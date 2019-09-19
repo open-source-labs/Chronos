@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class ServiceOverview extends React.Component {
   render() {
