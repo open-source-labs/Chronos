@@ -12,21 +12,22 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
-  win.loadURL('http://localhost:8081/');
+  win.loadURL('http://localhost:8080/');
+
+  // Load settings JSON and returns state back to the render process.
   ipcMain.on('state', (message) => {
     const state = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
       encoding: 'UTF-8',
     });
-    // rendererWindow.webContents.send(state);
     message.returnValue = state;
     console.log(state);
   });
+
+  // Load settings JSON and returns updated state back to the render process.
   ipcMain.on('submit', (message, state) => {
-    console.log(state, ' is the message');
     fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), state);
     const updatedState = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'));
     message.returnValue = updatedState;
-    console.log('state from main.js');
   });
   win.on('closed', () => {
     win = null;
