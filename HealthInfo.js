@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 mongoose.model('HealthInfo', {
-  currentLocation: {
+  currentMicroservice: {
     type: String,
-    // required: true
   },
-  desiredEndpoint: {
+  targetedEndpoint: {
     type: String,
-    // required: true
   },
   reqType: {
     type: String,
-    // required: false
+  },
+  timeSent: {
+    type: Date
   }
 })
