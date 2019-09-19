@@ -1,29 +1,26 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import SignUp from "./components/SignUp.jsx";
-import ServiceOverview from "./components/ServiceOverview.jsx";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import SignUp from './components/SignUp.jsx';
+import ServiceOverview from './components/ServiceOverview.jsx';
+const { ipcRenderer } = window.require('electron');
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // const stateData = fs.readFileSync('../user/start.json', (err, data) => {
-    //   if(err) console.log(err);
-    //   return data.json();
-    // });
-    // this.state = stateData;
-    this.state = {
-      setupRequired: true,
-      services: [],
-      database: '',
-    }
+    this.state = {};
+  }
+
+  componentDidMount() {
+    const state = ipcRenderer.sendSync('state');
+    this.setState(JSON.parse(state));
   }
 
   render() {
     const { setupRequired } = this.state;
-    if(setupRequired) return <SignUp />;
+    if (setupRequired) return <SignUp />;
     return <ServiceOverview />;
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById('app'));
