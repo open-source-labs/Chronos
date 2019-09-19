@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 mongoose.set("useUnifiedTopology", true);
 mongoose.set("useNewUrlParser", true);
 
-  module.exports = function(req,res,next) {
+  module.exports = function(currentMicroservice) {
     return function (req,res,next) {
       mongoose.connect(
         "mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access",
@@ -17,7 +17,7 @@ mongoose.set("useNewUrlParser", true);
           console.log("Chronos database is connected...");
         }
       )
-      const currentMicroservicePath = path.resolve(__dirname);
+      const currentMicroservicePath = currentMicroservice;
 
       require('./HealthInfo.js')
       const HealthInfo = mongoose.model("HealthInfo")
