@@ -21,7 +21,9 @@
   "dependencies": {
     "electron": "^6.0.7",
     "express": "^4.17.1",
+    "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
+    "pg": "^7.12.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "uuid": "^3.3.3"
