@@ -21,8 +21,9 @@ class App extends React.Component {
   render() {
     // Conditional rendering based on the stated loaded from the JSON file.
     const { setupRequired } = this.state;
+    const { database } = this.state;
     if (setupRequired) return <SignUp />;
-    return <ServiceOverview />;
+    return <ServiceOverview db={database} />;
   }
 }
 
