@@ -14,11 +14,10 @@ module.exports = {
     ],
   },
   mode: 'development',
-  devServer: {
-    proxy: {
-      '/': 'http://localhost:34343',
-    },
-  },
+  // devServer: {
+  //   proxy: {
+  //     '/': 'http://localhost:34343',
+  //   },},
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html',
