@@ -13,16 +13,16 @@ class ServiceOverview extends React.Component {
     // this.fetch = this.fetch.bind(this);
   }
 
-  // componentDidMount() {
-  //   // const { db } = this.state;
-  //   // event.preventDefault();
-  //   const now = ipcRenderer.send('all', JSON.stringify('mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access'));
-  //   console.log(now);
-  //   ipcRenderer.on('queryResponse', (data) => {
-  //     console.log('WHOA!');
-  //     console.log(data);
-  //   });
-  // }
+  componentDidMount() {
+    // const { db } = this.state;
+    // event.preventDefault();
+    const now = ipcRenderer.send('all', JSON.stringify('mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access'));
+    console.log(now);
+    ipcRenderer.on('queryResponse', (data) => {
+      console.log('WHOA!');
+      console.log(data);
+    });
+  }
 
   render() {
     // console.log(data);
