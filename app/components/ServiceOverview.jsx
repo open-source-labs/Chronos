@@ -1,7 +1,7 @@
 const { ipcRenderer } = window.require('electron');
 
 import React from 'react';
-const data = require('../../electron/OverviewRenderer');
+// const data = require('../../electron/OverviewRenderer');
 
 class ServiceOverview extends React.Component {
   constructor(props) {
@@ -25,11 +25,11 @@ class ServiceOverview extends React.Component {
   // }
 
   render() {
-    console.log(data);
+    // console.log(data);
     return (
       <div>
         <h1>HELLOOOOOOOO?!?</h1>
-        <p>this.state.queryResults</p>
+        {/* <p>this.state.queryResults</p> */}
         {/* <button onClick={reset}>Reset</button> */}
         {/* <button onClick={() => this.fetch()}>Fetch</button> */}
       </div>
