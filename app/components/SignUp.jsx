@@ -53,9 +53,9 @@ const SignUp = () => {
       <form>
         {/* Renders form state to the screen */}
         {formState.map((val, idx) => {
-          // Creates a unique key ID for each element in form state.
+          // uuidv1: Creates a unique key ID for each element in form state.
           // onChange: Allows state to be updated as the user types in the input fields.
-          // placeholder: Allows inputs to remain on the screen even as state update.
+          // placeholder: Allows inputs to remain on the screen even as state updates.
           const keyID = uuidv1();
           val.id = keyID;
           return (
@@ -81,7 +81,6 @@ const SignUp = () => {
           );
         })}
         <input
-          // Allows state to be updated as the user types in the input fields.
           onChange={(e) => {
             setdbState(e.target.value);
           }}
