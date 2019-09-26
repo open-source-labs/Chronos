@@ -31,11 +31,11 @@ function createWindow() {
   });
 
   // Queries the database for information and returns it back to the render process.
-  ipcMain.on('queryRequest', (message) => {
+  ipcMain.on('queryRequest',  (message) => {
     HealthInfoModel.find({}, (err, data) => {
       if (err) console.log(`An error occured while querying the database: ${err}`);
       const queryResults = JSON.stringify(data);
-      console.log(queryResults);
+      // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('queryResponse', queryResults);
     });
   });
@@ -57,10 +57,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// console.log('HELLLLLLLLO?');
-// console.log(db);
-// const server = https.createServer();
 
 // SQL
 // const pool = new Pool({
