@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const { database } = require('../user/settings.json');
+
+mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+  console.log('Connected!');
+});
 
 const HealthInfoSchema = mongoose.Schema({
   currentMicroservice: {
