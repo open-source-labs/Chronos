@@ -1,10 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
-// const https = require('https');
 const path = require('path');
-// const { Pool, Client } = require('pg');
-// const mongoose = require('mongoose');
-// const HealthInfoA = require('./InfoSchema');
+const HealthInfoModel = require('./InfoSchema');
 // require('../server/server.js');
 
 let win;
@@ -33,21 +30,13 @@ function createWindow() {
     message.returnValue = updatedState;
   });
 
-  ipcMain.on('all', (message, db) => {
-    mongoose.connect(db, { useNewUrlParser: true }, () => {
-      console.log('Connected!');
-      console.log(db);
-      // console.log('what da hell am i ', HealthInfoA.find({}));
-
-      HealthInfoA.find({}, (err, doc) => {
-        console.log('error =>', err);
-        console.log('data', doc);
-      });
-      // HealthInfo.find().then((data) => {
-      //   console.log('HELLLLLLLLLLLOOOOOOOO!');
-      //   console.log('inside query');
-      //   message.reply('queryResponse', data);
-      // });
+  // Queries the database for information and returns it back to the render process.
+  ipcMain.on('queryRequest', (message) => {
+    HealthInfoModel.find({}, (err, data) => {
+      if (err) console.log(`An error occured while querying the database: ${err}`);
+      const queryResults = JSON.stringify(data);
+      console.log(queryResults);
+      message.sender.send('queryResponse', queryResults);
     });
   });
 
