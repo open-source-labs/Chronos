@@ -1,37 +1,36 @@
 const { ipcRenderer } = window.require('electron');
 
 import React from 'react';
-// const data = require('../../electron/OverviewRenderer');
 
 class ServiceOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      db: 'postgres://jfmzzwvv:AZWRtG9zW1a9hOiInFyl49Itb1pPkqoc@salt.db.elephantsql.com:5432/jfmzzwvv',
-      queryResults: null,
+      data: {}
     };
-    // this.fetch = this.fetch.bind(this);
   }
 
   componentDidMount() {
-    // const { db } = this.state;
-    // event.preventDefault();
-    const now = ipcRenderer.send('all', JSON.stringify('mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access'));
-    console.log(now);
-    ipcRenderer.on('queryResponse', (data) => {
-      console.log('WHOA!');
-      console.log(data);
+    ipcRenderer.send('queryRequest');
+    ipcRenderer.on('queryResponse', (event, data) => {
+      console.log('in ipcRender')
+      // console.log(JSON.parse(data));
+      const potato = JSON.parse(data)
+      console.log('potato => ', [potato])
+      
+      this.setState({ data: JSON.parse(data) });
+      // return potato;
     });
+    // console.log('QUERY RETURNED: ', now);
+    // this.setState({ queryResults: results });
+    console.log('state', this.state)
   }
 
   render() {
-    // console.log(data);
     return (
       <div>
         <h1>HELLOOOOOOOO?!?</h1>
-        {/* <p>this.state.queryResults</p> */}
-        {/* <button onClick={reset}>Reset</button> */}
-        {/* <button onClick={() => this.fetch()}>Fetch</button> */}
+        {/* {this.state.queryResults.toString()} */}
       </div>
     );
   }
