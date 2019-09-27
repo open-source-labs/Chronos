@@ -44,7 +44,6 @@ const SignUp = () => {
       database: dbState,
     };
     const updatedState = ipcRenderer.sendSync('submit', JSON.stringify(state));
-    console.log("its me", updatedState);
   };
 
   return (

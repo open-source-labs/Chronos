@@ -15,13 +15,13 @@ class App extends React.Component {
   // IPC communication used to read settings JSON and set state accordingly.
   componentDidMount() {
     const state = ipcRenderer.sendSync('state');
-    this.setState(JSON.parse(state));
+    const { setupRequired } = JSON.parse(state);
+    this.setState({ setupRequired });
   }
 
   render() {
     // Conditional rendering based on the stated loaded from the JSON file.
     const { setupRequired } = this.state;
-    // const { database } = this.state;
     if (setupRequired) return <SignUp />;
     return <ServiceOverview />;
   }
