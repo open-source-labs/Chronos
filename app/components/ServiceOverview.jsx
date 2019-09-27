@@ -13,7 +13,7 @@ const ServiceOverview = () => {
     ipcRenderer.on('overviewResponse', (event, data) => {
       // Adds microservice data to state.
       const sanitizedData = [...Object.values(JSON.parse(data))];
-      // Algorithm is used to convert nested object into nested array;
+      // Algorithm is used to convert nested object into an array;
       sanitizedData.forEach((element, index) => {
         const { currentMicroservice, targetedEndpoint } = element;
         sanitizedData[index] = [currentMicroservice, targetedEndpoint];
