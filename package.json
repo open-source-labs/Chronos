@@ -7,7 +7,8 @@
     "build": "webpack",
     "start": "webpack-dev-server",
     "nodemon": "nodemon server/server.js",
-    "electron": "electron ."
+    "electron": "electron .",
+    "test": "mocha"
   },
   "babel": {
     "presets": [
@@ -42,6 +43,8 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "mocha": "^6.2.0",
+    "spectron": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
