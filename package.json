@@ -2,7 +2,7 @@
   "name": "test-electron-app",
   "version": "1.0.0",
   "description": "",
-  "main": "./electron/Main.js",
+  "main": "./Main.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
