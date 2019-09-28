@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const HealthInfoModel = require('./model/InfoSchema');
+const CommunicationSchema = require('./model/mongoose-communicatonSchema');
 
 let win;
 function createWindow() {
@@ -54,12 +54,12 @@ ipcMain.on('submit', (message, state) => {
 
 // Queries the database for information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message) => {
-  HealthInfoModel.find({})
+  CommunicationSchema.find({})
     .select({ _id: 0, currentMicroservice: 1, targetedEndpoint: 1 })
     .exec((err, data) => {
       if (err) {
         console.log(`An error occured while querying the database: ${err}`);
-        message.sender.send('overviewResponse', null);
+        message.sender.send('overviewResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
       // Asynchronous event emitter used to transmit query results back to the render process.
