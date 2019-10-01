@@ -1,5 +1,4 @@
 {
-  "setupRequired": true,
-  "services": [],
-  "database": ""
+  "setupRequired":true,
+  "services":[]
 }
