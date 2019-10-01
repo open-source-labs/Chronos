@@ -1,30 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import setup from './components/LoadServices.jsx';
 import SignUp from './components/SignUp.jsx';
 import ServiceOverview from './components/ServiceOverview.jsx';
 
-const { ipcRenderer } = window.require('electron');
+// const { ipcRenderer } = window.require('electron');
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  // IPC communication used to read settings JSON and set state accordingly.
-  componentDidMount() {
-    const state = ipcRenderer.sendSync('state');
-    const { setupRequired } = JSON.parse(state);
-    this.setState({ setupRequired });
-  }
-
-  render() {
-    // Conditional rendering based on the stated loaded from the JSON file.
-    const { setupRequired } = this.state;
-    if (setupRequired) return <SignUp />;
-    return <ServiceOverview />;
-  }
-}
+const App = () => {
+  const context = useContext(setup);
+  // const [setup] = useState(JSON.parse(ipcRenderer.sendSync('state')));
+  return context ? <SignUp /> : <ServiceOverview />;
+};
 
 ReactDOM.render(<App />, document.getElementById('app'));
