@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
-const { database } = require('../user/settings.json');
+const { services } = require('../user/settings.json');
 
-mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+const databaseType = services[0][1];
+const URI = services[0][2];
+
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+  if (err) console.log(err);
   console.log('Connected to database!');
 });
 
@@ -20,6 +24,6 @@ const communicationSchema = mongoose.Schema({
   },
 });
 
-const communicationModel = mongoose.model('communication', communicationSchema);
+const communicationModel = mongoose.model('communications', communicationSchema);
 
-module.exports = communicationModel;
+(databaseType === 'MongoDB') ? module.exports = communicationModel : module.exports = null;
