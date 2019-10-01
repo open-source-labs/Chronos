@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const { ipcRenderer } = window.require('electron');
 
 const ServiceOverview = () => {
+  // return 'HELLLLLLLLOOOOOOOOO?!?!?!?!?!?!?!?!?!';
   const [overviewState, setOverviewState] = useState([]);
 
   useEffect(() => {
@@ -11,7 +12,7 @@ const ServiceOverview = () => {
 
     // IPC listener responsible for retrieving infomation from asynchronous main process message.
     ipcRenderer.on('overviewResponse', (event, data) => {
-      // WIP: Parsing service and endpoint to create data that can be used for visualization.
+      // ! WIP: Parsing service and endpoint to create data that can be used for visualization.
       const dbData = Object.values(JSON.parse(data));
       const communications = {};
       for (let i = 0; i < dbData.length; i += 1) {
