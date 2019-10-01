@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
+// const DatabaseController = require('./model/database-controller');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
 
 let win;
@@ -39,32 +40,37 @@ app.on('activate', () => {
 
 // Load settings JSON and returns state back to the render process.
 ipcMain.on('state', (message) => {
-  const state = fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
+  const state = JSON.parse(fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
     encoding: 'UTF-8',
-  });
-  message.returnValue = state;
+  }));
+  const { setupRequired } = state;
+  message.returnValue = setupRequired;
 });
 
 // Load settings JSON and returns updated state back to the render process.
 ipcMain.on('submit', (message, state) => {
   fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), state);
-  const updatedState = fs.readFileSync(path.resolve(__dirname, './user/settings.json'));
-  message.returnValue = updatedState;
+  const updatedState = fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' });
+  message.returnValue = JSON.parse(updatedState).setupRequired;
 });
 
 // Queries the database for information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message) => {
-  CommunicationSchema.find({})
-    .select({ _id: 0, currentMicroservice: 1, targetedEndpoint: 1 })
-    .exec((err, data) => {
-      if (err) {
-        console.log(`An error occured while querying the database: ${err}`);
-        message.sender.send('overviewResponse', JSON.stringify(err));
-      }
-      const queryResults = JSON.stringify(data);
-      // Asynchronous event emitter used to transmit query results back to the render process.
-      message.sender.send('overviewResponse', queryResults);
-    });
+  const databaseType = JSON.parse(fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' })).services[0][1];
+  if (databaseType === 'MongoDB') {
+    CommunicationSchema.find({})
+      .select({ _id: 0, currentMicroservice: 1, targetedEndpoint: 1 })
+      .exec((err, data) => {
+        if (err) {
+          console.log(`An error occured while querying the database: ${err}`);
+          message.sender.send('overviewResponse', JSON.stringify(err));
+        }
+        const queryResults = JSON.stringify(data);
+        // Asynchronous event emitter used to transmit query results back to the render process.
+        message.sender.send('overviewResponse', queryResults);
+      });
+  }
+  // SQL Query
 });
 
 // SQL
