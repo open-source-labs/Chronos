@@ -47,7 +47,7 @@ mongoose.model("MicroserviceHealth", {
   },
   latency: {
     type: Number,
-    required: false
+    required: true
   },
   timestamp: {
     type: Date,
