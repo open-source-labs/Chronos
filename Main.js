@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
-// const HealthInfoSchema = require('./model/mongoose-healthInfoShema');
+const HealthInfoSchema = require('./model/mongoose-healthInfoShema');
 const pool = require('./model/sql-connect');
 
 let win;
@@ -88,13 +88,12 @@ ipcMain.on('dashboard', (message) => {
   message.returnValue = dashboardList;
 });
 
-// Queries the database for information and returns it back to the render process.
+// Queries the database for communications information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message) => {
   const databaseType = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
   ).services[0][1];
 
-  console.log(databaseType);
   if (databaseType === 'MongoDB') {
     CommunicationSchema.find({}, (err, data) => {
       if (err) {
@@ -116,6 +115,39 @@ ipcMain.on('overviewRequest', (message) => {
       const queryResults = JSON.stringify(result.rows);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('overviewResponse', queryResults);
+    });
+  }
+});
+
+// Queries the database for computer health information and returns it back to the render process.
+ipcMain.on('detailsRequest', (message) => {
+  const databaseType = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
+  ).services[0][1];
+
+  if (databaseType === 'MongoDB') {
+    HealthInfoSchema.find({}, (err, data) => {
+      if (err) {
+        console.log(`An error occured while querying the database: ${err}`);
+        message.sender.send('detailsResponse', JSON.stringify(err));
+      }
+      const queryResults = JSON.stringify(data);
+      console.log(queryResults)
+      // Asynchronous event emitter used to transmit query results back to the render process.
+      message.sender.send('detailsResponse', queryResults);
+    });
+  }
+  if (databaseType === 'SQL') {
+    const getHealth = 'SELECT * FROM healthInfo';
+    pool.query(getHealth, (err, result) => {
+      if (err) {
+        console.log(err);
+        message.sender.send('detailsResponse', JSON.stringify('Database info could not be retreived.'));
+      }
+      const queryResults = JSON.stringify(result.rows);
+      console.log(queryResults)
+      // Asynchronous event emitter used to transmit query results back to the render process.
+      message.sender.send('detailsResponse', queryResults);
     });
   }
 });
