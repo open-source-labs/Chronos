@@ -9,10 +9,13 @@ function createWindow() {
   win = new BrowserWindow({
     width: 900,
     height: 700,
+    icon: __dirname + './app/assets/icon.icns',
     webPreferences: {
       nodeIntegration: true,
     },
   });
+
+  // console.log(win.icon)
 
   // Development
   win.loadURL('http://localhost:8080/');
