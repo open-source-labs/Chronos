@@ -14,34 +14,50 @@ const ServicesDashboard = (props) => {
     for (let i = 0; i < context.length; i += 1) {
       buttonStore.push(
         <button
+          className="microserviceBtn"
           type="button"
           key={`${i}${context[i]}`}
           onClick={() => setSelection(<ServiceOverview index={i} />)}
+          // onClick={() => toggleClick()}
         >
           {context[i]}
         </button>,
       );
     }
+    // console.log(clicked)
     return buttonStore;
   };
+
   const [listState, setList] = useState(renderServiceList(serviceList));
 
-  if (serviceSelected) return serviceSelected;
+  // if (serviceSelected) return serviceSelected;
   return (
-    <div>
-      <h3>Your Microservices</h3>
-      <div>{listState}</div>
-      <button
-        type="submit"
-        key="BackToStart"
-        onClick={() => {
-          setup.setupRequired = setup.toggleSetup(false);
-          console.log(setup.setupRequired)
-          setSelection(<GettingStarted />);
-        }}
-      >
-        Add Service
-      </button>
+    <div className="servicesDashboardContainer">
+      <div className="left">
+        <div className="leftTopContainer">
+          <div className="left-top">
+            <h2>Your Microservices</h2>
+            {listState}
+            {/* <div className='servicesList'>{listState}</div> */}
+          </div>
+        </div>
+        <div className="left-bottom">
+          <button
+            className="submitBtn"
+            type="submit"
+            key="BackToStart"
+            onClick={() => {
+              setup.setupRequired = setup.toggleSetup(false);
+              setSelection(<GettingStarted />);
+            }}
+          >
+            Add Service
+          </button>
+        </div>
+      </div>
+      <div>
+        {serviceSelected}
+      </div>
     </div>
   );
 };
