@@ -21,6 +21,7 @@ const AddService = () => {
   };
 
   if (!ChronosSetup.setupRequired) return React.lazy(<ServicesDashboard />);
+
   return (
     <div className="mainContainer">
       <img src={logo} alt="logo" />
