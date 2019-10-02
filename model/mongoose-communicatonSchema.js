@@ -1,29 +1,36 @@
 const mongoose = require('mongoose');
-const { services } = require('../user/settings.json');
+const { services, setupRequired } = require('../user/settings.json');
 
-const databaseType = services[0][1];
-const URI = services[0][2];
+if (setupRequired) module.exports = null;
 
-mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
-  if (err) console.log(err);
-  console.log('Connected to database!');
-});
+if (services[0][1] === 'MongoDB') {
+  const URI = services[0][2];
+  mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) console.log(err);
+    console.log('Connected to Mongo database!');
+  });
 
-const communicationSchema = mongoose.Schema({
-  currentMicroservice: {
-    type: String,
-  },
-  targetedEndpoint: {
-    type: String,
-  },
-  reqType: {
-    type: String,
-  },
-  timeSent: {
-    type: Date,
-  },
-});
+  const communicationSchema = mongoose.Schema({
+    currentMicroservice: {
+      type: String,
+    },
+    targetedEndpoint: {
+      type: String,
+    },
+    reqType: {
+      type: String,
+    },
+    resStatus: {
+      type: Number,
+    },
+    resMessage: {
+      type: String,
+    },
+    timeSent: {
+      type: Date,
+    },
+  });
 
-const communicationModel = mongoose.model('communications', communicationSchema);
-
-(databaseType === 'MongoDB') ? module.exports = communicationModel : module.exports = null;
+  const communicationModel = mongoose.model('communications', communicationSchema);
+  module.exports = communicationModel;
+}
