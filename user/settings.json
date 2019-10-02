@@ -1,4 +1,6 @@
 {
-  "setupRequired":true,
-  "services":[]
+  "setupRequired":false,
+  "services":[
+      ["Test","MongoDB","mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access"]
+  ]
 }

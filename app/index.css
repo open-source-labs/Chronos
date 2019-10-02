@@ -1,5 +1,12 @@
+body {
+  background-color: #333;
+}
+
+/* img {
+  margin-bottom: 1px;
+} */
+
 .header {
-  background-color: rgb(58, 58, 58);
   color: white;
   height: 50px;
   font-family: Arial, Helvetica, sans-serif;
@@ -7,3 +14,83 @@
   padding-left: 5%;
   padding-top: 30%;
 }
+
+.mainContainer {
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 33% 33% 33%;
+  justify-items: center;
+  align-items: center;
+  margin-top: 10%;
+  color: white;
+}
+
+form {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.userInput {
+  width: 60%;
+  border: 2px solid rgb(255, 206, 9);
+  height: 50%;
+  font-size: 2vh;
+  padding-left: .25%;
+  margin: 15px auto 30px auto;
+}
+
+::placeholder {
+  font-size: 1.5vh;
+  color: rgb(201, 201, 201);
+}
+
+.submitBtn {
+  margin-top: 6%;
+  margin-bottom: 10%;
+  width: 60%;
+  height: 40px;
+  color: white;
+  font-size: 2vh;
+  border: 1px solid rgb(255, 206, 9);
+  background-color: #333;
+  transition: 0.25s;
+}
+
+.submitBtn:hover {
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #333;
+  background-color: rgb(255, 206, 9);
+}
+
+.servicesList {
+  margin-top: 10%;
+}
+
+.signUpHeader {
+  text-align: center;
+  font-weight: 300;
+  font-size: 5.5vh;
+  margin-bottom: 1%;
+}
+
+select {
+  display: block;
+  width: 30%;
+  font-size: 1.75vh;
+  font-weight: 400;
+  /* background-color: rgb(196, 196, 196); */
+  border: 2px solid rgb(255, 206, 9);
+  margin-top: 1%;
+  margin-bottom: 2.5%;
+}
+
+form {
+  width: 100%;
+  font-size: 2vh;
+  /* margin-top: -4%; */
+}
+
