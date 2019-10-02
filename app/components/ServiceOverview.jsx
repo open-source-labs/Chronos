@@ -4,7 +4,6 @@ import { Line, Bar, Pie } from 'react-chartjs-2';
 const { ipcRenderer } = window.require('electron');
 
 const ServiceOverview = () => {
-  // return 'HELLLLLLLLOOOOOOOOO?!?!?!?!?!?!?!?!?!';
   const [overviewState, setOverviewState] = useState([]);
 
   useEffect(() => {
