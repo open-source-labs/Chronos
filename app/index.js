@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
+import SetupContext from './context/SetupContext.js';
 import './index.css';
-import setup from './components/LoadServices.jsx';
 import SignUp from './components/SignUp.jsx';
-import ServiceOverview from './components/ServiceOverview.jsx';
-
-// const { ipcRenderer } = window.require('electron');
+import ServiceDashboard from './components/ServicesDashboard.jsx';
+// import ServiceOverview from './components/ServiceOverview.jsx';
 
 const App = () => {
-  const context = useContext(setup);
-  // const [setup] = useState(JSON.parse(ipcRenderer.sendSync('state')));
-  return context ? <SignUp /> : <ServiceOverview />;
+  const chronosSetup = useContext(SetupContext);
+  return chronosSetup.setupRequired ? <SignUp /> : <ServiceDashboard />;
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));
