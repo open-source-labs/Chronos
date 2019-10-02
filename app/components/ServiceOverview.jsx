@@ -86,8 +86,8 @@ const ServiceOverview = () => {
         <h1>Microservices Overview</h1>
       </div>
       <div />
-      {/* <div className='servicesList'>{stateRender()}</div> */}
-      <div style={{ position: 'relative', width: 700, height: 650 }}>
+      <div className='servicesList'>{stateRender()}</div>
+      {/* <div style={{ position: 'relative', width: 700, height: 650 }}>
         <Bar
           options={{
             title: { display: true, text: 'CPU Performance', fontSize: 30 },
@@ -95,7 +95,7 @@ const ServiceOverview = () => {
           }}
           data={getChartData}
         />
-      </div>
+      </div> */}
       <div />
     </div>
   );
