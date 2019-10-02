@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2'
+import { Line, Bar, Pie } from 'react-chartjs-2'
 
 const { ipcRenderer } = window.require('electron');
 
@@ -48,12 +48,12 @@ const ServiceOverview = () => {
 
   const newData = {
     data: {
-      labels: ['1', '2', '3', '4', '5'],
+      labels: ['Books.js', 'Customers.js', 'Orders.js'],
       datasets: [
         {
-          label: 'Customers.js',
+          label: 'Temperature (in Celcius)',
           backgroundColor: 'rgb(150, 220, 75',
-          data: [14, 51, 11, 40, 4, 22]
+          data: [39, 45, 50]
         }
       ]
     },
@@ -88,7 +88,7 @@ const ServiceOverview = () => {
       <div></div>
       {/* <div className='servicesList'>{stateRender()}</div> */}
       <div style={{ position: "relative", width: 700, height: 650 }}>
-        <Line options={{responsive: true}} data={getChartData}/>
+        <Bar options={{title: { display: true, text: 'CPU Performance', fontSize: 30 },responsive: true}} data={getChartData}/>
       </div>
       <div>
       </div>
