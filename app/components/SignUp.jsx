@@ -1,28 +1,31 @@
 import React, { useState, useContext } from 'react';
-import setup from './LoadServices.jsx';
-import ServiceOverview from './ServiceOverview.jsx';
+import SetupContext from '../context/SetupContext';
+import ServicesDashboard from './ServicesDashboard.jsx';
+// import ServiceOverview from './ServiceOverview.jsx';
+
 
 const { ipcRenderer } = window.require('electron');
 // const uuidv1 = require('uuid/v1');
 
 const SignUp = () => {
-  const setupContext = useContext(setup);
-  const [setupStatus, setStatus] = useState(setupContext);
+  const signInCompleted = useContext(SetupContext);
+  // const [setupStatus, setStatus] = useState(setupContext);
   // Form state
-  const [dbState, setDbType] = useState('');
-  const [uriState, setUri] = useState();
+  const [dbState, setDbType] = useState('SQL');
+  const [uriState, setUri] = useState('');
   const [labelState, setLabel] = useState('');
 
+  console.log(signInCompleted.setupRequired);
   const onSubmit = () => {
-    const userSettings = {
-      setupRequired: false,
-      services: [[labelState, dbState, uriState]],
-    };
+    const userSettings = [labelState, dbState, uriState];
     // IPC communication used to update settings JSON with user input.
-    const updatedStatus = ipcRenderer.sendSync('submit', JSON.stringify(userSettings));
-    setStatus(updatedStatus);
+    ipcRenderer.send('submit', JSON.stringify(userSettings));
+    signInCompleted.setupRequired = signInCompleted.toggleSetup(true);
+    setDbType('rerender');
   };
-  if (!setupStatus) return <ServiceOverview />;
+
+  if (!signInCompleted.setupRequired) return <ServicesDashboard />;
+
   return (
     <div>
       <h3>You are one checkbox and copy/paste away from easy microservice development!</h3>
