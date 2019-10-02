@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import SetupContext from '../context/SetupContext';
 import ServicesDashboard from './ServicesDashboard.jsx';
+import logo from '../assets/logo2.png';
 // import ServiceOverview from './ServiceOverview.jsx';
-
 
 const { ipcRenderer } = window.require('electron');
 // const uuidv1 = require('uuid/v1');
@@ -27,20 +27,32 @@ const SignUp = () => {
   if (!signInCompleted.setupRequired) return <ServicesDashboard />;
 
   return (
-    <div>
-      <h3>You are one checkbox and copy/paste away from easy microservice development!</h3>
+    <div className="mainContainer">
+      <img src={logo} />
+      <h2 className="signUpHeader">Enter Your Database Information</h2>
       <form>
-        Your database:
+        Database Type:
         <select value={dbState} onChange={(e) => setDbType(e.target.value)}>
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>
-        <input onChange={(e) => setUri(e.target.value)} placeholder={uriState} />
-        <br></br>
-        Save as:
-        <input onChange={(e) => setLabel(e.target.value)} type="text" placeholder={labelState} />
+        Database URI:
+        <input
+          className="userInput"
+          onChange={(e) => setUri(e.target.value)}
+          placeholder="Database URI"
+        />
+        Database Name:
+        <input
+          className="userInput"
+          onChange={(e) => setLabel(e.target.value)}
+          type="text"
+          placeholder="Database Name"
+        />
       </form>
-      <button type="submit" onClick={onSubmit}>Submit</button>
+      <button className="submitBtn" type="submit" onClick={onSubmit}>
+        SUBMIT
+      </button>
     </div>
   );
 };
