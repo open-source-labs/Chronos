@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import ServiceOverview from './ServiceOverview.jsx';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
@@ -18,19 +18,16 @@ const ServicesDashboard = (props) => {
           type="button"
           key={`${i}${context[i]}`}
           onClick={() => setSelection(<ServiceOverview index={i} />)}
-          // onClick={() => toggleClick()}
         >
           {context[i]}
         </button>,
       );
     }
-    // console.log(clicked)
     return buttonStore;
   };
 
   const [listState, setList] = useState(renderServiceList(serviceList));
 
-  // if (serviceSelected) return serviceSelected;
   return (
     <div className="servicesDashboardContainer">
       <div className="left">
@@ -38,7 +35,6 @@ const ServicesDashboard = (props) => {
           <div className="left-top">
             <h2>Your Microservices</h2>
             {listState}
-            {/* <div className='servicesList'>{listState}</div> */}
           </div>
         </div>
         <div className="left-bottom">
