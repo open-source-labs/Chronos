@@ -74,8 +74,7 @@ const ServiceOverview = (props) => {
         <h1>Microservices Overview</h1>
       </div>
       <div />
-         <div className="servicesList">{renderState()}</div>
-      <div />
+      <div className="servicesList">{renderState()}</div>
     </div>
   );
 };
