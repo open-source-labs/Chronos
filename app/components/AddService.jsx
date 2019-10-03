@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import logo from '../assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import ServicesDashboard from './ServicesDashboard.jsx';
-import { DashboardConsumer } from '../context/DashboardContext';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -34,30 +33,38 @@ const AddService = () => {
           <option value="MongoDB">MongoDB</option>
         </select>
         Database URI:
-        <input 
+        <input
           className="userInput"
-          id='dburi'
+          id="dburi"
           onChange={(e) => setUri(e.target.value)}
           placeholder="Database URI"
         />
         Database Name:
-        <input 
+        <input
           className="userInput"
-          id='dbname'
+          id="dbname"
           onChange={(e) => setLabel(e.target.value)}
           type="text"
           placeholder="Database Name"
         />
-      <button className="submitBtn" type="submit" onClick={()=> {
-        if (document.getElementById('dburi').value === '' || document.getElementById('dbname').value === '') {
-          alert('Required field missing. Please verify you provided both required items and resubmit form')
-        } else {
-          onSubmit()
-        }
-      }
-    }>
-        Submit
-      </button>
+        <button
+          className="submitBtn"
+          type="submit"
+          onClick={() => {
+            if (
+              document.getElementById('dburi').value === ''
+              || document.getElementById('dbname').value === ''
+            ) {
+              alert(
+                'Required field missing. Please verify you provided both required items and resubmit form',
+              );
+            } else {
+              onSubmit();
+            }
+          }}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
