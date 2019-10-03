@@ -33,13 +33,13 @@ const ServicesDashboard = (props) => {
       <div className="left">
         <div className="leftTopContainer">
           <div className="left-top">
-            <h2>Your Microservices</h2>
+            <h2 className='dashboardHeader'>Your Databases</h2>
             {listState}
           </div>
         </div>
         <div className="left-bottom">
           <button
-            className="submitBtn"
+            className="overviewSubmitBtn"
             type="submit"
             key="BackToStart"
             onClick={() => {
@@ -47,11 +47,11 @@ const ServicesDashboard = (props) => {
               setSelection(<GettingStarted />);
             }}
           >
-            Add Service
+            Add Database
           </button>
         </div>
       </div>
-      <div>
+      <div className='databsaseList'>
         {serviceSelected}
       </div>
     </div>
