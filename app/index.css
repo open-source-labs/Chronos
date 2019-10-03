@@ -34,10 +34,10 @@ body {
   align-items: center;
   justify-items: center;
   justify-content: center;
-  border-right: 1px solid white;
+  color: white;
   max-height: 600px;
   overflow-y: auto;
-  background-color: rgb(151, 151, 151)
+  background-color: #333;
 }
 
 .leftTopContainer {
@@ -72,7 +72,7 @@ form {
   border: 2px solid rgb(255, 206, 9);
   height: 50%;
   font-size: 2vh;
-  padding-left: .25%;
+  padding-left: 0.25%;
   margin: 15px auto 30px auto;
 }
 
@@ -153,4 +153,3 @@ form {
   font-size: 2vh;
   /* margin-top: -4%; */
 }
-
