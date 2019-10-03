@@ -17,7 +17,9 @@ const ServicesDashboard = (props) => {
           className="microserviceBtn"
           type="button"
           key={`${i}${context[i]}`}
-          onClick={() => setSelection(<ServiceOverview index={i} />)}
+          onClick={() => {
+            setSelection(<ServiceOverview index={i} />);
+          }}
         >
           {context[i]}
         </button>,
