@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
+const connectSQL = require('./model/sql-connect');
+const connectMongoose = require('./model/mongoose-connect');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
-const HealthInfoSchema = require('./model/mongoose-healthInfoShema');
-const pool = require('./model/sql-connect');
+const HealthInfoSchema = require('./model/mongoose-healthInfoSchema');
 
 let win;
 function createWindow() {
@@ -15,8 +16,6 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
-
-  // console.log(win.icon)
 
   // Development
   win.loadURL('http://localhost:8080/');
@@ -89,23 +88,27 @@ ipcMain.on('dashboard', (message) => {
 });
 
 // Queries the database for communications information and returns it back to the render process.
-ipcMain.on('overviewRequest', (message) => {
+ipcMain.on('overviewRequest', (message, index) => {
   const databaseType = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
-  ).services[0][1];
+  ).services[index][1];
 
   if (databaseType === 'MongoDB') {
+    connectMongoose(index);
     CommunicationSchema.find({}, (err, data) => {
       if (err) {
         console.log(`An error occured while querying the database: ${err}`);
         message.sender.send('overviewResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
+      console.log(queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('overviewResponse', queryResults);
     });
   }
+
   if (databaseType === 'SQL') {
+    const pool = connectSQL(index);
     const getCommunications = 'SELECT * FROM communications';
     pool.query(getCommunications, (err, result) => {
       if (err) {
@@ -113,7 +116,7 @@ ipcMain.on('overviewRequest', (message) => {
         message.sender.send(JSON.stringify('Database info could not be retreived.'));
       }
       const queryResults = JSON.stringify(result.rows);
-      console.log(results, ' is the results!!!!!')
+      console.log(queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('overviewResponse', queryResults);
     });
@@ -121,24 +124,28 @@ ipcMain.on('overviewRequest', (message) => {
 });
 
 // Queries the database for computer health information and returns it back to the render process.
-ipcMain.on('detailsRequest', (message) => {
+ipcMain.on('detailsRequest', (message, index) => {
   const databaseType = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
-  ).services[0][1];
+  ).services[index][1];
 
   if (databaseType === 'MongoDB') {
+    connectMongoose(index);
+    console.log(HealthInfoSchema)
     HealthInfoSchema.find({}, (err, data) => {
       if (err) {
         console.log(`An error occured while querying the database: ${err}`);
         message.sender.send('detailsResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
-      console.log(queryResults)
+      console.log(queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
     });
   }
+
   if (databaseType === 'SQL') {
+    const pool = connectSQL(index);
     const getHealth = 'SELECT * FROM healthInfo';
     pool.query(getHealth, (err, result) => {
       if (err) {

@@ -2,9 +2,9 @@ body {
   background-color: #333;
 }
 
-/* img {
-  margin-bottom: 1px;
-} */
+img {
+  margin-bottom: -75px;
+}
 
 .header {
   color: white;
@@ -80,7 +80,7 @@ form {
   border: 2px solid rgb(255, 206, 9);
   height: 50%;
   font-size: 2vh;
-  padding-left: .25%;
+  padding-left: 0.25%;
   margin: 15px auto 30px auto;
 }
 
@@ -129,7 +129,6 @@ form {
   border: 1px solid rgb(255, 206, 9);
   color: rgb(255, 206, 9);
   cursor: pointer;
-
 }
 
 .servicesList {
@@ -185,4 +184,3 @@ form {
   font-size: 2vh;
   /* margin-top: -4%; */
 }
-
