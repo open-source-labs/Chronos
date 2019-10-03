@@ -4,7 +4,7 @@ const path = require('path');
 const connectSQL = require('./model/sql-connect');
 const connectMongoose = require('./model/mongoose-connect');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
-const HealthInfoSchema = require('./model/mongoose-healthInfoShema');
+const HealthInfoSchema = require('./model/mongoose-healthInfoSchema');
 
 let win;
 function createWindow() {
@@ -92,9 +92,7 @@ ipcMain.on('overviewRequest', (message, index) => {
   const databaseType = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
   ).services[index][1];
-  console.log(databaseType);
 
-  console.log(index);
   if (databaseType === 'MongoDB') {
     connectMongoose(index);
     CommunicationSchema.find({}, (err, data) => {
@@ -133,13 +131,14 @@ ipcMain.on('detailsRequest', (message, index) => {
 
   if (databaseType === 'MongoDB') {
     connectMongoose(index);
+    console.log(HealthInfoSchema)
     HealthInfoSchema.find({}, (err, data) => {
       if (err) {
         console.log(`An error occured while querying the database: ${err}`);
         message.sender.send('detailsResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
-      console.log(queryResults)
+      console.log(queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
     });
