@@ -1,52 +1,37 @@
 import React, { useState, useEffect, useContext } from 'react';
-import OverviewContext from '../context/OverviewContext';
 import { Line, Bar, Pie } from 'react-chartjs-2';
+// import OverviewContext from '../context/OverviewContext';
 
 const { ipcRenderer } = window.require('electron');
 
 const ServiceOverview = (props) => {
-  console.log(props.index)
   const [overviewState, setOverviewState] = useState([]);
-  const serviceComponents = useContext(OverviewContext);
-  console.log(serviceComponents);
-  setOverviewState(serviceComponents(props.index));
-  
-  useEffect(() => {
-    // // IPC communication used to initiate query for information on microservices.
-    // ipcRenderer.send('overviewRequest');
+  // const serviceComponents = useContext(OverviewContext);
 
-    // // IPC listener responsible for retrieving infomation from asynchronous main process message.
-    // ipcRenderer.on('overviewResponse', (event, data) => {
-    //   // ! WIP: Parsing service and endpoint to create data that can be used for visualization.
-    //   const dbData = Object.values(JSON.parse(data));
-    //   const communications = {};
-    //   for (let i = 0; i < dbData.length; i += 1) {
-    //     const microservice = dbData[i].currentMicroservice;
-    //     const endpoint = dbData[i].targetedEndpoint;
-    //     if (communications[microservice] && !communications[microservice].includes(endpoint)) {
-    //       communications[microservice].push(endpoint);
-    //     } else {
-    //       communications[microservice] = [endpoint];
-    //     }
-    //   }
-    //   // Adds microservice data to state.
-    // setOverviewState([...Object.values(JSON.parse(data))]);
+  useEffect(() => {
+    // IPC communication used to initiate query for information on microservices.
+    ipcRenderer.send('overviewRequest', props.index);
+
+    // IPC listener responsible for retrieving infomation from asynchronous main process message.
+    ipcRenderer.on('overviewResponse', (event, data) => setOverviewState(Object.values(JSON.parse(data))));
   }, []);
 
-  const stateRender = () => {
-    const jsxAttributes = [];
+  const renderState = () => {
+    const componentButtons = [];
     for (let i = 0; i < overviewState.length; i += 1) {
       const element = overviewState[i];
-      jsxAttributes.push(
-        <p>
-          Microservice:
-          {element.currentMicroservice}
-          is sending a message to
-          {element.targetedEndpoint}
-        </p>,
-      );
+      // SQL
+      if (element.currentmicroservice) {
+        if (!componentButtons.includes(element.currentmicroservice)) {
+          componentButtons.push(<button>{element.currentmicroservice}</button>);
+        }
+      }
+      // Mongo
+      if (element.currentMicroservice && !componentButtons.includes(element.currentMicroservice)) {
+        componentButtons.push(<button>{element.currentMicroservice}</button>);
+      }
     }
-    return jsxAttributes;
+    return componentButtons;
   };
 
   const newData = {
@@ -89,7 +74,7 @@ const ServiceOverview = (props) => {
         <h1>Microservices Overview</h1>
       </div>
       <div />
-      <div className='servicesList'>{stateRender()}</div>
+      <div className="servicesList">{renderState()}</div>
       {/* <div style={{ position: 'relative', width: 700, height: 650 }}>
         <Bar
           options={{
