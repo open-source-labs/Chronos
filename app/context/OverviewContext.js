@@ -10,5 +10,5 @@ const OverviewContext = React.createContext({
 });
 
 export const OverviewProvider = OverviewContext.Provider;
-export const OvervieConsumer = OverviewContext.Consumer;
+export const OverviewConsumer = OverviewContext.Consumer;
 export default OverviewContext;
