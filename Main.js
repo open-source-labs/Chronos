@@ -113,6 +113,7 @@ ipcMain.on('overviewRequest', (message) => {
         message.sender.send(JSON.stringify('Database info could not be retreived.'));
       }
       const queryResults = JSON.stringify(result.rows);
+      console.log(results, ' is the results!!!!!')
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('overviewResponse', queryResults);
     });

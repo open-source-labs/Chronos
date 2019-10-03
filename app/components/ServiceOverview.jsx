@@ -45,39 +45,39 @@ const ServiceOverview = () => {
     return jsxAttributes;
   };
 
-  const newData = {
-    data: {
-      labels: ['Books.js', 'Customers.js', 'Orders.js'],
-      datasets: [
-        {
-          label: 'Temperature (in Celcius)',
-          backgroundColor: 'rgb(150, 220, 75',
-          data: [39, 45, 50],
-        },
-      ],
-    },
-  };
+  // const newData = {
+  //   data: {
+  //     labels: ['Books.js', 'Customers.js', 'Orders.js'],
+  //     datasets: [
+  //       {
+  //         label: 'Temperature (in Celcius)',
+  //         backgroundColor: 'rgb(150, 220, 75',
+  //         data: [39, 45, 50],
+  //       },
+  //     ],
+  //   },
+  // };
 
-  const setGradientColor = (canvas, color) => {
-    const ctx = canvas.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 600, 550);
-    gradient.addColorStop(0, color);
-    gradient.addColorStop(0.95, 'rgba(133, 144, 0.5');
-    return gradient;
-  };
+  // const setGradientColor = (canvas, color) => {
+  //   const ctx = canvas.getContext('2d');
+  //   const gradient = ctx.createLinearGradient(0, 0, 600, 550);
+  //   gradient.addColorStop(0, color);
+  //   gradient.addColorStop(0.95, 'rgba(133, 144, 0.5');
+  //   return gradient;
+  // };
 
-  const getChartData = (canvas) => {
-    const { data } = newData;
-    if (data.datasets) {
-      const colors = ['rgb(255, 206, 9)', 'rgb(150, 220, 75'];
-      data.datasets.forEach((set, i) => {
-        set.backgroundColor = setGradientColor(canvas, colors[i]);
-        set.borderColor = 'white';
-        set.borderWidth = 2;
-      });
-    }
-    return data;
-  };
+  // const getChartData = (canvas) => {
+  //   const { data } = newData;
+  //   if (data.datasets) {
+  //     const colors = ['rgb(255, 206, 9)', 'rgb(150, 220, 75'];
+  //     data.datasets.forEach((set, i) => {
+  //       set.backgroundColor = setGradientColor(canvas, colors[i]);
+  //       set.borderColor = 'white';
+  //       set.borderWidth = 2;
+  //     });
+  //   }
+  //   return data;
+  // };
 
   return (
     <div className="mainContainer">
