@@ -8,10 +8,10 @@ const RequestTypesChart = () => {
 
   const createRequestChart = () => {
     const requestObj = {
-      POST: 0,
       DELETE: 0,
       GET: 0,
       PATCH: 0,
+      POST: 0,
       PUSH: 0,
       PUT: 0,
     };
@@ -24,6 +24,7 @@ const RequestTypesChart = () => {
       else if (element.reqtype in requestObj) requestObj[element.reqtype] += 1;
     }
 
+    console.log(requestObj)
     const chartData = {
       datasets: [
         {
