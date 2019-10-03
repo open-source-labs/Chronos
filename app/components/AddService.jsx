@@ -45,10 +45,10 @@ const AddService = () => {
           type="text"
           placeholder="Database Name"
         />
-      </form>
       <button className="submitBtn" type="submit" onClick={onSubmit}>
         SUBMIT
       </button>
+      </form>
     </div>
   );
 };
