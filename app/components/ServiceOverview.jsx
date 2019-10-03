@@ -18,17 +18,29 @@ const ServiceOverview = (props) => {
 
   const renderState = () => {
     const componentButtons = [];
+    const serviceCache = {};
     for (let i = 0; i < overviewState.length; i += 1) {
       const element = overviewState[i];
       // SQL
       if (element.currentmicroservice) {
-        if (!componentButtons.includes(element.currentmicroservice)) {
-          componentButtons.push(<button>{element.currentmicroservice}</button>);
+        if (!(element.currentmicroservice in serviceCache)) {
+          const button = <button>{element.currentmicroservice}</button>;
+          componentButtons.push(button);
+          serviceCache[element.currentmicroservice] = 1;
+        } else {
+          serviceCache[element.currentmicroservice] += 1;
         }
-      }
-      // Mongo
-      if (element.currentMicroservice && !componentButtons.includes(element.currentMicroservice)) {
-        componentButtons.push(<button>{element.currentMicroservice}</button>);
+      } else if (element.currentMicroservice) {
+        // Mongo
+        if (element.currentMicroservice) {
+          if (!(element.currentMicroservice in serviceCache)) {
+            const button = <button>{element.currentMicroservice}</button>;
+            componentButtons.push(button);
+            serviceCache[element.currentMicroservice] = 1;
+          } else {
+            serviceCache[element.currentMicroservice] += 1;
+          }
+        }
       }
     }
     return componentButtons;
