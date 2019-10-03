@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import HealthInformationContext from '../context/DetailsContext';
 import RequestTypesChart from '../charts/request-type-chart.jsx';
+import ResponseCodesChart from '../charts/response-code-chart.jsx';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -19,7 +20,18 @@ const ServiceDetails = (props) => {
     });
   }, []);
 
-  return <div><RequestTypesChart /></div>;
+  return (
+    <div>
+      <div>
+        <h3>Request Types</h3>
+        <RequestTypesChart />
+      </div>
+      <div>
+        <h3>Response Codes</h3>
+        <ResponseCodesChart />
+      </div>
+    </div>
+  );
 };
 
 export default ServiceDetails;
