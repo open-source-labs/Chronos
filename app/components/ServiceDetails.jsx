@@ -10,18 +10,18 @@ const ServiceDetails = (props) => {
   const healthdata = useContext(HealthInformationContext);
   const [detailsState, setDetails] = useState();
 
-  
+
   useEffect(() => {
     // IPC communication used to initiate query for information on microservices.
     ipcRenderer.send('detailsRequest', props.index);
-    
+ 
     // IPC listener responsible for retrieving infomation from asynchronous main process message.
     ipcRenderer.on('detailsResponse', (event, data) => {
       setDetails(Object.values(JSON.parse(data)));
       healthdata.detailData = detailsState;
     });
   }, []);
-  
+ 
   console.log(detailsState);
   return (
     <div>
