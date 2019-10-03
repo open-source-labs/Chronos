@@ -17,12 +17,12 @@ body {
 
 .mainContainer {
   font-family: Arial, Helvetica, sans-serif;
-  /* display: grid; */
+  display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 33% 33% 33%;
   justify-items: center;
   align-items: center;
-  margin-top: 10%;
+  /* margin-top: 10%; */
   color: white;
 }
 
@@ -31,24 +31,31 @@ body {
   font-size: 1.75vh;
   flex-direction: column;
   align-content: center;
+  width: 100%;
+  padding: 5% 10% 0 5%;
   align-items: center;
   justify-items: center;
   justify-content: center;
-  border-right: 1px solid white;
+  border-right: 2px solid rgb(163, 163, 163);
   max-height: 600px;
   overflow-y: auto;
-  background-color: rgb(151, 151, 151)
+  /* background-color: rgb(151, 151, 151) */
 }
 
 .leftTopContainer {
   display: flex;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
   align-content: center;
 }
 
 .left-bottom {
   max-height: 100px;
+  display: flex;
+  align-content: center;
+  grid-auto-columns: 100%;
+  align-items: center;
+  align-content: center;
 }
 
 .left {
@@ -58,7 +65,7 @@ body {
 
 .servicesDashboardContainer {
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 30% 70%;
 }
 
 form {
@@ -84,7 +91,7 @@ form {
 .submitBtn {
   margin-top: 6%;
   margin-bottom: 10%;
-  width: 100%;
+  width: 50%;
   height: 40px;
   color: white;
   font-size: 2vh;
@@ -106,13 +113,31 @@ form {
   transition: 0.1s;
 }
 
+.overviewSubmitBtn {
+  background-color: #333;
+  width: 50%;
+  margin: 8% auto 0 auto;
+  height: 40px;
+  border: 1px solid white;
+  font-size: 1.55vh;
+  color: white;
+  transition: 0.25s;
+}
+
+.overviewSubmitBtn:hover {
+  border: 1px solid rgb(255, 206, 9);
+  color: rgb(255, 206, 9);
+  cursor: pointer;
+
+}
+
 .servicesList {
   align-items: center;
   justify-content: center;
 }
 
 .microserviceBtn:hover {
-  font-weight: 900;
+  /* font-weight: 900; */
   cursor: pointer;
   border: 2px solid rgb(243, 239, 179);
   background-color: rgb(255, 206, 9);
@@ -132,9 +157,15 @@ form {
 
 .signUpHeader {
   text-align: center;
+  margin-top: 0%;
   font-weight: 300;
   font-size: 5.5vh;
-  margin-bottom: 1%;
+  margin-bottom: 8vh;
+}
+
+.dashboardHeader {
+  color: white;
+  margin-top: 35%;
 }
 
 select {

@@ -1,5 +1,1 @@
-{
-  "setupRequired": true,
-  "michelleWasHere": true,
-  "services": [["hard", "coded", "solution"]]
-}
+{"setupRequired":true,"michelleWasHere":false,"services":[["sample database name","SQL","sample url"],["sample database 2","SQL","sample database 2"],["test test test","SQL","test test test"],["test test test test","SQL","test tes test test"],["test","SQL","test"]]}
