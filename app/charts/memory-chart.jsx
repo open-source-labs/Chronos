@@ -1,46 +1,40 @@
 import React, { useContext } from 'react';
-// You can change the chart property imported to the one that suits your needs.
 import { Bar } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
 const MemoryChart = () => {
-  // ! Do not change the variables related to context.
   const healthData = useContext(HealthContext);
-  const health = healthData.detailsData;
+  // const health = healthData.detailData;
 
-  // Helper function
   const createChart = () => {
-    // Object for storing data
     const memoryObj = {
       free: 0,
       active: 0,
       used: 0,
-      total: 0
+      total: 0,
     };
 
-    // Iterate through HealthInfo to creat an object with data needed to create your graph.
-    for (let i = 0; i < health.length; i += 1) {
-      //Mongo
-      if (health[i].freeMemory) {
-        memoryObj.free += health[i].freeMemory
-        memoryObj.active += health[i].activeMemory
-        memoryObj.used += health[i].usedMemory
-        memoryObj.total += health[i].totalMemory
-      } else if (health[i].freememory) {
-        memoryObj.free += health[i].freememory;
-        memoryObj.active += health[i].activememory;
-        memoryObj.used += health[i].usedmemory;
-        memoryObj.total += health[i].totalmemory;
+    for (let i = 0; i < healthData.length; i += 1) {
+      console.log(healthData);
+      // If Mongo
+      if (healthData[i].freeMemory) {
+        memoryObj.free += healthData[i].freeMemory;
+        memoryObj.active += healthData[i].activeMemory;
+        memoryObj.used += healthData[i].usedMemory;
+        memoryObj.total += healthData[i].totalMemory;
+      } else if (healthData[i].freememory) {
+        memoryObj.free += healthData[i].freememory;
+        memoryObj.active += healthData[i].activememory;
+        memoryObj.used += healthData[i].usedmemory;
+        memoryObj.total += healthData[i].totalmemory;
       }
     }
-    memoryObj.free /= 1000000000
-    memoryObj.active /= 1000000000
-    memoryObj.used /= 1000000000
-    memoryObj.total /= 100000000
 
-    // ! Chart Data 
-    // * --- Change the object used in data to the one you created.
-    // * --- Labels must be in the same order as the keys in your object. 
+    memoryObj.free /= 1000000000 * healthData.length;
+    memoryObj.active /= 1000000000 * healthData.length;
+    memoryObj.used /= 1000000000 * healthData.length;
+    memoryObj.total /= 1000000000 * healthData.length;
+
     const chartData = {
       datasets: [
         {
