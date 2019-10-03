@@ -10,8 +10,8 @@ let win;
 function createWindow() {
   win = new BrowserWindow({
     width: 900,
-    height: 700,
-    icon: path.join(__dirname, '../app/assets/icon2.png'),
+    height: 800,
+    icon: path.join(__dirname, 'app/assets/icons/icon.png'),
     webPreferences: {
       nodeIntegration: true,
     },
