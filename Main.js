@@ -101,7 +101,6 @@ ipcMain.on('overviewRequest', (message, index) => {
         message.sender.send('overviewResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
-      console.log(queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('overviewResponse', queryResults);
     });
@@ -116,7 +115,6 @@ ipcMain.on('overviewRequest', (message, index) => {
         message.sender.send(JSON.stringify('Database info could not be retreived.'));
       }
       const queryResults = JSON.stringify(result.rows);
-      console.log(queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('overviewResponse', queryResults);
     });
@@ -131,14 +129,12 @@ ipcMain.on('detailsRequest', (message, index) => {
 
   if (databaseType === 'MongoDB') {
     connectMongoose(index);
-    console.log(HealthInfoSchema)
     HealthInfoSchema.find({}, (err, data) => {
       if (err) {
-        console.log(`An error occured while querying the database: ${err}`);
         message.sender.send('detailsResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
-      console.log(queryResults);
+      console.log('QUERY RESULTS =>', queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
     });
@@ -149,11 +145,9 @@ ipcMain.on('detailsRequest', (message, index) => {
     const getHealth = 'SELECT * FROM healthInfo';
     pool.query(getHealth, (err, result) => {
       if (err) {
-        console.log(err);
         message.sender.send('detailsResponse', JSON.stringify('Database info could not be retreived.'));
       }
       const queryResults = JSON.stringify(result.rows);
-      console.log(queryResults)
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
     });
