@@ -24,7 +24,6 @@ const RequestTypesChart = () => {
       else if (element.reqtype in requestObj) requestObj[element.reqtype] += 1;
     }
 
-    console.log(requestObj)
     const chartData = {
       datasets: [
         {
