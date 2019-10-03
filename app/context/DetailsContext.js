@@ -1,12 +1,7 @@
 import React from 'react';
 
 const DetailContext = React.createContext({
-  detailData: null,
-  overviewStatus: true,
-  toggleOverview: (status) => {
-    if (status) return false;
-    return true;
-  },
+  detailData: [],
 });
 
 export const DetailProvider = DetailContext.Provider;
