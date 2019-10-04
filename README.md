@@ -13,10 +13,10 @@ There are two main aspects to Chronos-Microservice-Debugger
 
 
 ```javascript
-app.use('/', chronos-microservice-debgugger.microCom('microserviceName', 'databaseType', 'databaseURL'))
+app.use('/', chronos-microservice-debugger.microCom('microserviceName', 'databaseType', 'databaseURL'))
 chronos-microservice-debugger.microHealth('microserviceName', databaseType, databaseURL))
 ```
-Chronos uses a user-owned and provided database to ensure that your private data stays private. We currently support MongoDB and SQL/PostgresQL databases.
+Chronos uses a user-owned and provided database to ensure that your private data stays private. We currently support MongoDB and SQL/PostgreSQL databases.
 
 ## Things in the Works
 *gRPC support
@@ -27,7 +27,7 @@ Chronos uses a user-owned and provided database to ensure that your private data
 
 ## Links
 *Chronos Website: http://chronos.ninja
-*Gitub Page: http://https://github.com/oslabs-beta/Chronos
+*Gitub Page: https://github.com/oslabs-beta/Chronos
 
 ## Contact Us
 For questions, requests, or more information, please contact us at teammicronos@gmail.com
