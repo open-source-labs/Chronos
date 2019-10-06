@@ -1,8 +1,8 @@
 {
   "package name": "chronos",
   "name": "chronos-microservice-debugger",
-  "version": "1.0.1",
-  "description": "A microservice visualization and debugging application",
+  "version": "1.0.2",
+  "description": "A microservice health monitor and communication logger",
   "main": "chronos.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,9 +11,10 @@
     "microservice",
     "debugger",
     "microservice-health",
+    "microservice-health-monitor",
     "health-monitor",
     "communication-monitor",
-    "microservice-visualizer"
+    "microservice-communication-monitor"
   ],
   "author": "Team Chronos",
   "license": "MIT",
