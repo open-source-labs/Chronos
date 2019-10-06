@@ -1,21 +1,37 @@
+// NPM package that gathers health information
 const si = require('systeminformation');
 const chronos = {};
 
+// queryObj determines the setInterval needed for microHealth based on queryFreq parameter provided by user
+let queryObj = {
+  s: 1000, // 1000 milliseconds per second
+  m: 60000, // 1000 milliseconds * 60 seconds
+  h: 3600000, // 60 seconds * 60 minutes per hour * 1000 milliseconds per second
+  d: 86400000, // 60 sec. * 60 min * 1000 ms per sec * 24 hours per day
+  w: 604800000, // 60 sec/min * 60 min/hr * 1000 ms/sec * 24 hours/day * 7 days per week
+}
 
+//microCom 
 chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
+  // create connection to user owned database
+  // we're using PostgreSQL and need to require pg
   const { Client } = require("pg");
+  // grabbed from user input
   const uri = userOwnedDB;
 
+  // creates a new instance of client
   const client = new Client({
     connectionString: uri
   })
 
+  // connects to DB, else throws error
   client.connect((err, client, release) => {
     if (err) {
-      console.log("Issue connecting to db");
+      throw new Error("Issue connecting to db");
     }
   })
 
+  // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed. 
   client.query(
     `CREATE TABLE IF NOT EXISTS communications(
     id serial PRIMARY KEY,
@@ -29,39 +45,42 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
     (err, results) => {
       if (err) {
         throw err;
-      } 
+      }
     }
   )
-   return (req, res, next) => {
+  return (req, res, next) => {
+    //user-input name for current microservice
+    let currentMicroservice = userInputMSName;
+    //What was our endpoint? Grabbed from request object
+    let targetedEndpoint = req.originalUrl;
+    //Type of request. Grabbed from request object
+    let reqType = req.method;
 
-      let currentMicroservice = userInputMSName;
-      let targetedEndpoint = req.originalUrl;
-      let reqType = req.method;
+    let queryString = `INSERT INTO communications(currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage) VALUES ($1, $2, $3, $4, $5)`;
 
-      
-      let queryString = `INSERT INTO communications(currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage) VALUES ($1, $2, $3, $4, $5)`;
-      
-      res.on('finish', () => {
-        resStatus = res.statusCode;
-        resMessage = res.statusMessage;
-            values = [
-              currentMicroservice,
-              targetedEndpoint,
-              reqType,
-              resStatus,
-              resMessage
-            ];
+    // Waits for response to finish before pushing information into database
+    res.on('finish', () => {
+      //Grabs status code from response object
+      resStatus = res.statusCode;
+      //Grabs status message from response object
+      resMessage = res.statusMessage;
+      values = [
+        currentMicroservice,
+        targetedEndpoint,
+        reqType,
+        resStatus,
+        resMessage
+      ];
       client.query(queryString, values, (err, result) => {
-        console.log(3)
         if (err) {
           throw err;
-        } 
+        }
       })
     })
-     next();
+    next();
   }
 },
-  chronos.microHealth = (userOwnedDB, userInputMSName) => {
+  chronos.microHealth = (userOwnedDB, userInputMSName, queryFreq) => {
     const { Client } = require("pg");
     const uri = userOwnedDB;
 
@@ -75,8 +94,8 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
       }
     });
 
-    let cpuCurrentSpeed, 
-      cpuTemperature, 
+    let cpuCurrentSpeed,
+      cpuTemperature,
       cpuCurrentLoadPercentage,
       totalMemory,
       freeMemory,
@@ -88,7 +107,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
       numBlockedProcesses,
       numRunningProcesses,
       numSleepingProcesses;
-      
+
     currentMicroservice = userInputMSName;
 
     client.query(
@@ -133,12 +152,12 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
         });
 
       si.currentLoad()
-      .then(data => {
-        cpuCurrentLoadPercentage = data.currentload
-      })
-      .catch(err => {
-        throw err;
-      })
+        .then(data => {
+          cpuCurrentLoadPercentage = data.currentload
+        })
+        .catch(err => {
+          throw err;
+        })
 
       si.mem()
         .then(data => {
@@ -206,7 +225,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
           throw err;
         }
       });
-    }, 1000);
+    }, queryObj[queryFreq]);
   };
 
 module.exports = chronos;
