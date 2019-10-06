@@ -18,11 +18,11 @@ The parameters are:
 2. databaseType: We currently support PostgreSQL and Mongo. Enter "mongo" or "sql"
 3. databaseURL: Where would you like to store your information? Enter the URL to your database
 4. queryFrequency: How often do you want microHealth to monitor the health of your database? It defaults to every second, but you can choose:
-..1. "s" : The default, monitors every second
-..2. "m" : Monitors every minute
-..3. "h" : Monitors every hour
-..4. "d" : Monitors once per day
-..5. "w" : Monitors once per week
+  * "s" : The default, monitors every second
+  * "m" : Monitors every minute
+  * "h" : Monitors every hour
+  * "d" : Monitors once per day
+  * "w" : Monitors once per week
 
 String parameter example:
 ```javascript
