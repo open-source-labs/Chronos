@@ -1,9 +1,7 @@
 # Chronos
-<hr />
 Chronos consists of an NPM package to be required into a user’s microservices that intercepts all http and gRPC microservice communications, as well as monitors the health of each microservice over time. This information is written to a user-owned database (PostgreSQL or NoSQL) where it is queried and rendered by the frontend utilizing Node in conjunction with a native, cross-platform Electron desktop application with React components to ensure agreement between the frontend and database.
 
 ## Why was Chronos created?
-<hr />
 As companies grow larger and begin to scale, they have a tendency to move from a monolithic code architecture and microservices and distributed systems architecture in order to build faster, more maintainable code.
 
 The process of modularizing a code bases and breaking a monolith into individual services can be a daunting task. How do you break apart and re-connect these services? There is often a transitional period where valuable time is spent debugging these connections between services.
@@ -11,10 +9,9 @@ The process of modularizing a code bases and breaking a monolith into individual
 Chronos is deigned to meet the needs of companies and developers working to break down their monoliths into distributed systems by combining an NPM package together with an Electron application to monitor and assist in the debugging of their services.
 
 ## How to Install Chronos
-<hr />
 The Chronos-Microservice-Debugger Express Middleware can be found on npm: https://www.npmjs.com/package/chronos-microservice-debugger
 
-To install NPM package:
+To install the NPM package:
 ```javascript
 npm install chronos-microservice-debugger
 ```
@@ -22,7 +19,6 @@ npm install chronos-microservice-debugger
 The Chronos Electron application is in progress and will soon be availble for public download for all platforms. Please stay tuned.
 
 ## How to Use Chronos
-<hr />
 There are two main aspects to Chronos-Microservice-Debugger
 1. Communication Monitor: Listens in on all microservice-microservice and microservice-client communication and monitors the response statuses and messages to ensure communications are making it to the correct destination successfully.
 2. Health Monitor: The health monitor checks the status of your microservice every second and sends this health information to an optional electron frontend where it is visualized for easier use.
@@ -34,11 +30,11 @@ The parameters are:
 2. databaseType: We currently support PostgreSQL and Mongo. Enter "mongo" or "sql"
 3. databaseURL: Where would you like to store your information? Enter the URL to your database
 4. queryFrequency: How often do you want microHealth to monitor the health of your database? It defaults to every second, but you can choose:
-..1. "s" : The default, monitors every second
-..2. "m" : Monitors every minute
-..3. "h" : Monitors every hour
-..4. "d" : Monitors once per day
-..5. "w" : Monitors once per week
+  * "s" : The default, monitors every second
+  * "m" : Monitors every minute
+  * "h" : Monitors every hour
+  * "d" : Monitors once per day
+  * "w" : Monitors once per week
 
 String parameter example:
 ```javascript
@@ -83,7 +79,6 @@ chronos-microservice-debugger.microHealth(values)
 ```
 
 ## How to Contribute to Chronos
-<hr />
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, suggestions, please contact us at teammicronos@gmail.com or submit a pull request.
 
 ## Created By
