@@ -1,12 +1,12 @@
-##Chronos Microservice Debugger
+## Chronos Microservice Debugger
 Chronos Microservice Debugger consists of an npm package with an optional Electron front end to visualize information collected through use of npm package.
 
-##Install
+## Install
 ```javascript
 npm install chronos-microservice-debugger
 ```
 
-##Usage
+## Usage
 There are two main aspects to Chronos-Microservice-Debugger
 1. Communication Monitor: Listens in on all microservice-microservice and microservice-client communication and monitors the response statuses and messages to ensure communications are making it to the correct destination successfully.
 2. Health Monitor: The health monitor checks the status of your microservice every second and sends this health information to an optional electron frontend where it is visualized for easier use.
@@ -68,7 +68,7 @@ chronos-microservice-debugger.microHealth(values)
 
 Chronos uses a user-owned and provided database to ensure that your private data stays private. We currently support MongoDB and SQL/PostgreSQL databases.
 
-##Things in the Works
+## Things in the Works
 1. gRPC support
 3. 'Time Travel' to see how your microservices have changed over time
 4. Docker health information for containerized microservices
@@ -76,10 +76,10 @@ Chronos uses a user-owned and provided database to ensure that your private data
 6. Published Electron application with cross-browser compatibility
 7. Microservice Architecture Visualizer
 
-##Links
+## Links
 1. Chronos Website (Coming Soon): http://chronos.ninja
 2. Gitub Page: https://github.com/oslabs-beta/Chronos
 
-##Contact Us
+## Contact Us
 For questions, requests, or more information, please contact us at teammicronos@gmail.com
 
