@@ -1,20 +1,23 @@
 import React, { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
-import HealthContext from '../context/DetailsContext';
+// import HealthContext from '../context/DetailsContext';
 
-const SpeedChart = () => {
-  const healthData = useContext(HealthContext);
-  const health = healthData.detailsData;
+const SpeedChart = (props) => {
+  // const healthData = useContext(HealthContext);
+  const { details, service } = props;
+  // const health = props.details;
+  console.log('SPEED HAS CONTEXT?!?! => ', props);
   // Helper function
   const createChart = () => {
     const speedData = [];
 
     // Iterate through HealthInfo to creat an object with data needed to create your graph.
-    for (let i = 0; i < health.length; i += 1) {
-      const element = health[i];
+    for (let i = 0; i < details.length; i += 1) {
+      const element = details[i];
+      console.log('EEEEEEELLLLLLEEEEEMMMMEEEENNNT => ', element)
       // if Mongo
       // if SQL
-      if (element.cpucurrentspeed) {
+      if ((element.currentmicroservice === props.service || element.currentMicroservice === props.service) && element.cpucurrentspeed) {
         const graphDataPoint = {};
         graphDataPoint.x = i;
         if (element.cpucurrentspeed === null) graphDataPoint.y = 0;
