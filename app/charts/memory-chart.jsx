@@ -6,19 +6,30 @@ const MemoryChart = (props) => {
   const healthData = useContext(HealthContext).detailData;
 
   const createChart = () => {
-    let free = [];
-    let used= [];
-    let active = [];
-    let total = [];
+    const free = [];
+    const used = [];
+    const active = [];
+    const total = [];
+
+    const memoryObj = {
+      freeMem: free,
+      usedMem: used,
+      activeMem: active,
+      totalMem: total,
+    };
+
 
     for (let i = 0; i < healthData.length; i += 1) {
       // If Mongo
-      if (healthData[i].currentMicroservice === props.service && healthData[i].freeMemory) {
+      if (healthData[i].currentMicroservice === props.service) {
         memoryObj.free += healthData[i].freeMemory;
         memoryObj.active += healthData[i].activeMemory;
         memoryObj.used += healthData[i].usedMemory;
         memoryObj.total += healthData[i].totalMemory;
-      } else if (healthData[i].currentmicroservice === props.service && healthData[i].freememory) {
+      }
+
+      // If SQL
+      if (healthData[i].currentmicroservice === props.service) {
         memoryObj.free += healthData[i].freememory;
         memoryObj.active += healthData[i].activememory;
         memoryObj.used += healthData[i].usedmemory;
@@ -26,47 +37,38 @@ const MemoryChart = (props) => {
       }
     }
 
-    
-
-    const memoryObj = {
-      freeMem: free,
-      usedMem: used,
-      activeMem: active,
-      totalMem: total
-    }
-
     const chartData = {
       datasets: [
         {
-          label: "Free Memory",
+          label: 'Free Memory',
           data: Object.values(memoryObj.freeMem),
           backgroundColor: [
-            "rgb(2, 210, 249)"
-          ]
+            'rgb(2, 210, 249)',
+          ],
         },
         {
-          label: "Used Memory",
+          label: 'Used Memory',
           data: Object.values(memoryObj.usedMem),
           backgroundColor: [
-            "rgb(198, 42, 177)",
-          ]
+            'rgb(198, 42, 177)',
+          ],
         },
         {
-          label: "Active Memory",
+          label: 'Active Memory',
           data: Object.values(memoryObj.activeMem),
           backgroundColor: [
-            "rgb(252, 170, 52)"
-          ]
+            'rgb(252, 170, 52)',
+          ],
         },
         {
-          label: "Total Memory",
+          label: 'Total Memory',
           data: Object.values(memoryObj.activeMem),
           backgroundColor: [
-            "rgb(239, 91, 145)"
-          ]
+            'rgb(239, 91, 145)',
+          ],
         },
       ],
-      labels: ["Free Memory", "Active Memory", "Used Memory", "Total Memory"]
+      labels: ['Free Memory', 'Active Memory', 'Used Memory', 'Total Memory'],
     };
 
     return <Line data={chartData} />;
