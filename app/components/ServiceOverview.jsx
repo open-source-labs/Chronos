@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import OverviewContext from '../context/OverviewContext';
+import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
 
 const { ipcRenderer } = window.require('electron');
@@ -8,6 +9,7 @@ const ServiceOverview = (props) => {
   const [overviewState, setOverviewState] = useState([]);
   const [detailsSelected, setDetails] = useState();
   const serviceComponents = useContext(OverviewContext);
+  const healthdata = useContext(HealthInformationContext);
 
   useEffect(() => {
     // IPC communication used to initiate query for information on microservices.
@@ -16,7 +18,7 @@ const ServiceOverview = (props) => {
     // IPC listener responsible for retrieving infomation from asynchronous main process message.
     ipcRenderer.on('overviewResponse', (event, data) => {
       setOverviewState(Object.values(JSON.parse(data)));
-      serviceComponents.overviewData = Object.values(JSON.parse(data));
+      serviceComponents.overviewData = JSON.parse(data);
     });
   }, []);
 
@@ -32,7 +34,16 @@ const ServiceOverview = (props) => {
             <button
               type="button"
               key={`serviceItem${props.index}${i}`}
-              onClick={() => setDetails(<ServiceDetails index={props.index} />)}
+              onClick={() => {
+                ipcRenderer.send('detailsRequest', props.index);
+
+                // IPC listener responsible for retrieving infomation from asynchronous main process message.
+                ipcRenderer.on('detailsResponse', (event, data) => {
+                  // setHealthData(Object.values(JSON.parse(data)));
+                  healthdata.detailData = Object.values(JSON.parse(data));
+                  setDetails(<ServiceDetails service={element.currentmicroservice} />);
+                });
+              }}
             >
               {element.currentmicroservice}
             </button>
@@ -50,7 +61,15 @@ const ServiceOverview = (props) => {
               <button
                 type="button"
                 key={`serviceItem${props.index}${i}`}
-                onClick={() => setDetails(<ServiceDetails index={props.index} />)}
+                onClick={() => {
+                  ipcRenderer.send('detailsRequest', props.index);
+
+                  // IPC listener responsible for retrieving infomation from asynchronous main process message.
+                  ipcRenderer.on('detailsResponse', (event, data) => {
+                    healthdata.detailData = Object.values(JSON.parse(data));
+                    setDetails(<ServiceDetails service={element.currentMicroservice} />);
+                  });
+                }}
               >
                 {element.currentMicroservice}
               </button>
