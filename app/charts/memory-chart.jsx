@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
-const MemoryChart = () => {
-  const healthData = useContext(HealthContext);
-  // const health = healthData.detailData;
+const MemoryChart = (props) => {
+  const healthData = useContext(HealthContext).detailData;
 
   const createChart = () => {
     const memoryObj = {
@@ -15,14 +14,13 @@ const MemoryChart = () => {
     };
 
     for (let i = 0; i < healthData.length; i += 1) {
-      console.log(healthData);
       // If Mongo
-      if (healthData[i].freeMemory) {
+      if (healthData[i].currentMicroservice === props.service && healthData[i].freeMemory) {
         memoryObj.free += healthData[i].freeMemory;
         memoryObj.active += healthData[i].activeMemory;
         memoryObj.used += healthData[i].usedMemory;
         memoryObj.total += healthData[i].totalMemory;
-      } else if (healthData[i].freememory) {
+      } else if (healthData[i].currentmicroservice === props.service && healthData[i].freememory) {
         memoryObj.free += healthData[i].freememory;
         memoryObj.active += healthData[i].activememory;
         memoryObj.used += healthData[i].usedmemory;
