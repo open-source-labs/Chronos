@@ -134,7 +134,6 @@ ipcMain.on('detailsRequest', (message, index) => {
         message.sender.send('detailsResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
-      console.log('QUERY RESULTS =>', queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
     });
