@@ -1,17 +1,15 @@
 import React, { useContext } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
 const MemoryChart = (props) => {
   const healthData = useContext(HealthContext).detailData;
 
   const createChart = () => {
-    const memoryObj = {
-      free: 0,
-      active: 0,
-      used: 0,
-      total: 0,
-    };
+    let free = [];
+    let used= [];
+    let active = [];
+    let total = [];
 
     for (let i = 0; i < healthData.length; i += 1) {
       // If Mongo
@@ -28,30 +26,50 @@ const MemoryChart = (props) => {
       }
     }
 
-    memoryObj.free /= 1000000000 * healthData.length;
-    memoryObj.active /= 1000000000 * healthData.length;
-    memoryObj.used /= 1000000000 * healthData.length;
-    memoryObj.total /= 1000000000 * healthData.length;
+    
+
+    const memoryObj = {
+      freeMem: free,
+      usedMem: used,
+      activeMem: active,
+      totalMem: total
+    }
 
     const chartData = {
       datasets: [
         {
-          label: 'Breakdown of Memory in Gigabytes',
-          data: Object.values(memoryObj),
+          label: "Free Memory",
+          data: Object.values(memoryObj.freeMem),
           backgroundColor: [
-            'rgb(2, 210, 249)',
-            'rgb(198, 42, 177)',
-            'rgb(252, 170, 52)',
-            'rgb(239, 91, 145)',
-            'rgb(182, 219, 26)',
-            'rgb(254, 255, 0)',
-          ],
+            "rgb(2, 210, 249)"
+          ]
+        },
+        {
+          label: "Used Memory",
+          data: Object.values(memoryObj.usedMem),
+          backgroundColor: [
+            "rgb(198, 42, 177)",
+          ]
+        },
+        {
+          label: "Active Memory",
+          data: Object.values(memoryObj.activeMem),
+          backgroundColor: [
+            "rgb(252, 170, 52)"
+          ]
+        },
+        {
+          label: "Total Memory",
+          data: Object.values(memoryObj.activeMem),
+          backgroundColor: [
+            "rgb(239, 91, 145)"
+          ]
         },
       ],
-      labels: ['Free Memory', 'Active Memory', 'Used Memory', 'Total Memory'],
+      labels: ["Free Memory", "Active Memory", "Used Memory", "Total Memory"]
     };
 
-    return <Bar data={chartData} />;
+    return <Line data={chartData} />;
   };
 
   // Return div with helper function invoked
