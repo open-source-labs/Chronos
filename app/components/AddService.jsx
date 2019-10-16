@@ -16,7 +16,6 @@ const AddService = () => {
     // IPC communication used to update settings JSON with user input.
     ipcRenderer.send('submit', JSON.stringify(userSettings));
     ChronosSetup.setupRequired = ChronosSetup.toggleSetup(true);
-    setDbType('rerender');
     document.location.reload();
   };
 
