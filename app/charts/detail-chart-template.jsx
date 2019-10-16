@@ -5,8 +5,7 @@ import HealthContext from '../context/DetailsContext';
 
 const RequestTypesChart = () => {
   // ! Do not change the variables related to context.
-  const healthData = useContext(HealthContext);
-  const health = healthData.detailsData;
+  const healthData = useContext(HealthContext).detailsData;
 
   // Helper function
   const createChart = () => {
@@ -15,7 +14,7 @@ const RequestTypesChart = () => {
     };
 
     // Iterate through HealthInfo to creat an object with data needed to create your graph.
-    for (let i = 0; i < health.length; i += 1) {
+    for (let i = 0; i < healthData.length; i += 1) {
  
     }
 
