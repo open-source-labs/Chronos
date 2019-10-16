@@ -91,30 +91,3 @@ const ResponseCodeChart = () => {
 };
 
 export default ResponseCodeChart;
-
-// switch (statusCode) {
-//   case statusCode <= 199:
-//     key = '100-199';
-//     responseCodes[key] += 1;
-//     break;
-//   case statusCode <= 299:
-//     key = '200-299';
-//     responseCodes[key] += 1;
-//     break;
-//   case statusCode <= 399:
-//     key = '300-399';
-//     responseCodes[key] += 1;
-//     break;
-//   case statusCode <= 499:
-//     key = '400-499';
-//     responseCodes[key] += 1;
-//     break;
-//   default:
-//     key = '500-599';
-//     responseCodes[key] += 1;
-//     break;
-// }
-//   }
-//   // if SQL
-//   // else if (element.resstatus in requestObj) requestObj[element.resstatus] += 1;
-// }
