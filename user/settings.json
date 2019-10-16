@@ -1,1 +1,20 @@
+<<<<<<< HEAD
 {"setupRequired":false,"michelleWasHere":false,"services":[["test db","SQL","test db"]]}
+=======
+{
+  "setupRequired": false,
+  "michelleWasHere": false,
+  "services": [
+    [
+      "Mongo Test",
+      "MongoDB",
+      "mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access"
+    ],
+    [
+      "SQL Test",
+      "SQL",
+      "postgres://bbehwewl:tKJ8dnBPESQUABiEpdNnFF54SCsaQrZh@salt.db.elephantsql.com:5432/bbehwewl"
+    ]
+  ]
+}
+>>>>>>> 9451d3ce599744d1012099669b524d052dfb7c46

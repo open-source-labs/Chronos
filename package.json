@@ -1,5 +1,5 @@
 {
-  "name": "test-electron-app",
+  "name": "chronos",
   "version": "1.0.0",
   "description": "",
   "main": "./Main.js",
@@ -29,8 +29,7 @@
     "pg": "^7.12.1",
     "react": "16.10.1",
     "react-chartjs-2": "^2.8.0",
-    "react-dom": "16.10.1",
-    "uuid": "^3.3.3"
+    "react-dom": "16.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
