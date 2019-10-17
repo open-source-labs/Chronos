@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
-const ResponseCodeChart = () => {
+const ResponseCodeChart = (props) => {
+  console.log(' => ', props)
   const communicationsData = useContext(CommunicationsContext);
   const communications = communicationsData.overviewData;
 
@@ -19,7 +20,7 @@ const ResponseCodeChart = () => {
     for (let i = 0; i < communications.length; i += 1) {
       const element = communications[i];
       // if Mongo
-      if (element.resStatus) {
+      if (element.resStatus && element.currentMicroservice === props.service) {
         const statusCode = element.resStatus;
         let key;
 
@@ -42,7 +43,7 @@ const ResponseCodeChart = () => {
           key = 'NULL';
           responseCodes[key] += 1;
         }
-      } else if (element.resstatus || !element.resstatus) {
+      } else if (element.resstatus && element.currentmicroservice === props.service) {
         const statusCode = element.resstatus;
         let key;
 
