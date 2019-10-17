@@ -1,3 +1,11 @@
+// * Request -> NEED TO FIX ALGO TO BE SELECTIVE FOR CURRENT SURVICE
+// * Respose -> NEED TO FIX ALGO TO BE SELECTIVE FOR CURRENT SURVICE
+// ! Memory Natalie
+// * Speed Michelle
+// ! Processes 
+// ! Temperature (Line) Mo
+// ! Latency (Line?) Duane
+
 import React, { useContext } from 'react';
 // You can change the chart property imported to the one that suits your needs.
 import { Doughnut } from 'react-chartjs-2';
