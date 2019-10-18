@@ -3,6 +3,8 @@ import RequestTypesChart from '../charts/request-type-chart.jsx';
 import ResponseCodesChart from '../charts/response-code-chart.jsx';
 import SpeedChart from '../charts/speed-chart.jsx';
 import ProcessesChart from '../charts/processes-chart.jsx';
+import LatencyChart from '../charts/latency-chart.jsx';
+// import MemoryChart from '../charts/memory-chart.jsx';
 
 const ServiceDetails = (props) => {
   return (
@@ -23,6 +25,10 @@ const ServiceDetails = (props) => {
       <div>
         <h3>Processes Chart</h3>
         <ProcessesChart service={props.service} />
+      </div>
+      <div>
+        <h3>Latency</h3>
+        <LatencyChart service={props.service}/>
       </div>
     </div>
   );
