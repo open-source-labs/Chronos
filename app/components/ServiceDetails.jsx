@@ -1,11 +1,9 @@
-import React, { useEffect, useContext } from 'react';
-import HealthInformationContext from '../context/DetailsContext';
+import React from 'react';
 import RequestTypesChart from '../charts/request-type-chart.jsx';
 import ResponseCodesChart from '../charts/response-code-chart.jsx';
 import SpeedChart from '../charts/speed-chart.jsx';
+import ProcessesChart from '../charts/processes-chart.jsx';
 // import MemoryChart from '../charts/memory-chart.jsx';
-
-const { ipcRenderer } = window.require('electron');
 
 const ServiceDetails = (props) => {
   return (
@@ -19,8 +17,12 @@ const ServiceDetails = (props) => {
         <ResponseCodesChart service={props.service} />
       </div>
       <div>
-        <h3>Memory Chart</h3>
+        <h3>Speed Chart</h3>
         <SpeedChart service={props.service} />
+      </div>
+      <div>
+        <h3>Processes Chart</h3>
+        <ProcessesChart service={props.service} />
       </div>
     </div>
   );
