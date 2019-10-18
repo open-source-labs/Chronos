@@ -1,16 +1,5 @@
 {
-  "setupRequired": false,
-  "michelleWasHere": false,
-  "services": [
-    [
-      "Mongo Test",
-      "MongoDB",
-      "mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/chronos-access"
-    ],
-    [
-      "SQL Test",
-      "SQL",
-      "postgres://bbehwewl:tKJ8dnBPESQUABiEpdNnFF54SCsaQrZh@salt.db.elephantsql.com:5432/bbehwewl"
-    ]
-  ]
+  "setupRequired": true,
+  "michelleWasHere": true,
+  "services": [["Hard", "Coded", "Solution"]]
 }
