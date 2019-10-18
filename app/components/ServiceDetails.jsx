@@ -28,7 +28,7 @@ const ServiceDetails = (props) => {
       </div>
       <div>
         <h3>Latency</h3>
-        <LatencyChart service={props.service}/>
+        <LatencyChart service={props.service} />
       </div>
     </div>
   );
