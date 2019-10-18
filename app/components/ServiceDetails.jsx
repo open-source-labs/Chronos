@@ -4,6 +4,7 @@ import RequestTypesChart from '../charts/request-type-chart.jsx';
 import ResponseCodesChart from '../charts/response-code-chart.jsx';
 import SpeedChart from '../charts/speed-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
+import TemperatureTypesChart from '../charts/temperature-chart.jsx'
 
 const { ipcRenderer } = window.require('electron');
 
@@ -21,6 +22,10 @@ const ServiceDetails = (props) => {
       <div>
         <h3>Memory Chart</h3>
         <MemoryChart service={props.service} />
+      </div>
+      <div>
+        <h3>Temperature Chart</h3>
+        <TemperatureTypesChart service={props.service} />
       </div>
     </div>
   );
