@@ -10,7 +10,7 @@ import LatencyChart from '../charts/latency-chart.jsx';
 const ServiceDetails = (props) => {
   return (
     <div>
-      <button type="button" onClick={() => document.location.reload()}>Back Service List</button>
+      <button className="backButton" type="button" onClick={() => document.location.reload()}>Back</button>
       <div>
         <h3>Request Types</h3>
         <RequestTypesChart service={props.service} />
