@@ -3,11 +3,11 @@ import RequestTypesChart from '../charts/request-type-chart.jsx';
 import ResponseCodesChart from '../charts/response-code-chart.jsx';
 import SpeedChart from '../charts/speed-chart.jsx';
 import ProcessesChart from '../charts/processes-chart.jsx';
-// import MemoryChart from '../charts/memory-chart.jsx';
 
 const ServiceDetails = (props) => {
   return (
     <div>
+      <button type="button" onClick={() => document.location.reload()}>Back Service List</button>
       <div>
         <h3>Request Types</h3>
         <RequestTypesChart service={props.service} />
