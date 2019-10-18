@@ -9,7 +9,7 @@ const TemperatureChart = (props) => {
     const yAxis = [];
     const xAxis = [];
     for (let i = 0; i < healthData.length; i += 1) {
-      let element = healthData[i];
+      const element = healthData[i];
       if ((element.currentMicroservice === props.service) && element.cpuTemperature) {
         yAxis.push(i);
         xAxis.push(element.cpuTemperature);
