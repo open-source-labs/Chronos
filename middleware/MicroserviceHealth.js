@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-mongoose.model("MicroserviceHealth", {
+mongoose.model('MicroserviceHealth', {
   currentMicroservice: {
     type: String,
   },
@@ -42,5 +42,5 @@ mongoose.model("MicroserviceHealth", {
   },
   timestamp: {
     type: Date,
-  }
+  },
 });
