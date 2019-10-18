@@ -11,7 +11,6 @@ const SpeedChart = (props) => {
 
     for (let i = 0; i < healthData.length; i += 1) {
       const element = healthData[i];
-      console.log(element)
       // If using a SQL Database
       if (element.currentmicroservice === props.service && element.cpucurrentspeed) {
         xAxis.push(i);
@@ -19,7 +18,6 @@ const SpeedChart = (props) => {
       }
       // If using a Mongo Database
       if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
-        console.log('HERE?!?!')
         xAxis.push(i);
         yAxis.push(element.cpuCurrentSpeed);
       }
@@ -36,9 +34,9 @@ const SpeedChart = (props) => {
         },
       ],
       options: {
-        xAxisID: 'Speed',
-        yAxisID: 'Communicaton',
       },
+      xAxisID: 'Speed',
+      yAxisID: 'Communicaton',
       labels: xAxis,
     };
 
