@@ -18,9 +18,9 @@ const RequestTypesChart = (props) => {
     for (let i = 0; i < communicationsData.length; i += 1) {
       const element = communicationsData[i];
       // if Mongo
-      if ((element.currentMicroservice === props.service) && element.reqType in requestObj) requestObj[element.reqType] += 1;
+      if (element.currentMicroservice === props.service && element.reqType in requestObj) requestObj[element.reqType] += 1;
       // if SQL
-      else if ((element.currentmicroservice === props.service) && element.reqtype in requestObj) requestObj[element.reqtype] += 1;
+      else if (element.currentmicroservice === props.service && element.reqtype in requestObj) requestObj[element.reqtype] += 1;
     }
 
     const chartData = {
