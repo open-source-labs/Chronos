@@ -1,24 +1,18 @@
-// * Request -> NEED TO FIX ALGO TO BE SELECTIVE FOR CURRENT SURVICE
-// * Respose -> NEED TO FIX ALGO TO BE SELECTIVE FOR CURRENT SURVICE
-// ! Memory Natalie
-// * Speed Michelle
-// ! Processes 
-// ! Temperature (Line) Mo
-// ! Latency (Line?) Duane
-
 import React, { useContext } from 'react';
 // You can change the chart property imported to the one that suits your needs.
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
 const RequestTypesChart = () => {
   // ! Do not change the variables related to context.
   const healthData = useContext(HealthContext).detailsData;
+  console.log(healthData, ' is the health data!!!')
 
   // Helper function
   const createChart = () => {
     // Object for storing data
-    const /*<MY OBJECT>*/ = {
+    const latencyInfo = {
+
     };
 
     // Iterate through HealthInfo to creat an object with data needed to create your graph.
