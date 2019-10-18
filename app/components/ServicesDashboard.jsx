@@ -35,7 +35,7 @@ const ServicesDashboard = (props) => {
       <div className="left">
         <div className="leftTopContainer">
           <div className="left-top">
-            <h2 className='dashboardHeader'>Your Databases</h2>
+            <h2 className="dashboardHeader">Your Databases</h2>
             {listState}
           </div>
         </div>
@@ -53,9 +53,7 @@ const ServicesDashboard = (props) => {
           </button>
         </div>
       </div>
-      <div className='databsaseList'>
-        {serviceSelected}
-      </div>
+      <div className="databsaseList">{serviceSelected}</div>
     </div>
   );
 };
