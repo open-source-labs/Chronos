@@ -28,15 +28,13 @@ const ServicesDashboard = (props) => {
     return buttonStore;
   };
 
-  const [listState, setList] = useState(renderServiceList(serviceList));
-
   return (
     <div className="servicesDashboardContainer">
       <div className="left">
         <div className="leftTopContainer">
           <div className="left-top">
             <h2 className="dashboardHeader">Your Databases</h2>
-            {listState}
+            {renderServiceList(serviceList)}
           </div>
         </div>
         <div className="left-bottom">
