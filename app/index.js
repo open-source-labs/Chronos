@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import SetupContext from './context/SetupContext.js';
 import './index.css';
-// import GettingStarted from './components/GettingStarted.jsx';
 import AddService from './components/AddService.jsx'
 import ServiceDashboard from './components/ServicesDashboard.jsx';
 
