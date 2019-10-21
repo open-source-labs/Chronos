@@ -8,6 +8,7 @@ const { ipcRenderer } = window.require('electron');
 const AddService = () => {
   // Context used to ensure that that this page is only seen when the setup is required. Updated when user adds a database.
   const ChronosSetup = useContext(SetupContext);
+  
   // Local state created for form entries ONLY.
   const [dbState, setDbType] = useState('SQL');
   const [uriState, setUri] = useState('');
