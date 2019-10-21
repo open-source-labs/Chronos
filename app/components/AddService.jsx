@@ -6,20 +6,22 @@ import ServicesDashboard from './ServicesDashboard.jsx';
 const { ipcRenderer } = window.require('electron');
 
 const AddService = () => {
+  // Context used to ensure that that this page is only seen when the setup is required. Updated when user adds a database.
   const ChronosSetup = useContext(SetupContext);
+  // Local state created for form entries ONLY.
   const [dbState, setDbType] = useState('SQL');
   const [uriState, setUri] = useState('');
   const [labelState, setLabel] = useState('');
 
+  // Submits data provided by the user to added to the setting file.
   const onSubmit = () => {
     const userSettings = [labelState, dbState, uriState];
     // IPC communication used to update settings JSON with user input.
     ipcRenderer.send('submit', JSON.stringify(userSettings));
     ChronosSetup.setupRequired = ChronosSetup.toggleSetup(true);
+    // Refresh window after submit.
     document.location.reload();
   };
-
-  if (!ChronosSetup.setupRequired) return React.lazy(<ServicesDashboard />);
 
   return (
     <div className="mainContainer">
@@ -49,6 +51,7 @@ const AddService = () => {
         <button
           className="submitBtn"
           type="submit"
+          // Error Handling.
           onClick={() => {
             if (
               document.getElementById('dburi').value === ''
