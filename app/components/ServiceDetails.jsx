@@ -7,6 +7,7 @@ import TemperatureChart from '../charts/temperature-chart.jsx'
 import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
 
+// Renders charts created with health and communication data for a selected database.
 const ServiceDetails = (props) => {
   return (
     <div>
