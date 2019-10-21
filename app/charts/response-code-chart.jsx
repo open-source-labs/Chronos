@@ -17,7 +17,7 @@ const ResponseCodeChart = (props) => {
 
     for (let i = 0; i < communicationsData.length; i += 1) {
       const element = communicationsData[i];
-      // if Mongo
+      // If Mongo Else SQL
       if ((element.currentMicroservice === props.service) && element.resStatus) {
         const statusCode = element.resStatus;
         if (statusCode <= 199) {
