@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import ServiceOverview from './ServiceOverview.jsx';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
-import GettingStarted from './GettingStarted.jsx';
+import AddService from './AddService.jsx';
 
 const ServicesDashboard = (props) => {
   const setup = useContext(SetupContext);
@@ -44,7 +44,7 @@ const ServicesDashboard = (props) => {
             key="BackToStart"
             onClick={() => {
               setup.setupRequired = setup.toggleSetup(false);
-              setSelection(<GettingStarted />);
+              setSelection(<AddService />);
             }}
           >
             Add Database
