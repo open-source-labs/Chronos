@@ -7,9 +7,10 @@ const LatencyChart = (props) => {
   const yAxis = [];
   const healthData = useContext(HealthContext).detailData;
   for (let i = 0; i < healthData.length; i++) {
-    if (healthData[i].latency !== null) {
+    const element = healthData[i];
+    if (element.currentmicroservice === props.service || element.currentMicroservice === props.service) {
       xAxis.push(i);
-      yAxis.push(healthData[i].latency);
+      yAxis.push(element.latency);
     }
   }
   const chartData = {

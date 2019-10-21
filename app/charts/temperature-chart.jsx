@@ -10,10 +10,13 @@ const TemperatureChart = (props) => {
     const xAxis = [];
     for (let i = 0; i < healthData.length; i += 1) {
       const element = healthData[i];
+      // If Mongo
       if ((element.currentMicroservice === props.service) && element.cpuTemperature) {
         yAxis.push(i);
         xAxis.push(element.cpuTemperature);
       }
+
+      // If SQL
       if ((element.currentmicroservice === props.service) && element.cputemperature) {
         yAxis.push(i);
         xAxis.push(element.cputemperature);

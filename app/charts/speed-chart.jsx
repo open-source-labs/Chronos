@@ -16,6 +16,7 @@ const SpeedChart = (props) => {
         xAxis.push(i);
         yAxis.push(element.cpucurrentspeed);
       }
+      
       // If using a Mongo Database
       if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
         xAxis.push(i);
