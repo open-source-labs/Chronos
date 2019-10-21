@@ -5,10 +5,16 @@ import SetupContext from '../context/SetupContext';
 import AddService from './AddService.jsx';
 
 const ServicesDashboard = (props) => {
+  // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
+
+  // List of the databases saved by users to track microservices.
   const serviceList = useContext(DashboardContext);
+
+  // Used to hold the buttons created for each database found in context.
   const [serviceSelected, setSelection] = useState();
 
+  // Creates button for each database in dashboard context.
   const renderServiceList = (context) => {
     const buttonStore = [];
     for (let i = 0; i < context.length; i += 1) {
