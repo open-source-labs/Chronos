@@ -15,6 +15,7 @@ const ServicesDashboard = (props) => {
   const [serviceSelected, setSelection] = useState();
 
   // Creates button for each database in dashboard context.
+  // context is an array of the database names
   const renderServiceList = (context) => {
     const buttonStore = [];
     for (let i = 0; i < context.length; i += 1) {
@@ -25,8 +26,7 @@ const ServicesDashboard = (props) => {
           key={`${i}${context[i]}`}
           onClick={() => {
             setSelection(<ServiceOverview index={i} />);
-          }}
-        >
+          }}>
           {context[i]}
         </button>,
       );
@@ -49,6 +49,7 @@ const ServicesDashboard = (props) => {
             type="submit"
             key="BackToStart"
             onClick={() => {
+              // always return true since false is passed into the toggleSetup
               setup.setupRequired = setup.toggleSetup(false);
               setSelection(<AddService />);
             }}

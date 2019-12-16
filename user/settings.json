@@ -1,5 +1,1 @@
-{
-  "setupRequired": true,
-  "michelleWasHere": true,
-  "services": [["hard", "coded", "solution"]]
-}
+{"setupRequired":false,"michelleWasHere":false,"services":[["starwar","SQL","postgres://gymyqkck:KDN5_PWumJO6UorMKuex8LLGBsTlISs8@salt.db.elephantsql.com:5432/gymyqkck"],["starwar2","SQL","postgres://gymyqkck:KDN5_PWumJO6UorMKuex8LLGBsTlISs8@salt.db.elephantsql.com:5432/gymyqkck"],["test.user","MongoDB","mongodb+srv://jenaepen:pen1321!@jenae-6dyj0.mongodb.net/test?retryWrites=true&w=majority"]]}
