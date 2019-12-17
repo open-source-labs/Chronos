@@ -2,13 +2,19 @@ import React, { useState, useContext } from 'react';
 import ServiceOverview from './ServiceOverview.jsx';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
-import GettingStarted from './GettingStarted.jsx';
+import AddService from './AddService.jsx';
 
 const ServicesDashboard = (props) => {
+  // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
+
+  // List of the databases saved by users to track microservices.
   const serviceList = useContext(DashboardContext);
+
+  // Used to hold the buttons created for each database found in context.
   const [serviceSelected, setSelection] = useState();
 
+  // Creates button for each database in dashboard context.
   const renderServiceList = (context) => {
     const buttonStore = [];
     for (let i = 0; i < context.length; i += 1) {
@@ -28,15 +34,13 @@ const ServicesDashboard = (props) => {
     return buttonStore;
   };
 
-  const [listState, setList] = useState(renderServiceList(serviceList));
-
   return (
     <div className="servicesDashboardContainer">
       <div className="left">
         <div className="leftTopContainer">
           <div className="left-top">
-            <h2 className='dashboardHeader'>Your Databases</h2>
-            {listState}
+            <h2 className="dashboardHeader">Your Databases</h2>
+            {renderServiceList(serviceList)}
           </div>
         </div>
         <div className="left-bottom">
@@ -46,16 +50,14 @@ const ServicesDashboard = (props) => {
             key="BackToStart"
             onClick={() => {
               setup.setupRequired = setup.toggleSetup(false);
-              setSelection(<GettingStarted />);
+              setSelection(<AddService />);
             }}
           >
             Add Database
           </button>
         </div>
       </div>
-      <div className='databsaseList'>
-        {serviceSelected}
-      </div>
+      <div className="databsaseList">{serviceSelected}</div>
     </div>
   );
 };

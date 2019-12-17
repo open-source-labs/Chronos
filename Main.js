@@ -59,7 +59,7 @@ ipcMain.on('submit', (message, newService) => {
       encoding: 'UTF-8',
     }),
   );
-  // if statement is used to remove hard coded data.
+  // if statement is used to replace hard coded data. Hard coded data and the michelleWasHere key is needed to avoid a load error caused by Electron querying the database before a user has added or selected a database.
   if (state.michelleWasHere) {
     state.setupRequired = false;
     state.michelleWasHere = false;
@@ -134,7 +134,6 @@ ipcMain.on('detailsRequest', (message, index) => {
         message.sender.send('detailsResponse', JSON.stringify(err));
       }
       const queryResults = JSON.stringify(data);
-      console.log('QUERY RESULTS =>', queryResults);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
     });
