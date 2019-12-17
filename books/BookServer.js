@@ -1,11 +1,12 @@
-
 const PORT = 4545;
 const path = require('path');
 const express = require('express');
-const bodyParser = require('body-parser');
-const controller = require('./BookController');
 
 const app = express();
+const bodyParser = require('body-parser');
+const controller = require('./BookController.js');
+
+
 app.use(bodyParser.json());
 
 
@@ -14,14 +15,31 @@ app.use(bodyParser.json());
 
 // app.use('/', mw.microCom(path.basename(__filename)));
 
+// CHAOS FLOW
+app.use((req, res, next) => {
+  console.log(
+    `***************************************************************************************
+    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
+  req.url
+}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    ***************************************************************************************`,
+  );
+  next();
+});
 
 //  This route will create a new book!
-app.post('/book', controller.createBook, (req, res) => {
+app.post('/createbook', controller.createBook, (req, res) => {
+  console.log('Book creation was successfull!');
   res.status(200).json(res.locals.createBook);
 });
 
 // This route will delete a book
-app.delete('/book/:id', controller.deleteBook, (req, res) => res.status(200).json(res.locals.deleteBook));
+app.delete('/deletebook:id?', controller.deleteBook, (req, res) => {
+  res.status(200).json(res.locals.deleteBook);
+});
+
+// This route will get all the books in the database
+app.get('/getbooks', controller.getBooks, (req, res) => res.status(200).json(res.locals.getBooks));
 
 
 //  This is my global error handler

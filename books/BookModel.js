@@ -4,12 +4,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 //  database link
-const myURI = 'mongodb+srv://tim:tim@cluster0-aady4.mongodb.net/test?retryWrites=true&w=majority';
+const myURI = 'mongodb+srv://tim:tim@cluster0-khxef.mongodb.net/test?retryWrites=true&w=majority';
+
 const URI = process.env.MONGO_URI || myURI;
 
 // connect the database, if error, log will be sent to the terminal
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to DB! *********'))
+  .then(() => console.log('Connected!!!********* Database is live!!!'))
   .catch((err) => console.log('Connection Error ', err));
 
 
@@ -23,7 +24,7 @@ const BooksSchema = new Schema({
     type: String,
     required: true,
   },
-  numberPages: {
+  numberOfPages: {
     type: Number,
     required: false,
   },
