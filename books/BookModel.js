@@ -10,7 +10,7 @@ const URI = process.env.MONGO_URI || myURI;
 
 // connect the database, if error, log will be sent to the terminal
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected!!!********* Database is live!!!'))
+  .then(() => console.log('Connected!!!********* Books Database is live!!!'))
   .catch((err) => console.log('Connection Error ', err));
 
 
