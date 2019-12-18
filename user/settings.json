@@ -1,5 +1,5 @@
 {
-  "setupRequired":true,
-  "michelleWasHere":true,
-  "services":[]
+  "setupRequired": true,
+  "michelleWasHere": true,
+  "services": [["hard", "coded", "solution"]]
 }
