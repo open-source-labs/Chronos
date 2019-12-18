@@ -41,7 +41,6 @@ const AddService = () => {
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>
-        {/* {dbState} */}
         Database URI:
         {/* This is where the uri value is set with setUri */}
         <input
