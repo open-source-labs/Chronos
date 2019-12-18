@@ -40,8 +40,8 @@ app.delete('/deletebook:id?', controller.deleteBook, (req, res) => {
 // This route will get all the books in the database
 app.get('/getbooks', controller.getBooks, (req, res) => res.status(200).json(res.locals.getBooks));
 
-// This route gets orders from the Orders application
 
+// This route gets orders from the Orders application
 app.get('/getordersinfo', controller.getorderinfo, (req, res) => {
   res.status(200).json(res.locals.getorderinfo);
 });
