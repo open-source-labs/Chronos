@@ -3,9 +3,8 @@ const express = require('express');
 const PORT = 5555;
 const app = express();
 const bodyParser = require('body-parser');
-
-//  const path = require('path');
 const controller = require('./CustomerController');
+//  const path = require('path');
 
 app.use(bodyParser.json());
 
@@ -51,7 +50,8 @@ app.listen(PORT, () => {
   console.log(`Customer server running on port ${PORT}...`);
 });
 
-// ******** I DONT THINK THIS PART IS NECESSARY. I'LL JUST LEAVE A COMMENT HERE **********
+// ******** I DONT THINK THIS PART IS NECESSARY. I'LL JUST LEAVE A COMMENT HERE IT HAS BEEN REFACTORED ABOVE**********
+
 // Get customer by using their id
 // app.get('/customer/:id', (req, res, next) => {
 //   Customer.findById(req.params.id)
@@ -78,9 +78,4 @@ app.listen(PORT, () => {
 //         throw err;
 //       }
 //     });
-// });
-
-
-// mongoose.connect('mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/customersservice', () => {
-//   console.log('Customers database is connected...');
 // });
