@@ -39,24 +39,3 @@ const OrderSchema = new Schema({
 const OrderModel = mongoose.model('OrderModel', OrderSchema);
 
 module.exports = OrderModel;
-
-
-// //  Schema for the database
-// const CustomerSchema = new Schema({
-//   name: {
-//     type: String,
-//     required: true,
-//   },
-//   age: {
-//     type: Number,
-//     required: true,
-//   },
-//   address: {
-//     type: String,
-//     required: true,
-//   },
-// });
-
-// const CustomerModel = mongoose.model('CustomerModel', CustomerSchema);
-
-// module.exports = CustomerModel;
