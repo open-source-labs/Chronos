@@ -4,7 +4,7 @@ const BookModel = require('./BookModel');
 
 const BookController = {};
 
-
+// This controller creates a book in the book db
 BookController.createBook = (req, res, next) => {
   const {
     title, author, numberOfPages, publisher,
@@ -24,6 +24,7 @@ BookController.createBook = (req, res, next) => {
   });
 };
 
+// This controller creates a book in the book db
 
 BookController.getBooks = (req, res, next) => {
   BookModel.find({}, (err, result) => {
@@ -51,6 +52,7 @@ BookController.deleteBook = (req, res, next) => {
   });
 };
 
+//  This controller gets order info from the order application
 BookController.getorderinfo = (req, res, next) => {
   //  const { body } = req;
   fetch('http://localhost:7777/getorders', {
