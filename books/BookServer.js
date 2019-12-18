@@ -1,5 +1,4 @@
 const PORT = 4545;
-const path = require('path');
 const express = require('express');
 
 const app = express();
@@ -15,17 +14,17 @@ app.use(bodyParser.json());
 
 // app.use('/', mw.microCom(path.basename(__filename)));
 
-// CHAOS FLOW
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
-  req.url
-}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
-    ***************************************************************************************`,
-  );
-  next();
-});
+// CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
+// app.use((req, res, next) => {
+//   console.log(
+//     `***************************************************************************************
+//     CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
+//   req.url
+// }, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+//     ***************************************************************************************`,
+//   );
+//   next();
+// });
 
 //  This route will create a new book!
 app.post('/createbook', controller.createBook, (req, res) => {
@@ -48,7 +47,7 @@ app.get('/getordersinfo', controller.getorderinfo, (req, res) => {
 });
 
 
-//  This is my global error handler
+//  This is my global error handler - isn't being used right now and it's not breaking anything so...
 function errorHandler(error, req, res, next) {
   //  console.log(err.stack);
   const defaultErr = {
@@ -66,64 +65,3 @@ function errorHandler(error, req, res, next) {
 app.listen(PORT, () => {
   console.log(`Book server running on port ${PORT} ...`);
 });
-
-
-// // Connects our bookservice db to cloud db
-// mongoose.connect('mongodb+srv://numanzor:Nu121692.@microservice-tutorial-hq75f.mongodb.net/booksservice', () => {
-//   console.log('Books database is connected...');
-// });
-
-// Previous test for endpoint
-// app.get('/', (req, res, next) => res.status(200).send('This is our main endpoint!'));
-
-
-//   This was supposed to create a book
-//   // create a new Book with the above attributes
-//   const book = new Book(newBook);
-
-//   // save our book to collection
-
-//   book.save().then(() => {
-//     res.send('Book successfully saved to the database');
-//     next();
-//   })
-//     .catch((err) => {
-//       Promise.reject(err);
-//     });
-// });
-
-
-// app.get('/books', (req, res, next) => {
-//   Book.find().then((books) => {
-//     res.json(books);
-//     next();
-//   }).catch((err) => {
-//     Promise.reject(err);
-//   });
-// });
-
-// // Get a book by its id
-// app.get('/book/:id', (req, res, next) => {
-//   Book.findById(req.params.id)
-//     .then((book) => {
-//       if (book) {
-//         res.json(book);
-//         next();
-//       } else {
-//         Promise.reject(err);
-//       }
-//     });
-// });
-
-
-// Create functionality
-// app.post('/book', (req, res, next) => {
-//   const newBook = {
-//     title: req.body.title,
-//     author: req.body.author,
-//     numberPages: req.body.numberPages,
-//     publisher: req.body.publisher,
-//   };
-
-
-// const mongoose = require('mongoose');
