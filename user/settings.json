@@ -1,1 +1,1 @@
-{"setupRequired":true,"michelleWasHere":true,"services": [["hard", "coded", "solution"]]}
+{"setupRequired":false,"michelleWasHere":false,"services":[["microservice1","SQL","postgres://gymyqkck:KDN5_PWumJO6UorMKuex8LLGBsTlISs8@salt.db.elephantsql.com:5432/gymyqkck"]]}

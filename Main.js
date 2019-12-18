@@ -126,7 +126,6 @@ ipcMain.on('overviewRequest', (message, index) => {
     const getCommunications = 'SELECT * FROM communications';
     pool.query(getCommunications, (err, result) => {
       if (err) {
-        console.log(err);
        return message.sender.send(JSON.stringify('Database info could not be retrieved.'));
       }
       //queryResults is an array of objects with the following keys {"id","currentmicroservice","targetedendpoint","reqtype","resstatus","resmessage","timesent"}
@@ -151,7 +150,7 @@ ipcMain.on('detailsRequest', (message, index) => {
       }
       const queryResults = JSON.stringify(data);
       // Asynchronous event emitter used to transmit query results back to the render process.
-      message.sender.send('detailsResponse', queryResults);
+      return message.sender.send('detailsResponse', queryResults);
     });
   }
 
@@ -165,7 +164,7 @@ ipcMain.on('detailsRequest', (message, index) => {
       }
       const queryResults = JSON.stringify(result.rows);
       // Asynchronous event emitter used to transmit query results back to the render process.
-      message.sender.send('detailsResponse', queryResults);
+      return message.sender.send('detailsResponse', queryResults);
     });
   }
 });

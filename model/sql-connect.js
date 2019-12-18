@@ -9,9 +9,11 @@ const connectSQL = (i) => {
     connectionString: URI,
   })
   //verifying that the connection has been made by stating the time it was connected 
-  pool.query('SELECT NOW()', (err, res) => {
-      console.log('Database '+services[i][0]+' has been connected at '+res.rows[0].now)
-    })
+  // This code could be causing too many request to the database 
+  // pool.query('SELECT NOW()', (err, res) => {
+  //   if(err) return message.sender.send('detailsResponse', JSON.stringify('Did not connect to database',err));
+  //   console.log('Database '+services[i][0]+' has been connected at '+res.rows[0].now)
+  // })
   return pool ;
 };
 
