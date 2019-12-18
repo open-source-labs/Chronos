@@ -2,51 +2,48 @@ import React, { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
-const SpeedChart = () => {
-  const healthData = useContext(HealthContext);
-  const health = healthData.detailsData;
-  // Helper function
-  const createChart = () => {
-    const speedData = [];
+const SpeedChart = (props) => {
+  const healthData = useContext(HealthContext).detailData;
 
-    // Iterate through HealthInfo to creat an object with data needed to create your graph.
-    for (let i = 0; i < health.length; i += 1) {
-      const element = health[i];
-      // if Mongo
-      // if SQL
-      if (element.cpucurrentspeed) {
-        const graphDataPoint = {};
-        graphDataPoint.x = i;
-        if (element.cpucurrentspeed === null) graphDataPoint.y = 0;
-        else graphDataPoint.y = element.cpucurrentspeed || 0;
+  const createChart = () => {
+    const xAxis = [];
+    const yAxis = [];
+
+    for (let i = 0; i < healthData.length; i += 1) {
+      const element = healthData[i];
+      // If using a SQL Database
+      if (element.currentmicroservice === props.service && element.cpucurrentspeed) {
+        xAxis.push(i);
+        yAxis.push(element.cpucurrentspeed);
+      }
+      
+      // If using a Mongo Database
+      if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
+        xAxis.push(i);
+        yAxis.push(element.cpuCurrentSpeed);
       }
     }
 
-    // ! Chart Data 
-    // * --- Change the object used in data to the one you created.
-    // * --- Labels must be in the same order as the keys in your object. 
     const chartData = {
       datasets: [
         {
-          label: 'Breakdown of Requests by Type',
-          data: Object.values(requestObj),
+          label: `CPU Speed of ${props.service}`,
+          data: yAxis,
           backgroundColor: [
             'rgb(2, 210, 249)',
-            'rgb(198, 42, 177)',
-            'rgb(252, 170, 52)',
-            'rgb(239, 91, 145)',
-            'rgb(182, 219, 26)',
-            'rgb(254, 255, 0)',
           ],
         },
       ],
-      labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
+      options: {
+      },
+      xAxisID: 'Speed',
+      yAxisID: 'Communicaton',
+      labels: xAxis,
     };
 
     return <Line data={chartData} />;
   };
 
-  // Return div with helper function invoked
   return <div>{createChart()}</div>;
 };
 

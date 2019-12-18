@@ -36,14 +36,35 @@ img {
   align-items: center;
   justify-items: center;
   justify-content: center;
-  border-right: 2px solid rgb(163, 163, 163);
   max-height: 600px;
   overflow-y: auto;
   /* background-color: rgb(151, 151, 151) */
 }
 
+.servicesBtn {
+  background-color: rgb(255, 206, 9);
+  width: 100px;
+  font-size: 13px;
+  border: none;
+  height: 50px;
+  transition: 0.2s;
+  margin: 0 8px 0 8px;
+}
+
+.servicesBtn:hover {
+  background-color: rgb(250, 227, 136);
+  font-weight: 400;
+  box-shadow: #333;
+  cursor: pointer;
+}
+
+.overviewTitle {
+  margin-top: 80px;
+}
+
 .leftTopContainer {
   display: flex;
+  border-right: 2px solid rgb(163, 163, 163);
   align-items: center;
   justify-content: center;
   align-content: center;
@@ -61,6 +82,12 @@ img {
 .left {
   height: 700px;
   /* display: flex; */
+}
+
+h3 {
+  color: white;
+  margin-left: 25px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .servicesDashboardContainer {
@@ -176,6 +203,19 @@ select {
   border: 2px solid rgb(255, 206, 9);
   margin-top: 1%;
   margin-bottom: 2.5%;
+}
+
+.backButton {
+  height: 25px;
+  background-color: #edd9a3;
+  transition: 0.2s;
+  margin-left: 10px;
+
+}
+
+.backButton:hover {
+  cursor: pointer;
+  background-color: #fbcd4e;
 }
 
 form {
