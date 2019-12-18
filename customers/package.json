@@ -2,9 +2,10 @@
   "name": "customers",
   "version": "1.0.0",
   "description": "",
-  "main": "customers.js",
+  "main": "customerserver.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon customers/customerserver.js"
   },
   "keywords": [],
   "author": "",
