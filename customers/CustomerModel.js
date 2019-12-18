@@ -30,6 +30,7 @@ const CustomerSchema = new Schema({
   },
 });
 
+// create model and ship out
 const CustomerModel = mongoose.model('CustomerModel', CustomerSchema);
 
 module.exports = CustomerModel;
