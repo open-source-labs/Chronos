@@ -4,9 +4,10 @@ const PORT = 5555;
 const app = express();
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.json());
-const path = require('path');
+//  const path = require('path');
 const controller = require('./CustomerController');
+
+app.use(bodyParser.json());
 
 
 // eslint-disable-next-line max-len
@@ -34,9 +35,17 @@ app.get('/getcustomers', controller.getcustomers, (req, res) => {
   res.status(200).json(res.locals.getcustomers);
 });
 
+//  Delete a customer with id
 app.delete('/deletecustomer:id?', controller.deletecustomer, (req, res) => {
   res.status(200).json(res.locals.deletecustomer);
 });
+
+// Get books information from the books application
+app.get('/getbooksinfo', controller.getbooksinfo, (req, res) => {
+  //  console.log(`These are the books I got back ${JSON.stringify(res.locals.booksinfo)}`);
+  res.status(200).json(res.locals.booksinfo);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Customer server running on port ${PORT}...`);

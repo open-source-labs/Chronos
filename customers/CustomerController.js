@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const CustomerModel = require('./CustomerModel');
 
 const CustomerController = {};
@@ -43,4 +44,25 @@ CustomerController.deletecustomer = (req, res, next) => {
   });
 };
 
+//  Controller to get info from the books application
+
+CustomerController.getbooksinfo = (req, res, next) => {
+  //  const { body } = req;
+  fetch('http://localhost:4545/getbooks', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'Application/JSON',
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((results) => {
+      //  const info = results.forEach((curr) => JSON.stringify((curr)));
+      res.locals.booksinfo = results;
+      return next();
+    })
+    .catch((error) => {
+      console.log(`There was an error in getting customers data ${error}`);
+    });
+};
 module.exports = CustomerController;
