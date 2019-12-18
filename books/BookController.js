@@ -1,4 +1,6 @@
+const fetch = require('node-fetch');
 const BookModel = require('./BookModel');
+
 
 const BookController = {};
 
@@ -49,7 +51,25 @@ BookController.deleteBook = (req, res, next) => {
   });
 };
 
-
+BookController.getorderinfo = (req, res, next) => {
+  //  const { body } = req;
+  fetch('http://localhost:7777/getorders', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'Application/JSON',
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((results) => {
+      //  const info = results.forEach((curr) => JSON.stringify((curr)));
+      res.locals.getorderinfo = results;
+      return next();
+    })
+    .catch((error) => {
+      console.log(`There was an error in getting customers data ${error}`);
+    });
+};
 module.exports = BookController;
 
 
