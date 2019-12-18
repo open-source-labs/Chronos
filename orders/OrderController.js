@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// This module enables you to use the fetch api on the backend
 const fetch = require('node-fetch');
 const OrderModel = require('./OrderModel');
 
@@ -6,6 +7,11 @@ const OrderController = {};
 
 // We changed the types to string instead
 //  mongoose.Types.ObjectId
+
+// We changed it back
+
+
+//  Controller for order creation
 OrderController.createorder = (req, res, next) => {
   console.log('Create Order middleware has been fired!');
   const newOrder = {
@@ -29,6 +35,7 @@ OrderController.createorder = (req, res, next) => {
 };
 
 
+// Controller for order retrieval
 OrderController.getorders = (req, res, next) => {
   OrderModel.find({}, (error, results) => {
     if (error) {
@@ -41,6 +48,7 @@ OrderController.getorders = (req, res, next) => {
   });
 };
 
+//  Controller for retrieving customers info from the customer application
 OrderController.fetchcustomerdata = (req, res, next) => {
   //  const { body } = req;
   fetch('http://localhost:5555/getcustomers', {
@@ -60,21 +68,5 @@ OrderController.fetchcustomerdata = (req, res, next) => {
       console.log(`There was an error in getting customers data ${error}`);
     });
 };
-
-// function populateMessages() {
-//   fetch('/getmessages', {
-//   // method: 'GET',
-//     headers: {
-//       'Content-Type': 'Application/JSON',
-//       Accept: 'application/json',
-//     },
-
-//   })
-//   //   json here caused me much pain
-//     .then((res) => res.json())
-//     .then((result) => {
-//       for (let i = 0; i < result.length; i += 1) {
-//         const obj = result[i];
-
 
 module.exports = OrderController;
