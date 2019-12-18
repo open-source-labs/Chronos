@@ -25,6 +25,7 @@ const ServiceOverview = (props) => {
     ipcRenderer.on('overviewResponse', (event, data) => {
       // Adds to state and context.
       setOverviewState(Object.values(JSON.parse(data)));
+      console.log('OverviewState:', overviewState)
       serviceComponents.overviewData = JSON.parse(data);
     });
   }, []);

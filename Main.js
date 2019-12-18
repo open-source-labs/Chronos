@@ -112,16 +112,15 @@ ipcMain.on('overviewRequest', (message, index) => {
         console.log(`An error occured while querying the database: ${err}`);
         return message.sender.send('overviewResponse', JSON.stringify(err));
       }
+      //queryResults is an array of objects with the following keys {"_id","currentMicroservice","targetedEndpoint","reqType","timeSent","resStatus","resMessage","__v"}
       const queryResults = JSON.stringify(data);
-      console.log('queryResults:', queryResults) //it doesn't console.log for some reason
 
       // Asynchronous event emitter used to transmit query results back to the render process.
-      message.sender.send('overviewResponse', queryResults);
+      return message.sender.send('overviewResponse', queryResults);
     });
   }
 
   if (databaseType === 'SQL') {
-    console.log('in SQL right now')
     // What is index? index - is passed on from ServiceDashboard as a prop when the button was  created. When the button is pressed, the serviceSelected is set to <ServiceOverview index ={i}>. The ServiceOverview makes the ipcRenderer.send('overviewRequest', props.index). The index indicates which service is being called
     const pool = connectSQL(index);
     const getCommunications = 'SELECT * FROM communications';
@@ -130,9 +129,10 @@ ipcMain.on('overviewRequest', (message, index) => {
         console.log(err);
        return message.sender.send(JSON.stringify('Database info could not be retrieved.'));
       }
+      //queryResults is an array of objects with the following keys {"id","currentmicroservice","targetedendpoint","reqtype","resstatus","resmessage","timesent"}
       const queryResults = JSON.stringify(result.rows);
       // Asynchronous event emitter used to transmit query results back to the render process.
-      message.sender.send('overviewResponse', queryResults);
+      return message.sender.send('overviewResponse', queryResults);
     });
   }
 });
