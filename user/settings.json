@@ -1,1 +1,1 @@
-{"setupRequired":false,"michelleWasHere":false,"services":[["microservice1","SQL","postgres://gymyqkck:KDN5_PWumJO6UorMKuex8LLGBsTlISs8@salt.db.elephantsql.com:5432/gymyqkck"],["microservice2","MongoDB","mongodb+srv://jenaepen:pen1321!@jenae-6dyj0.mongodb.net/test?retryWrites=true&w=majority"]]}
+{"setupRequired":true,"michelleWasHere":true,"services": [["hard", "coded", "solution"]]}
