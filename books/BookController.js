@@ -9,7 +9,6 @@ BookController.createBook = (req, res, next) => {
   const {
     title, author, numberOfPages, publisher,
   } = req.body;
-  console.log('This is the title ', req.body.title);
   BookModel.create({
     title, author, numberOfPages, publisher,
   }, (err, result) => {
@@ -19,7 +18,6 @@ BookController.createBook = (req, res, next) => {
     }
 
     res.locals.createBook = result;
-    console.log(`Book was successfully stored in db ${res.locals.createBook}`);
     return next();
   });
 };
@@ -40,14 +38,12 @@ BookController.getBooks = (req, res, next) => {
 // This controller deletes books
 BookController.deleteBook = (req, res, next) => {
   const { id } = req.query;
-  console.log(`This is the id of the request ${id}`);
   BookModel.findOneAndDelete({ _id: id }, (error, result) => {
     if (error) {
       console.log(`Deletion was not successful ${error}`);
       return res.status(404).json(error);
     }
     res.locals.deleteBook = result;
-    console.log(`Deletion was successful ${res.locals.deleteBook}`);
     return next();
   });
 };

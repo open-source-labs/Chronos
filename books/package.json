@@ -5,7 +5,7 @@
   "main": "bookserver.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon books/bookserver"
+    "start": "nodemon books/bookserver.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.8.1",
     "node-fetch": "^2.6.0",
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.2",
+    "path": "^0.12.7"
   }
 }
