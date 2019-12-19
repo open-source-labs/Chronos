@@ -1,24 +1,100 @@
 window.onload = () => {
 
   // microservice1
+
+  // create
   document.getElementById('create1').addEventListener("click", function create1() {
-    const field_A1 = document.getElementById('field_A1').value;
-    const field_B1 = document.getElementById('field_B1').value;
-    const field_C1 = document.getElementById('field_C1').value;
-    console.log(`CREATE: ${field_A1}, ${field_B1}, ${field_C1}`);
-    // send AJAX POST request
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul')
+    newDisplay.id = 'display';
+    document.getElementById('container').appendChild(newDisplay);
+    const title = document.getElementById('field_A1').value;
+    const author = document.getElementById('field_B1').value;
+    const numberOfPages = document.getElementById('field_C1').value;
+    const publisher = document.getElementById('field_D1').value;
+    let book = { title, author, numberOfPages, publisher };
+    book = JSON.stringify(book);
+    fetch('http://localhost:4545/createbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: book,
+    })
+      .then(res => res.json())
+      .then(data => {
+        const newEntry = document.createElement('li');
+        newEntry.innerHTML = 'CREATED: ' + data.title;
+        document.getElementById('display').appendChild(newEntry);
+      });
   });
+
+  // read
   document.getElementById('read1').addEventListener("click", function read1() {
-    console.log('read1');
-    // send AJAX GET request
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul')
+    newDisplay.id = 'display';
+    document.getElementById('container').appendChild(newDisplay);
+    fetch('http://localhost:4545/getbooks', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => {
+        for (let i = 0; i < data.length; i += 1) {
+        const newEntry = document.createElement('li');
+        const bookInDb = data[i];
+        newEntry.innerHTML = 'READ: ' + bookInDb.title;
+        document.getElementById('display').appendChild(newEntry);
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = 'Delete';
+        newEntry.appendChild(deleteButton);
+
+        // delete
+        deleteButton.addEventListener("click", function deleteBook() {
+          const display = document.getElementById('display');
+          display.remove();
+          const newDisplay = document.createElement('ul')
+          newDisplay.id = 'display';
+          document.getElementById('container').appendChild(newDisplay);
+          let url = new URL('http://localhost:4545/deletebook:id?');
+          url.searchParams.append('id', bookInDb._id);
+          fetch(url, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+          })
+            .then(res => res.json())
+            .then(data => {
+              const newEntry = document.createElement('li');
+              newEntry.innerHTML = 'DELETED: ' + data.title;
+              document.getElementById('display').appendChild(newEntry);
+            });
+        })
+        }
+      });
   });
-  document.getElementById('update1').addEventListener("click", function update1() {
-    console.log('update1');
-    // send AJAX PUT request
-  });
-  document.getElementById('delete1').addEventListener("click", function delete1() {
-    console.log('delete1');
-    // send AJAX DELETE request
+
+  // get order info
+  document.getElementById('orderInfo').addEventListener('click', function getOrderInfo() {
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul')
+    newDisplay.id = 'display';
+    newDisplay.innerHTML = 'List of orders';
+    document.getElementById('container').appendChild(newDisplay);
+    fetch('http://localhost:4545/getordersinfo', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => {
+        for (let i = 0; i < data.length; i += 1) {
+          const newEntry = document.createElement('li');
+          const orderInDb = data[i];
+          newEntry.innerHTML = 'ORDER ID: ' + orderInDb._id;
+          document.getElementById('display').appendChild(newEntry);
+        }
+      })
   });
 
   // microservice2

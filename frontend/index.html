@@ -6,25 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body id="application" style="background-color: lightgrey">Application
+<body id="application" style="background-color: lightgrey">Dummy Microservices App
     <script src="index.js"></script>
     </br>
     </br>
-    <div id="microservice1" style="background-color:grey">Microservice1
+    <div id="microservice1" style="background-color:grey">Books Microservice
         </br>
-        <input id="field_A1" placeholder="field_A1" type="text"/>
+        <input id="field_A1" placeholder="title" type="text"/>
         </br>
-        <input id="field_B1" placeholder="field_B1" type="text"/>
+        <input id="field_B1" placeholder="author" type="text"/>
         </br>
-        <input id="field_C1" placeholder="field_C1" type="text"/>
+        <input id="field_C1" placeholder="numberOfPages" type="text"/>
+        </br>
+        <input id="field_D1" placeholder="publisher" type="text"/>
         </br>
         <button id="create1">Create</button>
         <button id="read1">Read</button>
-        <button id="update1">Update</button>
-        <button id="delete1">Delete</button>
+        <button id="orderInfo">Get Order Info</button>
     </div>
     </br>
-    <div id="microservice2" style="background-color:grey">Microservice2
+    <div id="microservice2" style="background-color:grey">Customers Microservice
         </br>
         <input id="field_A2" placeholder="field_A2" type="text"/>
         </br>
@@ -38,7 +39,7 @@
         <button id="delete2">Delete</button>  
     </div>
     </br>
-    <div id="microservice3" style="background-color:grey">Microservice3
+    <div id="microservice3" style="background-color:grey">Orders Microservice
         </br>
         <input id="field_A3" placeholder="field_A3" type="text"/>
         </br>
@@ -52,7 +53,9 @@
         <button id="delete3">Delete</button>  
     </div>
     </br>
-    <ul id="display" style="background-color: white">
-    </ul>
+    <div id="container" style="background-color: white;">
+        <ul id="display">
+        </ul>
+    </div>
 </body>
 </html>

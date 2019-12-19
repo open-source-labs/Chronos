@@ -1,5 +1,5 @@
 const express = require('express');
-
+const path = require('path');
 const PORT = 5555;
 const app = express();
 const bodyParser = require('body-parser');
@@ -8,6 +8,7 @@ const controller = require('./CustomerController');
 
 app.use(bodyParser.json());
 
+app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 // eslint-disable-next-line max-len
 //  ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************

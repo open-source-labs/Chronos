@@ -1,11 +1,11 @@
 const express = require('express');
-
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 
 const PORT = 7777;
 app.use(bodyParser.json());
-
+app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 const controller = require('./OrderController');
 
 // const mw = require('../mwMongo.js');
