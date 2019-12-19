@@ -16,11 +16,11 @@ mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //  mongoose.SchemaTypes.ObjectId was changed from the types to make it a string and to te
 const OrderSchema = new Schema({
   customerID: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: String,
     required: true,
   },
   bookID: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: String,
     required: true,
   },
   purchaseDate: {
@@ -32,7 +32,6 @@ const OrderSchema = new Schema({
     type: Date,
     required: true,
     default: Date.now,
-
   },
 });
 

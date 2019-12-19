@@ -1,13 +1,16 @@
 const express = require('express');
 const path = require('path');
+
 const PORT = 5555;
+const cors = require('cors');
+
 const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./CustomerController');
 //  const path = require('path');
 
 app.use(bodyParser.json());
-
+app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 // eslint-disable-next-line max-len
