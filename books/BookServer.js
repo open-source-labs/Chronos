@@ -1,11 +1,14 @@
 const PORT = 4545;
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+
 const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./BookController.js');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 

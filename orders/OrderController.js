@@ -15,8 +15,8 @@ const OrderController = {};
 OrderController.createorder = (req, res, next) => {
   console.log('Create Order middleware has been fired!');
   const newOrder = {
-    customerID: mongoose.Types.ObjectId(req.body.customerID),
-    bookID: mongoose.Types.ObjectId(req.body.bookID),
+    customerID: req.body.customerID,
+    bookID: req.body.bookID,
     purchaseDate: req.body.purchaseDate,
     deliveryDate: req.body.deliveryDate,
   };
@@ -48,6 +48,21 @@ OrderController.getorders = (req, res, next) => {
   });
 };
 
+// Controller for order deletion
+OrderController.deleteorder = (req, res, next) => {
+  console.log('delete order controller fired');
+  const { _id } = req.query;
+  OrderModel.findOneAndDelete({ _id }, (error, result) => {
+    if (error) {
+      console.log(`Customer deletion was not successful ${error}`);
+      return res.status(404).json(error);
+    }
+    res.locals.deletecustomer = result;
+    console.log(`Customer deletion successful ${res.locals.deletecustomer}`);
+    return next();
+  });
+};
+
 //  Controller for retrieving customers info from the customer application
 OrderController.fetchcustomerdata = (req, res, next) => {
   //  const { body } = req;
@@ -68,5 +83,6 @@ OrderController.fetchcustomerdata = (req, res, next) => {
       console.log(`There was an error in getting customers data ${error}`);
     });
 };
+
 
 module.exports = OrderController;

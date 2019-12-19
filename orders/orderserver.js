@@ -1,10 +1,13 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+
 const app = express();
 const bodyParser = require('body-parser');
 
 const PORT = 7777;
 app.use(bodyParser.json());
+app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 const controller = require('./OrderController');
 
@@ -35,6 +38,12 @@ app.post('/createorder', controller.createorder, (req, res) => {
 // Get all orders through this endpoint
 app.get('/getorders', controller.getorders, (req, res) => {
   res.status(200).json(res.locals.getorders);
+});
+
+// Delete order through this endpoint
+app.delete('/deleteorder:id?', controller.deleteorder, (req, res) => {
+  console.log('in delete order anonymous');
+  res.status(200).json(res.locals.deletecustomer);
 });
 
 // Get customer info from the customers application with this endpoint
