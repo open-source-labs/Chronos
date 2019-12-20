@@ -32,25 +32,21 @@ app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 //  This route will create a new book!
 app.post('/createbook', controller.createBook, (req, res) => {
-  console.log('Book creation was successful!');
   res.status(200).json(res.locals.createBook);
 });
 
 // This route will delete a book
 app.delete('/deletebook:id?', controller.deleteBook, (req, res) => {
-  console.log('Book deletion was successful!');
   res.status(200).json(res.locals.deleteBook);
 });
 
 // This route will get all the books in the database
 app.get('/getbooks', controller.getBooks, (req, res) => {
-  console.log('Book retrieval was successful!');
   res.status(200).json(res.locals.getBooks);
 });
 
 // This route gets orders from the Orders application
 app.get('/getordersinfo', controller.getorderinfo, (req, res) => {
-  console.log('Orders retrieval was successful!');
   res.status(200).json(res.locals.getorderinfo);
 });
 
