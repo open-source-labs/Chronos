@@ -12,7 +12,6 @@ CustomerController.createcustomer = (req, res, next) => {
       return res.status(404).json(error);
     }
     res.locals.createcustomer = result;
-    console.log(`Customer creation successful ${res.locals.createcustomer}`);
     return next();
   });
 };
@@ -25,7 +24,6 @@ CustomerController.getcustomers = (req, res, next) => {
       return res.status(404).json(error);
     }
     res.locals.getcustomers = result;
-    console.log(`Customer selection successful ${res.locals.getcustomers}`);
     return next();
   });
 };
@@ -39,7 +37,6 @@ CustomerController.deletecustomer = (req, res, next) => {
       return res.status(404).json(error);
     }
     res.locals.deletecustomer = result;
-    console.log(`Customer deletion successful ${res.locals.deletecustomer}`);
     return next();
   });
 };

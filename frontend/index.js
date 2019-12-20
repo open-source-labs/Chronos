@@ -76,8 +76,8 @@ window.onload = () => {
       });
   });
 
-  // get order info
-  document.getElementById('orderInfo').addEventListener('click', () => {
+  // get orders info
+  document.getElementById('ordersInfo').addEventListener('click', () => {
     const display = document.getElementById('display');
     display.remove();
     const newDisplay = document.createElement('ul');
@@ -99,17 +99,21 @@ window.onload = () => {
       });
   });
 
-  // microservice2 - Customers
+// microservice2 - Customers
+  // create
   document.getElementById('create2').addEventListener('click', () => {
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul');
+    newDisplay.id = 'display';
+    document.getElementById('container').appendChild(newDisplay);
     const name = document.getElementById('field_A2').value;
     const age = document.getElementById('field_B2').value;
     const address = document.getElementById('field_C2').value;
-    console.log(`CREATE: ${name}, ${age}, ${address}`);
     let customer = {
       name, age, address,
     };
     customer = JSON.stringify(customer);
-    // send AJAX POST request
     fetch('http://localhost:5555/createcustomer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -122,14 +126,19 @@ window.onload = () => {
         document.getElementById('display').appendChild(newEntry);
       });
   });
+
+  // read
   document.getElementById('read2').addEventListener('click', () => {
-    console.log('read2');
-    // send AJAX GET request
-    fetch('/getcustomers', {
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul');
+    newDisplay.id = 'display';
+    document.getElementById('container').appendChild(newDisplay);
+    fetch('http://localhost:5555/getcustomers', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
-      .then((data) => data.json())
+      .then((res) => res.json())
       .then((data) => {
         for (let i = 0; i < data.length; i += 1) {
           const newEntry = document.createElement('li');
@@ -140,6 +149,7 @@ window.onload = () => {
           deleteButton.innerHTML = 'Delete';
           newEntry.appendChild(deleteButton);
 
+          // delete
           deleteButton.addEventListener('click', () => {
             const display = document.getElementById('display');
             display.remove();
@@ -162,13 +172,37 @@ window.onload = () => {
         }
       });
   });
-  // document.getElementById('update2').addEventListener('click', () => {
-  //   console.log('update2');
-  //   // send AJAX PUT request
-  // });
+
+    // get books info
+    document.getElementById('booksInfo').addEventListener('click', () => {
+      const display = document.getElementById('display');
+      display.remove();
+      const newDisplay = document.createElement('ul');
+      newDisplay.id = 'display';
+      newDisplay.innerHTML = 'List of books';
+      document.getElementById('container').appendChild(newDisplay);
+      fetch('http://localhost:5555/getbooksinfo', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          for (let i = 0; i < data.length; i += 1) {
+            const newEntry = document.createElement('li');
+            const bookInDb = data[i];
+            newEntry.innerHTML = `TITLE: ${bookInDb.title}`;
+            document.getElementById('display').appendChild(newEntry);
+          }
+        });
+    });
 
   // microservice3 - Orders
   document.getElementById('create3').addEventListener('click', () => {
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul');
+    newDisplay.id = 'display';
+    document.getElementById('container').appendChild(newDisplay);
     const customerID = document.getElementById('field_A3').value;
     const bookID = document.getElementById('field_B3').value;
     const purchaseDate = document.getElementById('field_C3').value;
@@ -180,9 +214,6 @@ window.onload = () => {
       deliveryDate,
     };
     order = JSON.stringify(order);
-
-    console.log(`CREATE: ${customerID}, ${bookID}, ${purchaseDate}, ${deliveryDate}`);
-    // send AJAX POST request
     fetch('http://localhost:7777/createorder', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -195,9 +226,15 @@ window.onload = () => {
         document.getElementById('display').appendChild(newEntry);
       });
   });
+
+  //read
   document.getElementById('read3').addEventListener('click', () => {
-    console.log('read3');
-    // send AJAX GET request
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul');
+    newDisplay.id = 'display';
+    newDisplay.innerHTML = 'List of orders';
+    document.getElementById('container').appendChild(newDisplay);
     fetch('http://localhost:7777/getorders', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -207,7 +244,7 @@ window.onload = () => {
         for (let i = 0; i < data.length; i += 1) {
           const newEntry = document.createElement('li');
           const orderInDb = data[i];
-          newEntry.innerHTML = `READ: ${orderInDb._id}`;
+          newEntry.innerHTML = `ORDER ID: ${orderInDb._id}`;
           document.getElementById('display').appendChild(newEntry);
           const deleteButton = document.createElement('button');
           deleteButton.innerHTML = 'Delete';
@@ -236,12 +273,26 @@ window.onload = () => {
         }
       });
   });
-  // document.getElementById('update3').addEventListener('click', () => {
-  //   console.log('update3');
-  //   // send AJAX PUT request
-  // });
-  // document.getElementById('delete3').addEventListener('click', () => {
-  //   console.log('delete3');
-  //   // send AJAX DELETE request
-  // });
+      // get customers info
+      document.getElementById('customersInfo').addEventListener('click', () => {
+        const display = document.getElementById('display');
+        display.remove();
+        const newDisplay = document.createElement('ul');
+        newDisplay.id = 'display';
+        newDisplay.innerHTML = 'List of customers';
+        document.getElementById('container').appendChild(newDisplay);
+        fetch('http://localhost:7777/customerdata', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            for (let i = 0; i < data.length; i += 1) {
+              const newEntry = document.createElement('li');
+              const customerInDb = data[i];
+              newEntry.innerHTML = `NAME: ${customerInDb.name}`;
+              document.getElementById('display').appendChild(newEntry);
+            }
+          });
+      });
 };

@@ -31,7 +31,6 @@ const controller = require('./OrderController');
 
 // Create an Order through this endpoint
 app.post('/createorder', controller.createorder, (req, res) => {
-  console.log(`This is the order I just posted ${res.locals.createorder}`);
   res.status(200).json(res.locals.createorder);
 });
 
@@ -42,7 +41,6 @@ app.get('/getorders', controller.getorders, (req, res) => {
 
 // Delete order through this endpoint
 app.delete('/deleteorder:id?', controller.deleteorder, (req, res) => {
-  console.log('in delete order anonymous');
   res.status(200).json(res.locals.deletecustomer);
 });
 
