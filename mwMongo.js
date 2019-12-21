@@ -6,7 +6,7 @@ mongoose.set("useUnifiedTopology", true);
 mongoose.set("useNewUrlParser", true);
 
 const chronos = {};
-
+let currentMicroservicePath;
 chronos.connectDB = (userOwnedDB) => {
   mongoose.connect(`${userOwnedDB}`,
     () => {
@@ -18,7 +18,7 @@ chronos.connectDB = (userOwnedDB) => {
 chronos.microCom = (userOwnedDB, currentMicroservice) => {
   chronos.connectDB(userOwnedDB)
   return function(req, res, next) {
-    const currentMicroservicePath = currentMicroservice;
+    currentMicroservicePath = currentMicroservice;
 
     require("./Communication.js");
     const Communication = mongoose.model("Communication");
@@ -27,7 +27,8 @@ chronos.microCom = (userOwnedDB, currentMicroservice) => {
       currentMicroservice: currentMicroservicePath,
       targetedEndpoint: req.originalUrl,
       reqType: req.method,
-      timeSent: Date.now()
+      timeSent: Date.now(),
+      correlatingId: res.getHeaders()['x-correlation-id']
     };
 
     res.on("finish", () => {
@@ -60,8 +61,7 @@ chronos.microCom = (userOwnedDB, currentMicroservice) => {
       usedMemory,
       activeMemory,
       latency,
-      timestamp;
-      currentMicroservice,
+      timestamp,
       totalNumProcesses,
       numBlockedProcesses,
       numRunningProcesses,

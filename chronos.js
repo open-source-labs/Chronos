@@ -1,5 +1,6 @@
 const mongoMiddleware = require('./mwMongo.js')
 const sqlMiddleware = require('./mwSQL.js')
+const hpropagate = require('hpropagate')
 
 const chronos = {}
 //microHealth gathers health information about the microservices using the system information npm package.
@@ -10,6 +11,10 @@ const chronos = {}
  * userOwnedDB: URL to user database
  * queryFreq: How often user wants microservice health checked, default every second. Can be minute, hour, daily, or weekly.
  */
+
+chronos.propagate = () => { 
+  hpropagate({propagateInResponses: true})
+}
 
 chronos.microHealth = (microserviceName, databaseType, userOwnedDB, queryFreq = "s") => {
   //Handles if user inputs an array. Grabs information and assigns to correct parameters
@@ -62,7 +67,7 @@ chronos.microHealth = (microserviceName, databaseType, userOwnedDB, queryFreq = 
     * userOwnedDB: URL to user database
     * queryFreq: Not necessary for microCom as microCom monitors only when an endpoint is hit
  */
-  chronos.microCom = (microserviceName, databaseType, userOwnedDB, req, res, next) => {
+  chronos.microCom = (microserviceName, databaseType, userOwnedDB,req, res, next) => {
 
     //Handles if user inputs an array. Grabs information and assigns to correct parameters
     if (Array.isArray(microserviceName) === true && microserviceName.length >= 3) {
@@ -73,7 +78,7 @@ chronos.microHealth = (microserviceName, databaseType, userOwnedDB, queryFreq = 
     //Changes user inputs to lowercase to account for any capitalization errors
     microserviceName.toLowerCase();
     databaseType.toLowerCase();
-    queryFreq.toLowerCase();
+    //queryFreq.toLowerCase();
 
     //Ensures that the required parameters are entered, errors out otherwise
     if (!microserviceName || !databaseType || !userOwnedDB) {

@@ -40,7 +40,8 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
     reqType varchar(500),
     resStatus integer,
     resMessage varchar(500),
-    timeSent timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+    timeSent timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    correlatingId varchar(500)
   )`,
     (err, results) => {
       if (err) {
@@ -49,6 +50,8 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
     }
   )
   return (req, res, next) => {
+    //correlating id that will persist thru the request from one server to the next
+    const correlatingId = res.getHeaders()['x-correlation-id'];
     //user-input name for current microservice
     let currentMicroservice = userInputMSName;
     //What was our endpoint? Grabbed from request object
@@ -56,7 +59,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
     //Type of request. Grabbed from request object
     let reqType = req.method;
 
-    let queryString = `INSERT INTO communications(currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage) VALUES ($1, $2, $3, $4, $5)`;
+    let queryString = `INSERT INTO communications(currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage, correlatingId) VALUES ($1, $2, $3, $4, $5, $6)`;
 
     // Waits for response to finish before pushing information into database
     res.on('finish', () => {
@@ -69,9 +72,9 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
         targetedEndpoint,
         reqType,
         resStatus,
-        resMessage
+        resMessage,
+        correlatingId
       ];
-      //Creates query to insert values into table. Throws error if error occurs    
       client.query(queryString, values, (err, result) => {
         if (err) {
           throw err;
@@ -81,19 +84,14 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
     next();
   }
 },
-  //microHealth
   chronos.microHealth = (userOwnedDB, userInputMSName, queryFreq) => {
-    // create connection to user owned database
-    // we're using PostgreSQL and need to require pg
     const { Client } = require("pg");
-    // grabbed from user input
     const uri = userOwnedDB;
 
-    // creates a new instance of client
     const client = new Client({
       connectionString: uri
     });
-    // connects to DB, else throws error
+
     client.connect((err, client, release) => {
       if (err) {
         console.log("Issue connecting to db");
@@ -114,10 +112,8 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
       numRunningProcesses,
       numSleepingProcesses;
 
-    //grabbed from userInput
     currentMicroservice = userInputMSName;
 
-    // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
     client.query(
       `CREATE TABLE IF NOT EXISTS healthInfo (
       id SERIAL PRIMARY KEY,
@@ -142,11 +138,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
         }
       }
     );
-    //uses setInterval to regularly query user's microservices as needed
     setInterval(() => {
-      //microservice health queries from system information npm documentation
-      //returns promise that needs to be resolved or rejected before info can 
-      //be grabbed and saved to created variables
       si.cpuCurrentspeed()
         .then(data => {
           cpuCurrentSpeed = data.avg;
@@ -232,7 +224,6 @@ chronos.microCom = (userOwnedDB, userInputMSName, req, res, next) => {
         latency
       ];
 
-      //Creates query to insert values into table. Throws error if error occurs
       client.query(queryString, values, (err, results) => {
         if (err) {
           throw err;
