@@ -99,7 +99,7 @@ window.onload = () => {
       });
   });
 
-// microservice2 - Customers
+  // microservice2 - Customers
   // create
   document.getElementById('create2').addEventListener('click', () => {
     const display = document.getElementById('display');
@@ -173,28 +173,28 @@ window.onload = () => {
       });
   });
 
-    // get books info
-    document.getElementById('booksInfo').addEventListener('click', () => {
-      const display = document.getElementById('display');
-      display.remove();
-      const newDisplay = document.createElement('ul');
-      newDisplay.id = 'display';
-      newDisplay.innerHTML = 'List of books';
-      document.getElementById('container').appendChild(newDisplay);
-      fetch('http://localhost:5555/getbooksinfo', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          for (let i = 0; i < data.length; i += 1) {
-            const newEntry = document.createElement('li');
-            const bookInDb = data[i];
-            newEntry.innerHTML = `TITLE: ${bookInDb.title}`;
-            document.getElementById('display').appendChild(newEntry);
-          }
-        });
-    });
+  // get books info
+  document.getElementById('booksInfo').addEventListener('click', () => {
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul');
+    newDisplay.id = 'display';
+    newDisplay.innerHTML = 'List of books';
+    document.getElementById('container').appendChild(newDisplay);
+    fetch('http://localhost:5555/getbooksinfo', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        for (let i = 0; i < data.length; i += 1) {
+          const newEntry = document.createElement('li');
+          const bookInDb = data[i];
+          newEntry.innerHTML = `TITLE: ${bookInDb.title}`;
+          document.getElementById('display').appendChild(newEntry);
+        }
+      });
+  });
 
   // microservice3 - Orders
   document.getElementById('create3').addEventListener('click', () => {
@@ -227,7 +227,7 @@ window.onload = () => {
       });
   });
 
-  //read
+  // read
   document.getElementById('read3').addEventListener('click', () => {
     const display = document.getElementById('display');
     display.remove();
@@ -273,26 +273,26 @@ window.onload = () => {
         }
       });
   });
-      // get customers info
-      document.getElementById('customersInfo').addEventListener('click', () => {
-        const display = document.getElementById('display');
-        display.remove();
-        const newDisplay = document.createElement('ul');
-        newDisplay.id = 'display';
-        newDisplay.innerHTML = 'List of customers';
-        document.getElementById('container').appendChild(newDisplay);
-        fetch('http://localhost:7777/customerdata', {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            for (let i = 0; i < data.length; i += 1) {
-              const newEntry = document.createElement('li');
-              const customerInDb = data[i];
-              newEntry.innerHTML = `NAME: ${customerInDb.name}`;
-              document.getElementById('display').appendChild(newEntry);
-            }
-          });
+  // get customers info
+  document.getElementById('customersInfo').addEventListener('click', () => {
+    const display = document.getElementById('display');
+    display.remove();
+    const newDisplay = document.createElement('ul');
+    newDisplay.id = 'display';
+    newDisplay.innerHTML = 'List of customers';
+    document.getElementById('container').appendChild(newDisplay);
+    fetch('http://localhost:7777/customerdata', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        for (let i = 0; i < data.length; i += 1) {
+          const newEntry = document.createElement('li');
+          const customerInDb = data[i];
+          newEntry.innerHTML = `NAME: ${customerInDb.name}`;
+          document.getElementById('display').appendChild(newEntry);
+        }
       });
+  });
 };

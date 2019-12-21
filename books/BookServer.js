@@ -1,4 +1,5 @@
 const cmd = require('chronos-microservice-debugger2');
+
 cmd.propagate();
 const PORT = 4545;
 const express = require('express');
@@ -9,8 +10,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./BookController.js');
 
-app.use('/', cmd.microCom('books_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv'));
-cmd.microHealth('books_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv', 's');
+app.use('/', cmd.microCom('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
+cmd.microHealth('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 
 app.use(bodyParser.json());
 app.use(cors());
