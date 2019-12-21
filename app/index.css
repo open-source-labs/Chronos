@@ -207,6 +207,7 @@ select {
 
 .backButton {
   height: 25px;
+  /* width: 35px; */
   background-color: #edd9a3;
   transition: 0.2s;
   margin-left: 10px;
@@ -222,4 +223,73 @@ form {
   width: 100%;
   font-size: 2vh;
   /* margin-top: -4%; */
+}
+
+
+/* healthInfo visualizer css from 2.0 Team */
+#serviceDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#healthGrid {
+  display: grid;
+  grid-template-columns: 75px 75px 75px;
+  width: auto;
+  justify-items: center;
+  align-items: center;
+}
+
+.healthName {
+  text-align: center;
+  margin-bottom: 1px;
+}
+
+.healthChartContainer {
+  margin: 10px 10px 10px 10px;
+}
+
+.healthChartContainer:hover {
+  opacity: 0.7;
+}
+
+#microserviceHealthInfo {
+  text-align: center;
+  margin-top: 25px;
+}
+
+#microserviceHealthTitle {
+  margin-left: 0px;
+}
+
+#modalWindow {
+  position:fixed;
+  padding:0;
+  margin:0;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,.5);
+}
+
+#modalContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -500px;
+  margin-top: -380px;
+  z-index: 1;
+  width: 1000px;
+  height: 760px;
+  background: #333;
+  opacity: 1 !important;
+  align-content: center;
+
+}
+
+#chartTitle {
+  text-align: center;
+  margin-bottom: 50px;
 }
