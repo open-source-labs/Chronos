@@ -18,7 +18,7 @@ chronos.connectDB = (userOwnedDB) => {
 chronos.microCom = (userOwnedDB, currentMicroservice) => {
   chronos.connectDB(userOwnedDB)
   return function(req, res, next) {
-    const currentMicroservicePath = currentMicroservice;
+    currentMicroservicePath = currentMicroservice;
 
     require("./Communication.js");
     const Communication = mongoose.model("Communication");
