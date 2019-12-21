@@ -1,3 +1,6 @@
+const cmd = require('chronos-microservice-debugger2');
+
+cmd.propagate();
 const PORT = 4545;
 const express = require('express');
 const path = require('path');
@@ -7,9 +10,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./BookController.js');
 
+app.use('/', cmd.microCom('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
+cmd.microHealth('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
+
 app.use(bodyParser.json());
 app.use(cors());
-
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 //  ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
