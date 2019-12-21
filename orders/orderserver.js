@@ -1,3 +1,5 @@
+const cmd = require('chronos-microservice-debugger2');
+cmd.propagate();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -6,6 +8,10 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const PORT = 7777;
+
+app.use('/', cmd.microCom('orders_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv'));
+cmd.microHealth('orders_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv', 's');
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
