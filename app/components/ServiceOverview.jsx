@@ -44,7 +44,8 @@ const ServiceOverview = (props) => {
         if (!(element.currentmicroservice in serviceCache)) {
           const button = (
             <button
-            className='servicesBtn'
+              className="servicesBtn"
+              currentMicroservice={element.currentmicroservice}
               type="button"
               key={`serviceItem${props.index}${i}`}
               onClick={() => {
@@ -72,7 +73,7 @@ const ServiceOverview = (props) => {
           if (!(element.currentMicroservice in serviceCache)) {
             const button = (
               <button
-                className='servicesBtn'
+                className="servicesBtn"
                 type="button"
                 key={`serviceItem${props.index}${i}`}
                 onClick={() => {
@@ -104,7 +105,7 @@ const ServiceOverview = (props) => {
   return (
     <div className="mainContainer">
       <div>
-        <h1 className='overviewTitle'>Microservices Overview</h1>
+        <h1 className="overviewTitle">Microservices Overview</h1>
       </div>
       <div />
       <div className="servicesList">{serviceList()}</div>

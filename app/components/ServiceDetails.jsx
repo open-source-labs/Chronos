@@ -13,6 +13,7 @@ const ServiceDetails = (props) => {
   // Hook used to set the Modal Component title. The "alt" attribute
   // is grabbed from the onClick event via event.path[0].alt
   const [chartTitle, setChartTitle] = useState();
+  const { currentMicroservice } = props;
 
   // Dictionary used by the healthInfoButtons loop below
   const buttonProperties = [
@@ -38,6 +39,7 @@ const ServiceDetails = (props) => {
             setModalChart(event.path[0].id);
             toggleModalDisplay(!modalDisplay);
           }}
+          service={service}
           type="image"
           id={buttonProperties[i].id}
           src={buttonProperties[i].src}
