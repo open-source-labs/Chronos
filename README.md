@@ -3,7 +3,7 @@ Chronos Microservice Debugger consists of an npm package with an optional Electr
 
 ## Install
 ```javascript
-npm install chronos-microservice-debugger
+npm install chronos-microservice-debugger2
 ```
 
 ## Usage
@@ -11,31 +11,36 @@ There are two main aspects to Chronos-Microservice-Debugger
 1. Communication Monitor: Listens in on all microservice-microservice and microservice-client communication and monitors the response statuses and messages to ensure communications are making it to the correct destination successfully.
 2. Health Monitor: The health monitor checks the status of your microservice every second and sends this health information to an optional electron frontend where it is visualized for easier use.
 
-To use the npm package, there are three required parameters and an optional fourth parameter. You can enter the items as individual strings or as an array containing the three required parameters and one optional parameter.
+To use the npm package, there are four required parameters and an optional fifth parameter. You can enter the items as individual strings or as an array containing the three required parameters and one optional parameter.
 
 The parameters are:
 1. microserviceName: What do you want to name the current microservice
 2. databaseType: We currently support PostgreSQL and Mongo. Enter "mongo" or "sql"
 3. databaseURL: Where would you like to store your information? Enter the URL to your database
-4. queryFrequency: How often do you want microHealth to monitor the health of your database? It defaults to every second, but you can choose:
-  * "s" : The default, monitors every second
-  * "m" : Monitors every minute
+4. wantMicroHealth: Do you want the microHealth of your microservice to be monitor? Enter "yes" or "no"
+5. queryFrequency: How often do you want microHealth to monitor the health of your database? It defaults to every minute, but you can choose:
+  * "s" : Monitors every second
+  * "m" : The default, monitors every minute
   * "h" : Monitors every hour
   * "d" : Monitors once per day
   * "w" : Monitors once per week
 
 String parameter example:
 ```javascript
-// How to use chronos-microservice-debugger
-app.use('/', chronos-microservice-debgugger.microCom('microserviceName', 'databaseType', 'databaseURL'))
+// How to use chronos-microservice-debugger2
+// Place the following two lines before requiring express
+const cmd = require('chronos-microservice-debgugger2');
+cmd.propagate();
 
-chronos-microservice-debugger.microHealth('microserviceName', 'databaseType', 'databaseURL', 'queryFrequency'))
+// Place the following line of code before the microservice re-routes the request (for string parameters)
+app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL','wantMicroHealth','queryFrequency'))
+
+// Or place the following line of code before the microservice re-routes the request (for array parameter)
+app.use('/', cmd.microCom(['microserviceName', 'databaseType', 'databaseURL','wantMicroHealth','queryFrequency']))
 
 // Example using string parameters
-app.use('/', chronos-microservice-debugger.microCom('books', 'sql', 'thisIsMyURL'))
-// Note: microCom does not utilize queryFreq because it logs all communication when an endpoint is hit
+app.use('/', cmd.microCom('books', 'sql', 'thisIsMyURL','yes', 'm'))
 
-chronos-microservice-debugger.microHealth('books', 'sql', 'thisIsMyURL', 'h')
 ```
 
 Array parameter example:
@@ -44,25 +49,22 @@ let values = [
   'microserviceName',
   'databaseType',
   'databaseURL',
+  'wantMicroHealth',
   'queryFrequency'
 ]
-// How to use chronos-micrservice-debugger with an array parameter
-app.use('/', chronos-microservice-debgugger.microCom(values)
-
-chronos-microservice-debugger.microHealth(values)
+// How to use chronos-micrservice-debugger2 with an array parameter
+app.use('/', cmd.microCom(values)
 
 // Example using an array parameter
 let values = [
   'books',
   'mongo',
   'thisIsMyNewURL',
+  'yes',
   'w'
 ]
 
-app.use('/', chronos-microservice-debgugger.microCom(values)
-// Note: microCom does not utilize queryFreq because it logs all communication when an endpoint is hit
-
-chronos-microservice-debugger.microHealth(values)
+app.use('/', cmd.microCom(values)
 
 ```
 
@@ -77,9 +79,8 @@ Chronos uses a user-owned and provided database to ensure that your private data
 7. Microservice Architecture Visualizer
 
 ## Links
-1. Chronos Website (Coming Soon): http://chronos.ninja
-2. Gitub Page: https://github.com/oslabs-beta/Chronos
+1. Gitub Page: https://github.com/Chronos2-0/Chronos
 
 ## Contact Us
-For questions, requests, or more information, please contact us at teammicronos@gmail.com
+For questions, requests, or more information, please contact us at chronosjobtc@gmail.com
 
