@@ -3,7 +3,7 @@ Chronos Microservice Debugger consists of an npm package with an optional Electr
 
 ## Install
 ```javascript
-npm install chronos-microservice-debugger2
+npm install chronos-microservice-debugger3
 ```
 
 ## Usage
@@ -27,9 +27,9 @@ The parameters are:
 
 String parameter example:
 ```javascript
-// How to use chronos-microservice-debugger2
+// How to use chronos-microservice-debugger3
 // Place the following two lines before requiring express
-const cmd = require('chronos-microservice-debgugger2');
+const cmd = require('chronos-microservice-debgugger3');
 cmd.propagate();
 
 // Place the following line of code before the microservice re-routes the request (for string parameters)
