@@ -1,6 +1,6 @@
 {
   "package name": "chronos",
-  "name": "chronos-microservice-debugger2",
+  "name": "chronos-microservice-debugger3",
   "version": "2.0.0",
   "description": "A microservice health monitor and communication logger",
   "main": "chronos.js",
