@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import Modal from './Modal.jsx';
+import pieChart from '../assets/pieChart.png'
+
 
 // Renders health info detail buttons
 const ServiceDetails = (props) => {
@@ -16,8 +18,10 @@ const ServiceDetails = (props) => {
   const { currentMicroservice } = props;
 
   // Dictionary used by the healthInfoButtons loop below
+  //    { id: 'request', alt: 'Request Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
+  
   const buttonProperties = [
-    { id: 'request', alt: 'Request Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
+    { id: 'request', alt: 'Request Data', src: pieChart },
     { id: 'response', alt: 'Response Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'speed', alt: 'Speed Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'processes', alt: 'Processes Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
@@ -32,6 +36,7 @@ const ServiceDetails = (props) => {
   const healthInfoButtons = [];
   for (let i = 0; i < buttonProperties.length; i += 1) {
     healthInfoButtons.push(
+    <div>
       <div className="healthChartContainer">
         <input
           onClick={() => {
@@ -43,9 +48,14 @@ const ServiceDetails = (props) => {
           type="image"
           id={buttonProperties[i].id}
           src={buttonProperties[i].src}
-          width="50px"
+          width="60px"
           alt={buttonProperties[i].alt}
         />
+        <br/>
+        <div style={{color:'white', paddingLeft:'7px'}}>
+        {buttonProperties[i].id}
+        </div>
+      </div>
       </div>,
     );
   }

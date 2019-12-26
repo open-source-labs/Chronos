@@ -6,6 +6,8 @@ const connectMongoose = require('./model/mongoose-connect');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
 const HealthInfoSchema = require('./model/mongoose-healthInfoSchema');
 
+//declare a variable pool for SQL connection
+let pool;
 let win;
 function createWindow() {
   win = new BrowserWindow({
@@ -55,19 +57,17 @@ ipcMain.on('setup', (message) => {
 // Loads existing settings JSON and update settings to include new services entered by the user.
 ipcMain.on('submit', (message, newService) => {
   // set the variable 'state' to the contents of /user/settings.json
-  // contents => "setupRequired" (boolean) ,"michelleWasHere" (boolean),"services" (Array)
+  // contents => "setupRequired" (boolean),"services" (Array)
   // setupRequired- toggle the page for adding database
-  // michelleWasHere - I believe initiate the service array
   // services - name of DB  stores dbType, and uri 
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
     }),
   );
-  // if statement is used to replace hard coded data. Hard coded data and the michelleWasHere key is needed to avoid a load error caused by Electron querying the database before a user has added or selected a database.
-  if (state.michelleWasHere) {
+  // if statement is used to replace hard coded data. Hard coded data is needed to avoid a load error caused by Electron querying the database before a user has added or selected a database.
+  if (state.setupRequired) {
     state.setupRequired = false;
-    state.michelleWasHere = false;
     state.services = [JSON.parse(newService)];
     //is updating the /user/settings.json file with the first new service
     fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
@@ -100,13 +100,15 @@ ipcMain.on('dashboard', (message) => {
 
 // Queries the database for communications information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message, index) => {
-  // Gets the database type from /user/settings.json services: [[name, dbType, uri],...]
-  const databaseType = JSON.parse(
+  //acquires the services from user settings.json file
+  const services = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
-  ).services[index][1];
+  ).services
+  const databaseType = services[index][1];
+  const URI = services[index][2];
 
   if (databaseType === 'MongoDB') {
-    connectMongoose(index);
+    connectMongoose(index,URI);
     CommunicationSchema.find({}, (err, data) => {
       if (err) {
         console.log(`An error occured while querying the database: ${err}`);
@@ -121,13 +123,13 @@ ipcMain.on('overviewRequest', (message, index) => {
   }
 
   if (databaseType === 'SQL') {
-    // What is index? index - is passed on from ServiceDashboard as a prop when the button was  created. When the button is pressed, the serviceSelected is set to <ServiceOverview index ={i}>. The ServiceOverview makes the ipcRenderer.send('overviewRequest', props.index). The index indicates which service is being called
-    const pool = connectSQL(index);
+    pool = connectSQL(index,URI);
     const getCommunications = 'SELECT * FROM communications';
     pool.query(getCommunications, (err, result) => {
       if (err) {
        return message.sender.send(JSON.stringify('Database info could not be retrieved.'));
       }
+      console.log('Connected to SQL Database')
       //queryResults is an array of objects with the following keys {"id","currentmicroservice","targetedendpoint","reqtype","resstatus","resmessage","timesent"}
       const queryResults = JSON.stringify(result.rows);
       // Asynchronous event emitter used to transmit query results back to the render process.
@@ -143,7 +145,6 @@ ipcMain.on('detailsRequest', (message, index) => {
   ).services[index][1];
 
   if (databaseType === 'MongoDB') {
-    connectMongoose(index);
     HealthInfoSchema.find({}, (err, data) => {
       if (err) {
         message.sender.send('detailsResponse', JSON.stringify(err));
@@ -155,8 +156,8 @@ ipcMain.on('detailsRequest', (message, index) => {
   }
 
   if (databaseType === 'SQL') {
-    //what is index?
-    const pool = connectSQL(index);
+
+    // const pool = connectSQL(index);
     const getHealth = 'SELECT * FROM healthInfo';
     pool.query(getHealth, (err, result) => {
       if (err) {

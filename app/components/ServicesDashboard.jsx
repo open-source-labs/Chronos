@@ -25,6 +25,8 @@ const ServicesDashboard = (props) => {
           type="button"
           key={`${i}${context[i]}`}
           onClick={() => {
+            // jenae added this
+            console.log('main button clicked')
             setSelection(<ServiceOverview index={i} />);
           }}>
           {context[i]}
@@ -49,7 +51,6 @@ const ServicesDashboard = (props) => {
             type="submit"
             key="BackToStart"
             onClick={() => {
-              // always return true since false is passed into the toggleSetup
               setup.setupRequired = setup.toggleSetup(false);
               setSelection(<AddService />);
             }}
