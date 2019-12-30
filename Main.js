@@ -7,6 +7,9 @@ const connectMongoose = require('./model/mongoose-connect');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
 const HealthInfoSchema = require('./model/mongoose-healthInfoSchema');
 
+//declare a variable pool for SQL connection
+let pool;
+
 //declare win variable ---> Ousman
 let win;
 
@@ -87,9 +90,8 @@ ipcMain.on('submit', (message, newService) => {
   //  if statement is used to replace hard coded data. Hard coded data and the michelleWasHere key is needed to avoid a load error caused by Electron querying the database before a user has added or selected a database.
 
   //*** What is happening here --> Ousman */
-  if (state.michelleWasHere) {
+  if (state.setupRequired) {
     state.setupRequired = false;
-    state.michelleWasHere = false;
     state.services = [JSON.parse(newService)];
     fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
   } else {
@@ -119,12 +121,15 @@ ipcMain.on('dashboard', (message) => {
 
 // Queries the database for communications information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message, index) => {
-  const databaseType = JSON.parse(
+  const services = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
-  ).services[index][1];
+  ).services;
+  
+  const databaseType = services[index][1];
+  const URI = services[index][2];
 
   if (databaseType === 'MongoDB') {
-    connectMongoose(index);
+    connectMongoose(index, URI);
     CommunicationSchema.find({}, (err, data) => {
       if (err) {
         console.log(`An error occured while querying the database: ${err}`);
@@ -140,7 +145,7 @@ ipcMain.on('overviewRequest', (message, index) => {
   }
   
   if (databaseType === 'SQL') {
-    const pool = connectSQL(index);
+    pool = connectSQL(index, URI);
     const getCommunications = 'SELECT * FROM communications';
     pool.query(getCommunications, (err, result) => {
       if (err) {
@@ -159,6 +164,7 @@ ipcMain.on('overviewRequest', (message, index) => {
             message.sender.send(JSON.stringify('Database info could not be retreived.'));
 
       } else {
+        console.log('Connected to SQL Database')
         const queryResults = JSON.stringify(result.rows);
         // Asynchronous event emitter used to transmit query results back to the render process.
         message.sender.send('overviewResponse', queryResults);
