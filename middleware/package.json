@@ -1,0 +1,27 @@
+{
+  "package name": "chronos",
+  "name": "chronos-microservice-debugger",
+  "version": "1.0.1",
+  "description": "A microservice visualization and debugging application",
+  "main": "chronos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "microservice",
+    "debugger",
+    "microservice-health",
+    "health-monitor",
+    "communication-monitor",
+    "microservice-visualizer"
+  ],
+  "author": "Team Chronos",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.7.3",
+    "osx-temperature-sensor": "^1.0.4",
+    "pg": "^7.12.1",
+    "systeminformation": "^4.14.11",
+    "wmic": "^0.3.0"
+  }
+}
