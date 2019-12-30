@@ -1,1 +1,5 @@
-{"setupRequired":true, "services":["hard","coded","in"]}
+{
+  "setupRequired":true,
+  "michelleWasHere":true,
+  "services":[]
+}
