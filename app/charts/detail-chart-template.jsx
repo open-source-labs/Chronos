@@ -1,25 +1,22 @@
 import React, { useContext } from 'react';
-import { Line } from 'react-chartjs-2';
+// You can change the chart property imported to the one that suits your needs.
+import { Doughnut } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
-const SpeedChart = () => {
+const RequestTypesChart = () => {
+  // ! Do not change the variables related to context.
   const healthData = useContext(HealthContext);
   const health = healthData.detailsData;
+
   // Helper function
   const createChart = () => {
-    const speedData = [];
+    // Object for storing data
+    const /*<MY OBJECT>*/ = {
+    };
 
     // Iterate through HealthInfo to creat an object with data needed to create your graph.
     for (let i = 0; i < health.length; i += 1) {
-      const element = health[i];
-      // if Mongo
-      // if SQL
-      if (element.cpucurrentspeed) {
-        const graphDataPoint = {};
-        graphDataPoint.x = i;
-        if (element.cpucurrentspeed === null) graphDataPoint.y = 0;
-        else graphDataPoint.y = element.cpucurrentspeed || 0;
-      }
+ 
     }
 
     // ! Chart Data 
@@ -43,11 +40,11 @@ const SpeedChart = () => {
       labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
     };
 
-    return <Line data={chartData} />;
+    return <Doughnut data={chartData} />;
   };
 
   // Return div with helper function invoked
   return <div>{createChart()}</div>;
 };
 
-export default SpeedChart;
+export default RequestTypesChart;

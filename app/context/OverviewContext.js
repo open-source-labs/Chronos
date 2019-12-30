@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Used to save query results. Laid foundation for conditional rendering similar to how SetupContext was used.
 const OverviewContext = React.createContext({
   overviewData: null,
   overviewStatus: true,

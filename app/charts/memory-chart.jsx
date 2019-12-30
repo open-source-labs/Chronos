@@ -1,29 +1,25 @@
 import React, { useContext } from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
-const MemoryChart = (props) => {
-  const healthData = useContext(HealthContext).detailData;
+const MemoryChart = () => {
+  const healthData = useContext(HealthContext);
+  // const health = healthData.detailData;
 
   const createChart = () => {
-    const xAxis = [];
-    const free = [];
-    const used = [];
-    const active = [];
-    const total = [];
+    let free = [];
+    let used= [];
+    let active = [];
+    let total = [];
 
     for (let i = 0; i < healthData.length; i += 1) {
-      xAxis.push(i);
       // If Mongo
-      if (healthData[i].currentMicroservice === props.service) {
+      if (healthData[i].freeMemory && healthData[i].activeMemory && healthData[i].usedMemory && healthData[i].totalMemory) {
         free.push(healthData[i].freeMemory);
         active.push(healthData[i].activeMemory);
         used.push(healthData[i].usedMemory);
         total.push(healthData[i].totalMemory);
-      }
-
-      // If SQL
-      if (healthData[i].currentmicroservice === props.service) {
+      } else {
         free.push(healthData[i].freememory);
         active.push(healthData[i].activememory);
         used.push(healthData[i].usedmemory);
@@ -31,39 +27,53 @@ const MemoryChart = (props) => {
       }
     }
 
+    
+
+    const memoryObj = {
+      freeMem: free,
+      usedMem: used,
+      activeMem: active,
+      totalMem: total
+    }
+
     const chartData = {
       datasets: [
         {
-          label: 'Free Memory',
-          backgroundColor: 'rgb(2, 210, 249)',
-          data: free,
-          // showLine: true,
+          label: "Free Memory",
+          data: Object.values(memoryObj.freeMem),
+          backgroundColor: [
+            "rgb(2, 210, 249)"
+          ]
         },
         {
-          label: 'Used Memory',
-          backgroundColor: 'rgb(239, 91, 145)',
-          data: used,
-          // showLine: true,
+          label: "Used Memory",
+          data: Object.values(memoryObj.usedMem),
+          backgroundColor: [
+            "rgb(198, 42, 177)",
+          ]
         },
         {
-          label: 'Active Memory',
-          backgroundColor: 'rgb(182, 219, 26)',
-          data: active,
-          // showLine: true,
+          label: "Active Memory",
+          data: Object.values(memoryObj.activeMem),
+          backgroundColor: [
+            "rgb(252, 170, 52)"
+          ]
         },
         {
-          label: 'Total Memory',
-          backgroundColor: 'rgb(252, 170, 52)',
-          data: total,
-          // showLine: true,
+          label: "Total Memory",
+          data: Object.values(memoryObj.activeMem),
+          backgroundColor: [
+            "rgb(239, 91, 145)"
+          ]
         },
       ],
-      labels: xAxis,
+      labels: ["Free Memory", "Active Memory", "Used Memory", "Total Memory"]
     };
 
-    return <Bar data={chartData} />;
+    return <Line data={chartData} />;
   };
 
+  // Return div with helper function invoked
   return <div>{createChart()}</div>;
 };
 
