@@ -5,7 +5,7 @@
   "main": "./Main.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server & electron .",
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
     "test": "mocha"
