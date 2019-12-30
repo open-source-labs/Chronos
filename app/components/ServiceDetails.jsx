@@ -1,38 +1,49 @@
-import React, { useEffect, useState, useContext } from 'react';
-import HealthInformationContext from '../context/DetailsContext';
+import React from 'react';
 import RequestTypesChart from '../charts/request-type-chart.jsx';
 import ResponseCodesChart from '../charts/response-code-chart.jsx';
-// import SpeedChart from '../charts/speed-chart.jsx';
+import RouteTrace from '../charts/route-trace.jsx';
+import SpeedChart from '../charts/speed-chart.jsx';
+import ProcessesChart from '../charts/processes-chart.jsx';
+import TemperatureChart from '../charts/temperature-chart.jsx'
+import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
 
-const { ipcRenderer } = window.require('electron');
-
+// Renders charts created with health and communication data for a selected database.
 const ServiceDetails = (props) => {
-  const healthdata = useContext(HealthInformationContext);
-
-  useEffect(() => {
-    // IPC communication used to initiate query for information on microservices.
-    ipcRenderer.send('detailsRequest', props.index);
-
-    // IPC listener responsible for retrieving infomation from asynchronous main process message.
-    ipcRenderer.on('detailsResponse', (event, data) => {
-      healthdata.detailData = [...JSON.parse(data)];
-    });
-  }, []);
-
   return (
     <div>
+      <button className="backButton" type="button" onClick={() => document.location.reload()}>Back</button>
       <div>
         <h3>Request Types</h3>
-        <RequestTypesChart />
+        <RequestTypesChart service={props.service} />
       </div>
       <div>
-        <h3>Response Codes</h3>
-        <ResponseCodesChart />
+        <h3>Response Codes </h3>
+        <ResponseCodesChart service={props.service} />
+      </div>
+      <div>
+        <h3>Route Trace</h3>
+         <RouteTrace service={props.service} />
+      </div>
+      <div>
+        <h3>Speed Chart</h3>
+        <SpeedChart service={props.service} />
+      </div>
+      <div>
+        <h3>Processes Chart</h3>
+        <ProcessesChart service={props.service} />
+      </div>
+      <div>
+        <h3>Latency</h3>
+        <LatencyChart service={props.service} />
+      </div>
+      <div>
+        <h3>Temperature Chart</h3>
+        <TemperatureChart service={props.service} />
       </div>
       <div>
         <h3>Memory Chart</h3>
-        <MemoryChart />
+        <MemoryChart service={props.service} />
       </div>
     </div>
   );
