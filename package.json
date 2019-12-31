@@ -10,6 +10,7 @@
     "electron": "electron .",
     "test": "mocha",
     "both": "webpack-dev-server & electron ."
+    
   },
   "babel": {
     "presets": [
