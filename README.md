@@ -35,9 +35,6 @@ cmd.propagate();
 // Place the following line of code before the microservice re-routes the request (for string parameters)
 app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL','wantMicroHealth','queryFrequency'))
 
-// Or place the following line of code before the microservice re-routes the request (for array parameter)
-app.use('/', cmd.microCom(['microserviceName', 'databaseType', 'databaseURL','wantMicroHealth','queryFrequency']))
-
 // Example using string parameters
 app.use('/', cmd.microCom('books', 'sql', 'thisIsMyURL','yes', 'm'))
 
