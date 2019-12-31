@@ -47,6 +47,7 @@ const ServiceOverview = (props) => {
           const button = (
             <button
             className='servicesBtn'
+              currentMicroservice={element.currentmicroservice}
               type="button"
               key={`serviceItem${props.index}${i}`}
               onClick={() => {
