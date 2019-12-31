@@ -18,7 +18,7 @@ The parameters are:
 2. databaseType: We currently support PostgreSQL and Mongo. Enter "mongo" or "sql"
 3. databaseURL: Where would you like to store your information? Enter the URL to your database
 4. wantMicroHealth: Do you want the microHealth of your microservice to be monitor? Enter "yes" or "no"
-5. queryFrequency: How often do you want microHealth to monitor the health of your database? It defaults to every minute, but you can choose:
+5. queryFrequency (optional): How often do you want microHealth to monitor the health of your database? It defaults to every minute, but you can choose:
   * "s" : Monitors every second
   * "m" : The default, monitors every minute
   * "h" : Monitors every hour
