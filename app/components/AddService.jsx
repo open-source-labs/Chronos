@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import logo from '../assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import ServicesDashboard from './ServicesDashboard.jsx';
@@ -10,7 +10,7 @@ const AddService = () => {
   const ChronosSetup = useContext(SetupContext);
   
   // Local state created for form entries ONLY.
-  const [dbState, setDbType] = useState('SQL');
+  const [dbState, setDbType] = useState('');
   const [uriState, setUri] = useState('');
   const [labelState, setLabel] = useState('');
 
@@ -23,6 +23,11 @@ const AddService = () => {
     // Refresh window after submit.
     document.location.reload();
   };
+  
+  //it is setting the dbState
+   useEffect(()=>{
+     setDbType(document.getElementById('dbType').value)
+    },[dbState, setDbType])
 
   return (
     <div className="mainContainer">
@@ -30,7 +35,7 @@ const AddService = () => {
       <h2 className="signUpHeader">Enter Your Database Information</h2>
       <form>
         Database Type:
-        <select value={dbState} onChange={(e) => setDbType(e.target.value)}>
+         <select id="dbType" onChange={()=>setDbType(document.getElementById('dbType').value)}>
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>
