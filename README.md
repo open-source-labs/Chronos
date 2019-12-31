@@ -29,7 +29,7 @@ String parameter example:
 ```javascript
 // How to use chronos-microservice-debugger3
 // Place the following two lines before requiring express
-const cmd = require('chronos-microservice-debgugger3');
+const cmd = require('chronos-microservice-debugger3');
 cmd.propagate();
 
 // Place the following line of code before the microservice re-routes the request (for string parameters)
