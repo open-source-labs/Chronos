@@ -1,12 +1,20 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import Modal from './Modal.jsx';
 import pieChart from '../assets/pieChart.png'
+import RequestTypesChart from '../charts/request-type-chart.jsx';
+import ResponseCodesChart from '../charts/response-code-chart.jsx';
+import RouteTrace from '../charts/route-trace.jsx';
+import SpeedChart from '../charts/speed-chart.jsx';
+import ProcessesChart from '../charts/processes-chart.jsx';
+import TemperatureChart from '../charts/temperature-chart.jsx'
+import LatencyChart from '../charts/latency-chart.jsx';
+import MemoryChart from '../charts/memory-chart.jsx';
 
-
-// Renders health info detail buttons
+// Renders charts created with health and communication data for a selected database.
 const ServiceDetails = (props) => {
-  const { service } = props;
+  
+  // Renders health info detail buttons
+    const { service } = props;
   // Hook used to toggle whether or not the Modal component renders
   const [modalDisplay, toggleModalDisplay] = useState(false);
   // Hook used to set the chart that the Modal displays.  The
@@ -19,10 +27,11 @@ const ServiceDetails = (props) => {
 
   // Dictionary used by the healthInfoButtons loop below
   //    { id: 'request', alt: 'Request Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-  
+
   const buttonProperties = [
     { id: 'request', alt: 'Request Data', src: pieChart },
     { id: 'response', alt: 'Response Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
+    { id: 'routes', alt: 'Route Trace', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'speed', alt: 'Speed Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'processes', alt: 'Processes Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'latency', alt: 'Latency Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
@@ -60,7 +69,6 @@ const ServiceDetails = (props) => {
     );
   }
 
-
   return (
     <div id="serviceDetailsContainer">
       {modalDisplay ? (
@@ -78,7 +86,7 @@ const ServiceDetails = (props) => {
       <h3 id="microserviceHealthTitle">Microservice Health</h3>
       <div id="healthGrid">
         {healthInfoButtons}
-      </div>
+       </div>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import CommunicationsContext from '../context/OverviewContext';
 
 const ResponseCodeChart = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
+
+  
   
   const createChart = () => {
     const responseCodes = {
