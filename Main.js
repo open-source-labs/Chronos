@@ -140,7 +140,6 @@ ipcMain.on('overviewRequest', (message, index) => {
         // Asynchronous event emitter used to transmit query results back to the render process.
         message.sender.send('overviewResponse', queryResults);
       
-
     });
   }
   
@@ -180,7 +179,6 @@ ipcMain.on('detailsRequest', (message, index) => {
   ).services[index][1];
 
   if (databaseType === 'MongoDB') {
-    connectMongoose(index);
     HealthInfoSchema.find({}, (err, data) => {
       if (err) {
         message.sender.send('detailsResponse', JSON.stringify(err));
@@ -192,7 +190,6 @@ ipcMain.on('detailsRequest', (message, index) => {
   }
 
   if (databaseType === 'SQL') {
-    const pool = connectSQL(index);
     const getHealth = 'SELECT * FROM healthInfo';
     pool.query(getHealth, (err, result) => {
       if (err) {
