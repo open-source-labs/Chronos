@@ -17,18 +17,17 @@ const AddService = () => {
   // Submits data provided by the user to added to the setting file.
   const onSubmit = () => {
     const userSettings = [labelState, dbState, uriState];
-
     // IPC communication used to update settings JSON with user input.
     ipcRenderer.send('submit', JSON.stringify(userSettings));
     ChronosSetup.setupRequired = ChronosSetup.toggleSetup(true);
     // Refresh window after submit.
     document.location.reload();
   };
+  
   //it is setting the dbState
    useEffect(()=>{
      setDbType(document.getElementById('dbType').value)
     },[dbState, setDbType])
-
 
   return (
     <div className="mainContainer">
@@ -36,20 +35,17 @@ const AddService = () => {
       <h2 className="signUpHeader">Enter Your Database Information</h2>
       <form>
         Database Type:
-        {/* the select e.target.value of onchange is reading the value SQL and MongDB, the value the setState is delay by one action. Stack Over Flow says the action is an async call so dbState is updated late. So I did another setDbtype callwith useEffect*/}
-        <select id="dbType" onChange={()=>setDbType(document.getElementById('dbType').value)}>
+         <select id="dbType" onChange={()=>setDbType(document.getElementById('dbType').value)}>
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>
         Database URI:
-        {/* This is where the uri value is set with setUri */}
         <input
           className="userInput"
           id="dburi"
           onChange={(e) => setUri(e.target.value)}
           placeholder="Database URI"
         />
-        {/* This is where the name of the database is set with setLabel */}
         Database Name:
         <input
           className="userInput"
