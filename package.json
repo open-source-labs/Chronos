@@ -9,6 +9,7 @@
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
     "test": "mocha"
+    
   },
   "babel": {
     "presets": [
