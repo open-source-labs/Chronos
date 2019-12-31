@@ -25,13 +25,15 @@ The parameters are:
   * "d" : Monitors once per day
   * "w" : Monitors once per week
 
-String parameter example:
 ```javascript
 // How to use chronos-microservice-debugger3
 // Place the following two lines before requiring express
 const cmd = require('chronos-microservice-debugger3');
 cmd.propagate();
+```
 
+String parameter example:
+```javascript
 // Place the following line of code before the microservice re-routes the request (for string parameters)
 app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL','wantMicroHealth','queryFrequency'))
 
@@ -49,7 +51,7 @@ let values = [
   'wantMicroHealth',
   'queryFrequency'
 ]
-// How to use chronos-micrservice-debugger2 with an array parameter
+// How to use chronos-micrservice-debugger3 with an array parameter
 app.use('/', cmd.microCom(values)
 
 // Example using an array parameter
