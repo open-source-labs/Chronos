@@ -6,6 +6,7 @@ import ProcessesChart from '../charts/processes-chart.jsx';
 import TemperatureChart from '../charts/temperature-chart.jsx';
 import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
+import RouteTrace from '../charts/route-trace.jsx';
 
 const Modal = (props) => {
   // Destructuring props to make linter happy
@@ -15,6 +16,7 @@ const Modal = (props) => {
   //  Dictionary used to render proper data chart within Modal component upon rendering
   const dict = {
     request: <RequestTypesChart service={service} />,
+    routes: <RouteTrace service={service} />,
     response: <ResponseCodesChart service={service} />,
     speed: <SpeedChart service={service} />,
     processes: <ProcessesChart service={service} />,

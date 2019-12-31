@@ -15,7 +15,6 @@ const ServicesDashboard = (props) => {
   const [serviceSelected, setSelection] = useState();
 
   // Creates button for each database in dashboard context.
-  // context is an array of the database names
   const renderServiceList = (context) => {
     const buttonStore = [];
     for (let i = 0; i < context.length; i += 1) {
@@ -25,10 +24,9 @@ const ServicesDashboard = (props) => {
           type="button"
           key={`${i}${context[i]}`}
           onClick={() => {
-            // jenae added this
-            console.log('main button clicked')
             setSelection(<ServiceOverview index={i} />);
-          }}>
+          }}
+        >
           {context[i]}
         </button>,
       );
