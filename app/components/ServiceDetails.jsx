@@ -31,6 +31,7 @@ const ServiceDetails = (props) => {
   const buttonProperties = [
     { id: 'request', alt: 'Request Data', src: pieChart },
     { id: 'response', alt: 'Response Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
+    { id: 'routes', alt: 'Route Trace', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'speed', alt: 'Speed Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'processes', alt: 'Processes Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'latency', alt: 'Latency Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
@@ -86,38 +87,6 @@ const ServiceDetails = (props) => {
       <div id="healthGrid">
         {healthInfoButtons}
        </div>
-      <div>
-        <h3>Request Types</h3>
-        <RequestTypesChart service={props.service} />
-      </div>
-      <div>
-        <h3>Response Codes </h3>
-        <ResponseCodesChart service={props.service} />
-      </div>
-      <div>
-        <h3>Route Trace</h3>
-         <RouteTrace service={props.service} />
-      </div>
-      <div>
-        <h3>Speed Chart</h3>
-        <SpeedChart service={props.service} />
-      </div>
-      <div>
-        <h3>Processes Chart</h3>
-        <ProcessesChart service={props.service} />
-      </div>
-      <div>
-        <h3>Latency</h3>
-        <LatencyChart service={props.service} />
-      </div>
-      <div>
-        <h3>Temperature Chart</h3>
-        <TemperatureChart service={props.service} />
-      </div>
-      <div>
-        <h3>Memory Chart</h3>
-        <MemoryChart service={props.service} />
-      </div>
     </div>
   );
 };
