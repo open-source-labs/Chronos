@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["micro1","MongoDB","mongodb+srv://jenaepen:pen1321!@jenae-6dyj0.mongodb.net/test?retryWrites=true&w=majority"],["micro2","SQL","postgres://heilucpy:7kaQsZKI-1Pe-Vuu_4TSbezjJvCBJ5ft@rajje.db.elephantsql.com:5432/heilucpy"]]}
+{"setupRequired":false,"services":[["Database1","MongoDB","mongodb+srv://chronos:jenae@cluster0-gw2vt.mongodb.net/test?retryWrites=true&w=majority"]]}
