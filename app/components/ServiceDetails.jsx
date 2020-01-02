@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import Modal from './Modal.jsx';
 import pieChart from '../assets/pieChart.png'
-import RequestTypesChart from '../charts/request-type-chart.jsx';
-import ResponseCodesChart from '../charts/response-code-chart.jsx';
-import RouteTrace from '../charts/route-trace.jsx';
-import SpeedChart from '../charts/speed-chart.jsx';
-import ProcessesChart from '../charts/processes-chart.jsx';
-import TemperatureChart from '../charts/temperature-chart.jsx'
-import LatencyChart from '../charts/latency-chart.jsx';
-import MemoryChart from '../charts/memory-chart.jsx';
+import memoryChart from '../assets/memoryChart.png'
+import tempChart from '../assets/tempChart.png'
+import speedChart from '../assets/speedChart.png'
+import latencyChart from '../assets/latencyChart.png'
+import processingChart from '../assets/processingChart.png'
 
 // Renders charts created with health and communication data for a selected database.
 const ServiceDetails = (props) => {
@@ -30,13 +27,13 @@ const ServiceDetails = (props) => {
 
   const buttonProperties = [
     { id: 'request', alt: 'Request Data', src: pieChart },
-    { id: 'response', alt: 'Response Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-    { id: 'routes', alt: 'Route Trace', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-    { id: 'speed', alt: 'Speed Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-    { id: 'processes', alt: 'Processes Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-    { id: 'latency', alt: 'Latency Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-    { id: 'temperature', alt: 'Temperature Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
-    { id: 'memory', alt: 'Memory Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
+    { id: 'response', alt: 'Response Data', src: pieChart },
+   // { id: 'routes', alt: 'Route Trace', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
+    { id: 'speed', alt: 'Speed Data', src: speedChart},
+    { id: 'processes', alt: 'Processes Data', src: processingChart },
+    { id: 'latency', alt: 'Latency Data', src: latencyChart },
+    { id: 'temperature', alt: 'Temperature Data', src: tempChart },
+    { id: 'memory', alt: 'Memory Data', src: memoryChart },
   ];
 
   // Create the Health Info buttons and their associated properties.  Each time a button is clicked,
