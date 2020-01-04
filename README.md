@@ -90,7 +90,15 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## People
 
-[List of all contributors](https://github.com/Chronos2-0/Chronos/graphs/contributors)
+[Tim Atapagra](https://github.com/orgs/Chronos2-0/people/timpagra)
+[Mohtasim Chowdhury](https://github.com/mohtasim317)
+[Ousman Diallo](https://github.com/orgs/Chronos2-0/people/Dialloousman)
+[Michelle Herrera](https://github.com/mesherrera)
+[Duane McFarlane](https://github.com/Duane11003)
+[Ben Mizel](https://github.com/orgs/Chronos2-0/people/ben-mizel)
+[Jenae Pennie](https://github.com/orgs/Chronos2-0/people/jenaepen)
+[Chris Romano](https://github.com/orgs/Chronos2-0/people/robicano22)
+[Natalie Umanzor](https://github.com/nmczormick)
 
 ## License
 
