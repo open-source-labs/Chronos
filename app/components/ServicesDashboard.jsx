@@ -24,6 +24,8 @@ const ServicesDashboard = (props) => {
           type="button"
           key={`${i}${context[i]}`}
           onClick={() => {
+            // Database button click functionality
+            console.log('SERVICE BUTTON CLICKED!!');
             setSelection(<ServiceOverview index={i} />);
           }}
         >
@@ -55,6 +57,17 @@ const ServicesDashboard = (props) => {
           >
             Add Database
           </button>
+        </div>
+        <div className="left-bottom">
+          <button
+              className="overviewSubmitBtn"
+              type="submit"
+              onClick={() => {
+                location.reload();
+              }}
+            >
+              Refresh overview
+            </button>
         </div>
       </div>
       <div className="databsaseList">{serviceSelected}</div>
