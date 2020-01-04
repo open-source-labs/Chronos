@@ -3,6 +3,7 @@ import ServiceOverview from './ServiceOverview.jsx';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
 import AddService from './AddService.jsx';
+import DeleteService from './DeleteService.jsx';
 
 const ServicesDashboard = (props) => {
   // Used to toggle setup required if user wants to add a new database.
@@ -54,6 +55,16 @@ const ServicesDashboard = (props) => {
             }}
           >
             Add Database
+          </button>
+          <button
+            className="overviewSubmitBtn"
+            type="submit"
+            key="goToDeletePage"
+            onClick={() => {
+              setSelection(<DeleteService />);
+            }}
+          >
+            Delete Database
           </button>
         </div>
         <div className="left-bottom">
