@@ -65,4 +65,5 @@ CustomerController.getbooksinfo = (req, res, next) => {
       console.log(`There was an error in getting customers data ${error}`);
     });
 };
+
 module.exports = CustomerController;
