@@ -24,8 +24,8 @@ app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wa
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application.
 
-To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger3) Node module within each microservice of your application using the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
+To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger3) node module within each microservice of your application using the
+[`npm install`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)command:
 
 ```bash
 $ npm install chronos-microservice-debugger3
@@ -44,7 +44,7 @@ app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wa
 
 The cmd.microCom handler function logs communication and health data to a user-provided database. This is to ensure that your private data stays private. We currently support MongoDB and SQL/PostgreSQL databases.
 
-cmd.microCom has four parameters and an optional fifth parameter. You can enter the arguments as individual strings or as an array.
+cmd.microCom takes four parameters and an optional fifth parameter. You can enter the arguments as individual strings or as an array.
 
 The parameters are:
 1. microserviceName: To identify the microservice (i.e. "payments")
@@ -60,7 +60,7 @@ The parameters are:
 
 String parameter example:
 ```javascript
-app.use('/', cmd.microCom('payments', 'mongo', 'mongodb+srv://user:password@cluster0-abcdefg.mongodb.net/','yes','h'))
+app.use('/', cmd.microCom('payments', 'mongo', 'mongodb+srv://user:password@cluster0-abc.mongodb.net/','yes','h'))
 ```
 
 Array parameter example:
@@ -68,7 +68,7 @@ Array parameter example:
 let values = [
   'payments',
   'mongo',
-  'mongodb+srv://user:password@cluster0-abcdefg.mongodb.net/',
+  'mongodb+srv://user:password@cluster0-abc.mongodb.net/',
   'yes',
   'h'
 ]
