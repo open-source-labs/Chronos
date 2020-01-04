@@ -24,14 +24,16 @@ app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wa
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application.
 
+#### Node module
+
 To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger3) node module within each microservice of your application using the
 [`npm install`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)command:
 
-```bash
-$ npm install chronos-microservice-debugger3
+```
+npm install chronos-microservice-debugger3
 ```
 
-Once installed, place the following two lines in the microservice's server file before requiring 'express':
+Once installed, write the following two lines at the top of each microservice's server file:
 ```javascript
 const cmd = require('chronos-microservice-debugger3');
 cmd.propagate();
@@ -75,6 +77,12 @@ let values = [
 
 app.use('/', cmd.microCom(values)
 ```
+
+#### Electron desktop application
+
+After installing the node module in each microservice, download the Electron desktop application from the public [Chronos](https://github.com/Chronos2-0/Chronos) repo.
+
+Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` to start the Electron desktop application.
 
 ## Contributing
 
