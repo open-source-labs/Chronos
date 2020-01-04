@@ -1,11 +1,15 @@
 body {
   background-color: #333;
   background: rgb(25,0,36);
-background: linear-gradient(135deg, rgba(25,0,36,1) 0%, rgb(68, 68, 68) 0%, rgb(29, 29, 29) 100%);
+  background: linear-gradient(135deg, rgba(25,0,36,1) 0%, rgb(68, 68, 68) 0%, rgb(29, 29, 29) 100%);
 }
 
 img {
   margin-bottom: -75px;
+}
+
+#splash {
+  
 }
 
 .header {
