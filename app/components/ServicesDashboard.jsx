@@ -67,6 +67,17 @@ const ServicesDashboard = (props) => {
             Delete Database
           </button>
         </div>
+        <div className="left-bottom">
+          <button
+              className="overviewSubmitBtn"
+              type="submit"
+              onClick={() => {
+                location.reload();
+              }}
+            >
+              Refresh overview
+            </button>
+        </div>
       </div>
       <div className="databsaseList">{serviceSelected}</div>
     </div>
