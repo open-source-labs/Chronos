@@ -1,8 +1,14 @@
+//  This app was created to test the functionality of the Trace tool - chronos
+// It's very barebones and straightforward
+
+
 window.onload = () => {
   // microservice1 - Books
   const microservicePort = { 4545: 'Books', 7777: 'Orders', 5555: 'Customers' };
+  // sets the title of the page to whatever port you're currently on
   document.title = microservicePort[window.location.port];
-  // create
+  // create a display that when clicked will grab the books passed in
+  //  and send it to the database to be stored
   document.getElementById('create1').addEventListener('click', () => {
     const display = document.getElementById('display');
     display.remove();
@@ -23,6 +29,7 @@ window.onload = () => {
       body: book,
     })
       .then((res) => res.json())
+      //  display the result of the action just taken
       .then((data) => {
         const newEntry = document.createElement('li');
         newEntry.innerHTML = `CREATED: ${data.title}`;
@@ -30,7 +37,7 @@ window.onload = () => {
       });
   });
 
-  // read
+  // read functionality
   document.getElementById('read1').addEventListener('click', () => {
     const display = document.getElementById('display');
     display.remove();
@@ -51,8 +58,9 @@ window.onload = () => {
           const deleteButton = document.createElement('button');
           deleteButton.innerHTML = 'Delete';
           newEntry.appendChild(deleteButton);
-
-          // delete
+          // the items displayed from the read's completed execution
+          // displays a new 'ul' for each item and appended on that
+          //  is it's associated delete button functionality
           deleteButton.addEventListener('click', () => {
             const display = document.getElementById('display');
             display.remove();
@@ -162,10 +170,7 @@ window.onload = () => {
         }
       });
   });
-  // document.getElementById('update2').addEventListener('click', () => {
-  //   console.log('update2');
-  //   // send AJAX PUT request
-  // });
+
 
   // microservice3 - Orders
   document.getElementById('create3').addEventListener('click', () => {
@@ -236,12 +241,4 @@ window.onload = () => {
         }
       });
   });
-  // document.getElementById('update3').addEventListener('click', () => {
-  //   console.log('update3');
-  //   // send AJAX PUT request
-  // });
-  // document.getElementById('delete3').addEventListener('click', () => {
-  //   console.log('delete3');
-  //   // send AJAX DELETE request
-  // });
 };
