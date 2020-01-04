@@ -8,7 +8,8 @@
     "start": "webpack-dev-server",
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
-    "test": "mocha"
+    "test": "mocha",
+    "both": "webpack-dev-server & electron ."
   },
   "babel": {
     "presets": [
@@ -21,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "chart.js": "^2.8.0",
+    "chronos-microservice-debugger": "^1.0.3",
     "electron": "^6.0.7",
     "express": "^4.17.1",
     "mongodb": "^3.3.2",
