@@ -24,8 +24,6 @@ const ServicesDashboard = (props) => {
           type="button"
           key={`${i}${context[i]}`}
           onClick={() => {
-            // Database button click functionality
-            console.log('SERVICE BUTTON CLICKED!!');
             setSelection(<ServiceOverview index={i} />);
           }}
         >
