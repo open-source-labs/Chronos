@@ -11,10 +11,6 @@ app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 const controller = require('./OrderController');
 
-// const mw = require('../mwMongo.js');
-
-// app.use('/', mw.microCom(path.basename(__filename)));
-
 
 // CHAOS FLOW
 // app.use((req, res, next) => {
@@ -52,33 +48,7 @@ app.get('/customerdata', controller.fetchcustomerdata, (req, res) => {
   res.status(200).json((res.locals.customerdata));
 });
 
-
-//  ********* NOT NEEDED BUT HOLD DELETING FOR NOW ***********
-// app.get('/order/:id', (req, res, next) => {
-//   Order.findById(req.params.id)
-//     .then((order) => {
-//       let orderObject;
-//       axios.get(`http://localhost:5555/customer/${order.CustomerID}`)
-//         .then((res) => {
-//           orderObject = { customerName: res.data.name, bookTitle: '' };
-//           axios.get(`http://localhost:4545/book/${order.BookID}`)
-//             .then((res) => {
-//               orderObject.bookTitle = res.data.title;
-//             })
-//             .catch((err) => {
-//               Promise.reject(err);
-//             });
-//         })
-//         .catch((err) => {
-//           Promise.reject(err);
-//         });
-//     })
-//     .catch((err) => {
-//       Promise.reject(err);
-//     });
-//   next();
-// });
-// **************** END ***************
+//  open and listen to server on this port
 app.listen(PORT, () => {
   console.log(`Orders server running on port ${PORT}...`);
 });
