@@ -336,3 +336,6 @@ form {
   font-size: 2vh;
   /* margin-top: -4%; */
 }
+.deleteMicroservice{
+  padding: 10px;
+}
