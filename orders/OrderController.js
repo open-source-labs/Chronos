@@ -13,15 +13,12 @@ const OrderController = {};
 
 //  Controller for order creation
 OrderController.createorder = (req, res, next) => {
-  console.log('Create Order middleware has been fired!');
   const newOrder = {
     customerID: req.body.customerID,
     bookID: req.body.bookID,
     purchaseDate: req.body.purchaseDate,
     deliveryDate: req.body.deliveryDate,
   };
-  console.log('This is what the new order object is ', newOrder);
-
 
   OrderModel.create(newOrder, (error, results) => {
     if (error) {
@@ -29,7 +26,6 @@ OrderController.createorder = (req, res, next) => {
       return res.status(404).json(error);
     }
     res.locals.createorder = results;
-    console.log(`Document successfully saved! ${res.locals.createorder}`);
     return next();
   });
 };
@@ -43,22 +39,19 @@ OrderController.getorders = (req, res, next) => {
       return res.status(404).json(error);
     }
     res.locals.getorders = results;
-    console.log(`Document retrieval successful! ${res.locals.getorders}`);
     return next();
   });
 };
 
 // Controller for order deletion
 OrderController.deleteorder = (req, res, next) => {
-  console.log('delete order controller fired');
-  const { _id } = req.query;
-  OrderModel.findOneAndDelete({ _id }, (error, result) => {
+  const { id } = req.query;
+  OrderModel.findOneAndDelete({ _id: id }, (error, result) => {
     if (error) {
       console.log(`Customer deletion was not successful ${error}`);
       return res.status(404).json(error);
     }
     res.locals.deletecustomer = result;
-    console.log(`Customer deletion successful ${res.locals.deletecustomer}`);
     return next();
   });
 };
@@ -76,7 +69,6 @@ OrderController.fetchcustomerdata = (req, res, next) => {
     .then((response) => response.json())
     .then((results) => {
       res.locals.customerdata = results;
-      console.log(`This is the parsed blob ${JSON.stringify(res.locals.customerdata)}`);
       return next();
     })
     .catch((error) => {
