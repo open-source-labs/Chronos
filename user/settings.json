@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["Database1","MongoDB","mongodb+srv://chronos:jenae@cluster0-gw2vt.mongodb.net/test?retryWrites=true&w=majority"]]}
+{"setupRequired":true, "services":["hard","coded","in"]}

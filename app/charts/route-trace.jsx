@@ -9,10 +9,17 @@ const RouteLocations = (props) => {
 
   if(communicationsData.length>0 && communicationsData[0]["_id"]){
     //Sort the communication array from latest to earliest document
-    communicationsData.sort((a,b)=>{ new Date(a.timeSent) - new Date(b.timeSent)})
+    // communicationsData.sort((a,b)=>{ new Date(a.timeSent) - new Date(b.timeSent)})
+    communicationsData.sort((a,b)=>{
+      if(new Date(a.timeSent) > new Date(b.timeSent)) return 1;
+      if(new Date(a.timeSent) < new Date(b.timeSent)) return -1;
+      return 0;
+    });
+
+
     
     //Iterate over sorted communicationsData array from the end to the beginning
-    for (let i = communicationsData.length-1; i >= 0; i--) {
+      for (let i = 0; i < communicationsData.length; i+=1) {
       //declare a constant element and initialize it as the object at index i of the communicationsData array
       const element = communicationsData[i];
       //Pushes the microservice name into the object  
@@ -34,9 +41,10 @@ const RouteLocations = (props) => {
 
   //use object values to destructure locations
   const tracePoints = Object.values(resObj);
-  let position = tracePoints.length-1;
+  let position = communicationsData[0].correlatingid ? 0 : tracePoints.length-1;
  
   const resArray = [];
+
   for (let i = 0; i < tracePoints[position].length; i+=1) {
     resArray.push(
         <div className="RouteCircle" key={i}>
@@ -53,3 +61,4 @@ const RouteLocations = (props) => {
 };
 
 export default RouteLocations;
+
