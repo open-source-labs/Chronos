@@ -69,7 +69,7 @@ function errorHandler(error, req, res, next) {
   res.status(errorObj.status).json(errorObj.message);
 }
 
-// Open an express server
+// Open and listen to server on said port
 app.listen(PORT, () => {
   console.log(`Book server running on port ${PORT} ...`);
 });
