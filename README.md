@@ -1,3 +1,5 @@
+![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
+
 # What is Chronos?
 A tool for visualizing communication and health throughout a microservices application
 
