@@ -11,6 +11,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./CustomerController');
 //  const path = require('path');
+//  we're using the chronos debugger tool here to intercept
+//  request and propagate our context onto said request as it travels
 
 app.use('/', cmd.microCom('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
 cmd.microHealth('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
