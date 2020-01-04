@@ -51,7 +51,8 @@ BookController.deleteBook = (req, res, next) => {
 //  This controller gets order info from the order application
 BookController.getorderinfo = (req, res, next) => {
   //  const { body } = req;
-  // since it's a get request, you technically don't need all the headers but it's more declarative this way
+  // since it's a get request, you technically don't need
+  //  all the headers but it's more declarative this way
   fetch('http://localhost:7777/getorders', {
     method: 'GET',
     headers: {
