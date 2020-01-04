@@ -11,11 +11,12 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## Who created Chronos?
 * Mohtasim Chowdhury
-* Ousman Diallo
+* Natalie Umanzor
 * Michelle Herrera
 * Duane McFarlane
 * Ben Mizel
 * Timothy Atapagra
 * Jenae Pennie
 * Chris Romano
-* Natalie Umanzor
+* Ousman Diallo
+
