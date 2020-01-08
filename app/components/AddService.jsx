@@ -8,7 +8,7 @@ const { ipcRenderer } = window.require('electron');
 const AddService = () => {
   // Context used to ensure that that this page is only seen when the setup is required. Updated when user adds a database.
   const ChronosSetup = useContext(SetupContext);
-  
+
   // Local state created for form entries ONLY.
   const [dbState, setDbType] = useState('');
   const [uriState, setUri] = useState('');
@@ -23,11 +23,11 @@ const AddService = () => {
     // Refresh window after submit.
     document.location.reload();
   };
-  
-  //it is setting the dbState
-   useEffect(()=>{
-     setDbType(document.getElementById('dbType').value)
-    },[dbState, setDbType])
+
+  // it is setting the dbState
+  useEffect(() => {
+    setDbType(document.getElementById('dbType').value);
+  }, [dbState, setDbType]);
 
   return (
     <div className="mainContainer">
@@ -35,10 +35,10 @@ const AddService = () => {
       <h2 className="signUpHeader">Enter Your Database Information</h2>
       <form>
         Database Type:
-         <select id="dbType" onChange={()=>setDbType(document.getElementById('dbType').value)}>
-          <option value="SQL">SQL</option>
-          <option value="MongoDB">MongoDB</option>
-        </select>
+        <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>
+           <option value="SQL">SQL</option>
+           <option value="MongoDB">MongoDB</option>
+         </select>
         Database URI:
         <input
           className="userInput"
