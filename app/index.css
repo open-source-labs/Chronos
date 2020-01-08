@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
+
 body {
   background-color: #333;
   background: rgb(25,0,36);
@@ -9,7 +11,46 @@ img {
 }
 
 #splash {
-  
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-duration: 3s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+#splashLogo {
+height: 300px;
+margin-bottom: 0px;
+margin-top: -100px;
+}
+
+#splashText {
+  color: #FCE356;
+  font-size: 9vw;
+  letter-spacing: 100px;
+  margin-right: -100px;
+  font-family: Baloo Bhaijaan;
+  font-weight: lighter;
 }
 
 .header {
@@ -28,23 +69,25 @@ img {
   grid-template-rows: 33% 33% 33%;
   justify-items: center;
   align-items: center;
-  /* margin-top: 10%; */
   color: white;
 }
 
 .left-top {
+  display: flex;
+  flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.75vh;
   flex-direction: column;
   align-content: center;
   width: 100%;
-  padding: 5% 10% 0 5%;
+  /* padding: 5% 10% 0 5%; */
   align-items: center;
   justify-items: center;
   justify-content: center;
+  /* height: 1000px; */
   max-height: 600px;
   overflow-y: auto;
-  /* background-color: rgb(151, 151, 151) */
+
 }
 
 .servicesBtn {
@@ -70,10 +113,12 @@ img {
 
 .leftTopContainer {
   display: flex;
+  flex-direction: column;
   border-right: 2px solid rgb(163, 163, 163);
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   align-content: center;
+  height: 1000px;
 }
 
 .left-bottom {
@@ -86,8 +131,14 @@ img {
 }
 
 .left {
-  height: 700px;
+  height: 1000px;
   /* display: flex; */
+}
+
+#serviceDashLogo {
+  width: 200px;
+  margin-bottom: 0px;
+  margin-top: 75px;
 }
 
 h3 {
@@ -137,7 +188,7 @@ form {
 }
 
 .microserviceBtn {
-  width: 100%;
+  width: 80%;
   height: 50px;
   background-color: rgb(249, 221, 111);
   padding: 2%;
@@ -152,7 +203,6 @@ form {
 
 .overviewSubmitBtn {
   background-color: #333;
-  width: 50%;
   margin: 8% auto 0 auto;
   height: 40px;
   border: 1px solid white;
@@ -201,7 +251,8 @@ form {
 
 .dashboardHeader {
   color: white;
-  margin-top: 35%;
+  margin-top: 10%;
+  text-align: center;
 }
 
 select {

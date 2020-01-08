@@ -4,6 +4,8 @@ import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
 import AddService from './AddService.jsx';
 
+const path = require('path');
+
 const ServicesDashboard = (props) => {
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
@@ -16,6 +18,7 @@ const ServicesDashboard = (props) => {
 
   // Creates button for each database in dashboard context.
   const renderServiceList = (context) => {
+    console.log('inside renderServiceLIst');
     const buttonStore = [];
     for (let i = 0; i < context.length; i += 1) {
       buttonStore.push(
@@ -38,26 +41,30 @@ const ServicesDashboard = (props) => {
     <div className="servicesDashboardContainer">
       <div className="left">
         <div className="leftTopContainer">
+          <img alt="Chronos Logo" src="app/assets/icon2Cropped.png" id="serviceDashLogo" />
           <div className="left-top">
             <h2 className="dashboardHeader">Your Databases</h2>
             {renderServiceList(serviceList)}
           </div>
-        </div>
-        <div className="left-bottom">
-          <button
-            className="overviewSubmitBtn"
-            type="submit"
-            key="BackToStart"
-            onClick={() => {
-              setup.setupRequired = setup.toggleSetup(false);
-              setSelection(<AddService />);
-            }}
-          >
+          <div className="left-bottom">
+            <button
+              className="overviewSubmitBtn"
+              type="submit"
+              key="BackToStart"
+              onClick={() => {
+                setup.setupRequired = setup.toggleSetup(false);
+                setSelection(<AddService />);
+              }}
+            >
             Add Database
-          </button>
+            </button>
+          </div>
         </div>
+
       </div>
-      <div className="databsaseList">{serviceSelected}</div>
+      <div className="databsaseList">
+        {serviceSelected}
+      </div>
     </div>
   );
 };

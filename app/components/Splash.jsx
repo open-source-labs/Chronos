@@ -7,8 +7,8 @@ const Splash = (props) => {
 
   return (
     <div id="splash">
-      <img alt="Chronos Logo" src="app/assets//icons/icon.png" id="splashLogo" />
-      <span id="splashText">chronos</span>
+      <img alt="Chronos Logo" src="app/assets/icons/icon.png" id="splashLogo" />
+      <span id="splashText" style={{ fontFamily: 'Baloo Bhaijaan' }}>chronos</span>
     </div>
   );
 };
