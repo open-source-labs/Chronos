@@ -19,7 +19,6 @@ const ServicesDashboard = (props) => {
 
   // Creates button for each database in dashboard context.
   const renderServiceList = (context) => {
-    console.log('inside renderServiceLIst');
     const buttonStore = [];
     for (let i = 0; i < context.length; i += 1) {
       buttonStore.push(
@@ -58,24 +57,20 @@ const ServicesDashboard = (props) => {
               }}
             >
             Add Database
-<<<<<<< HEAD
+            </button>
+            <button
+              className="overviewSubmitBtn"
+              type="submit"
+              key="goToDeletePage"
+              onClick={() => {
+                setSelection(<DeleteService />);
+              }}
+            >
+            Delete Database
             </button>
           </div>
-=======
-          </button>
-          <button
-            className="overviewSubmitBtn"
-            type="submit"
-            key="goToDeletePage"
-            onClick={() => {
-              setSelection(<DeleteService />);
-            }}
-          >
-            Delete Database
-          </button>
-        </div>
-        <div className="left-bottom">
-          <button
+          <div className="left-bottom">
+            <button
               className="overviewSubmitBtn"
               type="submit"
               onClick={() => {
@@ -84,9 +79,9 @@ const ServicesDashboard = (props) => {
             >
               Refresh overview
             </button>
->>>>>>> dev
-        </div>
+          </div>
 
+        </div>
       </div>
       <div className="databsaseList">
         {serviceSelected}

@@ -16,7 +16,7 @@ const Modal = (props) => {
   //  Dictionary used to render proper data chart within Modal component upon rendering
   const dict = {
     request: <RequestTypesChart service={service} />,
-    routes: <RouteTrace service={service} />,
+    routesImage: <RouteTrace service={service} />,
     response: <ResponseCodesChart service={service} />,
     speed: <SpeedChart service={service} />,
     processes: <ProcessesChart service={service} />,
@@ -27,6 +27,9 @@ const Modal = (props) => {
 
   // event.stopPropogation allows the user to interact with the chart as opposed to a click on the
   // chart bubbling out and closing the Modal.
+
+  console.log('Modal Props: ', props);
+  console.log('Modal props.modalChart: ', modalChart);
   return (
     <div id="modalWindow" onClick={() => toggleModalDisplay(!toggleModalDisplay)}>
       <div id="modalContent" onClick={(event) => event.stopPropagation()}>

@@ -41,7 +41,10 @@ img {
 @keyframes fadeInOpacity {
 	0% {
 		opacity: 1;
-	}
+  }
+  66% {
+    opacity: .66
+  }
 	100% {
 		opacity: 0;
 	}
@@ -368,6 +371,12 @@ select {
   font-size: 28px;
   padding: 0px;
   margin-right: 10px;
+}
+
+#routes {
+  /* display: flex;
+  flex-direction: column;
+  height: 800px; */
 }
 
 .RouteCircle {
