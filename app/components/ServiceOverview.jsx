@@ -40,9 +40,33 @@ const ServiceOverview = (props) => {
   // Hook used to set the Modal Component title. The "alt" attribute
   // is grabbed from the onClick event via event.path[0].alt
   const [chartTitle, setChartTitle] = useState();
-
-  const routeButtonProperty = { id: 'routes', alt: 'Route Trace', src: routeChart };
+  
+  const routeButtonProperty = { traffic: {id: 'traffic', alt: 'Microservice Traffic', src: routeChart}, routes: {id: 'routes', alt: 'Route Trace', src: routeChart} };
+  
   const routes = [];
+  const traffic = [];
+  traffic.push (
+      <div>
+      <div className="healthChartContainer">
+        <input
+          onClick={() => {
+            setChartTitle(event.path[0].alt);
+            setModalChart(event.path[0].id);
+            toggleModalDisplay(!modalDisplay);
+          }}
+          type="image"
+          id={routeButtonProperty.traffic.id}
+          src={routeButtonProperty.traffic.src}
+          width="60px"
+          alt={routeButtonProperty.traffic.alt}
+        />
+        <br/>
+        <div style={{color:'white', paddingLeft:'7px'}}>
+        {routeButtonProperty.id}
+        </div>
+      </div>
+      </div>
+  );
   routes.push(
     <div>
       <div className="healthChartContainer">
@@ -53,10 +77,10 @@ const ServiceOverview = (props) => {
             toggleModalDisplay(!modalDisplay);
           }}
           type="image"
-          id={routeButtonProperty.id}
-          src={routeButtonProperty.src}
+          id={routeButtonProperty.routes.id}
+          src={routeButtonProperty.routes.src}
           width="60px"
-          alt={routeButtonProperty.alt}
+          alt={routeButtonProperty.routes.alt}
         />
         <br/>
         <div style={{color:'white', paddingLeft:'7px'}}>
@@ -160,6 +184,7 @@ const ServiceOverview = (props) => {
         />
       ) : null}
       {routes}
+      {traffic}
     </div>
   );
 };
