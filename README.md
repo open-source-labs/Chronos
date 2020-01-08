@@ -53,7 +53,7 @@ The parameters are:
 2. databaseType: Enter either "mongo" or "sql"
 3. databaseURL: Enter the URL of your database
 4. wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no"
-5. queryFrequency (optional): How frequently do you want the log the health of this microservice? It defaults to every minute, but you can choose:
+5. queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
   * "s" : every second
   * "m" : every minute (default)
   * "h" : every hour
@@ -82,7 +82,7 @@ app.use('/', cmd.microCom(values)
 
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos](https://github.com/Chronos2-0/Chronos) repo.
 
-Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` to start the Electron desktop application.
+Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 
 ## Contributing
 
