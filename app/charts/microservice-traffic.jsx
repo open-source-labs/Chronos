@@ -79,7 +79,6 @@ const MicroServiceTraffic = (props) => {
   // return div with Bar component and Trace Points data
   return (
       <div>
-          <h1>THIS IS FROM MS TRAFFIC</h1>
         <Bar 
         data={myChart}
         width={100}
