@@ -1,7 +1,7 @@
-FROM node:10
-WORKDIR /bookContainer/
+FROM node:10.16
+WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
 COPY . .
+RUN npm install
 EXPOSE 4545
-CMD ["node", "books.js"]
+ENTRYPOINT ["node", "BookServer.js"]
