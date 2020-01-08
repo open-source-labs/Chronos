@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import logo from '../assets/logo2.png';
+// import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import ServicesDashboard from './ServicesDashboard.jsx';
 
@@ -31,14 +31,14 @@ const AddService = () => {
 
   return (
     <div className="mainContainer">
-      <img src={logo} alt="logo" />
+      <img src="app/assets/logo2.png" alt="logo" />
       <h2 className="signUpHeader">Enter Your Database Information</h2>
       <form>
         Database Type:
         <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>
-           <option value="SQL">SQL</option>
-           <option value="MongoDB">MongoDB</option>
-         </select>
+          <option value="SQL">SQL</option>
+          <option value="MongoDB">MongoDB</option>
+        </select>
         Database URI:
         <input
           className="userInput"
