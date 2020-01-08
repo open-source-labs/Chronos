@@ -45,8 +45,12 @@ const ServiceOverview = (props) => {
   //route button AND traffic button property
   const routeButtonProperty = { traffic: {id: 'Traffic', alt: 'Microservice Traffic', src: chartModal}, routes: {id: 'Routes', alt: 'Route Trace', src: routeChart} };
   
+  //declare routes array to display routes when modal is toggled
   const routes = [];
+  //declare traffic array to display traffic when modal is toggled
   const traffic = [];
+
+  //push traffic component logic traffic 
   traffic.push (
     
       <div className="healthChartContainer">
@@ -69,6 +73,8 @@ const ServiceOverview = (props) => {
       </div>
     
   );
+
+  //push routes component logic traffic 
   routes.push(
 
       <div className="healthChartContainer">
@@ -170,11 +176,9 @@ const ServiceOverview = (props) => {
       <div>
         <h1 className='overviewTitle'>Microservices Overview</h1>
       </div>
-      <div />
       <div className="servicesList">{serviceList()}</div>
-      {/* adding the route tracer button */}
       <br/>
-      <h3>Microservices Communications</h3>
+      <h1>Microservices Communications</h1>
       {modalDisplay ? (
         <Modal
           chartTitle={chartTitle}
@@ -189,7 +193,7 @@ const ServiceOverview = (props) => {
       <div id="routeAndTrafficDisplay">
         {routes}
         {traffic}
-        </div>
+      </div>
     </div>
   );
 };
