@@ -13,30 +13,29 @@ const controller = require('./BookController.js');
 //  we're using the chronos debugger tool here to intercept
 //  request and propagate our context onto said request as it travels
 
-app.use('/', cmd.microCom('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
-cmd.microHealth('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
+// app.use('/', cmd.microCom('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
+// cmd.microHealth('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 
-app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
-//  ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
-//  This requires the chronos middleware into the server ***Tim's comment
-// const mw = require('../mwMongo.js');
-
-// app.use('/', mw.microCom(path.basename(__filename)));
+// ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
 
 // CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
-// app.use((req, res, next) => {
-//   console.log(
-//     `***************************************************************************************
-//     CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
-//   req.url
-// }, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
-//     ***************************************************************************************`,
-//   );
-//   next();
-// });
+app.use((req, res, next) => {
+  console.log(
+    `***************************************************************************************
+    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
+  req.url
+}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    ***************************************************************************************`,
+  );
+  next();
+});
 
 //  This route will create a new book!
 app.post('/createbook', controller.createBook, (req, res) => {
@@ -50,7 +49,7 @@ app.delete('/deletebook:id?', controller.deleteBook, (req, res) => {
 
 // This route will get all the books in the database
 app.get('/getbooks', controller.getBooks, (req, res) => {
-  res.status(200).json(res.locals.getBooks);
+  res.status(200).send(res.locals.getBooks);
 });
 
 // This route gets orders from the Orders application
