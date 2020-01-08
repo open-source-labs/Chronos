@@ -5,7 +5,7 @@
   "main": "bookserver.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon books/bookserver.js"
+    "start": "nodemon books/BookServer.js"
   },
   "keywords": [],
   "author": "",
