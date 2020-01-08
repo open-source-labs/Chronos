@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
-const RouteLocations = (props) => {
+const MicroServiceTraffic = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
 
   //initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.    
@@ -42,26 +42,63 @@ const RouteLocations = (props) => {
   const tracePoints = Object.values(resObj);
   let position = communicationsData[0].correlatingid ? 0 : tracePoints.length-1;
  
-  const resArray = [];
+  // Declare Micro-server-count dictinary to capture the amount of times a particular server is hit
+  const microServiceCountdictionary  = {};
 
   // iterate over Trace Points
   for (let i = 0; i < tracePoints[position].length; i+=1) {
-    //push into resulting array current tracepoint as div
-    resArray.push(
-        <div className="RouteCircle" key={i}>
-        <p id="routeText">Point {i+1}: {tracePoints[position][i]}</p>
-        </div>
-    )
+    
+    // populate Micro-count dictionary
+    if (!microServiceCountdictionary[tracePoints[position][i]]) {
+      microServiceCountdictionary[tracePoints[position][i]] = 1;
+    } else {
+      microServiceCountdictionary[tracePoints[position][i]]+=1
+    }
   };
 
+  // capture values of microServiceCountdictionary to use as data to populate chart object
+  const serverPingCount = Object.values(microServiceCountdictionary);
+
   
-  // return div with Trace Points data
+  // Create chart object data to feed into bar component 
+  const myChart = {
+    //spread dictionary keys inorder to properly label chart x axis 
+    labels: [...Object.keys(microServiceCountdictionary)],
+    datasets: [
+        {
+          label: 'Times server Pinged',
+          backgroundColor: 'rgba(241, 207, 70,1)',
+          borderColor: 'rgba(0,0,0,1)',
+          borderWidth: 1,
+          data: [...serverPingCount, 0] // spread ping count array into data array to have chart populate the Y axis
+        }
+      ]
+  }
+
+  
+  // return div with Bar component and Trace Points data
   return (
       <div>
-        {resArray}
+          <h1>THIS IS FROM MS TRAFFIC</h1>
+        <Bar 
+        data={myChart}
+        width={100}
+        height={50}
+        options={{
+            title:{
+              display:true,
+              text:'Microservices Overview',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
       </div>
   )
 };
 
-export default RouteLocations;
+export default MicroServiceTraffic;
 
