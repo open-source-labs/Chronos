@@ -4,6 +4,7 @@ import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
 import Modal from './Modal.jsx';
 import routeChart from '../assets/routeChart.png'
+import chartModal from '../assets/chartModal.png'
 
 const { ipcRenderer } = window.require('electron');
 
@@ -41,12 +42,13 @@ const ServiceOverview = (props) => {
   // is grabbed from the onClick event via event.path[0].alt
   const [chartTitle, setChartTitle] = useState();
   
-  const routeButtonProperty = { traffic: {id: 'traffic', alt: 'Microservice Traffic', src: routeChart}, routes: {id: 'routes', alt: 'Route Trace', src: routeChart} };
+  //route button AND traffic button property
+  const routeButtonProperty = { traffic: {id: 'Traffic', alt: 'Microservice Traffic', src: chartModal}, routes: {id: 'Routes', alt: 'Route Trace', src: routeChart} };
   
   const routes = [];
   const traffic = [];
   traffic.push (
-      <div>
+    
       <div className="healthChartContainer">
         <input
           onClick={() => {
@@ -62,13 +64,13 @@ const ServiceOverview = (props) => {
         />
         <br/>
         <div style={{color:'white', paddingLeft:'7px'}}>
-        {routeButtonProperty.id}
+        {routeButtonProperty.traffic.id}
         </div>
       </div>
-      </div>
+    
   );
   routes.push(
-    <div>
+
       <div className="healthChartContainer">
         <input
           onClick={() => {
@@ -84,10 +86,10 @@ const ServiceOverview = (props) => {
         />
         <br/>
         <div style={{color:'white', paddingLeft:'7px'}}>
-        {routeButtonProperty.id}
+        {routeButtonProperty.routes.id}
         </div>
       </div>
-      </div>,
+
     );
 
   // Filters data received from IPC to the communications database to create a list of the services tracked in the provided database,
@@ -171,7 +173,8 @@ const ServiceOverview = (props) => {
       <div />
       <div className="servicesList">{serviceList()}</div>
       {/* adding the route tracer button */}
-      <h3>Trace Last Route</h3>
+      <br/>
+      <h3>Microservices Communications</h3>
       {modalDisplay ? (
         <Modal
           chartTitle={chartTitle}
@@ -183,8 +186,10 @@ const ServiceOverview = (props) => {
           }}
         />
       ) : null}
-      {routes}
-      {traffic}
+      <div id="routeAndTrafficDisplay">
+        {routes}
+        {traffic}
+        </div>
     </div>
   );
 };
