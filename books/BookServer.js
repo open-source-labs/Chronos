@@ -17,7 +17,7 @@ const controller = require('./BookController.js');
 // cmd.microHealth('books_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 
 app.use(cors());
