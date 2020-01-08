@@ -181,8 +181,6 @@ window.onload = () => {
       });
   });
 
-<<<<<<< HEAD
-=======
   // get books info
   document.getElementById('booksInfo').addEventListener('click', () => {
     const display = document.getElementById('display');
@@ -205,7 +203,6 @@ window.onload = () => {
         }
       });
   });
->>>>>>> 6a73b76184d272df01af57d5f8b25d8c8cecf4a1
 
   // microservice3 - Orders
   document.getElementById('create3').addEventListener('click', () => {
@@ -284,8 +281,6 @@ window.onload = () => {
         }
       });
   });
-<<<<<<< HEAD
-=======
   // get customers info
   document.getElementById('customersInfo').addEventListener('click', () => {
     const display = document.getElementById('display');
@@ -308,5 +303,4 @@ window.onload = () => {
         }
       });
   });
->>>>>>> 6a73b76184d272df01af57d5f8b25d8c8cecf4a1
 };
