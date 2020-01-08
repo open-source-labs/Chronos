@@ -3,6 +3,7 @@ import ServiceOverview from './ServiceOverview.jsx';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
 import AddService from './AddService.jsx';
+import DeleteService from './DeleteService.jsx';
 
 const path = require('path');
 
@@ -57,8 +58,33 @@ const ServicesDashboard = (props) => {
               }}
             >
             Add Database
+<<<<<<< HEAD
             </button>
           </div>
+=======
+          </button>
+          <button
+            className="overviewSubmitBtn"
+            type="submit"
+            key="goToDeletePage"
+            onClick={() => {
+              setSelection(<DeleteService />);
+            }}
+          >
+            Delete Database
+          </button>
+        </div>
+        <div className="left-bottom">
+          <button
+              className="overviewSubmitBtn"
+              type="submit"
+              onClick={() => {
+                location.reload();
+              }}
+            >
+              Refresh overview
+            </button>
+>>>>>>> dev
         </div>
 
       </div>

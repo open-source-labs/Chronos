@@ -119,6 +119,29 @@ ipcMain.on('dashboard', (message) => {
   message.returnValue = dashboardList;
 });
 
+//ipc 'deleteService' route
+ipcMain.on('deleteService', (message, index) => {
+  //assigns state to the returned the object returned from settings.json
+    let state = JSON.parse(
+      //read json from settings.json
+      fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
+        encoding: 'UTF-8',
+      }),
+    );
+    // updating the services
+    if(state.services.length > 1){
+      state.services.splice(index,1); 
+    }else{
+      state= {"setupRequired":true, "services":["hard","coded","in"] }
+    }
+    
+    //write json from settings.json
+    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
+        encoding: 'UTF-8'}) 
+    message.sender.send('deleteResponse', state.services);
+  });
+
+
 // Queries the database for communications information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message, index) => {
   const services = JSON.parse(
