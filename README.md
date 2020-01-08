@@ -4,22 +4,21 @@ Microservices architecture for testing [Chronos](https://github.com/Chronos2-0/C
 
 ## Purpose and Design
 This sample microservices architecture allows developers to explore the functionality of Chronos. It consists of three microservices, which are contained within the directories:
--Books
--Customers
--Orders
+- Books
+- Customers
+- Orders
 
 Each microservice has its own server, which receives requests from both the client and from other microservices. Each microservice also has its own database, which it can query to respond to those requests.
 
-**You must replace the placeholder MongoDB Atlas URIs for the databases with your own _actual_ MongoDB Atlas URIs.**
+**You must replace the placeholder MongoDB Atlas URIs for the databases with your own _actual_ MongoDB Atlas URIs:**
 
 ```
 const myURI = 'mongodb+srv://johndoe:johndoe@cluster0-abcdef.mongodb.net/';
 ```
 
-In order to start the entire application, you will need to start each microservice's server. To do so, within each microservice directory, install all dependencies using the `npm install` command followed by the `npm start` command. You will then be able to interact with the application (as though you are a user) on a barebones frontend, which is being served by all three servers and can be found at localhost:4545 (the Books server), localhost:5555 (the Customers server), and at localhost:7777 (the Orders server).
+In order to start the entire application, you will need to start each microservice's server. To do so, within each microservice directory, install all dependencies using the `npm install` command followed by the `npm start` command. You will then be able to interact with the application (as though you are a user) on a barebones frontend, which is being served by all three servers and can be found at localhost:4545 (Books), localhost:5555 (Customers), and at localhost:7777 (Orders).
 
-**Important**
-**To test the functionality of Chronos using this sample microservices architecture, you must install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger3) node module within each microservice. _It is not pre-installed._ Installation instructions for both the Chronos node module and the Chronos desktop visualizer are below:**
+**To test the functionality of Chronos using this sample microservices architecture, you must install the [Chronos node module](https://www.npmjs.com/package/chronos-microservice-debugger3) within each microservice. _It is not pre-installed._ Installation instructions for both the Chronos node module and the Chronos desktop visualizer are below:**
 
 ## Installation
 
