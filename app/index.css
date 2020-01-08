@@ -3,6 +3,15 @@
 body {
   background-color: #333;
   background: rgb(25,0,36);
+}
+
+html {
+  /* prevent the gradient from repeating past the visible section*/
+  min-height: 100%
+}
+
+body {
+  /* background-color: #333; Original background*/
   background: linear-gradient(135deg, rgba(25,0,36,1) 0%, rgb(68, 68, 68) 0%, rgb(29, 29, 29) 100%);
 }
 
@@ -91,9 +100,12 @@ margin-top: -100px;
 }
 
 .servicesBtn {
-  background-color: rgb(255, 206, 9);
-  width: 100px;
+  background-color: rgb(255, 206, 9); 
+  width: 13em;
+  word-wrap: break-word;
   font-size: 13px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border: none;
   height: 50px;
   transition: 0.2s;
@@ -390,4 +402,7 @@ form {
   width: 100%;
   font-size: 2vh;
   /* margin-top: -4%; */
+}
+.deleteMicroservice{
+  padding: 10px;
 }
