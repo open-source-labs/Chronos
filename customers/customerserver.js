@@ -14,26 +14,29 @@ const controller = require('./CustomerController');
 //  we're using the chronos debugger tool here to intercept
 //  request and propagate our context onto said request as it travels
 
-app.use('/', cmd.microCom('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
-cmd.microHealth('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
+// app.use('/', cmd.microCom('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
+// cmd.microHealth('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
-// eslint-disable-next-line max-len
-//  ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
-// const mw = require('../mwMongo.js');
-//  app.use('/', mw.microCom(path.basename(__filename)));
-// mw.microHealth(path.resolve(__filename));
 
+// ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
 
-// const mw = require("../mwSQL.js")
-// app.use('/', mw.microCom('customers'))
-// mw.microHealth('customers');
-
-
-//  ********** END **********
+// CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
+app.use((req, res, next) => {
+  console.log(
+    `***************************************************************************************
+    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
+  req.url
+}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    ***************************************************************************************`,
+  );
+  next();
+});
 
 
 // Create a new customer
@@ -61,33 +64,3 @@ app.get('/getbooksinfo', controller.getbooksinfo, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Customer server running on port ${PORT}...`);
 });
-
-// ******** I DONT THINK THIS PART IS NECESSARY. I'LL JUST LEAVE A COMMENT HERE IT HAS BEEN REFACTORED ABOVE**********
-
-// Get customer by using their id
-// app.get('/customer/:id', (req, res, next) => {
-//   Customer.findById(req.params.id)
-//     .then((customer) => {
-//       if (customer) {
-//         res.json(customer);
-//         next();
-//       } else {
-//         Promise.reject(err);
-//       }
-//     });
-// });
-
-// ********* END ********
-
-// Delete a customer by their id
-// app.delete('/customer/:id', (req, res, next) => {
-//   Customer.findOneAndRemove(req.params.id)
-//     .then(() => {
-//       res.send('Customer successfully deleted');
-//       next();
-//     }).catch((err) => {
-//       if (err) {
-//         throw err;
-//       }
-//     });
-// });
