@@ -15,10 +15,10 @@ const PORT = 7777;
 // cmd.microHealth('orders_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 
 // app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'));
-app.use('/', cmd.microCom('orders_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv', 'yes', 'm'));
+app.use('/', cmd.microCom('orders_microservice', 'mongo', 'mongodb+srv://tim:tim@cluster0-yddlq.mongodb.net/test?retryWrites=true&w=majority', 'yes', 'm'));
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors());
@@ -45,9 +45,7 @@ app.post('/createorder', controller.createorder, (req, res) => {
 });
 
 // Get all orders through this endpoint
-app.get('/getorders', controller.getorders, (req, res) => {
-  res.status(200).json(res.locals.getorders);
-});
+app.get('/getorders', controller.getorders, (req, res) => res.status(200).send(res.locals.getorders));
 
 // Delete order through this endpoint
 app.delete('/deleteorder:id?', controller.deleteorder, (req, res) => {
