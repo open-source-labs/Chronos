@@ -17,7 +17,7 @@ const controller = require('./CustomerController');
 // app.use('/', cmd.microCom('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
 // cmd.microHealth('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 //  app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'));
-app.use('/', cmd.microCom('customers_microservice', 'mongo', 'mongodb+srv://tim:tim@cluster0-yddlq.mongodb.net/test?retryWrites=true&w=majority', 'yes', 'm'));
+app.use('/', cmd.microCom('customers_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv', 'yes', 'm'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -27,7 +27,8 @@ app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 
-// ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
+// eslint-disable-next-line max-len
+//  ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
 
 // CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
 app.use((req, res, next) => {
