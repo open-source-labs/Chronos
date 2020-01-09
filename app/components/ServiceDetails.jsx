@@ -22,7 +22,6 @@ const ServiceDetails = (props) => {
   const { currentMicroservice } = props;
 
   // Dictionary used by the healthInfoButtons loop below
-  //    { id: 'request', alt: 'Request Data', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
 
   const buttonProperties = [
     { id: 'request', alt: 'Request Data', src: 'app/assets/pieChart.png' },

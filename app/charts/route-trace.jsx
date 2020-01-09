@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useContext } from 'react';
+import { Bar } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
 const RouteLocations = (props) => {
@@ -10,13 +11,11 @@ const RouteLocations = (props) => {
 
   if (communicationsData.length > 0 && communicationsData[0]._id) {
     // Sort the communication array from latest to earliest document
-    // communicationsData.sort((a,b)=>{ new Date(a.timeSent) - new Date(b.timeSent)})
     communicationsData.sort((a, b) => {
       if (new Date(a.timeSent) > new Date(b.timeSent)) return 1;
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
     });
-
 
     // Iterate over sorted communicationsData array from the end to the beginning
     for (let i = 0; i < communicationsData.length; i += 1) {
@@ -26,7 +25,6 @@ const RouteLocations = (props) => {
       if (resObj[element.correlatingId]) {
         resObj[element.correlatingId].push(element.currentMicroservice);
       } else resObj[element.correlatingId] = [element.currentMicroservice];
-      // initializing the object with the first microservice
     }
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
@@ -43,7 +41,9 @@ const RouteLocations = (props) => {
 
   const resArray = [];
 
+  // iterate over Trace Points
   for (let i = 0; i < tracePoints[position].length; i += 1) {
+    // push into resulting array current tracepoint as div
     resArray.push(
       <div className="RouteCircle" key={i}>
         <p id="routeText">Point {i + 1}: {tracePoints[position][i]}</p>
@@ -53,10 +53,12 @@ const RouteLocations = (props) => {
 
   console.log('resArray: ', resArray);
 
+
+  // return div with Trace Points data
   return (
-    <div id="routes">
-      {resArray}
-    </div>
+    <div>
+        {resArray}
+      </div>
   );
 };
 
