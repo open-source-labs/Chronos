@@ -3,7 +3,7 @@ import routeChart from '../assets/routeChart.png';
 import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
-import Modal from './Modal.jsx';
+
 
 const { ipcRenderer } = window.require('electron');
 
@@ -41,29 +41,60 @@ const ServiceOverview = (props) => {
   // is grabbed from the onClick event via event.path[0].alt
   const [chartTitle, setChartTitle] = useState();
 
-  const routeButtonProperty = { id: 'routesImage', alt: 'Route Trace', src: routeChart };
+  // route button AND traffic button property
+  const routeButtonProperty = { traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: chartModal }, routes: { id: 'Routes', alt: 'Route Trace', src: routeChart } };
+
+  // declare routes array to display routes when modal is toggled
   const routes = [];
-  routes.push(
-    <div>
-      <div className="healthChartContainer">
-        <input
-          onClick={() => {
-            setChartTitle(event.path[0].alt);
-            setModalChart(event.path[0].id);
-            toggleModalDisplay(!modalDisplay);
-          }}
-          type="image"
-          id={routeButtonProperty.id}
-          src="app/assets/routeChart.png"
-          width="60px"
-          alt={routeButtonProperty.alt}
-        />
-        <br />
-        <div style={{ color: 'white', paddingLeft: '7px' }}>
-          Routes
-        </div>
+  // declare traffic array to display traffic when modal is toggled
+  const traffic = [];
+
+  // push traffic component logic traffic
+  traffic.push(
+
+    <div className="healthChartContainer">
+      <input
+        onClick={() => {
+          setChartTitle(event.path[0].alt);
+          setModalChart(event.path[0].id);
+          toggleModalDisplay(!modalDisplay);
+        }}
+        type="image"
+        id={routeButtonProperty.traffic.id}
+        src={routeButtonProperty.traffic.src}
+        width="60px"
+        alt={routeButtonProperty.traffic.alt}
+      />
+      <br />
+      <div style={{ color: 'white', paddingLeft: '7px' }}>
+        {routeButtonProperty.traffic.id}
       </div>
     </div>,
+
+  );
+
+  // push routes component logic traffic
+  routes.push(
+
+    <div className="healthChartContainer">
+      <input
+        onClick={() => {
+          setChartTitle(event.path[0].alt);
+          setModalChart(event.path[0].id);
+          toggleModalDisplay(!modalDisplay);
+        }}
+        type="image"
+        id={routeButtonProperty.id}
+        src="app/assets/routeChart.png"
+        width="60px"
+        alt={routeButtonProperty.routes.alt}
+      />
+      <br />
+      <div style={{ color: 'white', paddingLeft: '7px' }}>
+          Routes
+      </div>
+    </div>,
+
   );
 
   // Filters data received from IPC to the communications database to create a list of the services tracked in the provided database,
@@ -150,10 +181,9 @@ const ServiceOverview = (props) => {
       <div>
         <h1 className="overviewTitle">Microservices Overview</h1>
       </div>
-      <div />
       <div className="servicesList">{serviceList()}</div>
-      {/* adding the route tracer button */}
-      <h3>Trace Last Route</h3>
+      <br />
+      <h1>Microservices Communications</h1>
       {modalDisplay ? (
         <Modal
           chartTitle={chartTitle}
@@ -165,7 +195,11 @@ const ServiceOverview = (props) => {
           }}
         />
       ) : null}
-      {routes}
+      <div id="routeAndTrafficDisplay">
+        {routes}
+        {traffic}
+      </div>
+
     </div>
   );
 };

@@ -7,6 +7,7 @@ import TemperatureChart from '../charts/temperature-chart.jsx';
 import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
 import RouteTrace from '../charts/route-trace.jsx';
+import MicroServiceTraffic from '../charts/microservice-traffic.jsx';
 
 const Modal = (props) => {
   // Destructuring props to make linter happy
@@ -21,6 +22,7 @@ const Modal = (props) => {
     speed: <SpeedChart service={service} />,
     processes: <ProcessesChart service={service} />,
     latency: <LatencyChart service={service} />,
+    Traffic: <MicroServiceTraffic service={service} />,
     temperature: <TemperatureChart service={service} />,
     memory: <MemoryChart service={service} />,
   };

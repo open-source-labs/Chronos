@@ -321,6 +321,11 @@ select {
   opacity: 0.7;
   }
 
+  #routeAndTrafficDisplay {
+    display: inline-flex;
+  }
+
+
 #microserviceHealthInfo {
   text-align: center;
   margin-top: 25px;
@@ -373,11 +378,6 @@ select {
   margin-right: 10px;
 }
 
-#routes {
-  /* display: flex;
-  flex-direction: column;
-  height: 800px; */
-}
 
 .RouteCircle {
   font-family: Arial, Helvetica, sans-serif;
