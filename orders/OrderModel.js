@@ -1,19 +1,16 @@
 const mongoose = require('mongoose');
-//  pull schema from the mongoose object
+
 const { Schema } = mongoose;
 
-//  database link
-const myURI = 'mongodb+srv://tim:tim@cluster0-xjjw3.mongodb.net/test?retryWrites=true&w=majority';
+// UNCOMMENT THE LINE BELOW AND REPLACE WITH AN ACTUAL MONGODB URI FOR YOUR "BOOKS" DATABASE
+// const myURI = 'mongodb+srv://johndoe:johndoe@cluster0-abcdef.mongodb.net/';
 
-// const URI = process.env.MONGO_URI || myURI;
+const URI = process.env.MONGO_URI || myURI;
 
-// connect the database, if error, log will be sent to the terminal
 mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected!!!********* Order Database is live!!!'))
   .catch((err) => console.log('Connection Error ', err));
 
-
-//  mongoose.SchemaTypes.ObjectId was changed from the types to make it a string and to te
 const OrderSchema = new Schema({
   customerID: {
     type: String,
