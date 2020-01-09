@@ -9,6 +9,7 @@
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
     "test": "mocha",
+    "test-react": "jest enzyme.test.js --verbose",
     "both": "webpack-dev-server & electron ."
   },
   "babel": {
@@ -25,6 +26,7 @@
     "chronos-microservice-debugger": "^1.0.3",
     "electron": "^6.0.7",
     "express": "^4.17.1",
+    "jest": "^24.9.0",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
@@ -39,6 +41,8 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.4.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
