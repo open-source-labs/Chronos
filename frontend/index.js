@@ -1,7 +1,3 @@
-//  This app was created to test the functionality of the Trace tool - chronos
-// It's very barebones and straightforward
-
-
 window.onload = () => {
   // microservice1 - Books
   const microservicePort = { 4545: 'Books', 7777: 'Orders', 5555: 'Customers' };
@@ -19,6 +15,9 @@ window.onload = () => {
     const author = document.getElementById('field_B1').value;
     const numberOfPages = document.getElementById('field_C1').value;
     const publisher = document.getElementById('field_D1').value;
+    if (!title || !author || !numberOfPages || !publisher) {
+      return alert("Every Books field must be completed");
+    }
     let book = {
       title, author, numberOfPages, publisher,
     };
@@ -43,6 +42,7 @@ window.onload = () => {
     display.remove();
     const newDisplay = document.createElement('ul');
     newDisplay.id = 'display';
+    newDisplay.innerHTML = 'List of books';
     document.getElementById('container').appendChild(newDisplay);
     fetch('http://localhost:4545/getbooks', {
       method: 'GET',
@@ -118,6 +118,9 @@ window.onload = () => {
     const name = document.getElementById('field_A2').value;
     const age = document.getElementById('field_B2').value;
     const address = document.getElementById('field_C2').value;
+    if (!name || !age || !address) {
+      return alert("Every Customers field must be completed");
+    }
     let customer = {
       name, age, address,
     };
@@ -141,6 +144,7 @@ window.onload = () => {
     display.remove();
     const newDisplay = document.createElement('ul');
     newDisplay.id = 'display';
+    newDisplay.innerHTML = 'List of customers';
     document.getElementById('container').appendChild(newDisplay);
     fetch('http://localhost:5555/getcustomers', {
       method: 'GET',
@@ -181,8 +185,6 @@ window.onload = () => {
       });
   });
 
-<<<<<<< HEAD
-=======
   // get books info
   document.getElementById('booksInfo').addEventListener('click', () => {
     const display = document.getElementById('display');
@@ -205,7 +207,6 @@ window.onload = () => {
         }
       });
   });
->>>>>>> 6a73b76184d272df01af57d5f8b25d8c8cecf4a1
 
   // microservice3 - Orders
   document.getElementById('create3').addEventListener('click', () => {
@@ -218,6 +219,9 @@ window.onload = () => {
     const bookID = document.getElementById('field_B3').value;
     const purchaseDate = document.getElementById('field_C3').value;
     const deliveryDate = document.getElementById('field_D3').value;
+    if (!customerID || !bookID || !purchaseDate || !deliveryDate) {
+      return alert("Every Orders field must be completed");
+    }
     let order = {
       customerID,
       bookID,
@@ -284,8 +288,6 @@ window.onload = () => {
         }
       });
   });
-<<<<<<< HEAD
-=======
   // get customers info
   document.getElementById('customersInfo').addEventListener('click', () => {
     const display = document.getElementById('display');
@@ -308,5 +310,4 @@ window.onload = () => {
         }
       });
   });
->>>>>>> 6a73b76184d272df01af57d5f8b25d8c8cecf4a1
 };
