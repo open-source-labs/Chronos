@@ -27,6 +27,7 @@
     "electron": "^6.0.7",
     "express": "^4.17.1",
     "jest": "^24.9.0",
+    "jsdom": "^15.2.1",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
