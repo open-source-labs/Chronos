@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 // UNCOMMENT THE LINE BELOW AND REPLACE WITH AN ACTUAL MONGODB URI FOR YOUR "BOOKS" DATABASE
-const myURI = 'mongodb+srv://benmizel:3A7G4ERMhg%2ER%25wb@cluster0-tllwn.mongodb.net/test?retryWrites=true&w=majority';
+// const myURI = 'mongodb+srv://johndoe:johndoe@cluster0-abcdef.mongodb.net/';
 
 const URI = process.env.MONGO_URI || myURI;
 
