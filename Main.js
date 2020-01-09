@@ -78,33 +78,33 @@ ipcMain.on('setup', (message) => {
   message.returnValue = setupRequired;
 });
 
-// Loads existing settings JSON and update settings to include new services entered by the user.
-//on ipc 'submit' request --> Ousman
+// Adds a new service to the services array within the user/setting.json file
 ipcMain.on('submit', (message, newService) => {
-  //assigning state to the parsed return of setting
+  // Declares a variable state and initialize it to the returned parsed json object from the user/settings.json file
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
     }),
   );
-  //  if statement is used to replace hard coded data. Hard coded data and the michelleWasHere key is needed to avoid a load error caused by Electron querying the database before a user has added or selected a database.
 
-  //*** What is happening here --> Ousman */
+  // Checks if setup is required by checking if the value for the state key 'setupRequired' is true 
   if (state.setupRequired) {
+    // If setup is required, the value for key 'setupRequired' is reassign to false and the value for key 'services' is reassign to an array with newService as its only element
     state.setupRequired = false;
     state.services = [JSON.parse(newService)];
-    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
   } else {
-    state.setupRequired = false;
+    // Else the newService is pushed into the services array
     state.services.push(JSON.parse(newService));
-    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
-  }
+  } 
+
+  // Rewrites user/settings.json to show state
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
 });
 
 // Load settings JSON and returns updated state back to the render process.
 //on ipc 'dashboard' request --> Ousman
 ipcMain.on('dashboard', (message) => {
-  //assign state to the parsed return of setting --> Ousman 
+  // Declares a variable state and initialize it to the returned parse json object from the user/settings.json file
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
@@ -119,27 +119,33 @@ ipcMain.on('dashboard', (message) => {
   message.returnValue = dashboardList;
 });
 
-//ipc 'deleteService' route
+// Deletes the service at position 'index' from the services array within the user/setting.json file,
+// resets the user/setting.json file to what it was originally if all of the services are deleted,
+// and sends the remaining services back to onDelete function within DeleteService as a response
 ipcMain.on('deleteService', (message, index) => {
-  //assigns state to the returned the object returned from settings.json
-    let state = JSON.parse(
-      //read json from settings.json
-      fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
-        encoding: 'UTF-8',
-      }),
-    );
-    // updating the services
-    if(state.services.length > 1){
-      state.services.splice(index,1); 
-    }else{
-      state= {"setupRequired":true, "services":["hard","coded","in"] }
-    }
+  // Declares a variable state and initialize it to the returned parse json object from the user/settings.json file
+  let state = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
+      encoding: 'UTF-8',
+    }),
+  );
+
+  // Checks if there is more than one services in the services array
+  if(state.services.length > 1){
+    // If true, removes the service at position 'index'
+    state.services.splice(index,1); 
+  }else{
+     // Else reassign state to what the user/setting.json file was originally before any database was save
+    state= {"setupRequired":true, "services":["hard","coded","in"] }
+  }
     
-    //write json from settings.json
-    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
-        encoding: 'UTF-8'}) 
-    message.sender.send('deleteResponse', state.services);
-  });
+  // Rewrites user/settings.json to show state
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
+    encoding: 'UTF-8'}) 
+
+  // Send a response back with the updated services
+  message.sender.send('deleteResponse', state.services);
+});
 
 
 // Queries the database for communications information and returns it back to the render process.
