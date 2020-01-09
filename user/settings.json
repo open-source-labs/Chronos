@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["Ousman Microservice","SQL","\tpostgres://wcdnbpvl:k6DU4g2y589_oeYHSKpBossOHoY3NenQ@rajje.db.elephantsql.com:5432/wcdnbpvl"],["MSlocation1 - Ousman","SQL","postgres://mnspuhgt:xFq9ZKWq4GoY9QVIDsrlv8kgets20322@rajje.db.elephantsql.com:5432/mnspuhgt"]]}
+{"setupRequired":true,"services":["hard","coded","in"]}
