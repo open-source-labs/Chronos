@@ -27,7 +27,7 @@ OrderController.createorder = (req, res, next) => {
 // This middleware gets all the orders
 OrderController.getorders = (req, res, next) => {
   OrderModel.find({}, (error, results) => {
-    if (error) {
+    if (error) { 
       console.log(`Document retrieval failed! ${error}`);
       return res.status(404).json(error);
     }
@@ -51,10 +51,9 @@ OrderController.deleteorder = (req, res, next) => {
 
 //  This middleware gets all the customers from the customers database by sending a request to the customers server
 OrderController.fetchcustomerdata = (req, res, next) => {
-  fetch('http://localhost:5555/getcustomers', {
+  fetch('http://localhost:5555/customers/getcustomers', {
     method: 'GET',
     headers: {
-      'Content-Type': 'Application/JSON',
       Accept: 'application/json',
     },
   })
