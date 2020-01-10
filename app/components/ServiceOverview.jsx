@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
+import routeChart from '../assets/routeChart.png';
 import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
 import Modal from './Modal.jsx';
-import routeChart from '../assets/routeChart.png'
-import chartModal from '../assets/chartModal.png'
+
 
 const { ipcRenderer } = window.require('electron');
 
@@ -32,7 +32,7 @@ const ServiceOverview = (props) => {
     });
   }, []);
 
-  //Add routes to the display 
+  // Add routes to the display
   // Hook used to toggle whether or not the Modal component renders
   const [modalDisplay, toggleModalDisplay] = useState(false);
   // Hook used to set the chart that the Modal displays.  The
@@ -41,62 +41,62 @@ const ServiceOverview = (props) => {
   // Hook used to set the Modal Component title. The "alt" attribute
   // is grabbed from the onClick event via event.path[0].alt
   const [chartTitle, setChartTitle] = useState();
-  
-  //route button AND traffic button property
-  const routeButtonProperty = { traffic: {id: 'Traffic', alt: 'Microservice Traffic', src: chartModal}, routes: {id: 'Routes', alt: 'Route Trace', src: routeChart} };
-  
-  //declare routes array to display routes when modal is toggled
+
+  // route button AND traffic button property
+  const routeButtonProperty = { traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: 'app/assets/chartModal.png' }, routes: { id: 'routesImage', alt: 'Route Trace', src: routeChart } };
+
+  // declare routes array to display routes when modal is toggled
   const routes = [];
-  //declare traffic array to display traffic when modal is toggled
+  // declare traffic array to display traffic when modal is toggled
   const traffic = [];
 
-  //push traffic component logic traffic 
-  traffic.push (
-    
-      <div className="healthChartContainer">
-        <input
-          onClick={() => {
-            setChartTitle(event.path[0].alt);
-            setModalChart(event.path[0].id);
-            toggleModalDisplay(!modalDisplay);
-          }}
-          type="image"
-          id={routeButtonProperty.traffic.id}
-          src={routeButtonProperty.traffic.src}
-          width="60px"
-          alt={routeButtonProperty.traffic.alt}
-        />
-        <br/>
-        <div style={{color:'white', paddingLeft:'7px'}}>
+  // push traffic component logic traffic
+  traffic.push(
+
+    <div className="healthChartContainer">
+      <input
+        onClick={() => {
+          setChartTitle(event.path[0].alt);
+          setModalChart(event.path[0].id);
+          toggleModalDisplay(!modalDisplay);
+        }}
+        type="image"
+        id={routeButtonProperty.traffic.id}
+        src={routeButtonProperty.traffic.src}
+        width="60px"
+        alt={routeButtonProperty.traffic.alt}
+      />
+      <br />
+      <div style={{ color: 'white', paddingLeft: '7px' }}>
         {routeButtonProperty.traffic.id}
-        </div>
       </div>
-    
+    </div>,
+
   );
 
-  //push routes component logic traffic 
+  // push routes component logic traffic
   routes.push(
 
-      <div className="healthChartContainer">
-        <input
-          onClick={() => {
-            setChartTitle(event.path[0].alt);
-            setModalChart(event.path[0].id);
-            toggleModalDisplay(!modalDisplay);
-          }}
-          type="image"
-          id={routeButtonProperty.routes.id}
-          src={routeButtonProperty.routes.src}
-          width="60px"
-          alt={routeButtonProperty.routes.alt}
-        />
-        <br/>
-        <div style={{color:'white', paddingLeft:'7px'}}>
-        {routeButtonProperty.routes.id}
-        </div>
+    <div className="healthChartContainer">
+      <input
+        onClick={() => {
+          setChartTitle(event.path[0].alt);
+          setModalChart(event.path[0].id);
+          toggleModalDisplay(!modalDisplay);
+        }}
+        type="image"
+        id={routeButtonProperty.routes.id}
+        src="app/assets/routeChart.png"
+        width="60px"
+        alt={routeButtonProperty.routes.alt}
+      />
+      <br />
+      <div style={{ color: 'white', paddingLeft: '7px' }}>
+          Routes
       </div>
+    </div>,
 
-    );
+  );
 
   // Filters data received from IPC to the communications database to create a list of the services tracked in the provided database,
   const serviceList = () => {
@@ -113,7 +113,7 @@ const ServiceOverview = (props) => {
         if (!(element.currentmicroservice in serviceCache)) {
           const button = (
             <button
-            className='servicesBtn'
+              className="servicesBtn"
               currentMicroservice={element.currentmicroservice}
               type="button"
               key={`serviceItem${props.index}${i}`}
@@ -142,7 +142,7 @@ const ServiceOverview = (props) => {
           if (!(element.currentMicroservice in serviceCache)) {
             const button = (
               <button
-                className='servicesBtn'
+                className="servicesBtn"
                 type="button"
                 key={`serviceItem${props.index}${i}`}
                 onClick={() => {
@@ -166,6 +166,12 @@ const ServiceOverview = (props) => {
         }
       }
     }
+    // If there's no data, return 'No data present', else return microservices button
+    if (componentButtons.length === 0) {
+      return (
+        <p>No data present</p>
+      );
+    }
     return componentButtons;
   };
 
@@ -174,10 +180,10 @@ const ServiceOverview = (props) => {
   return (
     <div className="mainContainer">
       <div>
-        <h1 className='overviewTitle'>Microservices Overview</h1>
+        <h1 className="overviewTitle">Microservices Overview</h1>
       </div>
       <div className="servicesList">{serviceList()}</div>
-      <br/>
+      <br />
       <h1>Microservices Communications</h1>
       {modalDisplay ? (
         <Modal
@@ -194,6 +200,7 @@ const ServiceOverview = (props) => {
         {routes}
         {traffic}
       </div>
+
     </div>
   );
 };
