@@ -5,6 +5,8 @@ import SetupContext from '../context/SetupContext';
 import AddService from './AddService.jsx';
 import DeleteService from './DeleteService.jsx';
 
+const path = require('path');
+
 const ServicesDashboard = (props) => {
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
@@ -39,36 +41,36 @@ const ServicesDashboard = (props) => {
     <div className="servicesDashboardContainer">
       <div className="left">
         <div className="leftTopContainer">
+          <img alt="Chronos Logo" src="app/assets/icon2Cropped.png" id="serviceDashLogo" />
           <div className="left-top">
             <h2 className="dashboardHeader">Your Databases</h2>
             {renderServiceList(serviceList)}
           </div>
-        </div>
-        <div className="left-bottom">
-          <button
-            className="overviewSubmitBtn"
-            type="submit"
-            key="BackToStart"
-            onClick={() => {
-              setup.setupRequired = setup.toggleSetup(false);
-              setSelection(<AddService />);
-            }}
-          >
+          <div className="left-bottom">
+            <button
+              className="overviewSubmitBtn"
+              type="submit"
+              key="BackToStart"
+              onClick={() => {
+                setup.setupRequired = setup.toggleSetup(false);
+                setSelection(<AddService />);
+              }}
+            >
             Add Database
-          </button>
-          <button
-            className="overviewSubmitBtn"
-            type="submit"
-            key="goToDeletePage"
-            onClick={() => {
-              setSelection(<DeleteService />);
-            }}
-          >
+            </button>
+            <button
+              className="overviewSubmitBtn"
+              type="submit"
+              key="goToDeletePage"
+              onClick={() => {
+                setSelection(<DeleteService />);
+              }}
+            >
             Delete Database
-          </button>
-        </div>
-        <div className="left-bottom">
-          <button
+            </button>
+          </div>
+          <div className="left-bottom">
+            <button
               className="overviewSubmitBtn"
               type="submit"
               onClick={() => {
@@ -77,9 +79,13 @@ const ServicesDashboard = (props) => {
             >
               Refresh overview
             </button>
+          </div>
+
         </div>
       </div>
-      <div className="databsaseList">{serviceSelected}</div>
+      <div className="databsaseList">
+        {serviceSelected}
+      </div>
     </div>
   );
 };
