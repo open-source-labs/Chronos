@@ -3,7 +3,7 @@ const CustomerModel = require('./CustomerModel');
 
 const CustomerController = {};
 
-// Controller to create customer
+// This middleware creates a new customer
 CustomerController.createcustomer = (req, res, next) => {
   const { name, age, address } = req.body;
   CustomerModel.create({ name, age, address }, (error, result) => {
@@ -16,7 +16,7 @@ CustomerController.createcustomer = (req, res, next) => {
   });
 };
 
-//  Controller to get all customers
+//  This middleware gets all the customers
 CustomerController.getcustomers = (req, res, next) => {
   CustomerModel.find({}, (error, result) => {
     if (error) {
@@ -28,7 +28,7 @@ CustomerController.getcustomers = (req, res, next) => {
   });
 };
 
-//  Controller to delete a customer
+//  This middleware deletes a customer
 CustomerController.deletecustomer = (req, res, next) => {
   const { id } = req.query;
   CustomerModel.findOneAndDelete({ _id: id }, (error, result) => {
@@ -41,20 +41,16 @@ CustomerController.deletecustomer = (req, res, next) => {
   });
 };
 
-
-//  Controller to get info from the books application
+//  This middleware gets all the books from the books database by sending a request to the books server
 CustomerController.getbooksinfo = (req, res, next) => {
-  //  const { body } = req;
-  fetch('http://localhost:4545/getbooks', {
+  fetch('http://localhost:4545/books/getbooks', {
     method: 'GET',
     headers: {
-      'Content-Type': 'Application/JSON',
       Accept: 'application/json',
     },
   })
     .then((response) => response.json())
     .then((results) => {
-      //  const info = results.forEach((curr) => JSON.stringify((curr)));
       res.locals.booksinfo = results;
       return next();
     })

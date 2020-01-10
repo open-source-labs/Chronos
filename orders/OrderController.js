@@ -1,17 +1,9 @@
-const mongoose = require('mongoose');
-// This module enables you to use the fetch api on the backend
 const fetch = require('node-fetch');
 const OrderModel = require('./OrderModel');
 
 const OrderController = {};
 
-// We changed the types to string instead
-//  mongoose.Types.ObjectId
-
-// We changed it back
-
-
-//  Controller for order creation
+//  This middleware creates a new order
 OrderController.createorder = (req, res, next) => {
   const newOrder = {
     customerID: req.body.customerID,
@@ -30,11 +22,10 @@ OrderController.createorder = (req, res, next) => {
   });
 };
 
-
-// Controller for order retrieval
+// This middleware gets all the orders
 OrderController.getorders = (req, res, next) => {
   OrderModel.find({}, (error, results) => {
-    if (error) {
+    if (error) { 
       console.log(`Document retrieval failed! ${error}`);
       return res.status(404).json(error);
     }
@@ -43,7 +34,7 @@ OrderController.getorders = (req, res, next) => {
   });
 };
 
-// Controller for order deletion
+// This middleware deletes an order
 OrderController.deleteorder = (req, res, next) => {
   const { id } = req.query;
   OrderModel.findOneAndDelete({ _id: id }, (error, result) => {
@@ -56,13 +47,11 @@ OrderController.deleteorder = (req, res, next) => {
   });
 };
 
-//  Controller for retrieving customers info from the customer application
+//  This middleware gets all the customers from the customers database by sending a request to the customers server
 OrderController.fetchcustomerdata = (req, res, next) => {
-  //  const { body } = req;
-  fetch('http://localhost:5555/getcustomers', {
+  fetch('http://localhost:5555/customers/getcustomers', {
     method: 'GET',
     headers: {
-      'Content-Type': 'Application/JSON',
       Accept: 'application/json',
     },
   })
@@ -75,6 +64,5 @@ OrderController.fetchcustomerdata = (req, res, next) => {
       console.log(`There was an error in getting customers data ${error}`);
     });
 };
-
 
 module.exports = OrderController;

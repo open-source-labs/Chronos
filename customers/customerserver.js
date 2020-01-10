@@ -1,93 +1,53 @@
-const cmd = require('chronos-microservice-debugger2');
-
-cmd.propagate();
-const express = require('express');
-const path = require('path');
+// UNCOMMENT THE LINES BELOW
+// const cmd = require('chronos-microservice-debugger3');
+// cmd.propagate();
 
 const PORT = 5555;
+const express = require('express');
+const path = require('path');
 const cors = require('cors');
-
 const app = express();
 const bodyParser = require('body-parser');
-const controller = require('./CustomerController');
-//  const path = require('path');
-//  we're using the chronos debugger tool here to intercept
-//  request and propagate our context onto said request as it travels
+const controller = require('./CustomerController.js');
 
-app.use('/', cmd.microCom('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo'));
-cmd.microHealth('customers_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
+// UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
+// app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
-// eslint-disable-next-line max-len
-//  ********** I PROBABLY STILL NEED THIS PART FOR CHRONOS TO WORK AND DEBUG MY MICOSERVICE *************
-// const mw = require('../mwMongo.js');
-//  app.use('/', mw.microCom(path.basename(__filename)));
-// mw.microHealth(path.resolve(__filename));
-
-
-// const mw = require("../mwSQL.js")
-// app.use('/', mw.microCom('customers'))
-// mw.microHealth('customers');
-
-
-//  ********** END **********
-
-
-// Create a new customer
-app.post('/createcustomer', controller.createcustomer, (req, res) => {
+// This route will create a new customer
+app.post('/customers/createcustomer', controller.createcustomer, (req, res) => {
   res.status(200).json(res.locals.createcustomer);
 });
 
-// List all customers
-app.get('/getcustomers', controller.getcustomers, (req, res) => {
+app.get('/customers/getcustomers', controller.getcustomers, (req, res) => {
   res.status(200).json(res.locals.getcustomers);
 });
 
-//  Delete a customer with id
-app.delete('/deletecustomer:id?', controller.deletecustomer, (req, res) => {
+//  This route will delete a customer
+app.delete('/customers/deletecustomer:id?', controller.deletecustomer, (req, res) => {
   res.status(200).json(res.locals.deletecustomer);
 });
 
-// Get books information from the books application
-app.get('/getbooksinfo', controller.getbooksinfo, (req, res) => {
-  //  console.log(`These are the books I got back ${JSON.stringify(res.locals.booksinfo)}`);
+// This route will get all the books from the books database
+app.get('/customers/getbooksinfo', controller.getbooksinfo, (req, res) => {
   res.status(200).json(res.locals.booksinfo);
 });
 
+//  This is the global error handler
+function errorHandler(error, req, res, next) {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign(defaultErr, error);
+  console.log(`Here is the error object's response: ${errorObj.log}`);
+  res.status(errorObj.status).json(errorObj.message);
+}
 
+// Open and listen to server on specified port
 app.listen(PORT, () => {
   console.log(`Customer server running on port ${PORT}...`);
 });
-
-// ******** I DONT THINK THIS PART IS NECESSARY. I'LL JUST LEAVE A COMMENT HERE IT HAS BEEN REFACTORED ABOVE**********
-
-// Get customer by using their id
-// app.get('/customer/:id', (req, res, next) => {
-//   Customer.findById(req.params.id)
-//     .then((customer) => {
-//       if (customer) {
-//         res.json(customer);
-//         next();
-//       } else {
-//         Promise.reject(err);
-//       }
-//     });
-// });
-
-// ********* END ********
-
-// Delete a customer by their id
-// app.delete('/customer/:id', (req, res, next) => {
-//   Customer.findOneAndRemove(req.params.id)
-//     .then(() => {
-//       res.send('Customer successfully deleted');
-//       next();
-//     }).catch((err) => {
-//       if (err) {
-//         throw err;
-//       }
-//     });
-// });

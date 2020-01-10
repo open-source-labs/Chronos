@@ -1,10 +1,9 @@
 const fetch = require('node-fetch');
 const BookModel = require('./BookModel');
 
-
 const BookController = {};
 
-// This controller creates a book in the book db
+// This middleware creates a new book
 BookController.createBook = (req, res, next) => {
   const {
     title, author, numberOfPages, publisher,
@@ -16,14 +15,12 @@ BookController.createBook = (req, res, next) => {
       console.log(`This is the error I am getting back ${err}`);
       return res.send(404).json(err);
     }
-
     res.locals.createBook = result;
     return next();
   });
 };
 
-// This controller creates a book in the book db
-
+// This middleware gets all the books
 BookController.getBooks = (req, res, next) => {
   BookModel.find({}, (err, result) => {
     if (err) {
@@ -35,7 +32,7 @@ BookController.getBooks = (req, res, next) => {
 };
 
 
-// This controller deletes books
+// This middleware deletes a book
 BookController.deleteBook = (req, res, next) => {
   const { id } = req.query;
   BookModel.findOneAndDelete({ _id: id }, (error, result) => {
@@ -48,21 +45,16 @@ BookController.deleteBook = (req, res, next) => {
   });
 };
 
-//  This controller gets order info from the order application
+//  This middleware gets all the orders from the orders database by sending a request to the orders server
 BookController.getorderinfo = (req, res, next) => {
-  //  const { body } = req;
-  // since it's a get request, you technically don't need
-  //  all the headers but it's more declarative this way
-  fetch('http://localhost:7777/getorders', {
+  fetch('http://localhost:7777/orders/getorders', {
     method: 'GET',
     headers: {
-      'Content-Type': 'Application/JSON',
       Accept: 'application/json',
     },
   })
     .then((response) => response.json())
     .then((results) => {
-      //  const info = results.forEach((curr) => JSON.stringify((curr)));
       res.locals.getorderinfo = results;
       return next();
     })
