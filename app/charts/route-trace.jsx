@@ -57,8 +57,8 @@ const RouteLocations = (props) => {
   // return div with Trace Points data
   return (
     <div>
-        {resArray}
-      </div>
+      {resArray}
+    </div>
   );
 };
 

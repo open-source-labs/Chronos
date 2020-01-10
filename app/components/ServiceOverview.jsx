@@ -3,7 +3,7 @@ import routeChart from '../assets/routeChart.png';
 import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
-import chartModal from '';
+import Modal from './Modal.jsx';
 
 
 const { ipcRenderer } = window.require('electron');
@@ -43,7 +43,7 @@ const ServiceOverview = (props) => {
   const [chartTitle, setChartTitle] = useState();
 
   // route button AND traffic button property
-  const routeButtonProperty = { traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: chartModal }, routes: { id: 'Routes', alt: 'Route Trace', src: routeChart } };
+  const routeButtonProperty = { traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: 'app/assets/chartModal.png' }, routes: { id: 'routesImage', alt: 'Route Trace', src: routeChart } };
 
   // declare routes array to display routes when modal is toggled
   const routes = [];
@@ -85,7 +85,7 @@ const ServiceOverview = (props) => {
           toggleModalDisplay(!modalDisplay);
         }}
         type="image"
-        id={routeButtonProperty.id}
+        id={routeButtonProperty.routes.id}
         src="app/assets/routeChart.png"
         width="60px"
         alt={routeButtonProperty.routes.alt}
