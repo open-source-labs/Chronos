@@ -3,6 +3,7 @@ import routeChart from '../assets/routeChart.png';
 import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
+import chartModal from '';
 
 
 const { ipcRenderer } = window.require('electron');
