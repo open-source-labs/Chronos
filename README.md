@@ -2,7 +2,7 @@
 Chronos consists of an NPM package to be required into a user’s microservices that intercepts all http and gRPC microservice communications, as well as monitors the health of each microservice over time. This information is written to a user-owned database (PostgreSQL or NoSQL) where it is queried and rendered by the frontend utilizing Node in conjunction with a native, cross-platform Electron desktop application with React components to ensure agreement between the frontend and database.
 
 ## Why was Chronos created?
-As companies grow larger and begin to scale, they have a tendency to move from a monolithic code architecture and microservices and distributed systems architecture in order to build faster, more maintainable code.
+As companies grow larger and begin to scale, they have a tendency to move from a monolithic code architecture to microservices and distributed systems architecture in order to build faster, more maintainable code.
 
 The process of modularizing a code bases and breaking a monolith into individual services can be a daunting task. How do you break apart and re-connect these services? There is often a transitional period where valuable time is spent debugging these connections between services.
 
