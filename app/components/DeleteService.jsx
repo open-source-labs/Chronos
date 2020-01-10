@@ -4,6 +4,8 @@ import SetupContext from '../context/SetupContext';
 
 // Declare a constant ipcRenderer by deconstructing window.require('electron') so that the onDelete function can initialize an IPC Communication 
 const { ipcRenderer } = window.require('electron');
+console.log('window.require:', window.require)
+
 
 // Deletes a Service
 const DeleteService = (props) => {
@@ -53,3 +55,4 @@ const DeleteService = (props) => {
 
 // export the DeleteService function so that it can imported anywhere
 export default DeleteService;
+
