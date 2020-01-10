@@ -85,7 +85,7 @@ app.on('activate', () => {
 // Fired by the useEffect hook inside of the Splash.jsx component, this message route will toggle
 // splash property inside of settings.json to false once the Splash page renders itself just once
 ipcMain.on('toggleSplash', (message) => {
-  console.log('toggleSplash message received');
+  //console.log('toggleSplash message received');
   const state = JSON.parse(
     // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
@@ -102,7 +102,7 @@ ipcMain.on('toggleSplash', (message) => {
 });
 
 ipcMain.on('checkSplash', (message) => {
-  console.log('checkSplash message received');
+  //sconsole.log('checkSplash message received');
   const state = JSON.parse(
     // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
@@ -116,7 +116,7 @@ ipcMain.on('checkSplash', (message) => {
 // Load settings JSON and returns current setup status back to the render process.
 // ipc 'setup' route -->  Ousman
 ipcMain.on('setup', (message) => {
-  console.log('setup message received');
+  //console.log('setup message received');
   // assigns state to the returned the object returned from settings.json -->  Ousman
   const state = JSON.parse(
     // read json from settings.json
@@ -133,30 +133,31 @@ ipcMain.on('setup', (message) => {
 // Loads existing settings JSON and update settings to include new services entered by the user.
 // on ipc 'submit' request --> Ousman
 ipcMain.on('submit', (message, newService) => {
-  // assigning state to the parsed return of setting
+  // Declares a variable state and initialize it to the returned parsed json object from the user/settings.json file
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
     }),
   );
-  //  if statement is used to replace hard coded data. Hard coded data and the michelleWasHere key is needed to avoid a load error caused by Electron querying the database before a user has added or selected a database.
 
-  //* ** What is happening here --> Ousman */
+  // Checks if setup is required by checking if the value for the state key 'setupRequired' is true 
   if (state.setupRequired) {
+    // If setup is required, the value for key 'setupRequired' is reassign to false and the value for key 'services' is reassign to an array with newService as its only element
     state.setupRequired = false;
     state.services = [JSON.parse(newService)];
-    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
   } else {
-    state.setupRequired = false;
+    // Else the newService is pushed into the services array
     state.services.push(JSON.parse(newService));
-    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
-  }
+  } 
+
+  // Rewrites user/settings.json to show state
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
 });
 
 // Load settings JSON and returns updated state back to the render process.
 // on ipc 'dashboard' request --> Ousman
 ipcMain.on('dashboard', (message) => {
-  // assign state to the parsed return of setting --> Ousman
+  // Declares a variable state and initialize it to the returned parse json object from the user/settings.json file
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
@@ -171,24 +172,29 @@ ipcMain.on('dashboard', (message) => {
   message.returnValue = dashboardList;
 });
 
-// ipc 'deleteService' route
+// Deletes the service at position 'index' from the services array within the user/setting.json file,
+// resets the user/setting.json file to what it was originally if all of the services are deleted,
+// and sends the remaining services back to onDelete function within DeleteService as a response
 ipcMain.on('deleteService', (message, index) => {
-  // assigns state to the returned the object returned from settings.json
+  // Declares a variable state and initialize it to the returned parse json object from the user/settings.json file
   let state = JSON.parse(
-    // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
     }),
   );
+
+  // Send a response back with the updated services
   const { splash } = state;
-  // updating the services
+// Checks if there is more than one services in the services array
   if (state.services.length > 1) {
+       // If true, removes the service at position 'index'
     state.services.splice(index, 1);
   } else {
+      // Else reassign state to what the user/setting.json file was originally before any database was save
     state = { setupRequired: true, services: ['hard', 'coded', 'in'], splash };
   }
 
-  // write json from settings.json
+  // Rewrites json from settings.json
   fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), { encoding: 'UTF-8' });
   message.sender.send('deleteResponse', state.services);
 });
