@@ -23,7 +23,6 @@ OrderController.createorder = (req, res, next) => {
   });
 };
 
-
 // This middleware gets all the orders
 OrderController.getorders = (req, res, next) => {
   OrderModel.find({}, (error, results) => {

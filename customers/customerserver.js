@@ -15,7 +15,6 @@ app.use('/', cmd.microCom('Customers', 'mongo', 'mongodb+srv://benmizel:3A7G4ERM
 
 app.use(bodyParser.json());
 app.use(cors());
-// app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 // This route will create a new customer
 app.post('/customers/createcustomer', controller.createcustomer, (req, res) => {

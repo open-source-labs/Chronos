@@ -15,7 +15,6 @@ app.use('/', cmd.microCom('Books', 'mongo', 'mongodb+srv://benmizel:3A7G4ERMhg%2
  
 app.use(bodyParser.json());
 app.use(cors());
-// app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 //  This route will create a new book
 app.post('/books/createbook', controller.createBook, (req, res) => {

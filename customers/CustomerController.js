@@ -41,7 +41,6 @@ CustomerController.deletecustomer = (req, res, next) => {
   });
 };
 
-
 //  This middleware gets all the books from the books database by sending a request to the books server
 CustomerController.getbooksinfo = (req, res, next) => {
   fetch('http://localhost:4545/books/getbooks', {

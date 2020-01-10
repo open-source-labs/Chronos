@@ -15,7 +15,6 @@ app.use('/', cmd.microCom('Orders', 'mongo', 'mongodb+srv://benmizel:3A7G4ERMhg%
 
 app.use(bodyParser.json());
 app.use(cors());
-// app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 // This route will create a new order
 app.post('/orders/createorder', controller.createorder, (req, res) => {
