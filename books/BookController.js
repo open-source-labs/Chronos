@@ -47,10 +47,9 @@ BookController.deleteBook = (req, res, next) => {
 
 //  This middleware gets all the orders from the orders database by sending a request to the orders server
 BookController.getorderinfo = (req, res, next) => {
-  fetch('http://localhost:7777/getorders', {
+  fetch('http://localhost:7777/orders/getorders', {
     method: 'GET',
     headers: {
-      'Content-Type': 'Application/JSON',
       Accept: 'application/json',
     },
   })

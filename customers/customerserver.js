@@ -2,38 +2,36 @@
 // const cmd = require('chronos-microservice-debugger3');
 // cmd.propagate();
 
+const PORT = 5555;
 const express = require('express');
 const path = require('path');
-const PORT = 5555;
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
-const controller = require('./CustomerController');
+const controller = require('./CustomerController.js');
 
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 // app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
 // This route will create a new customer
-app.post('/createcustomer', controller.createcustomer, (req, res) => {
+app.post('/customers/createcustomer', controller.createcustomer, (req, res) => {
   res.status(200).json(res.locals.createcustomer);
 });
 
-// This route will get all the customers
-app.get('/getcustomers', controller.getcustomers, (req, res) => {
+app.get('/customers/getcustomers', controller.getcustomers, (req, res) => {
   res.status(200).json(res.locals.getcustomers);
 });
 
 //  This route will delete a customer
-app.delete('/deletecustomer:id?', controller.deletecustomer, (req, res) => {
+app.delete('/customers/deletecustomer:id?', controller.deletecustomer, (req, res) => {
   res.status(200).json(res.locals.deletecustomer);
 });
 
 // This route will get all the books from the books database
-app.get('/getbooksinfo', controller.getbooksinfo, (req, res) => {
+app.get('/customers/getbooksinfo', controller.getbooksinfo, (req, res) => {
   res.status(200).json(res.locals.booksinfo);
 });
 

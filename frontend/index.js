@@ -1,6 +1,6 @@
 window.onload = () => {
   // microservice1 - Books
-  const microservicePort = { 4545: 'Books', 7777: 'Orders', 5555: 'Customers' };
+  const microservicePort = { 3000: 'Frontend', 4545: 'Books', 7777: 'Orders', 5555: 'Customers' };
   // sets the title of the page to whatever port you're currently on
   document.title = microservicePort[window.location.port];
   // create a display that when clicked will grab the books passed in
@@ -22,7 +22,7 @@ window.onload = () => {
       title, author, numberOfPages, publisher,
     };
     book = JSON.stringify(book);
-    fetch('http://localhost:4545/createbook', {
+    fetch('http://localhost:3000/books/createbook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: book,
@@ -44,9 +44,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of books';
     document.getElementById('container').appendChild(newDisplay);
-    fetch('http://localhost:4545/getbooks', {
+    fetch('http://localhost:3000/books/getbooks', {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -67,7 +66,7 @@ window.onload = () => {
             const newDisplay = document.createElement('ul');
             newDisplay.id = 'display';
             document.getElementById('container').appendChild(newDisplay);
-            const url = new URL('http://localhost:4545/deletebook:id?');
+            const url = new URL('http://localhost:3000/books/deletebook:id?');
             url.searchParams.append('id', bookInDb._id);
             fetch(url, {
               method: 'DELETE',
@@ -92,9 +91,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of orders';
     document.getElementById('container').appendChild(newDisplay);
-    fetch('http://localhost:4545/getordersinfo', {
+    fetch('http://localhost:3000/books/getordersinfo', {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -125,7 +123,7 @@ window.onload = () => {
       name, age, address,
     };
     customer = JSON.stringify(customer);
-    fetch('http://localhost:5555/createcustomer', {
+    fetch('http://localhost:3000/customers/createcustomer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: customer,
@@ -146,9 +144,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of customers';
     document.getElementById('container').appendChild(newDisplay);
-    fetch('http://localhost:5555/getcustomers', {
+    fetch('http://localhost:3000/customers/getcustomers', {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -168,7 +165,7 @@ window.onload = () => {
             const newDisplay = document.createElement('ul');
             newDisplay.id = 'display';
             document.getElementById('container').appendChild(newDisplay);
-            const url = new URL('http://localhost:5555/deletecustomer:id?');
+            const url = new URL('http://localhost:3000/customers/deletecustomer:id?');
             url.searchParams.append('id', customerInDb._id);
             fetch(url, {
               method: 'DELETE',
@@ -193,9 +190,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of books';
     document.getElementById('container').appendChild(newDisplay);
-    fetch('http://localhost:5555/getbooksinfo', {
+    fetch('http://localhost:3000/customers/getbooksinfo', {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -229,7 +225,7 @@ window.onload = () => {
       deliveryDate,
     };
     order = JSON.stringify(order);
-    fetch('http://localhost:7777/createorder', {
+    fetch('http://localhost:3000/orders/createorder', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: order,
@@ -250,9 +246,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of orders';
     document.getElementById('container').appendChild(newDisplay);
-    fetch('http://localhost:7777/getorders', {
+    fetch('http://localhost:3000/orders/getorders', {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -272,7 +267,7 @@ window.onload = () => {
             const newDisplay = document.createElement('ul');
             newDisplay.id = 'display';
             document.getElementById('container').appendChild(newDisplay);
-            const url = new URL('http://localhost:7777/deleteorder:id?');
+            const url = new URL('http://localhost:3000/orders/deleteorder:id?');
             url.searchParams.append('id', orderInDb._id);
             fetch(url, {
               method: 'DELETE',
@@ -296,9 +291,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of customers';
     document.getElementById('container').appendChild(newDisplay);
-    fetch('http://localhost:7777/customerdata', {
+    fetch('http://localhost:3000/orders/getcustomersinfo', {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => res.json())
       .then((data) => {
