@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
 import Modal from './Modal.jsx';
-import pieChart from '../assets/pieChart.png';
-import memoryChart from '../assets/memoryChart.png';
-import tempChart from '../assets/tempChart.png';
-import speedChart from '../assets/speedChart.png';
-import latencyChart from '../assets/latencyChart.png';
-import processingChart from '../assets/processingChart.png';
 
 // Renders charts created with health and communication data for a selected database.
 const ServiceDetails = (props) => {
@@ -26,7 +20,6 @@ const ServiceDetails = (props) => {
   const buttonProperties = [
     { id: 'request', alt: 'Request Data', src: 'app/assets/pieChart.png' },
     { id: 'response', alt: 'Response Data', src: 'app/assets/pieChart.png' },
-    // { id: 'routes', alt: 'Route Trace', src: 'https://st2.depositphotos.com/3894705/9581/i/950/depositphotos_95816620-stock-photo-round-button-shows-speedometer.jpg' },
     { id: 'speed', alt: 'Speed Data', src: 'app/assets/speedChart.png' },
     { id: 'processes', alt: 'Processes Data', src: 'app/assets/processingChart.png' },
     { id: 'latency', alt: 'Latency Data', src: 'app/assets/latencyChart.png' },

@@ -175,16 +175,10 @@ const ServiceOverview = (props) => {
     return componentButtons;
   };
 
-  if (detailsSelected) return detailsSelected;
-
   return (
     <div className="mainContainer">
-      <div>
-        <h1 className="overviewTitle">Microservices Overview</h1>
-      </div>
-      <div className="servicesList">{serviceList()}</div>
-      <br />
-      <h1>Microservices Communications</h1>
+      <h1 className="overviewTitle">Microservices Overview</h1>
+      <h2>Communications Data</h2>
       {modalDisplay ? (
         <Modal
           chartTitle={chartTitle}
@@ -200,7 +194,9 @@ const ServiceOverview = (props) => {
         {routes}
         {traffic}
       </div>
-
+      <div className="servicesList">{serviceList()}</div>
+      <br />
+      {detailsSelected || null}
     </div>
   );
 };
