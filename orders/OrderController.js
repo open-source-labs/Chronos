@@ -59,7 +59,7 @@ OrderController.deleteorder = (req, res, next) => {
 //  Controller for retrieving customers info from the customer application
 OrderController.fetchcustomerdata = (req, res, next) => {
   //  const { body } = req;
-  fetch('http://localhost:5555/getcustomers', {
+  fetch('http://localhost:3000/customers/getcustomers', {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',
