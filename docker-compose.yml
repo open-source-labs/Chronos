@@ -1,0 +1,53 @@
+version: '3'
+services:
+  frontend:
+    build: './frontend'
+    image: chronos2jobtc/frontend-image:tag
+    container_name: "frontend-container"
+    ports:
+      - "3000:3000"
+      # - "8080:8080"
+    # volumes:
+    #   - ./frontend:/usr/src/app/frontend
+
+  books:
+    build: './books'
+    image: chronos2jobtc/books-image:tag
+    container_name: "books-container"
+    ports:
+      - "3001:4545"
+    # depends_on:
+    #   - frontend
+  customers:
+    build: './customers'
+    image: chronos2jobtc/customers-image:tag
+    container_name: "customers-container"
+    ports:
+      - "3002:5555"
+    # depends_on:
+    #   - frontend
+  orders:
+    build: './orders'
+    image: chronos2jobtc/orders-image:tag
+    container_name: "orders-container"
+    ports:
+      - "3003:7777"
+    # depends_on:
+    #   - frontend
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/srv/www/static
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - books
+      - customers
+      - orders
+  
+  
+  
+  
+  

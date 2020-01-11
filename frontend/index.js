@@ -340,8 +340,8 @@ window.onload = () => {
     };
 
     book = JSON.stringify(book);
-    // fetch('http://localhost:8080/books/createbook', {
-    fetch('http://localhost:3000/books/createbook', {
+    fetch('http://localhost:8080/books/createbook', {
+    // fetch('http://localhost:3000/books/createbook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: book,
@@ -364,8 +364,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of books';
     document.getElementById('container').appendChild(newDisplay);
-    // fetch('http://localhost:8080/books/getbooks', {
-    fetch('http://localhost:3000/books/getbooks', {
+    fetch('http://localhost:8080/books/getbooks', {
+    // fetch('http://localhost:3000/books/getbooks', {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -390,8 +390,8 @@ window.onload = () => {
             const newDisplay = document.createElement('ul');
             newDisplay.id = 'display';
             document.getElementById('container').appendChild(newDisplay);
-            // const url = new URL('http://localhost:8080/books/deletebook:id?');
-            const url = new URL('http://localhost:3000/books/deletebook:id?');
+            const url = new URL('http://localhost:8080/books/deletebook:id?');
+            // const url = new URL('http://localhost:3000/books/deletebook:id?');
             url.searchParams.append('id', bookInDb._id);
 
             fetch(url, {
@@ -417,8 +417,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of orders';
     document.getElementById('container').appendChild(newDisplay);
-    // fetch('http://localhost:8080/books/getordersinfo', {
-    fetch('http://localhost:3000/books/getordersinfo', {
+    fetch('http://localhost:8080/books/getordersinfo', {
+    // fetch('http://localhost:3000/books/getordersinfo', {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -450,8 +450,8 @@ window.onload = () => {
       name, age, address,
     };
     customer = JSON.stringify(customer);
-    // fetch('http://localhost:8080/customers/createcustomer', {
-    fetch('http://localhost:3000/customers/createcustomer', {
+    fetch('http://localhost:8080/customers/createcustomer', {
+    // fetch('http://localhost:3000/customers/createcustomer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: customer,
@@ -472,8 +472,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of customers';
     document.getElementById('container').appendChild(newDisplay);
-    // fetch('http://localhost:8080/customers/getcustomers', {
-    fetch('http://localhost:3000/customers/getcustomers', {
+    fetch('http://localhost:8080/customers/getcustomers', {
+    // fetch('http://localhost:3000/customers/getcustomers', {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -494,8 +494,8 @@ window.onload = () => {
             const newDisplay = document.createElement('ul');
             newDisplay.id = 'display';
             document.getElementById('container').appendChild(newDisplay);
-            // const url = new URL('http://localhost:8080/customers/deletecustomer:id?');
-            const url = new URL('http://localhost:3000/customers/deletecustomer:id?');
+            const url = new URL('http://localhost:8080/customers/deletecustomer:id?');
+            // const url = new URL('http://localhost:3000/customers/deletecustomer:id?');
             url.searchParams.append('id', customerInDb._id);
             fetch(url, {
               method: 'DELETE',
@@ -522,8 +522,8 @@ window.onload = () => {
     newDisplay.innerHTML = 'List of books';
     document.getElementById('container').appendChild(newDisplay);
 
-    // fetch('http://localhost:8080/customers/getbooksinfo', {
-    fetch('http://localhost:3000/customers/getbooksinfo', {
+    fetch('http://localhost:8080/customers/getbooksinfo', {
+    // fetch('http://localhost:3000/customers/getbooksinfo', {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -559,8 +559,8 @@ window.onload = () => {
       deliveryDate,
     };
     order = JSON.stringify(order);
-    // fetch('http://localhost:8080/orders/createorder', {
-    fetch('http://localhost:3000/orders/createorder', {
+    fetch('http://localhost:8080/orders/createorder', {
+    // fetch('http://localhost:3000/orders/createorder', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: order,
@@ -582,8 +582,8 @@ window.onload = () => {
     newDisplay.id = 'display';
     newDisplay.innerHTML = 'List of orders';
     document.getElementById('container').appendChild(newDisplay);
-    // fetch('http://localhost:8080/orders/getorders', {
-    fetch('http://localhost:3000/orders/getorders', {
+    fetch('http://localhost:8080/orders/getorders', {
+    // fetch('http://localhost:3000/orders/getorders', {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -604,8 +604,8 @@ window.onload = () => {
             const newDisplay = document.createElement('ul');
             newDisplay.id = 'display';
             document.getElementById('container').appendChild(newDisplay);
-            // const url = new URL('http://localhost:8080/orders/deleteorder:id?');
-            const url = new URL('http://localhost:3000/orders/deleteorder:id?');
+            const url = new URL('http://localhost:8080/orders/deleteorder:id?');
+            // const url = new URL('http://localhost:3000/orders/deleteorder:id?');
             url.searchParams.append('id', orderInDb._id);
             fetch(url, {
               method: 'DELETE',
@@ -631,8 +631,8 @@ window.onload = () => {
     newDisplay.innerHTML = 'List of customers';
     document.getElementById('container').appendChild(newDisplay);
 
-    // fetch('http://localhost:8080/orders/getcustomersinfo', {
-    fetch('http://localhost:3000/orders/getcustomersinfo', {
+    fetch('http://localhost:8080/orders/getcustomersinfo', {
+    // fetch('http://localhost:3000/orders/getcustomersinfo', {
       method: 'GET',
     })
       .then((res) => res.json())

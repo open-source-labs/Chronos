@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "http-proxy": "^1.18.0",
     "nodemon": "^2.0.2",
     "path": "^0.12.7"
   }

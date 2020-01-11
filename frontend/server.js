@@ -36,22 +36,34 @@ const orders = 'http://localhost:7777';
 // app.use('/', cmd.microCom('frontend', 'mongo', 'mongodb+srv://chronos:jenae@cluster0-gw2vt.mongodb.net/test?retryWrites=true&w=majority', 'yes', 'm'));
 
 // app.use(cors());
-app.use('/', express.static('../frontend'));
 
-app.all('/books/*', (req, res) => {
-  console.log('redirecting to books');
-  apiProxy.web(req, res, { target: books });
+// CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
+app.use((req, res, next) => {
+  console.log(
+    `***************************************************************************************
+    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
+  req.url
+}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    ***************************************************************************************`,
+  );
+  next();
 });
+// app.use('/', express.static('/usr/src/app/frontend'));
 
-app.all('/customers/*', (req, res) => {
-  console.log('redirecting to customers');
-  apiProxy.web(req, res, { target: customers });
-});
+// app.all('/books/*', (req, res) => {
+//   console.log('redirecting to books');
+//   apiProxy.web(req, res, { target: books });
+// });
 
-app.all('/orders/*', (req, res) => {
-  console.log('redirecting to orders');
-  apiProxy.web(req, res, { target: orders });
-});
+// app.all('/customers/*', (req, res) => {
+//   console.log('redirecting to customers');
+//   apiProxy.web(req, res, { target: customers });
+// });
+
+// app.all('/orders/*', (req, res) => {
+//   console.log('redirecting to orders');
+//   apiProxy.web(req, res, { target: orders });
+// });
 
 // Open and listen to server on specified port
 app.listen(PORT, () => {
