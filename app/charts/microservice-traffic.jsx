@@ -29,7 +29,6 @@ const MicroServiceTraffic = (props) => {
   }
 
   else {
-  
     for (let i = communicationsData.length-1; i >= 0; i--) {
       const element = communicationsData[i];
       if (resObj[element.correlatingid]) resObj[element.correlatingid].push(element.currentmicroservice);
@@ -40,26 +39,30 @@ const MicroServiceTraffic = (props) => {
 
   //use object values to destructure locations
   const tracePoints = Object.values(resObj);
-  let position = communicationsData[0].correlatingid ? 0 : tracePoints.length-1;
- 
+
   // Declare Micro-server-count dictinary to capture the amount of times a particular server is hit
   const microServiceCountdictionary  = {};
 
+  //array logging every ping present in communications table ---> flat used to flatten multidimensional array and return 1d array
+  const tracePointLog = tracePoints.flat(Infinity);
+
   // iterate over Trace Points
-  for (let i = 0; i < tracePoints[position].length; i+=1) {
+  for (let i = 0; i < tracePointLog.length; i+=1) {
     
     // populate Micro-count dictionary
-    if (!microServiceCountdictionary[tracePoints[position][i]]) {
-      microServiceCountdictionary[tracePoints[position][i]] = 1;
+    if (!microServiceCountdictionary[tracePointLog[i]]) {
+      microServiceCountdictionary[tracePointLog[i]] = 1;
     } else {
-      microServiceCountdictionary[tracePoints[position][i]]+=1
+      microServiceCountdictionary[tracePointLog[i]]+=1
     }
   };
 
   // capture values of microServiceCountdictionary to use as data to populate chart object
   const serverPingCount = Object.values(microServiceCountdictionary);
 
-  
+  // variable 10 points higher than max number in microservicesDictionary aggregation --> variable allows for top level spacing on bar graph
+  const yAxisHeadRoom = (Math.max(...serverPingCount) + 10);
+
   // Create chart object data to feed into bar component 
   const myChart = {
     //spread dictionary keys inorder to properly label chart x axis 
@@ -70,9 +73,9 @@ const MicroServiceTraffic = (props) => {
           backgroundColor: 'rgba(241, 207, 70,1)',
           borderColor: 'rgba(0,0,0,1)',
           borderWidth: 1,
-          data: [...serverPingCount, 0] // spread ping count array into data array to have chart populate the Y axis
+          data: [...serverPingCount, 0, yAxisHeadRoom] // spread ping count array into data array to have chart populate the Y axis
         }
-      ]
+      ],
   }
 
   
