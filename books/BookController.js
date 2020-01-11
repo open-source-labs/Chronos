@@ -27,9 +27,11 @@ BookController.createBook = (req, res, next) => {
 BookController.getBooks = (req, res, next) => {
   BookModel.find({}, (err, result) => {
     if (err) {
+      console.log('Book retrieval was not successful', err);
       return res.status(404).json(err);
     }
     res.locals.getBooks = result;
+    console.log('Book retrieval was successful', res.locals.getBooks);
     return next();
   });
 };
@@ -53,7 +55,7 @@ BookController.getorderinfo = (req, res, next) => {
   //  const { body } = req;
   // since it's a get request, you technically don't need
   //  all the headers but it's more declarative this way
-  fetch('http://localhost:7777/getorders', {
+  fetch('http://localhost:3000/orders/getorders', {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',

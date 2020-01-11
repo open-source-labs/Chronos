@@ -44,22 +44,22 @@ app.use((req, res, next) => {
 
 
 // Create a new customer
-app.post('/createcustomer', controller.createcustomer, (req, res) => {
+app.post('/customers/createcustomer', controller.createcustomer, (req, res) => {
   res.status(200).json(res.locals.createcustomer);
 });
 
 // List all customers
-app.get('/getcustomers', controller.getcustomers, (req, res) => {
+app.get('/customers/getcustomers', controller.getcustomers, (req, res) => {
   res.status(200).json(res.locals.getcustomers);
 });
 
 //  Delete a customer with id
-app.delete('/deletecustomer:id?', controller.deletecustomer, (req, res) => {
+app.delete('/customers/deletecustomer:id?', controller.deletecustomer, (req, res) => {
   res.status(200).json(res.locals.deletecustomer);
 });
 
 // Get books information from the books application
-app.get('/getbooksinfo', controller.getbooksinfo, (req, res) => {
+app.get('/customers/getbooksinfo', controller.getbooksinfo, (req, res) => {
   //  console.log(`These are the books I got back ${JSON.stringify(res.locals.booksinfo)}`);
   res.status(200).json(res.locals.booksinfo);
 });
