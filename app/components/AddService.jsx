@@ -29,10 +29,19 @@ const AddService = () => {
     setDbType(document.getElementById('dbType').value);
   }, [dbState, setDbType]);
 
+  const tooltipWriteup = `Chronos utilizes user-owned databases to store communications and system health data.
+    Please enter a valid connection string to a SQL or noSQL database to begin monitoring.`;
+
   return (
     <div className="mainContainer">
-      <img src="app/assets/logo2.png" alt="logo" />
-      <h2 className="signUpHeader">Enter Your Database Information</h2>
+      <img src="app/assets/logo2.png" alt="logo" id="addServiceLogo" />
+      <h2 className="signUpHeader">
+        Enter Your Database Information
+        <sup className="tooltip">
+              &#9432;
+          <div className="tooltiptext">{tooltipWriteup}</div>
+        </sup>
+      </h2>
       <form>
         Database Type:
         <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>

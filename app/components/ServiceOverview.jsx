@@ -23,15 +23,16 @@ const ServiceOverview = (props) => {
   useEffect(() => {
     // IPC communication used to initiate query for information on microservices.
     ipcRenderer.send('overviewRequest', props.index);
-
     // IPC listener responsible for retrieving infomation from asynchronous main process message.
     ipcRenderer.on('overviewResponse', (event, data) => {
       // Adds to state and context.
+      console.log(JSON.parse(data));
       setOverviewState(Object.values(JSON.parse(data)));
       serviceComponents.overviewData = JSON.parse(data);
     });
   }, []);
 
+  console.log('overviewstate: ', overviewState);
   // Add routes to the display
   // Hook used to toggle whether or not the Modal component renders
   const [modalDisplay, toggleModalDisplay] = useState(false);
@@ -43,7 +44,10 @@ const ServiceOverview = (props) => {
   const [chartTitle, setChartTitle] = useState();
 
   // route button AND traffic button property
-  const routeButtonProperty = { traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: 'app/assets/chartModal.png' }, routes: { id: 'routesImage', alt: 'Route Trace', src: routeChart } };
+  const routeButtonProperty = {
+    traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: 'app/assets/chartModal.png' },
+    routes: { id: 'routesImage', alt: 'Route Trace', src: routeChart },
+  };
 
   // declare routes array to display routes when modal is toggled
   const routes = [];
@@ -126,7 +130,8 @@ const ServiceOverview = (props) => {
                   // Adds returned data to context
                   healthdata.detailData = Object.values(JSON.parse(data));
                   // Updates state. Triggers rerender.
-                  setDetails(<ServiceDetails service={element.currentmicroservice} />);
+                  setDetails(<ServiceDetails service={element.currentmicroservice} setDetails={setDetails} />);
+                  console.log('details selected is: ', detailsSelected);
                 });
               }}
             >
@@ -175,10 +180,21 @@ const ServiceOverview = (props) => {
     return componentButtons;
   };
 
+  const tooltipWriteup = `Communications data - Routes and Traffic - is not specific to a single microservice,
+   but combines data from all microservices within a single application network.`;
+
+  const tooltipWriteup2 = 'View and toggle between health data for individual services within your microservice network.';
+
   return (
     <div className="mainContainer">
       <h1 className="overviewTitle">Microservices Overview</h1>
-      <h2>Communications Data</h2>
+      <h2>
+        Communications Data
+        <sup className="tooltip">
+          &#9432;
+          <div className="tooltiptext">{tooltipWriteup}</div>
+        </sup>
+      </h2>
       {modalDisplay ? (
         <Modal
           chartTitle={chartTitle}
@@ -194,7 +210,13 @@ const ServiceOverview = (props) => {
         {routes}
         {traffic}
       </div>
-      <div className="servicesList">{serviceList()}</div>
+      <div className="servicesList">
+        {serviceList()}
+        <sup className="tooltip">
+          &#9432;
+          <div className="tooltiptext">{tooltipWriteup2}</div>
+        </sup>
+      </div>
       <br />
       {detailsSelected || null}
     </div>
