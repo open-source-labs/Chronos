@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["SQL","SQL","postgres://rqiocamx:XOIUvjH7oFYem_GAJ-1Z8a5aSLc9XhEN@rajje.db.elephantsql.com:5432/rqiocamx"]],"splash":true}
+{"setupRequired":true,"services":["hard","coded","in"],"splash":false}
