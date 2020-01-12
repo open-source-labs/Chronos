@@ -196,6 +196,7 @@ ipcMain.on('deleteService', (message, index) => {
 
 // Queries the database for communications information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message, index) => {
+  console.log('hello from overview request');
   const { services } = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
   );
@@ -238,6 +239,7 @@ ipcMain.on('overviewRequest', (message, index) => {
         console.log('Connected to SQL Database');
         const queryResults = JSON.stringify(result.rows);
         // Asynchronous event emitter used to transmit query results back to the render process.
+        console.log('ipcMain about to send overviewResponse message');
         message.sender.send('overviewResponse', queryResults);
       }
     });
@@ -246,6 +248,7 @@ ipcMain.on('overviewRequest', (message, index) => {
 
 // Queries the database for computer health information and returns it back to the render process.
 ipcMain.on('detailsRequest', (message, index) => {
+  console.log('detailsRequest message received');
   const databaseType = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
   ).services[index][1];
@@ -269,6 +272,7 @@ ipcMain.on('detailsRequest', (message, index) => {
       }
       const queryResults = JSON.stringify(result.rows);
       // Asynchronous event emitter used to transmit query results back to the render process.
+      // console.log('healthInfo data about to comeback');
       message.sender.send('detailsResponse', queryResults);
     });
   }
