@@ -36,8 +36,6 @@ const ServicesDashboard = (props) => {
     return buttonStore;
   };
 
-  const tooltipWriteup = 'Please provide separate databases for additional microservice applications.';
-
   return (
     <div className="servicesDashboardContainer">
       <div className="left">
@@ -46,10 +44,6 @@ const ServicesDashboard = (props) => {
           <div className="left-top">
             <h2 className="dashboardHeader">
               Your Databases
-              <sup className="tooltip">
-              &#9432;
-                <div className="tooltiptext">{tooltipWriteup}</div>
-              </sup>
             </h2>
             {renderServiceList(serviceList)}
           </div>
