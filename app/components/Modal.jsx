@@ -16,15 +16,15 @@ const Modal = (props) => {
   } = props;
   //  Dictionary used to render proper data chart within Modal component upon rendering
   const dict = {
-    request: <RequestTypesChart service={service} />,
+    Request: <RequestTypesChart service={service} />,
     routesImage: <RouteTrace service={service} />,
-    response: <ResponseCodesChart service={service} />,
-    speed: <SpeedChart service={service} />,
-    processes: <ProcessesChart service={service} />,
-    latency: <LatencyChart service={service} />,
+    Response: <ResponseCodesChart service={service} />,
+    Speed: <SpeedChart service={service} />,
+    Processes: <ProcessesChart service={service} />,
+    Latency: <LatencyChart service={service} />,
     Traffic: <MicroServiceTraffic service={service} />,
-    temperature: <TemperatureChart service={service} />,
-    memory: <MemoryChart service={service} />,
+    Temperature: <TemperatureChart service={service} />,
+    Memory: <MemoryChart service={service} />,
   };
 
   // event.stopPropogation allows the user to interact with the chart as opposed to a click on the

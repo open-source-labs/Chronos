@@ -1,11 +1,10 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useContext } from 'react';
 import ServiceOverview from './ServiceOverview.jsx';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
 import AddService from './AddService.jsx';
 import DeleteService from './DeleteService.jsx';
-
-const path = require('path');
 
 const ServicesDashboard = (props) => {
   // Used to toggle setup required if user wants to add a new database.
@@ -43,7 +42,9 @@ const ServicesDashboard = (props) => {
         <div className="leftTopContainer">
           <img alt="Chronos Logo" src="app/assets/icon2Cropped.png" id="serviceDashLogo" />
           <div className="left-top">
-            <h2 className="dashboardHeader">Your Databases</h2>
+            <h2 className="dashboardHeader">
+              Your Databases
+            </h2>
             {renderServiceList(serviceList)}
           </div>
           <div className="left-bottom">
