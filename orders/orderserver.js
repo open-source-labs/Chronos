@@ -45,7 +45,7 @@ app.post('/orders/createorder', controller.createorder, (req, res) => {
 });
 
 // Get all orders through this endpoint
-app.get('/orders/getorders', controller.getorders, (req, res) => res.status(200).send(res.locals.getorders));
+app.get('/orders/getorders', controller.getorders, (req, res) => res.status(200).json(res.locals.getorders));
 
 // Delete order through this endpoint
 app.delete('/orders/deleteorder:id?', controller.deleteorder, (req, res) => {

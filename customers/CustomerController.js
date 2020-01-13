@@ -45,7 +45,7 @@ CustomerController.deletecustomer = (req, res, next) => {
 //  Controller to get info from the books application
 CustomerController.getbooksinfo = (req, res, next) => {
   //  const { body } = req;
-  fetch('http://localhost:3000/books/getbooks', {
+  fetch('http://localhost:8080/books/getbooks', {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',

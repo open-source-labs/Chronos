@@ -55,7 +55,7 @@ BookController.getorderinfo = (req, res, next) => {
   //  const { body } = req;
   // since it's a get request, you technically don't need
   //  all the headers but it's more declarative this way
-  fetch('http://localhost:3000/orders/getorders', {
+  fetch('http://localhost:8080/orders/getorders', {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',
