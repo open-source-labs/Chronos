@@ -1,8 +1,8 @@
 {
   "package name": "chronos",
   "name": "chronos-microservice-debugger3",
-  "version": "2.0.0",
-  "description": "A microservice health monitor and communication logger",
+  "version": "2.0.3",
+  "description": "Microservice communication and health visualizer.",
   "main": "chronos.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
