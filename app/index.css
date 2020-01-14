@@ -88,7 +88,7 @@ margin-top: -100px;
 
   /* Position the tooltip */
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 105%;
   top: -5px;
 }
@@ -230,6 +230,10 @@ form {
   border: 1px solid rgb(255, 206, 9);
   background-color: #333;
   transition: 0.25s;
+}
+
+#databsaseList {
+  z-index: -1;
 }
 
 .microserviceBtn {

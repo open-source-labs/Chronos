@@ -158,7 +158,7 @@ const ServiceOverview = (props) => {
                     // Adds returned data to context.
                     healthdata.detailData = Object.values(JSON.parse(data));
                     // Updates state. Triggers rerender.
-                    setDetails(<ServiceDetails service={element.currentMicroservice} />);
+                    setDetails(<ServiceDetails service={element.currentMicroservice} setDetails={setDetails} />);
                   });
                 }}
               >
