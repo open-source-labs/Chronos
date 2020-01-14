@@ -7,6 +7,7 @@ import TemperatureChart from '../charts/temperature-chart.jsx';
 import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
 import RouteTrace from '../charts/route-trace.jsx';
+import MicroServiceTraffic from '../charts/microservice-traffic.jsx';
 
 const Modal = (props) => {
   // Destructuring props to make linter happy
@@ -15,18 +16,20 @@ const Modal = (props) => {
   } = props;
   //  Dictionary used to render proper data chart within Modal component upon rendering
   const dict = {
-    request: <RequestTypesChart service={service} />,
-    routes: <RouteTrace service={service} />,
-    response: <ResponseCodesChart service={service} />,
-    speed: <SpeedChart service={service} />,
-    processes: <ProcessesChart service={service} />,
-    latency: <LatencyChart service={service} />,
-    temperature: <TemperatureChart service={service} />,
-    memory: <MemoryChart service={service} />,
+    Request: <RequestTypesChart service={service} />,
+    routesImage: <RouteTrace service={service} />,
+    Response: <ResponseCodesChart service={service} />,
+    Speed: <SpeedChart service={service} />,
+    Processes: <ProcessesChart service={service} />,
+    Latency: <LatencyChart service={service} />,
+    Traffic: <MicroServiceTraffic service={service} />,
+    Temperature: <TemperatureChart service={service} />,
+    Memory: <MemoryChart service={service} />,
   };
 
   // event.stopPropogation allows the user to interact with the chart as opposed to a click on the
   // chart bubbling out and closing the Modal.
+  
   return (
     <div id="modalWindow" onClick={() => toggleModalDisplay(!toggleModalDisplay)}>
       <div id="modalContent" onClick={(event) => event.stopPropagation()}>

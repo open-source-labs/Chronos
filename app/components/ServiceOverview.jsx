@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
+import routeChart from '../assets/routeChart.png';
 import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from './ServiceDetails.jsx';
 import Modal from './Modal.jsx';
-import routeChart from '../assets/routeChart.png'
+
 
 const { ipcRenderer } = window.require('electron');
 
@@ -22,16 +23,17 @@ const ServiceOverview = (props) => {
   useEffect(() => {
     // IPC communication used to initiate query for information on microservices.
     ipcRenderer.send('overviewRequest', props.index);
-
     // IPC listener responsible for retrieving infomation from asynchronous main process message.
     ipcRenderer.on('overviewResponse', (event, data) => {
       // Adds to state and context.
+      console.log(JSON.parse(data));
       setOverviewState(Object.values(JSON.parse(data)));
       serviceComponents.overviewData = JSON.parse(data);
     });
   }, []);
 
-  //Add routes to the display 
+  console.log('overviewstate: ', overviewState);
+  // Add routes to the display
   // Hook used to toggle whether or not the Modal component renders
   const [modalDisplay, toggleModalDisplay] = useState(false);
   // Hook used to set the chart that the Modal displays.  The
@@ -41,30 +43,64 @@ const ServiceOverview = (props) => {
   // is grabbed from the onClick event via event.path[0].alt
   const [chartTitle, setChartTitle] = useState();
 
-  const routeButtonProperty = { id: 'routes', alt: 'Route Trace', src: routeChart };
+  // route button AND traffic button property
+  const routeButtonProperty = {
+    traffic: { id: 'Traffic', alt: 'Microservice Traffic', src: 'app/assets/chartModal.png' },
+    routes: { id: 'routesImage', alt: 'Route Trace', src: routeChart },
+  };
+
+  // declare routes array to display routes when modal is toggled
   const routes = [];
-  routes.push(
-    <div>
-      <div className="healthChartContainer">
-        <input
-          onClick={() => {
-            setChartTitle(event.path[0].alt);
-            setModalChart(event.path[0].id);
-            toggleModalDisplay(!modalDisplay);
-          }}
-          type="image"
-          id={routeButtonProperty.id}
-          src={routeButtonProperty.src}
-          width="60px"
-          alt={routeButtonProperty.alt}
-        />
-        <br/>
-        <div style={{color:'white', paddingLeft:'7px'}}>
-        {routeButtonProperty.id}
-        </div>
+  // declare traffic array to display traffic when modal is toggled
+  const traffic = [];
+
+  // push traffic component logic traffic
+  traffic.push(
+
+    <div className="healthChartContainer">
+      <input
+        onClick={() => {
+          setChartTitle(event.path[0].alt);
+          setModalChart(event.path[0].id);
+          toggleModalDisplay(!modalDisplay);
+        }}
+        type="image"
+        id={routeButtonProperty.traffic.id}
+        src={routeButtonProperty.traffic.src}
+        width="60px"
+        alt={routeButtonProperty.traffic.alt}
+      />
+      <br />
+      <div style={{ color: 'white', paddingLeft: '7px' }}>
+        {routeButtonProperty.traffic.id}
       </div>
-      </div>,
-    );
+    </div>,
+
+  );
+
+  // push routes component logic traffic
+  routes.push(
+
+    <div className="healthChartContainer">
+      <input
+        onClick={() => {
+          setChartTitle(event.path[0].alt);
+          setModalChart(event.path[0].id);
+          toggleModalDisplay(!modalDisplay);
+        }}
+        type="image"
+        id={routeButtonProperty.routes.id}
+        src="app/assets/routeChart.png"
+        width="60px"
+        alt={routeButtonProperty.routes.alt}
+      />
+      <br />
+      <div style={{ color: 'white', paddingLeft: '7px' }}>
+          Routes
+      </div>
+    </div>,
+
+  );
 
   // Filters data received from IPC to the communications database to create a list of the services tracked in the provided database,
   const serviceList = () => {
@@ -81,7 +117,7 @@ const ServiceOverview = (props) => {
         if (!(element.currentmicroservice in serviceCache)) {
           const button = (
             <button
-            className='servicesBtn'
+              className="servicesBtn"
               currentMicroservice={element.currentmicroservice}
               type="button"
               key={`serviceItem${props.index}${i}`}
@@ -94,7 +130,8 @@ const ServiceOverview = (props) => {
                   // Adds returned data to context
                   healthdata.detailData = Object.values(JSON.parse(data));
                   // Updates state. Triggers rerender.
-                  setDetails(<ServiceDetails service={element.currentmicroservice} />);
+                  setDetails(<ServiceDetails service={element.currentmicroservice} setDetails={setDetails} />);
+                  console.log('details selected is: ', detailsSelected);
                 });
               }}
             >
@@ -110,7 +147,7 @@ const ServiceOverview = (props) => {
           if (!(element.currentMicroservice in serviceCache)) {
             const button = (
               <button
-                className='servicesBtn'
+                className="servicesBtn"
                 type="button"
                 key={`serviceItem${props.index}${i}`}
                 onClick={() => {
@@ -134,20 +171,30 @@ const ServiceOverview = (props) => {
         }
       }
     }
+    // If there's no data, return 'No data present', else return microservices button
+    if (componentButtons.length === 0) {
+      return (
+        <p>No data present</p>
+      );
+    }
     return componentButtons;
   };
 
-  if (detailsSelected) return detailsSelected;
+  const tooltipWriteup = `Communications data - Routes and Traffic - is not specific to a single microservice,
+   but combines data from all microservices within a single application network.`;
+
+  const tooltipWriteup2 = 'View and toggle between health data for individual services within your microservice network.';
 
   return (
     <div className="mainContainer">
-      <div>
-        <h1 className='overviewTitle'>Microservices Overview</h1>
-      </div>
-      <div />
-      <div className="servicesList">{serviceList()}</div>
-      {/* adding the route tracer button */}
-      <h3>Trace Last Route</h3>
+      <h1 className="overviewTitle">Microservices Overview</h1>
+      <h2>
+        Communications Data
+        <sup className="tooltip">
+          &#9432;
+          <div className="tooltiptext">{tooltipWriteup}</div>
+        </sup>
+      </h2>
       {modalDisplay ? (
         <Modal
           chartTitle={chartTitle}
@@ -159,7 +206,19 @@ const ServiceOverview = (props) => {
           }}
         />
       ) : null}
-      {routes}
+      <div id="routeAndTrafficDisplay">
+        {routes}
+        {traffic}
+      </div>
+      <div className="servicesList">
+        {serviceList()}
+        <sup className="tooltip">
+          &#9432;
+          <div className="tooltiptext">{tooltipWriteup2}</div>
+        </sup>
+      </div>
+      <br />
+      {detailsSelected || null}
     </div>
   );
 };
