@@ -80,7 +80,7 @@ app.use('/', cmd.microCom(values)
 
 #### Electron desktop application
 
-After installing the node module in each microservice, download the Electron desktop application from the public [Chronos](https://github.com/Chronos2-0/Chronos) repo.
+After installing the node module in each microservice, download the Electron desktop application from the public [Chronos](https://github.com/oslabs-beta/Chronos) repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 
