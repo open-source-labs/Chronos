@@ -37,5 +37,5 @@ app.all('/orders/*', (req, res) => {
 
 // Open and listen to server on specified port
 app.listen(PORT, () => {
-  console.log(`Frontend server running on port ${PORT} ...`);
+  console.log(`Reverse Proxy server running on port ${PORT} ...`);
 });
