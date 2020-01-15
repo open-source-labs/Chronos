@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
-const RequestTypesChart = () => {
-  const communicationsData = useContext(CommunicationsContext);
-  const communications = communicationsData.overviewData;
+const RequestTypesChart = (props) => {
+  const communicationsData = useContext(CommunicationsContext).overviewData;
 
   const createRequestChart = () => {
     const requestObj = {
@@ -16,18 +15,17 @@ const RequestTypesChart = () => {
       PUT: 0,
     };
 
-    for (let i = 0; i < communications.length; i += 1) {
-      const element = communications[i];
+    for (let i = 0; i < communicationsData.length; i += 1) {
+      const element = communicationsData[i];
       // if Mongo
-      if (element.reqType in requestObj) requestObj[element.reqType] += 1;
+      if (element.currentMicroservice === props.service && element.reqType in requestObj) requestObj[element.reqType] += 1;
       // if SQL
-      else if (element.reqtype in requestObj) requestObj[element.reqtype] += 1;
+      else if (element.currentmicroservice === props.service && element.reqtype in requestObj) requestObj[element.reqtype] += 1;
     }
 
     const chartData = {
       datasets: [
         {
-          label: 'Breakdown of Requests by Type',
           data: Object.values(requestObj),
           backgroundColor: [
             'rgb(2, 210, 249)',
