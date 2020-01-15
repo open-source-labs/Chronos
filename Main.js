@@ -283,3 +283,4 @@ ipcMain.on('detailsRequest', (message, index) => {
     });
   }
 });
+
