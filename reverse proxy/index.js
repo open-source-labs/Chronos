@@ -1,6 +1,6 @@
 window.onload = () => {
   // microservice1 - Books
-  const microservicePort = { 3000: 'Frontend', 4545: 'Books', 7777: 'Orders', 5555: 'Customers' };
+  const microservicePort = { 3000: 'Reverse Proxy', 4545: 'Books', 7777: 'Orders', 5555: 'Customers' };
   // sets the title of the page to whatever port you're currently on
   document.title = microservicePort[window.location.port];
   // create a display that when clicked will grab the books passed in
