@@ -41,7 +41,6 @@ CustomerController.deletecustomer = (req, res, next) => {
   });
 };
 
-
 //  Controller to get info from the books application
 CustomerController.getbooksinfo = (req, res, next) => {
   //  const { body } = req;
