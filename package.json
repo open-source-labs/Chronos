@@ -1,0 +1,30 @@
+{
+  "package name": "chronos",
+  "name": "chronos-microservice-debugger3",
+  "version": "2.0.3",
+  "description": "Microservice communication and health visualizer.",
+  "main": "chronos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "deprecated": false,
+  "keywords": [
+    "microservice",
+    "debugger",
+    "microservice-health",
+    "microservice-health-monitor",
+    "health-monitor",
+    "communication-monitor",
+    "microservice-communication-monitor"
+  ],
+  "author": "Chronos 2.0",
+  "license": "MIT",
+  "dependencies": {
+    "hpropagate": "0.0.7",
+    "mongoose": "^5.7.3",
+    "osx-temperature-sensor": "^1.0.4",
+    "pg": "^7.12.1",
+    "systeminformation": "^4.14.11",
+    "wmic": "^0.3.0"
+  }
+}
