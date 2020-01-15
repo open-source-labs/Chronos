@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
-const ResponseCodeChart = () => {
-  const communicationsData = useContext(CommunicationsContext);
-  const communications = communicationsData.overviewData;
+const ResponseCodeChart = (props) => {
+  const communicationsData = useContext(CommunicationsContext).overviewData;
 
+  
+  
   const createChart = () => {
     const responseCodes = {
       '100-199': 0,
@@ -13,57 +14,41 @@ const ResponseCodeChart = () => {
       '300-399': 0,
       '400-499': 0,
       '500-599': 0,
-      NULL: 0,
+      'NULL': 0,
     };
 
-    for (let i = 0; i < communications.length; i += 1) {
-      const element = communications[i];
-      // if Mongo
-      if (element.resStatus) {
+    for (let i = 0; i < communicationsData.length; i += 1) {
+      const element = communicationsData[i];
+      // If Mongo Else SQL
+      if ((element.currentMicroservice === props.service) && element.resStatus) {
         const statusCode = element.resStatus;
-        let key;
-
         if (statusCode <= 199) {
-          key = '100-199';
-          responseCodes[key] += 1;
+          responseCodes['100-199'] += 1;
         } else if (statusCode <= 299) {
-          key = '200-299';
-          responseCodes[key] += 1;
+          responseCodes['200-299'] += 1;
         } else if (statusCode <= 399) {
-          key = '300-399';
-          responseCodes[key] += 1;
+          responseCodes['300-399'] += 1;
         } else if (statusCode <= 499) {
-          key = '400-499';
-          responseCodes[key] += 1;
+          responseCodes['400-499'] += 1;
         } else if (statusCode <= 599) {
-          key = '500-599';
-          responseCodes[key] += 1;
+          responseCodes['500-599'] += 1;
         } else {
-          key = 'NULL';
-          responseCodes[key] += 1;
+          responseCodes['NULL'] += 1;
         }
-      } else if (element.resstatus || !element.resstatus) {
+      } else if ((element.currentmicroservice === props.service) && element.resstatus) {
         const statusCode = element.resstatus;
-        let key;
-
         if (statusCode <= 199) {
-          key = '100-199';
-          responseCodes[key] += 1;
+          responseCodes['100-199'] += 1;
         } else if (statusCode <= 299) {
-          key = '200-299';
-          responseCodes[key] += 1;
+          responseCodes['200-299'] += 1;
         } else if (statusCode <= 399) {
-          key = '300-399';
-          responseCodes[key] += 1;
+          responseCodes['300-399'] += 1;
         } else if (statusCode <= 499) {
-          key = '400-499';
-          responseCodes[key] += 1;
+          responseCodes['400-499'] += 1;
         } else if (statusCode <= 599) {
-          key = '500-599';
-          responseCodes[key] += 1;
+          responseCodes['500-599'] += 1;
         } else {
-          key = 'NULL';
-          responseCodes[key] += 1;
+          responseCodes['NULL'] += 1;
         }
       }
     }
@@ -71,7 +56,6 @@ const ResponseCodeChart = () => {
     const chartData = {
       datasets: [
         {
-          label: 'Breakdown of Response Status Codes',
           data: Object.values(responseCodes),
           backgroundColor: [
             'rgb(2, 210, 249)',
@@ -91,30 +75,3 @@ const ResponseCodeChart = () => {
 };
 
 export default ResponseCodeChart;
-
-// switch (statusCode) {
-//   case statusCode <= 199:
-//     key = '100-199';
-//     responseCodes[key] += 1;
-//     break;
-//   case statusCode <= 299:
-//     key = '200-299';
-//     responseCodes[key] += 1;
-//     break;
-//   case statusCode <= 399:
-//     key = '300-399';
-//     responseCodes[key] += 1;
-//     break;
-//   case statusCode <= 499:
-//     key = '400-499';
-//     responseCodes[key] += 1;
-//     break;
-//   default:
-//     key = '500-599';
-//     responseCodes[key] += 1;
-//     break;
-// }
-//   }
-//   // if SQL
-//   // else if (element.resstatus in requestObj) requestObj[element.resstatus] += 1;
-// }

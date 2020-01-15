@@ -1,5 +1,1 @@
-{
-  "setupRequired":true,
-  "michelleWasHere":true,
-  "services":[]
-}
+{"setupRequired":true,"services":["hard","coded","in"],"splash":true}

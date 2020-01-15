@@ -1,33 +1,50 @@
-import React, { useState, useContext } from 'react';
-import logo from '../assets/logo2.png';
+import React, { useState, useContext, useEffect } from 'react';
+// import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import ServicesDashboard from './ServicesDashboard.jsx';
 
 const { ipcRenderer } = window.require('electron');
 
 const AddService = () => {
+  // Context used to ensure that that this page is only seen when the setup is required. Updated when user adds a database.
   const ChronosSetup = useContext(SetupContext);
-  const [dbState, setDbType] = useState('SQL');
+
+  // Local state created for form entries ONLY.
+  const [dbState, setDbType] = useState('');
   const [uriState, setUri] = useState('');
   const [labelState, setLabel] = useState('');
 
+  // Submits data provided by the user to added to the setting file.
   const onSubmit = () => {
     const userSettings = [labelState, dbState, uriState];
     // IPC communication used to update settings JSON with user input.
     ipcRenderer.send('submit', JSON.stringify(userSettings));
     ChronosSetup.setupRequired = ChronosSetup.toggleSetup(true);
+    // Refresh window after submit.
     document.location.reload();
   };
 
-  if (!ChronosSetup.setupRequired) return React.lazy(<ServicesDashboard />);
+  // it is setting the dbState
+  useEffect(() => {
+    setDbType(document.getElementById('dbType').value);
+  }, [dbState, setDbType]);
+
+  const tooltipWriteup = `Chronos utilizes user-owned databases to store communications and system health data.
+    Please enter a valid connection string to a SQL or noSQL database to begin monitoring.`;
 
   return (
     <div className="mainContainer">
-      <img src={logo} alt="logo" />
-      <h2 className="signUpHeader">Enter Your Database Information</h2>
+      <img src="app/assets/logo2.png" alt="logo" id="addServiceLogo" />
+      <h2 className="signUpHeader">
+        Enter Your Database Information
+        <sup className="tooltip">
+              &#9432;
+          <div className="tooltiptext">{tooltipWriteup}</div>
+        </sup>
+      </h2>
       <form>
         Database Type:
-        <select value={dbState} onChange={(e) => setDbType(e.target.value)}>
+        <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>
@@ -49,6 +66,7 @@ const AddService = () => {
         <button
           className="submitBtn"
           type="submit"
+          // Error Handling.
           onClick={() => {
             if (
               document.getElementById('dburi').value === ''
