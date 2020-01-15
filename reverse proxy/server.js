@@ -18,7 +18,7 @@ const orders = 'http://localhost:7777';
 // app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
 
 app.use(cors());
-app.use('/', express.static('../frontend'));
+app.use('/', express.static('../reverse\ proxy/'));
 
 app.all('/books/*', (req, res) => {
   console.log('redirecting to books');
