@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import logo from '../assets/logo2.png';
+import React, { useState, useContext, useEffect } from 'react';
+// import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import ServicesDashboard from './ServicesDashboard.jsx';
 
@@ -8,9 +8,9 @@ const { ipcRenderer } = window.require('electron');
 const AddService = () => {
   // Context used to ensure that that this page is only seen when the setup is required. Updated when user adds a database.
   const ChronosSetup = useContext(SetupContext);
-  
+
   // Local state created for form entries ONLY.
-  const [dbState, setDbType] = useState('SQL');
+  const [dbState, setDbType] = useState('');
   const [uriState, setUri] = useState('');
   const [labelState, setLabel] = useState('');
 
@@ -24,13 +24,27 @@ const AddService = () => {
     document.location.reload();
   };
 
+  // it is setting the dbState
+  useEffect(() => {
+    setDbType(document.getElementById('dbType').value);
+  }, [dbState, setDbType]);
+
+  const tooltipWriteup = `Chronos utilizes user-owned databases to store communications and system health data.
+    Please enter a valid connection string to a SQL or noSQL database to begin monitoring.`;
+
   return (
     <div className="mainContainer">
-      <img src={logo} alt="logo" />
-      <h2 className="signUpHeader">Enter Your Database Information</h2>
+      <img src="app/assets/logo2.png" alt="logo" id="addServiceLogo" />
+      <h2 className="signUpHeader">
+        Enter Your Database Information
+        <sup className="tooltip">
+              &#9432;
+          <div className="tooltiptext">{tooltipWriteup}</div>
+        </sup>
+      </h2>
       <form>
         Database Type:
-        <select value={dbState} onChange={(e) => setDbType(e.target.value)}>
+        <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>

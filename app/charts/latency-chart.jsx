@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
-const LatencyChart = (props) => {
+const LatencyChart = (props) =>  {
   const xAxis = [];
   const yAxis = [];
   const healthData = useContext(HealthContext).detailData;
