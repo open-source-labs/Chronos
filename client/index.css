@@ -1,0 +1,327 @@
+html {
+    /* prevent the gradient from repeating past the visible section*/
+    min-height: 100%
+  }
+  
+
+body {
+    /* background: linear-gradient(180deg, #414245 0%, #030409 100%); */
+    background-color: #191919;
+}
+
+/* stop link default styling */
+a { 
+    color: inherit; 
+    text-decoration: none;
+} 
+
+#aboutParagraphs {
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    padding-top: 1.22em;
+    font-weight: 200;
+    color: white;
+    float: right;
+    width: 60%;
+    font-size: medium;
+    letter-spacing: .2em;
+    opacity: .95;
+}
+
+img.MainImage {
+    padding-top: 2.5em;
+    width: 10em;
+    height: 10em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    opacity: 0.8;
+    /* fade in */
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+    /* Direction movemnt of image */
+    -webkit-animation: fadein 2s, myfirst 4s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-direction: normal, reverse; /* Safari 4.0 - 8.0 */
+    animation: fadein 2s, myfirst 4s;
+    animation-direction: normal, reverse;
+    transition: 0.8s;
+}
+
+img.aboutPic  {
+    padding-top: 2.5em;
+    padding-left: 3.5em;
+    float: left;
+    width: 12em;
+    height: 12em;
+}
+
+/* Direction movemnt of image */
+@keyframes myfirst {
+    75%  {left: 0px; top: 0px;}
+    100% { left: 0px; top: 20px;}
+  }
+
+  /* logo fade for different browsers */
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:0.8;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:0.8;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:0.8;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 0.8;
+    }
+}
+
+/* Logo hover effect */
+img:hover {
+    color: rgb(255, 234, 0);
+    opacity: 1;
+  }
+
+
+#ChronosMainText {
+    color: rgb(255, 255, 255);
+    font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    letter-spacing: 0.9em;
+}
+
+#ChronosMainTextTwo {
+    color: rgb(255, 255, 255);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: medium;
+    letter-spacing: 0.7em;
+    line-height: 3em;
+    margin-bottom: 4em;
+}
+
+#ChronosMainTextThree {
+    color: rgb(255, 255, 255);
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: medium;
+    letter-spacing: .26em;
+    line-height: 150%;
+    margin-bottom: 4em;
+    /* width: 35em; */
+    opacity: .9;
+}
+
+#menu {
+  margin: auto;
+  padding: 10px;
+  width: 70%;
+  text-align:center;
+}
+
+ul#menuSelections li {
+    display:inline;
+    text-transform: uppercase;
+    color: rgb(199, 198, 198);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.7em;
+    padding-right: 7em;
+    font-size: small;
+    /* text fade - in */
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+ul#menuSelections li#MenuItem:hover {
+    color: rgb(255, 234, 0);
+    opacity: 1;
+  }
+
+#MainHr {
+    width: 13em;
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+#teamPage {
+    /* fade in */
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+}
+
+.aboutComponent {
+    width: 50em;
+    height: 17em;
+    padding-right: 3.8em;
+    padding-bottom: 5px;
+    margin: auto;
+    margin-bottom: 3.5em;
+    background-color: #1d1d1d;
+    box-shadow: 6px 5px 14px  rgba(0, 0, 0, 0.81);
+}
+
+
+
+div.aboutParagraphs {
+    background-color: pink;
+    align-items: center;
+}
+
+.connectWithMe {
+    margin-top: 3em;
+    text-align: center;
+    opacity: 0.9;
+    transition: 0.3s;
+    align-items: flex-end;
+}
+
+
+a#connectWithMeSocial:hover {
+    color: rgb(255, 234, 0);
+    opacity: 1;
+  }
+
+
+
+#titleChronosAndMiniTitle {
+    /* text fade - in */
+    margin: auto;
+    display: grid;
+    opacity: .95;
+    width: 35em;
+    -webkit-animation: fadein 2s;
+}
+
+.hamburgerMenu {
+    /* background-color: pink; */
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#hamburgerButton {
+    /* color: red; */
+    color: white;
+    font-size: xx-large;
+}
+
+.DropMenu {
+    display: flex;
+    /* background-color: pink; */
+    flex-direction: column;
+    align-items: center;
+}
+
+.DropMenu li {
+    display: flex;
+    width: 100%;
+    height: 4em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    letter-spacing: .15em;
+    background-color: #1d1d1d;
+    border-bottom: 1px solid black;
+    color: white;
+    box-shadow: 6px 5px 14px  rgba(0, 0, 0, 0.81);
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+/* Media Break points */
+@media (max-width: 768px) {
+    #menu {
+        display: none;
+    }
+    
+    ul#menuSelections li {
+        display: none;
+    }
+    #titleChronosAndMiniTitle {
+        /* background-color: pink; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
+    }
+    #titleChronosAndMiniTitle p {
+        width: none;
+    }
+    .aboutComponent {
+        /* background-color: red; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+        /* text-align: center; */
+        width: 20em;
+        height: 50em;
+    }
+    .aboutComponent p{
+        /* background-color: pink; */
+        width: 13em;
+        margin-bottom: 3em;
+    }
+    .connectWithMe {
+        /* background-color: pink; */
+    }
+    #aboutParagraphs {
+        /* background-color: pink; */
+        margin-left: 4em;
+    }
+    
+    #aboutParagraphs p {
+        /* background-color: pink; */
+        margin-bottom: 1em;
+    }
+ 
+
+    
+}
+
+@media (min-width: 768px) {
+    .hamburgerMenu {
+        display: none;
+    }
+    #lightDemoWrapper  {
+        width: 40%;
+    }
+    .DropMenu li {
+        display: none;
+    }
+}
+

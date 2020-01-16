@@ -1,64 +1,35 @@
 {
-  "name": "chronos",
+  "name": "chronosWebsite",
   "version": "1.0.0",
   "description": "",
-  "main": "./Main.js",
+  "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server",
-    "nodemon": "nodemon server/server.js",
-    "electron": "electron .",
-    "test": "mocha ./__tests__/spectron.test.js",
-    "both": "webpack-dev-server & electron ."
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ]
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@jest-runner/electron": "^2.0.3",
-    "chart.js": "^2.8.0",
-    "chronos-microservice-debugger": "^1.0.3",
-    "electron": "^6.1.7",
     "express": "^4.17.1",
-    "fs": "0.0.1-security",
-    "mongodb": "^3.3.2",
-    "mongoose": "^5.7.1",
-    "nodemon": "^1.19.2",
-    "pg": "^7.12.1",
-    "react": "16.10.1",
-    "react-chartjs-2": "^2.8.0",
-    "react-dom": "16.10.1",
-    "ttf-loader": "^1.0.2"
+    "nodemon": "^2.0.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "eslint": "^6.4.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "file-loader": "^4.3.0",
+    "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
-    "mocha": "^6.2.0",
-    "react-test-renderer": "^16.12.0",
-    "spectron": "^8.0.0",
-    "style-loader": "^1.0.0",
-    "url-loader": "^2.1.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8",
-    "webpack-dev-server": "^3.8.0"
+    "path": "^0.12.7",
+    "style-loader": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   }
 }

@@ -1,0 +1,46 @@
+.demoContainter {
+  margin-top: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.demoContainter #lightDemoWrapper {
+  background-color: #1f1f1f;
+  box-shadow: 6px 5px 14px rgba(0, 0, 0, 0.81);
+}
+.demoContainter .demoTitle1 {
+  font: 100% "Source Sans Pro", sans-serif;
+  letter-spacing: 0.13em;
+  color: white;
+  text-align: center;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  /* Direction movemnt of image */
+  -webkit-animation: fadein 2s, myfirst 4s;
+  -webkit-animation-direction: normal, reverse;
+  animation: fadein 2s, myfirst 4s;
+  animation-direction: normal, reverse;
+  transition: 0.8s;
+}
+.demoContainter .demoTitle1 p {
+  font: "Times New Roman";
+  font-weight: 300;
+  opacity: 0.85;
+  margin-bottom: 3.5em;
+}
+.demoContainter .space {
+  height: 3em;
+}
+.demoContainter .videoDemo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3.5%;
+}
+.demoContainter .videoDemo video {
+  width: 50%;
+}
+
+/*# sourceMappingURL=demo.css.map */
