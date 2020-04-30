@@ -1,4 +1,4 @@
-# Nginx is needed to route requests from the web user to the reverse proxy on the forntend for eventual proxying to
+# Nginx is needed to route requests from the web user to the reverse proxy on the frontend for eventual proxying to
 # the individual services in the microservices network
 
 version: '3'
