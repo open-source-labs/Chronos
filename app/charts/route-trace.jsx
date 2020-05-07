@@ -5,13 +5,16 @@ import CommunicationsContext from '../context/OverviewContext';
 
 const RouteLocations = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
-
+  console.log('commData (from overviewContxt):', communicationsData);
+  
   // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
 
   if (communicationsData.length > 0 && communicationsData[0]._id) {
     // Sort the communication array from latest to earliest document
     communicationsData.sort((a, b) => {
+      // Note that a newer date obj IS GREATER THAN an older date obj.
+      // The following lines sort the array from OLDEST to NEWEST.
       if (new Date(a.timeSent) > new Date(b.timeSent)) return 1;
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
@@ -60,6 +63,8 @@ const RouteLocations = (props) => {
     // Each elem in tracePoints is an array of arrays, which contain objects (each of which is a data point).
   const tracePoints = Object.values(resObj);
   const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
+  console.log('tracePoints arr:', tracePoints);
+  console.log('position for tracePoints:', position);
 
   const resArray = [];
 
