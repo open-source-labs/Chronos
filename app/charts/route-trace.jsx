@@ -21,34 +21,78 @@ const RouteLocations = (props) => {
     for (let i = 0; i < communicationsData.length; i += 1) {
       // declare a constant element and initialize it as the object at index i of the communicationsData array
       const element = communicationsData[i];
-      // Pushes the microservice name into the object
+      // Pushes the microservice name & timeSent into the resObj.
       if (resObj[element.correlatingId]) {
-        resObj[element.correlatingId].push(element.currentMicroservice);
-      } else resObj[element.correlatingId] = [element.currentMicroservice];
+        resObj[element.correlatingId].push({ 
+          microservice_name: element.currentMicroservice,
+          timeSent: element.timeSent
+        });
+      } else {
+        // The value that corresp. to the correlationId key is an array of obj containing name and time data.
+          // Each obj is a data point.
+        resObj[element.correlatingId] = [{ 
+          microservice_name: element.currentMicroservice,
+          timeSent: element.timeSent
+        }];
+      }
     }
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
       const element = communicationsData[i];
-      if (resObj[element.correlatingid]) resObj[element.correlatingid].push(element.currentmicroservice);
-      else resObj[element.correlatingid] = [element.currentmicroservice];
+      if (resObj[element.correlatingId]) {
+        resObj[element.correlatingId].push({ 
+          microservice_name: element.currentMicroservice,
+          timeSent: element.timeSent
+        });
+      } else {
+        // The value that corresp. to the correlationId key is an array of obj containing name and time data.
+          // Each obj is a data point.
+        resObj[element.correlatingId] = [{ 
+          microservice_name: element.currentMicroservice,
+          timeSent: element.timeSent
+        }];
+      }
       // initializing the object with the first microservice
     }
   }
 
   // use object values to destructure locations
+    // Each elem in tracePoints is an array of arrays, which contain objects (each of which is a data point).
   const tracePoints = Object.values(resObj);
   const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
 
   const resArray = [];
 
-  // iterate over Trace Points
+  // iterate over Trace Points, creating a <div> for every data obj.
   for (let i = 0; i < tracePoints[position].length; i += 1) {
-    // push into resulting array current tracepoint as div
-    resArray.push(
-      <div className="RouteCircle" key={i}>
-        <p id="routeText">Point {i + 1}: {tracePoints[position][i]}</p>
-      </div>,
-    );
+    if (i !== tracePoints[position].length - 1) {
+      // Calc time difference (when not at the end of array):
+        // Using Date.parse() because timeSent's value is a string.
+      const timeDiff = Date.parse(tracePoints[position][i + 1].timeSent) - Date.parse(tracePoints[position][i].timeSent);
+      resArray.push(
+        <div className="RouteCircle" key={i}>
+          {/* Altering this <p> so it displays only microsvc_name */}
+          <p id="routeText">
+            Point {i + 1}: {tracePoints[position][i].microservice_name}
+          </p>
+          {/* Adding another <p> that displays time difference btw curr obj and next obj */}
+          <p id="routeTimeDiff">
+            {/* Time: {tracePoints[position][i].timeSent} */}
+            {/* What datatype? {Date.parse(tracePoints[position][i].timeSent) - Date.parse(tracePoints[position][i + 1].timeSent)} ms */}
+            Time elapsed: {timeDiff} ms
+          </p>
+        </div>,
+      );
+    } else {
+      // If at the end of array, don't push the timeDiff <p> to resArray (only push a <p> w/ name).
+      resArray.push(
+        <div className="RouteCircle" key={i}>
+          <p id="routeText">
+            Point {i + 1}: {tracePoints[position][i].microservice_name}
+          </p>
+        </div>,
+      );
+    }
   }
 
   console.log('resArray: ', resArray);
