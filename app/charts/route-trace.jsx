@@ -72,8 +72,8 @@ const RouteLocations = (props) => {
   for (let i = 0; i < tracePoints[position].length; i += 1) {
     if (i !== tracePoints[position].length - 1) {
       // Calc time difference (when not at the end of array):
-        // Using Date.parse() because timeSent's value is a string.
-      const timeDiff = Date.parse(tracePoints[position][i + 1].timeSent) - Date.parse(tracePoints[position][i].timeSent);
+        // Convert time str to Date obj w/ new Date(), then get the time difference.
+      const timeDiff = new Date(tracePoints[position][i + 1].timeSent) - new Date(tracePoints[position][i].timeSent);
       resArray.push(
         <div className="RouteCircle" key={i}>
           {/* Altering this <p> so it displays only microsvc_name */}
@@ -83,7 +83,6 @@ const RouteLocations = (props) => {
           {/* Adding another <p> that displays time difference btw curr obj and next obj */}
           <p id="routeTimeDiff">
             {/* Time: {tracePoints[position][i].timeSent} */}
-            {/* What datatype? {Date.parse(tracePoints[position][i].timeSent) - Date.parse(tracePoints[position][i + 1].timeSent)} ms */}
             Time elapsed: {timeDiff} ms
           </p>
         </div>,
