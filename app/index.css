@@ -431,27 +431,30 @@ select {
   height: 4em;
   text-align: center;
   border-radius: 50%;
-  display: block;
+  /* display: block; */
+  /*** 3.0 changes ****/
+  display: flex;
+  /* flex-direction: column; */
+  /********************/
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30px;
+  margin-top: 5px;
   background: rgb(244, 222, 62);
   background: linear-gradient(315deg, rgb(237, 225, 62) 57%, rgb(253, 229, 45) 100%);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
-#routeText {
+/*** 3.0 changes: applying same styles to time diff text ****/
+#routeText, #routeTimeDiff {
   color: rgb(97, 97, 97);
   width: 11.3em;
   margin-left: 6.8em;
-  padding-top: 1.8em;
 }
 
-#routeText:hover {
+#routeText:hover, #routeTimeDiff:hover {
   color: white;
   text-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
+/**********************************/
 form {
   width: 100%;
   font-size: 2vh;
