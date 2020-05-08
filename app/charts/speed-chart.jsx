@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Line } from 'react-chartjs-2';
+import Plot from 'react-plotly.js';
 import HealthContext from '../context/DetailsContext';
 
 const SpeedChart = (props) => {
@@ -24,24 +24,56 @@ const SpeedChart = (props) => {
       }
     }
 
-    const chartData = {
-      datasets: [
-        {
-          label: `CPU Speed of ${props.service}`,
-          data: yAxis,
-          backgroundColor: [
-            'rgb(2, 210, 249)',
-          ],
-        },
-      ],
-      options: {
-      },
-      xAxisID: 'Speed',
-      yAxisID: 'Communicaton',
-      labels: xAxis,
-    };
+    return (
+      <Plot
+        data = {[{
+          domain: { x: [0, 1], y: [0, 1] },
+          type: 'indicator',
+          value: yAxis[length],
+          title: {'text': "Speed Chart"},
+          delta: {'reference': 3.5, 'increasing': {'color': "mistyrose"}},
+          mode: "gauge+number+delta",
+          gauge: { axis: { range: [null, 7] },
+                  'tickwidth': 1,
+                  'tickcolor': "#fce38a",
+                  'bar': {'color': "#6eb6ff"},
+                  'bordercolor': "#a3de83",
+                  'steps': [
+                  {'range': [0, 3.5], 'color': '#fab57a'},
+                  {'range': [3.5, 5.3], 'color': '#edf798'}],
+                  'threshold': {
+                  'line': {'color': "red", 'width': 4},
+                  'thickness': 0.75,
+                  'value': 6}
+                    },
+        }]}
+        layout = {{
+          height: 500,
+          width: 500,
+          paper_bgcolor: '#fffbe0'
+        }}
+      />
+    )
 
-    return <Line data={chartData} />;
+
+    // const chartData = {
+    //   datasets: [
+    //     {
+    //       label: `CPU Speed of ${props.service}`,
+    //       data: yAxis,
+    //       backgroundColor: [
+    //         'rgb(2, 210, 249)',
+    //       ],
+    //     },
+    //   ],
+    //   options: {
+    //   },
+    //   xAxisID: 'Speed',
+    //   yAxisID: 'Communicaton',
+    //   labels: xAxis,
+    // };
+
+    // return <Line data={chartData} />;
   };
 
   return <div>{createChart()}</div>;
