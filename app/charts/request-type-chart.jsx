@@ -31,12 +31,13 @@ const RequestTypesChart = (props) => {
           type: 'pie',
           marker: {
             'colors': [
-              '#f38181',
+              '#95e1d3',
               '#fce38a',
               '#fcbad3',
-              '#95e1d3',
-              '#a8d8ea',
               '#aa96da',
+              '#a8d8ea',
+              '#f38181',
+              
             ]
           },
         }]}

@@ -33,18 +33,18 @@ const SpeedChart = (props) => {
           title: {'text': "Speed Chart"},
           delta: {'reference': 3.5, 'increasing': {'color': "mistyrose"}},
           mode: "gauge+number+delta",
-          gauge: { axis: { range: [null, 7] },
+          gauge: { axis: { range: [null, 8] },
                   'tickwidth': 1,
                   'tickcolor': "#fce38a",
                   'bar': {'color': "#6eb6ff"},
                   'bordercolor': "#a3de83",
                   'steps': [
-                  {'range': [0, 3.5], 'color': '#fab57a'},
-                  {'range': [3.5, 5.3], 'color': '#edf798'}],
+                  {'range': [0, 4], 'color': '#edf798'},
+                  {'range': [4, 6], 'color': '#fab57a'}],
                   'threshold': {
-                  'line': {'color': "red", 'width': 4},
+                  'line': {'color': "red", 'width': 3.5},
                   'thickness': 0.75,
-                  'value': 6}
+                  'value': 7.5}
                     },
         }]}
         layout = {{
