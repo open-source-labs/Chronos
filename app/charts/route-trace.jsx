@@ -5,26 +5,29 @@ import CommunicationsContext from '../context/OverviewContext';
 
 const RouteLocations = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
-  console.log('commData (from overviewContxt):', communicationsData);
+  // console.log('commData (from overviewContxt):', communicationsData);
   
-  // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
+  // initialize an empty object resObj. 
+  // This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. 
+  // The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
 
   if (communicationsData.length > 0 && communicationsData[0]._id) {
-    // Sort the communication array from latest to earliest document
+    // Sort the communication array from OLDEST to NEWEST documents.
     communicationsData.sort((a, b) => {
       // Note that a newer date obj IS GREATER THAN an older date obj.
-      // The following lines sort the array from OLDEST to NEWEST.
       if (new Date(a.timeSent) > new Date(b.timeSent)) return 1;
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
     });
+    console.log('commData (AFTER sorting):', communicationsData);
 
-    // Iterate over sorted communicationsData array from the end to the beginning
+    // Iterate over sorted array to build up resObj.
     for (let i = 0; i < communicationsData.length; i += 1) {
       // declare a constant element and initialize it as the object at index i of the communicationsData array
       const element = communicationsData[i];
       // Pushes the microservice name & timeSent into the resObj.
+      // Data objects w/ same corrId will be grouped in a same array.
       if (resObj[element.correlatingId]) {
         resObj[element.correlatingId].push({ 
           microservice_name: element.currentMicroservice,
@@ -59,13 +62,49 @@ const RouteLocations = (props) => {
     }
   }
 
-  // use object values to destructure locations
+  // use Object.values to destructure locations
     // Each elem in tracePoints is an array of arrays, which contain objects (each of which is a data point).
-  const tracePoints = Object.values(resObj);
+    // Filter the array so that only subarrays w/ len > 1 are kept.
+      // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
+  const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
   const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
   console.log('tracePoints arr:', tracePoints);
   console.log('position for tracePoints:', position);
 
+  // Construct an obj that stores data necessary for calculating avg speed of requests btw 2 pts.
+  const avgDataObj = {};
+  /****** Build the object here w/ nested loops ************/
+  /****** WARNING: tracePoints arr can be very long (100+) ************/
+  for (let i = 0; i < tracePoints.length; i += 1) {
+    let subArr = tracePoints[i];
+    for (let j = 0; j < subArr.length; j += 1) {
+      let currDataObj = subArr[j]; 
+      if (j < subArr.length - 1) {
+        let nextDataObj = subArr[j + 1];
+        let routeName = `${currDataObj.microservice_name}-${nextDataObj.microservice_name}`;
+        // Key/value pair that keeps COUNT of two-point routes
+        if (!avgDataObj[`${routeName}Count`]) avgDataObj[`${routeName}Count`] = 1;
+        else avgDataObj[`${routeName}Count`] += 1;
+
+        // Key/value that accumulates TOTAL TIME a req travels btw 2 certain points
+        let timeDiff = new Date(nextDataObj.timeSent) - new Date(currDataObj.timeSent);
+        if (!avgDataObj[`${routeName}TotalTime`]) {
+          avgDataObj[`${routeName}TotalTime`] = timeDiff;
+        } 
+        else avgDataObj[`${routeName}TotalTime`] += timeDiff;
+
+        // Key/value that calculates AVG TIME of travel (dividing the 2 values above)
+        let avgTime = avgDataObj[`${routeName}TotalTime`] / avgDataObj[`${routeName}Count`];
+        avgDataObj[`${routeName}AvgTime`] = avgTime;
+      }
+    }
+  }
+  /** End of nested loops */
+
+  console.log('avgDataObj:', avgDataObj);
+  
+  /****************************************/
+  // Array of <divs> to be rendered. Each <div> contains route name and time difference.
   const resArray = [];
 
   // iterate over Trace Points, creating a <div> for every data obj.
