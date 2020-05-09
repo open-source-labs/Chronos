@@ -5,6 +5,8 @@ import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import routeChart from '../assets/routeChart.png';
 import ServiceDetails from '../components/ServiceDetails.jsx';
+import ServiceOverview from '../components/ServiceOverview.jsx';
+import AddService from '../components/AddService.jsx';
 
 const MonitoringContainer = (props) => {
   const { serviceSelected } = props;

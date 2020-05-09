@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ServicesList = (props) => {
-  const { context, Click, isClicked } = props;
+  const { context, Click, isclicked } = props;
   const buttonStore = [];
   for (let i = 0; i < context.length; i += 1) {
     buttonStore.push(
@@ -11,7 +11,7 @@ const ServicesList = (props) => {
         type="button"
         key={`${i}${context[i]}`}
         onClick={Click}
-        isClicked={isClicked}
+        isclicked={isclicked}
       >
         {context[i]}
       </button>
