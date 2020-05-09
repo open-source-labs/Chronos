@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import HealthInformationContext from '../context/DetailsContext';
 
 const { ipcRenderer } = window.require('electron');
 
 const Microservices = (props) => {
-  const { overview, details, index } = props;
+  const { overviewState, setDetails, index } = props;
   // Holds the buttons generated for unique services.
   const componentButtons = [];
 
@@ -13,8 +13,8 @@ const Microservices = (props) => {
   // Contexts have data added to them following successful IPC return. Data is later used to create charts.
   const healthdata = useContext(HealthInformationContext);
 
-  for (let i = 0; i < overview.length; i += 1) {
-    const element = overview[i];
+  for (let i = 0; i < overviewState.length; i += 1) {
+    const element = overviewState[i];
     // If SQL
     if (element.currentmicroservice) {
       if (!(element.currentmicroservice in serviceCache)) {
@@ -33,13 +33,12 @@ const Microservices = (props) => {
                 // Adds returned data to context
                 healthdata.detailData = Object.values(JSON.parse(data));
                 // Updates state. Triggers rerender.
-                details(
+                setDetails(
                   <ServiceDetails
                     service={element.currentmicroservice}
-                    details={details}
+                    setDetails={setDetails}
                   />
                 );
-                console.log('details selected is: ', detailsSelected);
               });
             }}
           >
@@ -66,10 +65,10 @@ const Microservices = (props) => {
                   // Adds returned data to context.
                   healthdata.detailData = Object.values(JSON.parse(data));
                   // Updates state. Triggers rerender.
-                  details(
+                  setDetails(
                     <ServiceDetails
                       service={element.currentMicroservice}
-                      setDetails={details}
+                      setDetails={setDetails}
                     />
                   );
                 });
@@ -88,12 +87,7 @@ const Microservices = (props) => {
   if (componentButtons.length === 0) {
     return <p>No data present</p>;
   }
-  console.log(componentButtons);
-  return (
-    <div>
-    {componentButtons}
-    </div>
-    );
+  return componentButtons;
 };
 
 export default Microservices;
