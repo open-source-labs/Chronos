@@ -90,7 +90,6 @@ const ProcessesChart = (props) => {
       />
     )};
     
-
   return <div>{createChart()}</div>;
 };
 
