@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useContext } from 'react';
-import { Bar } from 'react-chartjs-2';
+// import { Bar } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
 const RouteLocations = (props) => {
@@ -20,7 +20,7 @@ const RouteLocations = (props) => {
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
     });
-    console.log('commData (AFTER sorting):', communicationsData);
+    // console.log('commData (AFTER sorting):', communicationsData);
 
     // Iterate over sorted array to build up resObj.
     for (let i = 0; i < communicationsData.length; i += 1) {
@@ -67,9 +67,8 @@ const RouteLocations = (props) => {
     // Filter the array so that only subarrays w/ len > 1 are kept.
       // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
-  const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
-  console.log('tracePoints arr:', tracePoints);
-  console.log('position for tracePoints:', position);
+  // console.log('tracePoints arr:', tracePoints);
+
 
   // Construct an obj that stores data necessary for calculating avg speed of requests btw 2 pts.
   const avgDataObj = {};
@@ -100,14 +99,16 @@ const RouteLocations = (props) => {
     }
   }
   /** End of nested loops */
-
   console.log('avgDataObj:', avgDataObj);
-  
   /****************************************/
+
   // Array of <divs> to be rendered. Each <div> contains route name and time difference.
   const resArray = [];
 
-  // iterate over Trace Points, creating a <div> for every data obj.
+  const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
+  console.log('position for tracePoints:', position);
+  
+  // iterate over ONE elem in tracePoints, creating a <div> for every data obj.
   for (let i = 0; i < tracePoints[position].length; i += 1) {
     if (i !== tracePoints[position].length - 1) {
       // Calc time difference (when not at the end of array):
@@ -137,14 +138,68 @@ const RouteLocations = (props) => {
       );
     }
   }
+  // console.log('resArray: ', resArray);
 
-  console.log('resArray: ', resArray);
+  /**** Making a list of avg speed-related data. ********/
+  // const avgData = [];
+  // Object.entries(avgDataObj).forEach((el, i) => {
+  //   avgData.push(
+  //     <span className="avgDataDetails" key={`${i}+${el[0]}`}>
+  //       {el[0]}: {el[1]}
+  //     </span>
+  //   )
+  // })
+  // console.log('avgData (array):', avgData);
 
+  /**** Making CATEGORIZED lists of avg speed-related data. ********/
+  const avgTime = [], totalTime = [], count = [];
+  let i = 0; // For unique keys for each <span> //
 
-  // return div with Trace Points data
+  for (const key in avgDataObj) {
+    i += 1;
+
+    if (key.endsWith('AvgTime')) {
+      avgTime.push(
+        <span className="avgDataDetails" key={i}>
+          {key.slice(0, -7)}: {avgDataObj[key]} ms
+        </span>
+      )
+    }
+    if (key.endsWith('TotalTime')) {
+      totalTime.push(
+        <span className="avgDataDetails" key={i}>
+          {key.slice(0, -9)}: {avgDataObj[key]} ms
+        </span>
+      )
+    }
+    if (key.endsWith('Count')) {
+      count.push(
+        <span className="avgDataDetails" key={i}>
+          {key.slice(0, -5)}: {avgDataObj[key]}
+        </span>
+      )
+    }
+  }
+  // console.log('avgTime:', avgTime);
+  // console.log('totalTime:', totalTime);
+  // console.log('count:', count);
+  /****************/
+
   return (
-    <div>
+    <div id="routeDataArea">
+      {/* Data on the lastest route */}
       {resArray}
+
+      {/* Rendering avg-speed related data */}
+      <div id="avgData">
+        {/* {avgData} */}
+        <span className="avgData-titles">Average time between points:</span>
+        {avgTime}
+        <span className="avgData-titles">Total time between points:</span>
+        {totalTime}
+        <span className="avgData-titles">Number of trips between points:</span>
+        {count}
+      </div>
     </div>
   );
 };
