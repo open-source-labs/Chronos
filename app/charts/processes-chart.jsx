@@ -35,51 +35,51 @@ const ProcessesChart = (props) => {
     return (
       <Plot
         data = {[
-        {
-          type: 'scatter',
-          x: {autorange: true},
-          y: totalProcesses,
-          mode: 'markers',
-          rangemode: 'nonnegative',
-          name: 'Total Processes',
-          marker: {
-            color: 'red',
-            size: 3
+          {
+            type: 'scatter',
+            x: {autorange: true},
+            y: totalProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Total Processes',
+            marker: {
+              color: 'red',
+              size: 3
+            }},
+          {
+            type: 'scatter',
+            x: {autorange: true},
+            y: runningProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Running Processes',
+            marker: {
+              color: '#3ec1d3',
+              size: 3
+            }},
+          {
+            type: 'scatter',
+            x: {autorange: true},
+            y: blockedProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Blocked Processes',
+            marker: {
+              color: '#ff9a00',
+              size: 3
+            }},
+          { 
+            type: 'scatter',
+            x: {autorange: true},
+            y: sleepingProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Sleeping Processes',
+            marker: {
+              color: '#ff165d',
+              size: 3
           }},
-        {
-          type: 'scatter',
-          x: {autorange: true},
-          y: runningProcesses,
-          mode: 'markers',
-          rangemode: 'nonnegative',
-          name: 'Running Processes',
-          marker: {
-            color: '#3ec1d3',
-            size: 3
-          }},
-        {
-          type: 'scatter',
-          x: {autorange: true},
-          y: blockedProcesses,
-          mode: 'markers',
-          rangemode: 'nonnegative',
-          name: 'Blocked Processes',
-          marker: {
-            color: '#ff9a00',
-            size: 3
-          }},
-        { 
-          type: 'scatter',
-          x: {autorange: true},
-          y: sleepingProcesses,
-          mode: 'markers',
-          rangemode: 'nonnegative',
-          name: 'Sleeping Processes',
-          marker: {
-            color: '#ff165d',
-            size: 3
-          }},
-        {label: communicationLabel},
+          {label: communicationLabel},
         ]}
         layout = {{
           width: 500,
