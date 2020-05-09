@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Monitoring from './MonitoringContainer.jsx';
 import SidebarContainer from './SideBarContainer.jsx';
-import AddService from '../components/AddService.jsx';
-import DeleteService from '../components/DeleteService.jsx';
 // import ServiceOverview from '../components/ServiceOverview';
 
 const DashboardContainer = () => {
@@ -18,7 +16,7 @@ const DashboardContainer = () => {
     <div className="servicesDashboardContainer">
       <SidebarContainer setSelection={setSelection} setDetails={setDetails}/>
       <div className="databsaseList">
-        <Monitoring serviceSelected={serviceSelected} detailsSelected={detailsSelected}/>
+        {serviceSelected}
       </div>
     </div>
   );

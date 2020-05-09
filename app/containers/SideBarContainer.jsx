@@ -6,14 +6,18 @@ import DashboardContext from '../context/DashboardContext';
 import Microservices from '../AComp/Microservices.jsx';
 import OverviewContext from '../context/OverviewContext';
 import ServicesList from '../AComp/ServicesList.jsx';
+import AddService from '../components/AddService.jsx';
+import DeleteService from '../components/DeleteService.jsx';
+import Monitoring from './MonitoringContainer.jsx';
 
 const { ipcRenderer } = window.require('electron');
 
 const SidebarContainer = (props) => {
-  const { setSelection, setDetails } = props;
+  // const { setSelection, setDetails } = props;
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
-
+  const { setSelection } = props;
+  const [detailsSelected, setDetails] = useState();
   // List of the databases saved by users to track microservices.
   const serviceList = useContext(DashboardContext);
 
@@ -23,11 +27,11 @@ const SidebarContainer = (props) => {
   // Contexts have data added to them following successful IPC return. Data is later used to create charts.
   const serviceComponents = useContext(OverviewContext);
   const [index, setIndex] = useState();
-  const [isClicked, setClicked] = useState(false);
+  const [isclicked, setClicked] = useState(false);
 
   // Helper function to check if Clicked toggles
-  const clickToggle = () => {
-    if (isClicked) setClicked(false);
+  const clickToggle = (e) => {
+    if (isclicked) setClicked(false);
     else setClicked(true);
   };
   // Click function for Services
@@ -43,6 +47,7 @@ const SidebarContainer = (props) => {
       setOverviewState(Object.values(JSON.parse(data)));
       serviceComponents.overviewData = JSON.parse(data);
     });
+    setSelection(<Monitoring detailsSelected={detailsSelected} />);
   };
   // Click function for AddService
   const AddClick = () => {
@@ -63,9 +68,9 @@ const SidebarContainer = (props) => {
         <ServicesList
           context={serviceList}
           Click={ServicesClick}
-          isClicked={isClicked}
+          isclicked={isclicked}
         />
-        {isClicked ? (
+        {isclicked ? (
           <Microservices
             overviewState={overviewState}
             setDetails={setDetails}
