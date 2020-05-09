@@ -40,6 +40,11 @@ const LatencyChart = (props) =>  {
               orientation: 'h',
               xanchor: 'center',
               x: .5
+          },
+          xaxis: {
+            tickmode: 'linear',
+            tick0: 0,
+            dtick: 2000
           }
         }}
       />

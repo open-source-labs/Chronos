@@ -79,7 +79,7 @@ const ProcessesChart = (props) => {
             color: '#ff165d',
             size: 3
           }},
-        {labels: communicationLabel},
+        {label: communicationLabel},
         ]}
         layout = {{
           width: 500,
