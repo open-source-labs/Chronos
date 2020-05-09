@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import SetupContext from './context/SetupContext.js';
 import './index.css';
 import AddService from './components/AddService.jsx';
-import ServiceDashboard from './components/ServicesDashboard.jsx';
+// import ServiceDashboard from './components/ServicesDashboard.jsx';
 import Splash from './components/Splash.jsx';
+import DashboardContainer from './containers/DashboardContainer.jsx';
 
 const App = () => {
   const chronosSetup = useContext(SetupContext);
@@ -12,7 +13,7 @@ const App = () => {
   const [splash, toggleSplash] = useState(chronosSetup.splash);
 
   if (splash) return <Splash toggleSplash={toggleSplash} />;
-  return chronosSetup.setupRequired ? <AddService /> : <ServiceDashboard />;
+  return chronosSetup.setupRequired ? <AddService /> : <DashboardContainer />;
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));
