@@ -16,9 +16,9 @@ const DashboardContainer = () => {
 
   return (
     <div className="servicesDashboardContainer">
-      <SidebarContainer selection={setSelection} details={setDetails}/>
+      <SidebarContainer setSelection={setSelection} setDetails={setDetails}/>
       <div className="databsaseList">
-        <Monitoring service={serviceSelected} detail={detailsSelected}/>
+        <Monitoring serviceSelected={serviceSelected} detailsSelected={detailsSelected}/>
       </div>
     </div>
   );

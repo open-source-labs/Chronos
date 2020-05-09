@@ -7,8 +7,8 @@ import routeChart from '../assets/routeChart.png';
 import ServiceDetails from '../components/ServiceDetails.jsx';
 
 const MonitoringContainer = (props) => {
-  const { service } = props;
-  const { detail } = props;
+  const { serviceSelected } = props;
+  const { detailsSelected } = props;
 
   // Contexts have data added to them following successful IPC return. Data is later used to create charts.
   const serviceComponents = useContext(OverviewContext);
@@ -98,7 +98,7 @@ const MonitoringContainer = (props) => {
         {routes}
         {traffic}
       </div>
-      {detail || null}
+      {detailsSelected || null}
     </div>
   );
 };

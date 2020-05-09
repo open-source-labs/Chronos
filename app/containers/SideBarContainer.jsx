@@ -10,7 +10,7 @@ import ServicesList from '../AComp/ServicesList.jsx';
 const { ipcRenderer } = window.require('electron');
 
 const SidebarContainer = (props) => {
-  const { selection, details } = props;
+  const { setSelection, setDetails } = props;
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
 
@@ -22,12 +22,19 @@ const SidebarContainer = (props) => {
 
   // Contexts have data added to them following successful IPC return. Data is later used to create charts.
   const serviceComponents = useContext(OverviewContext);
+  const [index, setIndex] = useState();
+  const [isClicked, setClicked] = useState(false);
 
+  // Helper function to check if Clicked toggles
+  const clickToggle = () => {
+    if (isClicked) setClicked(false);
+    else setClicked(true);
+  };
   // Click function for Services
   const ServicesClick = (e) => {
-    const event = e.target.id;
-    console.log(event);
-    console.log(e.target);
+    clickToggle(e);
+    setIndex(e.target.id);
+    // const event = e.target.id;
     ipcRenderer.send('overviewRequest', e.target.id);
     // IPC listener responsible for retrieving infomation from asynchronous main process message.
     ipcRenderer.on('overviewResponse', (event, data) => {
@@ -40,10 +47,10 @@ const SidebarContainer = (props) => {
   // Click function for AddService
   const AddClick = () => {
     setup.setupRequired = setup.toggleSetup(false);
-    selection(<AddService />);
+    setSelection(<AddService />);
   };
   const DeleteClick = () => {
-    selection(<DeleteService />);
+    setSelection(<DeleteService />);
   };
   const RefreshClick = () => {
     location.reload();
@@ -53,10 +60,18 @@ const SidebarContainer = (props) => {
     <div className="left">
       <div className="leftTopContainer">
         <Header />
-        <ServicesList context={serviceList} Click={ServicesClick} />
-        <Microservices overview={overviewState}
-        details={details}
-        index={0} />
+        <ServicesList
+          context={serviceList}
+          Click={ServicesClick}
+          isClicked={isClicked}
+        />
+        {isClicked ? (
+          <Microservices
+            overviewState={overviewState}
+            setDetails={setDetails}
+            index={index}
+          />
+        ) : null}
         <Extras
           AddClick={AddClick}
           DeleteClick={DeleteClick}
