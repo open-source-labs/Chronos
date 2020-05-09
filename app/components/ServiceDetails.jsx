@@ -5,7 +5,7 @@ import Modal from './Modal.jsx';
 // Renders charts created with health and communication data for a selected database.
 const ServiceDetails = (props) => {
   // Renders health info detail buttons
-  const { service, setDetails } = props;
+  const { service, details } = props;
   // Hook used to toggle whether or not the Modal component renders
   const [modalDisplay, toggleModalDisplay] = useState(false);
   // Hook used to set the chart that the Modal displays.  The
@@ -82,7 +82,7 @@ const ServiceDetails = (props) => {
         onClick={() => {
           // document.location.reload()
           console.log('should clear data');
-          setDetails(null);
+          details(null);
         }}
       >
       Clear Health Data
