@@ -59,26 +59,33 @@ const ResponseCodeChart = (props) => {
         values: Object.values(responseCodes),
         labels: ['Informational 1xx', 'Successful 2xx', 'Redirection 3xx', 'Client Error 4xx', 'Server Error 5xx'],
         type: 'pie',
+        domain: {y: [0 , 2]},
         marker: {
           'colors': [
-              '#f38181',
-              '#fce38a',
-              '#fcbad3',
-              '#95e1d3',
-              '#a8d8ea',
-              '#aa96da',
-            ]
-          }
-        }]}
-        layout = {{
-          height: 500,
-          width: 500,
-          displaylogo: false,
-          paper_bgcolor: '#fffbe0'
-        }}
-      />
-    )
+            '#f38181',
+            '#fce38a',
+            '#fcbad3',
+            '#95e1d3',
+            '#a8d8ea',
+            '#aa96da',
+          ]
+        }
+      }]}
+      layout = {{
+        height: 500,
+        width: 500,
+        displaylogo: false,
+        paper_bgcolor: '#fffbe0',
+        legend: {
+          orientation: 'h',
+          xanchor: 'center',
+          x: .5,
+          y: 5
+        }
+      }}
+    />)
   };
+  
   return <div>{createChart()}</div>;
 };
 
