@@ -423,6 +423,32 @@ select {
   margin-right: 10px;
 }
 
+/*** 3.0 changes ****/
+#routeDataArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#avgData {
+  display: flex;
+  flex-direction: column;
+  height: 25em;
+  width: 30em;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.avgData-titles {
+  font-size: 1.5em;
+}
+.avgDataDetails {
+  color: rgb(97, 97, 97);
+  width: 29em;
+}
+.avgDataDetails:hover {
+  color: white;
+  text-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/*********************/
 
 .RouteCircle {
   font-family: Arial, Helvetica, sans-serif;
@@ -443,6 +469,7 @@ select {
   background: linear-gradient(315deg, rgb(237, 225, 62) 57%, rgb(253, 229, 45) 100%);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 /*** 3.0 changes: applying same styles to time diff text ****/
 #routeText, #routeTimeDiff {
   color: rgb(97, 97, 97);
@@ -455,6 +482,7 @@ select {
   text-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 /**********************************/
+
 form {
   width: 100%;
   font-size: 2vh;
