@@ -86,7 +86,12 @@ const ProcessesChart = (props) => {
           height: 500,
           paper_bgcolor: '#fffbe0',
           plot_bgcolor: '#fffbe0',
-          legend: {itemsizing: 'constant'}
+          legend: {
+            itemsizing: 'constant',
+            orientation: 'h',
+            xanchor: 'center',
+            x: .5
+          },
         }}
       />
     )

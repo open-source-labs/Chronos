@@ -36,8 +36,7 @@ const RequestTypesChart = (props) => {
               '#fcbad3',
               '#aa96da',
               '#a8d8ea',
-              '#f38181',
-              
+              '#f38181',           
             ]
           },
         }]}
@@ -45,11 +44,16 @@ const RequestTypesChart = (props) => {
           height: 500,
           width: 500,
           displaylogo: false,
-          paper_bgcolor: '#fffbe0'
+          paper_bgcolor: '#fffbe0',
+          legend: {
+              orientation: 'h',
+              xanchor: 'center',
+              x: .5,
+          }
         }}
       />
     )
-  }
+  };
 
   return <div>{createRequestChart()}</div>;
 };
