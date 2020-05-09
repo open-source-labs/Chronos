@@ -4,6 +4,7 @@ import HealthContext from '../context/DetailsContext';
 
 const ProcessesChart = (props) => {
   const healthData = useContext(HealthContext).detailData;
+
   const createChart = () => {
     const communicationLabel = [];
     const totalProcesses = [];
@@ -88,7 +89,8 @@ const ProcessesChart = (props) => {
           legend: {itemsizing: 'constant'}
         }}
       />
-    )};
+    )
+  };
     
   return <div>{createChart()}</div>;
 };

@@ -5,9 +5,11 @@ import Plot from 'react-plotly.js';
 
 const LatencyChart = (props) =>  {
   const healthData = useContext(HealthContext).detailData;
+
   const createChart = () => {
     const xAxis = [];
     const yAxis = [];
+    
     for (let i = 0; i < healthData.length; i++) {
       const element = healthData[i];
       if (element.currentmicroservice === props.service || element.currentMicroservice === props.service) {
@@ -27,7 +29,6 @@ const LatencyChart = (props) =>  {
           name: `${props.service} CPU Latency`,
           marker: {
               color: '#155263',
-              size: 1
           }
         }]}
         layout = {{
@@ -38,7 +39,8 @@ const LatencyChart = (props) =>  {
           showlegend: true
         }}
       />
-    )};
+    )
+  };
 
   return <div>{createChart()}</div>;
 };
