@@ -29,8 +29,7 @@ const TemperatureChart = (props) => {
         data = {[{
           type: 'scatter',
           fill: 'tozeroy',
-          fillcolor: 'rgba(240, 138, 93, .5)',
-          line: {shape: 'spline', smoothing: 1.3},
+          fillcolor: 'rgba(29, 39, 134, .5)',
           mode: 'none',
           x: yAxis,
           y: xAxis,
@@ -48,6 +47,11 @@ const TemperatureChart = (props) => {
               orientation: 'h',
               xanchor: 'center',
               x: .5
+            },
+            xaxis: {
+            tickmode: 'linear',
+            tick0: 0,
+            dtick: 2000
             }
           }
         }
