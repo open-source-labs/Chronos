@@ -27,13 +27,14 @@ const TemperatureChart = (props) => {
     return (
       <Plot
         data = {[{
-          type: 'scatter',
+          type: 'bar',
+          width: 200,
           fill: 'tozeroy',
-          fillcolor: 'rgba(29, 39, 134, .5)',
+          color: '#00d1ff',
+          opacity: .4,
           mode: 'none',
           x: yAxis,
           y: xAxis,
-          rangemode: 'nonnegative',
           name: 'CPU Temperature',
           showlegend: true
         }]}
@@ -51,8 +52,9 @@ const TemperatureChart = (props) => {
             xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 2000
-            }
+            dtick: 2000,
+            },
+            yaxis: {rangemode: 'nonnegative'}
           }
         }
       />
