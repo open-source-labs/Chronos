@@ -2,7 +2,7 @@ import React from 'react';
 
 const MonitorHeader = () => (
   <>
-    <h1>Microservices Overview</h1>
+    <h1 className="overviewTitle">Microservices Overview</h1>
     <h2>Communications Data</h2>
   </>
 );

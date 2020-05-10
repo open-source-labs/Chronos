@@ -97,8 +97,8 @@ const MonitoringContainer = (props) => {
         />
       ) : null}
       <div id="routeAndTrafficDisplay">
-        {routes}
-        {traffic}
+      {routes}
+        
       </div>
       {detailsSelected || null}
     </div>

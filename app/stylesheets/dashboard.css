@@ -1,0 +1,72 @@
+.mainContainer {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.servicesDashboardContainer {
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+
+#databsaseList {
+  z-index: -1;
+}
+
+.dashboardHeader {
+  color: white;
+  margin-top: 10%;
+  text-align: center;
+}
+
+.backButton {
+  height: 25px;
+  background-color: #edd9a3;
+  transition: 0.2s;
+  margin-left: 0px;
+  margin-top: 5%;
+}
+
+.backButton:hover {
+  cursor: pointer;
+  background-color: #fbcd4e;
+}
+
+#serviceDetailsContainer {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#healthGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  text-align: center;
+}
+
+.healthChartContainer {
+  margin: 10px 10px 10px 10px;
+}
+
+.healthChartContainer:hover {
+  opacity: 0.7;
+  }
+
+  #routeAndTrafficDisplay {
+    display: inline-flex;
+  }
+
+
+#microserviceHealthInfo {
+  text-align: center;
+  margin-top: 25px;
+  }
+
+#microserviceHealthTitle {
+  margin-left: 0px;
+  }
