@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import HealthInformationContext from '../context/DetailsContext';
+import ServiceDetails from '../components/ServiceDetails.jsx';
 
 const { ipcRenderer } = window.require('electron');
 

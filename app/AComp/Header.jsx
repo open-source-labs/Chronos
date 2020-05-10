@@ -11,7 +11,7 @@ const Header = (props) => {
         id="serviceDashLogo"
       />
       <div className="left-top">
-        <h2>Databases</h2>
+        <h2 className="dashboardHeader">Databases</h2>
       </div>
     </>
   );
