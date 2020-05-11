@@ -1,1 +1,1 @@
-{"setupRequired":true,"services":["hard","coded","in"],"splash":true}
+{"setupRequired":false,"services":[["asdf","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":false}
