@@ -80,7 +80,7 @@ const MemoryChart = (props) => {
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 500,
+            dtick: 100,
           },
         }}
       />

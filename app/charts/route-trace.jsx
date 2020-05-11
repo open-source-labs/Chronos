@@ -49,7 +49,7 @@ const RouteLocations = (props) => {
         <p id="routeText">Point {i + 1}: {tracePoints[position][i]}</p>
       </div>,
     );
-  }
+  } 
 
   console.log('resArray: ', resArray);
 

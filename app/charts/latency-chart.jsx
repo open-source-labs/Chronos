@@ -28,7 +28,7 @@ const LatencyChart = (props) =>  {
           name: `${props.service} CPU Latency`,
           marker: {
               color: '#155263',
-          }
+          },
         }]}
         layout = {{
           width: 500,
@@ -44,8 +44,10 @@ const LatencyChart = (props) =>  {
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 2000
-          }
+            dtick: 200,
+            rangemode: 'nonnegative'
+          },
+          yaxis: {rangemode: 'nonnegative'}
         }}
       />
     )

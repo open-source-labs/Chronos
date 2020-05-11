@@ -27,11 +27,9 @@ const TemperatureChart = (props) => {
     return (
       <Plot
         data = {[{
-          type: 'bar',
-          width: 200,
+          type: 'scatter',
           fill: 'tozeroy',
-          color: '#00d1ff',
-          opacity: .4,
+          fillcolor: 'rgba(224, 62, 54, .6)',
           mode: 'none',
           x: yAxis,
           y: xAxis,
@@ -48,11 +46,6 @@ const TemperatureChart = (props) => {
               orientation: 'h',
               xanchor: 'center',
               x: .5
-            },
-            xaxis: {
-            tickmode: 'linear',
-            tick0: 0,
-            dtick: 2000,
             },
             yaxis: {rangemode: 'nonnegative'}
           }
