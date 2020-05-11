@@ -5,15 +5,14 @@ import SidebarContainer from './SideBarContainer.jsx';
 import '../stylesheets/dashboard.css';
 
 const DashboardContainer = () => {
-  // Used to hold the buttons created for each database found in context.
-  const [serviceSelected, setSelection] = useState();
+
   const [detailsSelected, setDetails] = useState();
 
   return (
     <div className="servicesDashboardContainer">
-      <SidebarContainer setSelection={setSelection} setDetails={setDetails} />
+      <SidebarContainer setDetails={setDetails} />
       <div className="databsaseList">
-        {serviceSelected || <Monitoring detailsSelected={detailsSelected} />}
+        <Monitoring detailsSelected={detailsSelected} />
       </div>
     </div>
   );

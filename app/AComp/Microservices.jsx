@@ -3,11 +3,10 @@ import OverviewContext from '../context/OverviewContext';
 import HealthInformationContext from '../context/DetailsContext';
 import ServiceDetails from '../components/ServiceDetails.jsx';
 
-
 const { ipcRenderer } = window.require('electron');
 
 const Microservices = (props) => {
-  const { index, setDetails, setSelection } = props;
+  const { index, setDetails } = props;
   // Overview state used to create service buttons
   const [overviewState, setOverviewState] = useState([]);
   // const [detailsSelected, setDetails] = useState();
@@ -55,9 +54,8 @@ const Microservices = (props) => {
                 healthdata.detailData = Object.values(JSON.parse(data));
                 // Updates state. Triggers rerender.
                 setDetails(
-                      <ServiceDetails service={element.currentmicroservice} />
+                  <ServiceDetails service={element.currentmicroservice} />
                 );
-                
               });
               // setSelection(<Monitoring detailsSelected={detailsSelected} />);
             }}
@@ -79,7 +77,7 @@ const Microservices = (props) => {
               key={`serviceItem${index}${i}`}
               onClick={() => {
                 ipcRenderer.send('detailsRequest', index);
-                
+
                 // IPC listener responsible for retrieving infomation from asynchronous main process message.
                 ipcRenderer.on('detailsResponse', (event, data) => {
                   // Adds returned data to context.
@@ -87,8 +85,7 @@ const Microservices = (props) => {
                   // Updates state. Triggers rerender.
                   setDetails(
                     <ServiceDetails service={element.currentMicroservice} />
-                    
-                    );
+                  );
                 });
               }}
             >
@@ -103,7 +100,7 @@ const Microservices = (props) => {
   }
   // If there's no data, return 'No data present', else return microservices button
   if (componentButtons.length === 0) {
-    return <p>No data present</p>;
+    return <p>Loading</p>;
   }
   return componentButtons;
 };
