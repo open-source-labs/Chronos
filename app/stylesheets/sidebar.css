@@ -2,6 +2,12 @@
   margin-bottom: 0px;
 }
 
+.dashboardHeader {
+  color: white;
+  margin-top: 10%;
+  text-align: center;
+}
+
 .left-top {
   display: flex;
   flex-direction: column;
@@ -109,3 +115,9 @@
 .servicesList {
   margin-top: 10%;
 }
+
+/* img and div display flex flex direction row */
+/*     height: 100px;
+    position: relative;
+    margin-left: -203px; */
+

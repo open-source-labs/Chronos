@@ -8,6 +8,7 @@ import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
 import RouteTrace from '../charts/route-trace.jsx';
 import MicroServiceTraffic from '../charts/microservice-traffic.jsx';
+import '../stylesheets/modal.css';
 
 const Modal = (props) => {
   // Destructuring props to make linter happy

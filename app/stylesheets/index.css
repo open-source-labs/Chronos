@@ -2,22 +2,17 @@
 
 body {
   background-color: #333;
-  background: rgb(25, 0, 36);
+  background: rgb(25,0,36);
 }
 
 html {
   /* prevent the gradient from repeating past the visible section*/
-  min-height: 100%;
+  min-height: 100%
 }
 
 body {
   /* background-color: #333; Original background*/
-  background: linear-gradient(
-    135deg,
-    rgba(25, 0, 36, 1) 0%,
-    rgb(68, 68, 68) 0%,
-    rgb(29, 29, 29) 100%
-  );
+  background: linear-gradient(135deg, rgba(25,0,36,1) 0%, rgb(68, 68, 68) 0%, rgb(29, 29, 29) 100%);
 }
 
 img {

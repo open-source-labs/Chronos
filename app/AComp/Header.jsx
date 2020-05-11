@@ -1,15 +1,17 @@
 import React, { Fragment } from 'react';
-import ServicesList from './ServicesList.jsx';
+
 
 const Header = (props) => {
-  const { context, Click } = props;
   return (
     <>
+    <div className="logoAndTitle">
       <img
         alt="Chronos Logo"
-        src="app/assets/icon2Cropped.png"
+        src="app/assets/logo2.png"
         id="serviceDashLogo"
       />
+      <h1>Chronos</h1>
+      </div>
       <div className="left-top">
         <h2 className="dashboardHeader">Databases</h2>
       </div>

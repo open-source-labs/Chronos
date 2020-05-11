@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
+import '../stylesheets/routes.css';
 
 const RouteLocations = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;

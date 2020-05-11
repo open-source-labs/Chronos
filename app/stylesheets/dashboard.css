@@ -15,12 +15,6 @@
   z-index: -1;
 }
 
-.dashboardHeader {
-  color: white;
-  margin-top: 10%;
-  text-align: center;
-}
-
 .backButton {
   height: 25px;
   background-color: #edd9a3;
