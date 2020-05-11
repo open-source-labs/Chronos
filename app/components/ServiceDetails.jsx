@@ -6,7 +6,7 @@ import Modal from './Modal.jsx';
 const ServiceDetails = (props) => {
   // Renders health info detail buttons
   const { service } = props;
-  console.log(service);
+  // console.log(service);
   // Hook used to toggle whether or not the Modal component renders
   const [modalDisplay, toggleModalDisplay] = useState(false);
   // Hook used to set the chart that the Modal displays.  The
