@@ -21,9 +21,17 @@ const ServiceDetails = (props) => {
     { id: 'Request', alt: 'Request Data', src: 'app/assets/pieChart.png' },
     { id: 'Response', alt: 'Response Data', src: 'app/assets/pieChart.png' },
     { id: 'Speed', alt: 'Speed Data', src: 'app/assets/speedChart.png' },
-    { id: 'Processes', alt: 'Processes Data', src: 'app/assets/processingChart.png' },
+    {
+      id: 'Processes',
+      alt: 'Processes Data',
+      src: 'app/assets/processingChart.png',
+    },
     { id: 'Latency', alt: 'Latency Data', src: 'app/assets/latencyChart.png' },
-    { id: 'Temperature', alt: 'Temperature Data', src: 'app/assets/tempChart.png' },
+    {
+      id: 'Temperature',
+      alt: 'Temperature Data',
+      src: 'app/assets/tempChart.png',
+    },
     { id: 'Memory', alt: 'Memory Data', src: 'app/assets/memoryChart.png' },
   ];
 
@@ -49,14 +57,11 @@ const ServiceDetails = (props) => {
             alt={buttonProperties[i].alt}
           />
           <br />
-          <div>
-            {buttonProperties[i].id}
-          </div>
+          <div>{buttonProperties[i].id}</div>
         </div>
-      </div>,
+      </div>
     );
   }
-
 
   return (
     <div id="serviceDetailsContainer">
@@ -73,9 +78,7 @@ const ServiceDetails = (props) => {
       ) : null}
 
       <h3 id="microserviceHealthTitle">Microservice Health - {service}</h3>
-      <div id="healthGrid">
-        {healthInfoButtons}
-      </div>
+      <div id="healthGrid">{healthInfoButtons}</div>
       <button
         className="backButton"
         type="button"
@@ -85,7 +88,7 @@ const ServiceDetails = (props) => {
           setDetails(null);
         }}
       >
-      Clear Health Data
+        Clear Health Data
       </button>
     </div>
   );

@@ -1,7 +1,5 @@
 // node requirements
-const {
-  dialog, app, BrowserWindow, ipcMain,
-} = require('electron');
+const { dialog, app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const connectSQL = require('./model/sql-connect');
@@ -44,11 +42,16 @@ function createWindow() {
       // read json from settings.json
       fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
         encoding: 'UTF-8',
-      }),
+      })
     );
     // reassign state.splash
     state.splash = true;
-    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), { encoding: 'UTF-8' }); win = null;
+    fs.writeFileSync(
+      path.resolve(__dirname, './user/settings.json'),
+      JSON.stringify(state),
+      { encoding: 'UTF-8' }
+    );
+    win = null;
   });
 }
 
@@ -62,11 +65,15 @@ app.on('window-all-closed', () => {
     // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
   // reassign state.splash
   state.splash = true;
-  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), { encoding: 'UTF-8' });
+  fs.writeFileSync(
+    path.resolve(__dirname, './user/settings.json'),
+    JSON.stringify(state),
+    { encoding: 'UTF-8' }
+  );
   // process platform is a property that return a string identifying the OS platform on which NodeJs process is running --> Ousman
   if (process.platform !== 'darwin') {
     // quits application
@@ -85,29 +92,33 @@ app.on('activate', () => {
 // Fired by the useEffect hook inside of the Splash.jsx component, this message route will toggle
 // splash property inside of settings.json to false once the Splash page renders itself just once
 ipcMain.on('toggleSplash', (message) => {
-  //console.log('toggleSplash message received');
+  // console.log('toggleSplash message received');
   const state = JSON.parse(
     // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
   // reassign state.splash to false
   state.splash = false;
 
   // overwrite settings.json with false splash property
-  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), { encoding: 'UTF-8' });
+  fs.writeFileSync(
+    path.resolve(__dirname, './user/settings.json'),
+    JSON.stringify(state),
+    { encoding: 'UTF-8' }
+  );
 
   message.returnValue = state.splash;
 });
 
 ipcMain.on('checkSplash', (message) => {
-  //sconsole.log('checkSplash message received');
+  // sconsole.log('checkSplash message received');
   const state = JSON.parse(
     // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
 
   message.returnValue = state.splash;
@@ -116,13 +127,13 @@ ipcMain.on('checkSplash', (message) => {
 // Load settings JSON and returns current setup status back to the render process.
 // ipc 'setup' route -->  Ousman
 ipcMain.on('setup', (message) => {
-  //console.log('setup message received');
+  // console.log('setup message received');
   // assigns state to the returned the object returned from settings.json -->  Ousman
   const state = JSON.parse(
     // read json from settings.json
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
   // destructure setupRequired from state constant ---> Ousman
   const { setupRequired } = state;
@@ -137,10 +148,10 @@ ipcMain.on('submit', (message, newService) => {
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
 
-  // Checks if setup is required by checking if the value for the state key 'setupRequired' is true 
+  // Checks if setup is required by checking if the value for the state key 'setupRequired' is true
   if (state.setupRequired) {
     // If setup is required, the value for key 'setupRequired' is reassign to false and the value for key 'services' is reassign to an array with newService as its only element
     state.setupRequired = false;
@@ -148,10 +159,13 @@ ipcMain.on('submit', (message, newService) => {
   } else {
     // Else the newService is pushed into the services array
     state.services.push(JSON.parse(newService));
-  } 
+  }
 
   // Rewrites user/settings.json to show state
-  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
+  fs.writeFileSync(
+    path.resolve(__dirname, './user/settings.json'),
+    JSON.stringify(state)
+  );
 });
 
 // Load settings JSON and returns updated state back to the render process.
@@ -161,7 +175,7 @@ ipcMain.on('dashboard', (message) => {
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
   // destructure services from state... what is services? --> Ousman
   const { services } = state;
@@ -180,31 +194,36 @@ ipcMain.on('deleteService', (message, index) => {
   let state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
       encoding: 'UTF-8',
-    }),
+    })
   );
 
   // Send a response back with the updated services
   const { splash } = state;
-// Checks if there is more than one services in the services array
+  // Checks if there is more than one services in the services array
   if (state.services.length > 1) {
-       // If true, removes the service at position 'index'
+    // If true, removes the service at position 'index'
     state.services.splice(index, 1);
   } else {
-      // Else reassign state to what the user/setting.json file was originally before any database was save
+    // Else reassign state to what the user/setting.json file was originally before any database was save
     state = { setupRequired: true, services: ['hard', 'coded', 'in'], splash };
   }
 
   // Rewrites json from settings.json
-  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), { encoding: 'UTF-8' });
+  fs.writeFileSync(
+    path.resolve(__dirname, './user/settings.json'),
+    JSON.stringify(state),
+    { encoding: 'UTF-8' }
+  );
   message.sender.send('deleteResponse', state.services);
 });
-
 
 // Queries the database for communications information and returns it back to the render process.
 ipcMain.on('overviewRequest', (message, index) => {
   console.log('hello from overview request');
   const { services } = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
+    fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
+      encoding: 'UTF-8',
+    })
   );
 
   const databaseType = services[index][1];
@@ -233,14 +252,16 @@ ipcMain.on('overviewRequest', (message, index) => {
         const errorAlert = {
           type: 'error',
           title: 'Error in Main process',
-          message: 'Database information could not be retreived. Check that table exists.',
+          message:
+            'Database information could not be retreived. Check that table exists.',
         };
 
         // after requiring dialog in the topmost section of main. We invoke the method showMessagebox passing the error object we created --> Ousman
         dialog.showMessageBox(errorAlert);
 
-
-        message.sender.send(JSON.stringify('Database info could not be retreived.'));
+        message.sender.send(
+          JSON.stringify('Database info could not be retreived.')
+        );
       } else {
         console.log('Connected to SQL Database');
         const queryResults = JSON.stringify(result.rows);
@@ -256,7 +277,9 @@ ipcMain.on('overviewRequest', (message, index) => {
 ipcMain.on('detailsRequest', (message, index) => {
   console.log('detailsRequest message received');
   const databaseType = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, './user/settings.json'), { encoding: 'UTF-8' }),
+    fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
+      encoding: 'UTF-8',
+    })
   ).services[index][1];
 
   if (databaseType === 'MongoDB') {
@@ -267,6 +290,7 @@ ipcMain.on('detailsRequest', (message, index) => {
       const queryResults = JSON.stringify(data);
       // Asynchronous event emitter used to transmit query results back to the render process.
       message.sender.send('detailsResponse', queryResults);
+      console.log('Message Sent');
     });
   }
 
@@ -274,7 +298,10 @@ ipcMain.on('detailsRequest', (message, index) => {
     const getHealth = 'SELECT * FROM healthInfo';
     pool.query(getHealth, (err, result) => {
       if (err) {
-        message.sender.send('detailsResponse', JSON.stringify('Database info could not be retreived.'));
+        message.sender.send(
+          'detailsResponse',
+          JSON.stringify('Database info could not be retreived.')
+        );
       }
       const queryResults = JSON.stringify(result.rows);
       // Asynchronous event emitter used to transmit query results back to the render process.
@@ -283,4 +310,3 @@ ipcMain.on('detailsRequest', (message, index) => {
     });
   }
 });
-

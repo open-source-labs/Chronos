@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 // import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
-import ServicesDashboard from './ServicesDashboard.jsx';
+import '../stylesheets/AddService.css';
 
 const { ipcRenderer } = window.require('electron');
 
