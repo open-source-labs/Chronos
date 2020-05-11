@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Monitoring from './MonitoringContainer.jsx';
 import SidebarContainer from './SideBarContainer.jsx';
-// import ServiceOverview from '../components/ServiceOverview';
 import '../stylesheets/dashboard.css';
 
 const DashboardContainer = () => {
@@ -20,7 +19,4 @@ const DashboardContainer = () => {
 
 export default DashboardContainer;
 
-// {/* <div className="databsaseList">
 
-// </div> */}
-// {/* <Monitoring service={serviceSelected}/> */}
