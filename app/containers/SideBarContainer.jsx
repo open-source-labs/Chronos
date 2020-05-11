@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import Header from '../AComp/Header.jsx';
+import Header from '../AComp/SidebarHeader.jsx';
 import Extras from '../AComp/Extras.jsx';
 import SetupContext from '../context/SetupContext';
 import DashboardContext from '../context/DashboardContext';
@@ -9,23 +9,19 @@ import AddService from '../components/AddService.jsx';
 import DeleteService from '../components/DeleteService.jsx';
 import '../stylesheets/sidebar.css';
 
-const { ipcRenderer } = window.require('electron');
-
 const SidebarContainer = (props) => {
-  // const { setSelection, setDetails } = props;
+  const { setDetails } = props;
+
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
 
-  const { setSelection, setDetails } = props;
-
-  
   // List of the databases saved by users to track microservices.
   const serviceList = useContext(DashboardContext);
 
-  
-
- 
+  // Setting index of service selected
   const [index, setIndex] = useState();
+
+  // Checking to see if service clicked to display Microservices
   const [isclicked, setClicked] = useState('false');
 
   // Helper function to check if Clicked toggles
@@ -37,17 +33,21 @@ const SidebarContainer = (props) => {
   const ServicesClick = (e) => {
     clickToggle(e);
     setIndex(e.target.id);
-
+    setDetails(null);
     // setSelection(<Monitoring detailsSelected={detailsSelected} />);
   };
   // Click function for AddService
   const AddClick = () => {
     setup.setupRequired = setup.toggleSetup(false);
-    setSelection(<AddService />);
+    setDetails(<AddService />);
   };
+
+  // Click fn for Delete Service
   const DeleteClick = () => {
-    setSelection(<DeleteService />);
+    setDetails(<DeleteService />);
   };
+
+  // Click fn for Refresh
   const RefreshClick = () => {
     location.reload();
   };
@@ -62,11 +62,7 @@ const SidebarContainer = (props) => {
           isclicked={isclicked}
         />
         {isclicked === 'true' ? (
-          <Microservices
-            setSelection={setSelection}
-            index={index}
-            setDetails={setDetails}
-          />
+          <Microservices index={index} setDetails={setDetails} />
         ) : null}
         <Extras
           AddClick={AddClick}
