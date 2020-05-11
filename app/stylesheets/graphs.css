@@ -1,0 +1,5 @@
+.graphsGrid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 60px;
+}

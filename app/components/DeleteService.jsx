@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import DashboardContext from '../context/DashboardContext';
 import SetupContext from '../context/SetupContext';
-
+import '../stylesheets/DeleteServices.css';
 // Declare a constant ipcRenderer by deconstructing window.require('electron') so that the onDelete function can initialize an IPC Communication 
 const { ipcRenderer } = window.require('electron');
 

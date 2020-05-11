@@ -1,0 +1,62 @@
+.RouteCircle {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  width: 4em;
+  height: 4em;
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background: rgb(244, 222, 62);
+  background: linear-gradient(315deg, rgb(237, 225, 62) 57%, rgb(253, 229, 45) 100%);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#routeText {
+  color: rgb(97, 97, 97);
+  width: 11.3em;
+  margin-left: 6.8em;
+  padding-top: 1.8em;
+}
+
+#routeText:hover {
+  color: white;
+  text-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#routeDataArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#avgData {
+  display: flex;
+  flex-direction: column;
+  height: 25em;
+  width: 30em;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.avgData-titles {
+  font-size: 1.5em;
+}
+.avgDataDetails {
+  color: rgb(97, 97, 97);
+  width: 29em;
+}
+.avgDataDetails:hover {
+  color: white;
+  text-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#routeText, #routeTimeDiff {
+  color: rgb(97, 97, 97);
+  width: 11.3em;
+  margin-left: 6.8em;
+}
+
+#routeText:hover, #routeTimeDiff:hover {
+  color: white;
+  text-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
