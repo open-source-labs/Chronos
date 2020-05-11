@@ -46,7 +46,6 @@ const Microservices = (props) => {
             type="button"
             key={`serviceItem${index}${i}`}
             onClick={() => {
-              console.log(element.currentmicroservice);
               // IPC communication used to initiate query for information on microservice health information.
               ipcRenderer.send('detailsRequest', index);
 
@@ -83,13 +82,12 @@ const Microservices = (props) => {
                 // IPC listener responsible for retrieving infomation from asynchronous main process message.
                 ipcRenderer.on('detailsResponse', (event, data) => {
                   // Adds returned data to context.
-                  console.log(element.currentmicroservice);
                   healthdata.detailData = Object.values(JSON.parse(data));
                   // Updates state. Triggers rerender.
                   setDetails(
-                        <ServiceDetails service={element.currentmicroservice} />
-                      
-                  );
+                    <ServiceDetails service={element.currentMicroservice} />
+                    
+                    );
                 });
               }}
             >
