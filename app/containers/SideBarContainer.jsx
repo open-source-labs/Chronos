@@ -25,7 +25,7 @@ const SidebarContainer = (props) => {
   const [isclicked, setClicked] = useState('false');
 
   // Helper function to check if Clicked toggles
-  const clickToggle = (e) => {
+  const clickToggle = () => {
     if (isclicked === 'true') setClicked('false');
     else setClicked('true');
   };

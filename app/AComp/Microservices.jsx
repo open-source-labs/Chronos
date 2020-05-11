@@ -9,7 +9,7 @@ const Microservices = (props) => {
   const { index, setDetails } = props;
   // Overview state used to create service buttons
   const [overviewState, setOverviewState] = useState([]);
-  // const [detailsSelected, setDetails] = useState();
+  
   // Contexts have data added to them following successful IPC return. Data is later used to create charts.
   const serviceComponents = useContext(OverviewContext);
 
@@ -57,7 +57,6 @@ const Microservices = (props) => {
                   <ServiceDetails service={element.currentmicroservice} />
                 );
               });
-              // setSelection(<Monitoring detailsSelected={detailsSelected} />);
             }}
           >
             {element.currentmicroservice}
