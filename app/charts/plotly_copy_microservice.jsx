@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import Plot from 'react-plotly.js';
+import { Bar } from 'react-chartjs-2';
 import CommunicationsContext from '../context/OverviewContext';
 
 const MicroServiceTraffic = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
 
-  
   //initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.    
   const resObj = {};
 
@@ -79,35 +78,27 @@ const MicroServiceTraffic = (props) => {
       ],
   }
 
+  
+  // return div with Bar component and Trace Points data
   return (
-    <Plot
-      data = {[{
-        type: 'bar',
-        x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy', 'ReverseProxy'],
-        y: [...serverPingCount, 0, yAxisHeadRoom],
-        fill: 'tozeroy',
-        color: 'red',
-        opacity: .4,
-        mode: 'none',
-        name: 'Times Server Pinged',
-        showlegend: true
-      }]}
-      layout = {
-        {
-          width: 500,
-          height: 500,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
-          legend: {
-            orientation: 'h',
-            xanchor: 'center',
-            x: .5,
-            y: 5
-          },
-          yaxis: {rangemode: 'nonnegative'}
-        }
-      }
-    />
+      <div>
+        <Bar 
+        data={myChart}
+        width={100}
+        height={50}
+        options={{
+            title:{
+              display:true,
+              text:'Microservices Overview',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
+      </div>
   )
 };
 

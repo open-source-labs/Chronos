@@ -38,17 +38,6 @@ const ProcessesChart = (props) => {
           {
             type: 'scatter',
             x: {autorange: true},
-            y: totalProcesses,
-            mode: 'markers',
-            rangemode: 'nonnegative',
-            name: 'Total Processes',
-            marker: {
-              color: 'red',
-              size: 3
-            }},
-          {
-            type: 'scatter',
-            x: {autorange: true},
             y: runningProcesses,
             mode: 'markers',
             rangemode: 'nonnegative',
