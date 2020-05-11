@@ -7,12 +7,12 @@ import '../stylesheets/dashboard.css';
 const DashboardContainer = () => {
   // Used to hold the buttons created for each database found in context.
   const [serviceSelected, setSelection] = useState();
-  // const [detailsSelected, setDetails] = useState();
+  const [detailsSelected, setDetails] = useState();
   return (
     <div className="servicesDashboardContainer">
-      <SidebarContainer setSelection={setSelection} />
+      <SidebarContainer setSelection={setSelection} setDetails={setDetails} />
       <div className="databsaseList">
-        {serviceSelected}
+        {serviceSelected || <Monitoring detailsSelected={detailsSelected} />}
       </div>
     </div>
   );
