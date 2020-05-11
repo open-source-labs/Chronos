@@ -7,7 +7,6 @@ import Microservices from '../AComp/Microservices.jsx';
 import ServicesList from '../AComp/ServicesList.jsx';
 import AddService from '../components/AddService.jsx';
 import DeleteService from '../components/DeleteService.jsx';
-// import Monitoring from './MonitoringContainer.jsx';
 import '../stylesheets/sidebar.css';
 
 const { ipcRenderer } = window.require('electron');
@@ -17,7 +16,7 @@ const SidebarContainer = (props) => {
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
 
-  const { setSelection, setDetails} = props;
+  const { setSelection, setDetails } = props;
 
   
   // List of the databases saved by users to track microservices.

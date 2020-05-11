@@ -18,9 +18,9 @@ function createWindow() {
   // assign win to an instance of a new browser window.
   win = new BrowserWindow({
     // giving our window its width
-    width: 900,
+    width: 1920,
     // giving our window its hieght
-    height: 800,
+    height: 1080,
     // specify the path of the icon -- Which icon is this?.. note too tsure --> Ousman
     icon: path.join(__dirname, 'app/assets/icons/icon.png'),
     // enable node inegreation --> node intgeration, default is usally false --> Ousman
