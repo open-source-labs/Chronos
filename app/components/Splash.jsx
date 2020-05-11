@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import '../stylesheets/splash.css';
 
 const { ipcRenderer } = window.require('electron');
 
