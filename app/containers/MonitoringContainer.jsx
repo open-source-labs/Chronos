@@ -80,23 +80,7 @@ const MonitoringContainer = (props) => {
 
   return (
     <div className="mainContainer">
-      <MonitorHeader />
-      {modalDisplay ? (
-        <Modal
-          chartTitle={chartTitle}
-          modalChart={modalChart}
-          service=""
-          toggleModalDisplay={toggleModalDisplay}
-          onClick={() => {
-            toggleModalDisplay(!modalDisplay);
-          }}
-        />
-      ) : null}
-      <div id="routeAndTrafficDisplay">
-        {routes}
-        {traffic}
-      </div>
-      <br />{detailsSelected || null}
+      {detailsSelected || null}
     </div>
   );
 };
