@@ -7,7 +7,7 @@ import ServiceDetails from '../components/ServiceDetails.jsx';
 const { ipcRenderer } = window.require('electron');
 
 const Microservices = (props) => {
-  const { index, setDetails } = props;
+  const { index, setDetails, setSelection } = props;
   // Overview state used to create service buttons
   const [overviewState, setOverviewState] = useState([]);
   // const [detailsSelected, setDetails] = useState();
@@ -57,6 +57,7 @@ const Microservices = (props) => {
                 setDetails(
                       <ServiceDetails service={element.currentmicroservice} />
                 );
+                
               });
               // setSelection(<Monitoring detailsSelected={detailsSelected} />);
             }}

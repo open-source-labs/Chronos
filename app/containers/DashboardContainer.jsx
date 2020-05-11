@@ -8,6 +8,7 @@ const DashboardContainer = () => {
   // Used to hold the buttons created for each database found in context.
   const [serviceSelected, setSelection] = useState();
   const [detailsSelected, setDetails] = useState();
+
   return (
     <div className="servicesDashboardContainer">
       <SidebarContainer setSelection={setSelection} setDetails={setDetails} />
