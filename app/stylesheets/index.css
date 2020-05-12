@@ -14,7 +14,8 @@ html {
 
 body {
   /* background-color: #333; Original background*/
-  background: linear-gradient(135deg, rgba(25,0,36,1) 0%, rgb(68, 68, 68) 0%, rgb(29, 29, 29) 100%);
+  background-color: white;
+  
 }
 
 img {
