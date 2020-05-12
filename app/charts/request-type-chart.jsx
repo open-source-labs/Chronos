@@ -33,9 +33,9 @@ const RequestTypesChart = (props) => {
           marker: {
             'colors': [
               '#c1e1dc',
-              '#337bae',
+              '#8369E3',
               '#ffeb94',
-              '#2f496e',
+              '#69C9E3',
               '#73605b',
               '#d09683',           
             ]
