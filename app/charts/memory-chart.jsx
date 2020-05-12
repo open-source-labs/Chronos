@@ -67,8 +67,8 @@ const MemoryChart = (props) => {
           {label: xAxis},
         ]}
         layout = {{
-          width: 500,
-          height: 500,
+          height: 400,
+          width: 400,
           paper_bgcolor: '#fffbe0',
           plot_bgcolor: '#fffbe0',
           legend: {

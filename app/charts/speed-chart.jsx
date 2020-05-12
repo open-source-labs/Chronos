@@ -50,8 +50,8 @@ const SpeedChart = (props) => {
           },
         }]}
         layout = {{
-          height: 500,
-          width: 500,
+          height: 400,
+          width: 400,
           paper_bgcolor: '#fffbe0',
           legend: {
             orientation: 'h',

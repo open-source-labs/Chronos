@@ -4,19 +4,14 @@ import SidebarContainer from './SideBarContainer.jsx';
 import '../stylesheets/dashboard.css';
 
 const DashboardContainer = () => {
-
   const [detailsSelected, setDetails] = useState();
 
   return (
-    <div className="servicesDashboardContainer">
+    <div className="MainDashboardContainer">
       <SidebarContainer setDetails={setDetails} />
-      <div className="databsaseList">
-        <Monitoring detailsSelected={detailsSelected} />
-      </div>
+      <Monitoring detailsSelected={detailsSelected} />
     </div>
   );
 };
 
 export default DashboardContainer;
-
-
