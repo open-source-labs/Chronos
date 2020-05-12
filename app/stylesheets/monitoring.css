@@ -1,0 +1,13 @@
+#serviceDetailsContainer {
+  margin-top: 1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#microserviceHealthTitle{
+  color: white;
+  font-size: 38px;
+  margin-top: 0px;
+}

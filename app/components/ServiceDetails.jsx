@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState } from 'react';
+import React from 'react';
 // import Modal from './Modal.jsx';
 import GraphsContainer from '../containers/GraphsContainer.jsx';
 
@@ -8,9 +8,12 @@ const ServiceDetails = (props) => {
   // Renders health info detail buttons
   const { service } = props;
   
+  //Capitalize service name
+  const title = service[0].toUpperCase() + service.substring(1);
+
   return (
     <div id="serviceDetailsContainer">
-      <h3 id="microserviceHealthTitle">Microservice Health - {service}</h3>
+      <h3 id="microserviceHealthTitle">{title}</h3>
       <GraphsContainer service={service} />
     </div>
   );
