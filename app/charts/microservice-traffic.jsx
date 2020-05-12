@@ -86,8 +86,8 @@ const MicroServiceTraffic = (props) => {
         x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy', 'ReverseProxy'],
         y: [...serverPingCount, 0, yAxisHeadRoom],
         fill: 'tozeroy',
-        color: 'red',
-        opacity: .4,
+        marker: {'color': '#5C80FF'},
+        opacity: .7,
         mode: 'none',
         name: 'Times Server Pinged',
         showlegend: true
@@ -96,8 +96,12 @@ const MicroServiceTraffic = (props) => {
         {
           height: 400,
           width: 400,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          font: {
+            color: 'azure',
+            size: 15
+          },
+          paper_bgcolor: '#8BA6B9',
+          plot_bgcolor: '#8BA6B9',
           legend: {
             orientation: 'h',
             xanchor: 'center',
