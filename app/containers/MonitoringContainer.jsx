@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import '../stylesheets/monitoring.css'
 
 const MonitoringContainer = (props) => {
   const { detailsSelected } = props;
 
-  return (
-    <div className="mainContainer">
-      {detailsSelected || null}
-    </div>
-  );
+  return <>{detailsSelected || null}</>;
 };
 
 export default MonitoringContainer;

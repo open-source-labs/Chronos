@@ -16,7 +16,6 @@ const GraphsContainer = (props) => {
   return (
     <div className="graphsGrid">
       <RequestTypesChart service={service} />
-      <RouteTrace service={service} />
       <ResponseCodesChart service={service} />
       <SpeedChart service={service} />
       <ProcessesChart service={service} />
@@ -24,6 +23,7 @@ const GraphsContainer = (props) => {
       <MicroServiceTraffic service={service} />
       <TemperatureChart service={service} />
       <MemoryChart service={service} />
+      <RouteTrace service={service} />
     </div>
   );
 };

@@ -20,6 +20,7 @@ const LatencyChart = (props) =>  {
     return (
       <Plot
         data = {[{
+          name: 'CPU Latency',
           type: 'scatter',
           x: xAxis,
           y: yAxis,
@@ -31,10 +32,14 @@ const LatencyChart = (props) =>  {
           },
         }]}
         layout = {{
-          width: 400,
           height: 400,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          width: 400,
+          font: {
+            color: 'azure',
+            size: 15
+          },
+          paper_bgcolor: '#8BA6B9',
+          plot_bgcolor: '#8BA6B9',
           showlegend: true,
           legend: {
               orientation: 'h',
