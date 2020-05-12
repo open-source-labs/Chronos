@@ -31,19 +31,19 @@ const SpeedChart = (props) => {
           type: 'indicator',
           value: yAxis[yAxis.length - 1],
           title: {'text': "Speed Chart"},
-          delta: {'reference': 3.5, 'increasing': {'color': "mistyrose"}},
+          delta: {'reference': 3.5, 'decreasing': {'color': 'mistyrose'}},
           mode: "gauge+number+delta",
           gauge: { axis: { range: [null, 8] },
             'tickwidth': 1,
-            'tickcolor': "#fce38a",
-            'bar': {'color': "#6eb6ff"},
-            'bordercolor': "#a3de83",
+            'tickcolor': 'mistyrose',
+            'bar': {'color': "#e1315b"},
+            'bordercolor': "#a1be95",
             'steps': [
-              {'range': [0, 4], 'color': '#edf798'},
+              {'range': [0, 4], 'color': '#e2dfa2'},
               {'range': [4, 6], 'color': '#fab57a'}
             ],
             'threshold': {
-              'line': {'color': "red", 'width': 3.5},
+              'line': {'color': 'mistyrose', 'width': 3.5},
               'thickness': 0.75,
               'value': 7.5
             }
@@ -52,7 +52,11 @@ const SpeedChart = (props) => {
         layout = {{
           height: 400,
           width: 400,
-          paper_bgcolor: '#fffbe0',
+          font: {
+            color: 'azure',
+            size: 15
+          },
+          paper_bgcolor: '#8BA6B9',
           legend: {
             orientation: 'h',
             xanchor: 'center',
