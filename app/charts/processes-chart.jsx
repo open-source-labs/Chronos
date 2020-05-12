@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { Bar } from 'react-chartjs-2';
+import Plot from 'react-plotly.js';
 import HealthContext from '../context/DetailsContext';
 
 const ProcessesChart = (props) => {
   const healthData = useContext(HealthContext).detailData;
+
   const createChart = () => {
     const communicationLabel = [];
     const totalProcesses = [];
@@ -31,30 +32,60 @@ const ProcessesChart = (props) => {
       }
     }
 
-    const chartData = {
-      datasets: [{
-        label: 'Blocked Processes',
-        backgroundColor: 'rgb(198, 42, 177)',
-        data: blockedProcesses,
-      }, {
-        label: 'Sleeping Processes',
-        backgroundColor: 'rgb(252, 170, 52)',
-        data: sleepingProcesses,
-      }, {
-        label: 'Running Processes',
-        backgroundColor: 'rgb(239, 91, 145)',
-        data: runningProcesses,
-      }, {
-        label: 'Total Processes',
-        backgroundColor: 'rgb(182, 219, 26)',
-        data: totalProcesses,
-      }],
-      labels: communicationLabel,
-    };
-
-    return <Bar data={chartData} />;
+    return (
+      <Plot
+        data = {[
+          {
+            type: 'scatter',
+            x: {autorange: true},
+            y: runningProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Running Processes',
+            marker: {
+              color: '#3ec1d3',
+              size: 3
+            }},
+          {
+            type: 'scatter',
+            x: {autorange: true},
+            y: blockedProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Blocked Processes',
+            marker: {
+              color: '#ff9a00',
+              size: 3
+            }},
+          { 
+            type: 'scatter',
+            x: {autorange: true},
+            y: sleepingProcesses,
+            mode: 'markers',
+            rangemode: 'nonnegative',
+            name: 'Sleeping Processes',
+            marker: {
+              color: '#ff165d',
+              size: 3
+          }},
+          {label: communicationLabel},
+        ]}
+        layout = {{
+          height: 400,
+          width: 400,
+          paper_bgcolor: '#fffbe0',
+          plot_bgcolor: '#fffbe0',
+          legend: {
+            itemsizing: 'constant',
+            orientation: 'h',
+            xanchor: 'center',
+            x: .5
+          },
+        }}
+      />
+    )
   };
-
+    
   return <div>{createChart()}</div>;
 };
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Plot from 'react-plotly.js';
+import { Line } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
 
 const TemperatureChart = (props) => {
@@ -8,7 +8,6 @@ const TemperatureChart = (props) => {
   const createChart = () => {
     const yAxis = [];
     const xAxis = [];
-
     for (let i = 0; i < healthData.length; i += 1) {
       const element = healthData[i];
       // If Mongo
@@ -24,34 +23,19 @@ const TemperatureChart = (props) => {
       }
     }
 
-    return (
-      <Plot
-        data = {[{
-          type: 'scatter',
-          fill: 'tozeroy',
-          fillcolor: 'rgba(224, 62, 54, .6)',
-          mode: 'none',
-          x: yAxis,
-          y: xAxis,
-          name: 'CPU Temperature',
-          showlegend: true
-        }]}
-        layout = {
-          {
-            height: 400,
-          width: 400,
-            paper_bgcolor: '#fffbe0',
-            plot_bgcolor: '#fffbe0',
-            legend: {
-              orientation: 'h',
-              xanchor: 'center',
-              x: .5
-            },
-            yaxis: {rangemode: 'nonnegative'}
-          }
-        }
-      />
-    )
+    const chartData = {
+      datasets: [
+        {
+          label: 'Temperature Data',
+          data: xAxis,
+          backgroundColor: [
+            'rgb(2, 210, 249)',
+          ],
+        },
+      ],
+      labels: yAxis,
+    };
+    return <Line data={chartData} />;
   };
 
   return <div>{createChart()}</div>;

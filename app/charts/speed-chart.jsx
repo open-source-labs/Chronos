@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Line } from 'react-chartjs-2';
+import Plot from 'react-plotly.js';
 import HealthContext from '../context/DetailsContext';
 
 const SpeedChart = (props) => {
@@ -24,24 +24,43 @@ const SpeedChart = (props) => {
       }
     }
 
-    const chartData = {
-      datasets: [
-        {
-          label: `CPU Speed of ${props.service}`,
-          data: yAxis,
-          backgroundColor: [
-            'rgb(2, 210, 249)',
-          ],
-        },
-      ],
-      options: {
-      },
-      xAxisID: 'Speed',
-      yAxisID: 'Communicaton',
-      labels: xAxis,
-    };
-
-    return <Line data={chartData} />;
+    return (
+      <Plot
+        data = {[{
+          domain: { x: [0, 1], y: [0, 1] },
+          type: 'indicator',
+          value: yAxis[yAxis.length - 1],
+          title: {'text': "Speed Chart"},
+          delta: {'reference': 3.5, 'increasing': {'color': "mistyrose"}},
+          mode: "gauge+number+delta",
+          gauge: { axis: { range: [null, 8] },
+            'tickwidth': 1,
+            'tickcolor': "#fce38a",
+            'bar': {'color': "#6eb6ff"},
+            'bordercolor': "#a3de83",
+            'steps': [
+              {'range': [0, 4], 'color': '#edf798'},
+              {'range': [4, 6], 'color': '#fab57a'}
+            ],
+            'threshold': {
+              'line': {'color': "red", 'width': 3.5},
+              'thickness': 0.75,
+              'value': 7.5
+            }
+          },
+        }]}
+        layout = {{
+          height: 400,
+          width: 400,
+          paper_bgcolor: '#fffbe0',
+          legend: {
+            orientation: 'h',
+            xanchor: 'center',
+            x: .5
+          }
+        }}
+      />
+    )
   };
 
   return <div>{createChart()}</div>;

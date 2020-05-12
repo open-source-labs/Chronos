@@ -1,5 +1,10 @@
 .graphsGrid {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 60px;
+  grid-gap: 30px;
+}
+
+svg {
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(255, 0, 0, 0.6);
 }

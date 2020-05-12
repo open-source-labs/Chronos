@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import Plot from 'react-plotly.js';
 import CommunicationsContext from '../context/OverviewContext';
 
 const RequestTypesChart = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
 
-  const createRequestChart = () => {
+    const createRequestChart = () => {
     const requestObj = {
       DELETE: 0,
       GET: 0,
@@ -23,24 +23,36 @@ const RequestTypesChart = (props) => {
       else if (element.currentmicroservice === props.service && element.reqtype in requestObj) requestObj[element.reqtype] += 1;
     }
 
-    const chartData = {
-      datasets: [
-        {
-          data: Object.values(requestObj),
-          backgroundColor: [
-            'rgb(2, 210, 249)',
-            'rgb(198, 42, 177)',
-            'rgb(252, 170, 52)',
-            'rgb(239, 91, 145)',
-            'rgb(182, 219, 26)',
-            'rgb(254, 255, 0)',
-          ],
-        },
-      ],
-      labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
-    };
-
-    return <Doughnut data={chartData} />;
+    return (
+      <Plot
+        data = {[{
+          values: Object.values(requestObj),
+          labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
+          type: 'pie',
+          marker: {
+            'colors': [
+              '#95e1d3',
+              '#fce38a',
+              '#fcbad3',
+              '#aa96da',
+              '#a8d8ea',
+              '#f38181',           
+            ]
+          },
+        }]}
+        layout = {{
+          height: 400,
+          width: 400,
+          displaylogo: false,
+          paper_bgcolor: '#fffbe0',
+          legend: {
+              orientation: 'h',
+              xanchor: 'center',
+              x: .5,
+          }
+        }}
+      />
+    )
   };
 
   return <div>{createRequestChart()}</div>;
