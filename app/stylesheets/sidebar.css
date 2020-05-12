@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
+
 #addServiceLogo {
   margin-bottom: 0px;
 }
@@ -6,12 +8,13 @@
   color: white;
   margin-top: 10%;
   text-align: center;
+  font-family: 'Nunito', sans-serif;
 }
 
 .left-top {
   display: flex;
   flex-direction: column;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 1.75vh;
   flex-direction: column;
   align-content: center;
@@ -27,10 +30,11 @@
 }
 
 .servicesBtn {
-  background-color: rgb(255, 206, 9); 
+  font-family: 'Nunito', sans-serif;
+  background-color: #D7B396; 
   width: 13em;
   word-wrap: break-word;
-  font-size: 13px;
+  font-size: 15px;
   text-align: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border: none;
@@ -40,7 +44,7 @@
 }
 
 .servicesBtn:hover {
-  background-color: rgb(250, 227, 136);
+  background-color: #b7e2b4;
   font-weight: 400;
   box-shadow: #333;
   cursor: pointer;
@@ -67,36 +71,42 @@
 
 .left {
   height: 1000px;
+  color:white;
+  font-family: 'Nunito', sans-serif;
   /* display: flex; */
 }
 
 .microserviceBtn {
+  font-family: 'Nunito', sans-serif;
   width: 80%;
   height: 50px;
-  background-color: rgb(249, 221, 111);
+  background-color: #8FB98B;
   padding: 2%;
   margin: 10px 0 10px 0;
-  font-size: 1.5vh;
+  font-size: 2.5vh;
   border: none;
   text-align: center;
-  color: #333;
+  color: azure;
   transition: 0.1s;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .overviewSubmitBtn {
-  background-color: #333;
+  font-family: 'Nunito', sans-serif;
+  background-color: #B99E8B;
   margin: 8% auto 0 auto;
   height: 40px;
-  border: 1px solid white;
-  font-size: 1.55vh;
-  color: white;
+  border: none;
+  font-size: 1.50vh;
+  color: whitesmoke;
   transition: 0.25s;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .overviewSubmitBtn:hover {
-  border: 1px solid rgb(255, 206, 9);
-  color: rgb(255, 206, 9);
+  border: .5px solid azure;
+  background-color: #c8afc9;
+  color: azure;
   cursor: pointer;
 }
 
@@ -108,8 +118,8 @@
 .microserviceBtn:hover {
   /* font-weight: 900; */
   cursor: pointer;
-  border: 2px solid rgb(243, 239, 179);
-  background-color: rgb(255, 206, 9);
+  border: 2px solid #98ba8e;
+  background-color: #ceb6cf;
 }
 
 .servicesList {
