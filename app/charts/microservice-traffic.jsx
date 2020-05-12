@@ -87,7 +87,7 @@ const MicroServiceTraffic = (props) => {
         y: [...serverPingCount, 0, yAxisHeadRoom],
         fill: 'tozeroy',
         marker: {'color': '#5C80FF'},
-        opacity: .7,
+        // opacity: .7,
         mode: 'none',
         name: 'Times Server Pinged',
         showlegend: true
@@ -97,11 +97,11 @@ const MicroServiceTraffic = (props) => {
           height: 400,
           width: 400,
           font: {
-            color: 'azure',
+            color: 'black',
             size: 15
           },
-          paper_bgcolor: '#8BA6B9',
-          plot_bgcolor: '#8BA6B9',
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
