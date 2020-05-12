@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-
+import React from 'react';
+import '../stylesheets/SidebarHeader.css';
 
 const Header = (props) => {
   return (

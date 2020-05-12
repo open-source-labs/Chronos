@@ -37,7 +37,7 @@ const MemoryChart = (props) => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgb(14, 49, 80)',
+            fillcolor: 'rgb(193, 225, 220)',
             mode: 'none',
             x: {autorange: true},
             y: free,
@@ -47,7 +47,7 @@ const MemoryChart = (props) => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgba(255, 64, 87, .3)',
+            fillcolor: 'rgba(255, 235, 148, .3)',
             mode: 'none',
             x: {autorange: true},
             y: used,
@@ -57,7 +57,7 @@ const MemoryChart = (props) => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgba(144, 0, 72, .4)',
+            fillcolor: 'rgba(253, 212, 117, .4)',
             mode: 'none',
             x: {autorange: true},
             y: active,
@@ -69,8 +69,12 @@ const MemoryChart = (props) => {
         layout = {{
           height: 400,
           width: 400,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          font: {
+            color: 'azure',
+            size: 15
+          },
+          paper_bgcolor: '#8BA6B9',
+          plot_bgcolor: '#8BA6B9',
           legend: {
             itemsizing: 'constant',
             orientation: 'h',
