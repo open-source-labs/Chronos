@@ -52,7 +52,7 @@ const SidebarContainer = (props) => {
   };
 
   return (
-    <div className="left" color="red">
+    <div className="left">
       <div className="leftTopContainer">
         <Header />
         <ServicesList
