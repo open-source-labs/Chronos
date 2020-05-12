@@ -36,11 +36,11 @@ const SpeedChart = (props) => {
           gauge: { axis: { range: [null, 8] },
             'tickwidth': 1,
             'tickcolor': 'mistyrose',
-            'bar': {'color': "#e1315b"},
+            'bar': {'color': "#f3f5fa"},
             'bordercolor': "#a1be95",
             'steps': [
-              {'range': [0, 4], 'color': '#e2dfa2'},
-              {'range': [4, 6], 'color': '#fab57a'}
+              {'range': [0, 4], 'color': '#d09683'},
+              {'range': [4, 6], 'color': '#4a4eee'}
             ],
             'threshold': {
               'line': {'color': 'mistyrose', 'width': 3.5},
@@ -53,10 +53,10 @@ const SpeedChart = (props) => {
           height: 400,
           width: 400,
           font: {
-            color: 'azure',
+            color: 'black',
             size: 15
           },
-          paper_bgcolor: '#8BA6B9',
+          paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',

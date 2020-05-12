@@ -29,7 +29,7 @@ const TemperatureChart = (props) => {
         data = {[{
           type: 'scatter',
           fill: 'tozeroy',
-          fillcolor: 'rgba(224, 62, 54, .4)',
+          fillcolor: 'rgb(250, 26, 88)',
           mode: 'none',
           x: yAxis,
           y: xAxis,
@@ -41,11 +41,11 @@ const TemperatureChart = (props) => {
             height: 400,
             width: 400,
             font: {
-              color: 'azure',
+              color: 'black',
               size: 15
             },
-            paper_bgcolor: '#8BA6B9',
-            plot_bgcolor: '#8BA6B9',
+            paper_bgcolor: 'white',
+            plot_bgcolor: 'white',
 
             legend: {
               orientation: 'h',
