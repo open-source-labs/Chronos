@@ -41,8 +41,8 @@ const RequestTypesChart = (props) => {
           },
         }]}
         layout = {{
-          height: 500,
-          width: 500,
+          height: 400,
+          width: 400,
           displaylogo: false,
           paper_bgcolor: '#fffbe0',
           legend: {
