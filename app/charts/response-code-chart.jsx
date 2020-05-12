@@ -71,11 +71,10 @@ const ResponseCodeChart = (props) => {
             marker: {
               colors: [
                 '#4897d8',
-                '#ffdb5c',
-                '#fa6e59',
+                '#ffd480',
+                '#fffe9f',
                 '#f8a055',
                 '#73605b',
-                '#d09683', 
               ],
             },
           },
