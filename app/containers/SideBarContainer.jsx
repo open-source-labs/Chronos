@@ -34,7 +34,6 @@ const SidebarContainer = (props) => {
     clickToggle(e);
     setIndex(e.target.id);
     setDetails(null);
-    // setSelection(<Monitoring detailsSelected={detailsSelected} />);
   };
   // Click function for AddService
   const AddClick = () => {
