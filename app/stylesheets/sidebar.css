@@ -45,7 +45,7 @@
 }
 
 .servicesBtn:hover {
-  background-color: #00AFEA;
+  background-color: #494FEE;
   font-weight: 400;
   box-shadow: #333;
   cursor: pointer;
@@ -107,7 +107,7 @@
 
 .overviewSubmitBtn:hover {
   /* border: .5px solid azure; */
-  background-color: #00AFEA;
+  background-color: #494FEE;
   color: azure;
   cursor: pointer;
 }
@@ -121,7 +121,7 @@
   /* font-weight: 900; */
   cursor: pointer;
   /* border: 2px solid #98ba8e; */
-  background-color: #00AFEA;
+  background-color: #494FEE;
 }
 
 .servicesList {
