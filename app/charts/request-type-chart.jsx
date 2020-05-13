@@ -29,22 +29,27 @@ const RequestTypesChart = (props) => {
           values: Object.values(requestObj),
           labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
           type: 'pie',
+          name: 'Request Types',
           marker: {
             'colors': [
-              '#95e1d3',
-              '#fce38a',
-              '#fcbad3',
-              '#aa96da',
-              '#a8d8ea',
-              '#f38181',           
+              '#fa1a58',
+              '#4a4eee',
+              '#00eda0',
+              '#00d3f2',
+              '#73605b',
+              '#d09683',           
             ]
           },
         }]}
         layout = {{
           height: 400,
           width: 400,
+          font: {
+            color: 'black',
+            size: 15
+          },
           displaylogo: false,
-          paper_bgcolor: '#fffbe0',
+          paper_bgcolor: 'white',
           legend: {
               orientation: 'h',
               xanchor: 'center',
@@ -55,7 +60,7 @@ const RequestTypesChart = (props) => {
     )
   };
 
-  return <div>{createRequestChart()}</div>;
+  return <div className="requestChart">{createRequestChart()}</div>;
 };
 
 export default RequestTypesChart;

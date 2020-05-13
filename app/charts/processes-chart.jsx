@@ -43,7 +43,7 @@ const ProcessesChart = (props) => {
             rangemode: 'nonnegative',
             name: 'Running Processes',
             marker: {
-              color: '#3ec1d3',
+              color: '#00d3f2',
               size: 3
             }},
           {
@@ -54,7 +54,7 @@ const ProcessesChart = (props) => {
             rangemode: 'nonnegative',
             name: 'Blocked Processes',
             marker: {
-              color: '#ff9a00',
+              color: '#00eda0',
               size: 3
             }},
           { 
@@ -65,7 +65,7 @@ const ProcessesChart = (props) => {
             rangemode: 'nonnegative',
             name: 'Sleeping Processes',
             marker: {
-              color: '#ff165d',
+              color: '#4a4eee',
               size: 3
           }},
           {label: communicationLabel},
@@ -73,8 +73,12 @@ const ProcessesChart = (props) => {
         layout = {{
           height: 400,
           width: 400,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          font: {
+            color: 'black',
+            size: 15
+          },
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           legend: {
             itemsizing: 'constant',
             orientation: 'h',
@@ -86,7 +90,7 @@ const ProcessesChart = (props) => {
     )
   };
     
-  return <div>{createChart()}</div>;
+  return <div className="processesChart">{createChart()}</div>;
 };
 
 export default ProcessesChart;

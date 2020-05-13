@@ -37,7 +37,7 @@ const MemoryChart = (props) => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgb(14, 49, 80)',
+            fillcolor: 'rgb(0, 237, 160)',
             mode: 'none',
             x: {autorange: true},
             y: free,
@@ -47,7 +47,7 @@ const MemoryChart = (props) => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgba(255, 64, 87, .3)',
+            fillcolor: 'rgba(0, 237, 160, .5)',
             mode: 'none',
             x: {autorange: true},
             y: used,
@@ -57,7 +57,7 @@ const MemoryChart = (props) => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgba(144, 0, 72, .4)',
+            fillcolor: 'rgba(74, 78, 238, .7)',
             mode: 'none',
             x: {autorange: true},
             y: active,
@@ -69,8 +69,12 @@ const MemoryChart = (props) => {
         layout = {{
           height: 400,
           width: 400,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          font: {
+            color: 'black',
+            size: 15
+          },
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           legend: {
             itemsizing: 'constant',
             orientation: 'h',
@@ -87,7 +91,7 @@ const MemoryChart = (props) => {
     )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="memoryChart">{createChart()}</div>;
 };
 
 export default MemoryChart;
