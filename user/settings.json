@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"setupRequired":false,"services":[["asdf","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":true}
+=======
+{"setupRequired":false,"services":[["Test","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":false}
+>>>>>>> f44452fa8acda19c6131565d833c41404df7bd4d

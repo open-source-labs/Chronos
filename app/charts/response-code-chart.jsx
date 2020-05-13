@@ -70,12 +70,11 @@ const ResponseCodeChart = (props) => {
             domain: { y: [0, 2] },
             marker: {
               colors: [
-                '#f38181',
-                '#fce38a',
-                '#fcbad3',
-                '#95e1d3',
-                '#a8d8ea',
-                '#aa96da',
+                '#fa1a58',
+                '#f3f5fa',
+                '#00eda0',
+                '#00fff2',
+                '#73605b',
               ],
             },
           },
@@ -83,8 +82,12 @@ const ResponseCodeChart = (props) => {
         layout={{
           height: 400,
           width: 400,
+          font: {
+            color: 'black',
+            size: 15
+          },
           displaylogo: false,
-          paper_bgcolor: '#fffbe0',
+          paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
@@ -96,7 +99,7 @@ const ResponseCodeChart = (props) => {
     );
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="responseCodeChart">{createChart()}</div>;
 };
 
 export default ResponseCodeChart;
