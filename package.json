@@ -21,6 +21,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "@jest-runner/electron": "^2.0.3",
     "chart.js": "^2.8.0",
     "chronos-microservice-debugger": "^1.0.3",
