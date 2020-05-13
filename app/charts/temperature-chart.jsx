@@ -59,7 +59,7 @@ const TemperatureChart = (props) => {
     )
   };
 
-  return <div className="temperatureChart">{createChart()}</div>;
+  return <div>{createChart()}</div>;
 };
 
 export default TemperatureChart;
