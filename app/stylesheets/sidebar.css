@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
+
 .left {
-  color: white;
+  height: 100%;
+  color:white;
   font-family: 'Nunito', sans-serif;
-  background-color: #24262f;
-  border-right: 2px solid rgba(0,0,0,0.3);
+  background-color: #24262F;
   /* display: flex; */
 }
+
 .leftTopContainer {
   display: flex;
   flex-direction: column;
@@ -23,4 +25,13 @@
   align-items: center;
   align-content: center;
 }
+
+
+
+
+
+/* img and div display flex flex direction row */
+/*     height: 100px;
+    position: relative;
+    margin-left: -203px; */
 

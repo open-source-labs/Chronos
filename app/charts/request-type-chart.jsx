@@ -32,10 +32,10 @@ const RequestTypesChart = (props) => {
           name: 'Request Types',
           marker: {
             'colors': [
-              '#c1e1dc',
-              '#8369E3',
-              '#ffeb94',
-              '#69C9E3',
+              '#fa1a58',
+              '#4a4eee',
+              '#00eda0',
+              '#00d3f2',
               '#73605b',
               '#d09683',           
             ]
@@ -45,11 +45,11 @@ const RequestTypesChart = (props) => {
           height: 400,
           width: 400,
           font: {
-            color: 'azure',
+            color: 'black',
             size: 15
           },
           displaylogo: false,
-          paper_bgcolor: '#8BA6B9',
+          paper_bgcolor: 'white',
           legend: {
               orientation: 'h',
               xanchor: 'center',

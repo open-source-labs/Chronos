@@ -28,18 +28,18 @@ const LatencyChart = (props) =>  {
           rangemode: 'nonnegative',
           name: `${props.service} CPU Latency`,
           marker: {
-              color: '#155263',
+              color: 'rgb(218, 170, 23',
           },
         }]}
         layout = {{
           height: 400,
           width: 650,
           font: {
-            color: 'azure',
+            color: 'black',
             size: 15
           },
-          paper_bgcolor: '#8BA6B9',
-          plot_bgcolor: '#8BA6B9',
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           showlegend: true,
           legend: {
               orientation: 'h',

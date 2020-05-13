@@ -76,36 +76,28 @@ const MicroServiceTraffic = (props) => {
   };
 
   return (
-    <div className="trafficChart">
-      <Plot
-        data={[
-          {
-            type: 'bar',
-            x: [
-              'Orders',
-              'Customers',
-              'Books',
-              'Reverse-Proxy',
-              'ReverseProxy',
-            ],
-            y: [...serverPingCount, 0, yAxisHeadRoom],
-            fill: 'tozeroy',
-            marker: { color: '#5C80FF' },
-            opacity: 0.7,
-            mode: 'none',
-            name: 'Times Server Pinged',
-            showlegend: true,
-          },
-        ]}
-        layout={{
+    <Plot
+      data = {[{
+        type: 'bar',
+        x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy', 'ReverseProxy'],
+        y: [...serverPingCount, 0, yAxisHeadRoom],
+        fill: 'tozeroy',
+        marker: {'color': '#5C80FF'},
+        // opacity: .7,
+        mode: 'none',
+        name: 'Times Server Pinged',
+        showlegend: true
+      }]}
+      layout = {
+        {
           height: 400,
           width: 400,
           font: {
-            color: 'azure',
-            size: 15,
+            color: 'black',
+            size: 15
           },
-          paper_bgcolor: '#8BA6B9',
-          plot_bgcolor: '#8BA6B9',
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
@@ -115,7 +107,6 @@ const MicroServiceTraffic = (props) => {
           yaxis: { rangemode: 'nonnegative' },
         }}
       />
-    </div>
   );
 };
 
