@@ -59,16 +59,16 @@ const SidebarContainer = (props) => {
           context={serviceList}
           Click={ServicesClick}
           isclicked={isclicked}
-        />
+          />
         {isclicked === 'true' ? (
           <ServicesList index={index} setDetails={setDetails} />
-        ) : null}
+          ) : null}
         <Extras
           AddClick={AddClick}
           DeleteClick={DeleteClick}
           RefreshClick={RefreshClick}
-        />
-      </div>
+          />
+          </div>
     </div>
   );
 };

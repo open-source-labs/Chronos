@@ -1,25 +1,21 @@
-
-
 .microserviceBtn {
   font-family: 'Nunito', sans-serif;
   width: 80%;
   height: 50px;
-  background-color: #444cf8;
+  background-color: #24262F;
   padding: 2%;
   margin: 10px 0 10px 0;
   font-size: 2.5vh;
-  font-weight: bold;
   border: none;
   text-align: center;
-  color: azure;
+  color: white;
   transition: 0.1s;
-  
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .microserviceBtn:hover {
   /* font-weight: 900; */
   cursor: pointer;
   /* border: 2px solid #98ba8e; */
-  background-color: #05EC96;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #494FEE;
 }

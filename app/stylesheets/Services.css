@@ -1,6 +1,6 @@
 .servicesBtn {
   font-family: 'Nunito', sans-serif;
-  background-color: #444cf8;
+  background-color: #24262F;
   width: 13em;
   color: white;
   word-wrap: break-word;
@@ -14,7 +14,7 @@
 }
 
 .servicesBtn:hover {
-  background-color: #b7e2b4;
+  background-color: #494FEE;
   font-weight: 400;
   box-shadow: #333;
   cursor: pointer;
