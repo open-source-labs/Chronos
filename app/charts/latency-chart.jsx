@@ -33,7 +33,7 @@ const LatencyChart = (props) =>  {
         }]}
         layout = {{
           height: 400,
-          width: 650,
+          width: 400,
           font: {
             color: 'black',
             size: 15
