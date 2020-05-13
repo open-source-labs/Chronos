@@ -15,6 +15,9 @@
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-class-properties"
     ]
   },
   "keywords": [],
@@ -27,6 +30,7 @@
     "@jest-runner/electron": "^2.0.3",
     "chart.js": "^2.8.0",
     "chronos-microservice-debugger": "^1.0.3",
+    "d3": "^5.16.0",
     "electron": "^6.1.11",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
@@ -45,6 +49,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
