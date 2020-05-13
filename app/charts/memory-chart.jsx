@@ -91,7 +91,7 @@ const MemoryChart = (props) => {
     )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="memoryChart">{createChart()}</div>;
 };
 
 export default MemoryChart;

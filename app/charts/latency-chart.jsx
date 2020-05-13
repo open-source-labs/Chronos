@@ -33,7 +33,7 @@ const LatencyChart = (props) =>  {
         }]}
         layout = {{
           height: 400,
-          width: 400,
+          width: 650,
           font: {
             color: 'azure',
             size: 15
@@ -58,7 +58,7 @@ const LatencyChart = (props) =>  {
     )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="latencyChart">{createChart()}</div>;
 };
 
 export default LatencyChart;

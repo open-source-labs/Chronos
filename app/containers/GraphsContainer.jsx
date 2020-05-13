@@ -16,14 +16,14 @@ const GraphsContainer = (props) => {
   return (
     <div className="graphsGrid">
       <SpeedChart service={service} />
-      <RequestTypesChart service={service} />
-      <ResponseCodesChart service={service} />
-      <ProcessesChart service={service} />
-      <LatencyChart service={service} />
-      <MicroServiceTraffic service={service} />
-      <TemperatureChart service={service} />
-      <MemoryChart service={service} />
-      <RouteTrace service={service} />
+      <TemperatureChart  service={service} />
+      <RequestTypesChart  service={service} />
+      <ResponseCodesChart  service={service} />
+      <ProcessesChart  service={service} />
+      <LatencyChart  service={service} />
+      <MicroServiceTraffic  service={service} />
+      <MemoryChart  service={service} />
+      {/* <RouteTrace className="routeChart" service={service} /> */}
     </div>
   );
 };

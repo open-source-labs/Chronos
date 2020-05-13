@@ -50,13 +50,13 @@ const SpeedChart = (props) => {
           },
         }]}
         layout = {{
-          height: 400,
-          width: 400,
+          height: 250,
+          width: 250,
           font: {
-            color: 'azure',
+            color: 'Black',
             size: 15
           },
-          paper_bgcolor: '#8BA6B9',
+          borderRadius: 10,
           legend: {
             orientation: 'h',
             xanchor: 'center',
@@ -67,7 +67,7 @@ const SpeedChart = (props) => {
     )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="speedChart">{createChart()}</div>;
 };
 
 export default SpeedChart;
