@@ -1,6 +1,7 @@
 import React from 'react';
 import '../stylesheets/overviewSubmit.css';
 
+
 const Extras = (props) => {
   const { AddClick, DeleteClick, RefreshClick } = props;
   return (
@@ -11,7 +12,7 @@ const Extras = (props) => {
         key="BackToStart"
         onClick={AddClick}
       >
-        Add Database
+        +
       </button>
       <button
         className="overviewSubmitBtn"
@@ -19,14 +20,14 @@ const Extras = (props) => {
         key="goToDeletePage"
         onClick={DeleteClick}
       >
-        Delete Database
+        -
       </button>
       <button
         className="overviewSubmitBtn"
         type="submit"
         onClick={RefreshClick}
       >
-        Refresh overview
+        Refresh
       </button>
     </div>
   );

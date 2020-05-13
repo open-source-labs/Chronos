@@ -99,7 +99,7 @@ const ResponseCodeChart = (props) => {
     );
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="responseCodeChart">{createChart()}</div>;
 };
 
 export default ResponseCodeChart;
