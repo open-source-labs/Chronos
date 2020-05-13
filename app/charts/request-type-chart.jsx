@@ -60,7 +60,7 @@ const RequestTypesChart = (props) => {
     )
   };
 
-  return <div>{createRequestChart()}</div>;
+  return <div className="requestChart">{createRequestChart()}</div>;
 };
 
 export default RequestTypesChart;

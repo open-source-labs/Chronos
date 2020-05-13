@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import '../stylesheets/AddService.css';
 

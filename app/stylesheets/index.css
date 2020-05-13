@@ -8,8 +8,9 @@ body {
 html {
   /* prevent the gradient from repeating past the visible section*/
   /* min-height: 100% */
-  max-width: 1920;
-  max-height: 1080;
+  background-color: #24262f;
+  /* max-width: 1920;
+  max-height: 1080; */
 }
 
 body {

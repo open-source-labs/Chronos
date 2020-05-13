@@ -6,6 +6,8 @@ import Splash from './components/Splash.jsx';
 import DashboardContainer from './containers/DashboardContainer.jsx';
 import './stylesheets/index.css';
 
+
+
 const App = () => {
   const chronosSetup = useContext(SetupContext);
   // useState hook to conditionally render the splash page only once per session
