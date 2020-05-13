@@ -10,7 +10,6 @@ import RouteTrace from '../charts/route-trace.jsx';
 import MicroServiceTraffic from '../charts/microservice-traffic.jsx';
 import '../stylesheets/graphs.css';
 
-
 let vis;
 
 const GraphsContainer = (props) => {
@@ -39,14 +38,12 @@ const GraphsContainer = (props) => {
   const [active, setActive] = useState(null);
   const canvas = useRef(null);
 
-
   useEffect(fetchData, []);
   useEffect(initVis, [ data ]);
 
   function fetchData() {
     Promise.resolve().then(() => setData(initialData.nodes));
   }
-
 
   function initVis() {
     if(data && data.length) {
