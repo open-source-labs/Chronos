@@ -70,10 +70,10 @@ const ResponseCodeChart = (props) => {
             domain: { y: [0, 2] },
             marker: {
               colors: [
-                '#4897d8',
-                '#ffd480',
-                '#fffe9f',
-                '#f8a055',
+                '#fa1a58',
+                '#f3f5fa',
+                '#00eda0',
+                '#00fff2',
                 '#73605b',
               ],
             },
@@ -83,11 +83,11 @@ const ResponseCodeChart = (props) => {
           height: 400,
           width: 400,
           font: {
-            color: 'azure',
+            color: 'black',
             size: 15
           },
           displaylogo: false,
-          paper_bgcolor: '#8BA6B9',
+          paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',

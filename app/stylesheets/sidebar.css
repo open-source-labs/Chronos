@@ -31,7 +31,8 @@
 
 .servicesBtn {
   font-family: 'Nunito', sans-serif;
-  background-color: #D7B396; 
+  background-color: #24262F;
+  color: white; 
   width: 13em;
   word-wrap: break-word;
   font-size: 15px;
@@ -44,7 +45,7 @@
 }
 
 .servicesBtn:hover {
-  background-color: #b7e2b4;
+  background-color: #494FEE;
   font-weight: 400;
   box-shadow: #333;
   cursor: pointer;
@@ -73,7 +74,7 @@
   height: 1000px;
   color:white;
   font-family: 'Nunito', sans-serif;
-  background-color: #24262F
+  background-color: #24262F;
   /* display: flex; */
 }
 
@@ -81,20 +82,20 @@
   font-family: 'Nunito', sans-serif;
   width: 80%;
   height: 50px;
-  background-color: #8FB98B;
+  background-color: #24262F;
   padding: 2%;
   margin: 10px 0 10px 0;
   font-size: 2.5vh;
   border: none;
   text-align: center;
-  color: azure;
+  color: white;
   transition: 0.1s;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .overviewSubmitBtn {
   font-family: 'Nunito', sans-serif;
-  background-color: #B99E8B;
+  background-color: #24262F;
   margin: 8% auto 0 auto;
   height: 40px;
   border: none;
@@ -105,8 +106,8 @@
 }
 
 .overviewSubmitBtn:hover {
-  border: .5px solid azure;
-  background-color: #c8afc9;
+  /* border: .5px solid azure; */
+  background-color: #494FEE;
   color: azure;
   cursor: pointer;
 }
@@ -119,8 +120,8 @@
 .microserviceBtn:hover {
   /* font-weight: 900; */
   cursor: pointer;
-  border: 2px solid #98ba8e;
-  background-color: #ceb6cf;
+  /* border: 2px solid #98ba8e; */
+  background-color: #494FEE;
 }
 
 .servicesList {
