@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
 import * as d3 from 'd3';
-
 class RouteTrace {
 
   containerEl;
@@ -26,8 +24,8 @@ class RouteTrace {
       .enter()
       .append('circle')
       .style('fill', 'red')
-      .attr('cx', () => Math.random() * width)
-      .attr('cy', () => Math.random() * height)
+      .attr('cx', 20)
+      .attr('cy', 200)
       .attr('r', 20)
       .on('mouseup', (d, i, nodes) => this.setActiveDatapoint(d, nodes[i]));
   }
