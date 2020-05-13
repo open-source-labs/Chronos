@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 15% 85%;
   position: relative;
+  background-color: #F7F8FC;
 }
 
 

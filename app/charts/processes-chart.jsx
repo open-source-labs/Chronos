@@ -72,7 +72,7 @@ const ProcessesChart = (props) => {
         ]}
         layout = {{
           height: 400,
-          width: 400,
+          width: 650,
           font: {
             color: 'black',
             size: 15
@@ -90,7 +90,7 @@ const ProcessesChart = (props) => {
     )
   };
     
-  return <div>{createChart()}</div>;
+  return <div className="processesChart">{createChart()}</div>;
 };
 
 export default ProcessesChart;

@@ -1,60 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
 
-#addServiceLogo {
-  margin-bottom: 0px;
-}
-
-.dashboardHeader {
-  color: white;
-  margin-top: 10%;
-  text-align: center;
-  font-family: 'Nunito', sans-serif;
-}
-
-.left-top {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.75vh;
-  flex-direction: column;
-  align-content: center;
-  width: 100%;
-  /* padding: 5% 10% 0 5%; */
-  align-items: center;
-  justify-items: center;
-  justify-content: center;
-  /* height: 1000px; */
-  max-height: 600px;
-  overflow-y: auto;
-
-}
-
-.servicesBtn {
+.left {
+  height: 100%;
+  color:white;
   font-family: 'Nunito', sans-serif;
   background-color: #24262F;
-  color: white; 
-  width: 13em;
-  word-wrap: break-word;
-  font-size: 15px;
-  text-align: center;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border: none;
-  height: 50px;
-  transition: 0.2s;
-  margin: 0 8px 0 8px;
-}
-
-.servicesBtn:hover {
-  background-color: #494FEE;
-  font-weight: 400;
-  box-shadow: #333;
-  cursor: pointer;
+  /* display: flex; */
 }
 
 .leftTopContainer {
   display: flex;
   flex-direction: column;
-  border-right: 2px solid rgb(163, 163, 163);
   align-items: center;
   justify-items: center;
   align-content: center;
@@ -62,71 +18,17 @@
 }
 
 .left-bottom {
-  max-height: 100px;
   display: flex;
+  flex-direction: column;
   align-content: center;
   grid-auto-columns: 100%;
   align-items: center;
   align-content: center;
 }
 
-.left {
-  height: 1000px;
-  color:white;
-  font-family: 'Nunito', sans-serif;
-  background-color: #24262F;
-  /* display: flex; */
-}
 
-.microserviceBtn {
-  font-family: 'Nunito', sans-serif;
-  width: 80%;
-  height: 50px;
-  background-color: #24262F;
-  padding: 2%;
-  margin: 10px 0 10px 0;
-  font-size: 2.5vh;
-  border: none;
-  text-align: center;
-  color: white;
-  transition: 0.1s;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
-.overviewSubmitBtn {
-  font-family: 'Nunito', sans-serif;
-  background-color: #24262F;
-  margin: 8% auto 0 auto;
-  height: 40px;
-  border: none;
-  font-size: 1.50vh;
-  color: whitesmoke;
-  transition: 0.25s;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
-.overviewSubmitBtn:hover {
-  /* border: .5px solid azure; */
-  background-color: #494FEE;
-  color: azure;
-  cursor: pointer;
-}
-
-.servicesList {
-  align-items: center;
-  justify-content: center;
-}
-
-.microserviceBtn:hover {
-  /* font-weight: 900; */
-  cursor: pointer;
-  /* border: 2px solid #98ba8e; */
-  background-color: #494FEE;
-}
-
-.servicesList {
-  margin-top: 10%;
-}
 
 /* img and div display flex flex direction row */
 /*     height: 100px;

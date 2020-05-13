@@ -1,8 +1,10 @@
 .graphsGrid {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 30px;
+  grid-gap: 30px;  /* align-items: center; */
+  margin: auto; 
 }
+
 
 svg {
   border-radius: 2px;
