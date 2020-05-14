@@ -79,7 +79,7 @@ const MicroServiceTraffic = (props) => {
     <Plot
       data = {[{
         type: 'bar',
-        x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy', 'ReverseProxy'],
+        x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy'],
         y: [...serverPingCount, 0, yAxisHeadRoom],
         fill: 'tozeroy',
         marker: {'color': '#5C80FF'},
