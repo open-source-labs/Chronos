@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["Test","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":false}
+{"setupRequired":false,"services":[["docker-mongo","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":false}
