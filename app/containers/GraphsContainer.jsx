@@ -7,6 +7,7 @@ import TemperatureChart from '../charts/temperature-chart.jsx';
 import LatencyChart from '../charts/latency-chart.jsx';
 import MemoryChart from '../charts/memory-chart.jsx';
 import RouteTrace from '../charts/route-trace.jsx';
+// import RouteLocations from '../charts/route-copy.jsx';
 import MicroServiceTraffic from '../charts/microservice-traffic.jsx';
 import '../stylesheets/graphs.css';
 
@@ -16,10 +17,10 @@ const GraphsContainer = (props) => {
   const { service } = props;
   const initialData = {
     nodes: [
-      { id: 'reverse-proxy' },
-      { id: 'books' },
-      { id: 'customers' },
-      { id: 'orders' },
+      { id1: 'reverse-proxy' },
+      { id2: 'books' },
+      { id3: 'customers' },
+      { id4: 'orders' },
     ],
     links: [
       { source: 'reverse-proxy', target: 'books' },
@@ -56,7 +57,7 @@ const GraphsContainer = (props) => {
       vis = new RouteTrace(canvas.current, d3Props);
     }
   }
-
+  
   return (
     <div className="graphsGrid">
       <div ref={canvas}/>
