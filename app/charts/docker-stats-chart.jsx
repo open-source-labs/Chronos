@@ -9,8 +9,7 @@ const DockerStatsChart = (props) => {
   // const healthData = useContext(HealthContext).detailData[length - 1]; // <== only used if only getting the last data pt.
   const healthData = useContext(HealthContext).detailData;
 
-  console.log('healthData (in docker-stats-chart):', healthData);
-  console.log('props.service:', props.service);
+  // console.log('healthData (in docker-stats-chart):', healthData);
 
   // Declare a dockerStats obj to store extracted Docker stats.
   let dockerStats = {};
@@ -24,33 +23,35 @@ const DockerStatsChart = (props) => {
     if (healthData[i].currentMicroservice === props.service) {
       // Extract Docker-related data (MongoDB) and save to dockerStats obj.
       dockerStats = {
-        'Containerized service': healthData.currentMicroservice,
-        'Container ID': healthData.containerId.slice(0, 7) + '[...]',
-        'CPU usage %': parseFloat(healthData.containerCpuPercent).toFixed(2) + '%',
-        'Mem usage %': parseFloat(healthData.containerMemPercent).toFixed(2) + '%',
-        'Mem limit (Mb)': parseFloat(healthData.containerMemLimit / 1000000).toFixed(2),
-        'Mem usage (Mb)': parseFloat(healthData.containerMemUsage / 1000000).toFixed(2),
-        'Network I/O - Received (Kb)': parseFloat(healthData.networkReceived / 1000).toFixed(2),
-        'Network I/O - Sent (Kb)': parseFloat(healthData.networkSent / 1000).toFixed(2),
-        'Process count': healthData.containerProcessCount,
-        'Restart count': healthData.containerRestartCount,
+        'Containerized service': healthData[i].currentMicroservice,
+        'Container ID': healthData[i].containerId.slice(0, 7) + '[...]',
+        'CPU usage %': parseFloat(healthData[i].containerCpuPercent).toFixed(2) + '%',
+        'Mem usage %': parseFloat(healthData[i].containerMemPercent).toFixed(2) + '%',
+        'Mem limit (Mb)': parseFloat(healthData[i].containerMemLimit / 1000000).toFixed(2),
+        'Mem usage (Mb)': parseFloat(healthData[i].containerMemUsage / 1000000).toFixed(2),
+        'Network I/O - Received (Kb)': parseFloat(healthData[i].networkReceived / 1000).toFixed(2),
+        'Network I/O - Sent (Kb)': parseFloat(healthData[i].networkSent / 1000).toFixed(2),
+        'Process count': healthData[i].containerProcessCount,
+        'Restart count': healthData[i].containerRestartCount,
       };
+      break;
     }
     
     // If postgreSQL:
     if (healthData[i].currentmicroservice === props.service) {
       dockerStats = {
-        'Containerized service': healthData.currentmicroservice,
-        'Container ID': healthData.containerid.slice(0, 7) + '[...]',
-        'CPU usage %': parseFloat(healthData.containercpupercent).toFixed(2) + '%',
-        'Mem usage %': parseFloat(healthData.containermempercent).toFixed(2) + '%',
-        'Mem limit (Mb)': parseFloat(healthData.containermemlimit / 1000000).toFixed(2),
-        'Mem usage (Mb)': parseFloat(healthData.containermemusage / 1000000).toFixed(2),
-        'Network I/O - Received (Kb)': parseFloat(healthData.networkreceived / 1000).toFixed(2),
-        'Network I/O - Sent (Kb)': parseFloat(healthData.networksent / 1000).toFixed(2),
-        'Process count': healthData.containerprocesscount,
-        'Restart count': healthData.containerrestartcount,
+        'Containerized service': healthData[i].currentmicroservice,
+        'Container ID': healthData[i].containerid.slice(0, 7) + '[...]',
+        'CPU usage %': parseFloat(healthData[i].containercpupercent).toFixed(2) + '%',
+        'Mem usage %': parseFloat(healthData[i].containermempercent).toFixed(2) + '%',
+        'Mem limit (Mb)': parseFloat(healthData[i].containermemlimit / 1000000).toFixed(2),
+        'Mem usage (Mb)': parseFloat(healthData[i].containermemusage / 1000000).toFixed(2),
+        'Network I/O - Received (Kb)': parseFloat(healthData[i].networkreceived / 1000).toFixed(2),
+        'Network I/O - Sent (Kb)': parseFloat(healthData[i].networksent / 1000).toFixed(2),
+        'Process count': healthData[i].containerprocesscount,
+        'Restart count': healthData[i].containerrestartcount,
       };
+      break;
     }
   }
 
