@@ -17,10 +17,10 @@ const GraphsContainer = (props) => {
   const { service } = props;
   const initialData = {
     nodes: [
-      { id1: 'reverse-proxy' },
-      { id2: 'books' },
-      { id3: 'customers' },
-      { id4: 'orders' },
+      { id: 'reverse-proxy' },
+      { id: 'books' },
+      { id: 'customers' },
+      { id: 'orders' },
     ],
     links: [
       { source: 'reverse-proxy', target: 'books' },
@@ -60,7 +60,6 @@ const GraphsContainer = (props) => {
   return (
     <div className="graphsGrid">
       <div className='routes'>
-        <div>{active}</div>
         <div ref={canvas} />
       </div>
       <SpeedChart service={service} />
