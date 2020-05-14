@@ -25,7 +25,7 @@ class RouteTrace {
       
     const simulation = d3.forceSimulation(data[0])
       .force("link", d3.forceLink(data[1]).id(data => data.id))
-      .force('charge', d3.forceManyBody().strength(-1000))
+      .force('charge', d3.forceManyBody().strength(-3000))
       .force('center', d3.forceCenter(width / 2 , height / 2))
 
     const link = svg.append("g")
