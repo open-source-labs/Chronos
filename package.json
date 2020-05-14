@@ -36,7 +36,7 @@
     "fs": "0.0.1-security",
     "ify-loader": "^1.1.0",
     "mongodb": "^3.5.7",
-    "mongoose": "^5.9.12",
+    "mongoose": "^5.9.13",
     "nodemon": "^1.19.2",
     "pg": "^7.18.2",
     "plotly.js": "^1.54.1",
@@ -71,6 +71,6 @@
     "url-loader": "^2.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   }
 }
