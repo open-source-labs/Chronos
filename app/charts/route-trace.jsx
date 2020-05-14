@@ -23,14 +23,10 @@ class RouteTrace {
     console.log('nodes: ', data[0])
     console.log('links: ', data[1])
       
-    var simulation = d3.forceSimulation(data[0])
-      .force('link', d3.forceLink())
-      // .force("link", d3.forceLink()                               // This force provides links between nodes
-      //   .id(function(d) { return d.id; })                     // This provide  the id of a node
-      //   .links(data[1])                                    // and this the list of links
-      // )
-      .force('charge', d3.forceManyBody())
-      .force('center', d3.forceCenter(width / 2, height / 2))
+    const simulation = d3.forceSimulation(data[0])
+      .force("link", d3.forceLink(data[1]).id(data => data.id))
+      .force('charge', d3.forceManyBody().strength(-1000))
+      .force('center', d3.forceCenter(width / 2 , height / 2))
 
     const link = svg.append("g")
       .attr("class", "links")
@@ -66,14 +62,14 @@ class RouteTrace {
       .on('tick', ticked);
 
     simulation.force('link')
-      // .links(data[1]); // error: cannot create property vx on books
+      .links(data[1]); // error: cannot create property vx on books
 
     function ticked() {
       link
-        .attr('x1', function(d) { return d.source.x; })
-        .attr('y1', function(d) { return d.source.y; })
-        .attr('x2', function(d) { return d.target.x; })
-        .attr('y2', function(d) { return d.target.y; });
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
 
       node
         .attr("transform", function(d) {
