@@ -32,7 +32,6 @@ const GraphsContainer = (props) => {
     ],
   };
 
-
   const [data, setData] = useState(null);
   const [width, setWidth] = useState(400);
   const [height, setHeight] = useState(400);
@@ -43,11 +42,11 @@ const GraphsContainer = (props) => {
   useEffect(initVis, [ data ]);
 
   function fetchData() {
-    Promise.resolve().then(() => setData(initialData.nodes));
+    Promise.resolve().then(() => setData(Object.values(initialData)));
   }
 
   function initVis() {
-    if(data && data.length) {
+    if (data && data.length) {
       const d3Props = {
         data,
         width,
@@ -60,7 +59,10 @@ const GraphsContainer = (props) => {
   
   return (
     <div className="graphsGrid">
-      <div ref={canvas}/>
+      <div className='routes'>
+        <div>{active}</div>
+        <div ref={canvas} />
+      </div>
       <SpeedChart service={service} />
       <TemperatureChart service={service} />
       <RequestTypesChart service={service} />
