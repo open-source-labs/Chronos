@@ -22,12 +22,13 @@ class RouteTrace {
     console.log('data: ', data)
     console.log('nodes: ', data[0])
     console.log('links: ', data[1])
-    
-    console.log('1st data point: ', data[0][0])
-    console.log('4th data point: ', data[0][3])
       
     var simulation = d3.forceSimulation(data[0])
       .force('link', d3.forceLink())
+      // .force("link", d3.forceLink()                               // This force provides links between nodes
+      //   .id(function(d) { return d.id; })                     // This provide  the id of a node
+      //   .links(data[1])                                    // and this the list of links
+      // )
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2))
 
