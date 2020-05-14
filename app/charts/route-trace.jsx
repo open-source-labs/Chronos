@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
-class RouteTrace {
 
+class RouteTrace {
   containerEl;
   props;
   svg;
@@ -24,8 +24,8 @@ class RouteTrace {
       .enter()
       .append('circle')
       .style('fill', 'red')
-      .attr('cx', 20)
-      .attr('cy', 200)
+      .attr('cx', () => Math.random() * width)
+      .attr('cy', () => Math.random() * height)
       .attr('r', 20)
       .on('mouseup', (d, i, nodes) => this.setActiveDatapoint(d, nodes[i]));
   }
