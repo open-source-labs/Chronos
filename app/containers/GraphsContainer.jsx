@@ -9,6 +9,7 @@ import MemoryChart from '../charts/memory-chart.jsx';
 import RouteTrace from '../charts/route-trace.jsx';
 // import RouteLocations from '../charts/route-copy.jsx';
 import MicroServiceTraffic from '../charts/microservice-traffic.jsx';
+import DockerStatsChart from '../charts/docker-stats-chart.jsx';
 import '../stylesheets/graphs.css';
 
 let vis;
@@ -70,6 +71,7 @@ const GraphsContainer = (props) => {
       <LatencyChart service={service} />
       <MicroServiceTraffic service={service} />
       <MemoryChart service={service} />
+      <DockerStatsChart service={service}/>
     </div>
   );
 };
