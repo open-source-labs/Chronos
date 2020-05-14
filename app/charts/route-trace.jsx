@@ -1,10 +1,20 @@
 import * as d3 from 'd3';
 
+let text = [{
+  t: 'reverseproxy',
+}, {
+  t: 'books',
+}, {
+  t: 'orders',
+}, {
+  t: 'customers'
+}]
 class RouteTrace {
   containerEl;
   props;
   svg;
-
+  
+  // creating D3 container for the nodes
   constructor(containerEl, props) {
     this.containerEl = containerEl;
     this.props = props;
@@ -17,11 +27,15 @@ class RouteTrace {
     this.updateDatapoints();
   }
 
+
   updateDatapoints = () => {
     const { svg, props: { data, width, height } } = this;
     console.log('data: ', data)
     console.log('nodes: ', data[0])
     console.log('links: ', data[1])
+    
+    console.log('1st data point: ', data[0][0])
+    console.log('4th data point: ', data[0][3])
 
       
     var simulation = d3.forceSimulation(data[0])
@@ -30,18 +44,32 @@ class RouteTrace {
       .force('center', d3.forceCenter(width / 2, height / 2))
 
     const node = svg
-    .selectAll("circle")
-    .data(data[0])
-    .enter()
-    .append("circle")
+      .selectAll("circle")
+      .data(data[0])
+      .enter()
+      .append("circle")
+    
+    //  node.select('circle').data(stuff).append("circle").select('text')
+    //  .text(function(d) { return d.id });
+    
+    const circleAttributes = node
       .attr("r", 20)
-      .attr('cx', () => Math.random() * width)
-      .attr('cy', () => Math.random() * height)
+      // .attr('cx', 200)
+      // .attr('cy', 200)
       .style("fill", "#00eda0")
-      .on('mouseup', (d, i, nodes) => this.setActiveDatapoint(d, nodes[i]));
+      .on('mouseup', (d, i, nodes) => this.setActiveDatapoint(d, nodes[i]))
 
-     node.append("title")
-     .text(function(d) { return d.id; });
+    const text = svg.selectAll("text")
+      .data(data[0]).enter().append("text")
+        
+    const labels = text
+      .attr("x", d => d.x)
+      .attr("y", d => d.y)
+      .attr("dx", 12)
+      .attr("dy",".35em")
+      .text(d => d.id);
+
+
 
     const link = svg
       .selectAll("line")
@@ -57,7 +85,6 @@ class RouteTrace {
     simulation.force('link')
       .links(link);
 
-
     function ticked() {
       link
         .attr("x1", function(d) { return d.source.x; })
@@ -69,7 +96,6 @@ class RouteTrace {
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
     }
-  
   }
 
   setActiveDatapoint = (d, node) => {
