@@ -3,8 +3,8 @@ node_js:
   - "stable"
 os:
   osx
-jobs:
-  allow_failures:
-    - os: osx
+# jobs:
+#   allow_failures:
+#     - os: osx
 install:
   - npm install
