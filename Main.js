@@ -75,7 +75,7 @@ app.on('window-all-closed', () => {
     { encoding: 'UTF-8' }
   );
   // process platform is a property that return a string identifying the OS platform on which NodeJs process is running --> Ousman
-  if (process.platform !== 'linux') {
+  if (process.platform !== 'darwin') {
     // quits application
     app.quit();
   }
