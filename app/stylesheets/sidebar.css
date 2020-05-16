@@ -5,7 +5,6 @@
   color:white;
   font-family: 'Nunito', sans-serif;
   background-color: #24262F;
-  /* display: flex; */
 }
 
 .leftTopContainer {
@@ -25,13 +24,3 @@
   align-items: center;
   align-content: center;
 }
-
-
-
-
-
-/* img and div display flex flex direction row */
-/*     height: 100px;
-    position: relative;
-    margin-left: -203px; */
-
