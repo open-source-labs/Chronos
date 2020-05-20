@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 //  database link
 //  can change but woun't advice that because the book application database lives here
-const myURI = 'mongodb+srv://tim:tim@cluster0-khxef.mongodb.net/test?retryWrites=true&w=majority';
+const myURI = 'mongodb+srv://alon:testing123@cluster0-nmd6a.mongodb.net/Books';
 
 const URI = process.env.MONGO_URI || myURI;
 

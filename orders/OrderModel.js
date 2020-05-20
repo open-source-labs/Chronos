@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 //  database link
-const myURI = 'mongodb+srv://tim:tim@cluster0-xjjw3.mongodb.net/test?retryWrites=true&w=majority';
+const myURI = 'mongodb+srv://alon:testing123@cluster0-nmd6a.mongodb.net/Orders';
 
 // const URI = process.env.MONGO_URI || myURI;
 
