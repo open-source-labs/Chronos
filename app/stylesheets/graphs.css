@@ -28,5 +28,8 @@ svg {
 #docker-stats-chart-header {
   align-self: center;
   font-size: 1.5em;
-  padding-bottom: 25px
+  padding-bottom: 25px;
+  height: 400;
+  width: 400;
 }
+
