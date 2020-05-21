@@ -29,7 +29,7 @@ const RequestTypesChart = (props) => {
           values: Object.values(requestObj),
           labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
           type: 'pie',
-          name: 'Request Types',
+          textposition: 'inside',
           marker: {
             'colors': [
               '#fa1a58',
@@ -42,11 +42,16 @@ const RequestTypesChart = (props) => {
           },
         }]}
         layout = {{
+          title: {
+            text: 'Request Types',
+            font: {size: 22}
+          },
           height: 400,
           width: 400,
           font: {
             color: 'black',
-            size: 15
+            size: 15,
+            family: 'Nunito, san serif'
           },
           displaylogo: false,
           paper_bgcolor: 'white',

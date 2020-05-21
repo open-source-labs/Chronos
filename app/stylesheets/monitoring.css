@@ -7,11 +7,13 @@
   box-shadow: black;
   border-radius: 5px;
   background-color: #F9FAFE;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22
 }
 
 #microserviceHealthTitle{
   color: black;
   font-size: 38px;
-  margin-top: 0px;
+  margin-top: 20px;
   font-family: 'Quicksand', sans-serif;
 }

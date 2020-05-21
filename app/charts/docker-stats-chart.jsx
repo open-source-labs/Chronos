@@ -76,6 +76,7 @@ const DockerStatsChart = (props) => {
         </span>
       )
     }
+    
     console.log('dockerStatsArr (docker stats chart):', dockerStatsArr);
     return (
       <div id="docker-stats-chart">

@@ -62,16 +62,17 @@ const ResponseCodeChart = (props) => {
             labels: [
               'Informational 1xx',
               'Successful 2xx',
-              'Redirection 3xx',
+              'Redirectional 3xx',
               'Client Error 4xx',
               'Server Error 5xx',
             ],
             type: 'pie',
+            textposition: 'inside',
             domain: { y: [0, 2] },
             marker: {
               colors: [
                 '#fa1a58',
-                '#f3f5fa',
+                '#f3f5fe',
                 '#00eda0',
                 '#00fff2',
                 '#73605b',
@@ -80,19 +81,23 @@ const ResponseCodeChart = (props) => {
           },
         ]}
         layout={{
+          title: {
+            text: 'Response Status Codes',
+            font: {size: 22}
+          },
           height: 400,
           width: 400,
           font: {
             color: 'black',
-            size: 15
+            size: 15,
+            family: 'Nunito, san serif'
           },
           displaylogo: false,
           paper_bgcolor: 'white',
           legend: {
-            orientation: 'h',
-            xanchor: 'center',
-            x: 0.5,
-            y: 5,
+              orientation: 'h',
+              xanchor: 'center',
+              x: .5
           },
         }}
       />
