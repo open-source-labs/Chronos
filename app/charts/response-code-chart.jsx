@@ -83,7 +83,7 @@ const ResponseCodeChart = (props) => {
         layout={{
           title: {
             text: 'Response Status Codes',
-            font: {size: 25}
+            font: {size: 22}
           },
           height: 400,
           width: 400,

@@ -30,7 +30,7 @@ const SpeedChart = (props) => {
           domain: { x: [0, 1], y: [0, 1] },
           type: 'indicator',
           value: yAxis[yAxis.length - 1],
-          title: {text: "Speed Chart", font: {size: 25}},
+          title: {text: "Speed Chart", font: {size: 22}},
           delta: {'reference': 3.5, 'decreasing': {'color': '#FA1A58'}},
           mode: "gauge+number+delta",
           gauge: { axis: { range: [null, 8] },

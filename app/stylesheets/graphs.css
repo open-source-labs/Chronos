@@ -2,7 +2,9 @@
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 30px;  /* align-items: center; */
-  margin: auto; 
+  margin: auto;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px rgba(216, 210, 247, .5);
 }
 
 
@@ -16,8 +18,8 @@ svg {
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 2px;
-  box-shadow: 2px 2px 2px rgba(216, 210, 247, .5);
+  border-radius: 3px;
+  box-shadow: 3px 3px 3px rgba(216, 210, 247, .5);
   height: 400;
   width: 400;
   padding: 10px 10px 10px 10px;
@@ -26,4 +28,5 @@ svg {
 #docker-stats-chart-header {
   align-self: center;
   font-size: 1.5em;
+  padding-bottom: 25px
 }
