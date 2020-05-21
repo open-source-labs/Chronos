@@ -403,6 +403,9 @@ window.onload = () => {
                 const newEntry = document.createElement('li');
                 newEntry.innerHTML = `DELETED: ${data.title}`;
                 document.getElementById('display').appendChild(newEntry);
+              })
+              .catch(err => {
+                console.log(err)
               });
           });
         }
