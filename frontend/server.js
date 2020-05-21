@@ -65,6 +65,19 @@ app.all('/orders/*', (req, res) => {
   apiProxy.web(req, res, { target: orders });
 });
 
+// Global error handler
+app.use((error, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign(defaultErr, error);
+  console.log(`Here is the error object's response: ${errorObj.log}`);
+
+  res.status(errorObj.status).json(errorObj.message);
+});
+
 // Open and listen to server on specified port
 app.listen(PORT, () => {
   console.log(`Frontend server running on port ${PORT} ...`);
