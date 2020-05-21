@@ -1,17 +1,10 @@
+
 // const express = require('express');
 const path = require('path');
 
-// const app = express();
+const cmd = require('chronos-microservice-debugger3');
 
-// const PORT = 3000;
-
-
-// app.listen(PORT, () => console.log('Server is listening on port', PORT));
-
-
-// const cmd = require('chronos-microservice-debugger3');
-
-// cmd.propagate();
+cmd.propagate();
 
 const PORT = 3000;
 const express = require('express');
@@ -34,7 +27,13 @@ const orders = 'http://localhost:7777';
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 // eslint-disable-next-line max-len
 // app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
-// app.use('/', cmd.microCom('frontend', 'mongo', 'mongodb+srv://chronos:jenae@cluster0-gw2vt.mongodb.net/test?retryWrites=true&w=majority', 'yes', 'm'));
+app.use('/', cmd.microCom(
+  'frontend',
+  'sql',
+  'postgres://uyfzdqhf:jlyib293ALvdP-OQtY2eOAowtNF3RkFH@isilo.db.elephantsql.com:5432/uyfzdqhf',
+  'yes',
+  'm')
+);
 
 app.use(cors());
 
