@@ -71,9 +71,13 @@ services:
       - ./default.conf:/etc/nginx/conf.d/default.conf
 
     # networks: 
-    #   - "orders-container"
-    #   - "customers-container"
-    #   - "books-container"
+      # - "orders-container"
+      # - "chronos_orders"
+      # - "customers-container"
+      # - "chronos_customers"
+      # - "books-container"
+      # - "chronos_books"
+
     depends_on:
       - frontend
       - books
