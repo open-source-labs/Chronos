@@ -13,7 +13,6 @@ svg {
 
 #docker-stats-chart {
   position: relative;
-  font-family: "Open Sans", verdana, arial, sans-serif;
   display: flex;
   flex-direction: column;
   background-color: white;

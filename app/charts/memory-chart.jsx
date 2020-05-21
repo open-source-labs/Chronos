@@ -36,7 +36,7 @@ const MemoryChart = (props) => {
         data = {[
           {
             type: 'scatter',
-            fill: 'tozeroy',
+            fill: 'tonexty',
             fillcolor: 'rgb(0, 237, 160)',
             mode: 'none',
             x: {autorange: true},
@@ -46,8 +46,8 @@ const MemoryChart = (props) => {
           },
           {
             type: 'scatter',
-            fill: 'tozeroy',
-            fillcolor: 'rgba(0, 237, 160, .5)',
+            fill: 'tonexty',
+            fillcolor: 'rgba(0, 237, 160, .4)',
             mode: 'none',
             x: {autorange: true},
             y: used,
@@ -56,8 +56,8 @@ const MemoryChart = (props) => {
           },
           {
             type: 'scatter',
-            fill: 'tozeroy',
-            fillcolor: 'rgba(74, 78, 238, .7)',
+            fill: 'tonexty',
+            fillcolor: 'rgba(74, 78, 238, .5)',
             mode: 'none',
             x: {autorange: true},
             y: active,
