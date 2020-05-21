@@ -16,7 +16,7 @@ const PORT = 7777;
 
 // app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'));
 app.use('/', cmd.microCom(
-  'books',
+  'orders',
   // PostgreSQL
   'sql',
   'postgres://uyfzdqhf:jlyib293ALvdP-OQtY2eOAowtNF3RkFH@isilo.db.elephantsql.com:5432/uyfzdqhf',
