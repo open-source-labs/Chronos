@@ -70,7 +70,7 @@ app.get('/books/getordersinfo', controller.getorderinfo, (req, res) => {
 
 
 //  This is my global error handler - isn't being used right now and it's not breaking anything so...
-function errorHandler(error, req, res, next) {
+app.use((error, req, res, next) => {
   //  console.log(err.stack);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
@@ -81,7 +81,7 @@ function errorHandler(error, req, res, next) {
   console.log(`Here is the error object's response: ${errorObj.log}`);
 
   res.status(errorObj.status).json(errorObj.message);
-}
+});
 
 // Open and listen to server on said port
 app.listen(PORT, () => {
