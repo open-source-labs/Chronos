@@ -1,17 +1,12 @@
-
-// const express = require('express');
 const path = require('path');
-
-const cmd = require('chronos-microservice-debugger3');
-
-cmd.propagate();
-
 const PORT = 3000;
 const express = require('express');
 const cors = require('cors');
 
 const app = express();
 
+const cmd = require('chronos-microservice-debugger3');
+cmd.propagate();
 
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 app.get('/', (req, res) => {
