@@ -44,7 +44,7 @@ const RequestTypesChart = (props) => {
         layout = {{
           title: {
             text: 'Request Types',
-            font: {size: 25}
+            font: {size: 22}
           },
           height: 400,
           width: 400,

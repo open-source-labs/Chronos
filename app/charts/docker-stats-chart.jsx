@@ -68,13 +68,22 @@ const DockerStatsChart = (props) => {
   if (Object.keys(dockerStats).length > 0) {
     // Build an array of <span>s that'll be rendered. Each <span> contains one stat.
     const dockerStatsArr = [];
+    const dockerDataArr = [];
   
     for (let stat in dockerStats) {
       dockerStatsArr.push(
         <span key={stat}>
-          {stat}: {dockerStats[stat]}
+          {stat}:
         </span>
       )
+    }
+    for (let stat in dockerStats) {
+      dockerDataArr.push(
+        <span key={stat}>
+          {dockerStats[stat]}
+        </span>
+      )
+
     }
     console.log('dockerStatsArr (docker stats chart):', dockerStatsArr);
 
@@ -82,6 +91,7 @@ const DockerStatsChart = (props) => {
       <div id="docker-stats-chart">
         <header id="docker-stats-chart-header">Docker Container Stats</header>
         {dockerStatsArr}
+        {dockerDataArr}
       </div>
     )
   } else { // If no Docker data:
