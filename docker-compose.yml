@@ -1,20 +1,19 @@
 # Nginx is needed to route requests from the web user to the reverse proxy on the frontend for eventual proxying to
 # the individual services in the microservices network.
-
-# ---*** Chronos 3.0 Team ***--- #
-# Publishing the host ports for the microservices wasn't necessary, as they don't need to be accessed from outside of the default bridge network. 
-  # They just need to be reachable by requests routed from Nginx.
-  # Hence host port values were deleted so that containers are reachable only by requests routed through Nginx's .
+# Since Nginx is handling all outside traffic and routing to the server, we don't need to expose the services to outside ports.
 # docker-compose will create a default bridge network for all the containers, so no need for a 'networks' key.
+# Publishing the ports for the microservices wasn't necessary, as they don't need to be accessed from outside of the default bridge network. 
+  # They just need to be reachable by Nginx.
 
 version: '3'
 services:
   frontend:
-    # Use the Dockerfile in each microservice's dir to build the image.
+    # Use image built from the Dockerfile in /fronend dir.
     build: './frontend'
 
     container_name: "frontend-container"
 
+    # Bind container and host machine to exposed port, 3000.
     # ports:
     #   - "3000:3000"
 
@@ -26,9 +25,8 @@ services:
 
     container_name: "books-container"
     
-    # Only expose an internal port. Same for other microservices.
     ports:
-      - "4545"
+      - "4545:4545"
     
     depends_on:
       - frontend
@@ -39,7 +37,7 @@ services:
     container_name: "customers-container"
 
     ports:
-      - "5555"
+      - "5555:5555"
 
     depends_on:
       - frontend
@@ -50,7 +48,7 @@ services:
     container_name: "orders-container"
 
     ports:
-      - "7777"
+      - "7777:7777"
 
     depends_on:
       - frontend
@@ -59,7 +57,7 @@ services:
     # Use latest version of the public nginx image.
     image: nginx:latest
 
-    container_name: "production_nginx"
+    container_name: production_nginx
 
     ports:
       - "8080:8080"
