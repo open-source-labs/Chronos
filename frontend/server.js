@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -5,7 +6,7 @@ const cmd = require('chronos-microservice-debugger3');
 
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.FRONTEND_PORT;
 
 cmd.propagate();
 
@@ -17,9 +18,9 @@ app.get('/', (req, res) => {
 // const httpProxy = require('http-proxy');
 // const apiProxy = httpProxy.createProxyServer();
 
-const books = 'http://localhost:4545';
-const customers = 'http://localhost:5555';
-const orders = 'http://localhost:7777';
+const books = `http://localhost:${process.env.BOOKS_PORT}`;
+const customers = `http://localhost:${process.env.CUSTOMERS_PORT}`;
+const orders = `http://localhost:${process.env.ORDERS_PORT}`;
 
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 // eslint-disable-next-line max-len
