@@ -1,5 +1,7 @@
 # Nginx is needed to route requests from the web user to the reverse proxy on the frontend for eventual proxying to
 # the individual services in the microservices network
+# docker-compose will create a default bridge network for all the containers. So, no need for a 'network' key.
+# Publishing the ports for the microservices wasn't necessary, as they don't need to be accessed from outside of the default bridge network. 
 
 version: '3'
 services:
@@ -12,9 +14,9 @@ services:
     container_name: "frontend-container"
 
     # Bind container and host machine to exposed port, 3000.
-    ports:
-      - "3000:3000"
-      # - "8080:8080"
+    # ports:
+    #   - "3000:3000"
+
     # volumes:
     #   - ./frontend:/usr/src/app/frontend
 
@@ -25,8 +27,8 @@ services:
 
     container_name: "books-container"
     
-    ports:
-      - "3001:4545"
+    # ports:
+    #   - "3001:4545"
     
     depends_on:
       - frontend
@@ -38,8 +40,8 @@ services:
 
     container_name: "customers-container"
 
-    ports:
-      - "3002:5555"
+    # ports:
+    #   - "3002:5555"
 
     depends_on:
       - frontend
@@ -51,8 +53,8 @@ services:
 
     container_name: "orders-container"
 
-    ports:
-      - "3003:7777"
+    # ports:
+    #   - "3003:7777"
 
     depends_on:
       - frontend
