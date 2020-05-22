@@ -40,9 +40,10 @@ const controller = require('./OrderController');
 app.use((req, res, next) => {
   console.log(
     `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
-  req.url
-}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    CHAOS FLOW TEST --- METHOD: ${req.method},
+    PATH: ${req.url},
+    BODY: ${JSON.stringify(req.body)},
+    ID: ${req.query.id}
     ***************************************************************************************`,
   );
   next();
@@ -64,8 +65,7 @@ app.delete('/orders/deleteorder:id?', controller.deleteorder, (req, res) => {
 
 // Get customer info from the customers application with this endpoint
 app.get('/orders/getcustomersinfo', controller.fetchcustomerdata, (req, res) => {
-  //  console.log(`This is the outgoing response ${JSON.stringify(res.locals.customerdata)}`);
-  res.status(200).json((res.locals.customerdata));
+    res.status(200).json((res.locals.customerdata));
 });
 
 //  open and listen to server on this port
