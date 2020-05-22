@@ -69,7 +69,7 @@ BookController.getorderinfo = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log(`There was an error in getting customers data ${error}`);
+      console.log(`There was an error in getting orders data ${error}`);
     });
 };
 module.exports = BookController;

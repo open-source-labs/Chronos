@@ -58,7 +58,7 @@ CustomerController.getbooksinfo = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log(`There was an error in getting customers data ${error}`);
+      console.log(`There was an error in getting books data ${error}`);
     });
 };
 
