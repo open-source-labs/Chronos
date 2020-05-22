@@ -12,9 +12,10 @@ app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname), '../frontend/index.html');
 });
-const httpProxy = require('http-proxy');
 
-const apiProxy = httpProxy.createProxyServer();
+// const httpProxy = require('http-proxy');
+// const apiProxy = httpProxy.createProxyServer();
+
 const books = 'http://localhost:4545';
 const customers = 'http://localhost:5555';
 const orders = 'http://localhost:7777';
@@ -47,7 +48,8 @@ app.use((req, res, next) => {
 
 app.all('/books/*', (req, res) => {
   console.log('redirecting to books');
-  apiProxy.web(req, res, { target: books });
+  // apiProxy.web(req, res, { target: books });
+  res.redirect(books);
 });
 
 app.all('/customers/*', (req, res) => {
