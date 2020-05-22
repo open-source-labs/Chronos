@@ -29,8 +29,8 @@ services:
 
     container_name: "books-container"
     
-    # ports:
-    #   - "3001:4545"
+    ports:
+      - "4545:4545"
     
     depends_on:
       - frontend

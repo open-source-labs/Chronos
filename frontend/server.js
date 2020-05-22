@@ -47,9 +47,10 @@ app.use((req, res, next) => {
 // app.use('/', express.static('/usr/src/app/frontend'));
 
 app.all('/books/*', (req, res) => {
+  console.log('req.originalUrl:', req.originalUrl);
   console.log('redirecting to books');
   // apiProxy.web(req, res, { target: books });
-  res.redirect(books);
+  res.redirect(books + req.originalUrl);
 });
 
 app.all('/customers/*', (req, res) => {
