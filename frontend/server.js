@@ -55,12 +55,14 @@ app.all('/books/*', (req, res) => {
 
 app.all('/customers/*', (req, res) => {
   console.log('redirecting to customers');
-  apiProxy.web(req, res, { target: customers });
+  // apiProxy.web(req, res, { target: customers });
+  res.redirect(customers + req.originalUrl);
 });
 
 app.all('/orders/*', (req, res) => {
   console.log('redirecting to orders');
-  apiProxy.web(req, res, { target: orders });
+  // apiProxy.web(req, res, { target: orders });
+  res.redirect(orders + req.originalUrl);
 });
 
 // Global error handler

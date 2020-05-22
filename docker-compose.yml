@@ -42,8 +42,8 @@ services:
 
     container_name: "customers-container"
 
-    # ports:
-    #   - "3002:5555"
+    ports:
+      - "5555:5555"
 
     depends_on:
       - frontend
@@ -55,8 +55,8 @@ services:
 
     container_name: "orders-container"
 
-    # ports:
-    #   - "3003:7777"
+    ports:
+      - "7777:7777"
 
     depends_on:
       - frontend
