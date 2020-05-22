@@ -1,11 +1,12 @@
 const path = require('path');
-const PORT = 3000;
 const express = require('express');
 const cors = require('cors');
+const cmd = require('chronos-microservice-debugger3');
 
 const app = express();
 
-const cmd = require('chronos-microservice-debugger3');
+const PORT = 3000;
+
 cmd.propagate();
 
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
@@ -28,8 +29,8 @@ app.use('/', cmd.microCom(
   'sql',
   'postgres://uyfzdqhf:jlyib293ALvdP-OQtY2eOAowtNF3RkFH@isilo.db.elephantsql.com:5432/uyfzdqhf',
   'yes',
-  'm')
-);
+  'm',
+));
 
 app.use(cors());
 
@@ -47,7 +48,6 @@ app.use((req, res, next) => {
 // app.use('/', express.static('/usr/src/app/frontend'));
 
 app.all('/books/*', (req, res) => {
-  console.log('req.originalUrl:', req.originalUrl);
   console.log('redirecting to books');
   // apiProxy.web(req, res, { target: books });
   res.redirect(books + req.originalUrl);
