@@ -38,9 +38,11 @@ app.use(cors());
 app.use((req, res, next) => {
   console.log(
     `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
-  req.url
-}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    CHAOS FLOW TEST --- 
+    METHOD:${req.method},
+    PATH: ${req.url},
+    BODY: ${JSON.stringify(req.body)},
+    ID: ${req.query.id}
     ***************************************************************************************`,
   );
   next();
