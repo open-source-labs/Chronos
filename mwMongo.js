@@ -9,13 +9,13 @@ const chronos = {};
 
 // connectDB is a method that connects chronos to the user database
 chronos.connectDB = (userOwnedDB) => {
-  mongoose.connect(`${userOwnedDB}`,
-    () => {
-      console.log('Chronos MongoDB database is connected...');
-    });
+  mongoose.connect(`${userOwnedDB}`, () => {
+    console.log('Chronos MongoDB database is connected...');
+  });
 }
 
-// queryObj determines the setInterval needed for microHealth based on queryFreq parameter provided by user
+// Use keys in queryObj to match users' queryFreq input and determine which time unit to use.
+// queryObj will be used as 2nd argument for the setInterval function. 
 const queryObj = {
   s: 1000, // 1000 milliseconds per second
   m: 60000, // 1000 milliseconds * 60 seconds
@@ -25,12 +25,12 @@ const queryObj = {
 };
 
 // Creates a coomunication table in the user database the stores all of the data from each request
-chronos.microCom = (userOwnedDB, currentMicroservice,wantMicroHealth, queryFreq) => {
+chronos.microCom = (userOwnedDB, currentMicroservice, wantMicroHealth, queryFreq) => {
   //Connects chronos to the user's database
   chronos.connectDB(userOwnedDB);
   
   //Checks if the user wants the MicroHealth of the server to be recorded. If so, the microHealth is invoked
-  if(wantMicroHealth === 'yes' || wantMicroHealth === 'y'){
+  if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
     chronos.microHealth(currentMicroservice,queryFreq)
   } 
 
@@ -88,8 +88,18 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
   let numBlockedProcesses;
   let numRunningProcesses;
   let numSleepingProcesses;
+  // New Docker container stats (9).
+  let containerId;
+  let containerMemUsage;
+  let containerMemLimit;
+  let containerMemPercent;
+  let containerCpuPercent;
+  let networkReceived;
+  let networkSent;
+  let containerProcessCount;
+  let containerRestartCount;
 
-  // setting the frequency for sending the data to the database with the cpu information
+  // Note the frequency setting (2nd argument: queryObj[queryFreq]) at the end of this setInterval.
   setInterval(() => {
     si.cpuCurrentspeed()
       .then((data) => {
@@ -154,6 +164,27 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
           throw err;
         }
       });
+    
+    // Passing in '*' to get stats on ALL containers.
+      // Assumes that only one container is running for each microsvc (for now).
+      // Targets the only container by pointing to data[0].
+    si.dockerContainerStats('*')
+      .then((data) => {
+        // console.log('"data" from si.dockerContainerStats:', data);
+        containerId = data[0].id;
+        containerMemUsage = data[0].mem_usage;
+        containerMemLimit = data[0].mem_limit;
+        containerMemPercent = data[0].mem_percent;
+        containerCpuPercent = data[0].cpu_percent;
+        networkReceived = data[0].netIO.rx;
+        networkSent = data[0].netIO.wx;
+        containerProcessCount = data[0].pids;
+        containerRestartCount = data[0].restartCount;
+      })
+      .catch((err) => {
+        console.log(err);
+        throw err;
+      });
 
     const newHealthPoint = {
       timestamp: Date.now(),
@@ -170,12 +201,21 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
       numBlockedProcesses,
       numSleepingProcesses,
       latency,
+      containerId,
+      containerMemUsage,
+      containerMemLimit,
+      containerMemPercent,
+      containerCpuPercent,
+      networkReceived,
+      networkSent,
+      containerProcessCount,
+      containerRestartCount,
     };
 
     const healthPoint = new MicroserviceHealth(newHealthPoint);
     healthPoint
       .save()
-      .then(() => {})
+      .then(() => {console.log('Saved to MongoDB!')})
       .catch((err) => {
         if (err) {
           throw err;
