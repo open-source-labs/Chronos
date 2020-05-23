@@ -1,55 +1,71 @@
-# Nginx is needed to route requests from the web user to the reverse proxy on the frontend for eventual proxying to
-# the individual services in the microservices network
+# Nginx is needed to route requests from the web user to the reverse proxy on the frontend...
+# ...for eventual proxying to the individual services in the microservices network.
+# docker-compose will create a default bridge network for all the containers...
+# ...so no need for a 'networks' key.
+# Publishing the host ports for the microservices was necessary due to requests made from the browser.
+  # Otherwise, if only internal ports are published, we can only talk to a container from within another container.
 
 version: '3'
 services:
   frontend:
+    # Use image built from the Dockerfile in /fronend dir.
     build: './frontend'
-    image: chronos2jobtc/frontend-image:tag
+
     container_name: "frontend-container"
-    ports:
-      - "3000:3000"
-      # - "8080:8080"
+
+    # Bind container and host machine to exposed port, 3000.
+    # ports:
+    #   - "3000:3000"
+
     # volumes:
     #   - ./frontend:/usr/src/app/frontend
 
   books:
     build: './books'
-    image: chronos2jobtc/books-image:tag
+
     container_name: "books-container"
+    
     ports:
-      - "3001:4545"
+      - "4545:4545"
+    
     depends_on:
       - frontend
+  
   customers:
     build: './customers'
-    image: chronos2jobtc/customers-image:tag
+
     container_name: "customers-container"
+
     ports:
-      - "3002:5555"
+      - "5555:5555"
+
     depends_on:
       - frontend
+  
   orders:
     build: './orders'
-    image: chronos2jobtc/orders-image:tag
+
     container_name: "orders-container"
+
     ports:
-      - "3003:7777"
+      - "7777:7777"
+
     depends_on:
       - frontend
+  
   nginx:
+    # Use latest version of the public nginx image.
     image: nginx:latest
+
     container_name: production_nginx
+
     ports:
       - "8080:8080"
+    
     volumes:
       - ./frontend:/srv/www/static
       - ./default.conf:/etc/nginx/conf.d/default.conf
 
-    # networks: 
-    #   - "orders-container"
-    #   - "customers-container"
-    #   - "books-container"
     depends_on:
       - frontend
       - books

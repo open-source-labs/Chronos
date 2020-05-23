@@ -15,7 +15,17 @@ const PORT = 7777;
 // cmd.microHealth('orders_microservice', 'sql', 'postgres://tsfcbdjo:l8AWzEJEyhxtR-ERoj7HNjIqBuRCqm9f@rajje.db.elephantsql.com:5432/tsfcbdjo', 'h');
 
 // app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'));
-app.use('/', cmd.microCom('orders_microservice', 'sql', 'postgres://kpbljbrv:Ry1hO5KPIU-jvVyGnHHne-yplDr2Yk3H@rajje.db.elephantsql.com:5432/kpbljbrv', 'yes', 'm'));
+app.use('/', cmd.microCom(
+  'orders',
+  // PostgreSQL
+  'sql',
+  'postgres://uyfzdqhf:jlyib293ALvdP-OQtY2eOAowtNF3RkFH@isilo.db.elephantsql.com:5432/uyfzdqhf',
+  // MongoDB
+  // 'mongo',
+  // 'mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority',
+  'yes',
+  'm'
+));
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,9 +40,10 @@ const controller = require('./OrderController');
 app.use((req, res, next) => {
   console.log(
     `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD:${req.method}, PATH: ${
-  req.url
-}, BODY: ${JSON.stringify(req.body)}, ID: ${req.query.id}
+    CHAOS FLOW TEST --- METHOD: ${req.method},
+    PATH: ${req.url},
+    BODY: ${JSON.stringify(req.body)},
+    ID: ${req.query.id}
     ***************************************************************************************`,
   );
   next();
@@ -54,8 +65,7 @@ app.delete('/orders/deleteorder:id?', controller.deleteorder, (req, res) => {
 
 // Get customer info from the customers application with this endpoint
 app.get('/orders/getcustomersinfo', controller.fetchcustomerdata, (req, res) => {
-  //  console.log(`This is the outgoing response ${JSON.stringify(res.locals.customerdata)}`);
-  res.status(200).json((res.locals.customerdata));
+    res.status(200).json((res.locals.customerdata));
 });
 
 //  open and listen to server on this port

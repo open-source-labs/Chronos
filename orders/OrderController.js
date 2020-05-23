@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 // This module enables you to use the fetch api on the backend
 const fetch = require('node-fetch');
@@ -59,7 +60,7 @@ OrderController.deleteorder = (req, res, next) => {
 //  Controller for retrieving customers info from the customer application
 OrderController.fetchcustomerdata = (req, res, next) => {
   //  const { body } = req;
-  fetch('http://localhost:8080/customers/getcustomers', {
+  fetch(`http://customers:${process.env.CUSTOMERS_PORT}/customers/getcustomers`, {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',

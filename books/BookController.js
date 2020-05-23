@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 const BookModel = require('./BookModel');
  
@@ -52,10 +53,11 @@ BookController.deleteBook = (req, res, next) => {
 
 //  This controller gets order info from the order application
 BookController.getorderinfo = (req, res, next) => {
+  console.log('req.headers (in bookController.js):', req.headers);
   //  const { body } = req;
   // since it's a get request, you technically don't need
   //  all the headers but it's more declarative this way
-  fetch('http://localhost:8080/orders/getorders', {
+  fetch(`http://orders:${process.env.ORDERS_PORT}/orders/getorders`, {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',
@@ -69,7 +71,7 @@ BookController.getorderinfo = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log(`There was an error in getting customers data ${error}`);
+      console.log(`There was an error in getting orders data ${error}`);
     });
 };
 module.exports = BookController;

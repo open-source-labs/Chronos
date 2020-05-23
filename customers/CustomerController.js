@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 const CustomerModel = require('./CustomerModel');
 
@@ -44,7 +45,7 @@ CustomerController.deletecustomer = (req, res, next) => {
 //  Controller to get info from the books application
 CustomerController.getbooksinfo = (req, res, next) => {
   //  const { body } = req;
-  fetch('http://localhost:8080/books/getbooks', {
+  fetch(`http://books:${process.env.BOOKS_PORT}/books/getbooks`, {
     method: 'GET',
     headers: {
       'Content-Type': 'Application/JSON',
@@ -58,7 +59,7 @@ CustomerController.getbooksinfo = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log(`There was an error in getting customers data ${error}`);
+      console.log(`There was an error in getting books data ${error}`);
     });
 };
 

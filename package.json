@@ -22,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "chart.js": "^2.8.0",
+    "dotenv": "^8.2.0",
     "electron": "^6.0.7",
     "express": "^4.17.1",
     "mongodb": "^3.3.2",
@@ -38,7 +39,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
-    "eslint": "^6.4.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
