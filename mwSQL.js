@@ -32,7 +32,8 @@ chronos.microCom = (userOwnedDB, userInputMSName,wantMicroHealth, queryFreq, req
     if (err) {
       throw new Error('Issue connecting to db');
     }
-    console.log('Connected to SQL in Chronos')
+    // Printing the beginning portion of my URI to confirm it's connecting to MY postgres DB.
+    console.log('Connected to SQL in Chronos', '\n', 'Postgres URI = ', uri.slice(0, 24), '...');
   });
   // invokes the microHealth if the user provides the word yes or y when they invoked chronos.microCom in their server
   if(wantMicroHealth === 'yes' || wantMicroHealth === 'y'){
@@ -57,6 +58,7 @@ chronos.microCom = (userOwnedDB, userInputMSName,wantMicroHealth, queryFreq, req
       }
     },
   );
+
   return (req, res, next) => {
     // correlating id that will persist thru the request from one server to the next
     const correlatingId = res.getHeaders()['x-correlation-id'];
@@ -92,6 +94,8 @@ chronos.microCom = (userOwnedDB, userInputMSName,wantMicroHealth, queryFreq, req
     next();
   };
 },
+
+// Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
 chronos.microHealth = (userInputMSName, queryFreq) => {
   let cpuCurrentSpeed;
   let cpuTemperature;
@@ -106,10 +110,15 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   let numBlockedProcesses;
   let numRunningProcesses;
   let numSleepingProcesses;
+  // Docker data:
+  let containerId, containerMemUsage, containerMemLimit, containerMemPercent, containerCpuPercent;
+  let networkReceived, networkSent, containerProcessCount, containerRestartCount;
 
   currentMicroservice = userInputMSName;
 
   client.query(
+    // Alan: updating the table with the last few columns to accomodate Docker data.
+      // As of 05/13/20, added 9 more columns.
     `CREATE TABLE IF NOT EXISTS healthInfo (
       id SERIAL PRIMARY KEY,
       time timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -125,7 +134,16 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       numRunningProcesses real DEFAULT 0,
       numBlockedProcesses real DEFAULT 0,
       numSleepingProcesses real DEFAULT 0,
-      latency float DEFAULT 0.0
+      latency float DEFAULT 0.0,
+      containerId varchar(500),
+      containerMemUsage real DEFAULT 0,
+      containerMemLimit real DEFAULT 0,
+      containerMemPercent real DEFAULT 0,
+      containerCpuPercent real DEFAULT 0,
+      networkReceived real DEFAULT 0,
+      networkSent real DEFAULT 0,
+      containerProcessCount integer DEFAULT 0,
+      containerRestartCount integer DEFAULT 0
     )`,
     (err, results) => {
       if (err) {
@@ -133,6 +151,8 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       }
     },
   );
+
+  // Collect metrics at intervals (determined by user input, e.g. 's', 'm', etc.)
   setInterval(() => {
     si.cpuCurrentspeed()
       .then((data) => {
@@ -187,21 +207,64 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       .catch((err) => {
         throw err;
       });
+    
+    // Alan: Adding more si funcs to log Docker data
+      // Later decided that Docker info aren't that useful. Container stats more so.
+    // si.dockerInfo()
+    //   .then((data) => {
+    //     console.log('"data" from si.dockerInfo:', data)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     throw err;
+    //   });
+    
+    // Passing in '*' to get stats on ALL containers.
+      // There should be only one container for each microsvc anyway (for now).
+      // Target the only container by pointing to data[0].
+    si.dockerContainerStats('*')
+      .then((data) => {
+        // console.log('"data" from si.dockerContainerStats:', data);
+        containerId = data[0].id;
+        containerMemUsage = data[0].mem_usage;
+        containerMemLimit = data[0].mem_limit;
+        containerMemPercent = data[0].mem_percent;
+        containerCpuPercent = data[0].cpu_percent;
+        networkReceived = data[0].netIO.rx;
+        networkSent = data[0].netIO.wx;
+        containerProcessCount = data[0].pids;
+        containerRestartCount = data[0].restartCount;
+      })
+      .catch((err) => {
+        console.log(err);
+        throw err;
+      });
 
     const queryString = `INSERT INTO healthInfo(
-       currentMicroservice,
-       cpuCurrentSpeed,
-       cpuTemperature,
-       cpuCurrentLoadPercentage,
-       totalMemory,
-       freeMemory,
-       usedMemory,
-       activeMemory,
-       totalNumProcesses,
-       numRunningProcesses,
-       numBlockedProcesses,
-       numSleepingProcesses,
-       latency) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+      currentMicroservice,
+      cpuCurrentSpeed,
+      cpuTemperature,
+      cpuCurrentLoadPercentage,
+      totalMemory,
+      freeMemory,
+      usedMemory,
+      activeMemory,
+      totalNumProcesses,
+      numRunningProcesses,
+      numBlockedProcesses,
+      numSleepingProcesses,
+      latency,
+      containerId,
+      containerMemUsage,
+      containerMemLimit,
+      containerMemPercent,
+      containerCpuPercent,
+      networkReceived,
+      networkSent,
+      containerProcessCount,
+      containerRestartCount) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
+        $14, $15, $16, $17, $18, $19, $20, $21, $22)`;
 
     const values = [
       currentMicroservice,
@@ -217,12 +280,22 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       numBlockedProcesses,
       numSleepingProcesses,
       latency,
+      containerId,
+      containerMemUsage,
+      containerMemLimit,
+      containerMemPercent,
+      containerCpuPercent,
+      networkReceived,
+      networkSent,
+      containerProcessCount,
+      containerRestartCount,  // #22
     ];
 
     client.query(queryString, values, (err, results) => {
       if (err) {
         throw err;
       }
+      console.log('Saved to PostgreSQL!')
     });
   }, queryObj[queryFreq]);
 };
