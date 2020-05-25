@@ -1,14 +1,14 @@
-require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const cmd = require('chronos-microservice-debugger3');
+require('dotenv').config();
+
+cmd.propagate();
 
 const app = express();
 
-const PORT = process.env.FRONTEND_PORT;
-
-cmd.propagate();
+app.use(express.json());
 
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 app.get('/', (req, res) => {
@@ -22,15 +22,18 @@ const books = `http://localhost:${process.env.BOOKS_PORT}`;
 const customers = `http://localhost:${process.env.CUSTOMERS_PORT}`;
 const orders = `http://localhost:${process.env.ORDERS_PORT}`;
 
-// UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 // eslint-disable-next-line max-len
-// app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
+// Invoke .microCom with the 5 params to enable logging of comm and health data to your own db.
 app.use('/', cmd.microCom(
-  'frontend',
+  'books',
+  // PostgreSQL
   'sql',
-  'postgres://uyfzdqhf:jlyib293ALvdP-OQtY2eOAowtNF3RkFH@isilo.db.elephantsql.com:5432/uyfzdqhf',
+  `${process.env.CHRONOS_PSQL}`,
+  // MongoDB
+  // 'mongo',
+  // `${process.env.CHRONOS_MONGO}`,
   'yes',
-  'm',
+  'm'
 ));
 
 app.use(cors());
@@ -48,7 +51,6 @@ app.use((req, res, next) => {
   );
   next();
 });
-// app.use('/', express.static('/usr/src/app/frontend'));
 
 app.all('/books/*', (req, res) => {
   console.log('redirecting to books');
@@ -82,6 +84,6 @@ app.use((error, req, res, next) => {
 });
 
 // Open and listen to server on specified port
-app.listen(PORT, () => {
-  console.log(`Frontend server running on port ${PORT} ...`);
+app.listen(process.env.FRONTEND_PORT, () => {
+  console.log(`Frontend server running on port ${process.env.FRONTEND_PORT} ...`);
 });
