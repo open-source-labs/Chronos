@@ -1,12 +1,12 @@
 ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
 ## Chronos
-Microservice communication and health visualizer.
+Microservice communication, health, and Docker container visualizer.
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 
 ```js
-const cmd = require('chronos-microservice-debugger3')
+const cmd = require('chronos-microservice-debugger4')
 cmd.propagate()
 
 app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
@@ -14,10 +14,27 @@ app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wa
 
 ## Features
 
+  * NEW (2.0.4): Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
   * HTTP request tracing
   * Speed and latency tracking
   * Process monitoring
   * Memory usage
+
+## NEW FEATURE FOR 2.0.4 - Logging Docker Container Stats
+
+In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
+`/var/run/docker.sock`
+
+For example, you can type the following when starting up a container:
+`docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
+
+If you're using Docker compose to start up multiple containers at once, you can add a `volumes` key for each of your services:
+```
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+```
+
+*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
 ## Installation
 
@@ -30,12 +47,12 @@ To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservi
 [`npm install`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)command:
 
 ```
-npm install chronos-microservice-debugger3
+npm install chronos-microservice-debugger4
 ```
 
 Once installed, write the following two lines at the top of each microservice's server file:
 ```javascript
-const cmd = require('chronos-microservice-debugger3');
+const cmd = require('chronos-microservice-debugger4');
 cmd.propagate();
 ```
 
@@ -90,6 +107,10 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## People
 
+[Alan Lee]
+[Alon Ofengart]
+[Brian Bui]
+[Brianna Sookhoo]
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
@@ -104,7 +125,7 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
   [MIT](LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/chronos-microservice-debugger3.svg
-[npm-url]: https://www.npmjs.com/package/chronos-microservice-debugger3
-[downloads-image]: https://img.shields.io/npm/dm/chronos-microservice-debugger3.svg
-[downloads-url]: https://npmjs.org/package/chronos-microservice-debugger3
+[npm-image]:
+[npm-url]:
+[downloads-image]:
+[downloads-url]:
