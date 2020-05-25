@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-const cmd = require('chronos-microservice-debugger3');
+const cmd = require('chronos-microservice-debugger4');
 require('dotenv').config();
 
 cmd.propagate();
