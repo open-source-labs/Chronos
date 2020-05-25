@@ -69,7 +69,9 @@ chronos.microCom = (userOwnedDB, userInputMSName,wantMicroHealth, queryFreq, req
     // Type of request. Grabbed from request object
     const reqType = req.method;
 
-    const queryString = 'INSERT INTO communications(currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage, correlatingId) VALUES ($1, $2, $3, $4, $5, $6)';
+    const queryString = `INSERT INTO communications
+      (currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage, correlatingId)
+      VALUES ($1, $2, $3, $4, $5, $6);`
 
     // Waits for response to finish before pushing information into database
     res.on('finish', () => {
