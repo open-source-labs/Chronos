@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-//  pull schema from the mongoose object
 const { Schema } = mongoose;
 
-//  database link
-const myURI = 'mongodb+srv://alon:testing123@cluster0-nmd6a.mongodb.net/Customers';
+// DB link for customers data.
+const customers_db_uri = `${process.env.CUSTOMERS_DB}`;
 
-const URI = process.env.MONGO_URI || myURI;
+// const URI = process.env.MONGO_URI || myURI;
 
-// connect the database, if error, log will be sent to the terminal
-mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(customers_db_uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected!!!********* Customer Database is live!!!'))
   .catch((err) => console.log('Connection Error ', err));
 
