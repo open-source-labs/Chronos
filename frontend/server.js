@@ -25,7 +25,7 @@ const orders = `http://localhost:${process.env.ORDERS_PORT}`;
 // eslint-disable-next-line max-len
 // Invoke .microCom with the 5 params to enable logging of comm and health data to your own db.
 app.use('/', cmd.microCom(
-  'books',
+  'frontend',
   // PostgreSQL
   'sql',
   `${process.env.CHRONOS_PSQL}`,

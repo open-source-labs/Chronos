@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Invoke .microCom with the 5 params to enable logging of comm and health data to your own db.
 app.use('/', cmd.microCom(
-  'books',
+  'customers',
   // PostgreSQL
   'sql',
   `${process.env.CHRONOS_PSQL}`,
