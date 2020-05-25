@@ -43,7 +43,7 @@ mongoose.model("MicroserviceHealth", {
   timestamp: {
     type: Date,
   },
-  // Alan: Aded schema for Docker container stats (9).
+  // Added additional schema for Docker container stats (9).
   containerId: {
     type: String,
   },
