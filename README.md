@@ -2,9 +2,6 @@
 ## Chronos
 Microservice communication, health, and Docker container visualizer.
 
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-
 ```js
 const cmd = require('chronos-microservice-debugger4')
 cmd.propagate()
@@ -124,8 +121,3 @@ Chronos hopes to inspire an active community of both users and developers. For q
 ## License
 
   [MIT](LICENSE)
-
-[npm-image]:
-[npm-url]:
-[downloads-image]:
-[downloads-url]:
