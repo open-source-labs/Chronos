@@ -2,7 +2,6 @@ const hpropagate = require('hpropagate');
 const mongoMiddleware = require('./mwMongo.js');
 const sqlMiddleware = require('./mwSQL.js');
 
-
 const chronos = {};
 
 /*propagate places an unique x-correlating-id into the headers of 
