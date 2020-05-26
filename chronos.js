@@ -74,7 +74,7 @@ chronos.microCom = (
   if (databaseType === 'mongo' || databaseType === 'mongodb') {
     return mongoMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq);
   } if (databaseType === 'sql' || databaseType === 'postgresql') {
-    return sqlMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq);
+    return sqlMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
   }
   throw new Error(
     'Chronos currently only supports Mongo and PostgreSQL databases. Please enter "mongo" or "sql"',
