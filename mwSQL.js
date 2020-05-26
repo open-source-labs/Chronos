@@ -15,7 +15,7 @@ const queryObj = {
 };
 
 // microCom
-chronos.microCom = (userOwnedDB, userInputMSName,wantMicroHealth, queryFreq, req, res, next) => {
+chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, req, res, next) => {
   // create connection to user owned database
   // we're using PostgreSQL and need to require pg
   const { Client } = require('pg');
@@ -32,12 +32,13 @@ chronos.microCom = (userOwnedDB, userInputMSName,wantMicroHealth, queryFreq, req
     if (err) {
       throw new Error('Issue connecting to db');
     }
-    // Printing the beginning portion of my URI to confirm it's connecting to MY postgres DB.
+    // Printing the beginning portion of URI to confirm it's connecting to the correct postgres DB.
     console.log('Connected to SQL in Chronos', '\n', 'Postgres URI = ', uri.slice(0, 24), '...');
   });
+
   // invokes the microHealth if the user provides the word yes or y when they invoked chronos.microCom in their server
-  if(wantMicroHealth === 'yes' || wantMicroHealth === 'y'){
-    chronos.microHealth(userInputMSName,queryFreq)
+  if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
+    chronos.microHealth(userInputMSName,queryFreq);
   } 
 
   // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
