@@ -36,9 +36,10 @@ chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, re
     console.log('Connected to SQL in Chronos', '\n', 'Postgres URI = ', uri.slice(0, 24), '...');
   });
 
-  // invokes the microHealth if the user provides the word yes or y when they invoked chronos.microCom in their server
+  // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
+  // Invoke microDocker instead if user provides "yes" to "isDockerized".
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
-    chronos.microHealth(userInputMSName,queryFreq);
+    chronos.microHealth(userInputMSName, queryFreq);
   } 
 
   // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
@@ -99,6 +100,8 @@ chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, re
 },
 
 // Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
+// Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
+  // Instead, will invoke another middlware called chronos.microDocker().
 chronos.microHealth = (userInputMSName, queryFreq) => {
   let cpuCurrentSpeed;
   let cpuTemperature;
