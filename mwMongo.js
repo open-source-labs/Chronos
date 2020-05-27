@@ -24,14 +24,17 @@ const queryObj = {
   w: 604800000, // 60 sec/min * 60 min/hr * 1000 ms/sec * 24 hours/day * 7 days per week
 };
 
-// Creates a coomunication table in the user database the stores all of the data from each request
-chronos.microCom = (userOwnedDB, currentMicroservice, wantMicroHealth, queryFreq) => {
-  //Connects chronos to the user's database
+// Create a coomunication table in the user database the stores all of the data from each request
+chronos.microCom = (userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized) => {
+  //Connect chronos to the user's database
   chronos.connectDB(userOwnedDB);
   
-  //Checks if the user wants the MicroHealth of the server to be recorded. If so, the microHealth is invoked
+  // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
+  // Invoke microDocker instead if user provides "yes" to "isDockerized".
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
-    chronos.microHealth(currentMicroservice,queryFreq)
+    chronos.microHealth(microserviceName, queryFreq);
+  } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
+    chronos.microDocker(microserviceName, queryFreq);
   } 
 
   //returns a middleware that creates a new communication document in the mongoDB database whenever a response for the request comes thru
@@ -44,7 +47,7 @@ chronos.microCom = (userOwnedDB, currentMicroservice, wantMicroHealth, queryFreq
 
     // creates newCommunication object that stores the data from each request
     const newCommunication = {
-      currentMicroservice,
+      microserviceName,
       targetedEndpoint: req.originalUrl,
       reqType: req.method,
       timeSent: Date.now(),
@@ -71,10 +74,14 @@ chronos.microCom = (userOwnedDB, currentMicroservice, wantMicroHealth, queryFreq
   };
 }
 
-// creates a table in the user database that store the health of the server base on the frequency the user stated
-chronos.microHealth = (currentMicroservice,queryFreq) => {
+// Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
+// Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
+  // Instead, will invoke another middlware called chronos.microDocker().
+chronos.microHealth = (microserviceName, queryFreq) => {
   require('./MicroserviceHealth.js');
+
   const MicroserviceHealth = mongoose.model('MicroserviceHealth');
+
   let cpuCurrentSpeed;
   let cpuTemperature;
   let cpuCurrentLoadPercentage;
@@ -88,16 +95,6 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
   let numBlockedProcesses;
   let numRunningProcesses;
   let numSleepingProcesses;
-  // New Docker container stats (9).
-  let containerId;
-  let containerMemUsage;
-  let containerMemLimit;
-  let containerMemPercent;
-  let containerCpuPercent;
-  let networkReceived;
-  let networkSent;
-  let containerProcessCount;
-  let containerRestartCount;
 
   // Note the frequency setting (2nd argument: queryObj[queryFreq]) at the end of this setInterval.
   setInterval(() => {
@@ -164,31 +161,10 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
           throw err;
         }
       });
-    
-    // Passing in '*' to get stats on ALL containers.
-      // Assumes that only one container is running for each microsvc (for now).
-      // Targets the only container by pointing to data[0].
-    si.dockerContainerStats('*')
-      .then((data) => {
-        // console.log('"data" from si.dockerContainerStats:', data);
-        containerId = data[0].id;
-        containerMemUsage = data[0].mem_usage;
-        containerMemLimit = data[0].mem_limit;
-        containerMemPercent = data[0].mem_percent;
-        containerCpuPercent = data[0].cpu_percent;
-        networkReceived = data[0].netIO.rx;
-        networkSent = data[0].netIO.wx;
-        containerProcessCount = data[0].pids;
-        containerRestartCount = data[0].restartCount;
-      })
-      .catch((err) => {
-        console.log(err);
-        throw err;
-      });
 
     const newHealthPoint = {
       timestamp: Date.now(),
-      currentMicroservice,
+      microserviceName,
       cpuCurrentSpeed,
       cpuTemperature,
       cpuCurrentLoadPercentage,
@@ -201,15 +177,6 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
       numBlockedProcesses,
       numSleepingProcesses,
       latency,
-      containerId,
-      containerMemUsage,
-      containerMemLimit,
-      containerMemPercent,
-      containerCpuPercent,
-      networkReceived,
-      networkSent,
-      containerProcessCount,
-      containerRestartCount,
     };
 
     const healthPoint = new MicroserviceHealth(newHealthPoint);
@@ -222,6 +189,98 @@ chronos.microHealth = (currentMicroservice,queryFreq) => {
         }
       });
   }, queryObj[queryFreq]);
+};
+
+chronos.microDocker = function (microserviceName, queryFreq) {
+  require('./ContainerInfo.js');
+
+  const ContainerInfo = mongoose.model('ContainerInfo');
+
+  // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
+  var containerName;
+  var containerPlatform;
+  var containerStartTime;
+  var containerMemUsage;
+  var containerMemLimit;
+  var containerMemPercent;
+  var containerCpuPercent;
+  var networkReceived;
+  var networkSent;
+  var containerProcessCount;
+  var containerRestartCount;
+  // dockerContainers() return an arr of active containers (ea. container = an obj).
+  // Find the data pt with containerName that matches microserviceName. 
+  // Extract container ID, name, platform, and start time.
+  // Other stats will be retrieved by dockerContainerStats().
+  si.dockerContainers()
+    .then(function (data) {
+    var containerId = '';
+    // let matchingContainer: object = {}; 
+    for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+      var dataObj = data_1[_i];
+      if (dataObj.name === microserviceName) {
+        // matchingContainer = dataObj;
+        containerName = dataObj.name;
+        containerId = dataObj.id;
+        containerPlatform = dataObj.platform;
+        containerStartTime = dataObj.startedAt;
+
+        // End iterations as soon as the matching data pt is found.
+        break;
+      }
+    }
+    // When containerId has a value:
+    // Initiate periodic invoc. of si.dockerContainerStats to retrieve and log stats to DB.
+    // The desired data pt is the first obj in the result array.
+    if (containerId !== '') {
+      setInterval(function () {
+        si.dockerContainerStats(containerId)
+          .then(function (data) {
+          console.log('data[0] of dockerContainerStats', data[0]);
+          // Reassign other vars to the values from retrieved data. 
+          // Then save to DB.
+          containerMemUsage = data[0].mem_usage;
+          containerMemLimit = data[0].mem_limit;
+          containerMemPercent = data[0].mem_percent;
+          containerCpuPercent = data[0].cpu_percent;
+          networkReceived = data[0].netIO.rx;
+          networkSent = data[0].netIO.wx;
+          containerProcessCount = data[0].pids;
+          containerRestartCount = data[0].restartCount;
+
+          const newContainerInfo = {
+            microserviceName,
+            containerName,
+            containerId,
+            containerPlatform,
+            containerStartTime,
+            containerMemUsage,
+            containerMemLimit,
+            containerMemPercent,
+            containerCpuPercent,
+            networkReceived,
+            networkSent,
+            containerProcessCount,
+            containerRestartCount,
+          };
+
+          const containerInfo = new ContainerInfo(newContainerInfo);
+          containerInfo.save()
+            .then(() => console.log('Saved to MongoDB!'))
+            .catch((err) => {
+              if (err) throw err
+            });
+        })["catch"](function (err) {
+          throw err;
+        });
+      }, queryObj[queryFreq]);
+    }
+    else {
+      throw new Error('Cannot find container data matching the microservice name.');
+    }
+  })["catch"](function (err) {
+    throw err;
+  });
 };
 
 module.exports = chronos;
