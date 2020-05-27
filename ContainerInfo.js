@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.model("containerInfo", {
+mongoose.model("ContainerInfo", {
 // Added additional schema for Docker container stats (9).
   microserviceName: {
     type: String,
