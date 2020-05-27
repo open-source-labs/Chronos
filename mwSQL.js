@@ -289,9 +289,10 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
         containerId = dataObj.id;
         containerPlatform = dataObj.platform;
         containerStartTime = dataObj.startedAt;
+        
+        // End iterations as soon as the matching data pt is found.
+        break;
       }
-      // End iterations as soon as the matching data pt is found.
-      break;
     }
     // When containerId has a value:
     // Initiate periodic invoc. of si.dockerContainerStats to retrieve and log stats to DB.
