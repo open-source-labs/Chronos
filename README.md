@@ -1,25 +1,21 @@
 ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
 ## Chronos
 Microservice communication, health, and Docker container visualizer.
-
-```js
-const cmd = require('chronos-microservice-debugger4')
-cmd.propagate()
-
-app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
-```
+A middleware & an Electron app.
 
 ## Features
 
-  * NEW (3.0.0): Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.) (New middleware compiled from TypeScript.)
+  * NEW (3.0+): Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.) (New middleware compiled from TypeScript.)
   * HTTP request tracing
   * Speed and latency tracking
   * Process monitoring
   * Memory usage
 
-## NEW FEATURE FOR 3.0.0 - Logging Docker Container Stats
+## NEW FEATURE FOR 3.0+ - Logging Docker Container Stats
 
-In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
+IMPORTANT: Give you containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
+
+IMPORTANT: In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
 `/var/run/docker.sock`
 
 For example, you can type the following when starting up a container:
@@ -55,28 +51,43 @@ cmd.propagate();
 
 Then add a route handler for all incoming requests:
 ```js
-app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wantMicroHealth', 'queryFrequency'))
+app.use('/', 
+  cmd.microCom(
+    'microserviceName', 
+    'databaseType',
+    'databaseURL',
+    'wantMicroHealth', 
+    'queryFrequency',
+    'isDockerized'
+  )
+)
 ```
 
 The cmd.microCom handler function logs communication and health data to a user-provided database. This is to ensure that your private data stays private. We currently support MongoDB and SQL/PostgreSQL databases.
 
-cmd.microCom takes four parameters and an optional fifth parameter. You can enter the arguments as individual strings or as an array.
+cmd.microCom takes six parameters. You can enter the arguments as individual strings or as an array.
 
 The parameters are:
-1. microserviceName: To identify the microservice (i.e. "payments")
-2. databaseType: Enter either "mongo" or "sql"
-3. databaseURL: Enter the URL of your database
-4. wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no"
+1. microserviceName: To identify the microservice (i.e. "payments").
+  - Make sure this name matches your container name. More details more below (param #6).
+  - Your input name for the microservice will be turned to an all-lowercase string.
+2. databaseType: Enter either "mongo" or "sql".
+3. databaseURL: Enter the URL of your database.
+4. wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
+  - Note: If you choose "yes" for this param, the middleware will NOT log container stats. In other words, if you want container stats instead, input "no" here and "yes" for param #6.
 5. queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
-  * "s" : every second
-  * "m" : every minute (default)
-  * "h" : every hour
-  * "d" : once per day
-  * "w" : once per week
+  - "s" : every second
+  - "m" : every minute (default)
+  - "h" : every hour
+  - "d" : once per day
+  - "w" : once per week
+6. isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
+  - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
+  - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
 String parameter example:
 ```javascript
-app.use('/', cmd.microCom('payments', 'mongo', 'mongodb+srv://user:password@cluster0-abc.mongodb.net/','yes','h'))
+app.use('/', cmd.microCom('payments', 'mongo', 'mongodb+srv://user:password@cluster0-abc.mongodb.net/','yes','m','no'))
 ```
 
 Array parameter example:
@@ -85,8 +96,9 @@ let values = [
   'payments',
   'mongo',
   'mongodb+srv://user:password@cluster0-abc.mongodb.net/',
-  'yes',
-  'h'
+  'no',
+  'h',
+  'yes
 ]
 
 app.use('/', cmd.microCom(values)
