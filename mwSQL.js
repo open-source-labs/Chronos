@@ -42,7 +42,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, is
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
     chronos.microHealth(userInputMSName, queryFreq);
   } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
-    chronos.microDocker(userInputMSName, uri, queryFreq);
+    chronos.microDocker(userInputMSName, queryFreq);
   }
 
   // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
@@ -119,9 +119,6 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   let numBlockedProcesses;
   let numRunningProcesses;
   let numSleepingProcesses;
-  // Docker data:
-  let containerId, containerMemUsage, containerMemLimit, containerMemPercent, containerCpuPercent;
-  let networkReceived, networkSent, containerProcessCount, containerRestartCount;
 
   currentMicroservice = userInputMSName;
 
