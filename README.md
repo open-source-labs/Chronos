@@ -11,13 +11,13 @@ app.use('/', cmd.microCom('microserviceName', 'databaseType', 'databaseURL', 'wa
 
 ## Features
 
-  * NEW (2.0.4): Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+  * NEW (3.0.0): Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.) (New middleware compiled from TypeScript.)
   * HTTP request tracing
   * Speed and latency tracking
   * Process monitoring
   * Memory usage
 
-## NEW FEATURE FOR 2.0.4 - Logging Docker Container Stats
+## NEW FEATURE FOR 3.0.0 - Logging Docker Container Stats
 
 In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
 `/var/run/docker.sock`
@@ -104,10 +104,12 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## People
 
-[Alan Lee]
-[Alon Ofengart]
-[Brian Bui]
-[Brianna Sookhoo]
+* v3 Team:
+Alan Lee [Alan Lee]
+Alon Ofengart [Alon Ofengart]
+Brian Bui [Brian Bui]
+Brianna Sookhoo [Brianna Sookhoo]
+
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
