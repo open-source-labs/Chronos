@@ -4,15 +4,15 @@ const sqlMiddleware = require('./mwSQL.js');
 
 const chronos = {};
 
-/*propagate places an unique x-correlating-id into the headers of 
-each request/response. The same id persist thru the whole life cycle of the 
-request.
+/* 
+propagate places an unique x-correlating-id into the headers of each request/response.
+The same id persist thru the whole life cycle of the request.
 */
 chronos.propagate = () => {
   hpropagate({ propagateInResponses: true });
 };
 
-// microCom logs all microservice-microservice and microservice-client communication into the user-owned database.
+// microCom logs all microservice-microservice and microservice-client comm. into the user-owned database.
 
 /* PARAMETERS:
   * microserviceName: what the user wants current microservice to be called
@@ -71,7 +71,7 @@ chronos.microCom = (
   // Checks the type of database provided by the user and uses appropriate middleware files.
   // Throws error if input db type is not supported
   if (databaseType === 'mongo' || databaseType === 'mongodb') {
-    return mongoMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq);
+    return mongoMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
   } if (databaseType === 'sql' || databaseType === 'postgresql') {
     return sqlMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
   }
