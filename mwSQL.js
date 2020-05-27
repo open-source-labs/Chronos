@@ -1,5 +1,6 @@
 // NPM package that gathers health information
 const si = require('systeminformation');
+const { Client } = require('pg');
 // const mwSqlDocker = require('./mwSqlDocker.js');
 
 let client;
@@ -17,10 +18,6 @@ const queryObj = {
 
 // microCom
 chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, isDockerized, req, res, next) => {
-  // create connection to user owned database
-  // we're using PostgreSQL and need to require pg
-  const { Client } = require('pg');
-  // grabbed from user input
   const uri = userOwnedDB;
 
   // creates a new instance of client
@@ -289,7 +286,7 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
         containerId = dataObj.id;
         containerPlatform = dataObj.platform;
         containerStartTime = dataObj.startedAt;
-        
+
         // End iterations as soon as the matching data pt is found.
         break;
       }
