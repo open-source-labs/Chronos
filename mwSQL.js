@@ -120,8 +120,6 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   currentMicroservice = userInputMSName;
 
   client.query(
-    // Alan: updating the table with the last few columns to accomodate Docker data.
-      // As of 05/13/20, added 9 more columns.
     `CREATE TABLE IF NOT EXISTS healthInfo (
       id SERIAL PRIMARY KEY,
       time timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -138,15 +136,6 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       numBlockedProcesses real DEFAULT 0,
       numSleepingProcesses real DEFAULT 0,
       latency float DEFAULT 0.0,
-      containerId varchar(500),
-      containerMemUsage real DEFAULT 0,
-      containerMemLimit real DEFAULT 0,
-      containerMemPercent real DEFAULT 0,
-      containerCpuPercent real DEFAULT 0,
-      networkReceived real DEFAULT 0,
-      networkSent real DEFAULT 0,
-      containerProcessCount integer DEFAULT 0,
-      containerRestartCount integer DEFAULT 0
     )`,
     (err, results) => {
       if (err) {
