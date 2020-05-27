@@ -10,7 +10,10 @@ cmd.propagate();
 
 const app = express();
 
-// Invoke .microCom with the 5 params to enable logging of comm and health data to your own db.
+// Invoke .microCom with the 6 params to enable logging of comm and health data to your own db.
+// Params (6): microservice name, db type, db URI, want health data?, query freq, is service Dockerized?
+  // If running a svc in a Docker container, please give container the same name as the microservice...
+  // ... to ensure proper logging of container stats.
 app.use('/', cmd.microCom(
   'orders',
   // PostgreSQL
@@ -19,8 +22,9 @@ app.use('/', cmd.microCom(
   // MongoDB
   // 'mongo',
   // `${process.env.CHRONOS_MONGO}`,
-  'yes',
-  'm'
+  'no',
+  'm',
+  'yes' // <-- Is the service Dockerized?
 ));
 
 app.use(cors());
