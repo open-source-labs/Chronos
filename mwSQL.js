@@ -263,7 +263,6 @@ chronos.microDocker = function (userInputMSName, uri, queryFreq) {
   });
   // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
   var containerName;
-  var containerId = '';
   var containerPlatform;
   var containerStartTime;
   var containerMemUsage;
@@ -280,6 +279,7 @@ chronos.microDocker = function (userInputMSName, uri, queryFreq) {
   // Other stats will be retrieved by dockerContainerStats().
   si.dockerContainers()
     .then(function (data) {
+    var containerId = '';
     // let matchingContainer: object = {}; 
     for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
       var dataObj = data_1[_i];
