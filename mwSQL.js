@@ -31,7 +31,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, is
       throw new Error('Issue connecting to db');
     }
     // Printing the beginning portion of URI to confirm it's connecting to the correct postgres DB.
-    console.log('Connected to SQL in Chronos', '\n', 'Postgres URI = ', uri.slice(0, 24), '...');
+    console.log('Chronos SQL is connected at ', uri.slice(0, 24), '...');
   });
 
   // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
@@ -242,8 +242,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
 };
 
 chronos.microDocker = function (userInputMSName, queryFreq) {
-  // Create a table if it doesn't already exist. Throws error if needed.
-  // 13 cols
+  // Create a table if it doesn't already exist.
   client.query("CREATE TABLE IF NOT EXISTS containerInfo(\n    id serial PRIMARY KEY,\n    currentMicroservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )", function (err, results) {
     if (err) throw err;
   });
@@ -266,16 +265,14 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
   si.dockerContainers()
     .then(function (data) {
     var containerId = '';
-    // let matchingContainer: object = {}; 
+
     for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
       var dataObj = data_1[_i];
       if (dataObj.name === userInputMSName) {
-        // matchingContainer = dataObj;
         containerName = dataObj.name;
         containerId = dataObj.id;
         containerPlatform = dataObj.platform;
         containerStartTime = dataObj.startedAt;
-
         // End iterations as soon as the matching data pt is found.
         break;
       }
@@ -287,7 +284,7 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
       setInterval(function () {
         si.dockerContainerStats(containerId)
           .then(function (data) {
-          console.log('data[0] of dockerContainerStats', data[0]);
+          // console.log('data[0] of dockerContainerStats', data[0]);
           // Reassign other vars to the values from retrieved data. 
           // Then save to DB.
           containerMemUsage = data[0].mem_usage;
@@ -316,7 +313,7 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
           ];
           client.query(queryString, values, function (err, results) {
             if (err) throw err;
-            console.log('Saved to PostgreSQL!');
+            console.log('Saved to SQL!');
           });
         })["catch"](function (err) {
           throw err;

@@ -11,6 +11,7 @@ const chronos = {};
 chronos.connectDB = (userOwnedDB) => {
   mongoose.connect(`${userOwnedDB}`, (error) => {
     if (error) throw error;
+    // Printing the beginning portion of URI to confirm it's connecting to the correct MongoDB.
     console.log(`Chronos MongoDB is connected at ${userOwnedDB.slice(0, 20)}...`);
   });
 }
@@ -216,16 +217,13 @@ chronos.microDocker = function (microserviceName, queryFreq) {
   si.dockerContainers()
     .then(function (data) {
     var containerId = '';
-    // let matchingContainer: object = {}; 
     for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
       var dataObj = data_1[_i];
       if (dataObj.name === microserviceName) {
-        // matchingContainer = dataObj;
         containerName = dataObj.name;
         containerId = dataObj.id;
         containerPlatform = dataObj.platform;
         containerStartTime = dataObj.startedAt;
-
         // End iterations as soon as the matching data pt is found.
         break;
       }
@@ -237,7 +235,7 @@ chronos.microDocker = function (microserviceName, queryFreq) {
       setInterval(function () {
         si.dockerContainerStats(containerId)
           .then(function (data) {
-          console.log('data[0] of dockerContainerStats', data[0]);
+          // console.log('data[0] of dockerContainerStats', data[0]);
           // Reassign other vars to the values from retrieved data. 
           // Then save to DB.
           containerMemUsage = data[0].mem_usage;
