@@ -1,6 +1,6 @@
 // NPM package that gathers health information
 const si = require('systeminformation');
-const mwSqlDocker = require('./mwSqlDocker.js');
+// const mwSqlDocker = require('./mwSqlDocker.js');
 
 let client;
 
@@ -42,7 +42,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, is
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
     chronos.microHealth(userInputMSName, queryFreq);
   } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
-    mwSqlDocker.microDocker(userInputMSName, uri, queryFreq);
+    chronos.microDocker(userInputMSName, uri, queryFreq);
   }
 
   // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
@@ -100,7 +100,7 @@ chronos.microCom = (userOwnedDB, userInputMSName, wantMicroHealth, queryFreq, is
     });
     next();
   };
-},
+};
 
 // Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
 // Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
@@ -216,38 +216,6 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       .catch((err) => {
         throw err;
       });
-    
-    // Alan: Adding more si funcs to log Docker data
-      // Later decided that Docker info aren't that useful. Container stats more so.
-    // si.dockerInfo()
-    //   .then((data) => {
-    //     console.log('"data" from si.dockerInfo:', data)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     throw err;
-    //   });
-    
-    // Passing in '*' to get stats on ALL containers.
-      // There should be only one container for each microsvc anyway (for now).
-      // Target the only container by pointing to data[0].
-    si.dockerContainerStats('*')
-      .then((data) => {
-        // console.log('"data" from si.dockerContainerStats:', data);
-        containerId = data[0].id;
-        containerMemUsage = data[0].mem_usage;
-        containerMemLimit = data[0].mem_limit;
-        containerMemPercent = data[0].mem_percent;
-        containerCpuPercent = data[0].cpu_percent;
-        networkReceived = data[0].netIO.rx;
-        networkSent = data[0].netIO.wx;
-        containerProcessCount = data[0].pids;
-        containerRestartCount = data[0].restartCount;
-      })
-      .catch((err) => {
-        console.log(err);
-        throw err;
-      });
 
     const queryString = `INSERT INTO healthInfo(
       currentMicroservice,
@@ -262,18 +230,8 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       numRunningProcesses,
       numBlockedProcesses,
       numSleepingProcesses,
-      latency,
-      containerId,
-      containerMemUsage,
-      containerMemLimit,
-      containerMemPercent,
-      containerCpuPercent,
-      networkReceived,
-      networkSent,
-      containerProcessCount,
-      containerRestartCount) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-        $14, $15, $16, $17, $18, $19, $20, $21, $22)`;
+      latency) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
 
     const values = [
       currentMicroservice,
@@ -288,16 +246,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       numRunningProcesses,
       numBlockedProcesses,
       numSleepingProcesses,
-      latency,
-      containerId,
-      containerMemUsage,
-      containerMemLimit,
-      containerMemPercent,
-      containerCpuPercent,
-      networkReceived,
-      networkSent,
-      containerProcessCount,
-      containerRestartCount,  // #22
+      latency
     ];
 
     client.query(queryString, values, (err, results) => {
@@ -307,6 +256,95 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       console.log('Saved to PostgreSQL!')
     });
   }, queryObj[queryFreq]);
+};
+
+chronos.microDocker = function (userInputMSName, uri, queryFreq) {
+  // Create a table if it doesn't already exist. Throws error if needed.
+  // 13 cols
+  client.query("CREATE TABLE IF NOT EXISTS containerInfo(\n    id serial PRIMARY KEY,\n    currentMicroservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )", function (err, results) {
+    if (err) throw err;
+  });
+  // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
+  var containerName;
+  var containerId = '';
+  var containerPlatform;
+  var containerStartTime;
+  var containerMemUsage;
+  var containerMemLimit;
+  var containerMemPercent;
+  var containerCpuPercent;
+  var networkReceived;
+  var networkSent;
+  var containerProcessCount;
+  var containerRestartCount;
+  // dockerContainers() return an arr of active containers (ea. container = an obj).
+  // Find the data pt with containerName that matches currentMicroservice name. 
+  // Extract container ID, name, platform, and start time.
+  // Other stats will be retrieved by dockerContainerStats().
+  si.dockerContainers()
+    .then(function (data) {
+    // let matchingContainer: object = {}; 
+    for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+      var dataObj = data_1[_i];
+      if (dataObj.name === userInputMSName) {
+        // matchingContainer = dataObj;
+        containerName = dataObj.name;
+        containerId = dataObj.id;
+        containerPlatform = dataObj.platform;
+        containerStartTime = dataObj.startedAt;
+      }
+      // End iterations as soon as the matching data pt is found.
+      break;
+    }
+    // When containerId has a value:
+    // Initiate periodic invoc. of si.dockerContainerStats to retrieve and log stats to DB.
+    // The desired data pt is the first obj in the result array.
+    if (containerId !== '') {
+      setInterval(function () {
+        si.dockerContainerStats(containerId)
+          .then(function (data) {
+          console.log('data[0] of dockerContainerStats', data[0]);
+          // Reassign other vars to the values from retrieved data. 
+          // Then save to DB.
+          containerMemUsage = data[0].mem_usage;
+          containerMemLimit = data[0].mem_limit;
+          containerMemPercent = data[0].mem_percent;
+          containerCpuPercent = data[0].cpu_percent;
+          networkReceived = data[0].netIO.rx;
+          networkSent = data[0].netIO.wx;
+          containerProcessCount = data[0].pids;
+          containerRestartCount = data[0].restartCount;
+          var queryString = "INSERT INTO containerInfo(\n                currentMicroservice,\n                containerName,\n                containerId,\n                containerPlatform,\n                containerStartTime,\n                containerMemUsage,\n                containerMemLimit,\n                containerMemPercent,\n                containerCpuPercent,\n                networkReceived,\n                networkSent,\n                containerProcessCount,\n                containerRestartCount)\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13\n              )";
+          var values = [
+            userInputMSName,
+            containerName,
+            containerId,
+            containerPlatform,
+            containerStartTime,
+            containerMemUsage,
+            containerMemLimit,
+            containerMemPercent,
+            containerCpuPercent,
+            networkReceived,
+            networkSent,
+            containerProcessCount,
+            containerRestartCount,
+          ];
+          client.query(queryString, values, function (err, results) {
+            if (err) throw err;
+            console.log('Saved to PostgreSQL!');
+          });
+        })["catch"](function (err) {
+          throw err;
+        });
+      }, queryObj[queryFreq]);
+    }
+    else {
+      throw new Error('Cannot find container data matching the microservice name.');
+    }
+  })["catch"](function (err) {
+    throw err;
+  });
 };
 
 module.exports = chronos;
