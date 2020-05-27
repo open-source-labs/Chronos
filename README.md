@@ -68,20 +68,20 @@ The cmd.microCom handler function logs communication and health data to a user-p
 cmd.microCom takes six parameters. You can enter the arguments as individual strings or as an array.
 
 The parameters are:
-1. microserviceName: To identify the microservice (i.e. "payments").
+* 1. microserviceName: To identify the microservice (i.e. "payments").
   - Make sure this name matches your container name. More details more below (param #6).
   - Your input name for the microservice will be turned to an all-lowercase string.
-2. databaseType: Enter either "mongo" or "sql".
-3. databaseURL: Enter the URL of your database.
-4. wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
+* 2. databaseType: Enter either "mongo" or "sql".
+* 3. databaseURL: Enter the URL of your database.
+* 4. wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
   - Note: If you choose "yes" for this param, the middleware will NOT log container stats. In other words, if you want container stats instead, input "no" here and "yes" for param #6.
-5. queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
+* 5. queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
   - "s" : every second
   - "m" : every minute (default)
   - "h" : every hour
   - "d" : once per day
   - "w" : once per week
-6. isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
+* 6. isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
@@ -98,7 +98,7 @@ let values = [
   'mongodb+srv://user:password@cluster0-abc.mongodb.net/',
   'no',
   'h',
-  'yes
+  'yes'
 ]
 
 app.use('/', cmd.microCom(values)
@@ -135,4 +135,4 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## License
 
-  [MIT](LICENSE)
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
