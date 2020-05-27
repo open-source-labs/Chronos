@@ -105,11 +105,12 @@ Chronos hopes to inspire an active community of both users and developers. For q
 ## People
 
 * v3 Team:
-Alan Lee [Alan Lee]
-Alon Ofengart [Alon Ofengart]
-Brian Bui [Brian Bui]
-Brianna Sookhoo [Brianna Sookhoo]
+[Alan Lee](https://github.com/ajlee12/), 
+[Alon Ofengart](https://github.com/alon25), 
+[Brian Bui](https://github.com/Umius-Brian), 
+[Brianna Sookhoo](https://github.com/briannasookhoo)
 
+* Previous teams who laid the foundation and put in invaluble work:
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
