@@ -49,9 +49,7 @@ chronos.microCom = (
 
   // Ensures that the required parameters are entered, errors out otherwise
   if (!microserviceName || !databaseType || !userOwnedDB || !wantMicroHealth) {
-    throw new Error(
-      'Please verify that you have provided all four required parameters',
-    );
+    throw new Error('Please verify that you have provided all four required parameters');
   }
 
   // Verifies that the user has enteres strings, throws error otherwise
@@ -63,16 +61,15 @@ chronos.microCom = (
       || typeof queryFreq !== 'string'
       || typeof isDockerized !== 'string'
   ) {
-    throw new Error(
-      'Please verify that the parameters you entered are all strings',
-    );
+    throw new Error('Please verify that the parameters you entered are all strings');
   }
 
   // Checks the type of database provided by the user and uses appropriate middleware files.
   // Throws error if input db type is not supported
   if (databaseType === 'mongo' || databaseType === 'mongodb') {
     return mongoMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
-  } if (databaseType === 'sql' || databaseType === 'postgresql') {
+  } 
+  if (databaseType === 'sql' || databaseType === 'postgresql') {
     return sqlMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
   }
   throw new Error(
