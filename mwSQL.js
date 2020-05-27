@@ -255,7 +255,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   }, queryObj[queryFreq]);
 };
 
-chronos.microDocker = function (userInputMSName, uri, queryFreq) {
+chronos.microDocker = function (userInputMSName, queryFreq) {
   // Create a table if it doesn't already exist. Throws error if needed.
   // 13 cols
   client.query("CREATE TABLE IF NOT EXISTS containerInfo(\n    id serial PRIMARY KEY,\n    currentMicroservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )", function (err, results) {
