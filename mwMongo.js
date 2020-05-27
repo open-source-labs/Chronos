@@ -9,8 +9,9 @@ const chronos = {};
 
 // connectDB is a method that connects chronos to the user database
 chronos.connectDB = (userOwnedDB) => {
-  mongoose.connect(`${userOwnedDB}`, () => {
-    console.log('Chronos MongoDB database is connected...');
+  mongoose.connect(`${userOwnedDB}`, (error) => {
+    if (error) throw error;
+    console.log(`Chronos MongoDB is connected at ${userOwnedDB.slice(0, 20)}...`);
   });
 }
 
