@@ -1,5 +1,5 @@
 FROM node:10.16
-WORKDIR /orderContainer/
+WORKDIR /usr/src/app
 COPY package*.json ./
 COPY . .
 RUN npm install
