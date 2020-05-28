@@ -42,5 +42,5 @@ mongoose.model("MicroserviceHealth", {
   },
   timestamp: {
     type: Date,
-  }
+  },
 });
