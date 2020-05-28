@@ -5,6 +5,7 @@ import Home from './components/Home.jsx';
 import Info from './components/Info.jsx';
 import Team from './components/Team.jsx';
 import Demo from './components/Demo.jsx';
+import NPM from './components/NPM.jsx';
 import GitHub from './components/GitHub.jsx';
 import Contact from './components/Contact.jsx';
 import {
@@ -52,6 +53,7 @@ const App = () => {
                 <Route exact path="/" component={Home}  />
                 <Route exact path="/info" component={Info}  />
                 <Route exact path="/demo" component={Demo}  />
+                <Route exact path="/npm" component={NPM}    />
                 <Route exact path="/team" component={Team}  />
                 <Route exact path="/contact" component={Contact}  />
                 <Route exact path="/github" component={GitHub}  />
