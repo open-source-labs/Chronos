@@ -1,7 +1,7 @@
 ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
 ## Chronos
 Microservice communication, health, and Docker container visualizer.
-A middleware & an Electron app.
+Comes with a middleware and an Electron app.
 
 ## Features
 
@@ -13,7 +13,7 @@ A middleware & an Electron app.
 
 ## NEW FEATURE FOR 3.0+ - Logging Docker Container Stats
 
-IMPORTANT: Give you containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
+IMPORTANT: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
 IMPORTANT: In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
 `/var/run/docker.sock`
@@ -21,7 +21,7 @@ IMPORTANT: In order to have container stats saved to your database along with ot
 For example, you can type the following when starting up a container:
 `docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
 
-If you're using Docker compose to start up multiple containers at once, you can add a `volumes` key for each of your services:
+If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
 ```
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
@@ -36,7 +36,7 @@ Chronos consists of a [Node](https://nodejs.org/en/) module available through th
 
 #### Node module
 
-To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger3) node module within each microservice of your application using the
+To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger4) node module within each microservice of your application using the
 [`npm install`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)command:
 
 ```
@@ -68,20 +68,20 @@ The cmd.microCom handler function logs communication and health data to a user-p
 cmd.microCom takes six parameters. You can enter the arguments as individual strings or as an array.
 
 The parameters are:
-* 1. microserviceName: To identify the microservice (i.e. "payments").
+* [1] microserviceName: To identify the microservice (i.e. "payments").
   - Make sure this name matches your container name. More details more below (param #6).
   - Your input name for the microservice will be turned to an all-lowercase string.
-* 2. databaseType: Enter either "mongo" or "sql".
-* 3. databaseURL: Enter the URL of your database.
-* 4. wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
+* [2] databaseType: Enter either "mongo" or "sql".
+* [3] databaseURL: Enter the URL of your database.
+* [4] wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
   - Note: If you choose "yes" for this param, the middleware will NOT log container stats. In other words, if you want container stats instead, input "no" here and "yes" for param #6.
-* 5. queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
+* [5] queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
   - "s" : every second
   - "m" : every minute (default)
   - "h" : every hour
   - "d" : once per day
   - "w" : once per week
-* 6. isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
+* [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
@@ -103,6 +103,13 @@ let values = [
 
 app.use('/', cmd.microCom(values)
 ```
+#### Microservice Test Suite
+
+Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app. 
+
+The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together. 
+
+Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 
 #### Electron desktop application
 
@@ -122,7 +129,7 @@ Chronos hopes to inspire an active community of both users and developers. For q
 [Brian Bui](https://github.com/Umius-Brian), 
 [Brianna Sookhoo](https://github.com/briannasookhoo)
 
-* Previous teams who laid the foundation and put in invaluble work:
+* Previous teams who laid the foundation and put in invaluable work:
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
