@@ -89,7 +89,8 @@ Inside the downloaded directory, install all dependencies using the `npm install
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
 ## People
-
+[Brianna Sookhoo](https://github.com/briannasookhoo),
+[Brian Bui](https://github.com/umius-brian),
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
