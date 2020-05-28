@@ -12,7 +12,6 @@
 }
 
 .overviewSubmitBtn:hover {
-  /* border: .5px solid azure; */
   background-color: #494FEE;
   color: azure;
   cursor: pointer;

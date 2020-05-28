@@ -58,7 +58,7 @@ const RequestTypesChart = (props) => {
           legend: {
               orientation: 'h',
               xanchor: 'center',
-              x: .5,
+              x: .5
           }
         }}
       />

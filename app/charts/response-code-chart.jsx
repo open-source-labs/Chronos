@@ -56,30 +56,28 @@ const ResponseCodeChart = (props) => {
 
     return (
       <Plot
-        data={[
-          {
-            values: Object.values(responseCodes),
-            labels: [
-              'Informational 1xx',
-              'Successful 2xx',
-              'Redirectional 3xx',
-              'Client Error 4xx',
-              'Server Error 5xx',
+        data={[{
+          values: Object.values(responseCodes),
+          labels: [
+            'Informational 1xx',
+            'Successful 2xx',
+            'Redirectional 3xx',
+            'Client Error 4xx',
+            'Server Error 5xx',
+          ],
+          type: 'pie',
+          textposition: 'inside',
+          domain: { y: [0, 2] },
+          marker: {
+            colors: [
+              '#fa1a58',
+              '#f3f5fe',
+              '#00eda0',
+              '#00fff2',
+              '#73605b',
             ],
-            type: 'pie',
-            textposition: 'inside',
-            domain: { y: [0, 2] },
-            marker: {
-              colors: [
-                '#fa1a58',
-                '#f3f5fe',
-                '#00eda0',
-                '#00fff2',
-                '#73605b',
-              ],
-            },
           },
-        ]}
+        }]}
         layout={{
           title: {
             text: 'Response Status Codes',

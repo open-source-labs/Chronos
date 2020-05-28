@@ -14,8 +14,6 @@
 }
 
 .microserviceBtn:hover {
-  /* font-weight: 900; */
   cursor: pointer;
-  /* border: 2px solid #98ba8e; */
   background-color: #494FEE;
 }
