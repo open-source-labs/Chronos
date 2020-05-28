@@ -30,7 +30,7 @@ const Team2 = () => {
             }
         },
         bioAlon : {
-            bioParagraph : 'Alon Ofengart is a full-stack software engineer who will one day develop Python2.',
+            bioParagraph : 'Alon Ofengart is a full-stack software engineer who will one day develop Python4++.',
             picture: bioAlonPic,
             contact: {
                 gitHub : 'https://github.com/alon25',
