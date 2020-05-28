@@ -13,11 +13,9 @@
   flex-direction: column;
   align-content: center;
   width: 100%;
-  /* padding: 5% 10% 0 5%; */
   align-items: center;
   justify-items: center;
   justify-content: center;
-  /* height: 1000px; */
   max-height: 600px;
   overflow-y: auto;
 }
