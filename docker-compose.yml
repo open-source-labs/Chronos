@@ -11,60 +11,69 @@ services:
     # Use image built from the Dockerfile in /fronend dir.
     build: './frontend'
 
-    container_name: "frontend-container"
+    container_name: "frontend"
 
     # Bind container and host machine to exposed port, 3000.
     # ports:
     #   - "3000:3000"
 
-    # volumes:
-    #   - ./frontend:/usr/src/app/frontend
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
   books:
     build: './books'
 
-    container_name: "books-container"
+    container_name: "books"
     
     ports:
       - "4545:4545"
     
     depends_on:
       - frontend
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
   
   customers:
     build: './customers'
 
-    container_name: "customers-container"
+    container_name: "customers"
 
     ports:
       - "5555:5555"
 
     depends_on:
       - frontend
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
   
   orders:
     build: './orders'
 
-    container_name: "orders-container"
+    container_name: "orders"
 
     ports:
       - "7777:7777"
 
     depends_on:
       - frontend
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
   
   nginx:
     # Use latest version of the public nginx image.
     image: nginx:latest
 
-    container_name: production_nginx
+    container_name: "production_nginx"
 
     ports:
       - "8080:8080"
     
     volumes:
-      - ./frontend:/srv/www/static
-      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - "./frontend:/srv/www/static"
+      - "./default.conf:/etc/nginx/conf.d/default.conf"
 
     depends_on:
       - frontend

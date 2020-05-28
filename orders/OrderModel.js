@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
-//  pull schema from the mongoose object
+require('dotenv').config();
+
 const { Schema } = mongoose;
 
-//  database link
-const myURI = 'mongodb+srv://alon:testing123@cluster0-nmd6a.mongodb.net/Orders';
+// DB link for orders data.
+const orders_db_uri = `${process.env.ORDERS_DB}`;
 
 // const URI = process.env.MONGO_URI || myURI;
 
 // connect the database, if error, log will be sent to the terminal
-mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(orders_db_uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected!!!********* Order Database is live!!!'))
   .catch((err) => console.log('Connection Error ', err));
 
-
-//  mongoose.SchemaTypes.ObjectId was changed from the types to make it a string and to te
 const OrderSchema = new Schema({
   customerID: {
     type: String,
