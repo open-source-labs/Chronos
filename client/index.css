@@ -144,9 +144,10 @@ img:hover {
 
 #menu {
   margin: auto;
-  padding: 10px;
+  padding: 20px;
   width: 70%;
   text-align:center;
+  position: relative;
 }
 
 ul#menuSelections li {
@@ -162,6 +163,7 @@ ul#menuSelections li {
     /* text fade - in */
     opacity: 0.6;
     transition: 0.3s;
+    position: relative;
 }
 
 ul#menuSelections li#MenuItem:hover {
@@ -253,8 +255,8 @@ a#connectWithMeSocial:hover {
     letter-spacing: .15em;
     background-color: #1d1d1d;
     border-bottom: 1px solid black;
-    color: white;
     box-shadow: 6px 5px 14px  rgba(0, 0, 0, 0.81);
+    color: white;
     justify-content: center;
     align-items: center;
     /* background-color: red; */
@@ -307,10 +309,7 @@ a#connectWithMeSocial:hover {
     #aboutParagraphs p {
         /* background-color: pink; */
         margin-bottom: 1em;
-    }
- 
-
-    
+    }    
 }
 
 @media (min-width: 768px) {
@@ -325,3 +324,49 @@ a#connectWithMeSocial:hover {
     }
 }
 
+.dropbtn {
+    display: inline;
+    text-transform: uppercase;
+    background-color: #1d1d1d;
+    justify-content: center;
+    align-items: center;
+    color: rgb(199, 198, 198);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.7em;
+    font-size: small;
+    border: none;
+    transition: 0.3s;
+  }
+  
+  .dropbtn:hover {
+      color: rgb(255, 234, 0);
+      opacity: 1;
+    }
+
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 99;
+    padding:0;
+    left: -24%;
+}
+
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
