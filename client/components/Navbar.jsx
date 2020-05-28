@@ -18,7 +18,7 @@ const Navbar = () => {
                 <li id="MenuItem" className="dropdown">
                     <button className="dropbtn">Team</button>
                     <div className="dropdown-content">
-                        <a href="/">LA</a>
+                        <a href="/team2">LA</a>
                         <a href="/team">NY</a>
                     </div>
                 </li>

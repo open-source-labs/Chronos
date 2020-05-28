@@ -60,7 +60,7 @@ const Team = () => {
         <div id="teamPage">
             <div className="titleChronosAndMiniTitle">
                 <div id="ChronosMainText">
-                    <h2>Team</h2>
+                    <h2>NY Team</h2>
                 </div>
                 <hr id="MainHr"/>
             </div>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
 .demoContainter {
   margin-top: 3%;
   display: flex;
@@ -6,11 +8,43 @@
   align-items: center;
 }
 .demoContainter #lightDemoWrapper {
-  background-color: #1f1f1f;
+  background-color: #5c82f6;
   box-shadow: 6px 5px 14px rgba(0, 0, 0, 0.81);
 }
-.demoContainter .demoTitle1 {
-  font: 100% "Source Sans Pro", sans-serif;
+
+.demoTitle1 {
+  font: 100% "Roboto Condensed", sans-serif;
+  letter-spacing: 0.13em;
+  color: white;
+  text-align: center;
+  text-align: center;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  -webkit-animation: fadein 2s, myfirst 4s;
+  -webkit-animation-direction: normal, reverse;
+  animation: fadein 2s, myfirst 4s;
+  animation-direction: normal, reverse;
+  transition: 0.8s;
+}
+.demoTitle2 {
+  font: 100% "Roboto Condensed", sans-serif;
+  letter-spacing: 0.13em;
+  color: black;
+  text-align: center;
+  text-align: center;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  -webkit-animation: fadein 2s, myfirst 4s;
+  -webkit-animation-direction: normal, reverse;
+  animation: fadein 2s, myfirst 4s;
+  animation-direction: normal, reverse;
+  transition: 0.8s;
+}
+
+.demoContainter  {
+  font: 100% "Roboto Condensed", sans-serif;
   letter-spacing: 0.13em;
   color: white;
   text-align: center;
@@ -24,8 +58,9 @@
   animation-direction: normal, reverse;
   transition: 0.8s;
 }
-.demoContainter .demoTitle1 p {
-  font: "Times New Roman";
+.demoContainter p {
+  font: "Roboto Condensed";
+  color: black;
   font-weight: 300;
   opacity: 0.85;
   margin-bottom: 3.5em;
@@ -34,6 +69,7 @@
   height: 3em;
 }
 .demoContainter .videoDemo {
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;

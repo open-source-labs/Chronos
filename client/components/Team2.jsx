@@ -10,7 +10,7 @@ import '../index.css';
 
 
 
-const Team = () => {
+const Team2 = () => {
     //set state here
     const [bios, updateBio] = useState({
         bioBrianna : {
@@ -30,7 +30,7 @@ const Team = () => {
             }
         },
         bioAlon : {
-            bioParagraph : 'Alon Ofengart is a full-stack software engineer who will one day develop Python2',
+            bioParagraph : 'Alon Ofengart is a full-stack software engineer who will one day develop Python2.',
             picture: bioAlonPic,
             contact: {
                 gitHub : 'https://github.com/alon25',
@@ -63,4 +63,4 @@ const Team = () => {
     )
 };
 
-export default Team;
+export default Team2;

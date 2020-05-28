@@ -34,7 +34,7 @@ const Demo = () => {
             </div>
 
             <div className="space"></div>
-            <div className="demoTitle1">
+            <div className="demoTitle2">
                 <h2>Video Demonstration</h2>
             <hr id="MainHr"/>
             <div className="videoDemo">
