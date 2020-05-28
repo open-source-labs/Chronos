@@ -5,7 +5,7 @@ import TeamMember from './TeamMember.jsx'
 import bioBrianPic from '../assets/Bio_picture_Brian.jpg';
 import bioBriannaPic from '../assets/Bio_picture_Brianna.png';
 import bioAlanPic from '../assets/Bio_picture_Alan.png';
-import bioAlonPic from '../assets/Bio_picture_Alon.png';
+import bioAlonPic from '../assets/Bio_picture_Alon.jpg';
 import '../index.css';
 
 
@@ -42,7 +42,7 @@ const Team2 = () => {
             picture: bioAlanPic,
             contact: {
                 gitHub : 'https://github.com/ajlee12',
-                linkedIn : 'https://www.linkedin.com/in/timpagra/'
+                linkedIn : 'https://www.linkedin.com/in/alan-lee-1ba1aa93/'
             }
         },
     });
