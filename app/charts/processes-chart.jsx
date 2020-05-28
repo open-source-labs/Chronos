@@ -45,7 +45,8 @@ const ProcessesChart = (props) => {
             marker: {
               color: '#00d3f2',
               size: 3
-            }},
+            }
+          },
           {
             type: 'scatter',
             x: {autorange: true},
@@ -56,7 +57,8 @@ const ProcessesChart = (props) => {
             marker: {
               color: '#00eda0',
               size: 3
-            }},
+            }
+          },
           { 
             type: 'scatter',
             x: {autorange: true},
@@ -67,7 +69,8 @@ const ProcessesChart = (props) => {
             marker: {
               color: '#4a4eee',
               size: 3
-          }},
+            }
+          },
           {label: communicationLabel},
         ]}
         layout = {{
