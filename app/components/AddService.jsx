@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
 import '../stylesheets/AddService.css';
 
@@ -34,11 +33,10 @@ const AddService = () => {
 
   return (
     <div className="mainContainer">
-      <img src="app/assets/logo2.png" alt="logo" id="addServiceLogo" />
       <h2 className="signUpHeader">
         Enter Your Database Information
       </h2>
-      <form>
+      <form className="inputForm">
         Database Type:
         <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>
           <option value="SQL">SQL</option>

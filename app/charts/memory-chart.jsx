@@ -36,8 +36,8 @@ const MemoryChart = (props) => {
         data = {[
           {
             type: 'scatter',
-            fill: 'tozeroy',
-            fillcolor: 'rgb(14, 49, 80)',
+            fill: 'tonexty',
+            fillcolor: 'rgb(0, 237, 160)',
             mode: 'none',
             x: {autorange: true},
             y: free,
@@ -46,8 +46,8 @@ const MemoryChart = (props) => {
           },
           {
             type: 'scatter',
-            fill: 'tozeroy',
-            fillcolor: 'rgba(255, 64, 87, .3)',
+            fill: 'tonexty',
+            fillcolor: 'rgba(0, 237, 160, .4)',
             mode: 'none',
             x: {autorange: true},
             y: used,
@@ -56,8 +56,8 @@ const MemoryChart = (props) => {
           },
           {
             type: 'scatter',
-            fill: 'tozeroy',
-            fillcolor: 'rgba(144, 0, 72, .4)',
+            fill: 'tonexty',
+            fillcolor: 'rgba(74, 78, 238, .5)',
             mode: 'none',
             x: {autorange: true},
             y: active,
@@ -67,10 +67,15 @@ const MemoryChart = (props) => {
           {label: xAxis},
         ]}
         layout = {{
-          width: 500,
-          height: 500,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          height: 400,
+          width: 400,
+          font: {
+            color: 'black',
+            size: 15,
+            family: 'Nunito, san serif'
+          },
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           legend: {
             itemsizing: 'constant',
             orientation: 'h',
@@ -80,14 +85,14 @@ const MemoryChart = (props) => {
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 100,
+            dtick: 100
           },
         }}
       />
     )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="memoryChart">{createChart()}</div>;
 };
 
 export default MemoryChart;

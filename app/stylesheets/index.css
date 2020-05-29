@@ -7,12 +7,15 @@ body {
 
 html {
   /* prevent the gradient from repeating past the visible section*/
-  min-height: 100%
+  /* min-height: 100% */
+  background-color: #24262f;
+  /* max-width: 1920;
+  max-height: 1080; */
 }
 
 body {
   /* background-color: #333; Original background*/
-  background: linear-gradient(135deg, rgba(25,0,36,1) 0%, rgb(68, 68, 68) 0%, rgb(29, 29, 29) 100%);
+  background-color: rgb(248, 249, 253);
 }
 
 img {
