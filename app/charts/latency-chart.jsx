@@ -20,26 +20,31 @@ const LatencyChart = (props) =>  {
     return (
       <Plot
         data = {[{
+          name: 'CPU Latency',
           type: 'scatter',
           x: xAxis,
           y: yAxis,
           mode: 'lines',
           rangemode: 'nonnegative',
-          name: `${props.service} CPU Latency`,
-          marker: {
-              color: '#155263',
-          },
+          name: 'CPU Latency',
+          marker: {color: '#daaa17'},
         }]}
         layout = {{
-          width: 500,
-          height: 500,
-          paper_bgcolor: '#fffbe0',
-          plot_bgcolor: '#fffbe0',
+          height: 400,
+          width: 400,
+          font: {
+            color: 'black',
+            size: 15,
+            family: 'Nunito, san serif'
+          },
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
           showlegend: true,
           legend: {
-              orientation: 'h',
-              xanchor: 'center',
-              x: .5
+            orientation: 'h',
+            xanchor: 'center',
+            x: 0.5,
+            y: 5,
           },
           xaxis: {
             tickmode: 'linear',
@@ -53,7 +58,7 @@ const LatencyChart = (props) =>  {
     )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="latencyChart">{createChart()}</div>;
 };
 
 export default LatencyChart;

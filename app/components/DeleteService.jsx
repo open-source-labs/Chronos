@@ -37,7 +37,7 @@ const DeleteService = (props) => {
 
   /* Iterates over the serviceList to create a button for each service. Each button is pushed into the databaseButtons array as the button is created. Each button has an onclick function that invokes the window confirm function with a warning message (ex:'Are you sure you want to delete this service?') and stores the result of invoking confirm into a constant moveForward. If the moveForward is true, then onDelete function is invoked with the index of where the service is stored within the serviceList*/
   for(let i = 0; i<serviceList.length; i++){
-    databaseButtons.push(<button className="microserviceBtn deleteMicroservice" key ={"delete"+i} onClick={()=>{
+    databaseButtons.push(<button className="deleteMicroservice" key ={"delete"+i} onClick={()=>{
       const moveForward = confirm(`Are you sure you want to delete ${serviceList[i]}? \n If "YES" press the "OK" button, else press the "Cancel" button`);
       if (moveForward){onDelete(i)}
       
@@ -45,8 +45,8 @@ const DeleteService = (props) => {
   }
   // returns the title of the page with all of the services that can be deleted as buttons 
   return (
-    <div className="mainContainer">
-        <h1 className='overviewTitle'>Press on the Database You Want to Delete</h1>
+    <div className="deleteMainContainer">
+        <h1 className='overviewTitle'>Select Database To Delete</h1>
         <div className="servicesList">{databaseButtons}</div>
     </div>
   );

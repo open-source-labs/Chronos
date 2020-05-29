@@ -15,21 +15,28 @@
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
     ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "@jest-runner/electron": "^2.0.3",
     "chart.js": "^2.8.0",
     "chronos-microservice-debugger": "^1.0.3",
+    "d3": "^5.16.0",
     "electron": "^6.1.11",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "ify-loader": "^1.1.0",
     "mongodb": "^3.5.7",
-    "mongoose": "^5.9.12",
+    "mongoose": "^5.9.13",
     "nodemon": "^1.19.2",
     "pg": "^7.18.2",
     "plotly.js": "^1.54.1",
@@ -41,8 +48,9 @@
     "ttf-loader": "^1.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/core": "^7.10.1",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.10.1",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
@@ -63,6 +71,6 @@
     "url-loader": "^2.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   }
 }

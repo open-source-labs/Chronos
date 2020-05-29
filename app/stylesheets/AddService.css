@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
+
+#addServiceLogo {
+  margin-bottom: 0px;
+}
+
 form {
   display: grid;
   justify-items: center;
@@ -6,9 +12,31 @@ form {
   font-size: 2vh;
 }
 
+.mainContainer {
+  font-family: 'Nunito', sans-serif;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+#addServiceLogo {
+  display: grid;
+  justify-items: center;
+  justify-content: center;
+}
+
+.inputForm {
+  color: black;
+}
+
+.dbType {
+  color: black;
+}
+
 .userInput {
   width: 70%;
-  border: 2px solid rgb(255, 206, 9);
+  border: 2px solid rgb(0, 0, 0);
   border-radius: 45px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
@@ -16,6 +44,7 @@ form {
   font-size: 2vh;
   padding-left: 0.25%;
   margin: 15px auto 30px auto;
+  font-family: 'Nunito', sans-serif;
 }
 
 ::placeholder {
@@ -30,17 +59,18 @@ form {
   height: 40px;
   color: white;
   font-size: 2vh;
-  border: 1px solid rgb(255, 206, 9);
-  background-color: #333;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: black;
   transition: 0.25s;
+  border-radius: 10px
 }
 
 .submitBtn:hover {
-  font-weight: 700;
+  font-size: 2vh;
   cursor: pointer;
   border-radius: 10px;
-  color: #333;
-  background-color: rgb(255, 206, 9);
+  color: white;
+  background-color: #494FEE;
 }
 
 .signUpHeader {
@@ -56,8 +86,7 @@ select {
   width: 30%;
   font-size: 1.75vh;
   font-weight: 400;
-  /* background-color: rgb(196, 196, 196); */
-  border: 2px solid rgb(255, 206, 9);
+  border: 2px solid black;
   margin-top: 1%;
   margin-bottom: 2.5%;
 }
