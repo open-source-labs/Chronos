@@ -123,21 +123,18 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## People
 
-* v3 Team:
-[Alan Lee](https://github.com/ajlee12/), 
-[Alon Ofengart](https://github.com/alon25), 
-[Brian Bui](https://github.com/Umius-Brian), 
-[Brianna Sookhoo](https://github.com/briannasookhoo)
-
-* Previous teams who laid the foundation and put in invaluable work:
 [Tim Atapagra](https://github.com/timpagra),
+[Brian Bui](https://github.com/Umius-Brian), 
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
 [Michelle Herrera](https://github.com/mesherrera),
+[Alan Lee](https://github.com/ajlee12/), 
 [Duane McFarlane](https://github.com/Duane11003),
 [Ben Mizel](https://github.com/ben-mizel),
+[Alon Ofengart](https://github.com/alon25), 
 [Jenae Pennie](https://github.com/jenaepen),
 [Chris Romano](https://github.com/robicano22),
+[Brianna Sookhoo](https://github.com/briannasookhoo),
 [Natalie Umanzor](https://github.com/nmczormick)
 
 ## License
