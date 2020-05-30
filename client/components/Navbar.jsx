@@ -23,7 +23,7 @@ const Navbar = () => {
                     </div>
                 </li>
                 <li id="MenuItem"><a href="https://www.npmjs.com/package/chronos-microservice-debugger4" target="_blank">NPM</a></li>
-                <li id="MenuItem"><a href="https://github.com/oslabs-beta/Chronos" target="_blank">Github</a></li>
+                <li id="MenuItem"><a href="https://github.com/open-source-labs/Chronos" target="_blank">Github</a></li>
             </ul>
         </div>
     )
