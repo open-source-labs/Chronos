@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import logo from 'app/assets/logo2.png';
 import SetupContext from '../context/SetupContext';
-import ServicesDashboard from './ServicesDashboard.jsx';
+import '../stylesheets/AddService.css';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -34,15 +33,10 @@ const AddService = () => {
 
   return (
     <div className="mainContainer">
-      <img src="app/assets/logo2.png" alt="logo" id="addServiceLogo" />
       <h2 className="signUpHeader">
         Enter Your Database Information
-        <sup className="tooltip">
-              &#9432;
-          <div className="tooltiptext">{tooltipWriteup}</div>
-        </sup>
       </h2>
-      <form>
+      <form className="inputForm">
         Database Type:
         <select id="dbType" onChange={() => setDbType(document.getElementById('dbType').value)}>
           <option value="SQL">SQL</option>

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import Plot from 'react-plotly.js';
 import CommunicationsContext from '../context/OverviewContext';
 
 const RequestTypesChart = (props) => {
   const communicationsData = useContext(CommunicationsContext).overviewData;
 
-  const createRequestChart = () => {
+    const createRequestChart = () => {
     const requestObj = {
       DELETE: 0,
       GET: 0,
@@ -23,27 +23,49 @@ const RequestTypesChart = (props) => {
       else if (element.currentmicroservice === props.service && element.reqtype in requestObj) requestObj[element.reqtype] += 1;
     }
 
-    const chartData = {
-      datasets: [
-        {
-          data: Object.values(requestObj),
-          backgroundColor: [
-            'rgb(2, 210, 249)',
-            'rgb(198, 42, 177)',
-            'rgb(252, 170, 52)',
-            'rgb(239, 91, 145)',
-            'rgb(182, 219, 26)',
-            'rgb(254, 255, 0)',
-          ],
-        },
-      ],
-      labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
-    };
-
-    return <Doughnut data={chartData} />;
+    return (
+      <Plot
+        data = {[{
+          values: Object.values(requestObj),
+          labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
+          type: 'pie',
+          textposition: 'inside',
+          marker: {
+            'colors': [
+              '#fa1a58',
+              '#4a4eee',
+              '#00eda0',
+              '#00d3f2',
+              '#73605b',
+              '#d09683',           
+            ]
+          },
+        }]}
+        layout = {{
+          title: {
+            text: 'Request Types',
+            font: {size: 22}
+          },
+          height: 400,
+          width: 400,
+          font: {
+            color: 'black',
+            size: 15,
+            family: 'Nunito, san serif'
+          },
+          displaylogo: false,
+          paper_bgcolor: 'white',
+          legend: {
+              orientation: 'h',
+              xanchor: 'center',
+              x: .5
+          }
+        }}
+      />
+    )
   };
 
-  return <div>{createRequestChart()}</div>;
+  return <div className="requestChart">{createRequestChart()}</div>;
 };
 
 export default RequestTypesChart;
