@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { Bar } from 'react-chartjs-2';
 import HealthContext from '../context/DetailsContext';
+import Plot from 'react-plotly.js';
 
 const MemoryChart = (props) => {
   const healthData = useContext(HealthContext).detailData;
@@ -31,40 +31,68 @@ const MemoryChart = (props) => {
       }
     }
 
-    const chartData = {
-      datasets: [
-        {
-          label: 'Free Memory',
-          backgroundColor: 'rgb(2, 210, 249)',
-          data: free,
-          // showLine: true,
-        },
-        {
-          label: 'Used Memory',
-          backgroundColor: 'rgb(239, 91, 145)',
-          data: used,
-          // showLine: true,
-        },
-        {
-          label: 'Active Memory',
-          backgroundColor: 'rgb(182, 219, 26)',
-          data: active,
-          // showLine: true,
-        },
-        {
-          label: 'Total Memory',
-          backgroundColor: 'rgb(252, 170, 52)',
-          data: total,
-          // showLine: true,
-        },
-      ],
-      labels: xAxis,
-    };
-
-    return <Bar data={chartData} />;
+    return (
+      <Plot
+        data = {[
+          {
+            type: 'scatter',
+            fill: 'tonexty',
+            fillcolor: 'rgb(0, 237, 160)',
+            mode: 'none',
+            x: {autorange: true},
+            y: free,
+            name: 'Free Memory',
+            rangemode: 'nonnegative'
+          },
+          {
+            type: 'scatter',
+            fill: 'tonexty',
+            fillcolor: 'rgba(0, 237, 160, .4)',
+            mode: 'none',
+            x: {autorange: true},
+            y: used,
+            name: 'Used Memory',
+            rangemode: 'nonnegative'
+          },
+          {
+            type: 'scatter',
+            fill: 'tonexty',
+            fillcolor: 'rgba(74, 78, 238, .5)',
+            mode: 'none',
+            x: {autorange: true},
+            y: active,
+            name: 'Active Memory',
+            rangemode: 'nonnegative'
+          },
+          {label: xAxis},
+        ]}
+        layout = {{
+          height: 400,
+          width: 400,
+          font: {
+            color: 'black',
+            size: 15,
+            family: 'Nunito, san serif'
+          },
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
+          legend: {
+            itemsizing: 'constant',
+            orientation: 'h',
+            xanchor: 'center',
+            x: .5
+          },
+          xaxis: {
+            tickmode: 'linear',
+            tick0: 0,
+            dtick: 100
+          },
+        }}
+      />
+    )
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="memoryChart">{createChart()}</div>;
 };
 
 export default MemoryChart;
