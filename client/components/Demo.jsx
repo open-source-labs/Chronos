@@ -10,31 +10,31 @@ const Demo = () => {
             <div className="demoTitle1">
                 <h2>Install</h2>
                     <p>
-                        npm install chronos-microservice-debugger3 
+                        npm install chronos-microservice-debugger4
                     </p>
             </div>
             <div className="demoTitle1">
-                <h2>Insert</h2>
+                <h2>Prep</h2>
                 <p>
                     insert chronos middleware within each server 
                 </p>
             </div>
             <div className="demoTitle1">
-                <h2>Link</h2>
+                <h2>Connect</h2>
                 <p>
                     link your database to our middleware and the chronos application 
                 </p>
             </div>
             <div className="demoTitle1">
-                <h2>View</h2>
+                <h2>Monitor</h2>
                 <p>
-                    monitor your microservices  
+                    open application to view microservices data 
                 </p>
             </div>
             </div>
 
             <div className="space"></div>
-            <div className="demoTitle1">
+            <div className="demoTitle2">
                 <h2>Video Demonstration</h2>
             <hr id="MainHr"/>
             <div className="videoDemo">

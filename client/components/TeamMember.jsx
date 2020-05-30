@@ -11,11 +11,11 @@ const TeamMember = (props) => {
                     <p>{props.bio}</p>
                 <div className="connectWithMe">
                     <a 
-                    id="connectWithMeSocial" href={props.contactLinks.linkedIn}>LinkedIn </a> 
+                    id="connectWithMeSocial" href={props.contactLinks.linkedIn} target="_blank">LinkedIn </a> 
                     | 
                     <a 
                     id="connectWithMeSocial"
-                    href={props.contactLinks.gitHub}> GitHub</a>
+                    href={props.contactLinks.gitHub} target="_blank"> GitHub</a>
                     </div>
                 </div>
         </div>

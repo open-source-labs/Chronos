@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Condensed&display=swap');
+
 html {
     /* prevent the gradient from repeating past the visible section*/
     min-height: 100%
@@ -6,7 +8,7 @@ html {
 
 body {
     /* background: linear-gradient(180deg, #414245 0%, #030409 100%); */
-    background-color: #191919;
+    background-color: #f5f5f5;
 }
 
 /* stop link default styling */
@@ -19,7 +21,7 @@ a {
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     padding-top: 1.22em;
     font-weight: 200;
-    color: white;
+    color: black;
     float: right;
     width: 60%;
     font-size: medium;
@@ -104,18 +106,19 @@ img:hover {
 
 
 #ChronosMainText {
-    color: rgb(255, 255, 255);
-    font-family: 'Source Sans Pro', sans-serif;
+    color: #8c6af7;
+    font-family: 'Bebas Neue', cursive;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: x-large;
+    font-size: xx-large;
     letter-spacing: 0.9em;
+    margin-right: -.9em;
 }
 
 #ChronosMainTextTwo {
-    color: rgb(255, 255, 255);
-    font-family: 'Source Sans Pro', sans-serif;
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 300;
     display: block;
     margin-left: auto;
@@ -128,8 +131,8 @@ img:hover {
 }
 
 #ChronosMainTextThree {
-    color: rgb(255, 255, 255);
-    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 300;
     margin-left: auto;
     margin-right: auto;
@@ -144,16 +147,17 @@ img:hover {
 
 #menu {
   margin: auto;
-  padding: 10px;
+  padding: 20px;
   width: 70%;
   text-align:center;
+  position: relative;
 }
 
 ul#menuSelections li {
     display:inline;
     text-transform: uppercase;
-    color: rgb(199, 198, 198);
-    font-family: 'Source Sans Pro', sans-serif;
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 300;
     text-align: center;
     letter-spacing: 0.7em;
@@ -162,10 +166,11 @@ ul#menuSelections li {
     /* text fade - in */
     opacity: 0.6;
     transition: 0.3s;
+    position: relative;
 }
 
 ul#menuSelections li#MenuItem:hover {
-    color: rgb(255, 234, 0);
+    color: #8c6af7;
     opacity: 1;
   }
 
@@ -189,7 +194,6 @@ ul#menuSelections li#MenuItem:hover {
     padding-bottom: 5px;
     margin: auto;
     margin-bottom: 3.5em;
-    background-color: #1d1d1d;
     box-shadow: 6px 5px 14px  rgba(0, 0, 0, 0.81);
 }
 
@@ -210,7 +214,7 @@ div.aboutParagraphs {
 
 
 a#connectWithMeSocial:hover {
-    color: rgb(255, 234, 0);
+    color: #F76A8E;
     opacity: 1;
   }
 
@@ -251,10 +255,10 @@ a#connectWithMeSocial:hover {
     height: 4em;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     letter-spacing: .15em;
-    background-color: #1d1d1d;
+    background-color: #FEA137;
     border-bottom: 1px solid black;
-    color: white;
     box-shadow: 6px 5px 14px  rgba(0, 0, 0, 0.81);
+    color: white;
     justify-content: center;
     align-items: center;
     /* background-color: red; */
@@ -307,10 +311,13 @@ a#connectWithMeSocial:hover {
     #aboutParagraphs p {
         /* background-color: pink; */
         margin-bottom: 1em;
-    }
- 
+    }    
+}
 
-    
+
+#lightDemoWrapper  {
+    width: 40%;
+    background-color: black;
 }
 
 @media (min-width: 768px) {
@@ -319,9 +326,57 @@ a#connectWithMeSocial:hover {
     }
     #lightDemoWrapper  {
         width: 40%;
+        background-color: black;
     }
     .DropMenu li {
         display: none;
     }
 }
+
+.dropbtn {
+    display: inline;
+    text-transform: uppercase;
+    background-color: #f5f5f5;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 0.7em;
+    font-size: small;
+    border: none;
+    transition: 0.3s;
+  }
+  
+  .dropbtn:hover {
+      color: #8c6af7;
+      opacity: 1;
+    }
+
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 99;
+    padding:0;
+    left: -24%;
+}
+
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
 
