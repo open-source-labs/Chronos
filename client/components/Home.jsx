@@ -31,6 +31,7 @@ class Home extends React.Component {
                         <p>
                         Chronos also accesses the systems information API to monitor data pertinent to the health of the server on which the service lives, all beautifully displayed and dynamically rendered.
                         </p>
+                    <a className="github-button" href="https://github.com/open-source-labs/Chronos" data-icon="octicon-star" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
                     </div>
                 </div>
             </div>
