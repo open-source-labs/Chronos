@@ -29,7 +29,6 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@jest-runner/electron": "^2.0.3",
     "chart.js": "^2.8.0",
-    "chronos-microservice-debugger": "^1.0.3",
     "d3": "^5.16.0",
     "electron": "^6.1.11",
     "express": "^4.17.1",
