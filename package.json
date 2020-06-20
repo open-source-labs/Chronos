@@ -1,7 +1,7 @@
 {
   "package name": "chronos",
-  "name": "chronos-microservice-debugger4",
-  "version": "3.0.8",
+  "name": "chronos-microservice-debugger5",
+  "version": "4.0.1",
   "description": "Microservice communication and health visualizer.",
   "main": "chronos.js",
   "scripts": {
@@ -23,9 +23,12 @@
   "dependencies": {
     "hpropagate": "0.0.7",
     "mongoose": "^5.9.16",
-    "osx-temperature-sensor": "^1.0.7",
     "pg": "^7.18.2",
-    "systeminformation": "^4.26.4",
+    "systeminformation": "^4.26.4"
+    },
+  "optionalDependencies": {
+    "osx-temperature-sensor": "^1.0.7",
     "wmic": "^0.3.0"
-  }
+
+    } 
 }
