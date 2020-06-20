@@ -49,7 +49,7 @@ chronos.microCom = (userOwnedDB, microserviceName, wantMicroHealth, queryFreq, i
 
     // creates newCommunication object that stores the data from each request
     const newCommunication = {
-      microserviceName,
+      currentMicroservice: microserviceName,
       targetedEndpoint: req.originalUrl,
       reqType: req.method,
       timeSent: Date.now(),
