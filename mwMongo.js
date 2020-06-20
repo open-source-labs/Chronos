@@ -166,7 +166,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 
     const newHealthPoint = {
       timestamp: Date.now(),
-      microserviceName,
+      currentMicroservice:microserviceName,
       cpuCurrentSpeed,
       cpuTemperature,
       cpuCurrentLoadPercentage,
@@ -248,7 +248,7 @@ chronos.microDocker = function (microserviceName, queryFreq) {
           containerRestartCount = data[0].restartCount;
 
           const newContainerInfo = {
-            microserviceName,
+            microserviceName:microserviceName,
             containerName,
             containerId,
             containerPlatform,
