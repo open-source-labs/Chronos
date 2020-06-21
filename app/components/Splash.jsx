@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../stylesheets/splash.css';
+import '../stylesheets/Splash.css';
 
 const Splash = ({ setFirstVisit }) => {
   // Display splash for 3 seconds
@@ -9,10 +9,8 @@ const Splash = ({ setFirstVisit }) => {
 
   return (
     <div id="splash">
-      <img alt="Chronos Logo" src="app/assets/icons/icon.png" id="splashLogo" />
-      <span id="splashText" style={{ fontFamily: 'Baloo Bhaijaan' }}>
-        chronos
-      </span>
+      <img alt="Chronos Logo" src="app/assets/icons/icon.png" />
+      <span>chronos</span>
     </div>
   );
 };
