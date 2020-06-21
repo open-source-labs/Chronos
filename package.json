@@ -44,7 +44,8 @@
     "react-chartjs-2": "^2.9.0",
     "react-dom": "16.10.1",
     "react-plotly.js": "^2.4.0",
-    "ttf-loader": "^1.0.2"
+    "ttf-loader": "^1.0.2",
+    "electron-devtools-installer": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
