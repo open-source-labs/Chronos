@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
 
-.left {
+.container {
   height: 100%;
   color:white;
   font-family: 'Nunito', sans-serif;
   background-color: #24262F;
 }
 
-.leftTopContainer {
+.sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,11 +16,30 @@
   height: 1000px;
 }
 
-.left-bottom {
+.btn-container {
   display: flex;
   flex-direction: column;
   align-content: center;
   grid-auto-columns: 100%;
   align-items: center;
   align-content: center;
+}
+
+.btn-container button {
+  font-family: 'Nunito', sans-serif;
+  background-color: #24262F;
+  margin: 8% auto 0 auto;
+  height: 40px;
+  width: 150px;
+  border: none;
+  font-size: 1.50vh;
+  color: whitesmoke;
+  transition: 0.25s;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn-container button:hover {
+  background-color: #494FEE;
+  color: azure;
+  cursor: pointer;
 }
