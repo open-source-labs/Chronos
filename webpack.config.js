@@ -34,7 +34,8 @@ module.exports = {
   // devServer: {
   //   proxy: {
   //     '/': 'http://localhost:34343',
-  //   },},
+  //   },
+  // },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html',
