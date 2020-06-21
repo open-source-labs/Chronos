@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
+import MicroServiceTraffic from '../charts/microservice-traffic';
 import SpeedChart from '../charts/speed-chart';
 import ProcessesChart from '../charts/processes-chart';
 import TemperatureChart from '../charts/temperature-chart';
@@ -8,9 +9,8 @@ import LatencyChart from '../charts/latency-chart';
 import MemoryChart from '../charts/memory-chart';
 import RouteTrace from '../charts/route-trace';
 // import RouteLocations from '../charts/route-copy';
-import MicroServiceTraffic from '../charts/microservice-traffic';
 import DockerStatsChart from '../charts/docker-stats-chart';
-import '../stylesheets/graphs-container.css';
+import '../stylesheets/GraphsContainer.css';
 
 const GraphsContainer = ({ service }) => {
   const initialData = {
