@@ -1,33 +1,33 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import CommunicationsContext from '../context/OverviewContext';
+import { OverviewContext } from '../context/OverviewContext';
 
-const MicroServiceTraffic = (props) => {
-  const communicationsData = useContext(CommunicationsContext).overviewData;
+const MicroServiceTraffic = props => {
+  const { overviewData } = useContext(OverviewContext);
 
   // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
 
-  if (communicationsData.length > 0 && communicationsData[0]._id) {
+  if (overviewData.length > 0 && overviewData[0]._id) {
     // Sort the communication array from latest to earliest document
-    communicationsData.sort((a, b) => {
+    overviewData.sort((a, b) => {
       if (new Date(a.timeSent) > new Date(b.timeSent)) return 1;
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
     });
 
-    // Iterate over sorted communicationsData array from the end to the beginning
-    for (let i = 0; i < communicationsData.length; i += 1) {
-      // declare a constant element and initialize it as the object at index i of the communicationsData array
-      const element = communicationsData[i];
+    // Iterate over sorted overviewData array from the end to the beginning
+    for (let i = 0; i < overviewData.length; i += 1) {
+      // declare a constant element and initialize it as the object at index i of the overviewData array
+      const element = overviewData[i];
       // Pushes the microservice name into the object
       if (resObj[element.correlatingId]) {
         resObj[element.correlatingId].push(element.currentMicroservice);
       } else resObj[element.correlatingId] = [element.currentMicroservice];
     }
   } else {
-    for (let i = communicationsData.length - 1; i >= 0; i--) {
-      const element = communicationsData[i];
+    for (let i = overviewData.length - 1; i >= 0; i--) {
+      const element = overviewData[i];
       if (resObj[element.correlatingid])
         resObj[element.correlatingid].push(element.currentmicroservice);
       else resObj[element.correlatingid] = [element.currentmicroservice];
@@ -77,37 +77,37 @@ const MicroServiceTraffic = (props) => {
 
   return (
     <Plot
-      data = {[{
-        type: 'bar',
-        x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy'],
-        y: [...serverPingCount, 0, yAxisHeadRoom],
-        fill: 'tozeroy',
-        marker: {'color': '#5C80FF'},
-        mode: 'none',
-        name: 'Times Server Pinged',
-        showlegend: true
-      }]}
-      layout = {
+      data={[
         {
-          height: 400,
-          width: 400,
-          font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito, san serif'
-          },
-          paper_bgcolor: 'white',
-          plot_bgcolor: 'white',
-          legend: {
-            orientation: 'h',
-            xanchor: 'center',
-            x: 0.5,
-            y: 5,
-          },
-          yaxis: { rangemode: 'nonnegative' },
-        }
-      }
-      />
+          type: 'bar',
+          x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy'],
+          y: [...serverPingCount, 0, yAxisHeadRoom],
+          fill: 'tozeroy',
+          marker: { color: '#5C80FF' },
+          mode: 'none',
+          name: 'Times Server Pinged',
+          showlegend: true,
+        },
+      ]}
+      layout={{
+        height: 400,
+        width: 400,
+        font: {
+          color: 'black',
+          size: 15,
+          family: 'Nunito, san serif',
+        },
+        paper_bgcolor: 'white',
+        plot_bgcolor: 'white',
+        legend: {
+          orientation: 'h',
+          xanchor: 'center',
+          x: 0.5,
+          y: 5,
+        },
+        yaxis: { rangemode: 'nonnegative' },
+      }}
+    />
   );
 };
 
