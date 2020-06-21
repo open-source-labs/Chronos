@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import CommunicationsContext from '../context/OverviewContext';
+import { CommunicationsContext } from '../context/CommunicationsContext';
 
-const MicroServiceTraffic = (props) => {
-  const communicationsData = useContext(CommunicationsContext).overviewData;
+const MicroServiceTraffic = props => {
+  const { communicationsData } = useContext(CommunicationsContext);
 
   // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
@@ -77,37 +77,37 @@ const MicroServiceTraffic = (props) => {
 
   return (
     <Plot
-      data = {[{
-        type: 'bar',
-        x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy'],
-        y: [...serverPingCount, 0, yAxisHeadRoom],
-        fill: 'tozeroy',
-        marker: {'color': '#5C80FF'},
-        mode: 'none',
-        name: 'Times Server Pinged',
-        showlegend: true
-      }]}
-      layout = {
+      data={[
         {
-          height: 400,
-          width: 400,
-          font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito, san serif'
-          },
-          paper_bgcolor: 'white',
-          plot_bgcolor: 'white',
-          legend: {
-            orientation: 'h',
-            xanchor: 'center',
-            x: 0.5,
-            y: 5,
-          },
-          yaxis: { rangemode: 'nonnegative' },
-        }
-      }
-      />
+          type: 'bar',
+          x: ['Orders', 'Customers', 'Books', 'Reverse-Proxy'],
+          y: [...serverPingCount, 0, yAxisHeadRoom],
+          fill: 'tozeroy',
+          marker: { color: '#5C80FF' },
+          mode: 'none',
+          name: 'Times Server Pinged',
+          showlegend: true,
+        },
+      ]}
+      layout={{
+        height: 400,
+        width: 400,
+        font: {
+          color: 'black',
+          size: 15,
+          family: 'Nunito, san serif',
+        },
+        paper_bgcolor: 'white',
+        plot_bgcolor: 'white',
+        legend: {
+          orientation: 'h',
+          xanchor: 'center',
+          x: 0.5,
+          y: 5,
+        },
+        yaxis: { rangemode: 'nonnegative' },
+      }}
+    />
   );
 };
 

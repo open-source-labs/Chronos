@@ -44,13 +44,15 @@
     "react-chartjs-2": "^2.9.0",
     "react-dom": "16.10.1",
     "react-plotly.js": "^2.4.0",
-    "ttf-loader": "^1.0.2"
+    "ttf-loader": "^1.0.2",
+    "electron-devtools-installer": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.10.1",
     "@babel/preset-react": "^7.9.4",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "enzyme": "^3.11.0",
