@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { OverviewContext } from '../context/OverviewContext';
-import { DetailsContext } from '../context/DetailsContext';
+import { CommunicationsContext } from '../context/CommunicationsContext';
+import { HealthContext } from '../context/HealthContext';
 import ServiceDetails from './ServiceDetails';
 import '../stylesheets/ServicesList.css';
 
@@ -11,7 +11,7 @@ const ServicesList = ({ index, setDetails }) => {
   const [overviewState, setOverviewState] = useState([]);
 
   // Contexts have data added to them following successful IPC return. Data is later used to create charts.
-  const { setOverviewData } = useContext(OverviewContext);
+  const { setCommunicationsData } = useContext(CommunicationsContext);
 
   useEffect(() => {
     // IPC communication used to initiate query for information on microservices.
@@ -20,18 +20,18 @@ const ServicesList = ({ index, setDetails }) => {
     ipcRenderer.on('overviewResponse', (event, data) => {
       // Adds to state and context.
       setOverviewState(Object.values(JSON.parse(data)));
-      setOverviewData(JSON.parse(data));
+      setCommunicationsData(JSON.parse(data));
     });
   }, []);
 
-  const { setDetailsData } = useContext(DetailsContext);
+  const { setHealthData } = useContext(HealthContext);
 
   const fetchData = microservice => {
     // Fetch all data points
     ipcRenderer.send('detailsRequest', index);
     ipcRenderer.on('detailsResponse', (event, data) => {
-      // Store all data points in DetailsContext
-      setDetailsData(Object.values(JSON.parse(data)));
+      // Store all data points in HealthContext
+      setHealthData(Object.values(JSON.parse(data)));
 
       // Change view in Monitoring Component
       setDetails(<ServiceDetails service={microservice} />);

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
-import DetailsContextProvider from '../context/DetailsContext';
-import OverviewContextProvider from '../context/OverviewContext';
+import HealthContextProvider from '../context/HealthContext';
+import CommunicationsContextProvider from '../context/CommunicationsContext';
 import '../stylesheets/DashboardContainer.css';
 
 const DashboardContainer = () => {
@@ -10,12 +10,12 @@ const DashboardContainer = () => {
 
   return (
     <div className="dashboard">
-      <OverviewContextProvider>
-        <DetailsContextProvider>
+      <CommunicationsContextProvider>
+        <HealthContextProvider>
           <SidebarContainer setDetails={setDetails} />
           <MainContainer details={details} />
-        </DetailsContextProvider>
-      </OverviewContextProvider>
+        </HealthContextProvider>
+      </CommunicationsContextProvider>
     </div>
   );
 };
