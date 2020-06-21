@@ -7,7 +7,13 @@ const Applications = ({ handleClick }) => {
 
   // Create a button for each app
   return applicationsList.map((app, i) => (
-    <button className="app-btn" type="button" id={i} key={i} onClick={handleClick}>
+    <button
+      className="app-btn"
+      type="button"
+      id={i}
+      key={i}
+      onClick={e => handleClick(e.target.id)}
+    >
       {app}
     </button>
   ));
