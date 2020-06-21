@@ -1,21 +1,6 @@
-.dashboardHeader {
+h2 {
   color: white;
-  margin-top: 10%;
+  margin-top: 40px;
   text-align: center;
   font-family: 'Nunito', sans-serif;
-}
-
-.left-top {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.75vh;
-  flex-direction: column;
-  align-content: center;
-  width: 100%;
-  align-items: center;
-  justify-items: center;
-  justify-content: center;
-  max-height: 600px;
-  overflow-y: auto;
 }

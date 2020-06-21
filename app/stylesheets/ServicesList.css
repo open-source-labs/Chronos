@@ -1,4 +1,4 @@
-.servicesBtn {
+.services-btn {
   font-family: 'Nunito', sans-serif;
   background-color: #24262F;
   width: 13em;
@@ -13,7 +13,7 @@
   margin: 0 8px 0 8px;
 }
 
-.servicesBtn:hover {
+.services-btn:hover {
   background-color: #494FEE;
   font-weight: 400;
   box-shadow: #333;
