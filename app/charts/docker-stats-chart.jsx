@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { DetailsContext } from '../context/DetailsContext';
+import { HealthContext } from '../context/HealthContext';
 // import Plot from 'react-plotly.js';
 
 // A table that displays real-time Docker container stats.
 // Just need to pull data from most recent (last) obj in healthData.
 const DockerStatsChart = props => {
-  const { detailsData } = useContext(DetailsContext);
+  const { healthData } = useContext(HealthContext);
 
   // console.log('healthData (in docker-stats-chart):', healthData);
 
@@ -17,15 +17,15 @@ const DockerStatsChart = props => {
   // Scan from the end of the data collection in heathData. (End = most recent)
   // Use the loop to find the index of the data pt that matches current microsrvc (props.service).
   // We are only extracting this most recent data pt.
-  for (let i = detailsData.length - 1; i >= 0; i -= 1) {
+  for (let i = healthData.length - 1; i >= 0; i -= 1) {
     // If user-chosen DB is NoSQL (Mongo):
-    if (detailsData[i].currentMicroservice === props.service) {
+    if (healthData[i].currentMicroservice === props.service) {
       index = i;
       // db = 'mongo';
       break;
     }
     // If SQL:
-    if (detailsData[i].currentmicroservice === props.service) {
+    if (healthData[i].currentmicroservice === props.service) {
       index = i;
       // db = 'sql';
       break;
@@ -34,37 +34,37 @@ const DockerStatsChart = props => {
 
   // Note: The difference btw MongoDB and pSQL is whether a stat title is camelCased (mongo = yes, psql = no).
   // Extract Docker-related MongoDB data (if exists) and save to dockerStats obj.
-  if (detailsData[index].containerId) {
+  if (healthData[index].containerId) {
     dockerStats = {
-      'Containerized service': detailsData[index].currentMicroservice,
-      'Container ID': detailsData[index].containerId.slice(0, 7) + '[...]',
-      'CPU usage %': parseFloat(detailsData[index].containerCpuPercent).toFixed(2) + '%',
-      'Mem usage %': parseFloat(detailsData[index].containerMemPercent).toFixed(2) + '%',
-      'Mem limit (Mb)': parseFloat(detailsData[index].containerMemLimit / 1000000).toFixed(2),
-      'Mem usage (Mb)': parseFloat(detailsData[index].containerMemUsage / 1000000).toFixed(2),
-      'Network I/O - Received (Kb)': parseFloat(detailsData[index].networkReceived / 1000).toFixed(
+      'Containerized service': healthData[index].currentMicroservice,
+      'Container ID': healthData[index].containerId.slice(0, 7) + '[...]',
+      'CPU usage %': parseFloat(healthData[index].containerCpuPercent).toFixed(2) + '%',
+      'Mem usage %': parseFloat(healthData[index].containerMemPercent).toFixed(2) + '%',
+      'Mem limit (Mb)': parseFloat(healthData[index].containerMemLimit / 1000000).toFixed(2),
+      'Mem usage (Mb)': parseFloat(healthData[index].containerMemUsage / 1000000).toFixed(2),
+      'Network I/O - Received (Kb)': parseFloat(healthData[index].networkReceived / 1000).toFixed(
         2
       ),
-      'Network I/O - Sent (Kb)': parseFloat(detailsData[index].networkSent / 1000).toFixed(2),
-      'Process count': detailsData[index].containerProcessCount,
-      'Restart count': detailsData[index].containerRestartCount,
+      'Network I/O - Sent (Kb)': parseFloat(healthData[index].networkSent / 1000).toFixed(2),
+      'Process count': healthData[index].containerProcessCount,
+      'Restart count': healthData[index].containerRestartCount,
     };
   }
   // Extract Docker-related SQL data (if exists) and save to dockerStats obj.
-  if (detailsData[index].containerid) {
+  if (healthData[index].containerid) {
     dockerStats = {
-      'Containerized service': detailsData[index].currentmicroservice,
-      'Container ID': detailsData[index].containerid.slice(0, 7) + '[...]',
-      'CPU usage %': parseFloat(detailsData[index].containercpupercent).toFixed(2) + '%',
-      'Mem usage %': parseFloat(detailsData[index].containermempercent).toFixed(2) + '%',
-      'Mem limit (Mb)': parseFloat(detailsData[index].containermemlimit / 1000000).toFixed(2),
-      'Mem usage (Mb)': parseFloat(detailsData[index].containermemusage / 1000000).toFixed(2),
-      'Network I/O - Received (Kb)': parseFloat(detailsData[index].networkreceived / 1000).toFixed(
+      'Containerized service': healthData[index].currentmicroservice,
+      'Container ID': healthData[index].containerid.slice(0, 7) + '[...]',
+      'CPU usage %': parseFloat(healthData[index].containercpupercent).toFixed(2) + '%',
+      'Mem usage %': parseFloat(healthData[index].containermempercent).toFixed(2) + '%',
+      'Mem limit (Mb)': parseFloat(healthData[index].containermemlimit / 1000000).toFixed(2),
+      'Mem usage (Mb)': parseFloat(healthData[index].containermemusage / 1000000).toFixed(2),
+      'Network I/O - Received (Kb)': parseFloat(healthData[index].networkreceived / 1000).toFixed(
         2
       ),
-      'Network I/O - Sent (Kb)': parseFloat(detailsData[index].networksent / 1000).toFixed(2),
-      'Process count': detailsData[index].containerprocesscount,
-      'Restart count': detailsData[index].containerrestartcount,
+      'Network I/O - Sent (Kb)': parseFloat(healthData[index].networksent / 1000).toFixed(2),
+      'Process count': healthData[index].containerprocesscount,
+      'Restart count': healthData[index].containerrestartcount,
     };
   }
 

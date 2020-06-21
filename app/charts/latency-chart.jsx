@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { DetailsContext } from '../context/DetailsContext';
+import { HealthContext } from '../context/HealthContext';
 
 const LatencyChart = ({ service }) => {
-  const { detailsData } = useContext(DetailsContext);
+  const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
     const xAxis = [];
     const yAxis = [];
 
-    for (let i = 0; i < detailsData.length; i++) {
-      const element = detailsData[i];
+    for (let i = 0; i < healthData.length; i++) {
+      const element = healthData[i];
       if (element.currentmicroservice === service || element.currentMicroservice === service) {
         xAxis.push(i);
         yAxis.push(element.latency);

@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { DetailsContext } from '../context/DetailsContext';
+import { HealthContext } from '../context/HealthContext';
 
 const TemperatureChart = props => {
-  const { detailsData } = useContext(DetailsContext);
+  const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
     const yAxis = [];
     const xAxis = [];
 
-    for (let i = 0; i < detailsData.length; i += 1) {
-      const element = detailsData[i];
+    for (let i = 0; i < healthData.length; i += 1) {
+      const element = healthData[i];
       // If Mongo
       if (element.currentMicroservice === props.service && element.cpuTemperature) {
         yAxis.push(i);

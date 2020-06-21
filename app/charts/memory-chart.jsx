@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { DetailsContext } from '../context/DetailsContext';
 import Plot from 'react-plotly.js';
+import { HealthContext } from '../context/HealthContext';
 
 const MemoryChart = props => {
-  const { detailsData } = useContext(DetailsContext);
+  const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
     const xAxis = [];
@@ -12,22 +12,22 @@ const MemoryChart = props => {
     const active = [];
     const total = [];
 
-    for (let i = 0; i < detailsData.length; i += 1) {
+    for (let i = 0; i < healthData.length; i += 1) {
       xAxis.push(i);
       // If Mongo
-      if (detailsData[i].currentMicroservice === props.service) {
-        free.push(detailsData[i].freeMemory);
-        active.push(detailsData[i].activeMemory);
-        used.push(detailsData[i].usedMemory);
-        total.push(detailsData[i].totalMemory);
+      if (healthData[i].currentMicroservice === props.service) {
+        free.push(healthData[i].freeMemory);
+        active.push(healthData[i].activeMemory);
+        used.push(healthData[i].usedMemory);
+        total.push(healthData[i].totalMemory);
       }
 
       // If SQL
-      if (detailsData[i].currentmicroservice === props.service) {
-        free.push(detailsData[i].freememory);
-        active.push(detailsData[i].activememory);
-        used.push(detailsData[i].usedmemory);
-        total.push(detailsData[i].totalmemory);
+      if (healthData[i].currentmicroservice === props.service) {
+        free.push(healthData[i].freememory);
+        active.push(healthData[i].activememory);
+        used.push(healthData[i].usedmemory);
+        total.push(healthData[i].totalmemory);
       }
     }
 

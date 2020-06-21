@@ -1,33 +1,33 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { OverviewContext } from '../context/OverviewContext';
+import { CommunicationsContext } from '../context/CommunicationsContext';
 
 const MicroServiceTraffic = props => {
-  const { overviewData } = useContext(OverviewContext);
+  const { communicationsData } = useContext(CommunicationsContext);
 
   // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
 
-  if (overviewData.length > 0 && overviewData[0]._id) {
+  if (communicationsData.length > 0 && communicationsData[0]._id) {
     // Sort the communication array from latest to earliest document
-    overviewData.sort((a, b) => {
+    communicationsData.sort((a, b) => {
       if (new Date(a.timeSent) > new Date(b.timeSent)) return 1;
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
     });
 
-    // Iterate over sorted overviewData array from the end to the beginning
-    for (let i = 0; i < overviewData.length; i += 1) {
-      // declare a constant element and initialize it as the object at index i of the overviewData array
-      const element = overviewData[i];
+    // Iterate over sorted communicationsData array from the end to the beginning
+    for (let i = 0; i < communicationsData.length; i += 1) {
+      // declare a constant element and initialize it as the object at index i of the communicationsData array
+      const element = communicationsData[i];
       // Pushes the microservice name into the object
       if (resObj[element.correlatingId]) {
         resObj[element.correlatingId].push(element.currentMicroservice);
       } else resObj[element.correlatingId] = [element.currentMicroservice];
     }
   } else {
-    for (let i = overviewData.length - 1; i >= 0; i--) {
-      const element = overviewData[i];
+    for (let i = communicationsData.length - 1; i >= 0; i--) {
+      const element = communicationsData[i];
       if (resObj[element.correlatingid])
         resObj[element.correlatingid].push(element.currentmicroservice);
       else resObj[element.correlatingid] = [element.currentmicroservice];

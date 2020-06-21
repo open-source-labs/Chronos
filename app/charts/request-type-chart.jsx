@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { OverviewContext } from '../context/OverviewContext';
+import { CommunicationsContext } from '../context/CommunicationsContext';
 
 const RequestTypesChart = ({ service }) => {
-  const { overviewData } = useContext(OverviewContext);
+  const { communicationsData } = useContext(CommunicationsContext);
 
   const createRequestChart = () => {
     const requestObj = {
@@ -15,8 +15,8 @@ const RequestTypesChart = ({ service }) => {
       PUT: 0,
     };
 
-    for (let i = 0; i < overviewData.length; i += 1) {
-      const element = overviewData[i];
+    for (let i = 0; i < communicationsData.length; i += 1) {
+      const element = communicationsData[i];
       // if Mongo
       if (element.currentMicroservice === service && element.reqType in requestObj)
         requestObj[element.reqType] += 1;
