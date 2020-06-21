@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["Demo","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"],["Chronos","MongoDB","mongodb+srv://tdwolf6:password16@cluster0-0xvd7.gcp.mongodb.net/Chronos?retryWrites=true&w=majority"]],"splash":false}
+{"setupRequired":false,"services":[["Demo","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":true}
