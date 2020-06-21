@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import HealthContext from '../context/DetailsContext';
+import { DetailsContext } from '../context/DetailsContext';
 
 const SpeedChart = props => {
-  const healthData = useContext(HealthContext).detailData;
+  const { detailsData } = useContext(DetailsContext);
 
   const createChart = () => {
     // Number from 0-1990
@@ -11,22 +11,16 @@ const SpeedChart = props => {
     // For MBS: 2.4hz, 2.0hz, etc.
     const yAxis = [];
 
-    for (let i = 0; i < healthData.length; i += 2) {
-      const element = healthData[i];
+    for (let i = 0; i < detailsData.length; i += 2) {
+      const element = detailsData[i];
       // If using a SQL Database
-      if (
-        element.currentmicroservice === props.service &&
-        element.cpucurrentspeed
-      ) {
+      if (element.currentmicroservice === props.service && element.cpucurrentspeed) {
         xAxis.push(i);
         yAxis.push(element.cpucurrentspeed);
       }
 
       // If using a Mongo Database
-      if (
-        element.currentMicroservice === props.service &&
-        element.cpuCurrentSpeed
-      ) {
+      if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
         xAxis.push(i);
         yAxis.push(element.cpuCurrentSpeed);
       }
@@ -40,9 +34,9 @@ const SpeedChart = props => {
             x: xAxis,
             y: yAxis,
             type: 'scatter',
-            mode: 'lines'
+            mode: 'lines',
           },
-          { label: 'mbps' }
+          { label: 'mbps' },
         ]}
         layout={{
           title: 'Speed Chart',
@@ -51,18 +45,18 @@ const SpeedChart = props => {
           font: {
             color: 'black',
             size: 13,
-            family: 'Nunito, san serif'
+            family: 'Nunito, san serif',
           },
           xaxis: {
             title: 'Service',
             tickmode: 'linear',
             tick0: 50,
             dtick: 200,
-            nticks: 2000
+            nticks: 2000,
           },
           yaxis: {
             range: [0, yAxis],
-            title: 'Data Rates (MBPS)'
+            title: 'Data Rates (MBPS)',
           },
           paper_bgcolor: 'white',
           showlegend: true,
@@ -70,8 +64,8 @@ const SpeedChart = props => {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
-            y: 5
-          }
+            y: 5,
+          },
         }}
       />
     );

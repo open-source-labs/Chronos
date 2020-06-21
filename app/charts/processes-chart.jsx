@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import HealthContext from '../context/DetailsContext';
+import { DetailsContext } from '../context/DetailsContext';
 
-const ProcessesChart = (props) => {
-  const healthData = useContext(HealthContext).detailData;
+const ProcessesChart = props => {
+  const { detailsData } = useContext(DetailsContext);
 
   const createChart = () => {
     const communicationLabel = [];
@@ -12,8 +12,8 @@ const ProcessesChart = (props) => {
     const blockedProcesses = [];
     const sleepingProcesses = [];
 
-    for (let i = 0; i < healthData.length; i += 1) {
-      const element = healthData[i];
+    for (let i = 0; i < detailsData.length; i += 1) {
+      const element = detailsData[i];
       // If using a SQL Database
       if (element.currentmicroservice === props.service) {
         communicationLabel.push(i);
@@ -34,52 +34,52 @@ const ProcessesChart = (props) => {
 
     return (
       <Plot
-        data = {[
+        data={[
           {
             type: 'scatter',
-            x: {autorange: true},
+            x: { autorange: true },
             y: runningProcesses,
             mode: 'markers',
             rangemode: 'nonnegative',
             name: 'Running Processes',
             marker: {
               color: '#00d3f2',
-              size: 3
-            }
+              size: 3,
+            },
           },
           {
             type: 'scatter',
-            x: {autorange: true},
+            x: { autorange: true },
             y: blockedProcesses,
             mode: 'markers',
             rangemode: 'nonnegative',
             name: 'Blocked Processes',
             marker: {
               color: '#00eda0',
-              size: 3
-            }
+              size: 3,
+            },
           },
-          { 
+          {
             type: 'scatter',
-            x: {autorange: true},
+            x: { autorange: true },
             y: sleepingProcesses,
             mode: 'markers',
             rangemode: 'nonnegative',
             name: 'Sleeping Processes',
             marker: {
               color: '#4a4eee',
-              size: 3
-            }
+              size: 3,
+            },
           },
-          {label: communicationLabel},
+          { label: communicationLabel },
         ]}
-        layout = {{
+        layout={{
           height: 400,
           width: 400,
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif'
+            family: 'Nunito, san serif',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -87,13 +87,13 @@ const ProcessesChart = (props) => {
             itemsizing: 'constant',
             orientation: 'h',
             xanchor: 'center',
-            x: .5
+            x: 0.5,
           },
         }}
       />
-    )
+    );
   };
-    
+
   return <div className="processesChart">{createChart()}</div>;
 };
 

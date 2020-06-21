@@ -1,14 +1,11 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useContext } from 'react';
-import CommunicationsContext from '../context/OverviewContext';
-import '../stylesheets/routes.css';
+import OverviewContext from '../context/OverviewContext';
 
-const RouteLocations = (props) => {
-  const communicationsData = useContext(CommunicationsContext).overviewData;
-  // console.log('commData (from overviewContxt):', communicationsData);
-  
-  // initialize an empty object resObj. 
-  // This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. 
+const RouteLocations = props => {
+  const communicationsData = useContext(OverviewContext).overviewData;
+
+  // initialize an empty object resObj.
+  // This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys.
   // The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
 
@@ -20,7 +17,6 @@ const RouteLocations = (props) => {
       if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
       return 0;
     });
-    // console.log('commData (AFTER sorting):', communicationsData);
 
     // Iterate over sorted array to build up resObj.
     for (let i = 0; i < communicationsData.length; i += 1) {
@@ -29,46 +25,48 @@ const RouteLocations = (props) => {
       // Pushes the microservice name & timeSent into the resObj.
       // Data objects w/ same corrId will be grouped in a same array.
       if (resObj[element.correlatingId]) {
-        resObj[element.correlatingId].push({ 
+        resObj[element.correlatingId].push({
           microservice_name: element.currentMicroservice,
-          timeSent: element.timeSent
+          timeSent: element.timeSent,
         });
       } else {
         // The value that corresp. to the correlationId key is an array of obj containing name and time data.
-          // Each obj is a data point.
-        resObj[element.correlatingId] = [{ 
-          microservice_name: element.currentMicroservice,
-          timeSent: element.timeSent
-        }];
+        // Each obj is a data point.
+        resObj[element.correlatingId] = [
+          {
+            microservice_name: element.currentMicroservice,
+            timeSent: element.timeSent,
+          },
+        ];
       }
     }
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
       const element = communicationsData[i];
       if (resObj[element.correlatingId]) {
-        resObj[element.correlatingId].push({ 
+        resObj[element.correlatingId].push({
           microservice_name: element.currentMicroservice,
-          timeSent: element.timeSent
+          timeSent: element.timeSent,
         });
       } else {
         // The value that corresp. to the correlationId key is an array of obj containing name and time data.
-          // Each obj is a data point.
-        resObj[element.correlatingId] = [{ 
-          microservice_name: element.currentMicroservice,
-          timeSent: element.timeSent
-        }];
+        // Each obj is a data point.
+        resObj[element.correlatingId] = [
+          {
+            microservice_name: element.currentMicroservice,
+            timeSent: element.timeSent,
+          },
+        ];
       }
       // initializing the object with the first microservice
     }
   }
 
   // use Object.values to destructure locations
-    // Each elem in tracePoints is an array of arrays, which contain objects (each of which is a data point).
-    // Filter the array so that only subarrays w/ len > 1 are kept.
-      // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
+  // Each elem in tracePoints is an array of arrays, which contain objects (each of which is a data point).
+  // Filter the array so that only subarrays w/ len > 1 are kept.
+  // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
-  // console.log('tracePoints arr:', tracePoints);
-
 
   // Construct an obj that stores data necessary for calculating avg speed of requests btw 2 pts.
   const avgDataObj = {};
@@ -77,7 +75,7 @@ const RouteLocations = (props) => {
   for (let i = 0; i < tracePoints.length; i += 1) {
     let subArr = tracePoints[i];
     for (let j = 0; j < subArr.length; j += 1) {
-      let currDataObj = subArr[j]; 
+      let currDataObj = subArr[j];
       if (j < subArr.length - 1) {
         let nextDataObj = subArr[j + 1];
         let routeName = `${currDataObj.microservice_name}-${nextDataObj.microservice_name}`;
@@ -89,8 +87,7 @@ const RouteLocations = (props) => {
         let timeDiff = new Date(nextDataObj.timeSent) - new Date(currDataObj.timeSent);
         if (!avgDataObj[`${routeName}TotalTime`]) {
           avgDataObj[`${routeName}TotalTime`] = timeDiff;
-        } 
-        else avgDataObj[`${routeName}TotalTime`] += timeDiff;
+        } else avgDataObj[`${routeName}TotalTime`] += timeDiff;
 
         // Key/value that calculates AVG TIME of travel (dividing the 2 values above)
         let avgTime = avgDataObj[`${routeName}TotalTime`] / avgDataObj[`${routeName}Count`];
@@ -98,22 +95,20 @@ const RouteLocations = (props) => {
       }
     }
   }
-  /** End of nested loops */
-  console.log('avgDataObj:', avgDataObj);
-  /****************************************/
 
   // Array of <divs> to be rendered. Each <div> contains route name and time difference.
   const resArray = [];
 
   const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
-  console.log('position for tracePoints:', position);
-  
+
   // iterate over ONE elem in tracePoints, creating a <div> for every data obj.
   for (let i = 0; i < tracePoints[position].length; i += 1) {
     if (i !== tracePoints[position].length - 1) {
       // Calc time difference (when not at the end of array):
-        // Convert time str to Date obj w/ new Date(), then get the time difference.
-      const timeDiff = new Date(tracePoints[position][i + 1].timeSent) - new Date(tracePoints[position][i].timeSent);
+      // Convert time str to Date obj w/ new Date(), then get the time difference.
+      const timeDiff =
+        new Date(tracePoints[position][i + 1].timeSent) -
+        new Date(tracePoints[position][i].timeSent);
       resArray.push(
         <div className="RouteCircle" key={i}>
           {/* Altering this <p> so it displays only microsvc_name */}
@@ -125,7 +120,7 @@ const RouteLocations = (props) => {
             {/* Time: {tracePoints[position][i].timeSent} */}
             Time elapsed: {timeDiff} ms
           </p>
-        </div>,
+        </div>
       );
     } else {
       // If at the end of array, don't push the timeDiff <p> to resArray (only push a <p> w/ name).
@@ -134,7 +129,7 @@ const RouteLocations = (props) => {
           <p id="routeText">
             Point {i + 1}: {tracePoints[position][i].microservice_name}
           </p>
-        </div>,
+        </div>
       );
     }
   }
@@ -152,7 +147,9 @@ const RouteLocations = (props) => {
   // console.log('avgData (array):', avgData);
 
   /**** Making CATEGORIZED lists of avg speed-related data. ********/
-  const avgTime = [], totalTime = [], count = [];
+  const avgTime = [],
+    totalTime = [],
+    count = [];
   let i = 0; // For unique keys for each <span> //
 
   for (const key in avgDataObj) {
@@ -163,21 +160,21 @@ const RouteLocations = (props) => {
         <span className="avgDataDetails" key={i}>
           {key.slice(0, -7)}: {avgDataObj[key]} ms
         </span>
-      )
+      );
     }
     if (key.endsWith('TotalTime')) {
       totalTime.push(
         <span className="avgDataDetails" key={i}>
           {key.slice(0, -9)}: {avgDataObj[key]} ms
         </span>
-      )
+      );
     }
     if (key.endsWith('Count')) {
       count.push(
         <span className="avgDataDetails" key={i}>
           {key.slice(0, -5)}: {avgDataObj[key]}
         </span>
-      )
+      );
     }
   }
   // console.log('avgTime:', avgTime);
