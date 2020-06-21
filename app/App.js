@@ -9,6 +9,8 @@ const App = () => {
 
   // HARD CODED for development
   const [firstVisit, setFirstVisit] = useState(false);
+
+  // UNCOMMENT this for splash demo
   // const [firstVisit, setFirstVisit] = useState(true);
 
   // Splash image on startup
