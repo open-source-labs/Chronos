@@ -28,6 +28,7 @@
     "no-alert": "off",
     "no-plusplus": "off",
     "no-new": "off",
-    "react/button-has-type": "off"
+    "react/button-has-type": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }
