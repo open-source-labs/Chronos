@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { DetailsContext } from '../context/DetailsContext';
+import { HealthContext } from '../context/HealthContext';
 
 const SpeedChart = props => {
-  const { detailsData } = useContext(DetailsContext);
+  const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
     // Number from 0-1990
@@ -11,8 +11,8 @@ const SpeedChart = props => {
     // For MBS: 2.4hz, 2.0hz, etc.
     const yAxis = [];
 
-    for (let i = 0; i < detailsData.length; i += 2) {
-      const element = detailsData[i];
+    for (let i = 0; i < healthData.length; i += 2) {
+      const element = healthData[i];
       // If using a SQL Database
       if (element.currentmicroservice === props.service && element.cpucurrentspeed) {
         xAxis.push(i);
