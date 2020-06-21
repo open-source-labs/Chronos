@@ -1,10 +1,8 @@
 import React from 'react';
-import '../stylesheets/monitoring.css'
+import '../stylesheets/monitoring.css';
 
-const MonitoringContainer = (props) => {
-  const { detailsSelected } = props;
-
-  return <>{detailsSelected || null}</>;
-};
+// Details is the current microservice being displayed
+// This is set in Sidebar Container and Services List Component
+const MonitoringContainer = ({ details }) => <>{details || null}</>;
 
 export default MonitoringContainer;

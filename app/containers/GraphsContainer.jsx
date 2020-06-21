@@ -14,15 +14,10 @@ import '../stylesheets/graphs.css';
 
 let vis;
 
-const GraphsContainer = (props) => {
+const GraphsContainer = props => {
   const { service } = props;
   const initialData = {
-    nodes: [
-      { id: 'reverse-proxy' },
-      { id: 'books' },
-      { id: 'customers' },
-      { id: 'orders' },
-    ],
+    nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
     links: [
       { source: 'reverse-proxy', target: 'books' },
       { source: 'reverse-proxy', target: 'customers' },
@@ -40,7 +35,7 @@ const GraphsContainer = (props) => {
   const canvas = useRef(null);
 
   useEffect(fetchData, []);
-  useEffect(initVis, [ data ]);
+  useEffect(initVis, [data]);
 
   function fetchData() {
     Promise.resolve().then(() => setData(Object.values(initialData)));
@@ -57,10 +52,10 @@ const GraphsContainer = (props) => {
       vis = new RouteTrace(canvas.current, d3Props);
     }
   }
-  
+
   return (
     <div className="graphsGrid">
-      <div className='routes'>
+      <div className="routes">
         <div ref={canvas} />
       </div>
       <SpeedChart service={service} />
@@ -71,7 +66,7 @@ const GraphsContainer = (props) => {
       <LatencyChart service={service} />
       <MicroServiceTraffic service={service} />
       <MemoryChart service={service} />
-      <DockerStatsChart service={service}/>
+      <DockerStatsChart service={service} />
     </div>
   );
 };

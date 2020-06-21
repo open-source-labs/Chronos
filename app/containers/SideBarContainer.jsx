@@ -1,17 +1,14 @@
 import React, { useState, useContext } from 'react';
-import Header from '../AComp/SidebarHeader.jsx';
-import Extras from '../AComp/Extras.jsx';
+import Header from '../AComp/SidebarHeader';
 import SetupContext from '../context/SetupContext';
 import DashboardContext from '../context/DashboardContext';
-import Microservices from '../AComp/Microservices.jsx';
-import ServicesList from '../AComp/ServicesList.jsx';
-import AddService from '../components/AddService.jsx';
-import DeleteService from '../components/DeleteService.jsx';
+import Microservices from '../AComp/Microservices';
+import ServicesList from '../AComp/ServicesList';
+import AddService from '../components/AddService';
+import DeleteService from '../components/DeleteService';
 import '../stylesheets/sidebar.css';
 
-const SidebarContainer = (props) => {
-  const { setDetails } = props;
-
+const SidebarContainer = ({ setDetails }) => {
   // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
 
@@ -22,53 +19,37 @@ const SidebarContainer = (props) => {
   const [index, setIndex] = useState();
 
   // Checking to see if service clicked to display Microservices
-  const [isclicked, setClicked] = useState('false');
+  const [clicked, setClicked] = useState(false);
 
-  // Helper function to check if Clicked toggles
-  const clickToggle = () => {
-    if (isclicked === 'true') setClicked('false');
-    else setClicked('true');
-  };
   // Click function for Services
-  const ServicesClick = (e) => {
-    clickToggle(e);
+  const ServicesClick = e => {
+    setClicked(!clicked);
     setIndex(e.target.id);
     setDetails(null);
   };
-  // Click function for AddService
   const AddClick = () => {
     setup.setupRequired = setup.toggleSetup(false);
     setDetails(<AddService />);
   };
 
-  // Click fn for Delete Service
-  const DeleteClick = () => {
-    setDetails(<DeleteService />);
-  };
-
-  // Click fn for Refresh
-  const RefreshClick = () => {
-    location.reload();
-  };
-
   return (
-    <div className="left">
-      <div className="leftTopContainer">
+    <div className="container">
+      <div className="sidebar">
         <Header />
-        <Microservices
-          context={serviceList}
-          Click={ServicesClick}
-          isclicked={isclicked}
-          />
-        {isclicked === 'true' ? (
-          <ServicesList index={index} setDetails={setDetails} />
-          ) : null}
-        <Extras
-          AddClick={AddClick}
-          DeleteClick={DeleteClick}
-          RefreshClick={RefreshClick}
-          />
-          </div>
+        <Microservices context={serviceList} Click={ServicesClick} clicked={clicked} />
+        {clicked && <ServicesList index={index} setDetails={setDetails} />}
+        <div className="btn-container">
+          <button type="button" onClick={AddClick}>
+            +
+          </button>
+          <button type="button" onClick={() => setDetails(<DeleteService />)}>
+            -
+          </button>
+          <button type="button" onClick={() => location.reload()}>
+            Refresh
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

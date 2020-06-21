@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Monitoring from './MonitoringContainer.jsx';
-import SidebarContainer from './SideBarContainer.jsx';
+import MonitoringContainer from './MonitoringContainer';
+import SidebarContainer from './SidebarContainer';
 import '../stylesheets/dashboard.css';
 
 const DashboardContainer = () => {
-  const [detailsSelected, setDetails] = useState();
+  const [details, setDetails] = useState();
 
   return (
-    <div className="MainDashboardContainer">
+    <div className="dashboard">
       <SidebarContainer setDetails={setDetails} />
-      <Monitoring detailsSelected={detailsSelected} />
+      <MonitoringContainer details={details} />
     </div>
   );
 };
