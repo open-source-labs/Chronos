@@ -1,18 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
 
-#addServiceLogo {
-  margin-bottom: 0px;
+*:focus {
+  outline: none;
 }
 
-form {
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  width: 100%;
-  font-size: 2vh;
-}
-
-.mainContainer {
+.add-container {
   font-family: 'Nunito', sans-serif;
   display: grid;
   justify-content: center;
@@ -20,25 +12,32 @@ form {
   align-self: center;
 }
 
-#addServiceLogo {
+/* Header */
+
+.add-container h2 {
+  text-align: center;
+  margin-top: 0%;
+  font-weight: 300;
+  font-size: 5.5vh;
+  margin-bottom: 8vh;
+  color: #333;
+}
+
+.add-container form {
   display: grid;
   justify-items: center;
-  justify-content: center;
-}
-
-.inputForm {
+  align-items: center;
+  width: 100%;
+  font-size: 2vh;
   color: black;
 }
 
-.dbType {
-  color: black;
-}
+/* Text input */
 
-.userInput {
+.add-container form input {
   width: 70%;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 45px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
   height: 50%;
   font-size: 2vh;
@@ -52,7 +51,20 @@ form {
   color: rgb(201, 201, 201);
 }
 
-.submitBtn {
+/* Select */
+.add-container form select {
+  display: block;
+  width: 30%;
+  font-size: 1.75vh;
+  font-weight: 400;
+  border: 2px solid black;
+  margin-top: 1%;
+  margin-bottom: 2.5%;
+}
+
+/* Submit button */
+
+.add-container form button {
   margin-top: 6%;
   margin-bottom: 10%;
   width: 50%;
@@ -62,31 +74,13 @@ form {
   border: 1px solid rgb(0, 0, 0);
   background-color: black;
   transition: 0.25s;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
-.submitBtn:hover {
+.add-container form button:hover {
   font-size: 2vh;
   cursor: pointer;
   border-radius: 10px;
   color: white;
-  background-color: #494FEE;
-}
-
-.signUpHeader {
-  text-align: center;
-  margin-top: 0%;
-  font-weight: 300;
-  font-size: 5.5vh;
-  margin-bottom: 8vh;
-}
-
-select {
-  display: block;
-  width: 30%;
-  font-size: 1.75vh;
-  font-weight: 400;
-  border: 2px solid black;
-  margin-top: 1%;
-  margin-bottom: 2.5%;
+  background-color: #494fee;
 }

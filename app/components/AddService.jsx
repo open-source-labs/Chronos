@@ -38,9 +38,9 @@ const AddService = () => {
 
   const { database, URI, name } = field;
   return (
-    <div className="mainContainer">
-      <h2 className="signUpHeader">Enter Your Database Information</h2>
-      <form className="inputForm" onSubmit={handleSubmit}>
+    <div className="add-container">
+      <h2>Enter Your Database Information</h2>
+      <form onSubmit={handleSubmit}>
         Database Type:
         <select name="database" value={database} onChange={e => handleChange(e.target)}>
           <option value="SQL">SQL</option>
@@ -48,7 +48,6 @@ const AddService = () => {
         </select>
         Database URI:
         <input
-          className="userInput"
           name="URI"
           value={URI}
           onChange={e => handleChange(e.target)}
@@ -57,7 +56,6 @@ const AddService = () => {
         />
         Database Name:
         <input
-          className="userInput"
           type="text"
           name="name"
           value={name}
