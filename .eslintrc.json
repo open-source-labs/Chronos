@@ -27,6 +27,8 @@
       }
     ],
     "react/prop-types": "off",
-    "no-console": "warn"
+    "no-console": "warn",
+    "react/jsx-filename-extension": "off",
+    "no-alert": "off"
   }
 }
