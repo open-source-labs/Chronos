@@ -12,7 +12,10 @@ module.exports = {
       { test: /\.jsx?/, use: 'babel-loader' },
       { test: /\.(css)$/, use: ['style-loader', 'css-loader'] },
       { test: /\.(png|jp(e*)g|svg)$/, use: 'url-loader' },
-      { test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
+      {
+        test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader?limit=100000',
+      },
       {
         test: /\.ttf$/,
         enforce: 'post',
@@ -37,4 +40,7 @@ module.exports = {
       template: 'app/index.html',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
 };
