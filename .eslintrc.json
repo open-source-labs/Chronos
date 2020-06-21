@@ -27,6 +27,7 @@
     "react/jsx-filename-extension": "off",
     "no-alert": "off",
     "no-plusplus": "off",
-    "no-new": "off"
+    "no-new": "off",
+    "react/button-has-type": "off"
   }
 }
