@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import MonitoringContainer from './MonitoringContainer';
+import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
+import DetailsContextProvider from '../context/DetailsContext';
+import OverviewContextProvider from '../context/OverviewContext';
 import '../stylesheets/dashboard.css';
 
 const DashboardContainer = () => {
@@ -8,8 +10,12 @@ const DashboardContainer = () => {
 
   return (
     <div className="dashboard">
-      <SidebarContainer setDetails={setDetails} />
-      <MonitoringContainer details={details} />
+      <OverviewContextProvider>
+        <DetailsContextProvider>
+          <SidebarContainer setDetails={setDetails} />
+          <MainContainer details={details} />
+        </DetailsContextProvider>
+      </OverviewContextProvider>
     </div>
   );
 };
