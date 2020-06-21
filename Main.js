@@ -1,11 +1,19 @@
 // node requirements
 const { dialog, app, BrowserWindow, ipcMain } = require('electron');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const fs = require('fs');
 const path = require('path');
 const connectSQL = require('./model/sql-connect');
 const connectMongoose = require('./model/mongoose-connect');
 const CommunicationSchema = require('./model/mongoose-communicatonSchema');
 const HealthInfoSchema = require('./model/mongoose-healthInfoSchema');
+
+// Install React Dev Tools
+app.whenReady().then(() => {
+  installExtension(REACT_DEVELOPER_TOOLS)
+    .then(name => console.log(`Added Extension:  ${name}`))
+    .catch(err => console.log('An error occurred: ', err));
+});
 
 // declare a variable pool for SQL connection
 let pool;
@@ -46,11 +54,9 @@ function createWindow() {
     );
     // reassign state.splash
     state.splash = true;
-    fs.writeFileSync(
-      path.resolve(__dirname, './user/settings.json'),
-      JSON.stringify(state),
-      { encoding: 'UTF-8' }
-    );
+    fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
+      encoding: 'UTF-8',
+    });
     win = null;
   });
 }
@@ -69,11 +75,9 @@ app.on('window-all-closed', () => {
   );
   // reassign state.splash
   state.splash = true;
-  fs.writeFileSync(
-    path.resolve(__dirname, './user/settings.json'),
-    JSON.stringify(state),
-    { encoding: 'UTF-8' }
-  );
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
+    encoding: 'UTF-8',
+  });
   // process platform is a property that return a string identifying the OS platform on which NodeJs process is running --> Ousman
   if (process.platform !== 'darwin') {
     // quits application
@@ -91,7 +95,7 @@ app.on('activate', () => {
 
 // Fired by the useEffect hook inside of the Splash.jsx component, this message route will toggle
 // splash property inside of settings.json to false once the Splash page renders itself just once
-ipcMain.on('toggleSplash', (message) => {
+ipcMain.on('toggleSplash', message => {
   // console.log('toggleSplash message received');
   const state = JSON.parse(
     // read json from settings.json
@@ -103,16 +107,14 @@ ipcMain.on('toggleSplash', (message) => {
   state.splash = false;
 
   // overwrite settings.json with false splash property
-  fs.writeFileSync(
-    path.resolve(__dirname, './user/settings.json'),
-    JSON.stringify(state),
-    { encoding: 'UTF-8' }
-  );
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
+    encoding: 'UTF-8',
+  });
 
   message.returnValue = state.splash;
 });
 
-ipcMain.on('checkSplash', (message) => {
+ipcMain.on('checkSplash', message => {
   // sconsole.log('checkSplash message received');
   const state = JSON.parse(
     // read json from settings.json
@@ -126,7 +128,7 @@ ipcMain.on('checkSplash', (message) => {
 
 // Load settings JSON and returns current setup status back to the render process.
 // ipc 'setup' route -->  Ousman
-ipcMain.on('setup', (message) => {
+ipcMain.on('setup', message => {
   // console.log('setup message received');
   // assigns state to the returned the object returned from settings.json -->  Ousman
   const state = JSON.parse(
@@ -162,15 +164,12 @@ ipcMain.on('submit', (message, newService) => {
   }
 
   // Rewrites user/settings.json to show state
-  fs.writeFileSync(
-    path.resolve(__dirname, './user/settings.json'),
-    JSON.stringify(state)
-  );
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state));
 });
 
 // Load settings JSON and returns updated state back to the render process.
 // on ipc 'dashboard' request --> Ousman
-ipcMain.on('dashboard', (message) => {
+ipcMain.on('dashboard', message => {
   // Declares a variable state and initialize it to the returned parse json object from the user/settings.json file
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, './user/settings.json'), {
@@ -209,11 +208,9 @@ ipcMain.on('deleteService', (message, index) => {
   }
 
   // Rewrites json from settings.json
-  fs.writeFileSync(
-    path.resolve(__dirname, './user/settings.json'),
-    JSON.stringify(state),
-    { encoding: 'UTF-8' }
-  );
+  fs.writeFileSync(path.resolve(__dirname, './user/settings.json'), JSON.stringify(state), {
+    encoding: 'UTF-8',
+  });
   message.sender.send('deleteResponse', state.services);
 });
 
@@ -252,16 +249,13 @@ ipcMain.on('overviewRequest', (message, index) => {
         const errorAlert = {
           type: 'error',
           title: 'Error in Main process',
-          message:
-            'Database information could not be retreived. Check that table exists.',
+          message: 'Database information could not be retreived. Check that table exists.',
         };
 
         // after requiring dialog in the topmost section of main. We invoke the method showMessagebox passing the error object we created --> Ousman
         dialog.showMessageBox(errorAlert);
 
-        message.sender.send(
-          JSON.stringify('Database info could not be retreived.')
-        );
+        message.sender.send(JSON.stringify('Database info could not be retreived.'));
       } else {
         console.log('Connected to SQL Database');
         const queryResults = JSON.stringify(result.rows);
