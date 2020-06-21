@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import Monitoring from './MonitoringContainer.jsx';
-import SidebarContainer from './SideBarContainer.jsx';
-import '../stylesheets/dashboard.css';
+import MainContainer from './MainContainer';
+import SidebarContainer from './SidebarContainer';
+import HealthContextProvider from '../context/HealthContext';
+import CommunicationsContextProvider from '../context/CommunicationsContext';
+import '../stylesheets/DashboardContainer.css';
 
 const DashboardContainer = () => {
-  const [detailsSelected, setDetails] = useState();
+  const [details, setDetails] = useState();
 
   return (
-    <div className="MainDashboardContainer">
-      <SidebarContainer setDetails={setDetails} />
-      <Monitoring detailsSelected={detailsSelected} />
+    <div className="dashboard">
+      <CommunicationsContextProvider>
+        <HealthContextProvider>
+          <SidebarContainer setDetails={setDetails} />
+          <MainContainer details={details} />
+        </HealthContextProvider>
+      </CommunicationsContextProvider>
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import HealthContext from '../context/DetailsContext';
 import Plot from 'react-plotly.js';
+import { HealthContext } from '../context/HealthContext';
 
-const LatencyChart = (props) =>  {
-  const healthData = useContext(HealthContext).detailData;
+const LatencyChart = ({ service }) => {
+  const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
     const xAxis = [];
@@ -11,7 +11,7 @@ const LatencyChart = (props) =>  {
 
     for (let i = 0; i < healthData.length; i++) {
       const element = healthData[i];
-      if (element.currentmicroservice === props.service || element.currentMicroservice === props.service) {
+      if (element.currentmicroservice === service || element.currentMicroservice === service) {
         xAxis.push(i);
         yAxis.push(element.latency);
       }
@@ -19,23 +19,24 @@ const LatencyChart = (props) =>  {
 
     return (
       <Plot
-        data = {[{
-          name: 'CPU Latency',
-          type: 'scatter',
-          x: xAxis,
-          y: yAxis,
-          mode: 'lines',
-          rangemode: 'nonnegative',
-          name: 'CPU Latency',
-          marker: {color: '#daaa17'},
-        }]}
-        layout = {{
+        data={[
+          {
+            name: 'CPU Latency',
+            type: 'scatter',
+            x: xAxis,
+            y: yAxis,
+            mode: 'lines',
+            rangemode: 'nonnegative',
+            marker: { color: '#daaa17' },
+          },
+        ]}
+        layout={{
           height: 400,
           width: 400,
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif'
+            family: 'Nunito, san serif',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -50,12 +51,12 @@ const LatencyChart = (props) =>  {
             tickmode: 'linear',
             tick0: 0,
             dtick: 200,
-            rangemode: 'nonnegative'
+            rangemode: 'nonnegative',
           },
-          yaxis: {rangemode: 'nonnegative'}
+          yaxis: { rangemode: 'nonnegative' },
         }}
       />
-    )
+    );
   };
 
   return <div className="latencyChart">{createChart()}</div>;

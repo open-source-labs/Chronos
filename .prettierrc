@@ -3,5 +3,5 @@
   "useTabs": false,
   "endOfLine": "auto",
   "arrowParens": "avoid",
-  "printWidth": 80
+  "printWidth": 100
 }
