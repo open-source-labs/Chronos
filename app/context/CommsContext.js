@@ -7,9 +7,11 @@ export const CommsContext = React.createContext();
 const CommsContextProvider = ({ children }) => {
   const [commsData, setCommsData] = useState([]);
 
+  // Fetches all data related to communication for a particular app
   const fetchCommsData = index => {
     ipcRenderer.send('overviewRequest', index);
     ipcRenderer.on('overviewResponse', (event, data) => {
+      // Store resulting data in local state
       setCommsData(JSON.parse(data));
     });
   };
