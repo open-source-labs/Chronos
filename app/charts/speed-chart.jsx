@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import HealthContext from '../context/DetailsContext';
 
-const SpeedChart = (props) => {
+const SpeedChart = props => {
   const healthData = useContext(HealthContext).detailData;
 
   const createChart = () => {
@@ -40,9 +40,9 @@ const SpeedChart = (props) => {
             x: xAxis,
             y: yAxis,
             type: 'scatter',
-            mode: 'lines',
+            mode: 'lines'
           },
-          { label: 'mbps' },
+          { label: 'mbps' }
         ]}
         layout={{
           title: 'Speed Chart',
@@ -51,18 +51,18 @@ const SpeedChart = (props) => {
           font: {
             color: 'black',
             size: 13,
-            family: 'Nunito, san serif',
+            family: 'Nunito, san serif'
           },
           xaxis: {
             title: 'Service',
             tickmode: 'linear',
             tick0: 50,
             dtick: 200,
-            nticks: 2000,
+            nticks: 2000
           },
           yaxis: {
             range: [0, yAxis],
-            title: 'Data Rates (MBPS)',
+            title: 'Data Rates (MBPS)'
           },
           paper_bgcolor: 'white',
           showlegend: true,
@@ -70,8 +70,8 @@ const SpeedChart = (props) => {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
-            y: 5,
-          },
+            y: 5
+          }
         }}
       />
     );
