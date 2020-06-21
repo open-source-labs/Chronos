@@ -1,0 +1,46 @@
+.deleteMicroservice {
+  padding: 10px;
+  margin: 10px;
+}
+
+.overviewTitle {
+  font-weight: 300;
+  font-size: 5.5vh;
+}
+
+.deleteMainContainer {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  font-family: 'Nunito', sans-serif;
+  width: 100%;
+}
+
+.servicesList {
+  display: flex;
+  justify-content: center;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.deleteMicroservice {
+  margin-top: 6%;
+  margin-bottom: 10%;
+  width: 50%;
+  height: 40px;
+  color: white;
+  font-size: 2vh;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: black;
+  transition: 0.25s;
+  border-radius: 10px
+}
+
+.deleteMicroservice:hover {
+  font-size: 2vh;
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+  background-color: #494FEE;
+}
