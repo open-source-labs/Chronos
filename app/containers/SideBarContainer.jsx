@@ -1,32 +1,24 @@
 import React, { useState, useContext } from 'react';
-import Header from '../AComp/SidebarHeader';
 import SetupContext from '../context/SetupContext';
-import DashboardContext from '../context/DashboardContext';
-import Microservices from '../AComp/Microservices';
-import ServicesList from '../AComp/ServicesList';
+import SidebarHeader from '../components/SidebarHeader';
+import Projects from '../components/Projects';
+import ServicesList from '../components/ServicesList';
 import AddService from '../components/AddService';
 import DeleteService from '../components/DeleteService';
 import '../stylesheets/sidebar.css';
 
 const SidebarContainer = ({ setDetails }) => {
-  // Used to toggle setup required if user wants to add a new database.
   const setup = useContext(SetupContext);
 
-  // List of the databases saved by users to track microservices.
-  const serviceList = useContext(DashboardContext);
+  // Set view to selected index
+  // Index is dependent on microservice button clicked
+  const [index, setIndex] = useState(null);
 
-  // Setting index of service selected
-  const [index, setIndex] = useState();
-
-  // Checking to see if service clicked to display Microservices
-  const [clicked, setClicked] = useState(false);
-
-  // Click function for Services
-  const ServicesClick = e => {
-    setClicked(!clicked);
+  const handleClick = e => {
     setIndex(e.target.id);
     setDetails(null);
   };
+
   const AddClick = () => {
     setup.setupRequired = setup.toggleSetup(false);
     setDetails(<AddService />);
@@ -35,9 +27,9 @@ const SidebarContainer = ({ setDetails }) => {
   return (
     <div className="container">
       <div className="sidebar">
-        <Header />
-        <Microservices context={serviceList} Click={ServicesClick} clicked={clicked} />
-        {clicked && <ServicesList index={index} setDetails={setDetails} />}
+        <SidebarHeader />
+        <Projects handleClick={handleClick} />
+        {index && <ServicesList index={index} setDetails={setDetails} />}
         <div className="btn-container">
           <button type="button" onClick={AddClick}>
             +
