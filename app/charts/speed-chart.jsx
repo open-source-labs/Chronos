@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import HealthContext from '../context/DetailsContext';
 
@@ -6,19 +6,27 @@ const SpeedChart = (props) => {
   const healthData = useContext(HealthContext).detailData;
 
   const createChart = () => {
+    // Number from 0-1990
     const xAxis = [];
+    // For MBS: 2.4hz, 2.0hz, etc.
     const yAxis = [];
 
-    for (let i = 0; i < healthData.length; i += 1) {
+    for (let i = 0; i < healthData.length; i += 2) {
       const element = healthData[i];
       // If using a SQL Database
-      if (element.currentmicroservice === props.service && element.cpucurrentspeed) {
+      if (
+        element.currentmicroservice === props.service &&
+        element.cpucurrentspeed
+      ) {
         xAxis.push(i);
         yAxis.push(element.cpucurrentspeed);
       }
-      
+
       // If using a Mongo Database
-      if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
+      if (
+        element.currentMicroservice === props.service &&
+        element.cpuCurrentSpeed
+      ) {
         xAxis.push(i);
         yAxis.push(element.cpuCurrentSpeed);
       }
@@ -26,47 +34,47 @@ const SpeedChart = (props) => {
 
     return (
       <Plot
-        data = {[{
-          domain: { x: [0, 1], y: [0, 1] },
-          type: 'indicator',
-          value: yAxis[yAxis.length - 1],
-          title: {text: "Speed Chart", font: {size: 22}},
-          delta: {'reference': 3.5, 'decreasing': {'color': '#fa1a58'}},
-          mode: "gauge+number+delta",
-          gauge: {
-            axis: { range: [null, 8] },
-            'tickwidth': 1,
-            'tickcolor': '#fa1a58',
-            'bar': {'color': '#00eda0'},
-            'bordercolor': "#a1be95",
-            'steps': [
-              {'range': [0, 4], 'color': '#fef5fa'},
-              {'range': [4, 6], 'color': '#4a4eee'}
-            ],
-            'threshold': {
-              'line': {'color': '#fa1a58', 'width': 3.5},
-              'thickness': 0.75,
-              'value': 7.5
-            }
+        data={[
+          {
+            name: 'mbps',
+            x: xAxis,
+            y: yAxis,
+            type: 'scatter',
+            mode: 'lines',
           },
-        }]}
-        layout = {{
+          { label: 'mbps' },
+        ]}
+        layout={{
+          title: 'Speed Chart',
           height: 400,
           width: 400,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito, san serif'
+            size: 13,
+            family: 'Nunito, san serif',
+          },
+          xaxis: {
+            title: 'Service',
+            tickmode: 'linear',
+            tick0: 50,
+            dtick: 200,
+            nticks: 2000,
+          },
+          yaxis: {
+            range: [0, yAxis],
+            title: 'Data Rates (MBPS)',
           },
           paper_bgcolor: 'white',
+          showlegend: true,
           legend: {
             orientation: 'h',
             xanchor: 'center',
-            x: .5
-          }
+            x: 0.5,
+            y: 5,
+          },
         }}
       />
-    )
+    );
   };
 
   return <div>{createChart()}</div>;
