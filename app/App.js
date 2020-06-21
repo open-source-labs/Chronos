@@ -7,10 +7,9 @@ import SetupContext from './context/SetupContext';
 const App = () => {
   const { setupRequired } = useContext(SetupContext);
 
-  // const [firstVisit, setFirstVisit] = useState(true);
-
-  // HARD CODED for dev purposes
+  // HARD CODED for development
   const [firstVisit, setFirstVisit] = useState(false);
+  // const [firstVisit, setFirstVisit] = useState(true);
 
   // Splash image on startup
   if (firstVisit) return <Splash setFirstVisit={setFirstVisit} />;
