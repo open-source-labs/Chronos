@@ -29,13 +29,13 @@
   }
 }
 
-#splashLogo {
+#splash img {
   height: 300px;
   margin-bottom: 0px;
   margin-top: -100px;
 }
 
-#splashText {
+#splash span {
   color: #fce356;
   font-size: 9vw;
   letter-spacing: 100px;
