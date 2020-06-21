@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import SetupContext from '../context/SetupContext';
 import SidebarHeader from '../components/SidebarHeader';
-import Projects from '../components/Projects';
+import Applications from '../components/Applications';
 import ServicesList from '../components/ServicesList';
 import AddService from '../components/AddService';
 import DeleteService from '../components/DeleteService';
@@ -28,7 +28,7 @@ const SidebarContainer = ({ setDetails }) => {
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
-        <Projects handleClick={handleClick} />
+        <Applications handleClick={handleClick} />
         {index && <ServicesList index={index} setDetails={setDetails} />}
         <div className="btn-container">
           <button type="button" onClick={AddClick}>
