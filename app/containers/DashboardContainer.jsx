@@ -3,7 +3,7 @@ import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
 import DetailsContextProvider from '../context/DetailsContext';
 import OverviewContextProvider from '../context/OverviewContext';
-import '../stylesheets/dashboard.css';
+import '../stylesheets/DashboardContainer.css';
 
 const DashboardContainer = () => {
   const [details, setDetails] = useState();
