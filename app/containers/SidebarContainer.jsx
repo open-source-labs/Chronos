@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
 import ServicesList from '../components/ServicesList';
