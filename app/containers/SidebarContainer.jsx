@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import SetupContext from '../context/SetupContext';
 import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
 import ServicesList from '../components/ServicesList';
@@ -8,8 +7,6 @@ import DeleteService from '../components/DeleteService';
 import '../stylesheets/SidebarContainer.css';
 
 const SidebarContainer = ({ setDetails }) => {
-  const setup = useContext(SetupContext);
-
   // Set view to selected index
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState(null);
@@ -22,11 +19,6 @@ const SidebarContainer = ({ setDetails }) => {
     setDetails(null);
   };
 
-  const AddClick = () => {
-    setup.setupRequired = setup.toggleSetup(false);
-    setDetails(<AddService />);
-  };
-
   return (
     <div className="container">
       <div className="sidebar">
@@ -35,7 +27,7 @@ const SidebarContainer = ({ setDetails }) => {
         {index && <ServicesList index={index} setDetails={setDetails} />}
         <div className="btn-container">
           {/* Route to AddService component */}
-          <button type="button" onClick={AddClick}>
+          <button type="button" onClick={() => setDetails(<AddService />)}>
             +
           </button>
           {/* Route to DeleteService component */}
