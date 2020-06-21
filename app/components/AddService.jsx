@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react';
-import SetupContext from '../context/SetupContext';
+import React, { useState } from 'react';
 import '../stylesheets/AddService.css';
 
 const { ipcRenderer } = window.require('electron');
 
 const AddService = () => {
-  let { setupRequired, toggleSetup } = useContext(SetupContext);
-
   const [field, setField] = useState({
     database: 'SQL',
     URI: '',
@@ -15,10 +12,9 @@ const AddService = () => {
 
   // Submit form data and save to database
   const handleSubmit = e => {
-    e.preventDefualt();
+    e.preventDefault();
     const { database, URI, name } = field;
     ipcRenderer.send('submit', JSON.stringify([name, database, URI]));
-    setupRequired = toggleSetup(true);
 
     // Refresh window after submit.
     document.location.reload();
@@ -63,9 +59,7 @@ const AddService = () => {
           placeholder="Database Name"
           required
         />
-        <button className="submitBtn" type="submit">
-          Submit
-        </button>
+        <button className="submitBtn">Submit</button>
       </form>
     </div>
   );
