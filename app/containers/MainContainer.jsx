@@ -1,5 +1,5 @@
 import React from 'react';
-import '../stylesheets/main.css';
+import '../stylesheets/MainContainer.css';
 
 // Details is the current microservice being displayed
 // This is set in Sidebar Container and Services List Component
