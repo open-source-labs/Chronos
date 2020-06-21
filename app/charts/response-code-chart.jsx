@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { CommunicationsContext } from '../context/CommunicationsContext';
+import { CommsContext } from '../context/CommsContext';
 
 const ResponseCodeChart = props => {
-  const { communicationsData } = useContext(CommunicationsContext);
+  const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
     const responseCodes = {
@@ -15,8 +15,8 @@ const ResponseCodeChart = props => {
       NULL: 0,
     };
 
-    for (let i = 0; i < communicationsData.length; i += 1) {
-      const element = communicationsData[i];
+    for (let i = 0; i < commsData.length; i += 1) {
+      const element = commsData[i];
       // If Mongo Else SQL
       if (element.currentMicroservice === props.service && element.resStatus) {
         const statusCode = element.resStatus;
