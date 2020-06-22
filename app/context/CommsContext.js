@@ -9,8 +9,8 @@ const CommsContextProvider = ({ children }) => {
 
   // Fetches all data related to communication for a particular app
   const fetchCommsData = index => {
-    ipcRenderer.send('overviewRequest', index);
-    ipcRenderer.on('overviewResponse', (event, data) => {
+    ipcRenderer.send('commsRequest', index);
+    ipcRenderer.on('commsResponse', (event, data) => {
       // Store resulting data in local state
       setCommsData(JSON.parse(data));
     });

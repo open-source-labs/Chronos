@@ -15,8 +15,8 @@ let pool;
  */
 data.communicationsData = () => {
   // Queries the database for communications information and returns it back to the render process.
-  ipcMain.on('overviewRequest', (message, index) => {
-    console.log('hello from overview request');
+  ipcMain.on('commsRequest', (message, index) => {
+    console.log('hello from comms request');
     const { services } = JSON.parse(
       fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
         encoding: 'UTF-8'
@@ -32,12 +32,12 @@ data.communicationsData = () => {
         // Error object to log to Electron GUI
         if (err) {
           console.log(`An error occured while querying the database: ${err}`);
-          message.sender.send('overviewResponse', JSON.stringify(err));
+          message.sender.send('commsResponse', JSON.stringify(err));
         }
         console.log('Connected to Mongo Database');
         const queryResults = JSON.stringify(data);
         // Asynchronous event emitter used to transmit query results back to the render process.
-        message.sender.send('overviewResponse', queryResults);
+        message.sender.send('commsResponse', queryResults);
       });
     }
 
@@ -61,7 +61,7 @@ data.communicationsData = () => {
           console.log('Connected to SQL Database');
           const queryResults = JSON.stringify(result.rows);
           // Asynchronous event emitter used to transmit query results back to the render process
-          message.sender.send('overviewResponse', queryResults);
+          message.sender.send('commsResponse', queryResults);
         }
       });
     }
@@ -72,8 +72,8 @@ data.communicationsData = () => {
  * @desc fetches microservice health data from the database to be rendered via charts
  */
 data.microserviceHealthData = () => {
-  ipcMain.on('detailsRequest', (message, index) => {
-    console.log('detailsRequest message received');
+  ipcMain.on('healthRequest', (message, index) => {
+    console.log('healthRequest message received');
     const databaseType = JSON.parse(
       fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
         encoding: 'UTF-8'
@@ -83,11 +83,11 @@ data.microserviceHealthData = () => {
     if (databaseType === 'MongoDB') {
       HealthInfoSchema.find({}, (err, data) => {
         if (err) {
-          message.sender.send('detailsResponse', JSON.stringify(err));
+          message.sender.send('healthResponse', JSON.stringify(err));
         }
         const queryResults = JSON.stringify(data);
         // Asynchronous event emitter used to transmit query results back to the render process
-        message.sender.send('detailsResponse', queryResults);
+        message.sender.send('healthResponse', queryResults);
         console.log('Message Sent');
       });
     }
@@ -97,13 +97,13 @@ data.microserviceHealthData = () => {
       pool.query(getHealth, (err, result) => {
         if (err) {
           message.sender.send(
-            'detailsResponse',
+            'healthResponse',
             JSON.stringify('Database info could not be retreived.')
           );
         }
         const queryResults = JSON.stringify(result.rows);
         // Asynchronous event emitter used to transmit query results back to the render process
-        message.sender.send('detailsResponse', queryResults);
+        message.sender.send('healthResponse', queryResults);
       });
     }
   });

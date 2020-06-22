@@ -9,8 +9,8 @@ const HealthContextProvider = ({ children }) => {
 
   // Fetches all data related to microservice health for a particular app
   const fetchHealthData = index => {
-    ipcRenderer.send('detailsRequest', index);
-    ipcRenderer.on('detailsResponse', (event, data) => {
+    ipcRenderer.send('healthRequest', index);
+    ipcRenderer.on('healthResponse', (event, data) => {
       // Store resulting data in local state
       setHealthData(Object.values(JSON.parse(data)));
     });
