@@ -6,10 +6,14 @@ const connectMongoose = require('../model/mongoose-connect');
 const CommunicationSchema = require('../model/mongoose-communicatonSchema');
 const HealthInfoSchema = require('../model/mongoose-healthInfoSchema');
 
-let pool;
 const data = {};
+// Initiate pool variable for SQL setup
+let pool;
 
-data.overviewRequest = () => {
+/**
+ * @desc fetches communications data from the database to be rendered via charts
+ */
+data.communicationsData = () => {
   // Queries the database for communications information and returns it back to the render process.
   ipcMain.on('overviewRequest', (message, index) => {
     console.log('hello from overview request');
@@ -25,11 +29,12 @@ data.overviewRequest = () => {
     if (databaseType === 'MongoDB') {
       connectMongoose(index, URI);
       CommunicationSchema.find({}, (err, data) => {
+        // Error object to log to Electron GUI
         if (err) {
           console.log(`An error occured while querying the database: ${err}`);
           message.sender.send('overviewResponse', JSON.stringify(err));
         }
-
+        console.log('Connected to Mongo Database');
         const queryResults = JSON.stringify(data);
         // Asynchronous event emitter used to transmit query results back to the render process.
         message.sender.send('overviewResponse', queryResults);
@@ -41,25 +46,21 @@ data.overviewRequest = () => {
       const getCommunications = 'SELECT * FROM communications';
       pool.query(getCommunications, (err, result) => {
         if (err) {
-          // error object to log to Electron GUI ---> Ousman
+          // Error object to log to Electron GUI
           const errorAlert = {
             type: 'error',
             title: 'Error in Main process',
-            message:
-              'Database information could not be retreived. Check that table exists.'
+            message: 'Database information could not be retreived. Check that table exists.'
           };
 
-          // after requiring dialog in the topmost section of main. We invoke the method showMessagebox passing the error object we created --> Ousman
+          // After requiring dialog, invoke the method showMessagebox passing the created error object
           dialog.showMessageBox(errorAlert);
 
-          message.sender.send(
-            JSON.stringify('Database info could not be retreived.')
-          );
+          message.sender.send(JSON.stringify('Database info could not be retreived.'));
         } else {
           console.log('Connected to SQL Database');
           const queryResults = JSON.stringify(result.rows);
-          // Asynchronous event emitter used to transmit query results back to the render process.
-          console.log('ipcMain about to send overviewResponse message');
+          // Asynchronous event emitter used to transmit query results back to the render process
           message.sender.send('overviewResponse', queryResults);
         }
       });
@@ -67,7 +68,10 @@ data.overviewRequest = () => {
   });
 };
 
-data.detailsRequest = () => {
+/**
+ * @desc fetches microservice health data from the database to be rendered via charts
+ */
+data.microserviceHealthData = () => {
   ipcMain.on('detailsRequest', (message, index) => {
     console.log('detailsRequest message received');
     const databaseType = JSON.parse(
@@ -82,7 +86,7 @@ data.detailsRequest = () => {
           message.sender.send('detailsResponse', JSON.stringify(err));
         }
         const queryResults = JSON.stringify(data);
-        // Asynchronous event emitter used to transmit query results back to the render process.
+        // Asynchronous event emitter used to transmit query results back to the render process
         message.sender.send('detailsResponse', queryResults);
         console.log('Message Sent');
       });
@@ -98,8 +102,7 @@ data.detailsRequest = () => {
           );
         }
         const queryResults = JSON.stringify(result.rows);
-        // Asynchronous event emitter used to transmit query results back to the render process.
-        // console.log('healthInfo data about to comeback');
+        // Asynchronous event emitter used to transmit query results back to the render process
         message.sender.send('detailsResponse', queryResults);
       });
     }
