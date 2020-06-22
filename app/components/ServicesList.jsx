@@ -5,31 +5,53 @@ import ServiceDetails from './ServiceDetails';
 import '../stylesheets/ServicesList.css';
 
 const ServicesList = ({ index, setDetails }) => {
-  const { fetchCommsData, commsData } = useContext(CommsContext);
-  const { fetchHealthData } = useContext(HealthContext);
+  // The index prop points to one of the user's applications stored in /user/settings.json
 
+  // Establish access to Health and Comms context
+  const { fetchCommsData, commsData, setCommsData } = useContext(CommsContext);
+  const { fetchHealthData, setHealthData } = useContext(HealthContext);
+
+  // On Mount: fetch all of an application's comms and health data
   useEffect(() => {
     fetchCommsData(index);
     fetchHealthData(index);
+
+    // Clear context states when component is unmounted
+    return () => {
+      setCommsData([]);
+      setHealthData([]);
+    };
   }, []);
 
-  const fetchData = microservice => {
+  // Change view display in the MainContainer component
+  const changeView = microservice => {
     setDetails(<ServiceDetails service={microservice} />);
   };
 
-  // Holds the buttons generated for unique services.
+  // Cache stores every microservice of the application
+  const cache = {};
+
+  // Holds all of the buttons to be rendered
   const tabs = [];
 
-  // Todo: Query for only the distinct microservices
-  const cache = {};
+  // Iterates through all datapoints (around 500) to find all distinct microservices
   for (let i = 0; i < commsData.length; i += 1) {
+    // Currently camelCase is for MongoDB, lowercase is for SQL
+    // Todo: match the columns/keys in both MongoDB and SQL
     const { currentMicroservice, currentmicroservice, _id } = commsData[i];
     const service = currentMicroservice || currentmicroservice;
 
     if (!cache[service]) {
       cache[service] = true;
+
+      // Make a button for each newly found microservice
       tabs.push(
-        <button className="services-btn" type="button" key={_id} onClick={() => fetchData(service)}>
+        <button
+          className="services-btn"
+          type="button"
+          key={_id}
+          onClick={() => changeView(service)}
+        >
           {service}
         </button>
       );
