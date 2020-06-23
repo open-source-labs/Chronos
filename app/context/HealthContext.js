@@ -12,7 +12,10 @@ const HealthContextProvider = ({ children }) => {
     ipcRenderer.send('healthRequest', index);
     ipcRenderer.on('healthResponse', (event, data) => {
       // Store resulting data in local state
-      setHealthData(Object.values(JSON.parse(data)));
+      const result = JSON.parse(data);
+      console.log('Number of data points (health):', result.length);
+      setHealthData(result);
+      // setHealthData(Object.values(JSON.parse(data)));
     });
   };
 

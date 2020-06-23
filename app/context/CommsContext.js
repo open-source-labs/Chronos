@@ -12,7 +12,9 @@ const CommsContextProvider = ({ children }) => {
     ipcRenderer.send('commsRequest', index);
     ipcRenderer.on('commsResponse', (event, data) => {
       // Store resulting data in local state
-      setCommsData(JSON.parse(data));
+      const result = JSON.parse(data);
+      console.log('Number of data points (comms):', result.length);
+      setCommsData(result);
     });
   };
 
