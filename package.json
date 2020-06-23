@@ -1,8 +1,8 @@
 {
   "name": "chronos",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./Main.js",
+  "version": "4.0.0",
+  "description": "Chronos Microservice Debugger",
+  "main": "./electron/main.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
