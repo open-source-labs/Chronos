@@ -29,15 +29,13 @@ const TemperatureChart = ({ service }) => {
 
       // If Mongo
       if (currentMicroservice === service && cpuTemperature) {
-        const seconds = milliseconds / 1000;
-        xAxis.push(seconds);
+        xAxis.push(i);
         yAxis.push(cpuTemperature);
       }
 
       // If SQL
       if (currentmicroservice === service && cputemperature) {
-        const seconds = milliseconds / 1000;
-        xAxis.push(seconds);
+        xAxis.push(i);
         yAxis.push(cputemperature);
       }
     }
@@ -50,7 +48,7 @@ const TemperatureChart = ({ service }) => {
             fill: 'tozeroy',
             mode: 'none',
             fillcolor: 'rgb(250, 26, 88)',
-            x: ['0:00', '0:30', '01:00', '01:30', '02:00', '02:30'],
+            x: xAxis,
             y: yAxis,
             name: 'CPU Temperature',
             showlegend: true,
