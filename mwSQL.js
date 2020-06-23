@@ -97,10 +97,9 @@ chronos.microCom = (
         const data = {
           text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
         };
-        //the message object contains the receipent email list and the email text body 
+        //the message object contains the receipent email list and the email text body
         const message = {
-          to:
-            `${emailList}`,
+          to: `${emailList}`,
           subject: 'Error from Middleware', // Subject line
           text: `${res.statusCode}, ${res.statusMessage}`, // Plain text body
         };
@@ -109,12 +108,12 @@ chronos.microCom = (
           host: `${emailHost}`,
           port: `${emailPort}`,
           auth: {
-             user: `${user}`,
-             pass: `${password}`
-          }
-      }
-        notifications.sendSlack(data,SlackUrl);
-        notifications.sendEmail(message,config);
+            user: `${user}`,
+            pass: `${password}`,
+          },
+        };
+        notifications.sendSlack(data, SlackUrl);
+        notifications.sendEmail(message, config);
       }
       // Grabs status code from response object
       resStatus = res.statusCode;
@@ -186,56 +185,56 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   // Collect metrics at intervals (determined by user input, e.g. 's', 'm', etc.)
   setInterval(() => {
     si.cpuCurrentspeed()
-      .then((data) => {
+      .then(data => {
         cpuCurrentSpeed = data.avg;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
 
     si.cpuTemperature()
-      .then((data) => {
+      .then(data => {
         cpuTemperature = data.main;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
 
     si.currentLoad()
-      .then((data) => {
+      .then(data => {
         cpuCurrentLoadPercentage = data.currentload;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
 
     si.mem()
-      .then((data) => {
+      .then(data => {
         totalMemory = data.total;
         freeMemory = data.free;
         usedMemory = data.used;
         activeMemory = data.active;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
 
     si.processes()
-      .then((data) => {
+      .then(data => {
         totalNumProcesses = data.all;
         numBlockedProcesses = data.blocked;
         numRunningProcesses = data.running;
         numSleepingProcesses = data.sleeping;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
 
     si.inetLatency()
-      .then((data) => {
+      .then(data => {
         latency = data;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
 
@@ -364,9 +363,7 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
             });
         }, queryObj[queryFreq]);
       } else {
-        throw new Error(
-          'Cannot find container data matching the microservice name.'
-        );
+        throw new Error('Cannot find container data matching the microservice name.');
       }
     })
     ['catch'](function (err) {
