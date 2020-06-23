@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const path = require('path');
 const dashboardRouter = require('./routes/dashboard.js');
-const dataRouter = require('./routes/data.js');
+const infoRouter = require('./routes/info.js');
 
 // Install React Dev Tools
 app.whenReady().then(() => {
@@ -71,9 +71,9 @@ dashboardRouter.deleteService();
 /**
  * @desc fetches communications data from the database to be rendered via charts
  */
-dataRouter.communicationsData();
+infoRouter.communicationsData();
 
 /**
  * @desc fetches microservice health data from the database to be rendered via charts
  */
-dataRouter.microserviceHealthData();
+infoRouter.microserviceHealthData();
