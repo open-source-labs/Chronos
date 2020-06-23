@@ -17,9 +17,9 @@ mongoose.model('Communication', {
     type: String,
   },
   timeSent: {
-    type: Date
+    type: Date,
   },
-  correlatingId:{
+  correlatingId: {
     type: String,
   },
-})
+});
