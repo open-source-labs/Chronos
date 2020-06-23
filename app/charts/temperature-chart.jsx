@@ -25,20 +25,21 @@ const TemperatureChart = ({ service }) => {
         cpuTemperature,
         cputemperature,
       } = healthData[i];
-      const milliseconds = moment(timestamp).format('SS');
+      const milliseconds = moment(timestamp).format('h:mm a');
 
       // If Mongo
       if (currentMicroservice === service && cpuTemperature) {
-        xAxis.push(i);
+        xAxis.push(milliseconds);
         yAxis.push(cpuTemperature);
       }
 
       // If SQL
       if (currentmicroservice === service && cputemperature) {
-        xAxis.push(i);
+        xAxis.push(milliseconds);
         yAxis.push(cputemperature);
       }
     }
+    const secondsArr = xAxis.map(dates => dates);
 
     return (
       <Plot
@@ -48,7 +49,7 @@ const TemperatureChart = ({ service }) => {
             fill: 'tozeroy',
             mode: 'none',
             fillcolor: 'rgb(250, 26, 88)',
-            x: xAxis,
+            x: secondsArr,
             y: yAxis,
             name: 'CPU Temperature',
             showlegend: true,
@@ -73,9 +74,16 @@ const TemperatureChart = ({ service }) => {
             y: 5,
           },
           xaxis: {
-            title: 'Time (100ms)',
+            // title: 'Time (100ms)',
+            tickmode: 'linear',
+            tick0: secondsArr[0],
+            tickformat: '%d %B (%a)<br>%Y',
+            nticks: 5,
+            range: [1, 10],
+            // dtick: 30 * 24 * 60 * 60 * 1000 // milliseconds
           },
           yaxis: {
+            tickformat: '(\xB0C)',
             title: `Temperature (\xB0C)`,
             rangemode: 'nonnegative',
           },
