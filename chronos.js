@@ -1,6 +1,6 @@
 const hpropagate = require('hpropagate');
-const mongoMiddleware = require('./mwMongo.js');
-const sqlMiddleware = require('./mwSQL.js');
+const mongoMiddleware = require('./models/mwMongo.js');
+const sqlMiddleware = require('./models/mwSQL.js');
 
 const chronos = {};
 
