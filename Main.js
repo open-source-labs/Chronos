@@ -69,6 +69,11 @@ dashboardRouter.dashboard();
 dashboardRouter.deleteService();
 
 /**
+ * @desc Connect user to selected database
+ */
+infoRouter.connect();
+
+/**
  * @desc fetches communications data from the database to be rendered via charts
  */
 infoRouter.commsData();
@@ -77,3 +82,4 @@ infoRouter.commsData();
  * @desc fetches microservice health data from the database to be rendered via charts
  */
 infoRouter.healthData();
+
