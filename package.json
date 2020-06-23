@@ -32,9 +32,11 @@
     "chart.js": "^2.8.0",
     "d3": "^5.16.0",
     "electron": "^6.1.11",
+    "electron-devtools-installer": "^3.0.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "ify-loader": "^1.1.0",
+    "moment": "^2.27.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.13",
     "pg": "^7.18.2",
@@ -44,8 +46,7 @@
     "react-chartjs-2": "^2.9.0",
     "react-dom": "16.10.1",
     "react-plotly.js": "^2.4.0",
-    "ttf-loader": "^1.0.2",
-    "electron-devtools-installer": "^3.0.0"
+    "ttf-loader": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",

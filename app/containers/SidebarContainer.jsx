@@ -24,6 +24,7 @@ const SidebarContainer = ({ setDetails }) => {
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
+        {/* Demo, Chronos */}
         <Applications handleClick={handleClick} />
 
         {/* Render the ServicesList if one of the Applications were clicked */}
