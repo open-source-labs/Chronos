@@ -71,6 +71,29 @@ chronos.microCom = (
     // adds resStatus and resMessage to the newCommunication object
     // sends the data to database and goes to the next middleware
     res.on('finish', () => {
+      // if the statusdoe is an error messsage a notice is sent to slack via axios in notifications.js
+      if (res.statusCode >= 400) {
+        // this is the data that is fed into the axios post update to any information deemed important to error
+        const data = {
+          text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
+        };
+        const message = {
+          to:
+            `${emailList}`,
+          subject: 'Error from Middleware', // Subject line
+          text: `${res.statusCode}, ${res.statusMessage}`, // Plain text body
+        };
+        const config = {
+          host: `${emailHost}`,
+          port: `${emailPort}`,
+          auth: {
+             user: `${user}`,
+             pass: `${password}`
+          }
+      }
+        notifications.sendSlack(data,SlackUrl);
+        notifications.sendEmail(message,config);
+      }
       newCommunication.resStatus = res.statusCode;
       newCommunication.resMessage = res.statusMessage;
       const communication = new Communication(newCommunication);
