@@ -7,14 +7,19 @@ const CommunicationSchema = require('../model/mongoose-communicatonSchema');
 const HealthSchema = require('../model/mongoose-healthInfoSchema');
 
 const info = {};
+
 // Initiate pool variable for SQL setup
 let pool;
+
+// Holds database type: 1) MongoDB or 2) SQL
+let currentDatabaseType;
 
 /**
  * Connects user to db
  */
 info.connect = () => {
   ipcMain.on('connect', (message, index) => {
+    // Extract databaseType and URI from settings.json at particular index
     const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
       encoding: 'UTF-8',
     });
@@ -22,8 +27,12 @@ info.connect = () => {
     const userDatabase = JSON.parse(fileContents).services[index];
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
+    // Connect to the proper database
     if (databaseType === 'MongoDB') connectMongoose(index, URI);
     if (databaseType === 'SQL') pool = connectSQL(index, URI);
+
+    // Currently set to a global variable
+    currentDatabaseType = databaseType;
   });
 };
 
@@ -38,14 +47,14 @@ info.commsData = () => {
       let result;
 
       // Mongo Database
-      if (databaseType === 'MongoDB') {
+      if (currentDatabaseType === 'MongoDB') {
         // Get all documents
         // const num = await CommunicationSchema.countDocuments();
         result = await CommunicationSchema.find().exec();
       }
 
       // SQL Database
-      if (databaseType === 'SQL') {
+      if (currentDatabaseType === 'SQL') {
         // Get all rows
         const getCommunications = 'SELECT * FROM communications';
         result = pool.query(getCommunications);
@@ -70,16 +79,10 @@ info.healthData = () => {
 
   ipcMain.on('healthRequest', async (message, index) => {
     try {
-      // Read from settings.json and get the database type
-      const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
-        encoding: 'UTF-8',
-      });
-      const databaseType = JSON.parse(fileContents).services[index][1];
-
       let result;
 
       // Mongo Database
-      if (databaseType === 'MongoDB') {
+      if (currentDatabaseType === 'MongoDB') {
         // Get number of documents
         let num = await HealthSchema.countDocuments();
 
@@ -89,7 +92,7 @@ info.healthData = () => {
       }
 
       // SQL Database
-      if (databaseType === 'SQL') {
+      if (currentDatabaseType === 'SQL') {
         // Get last 50 documents. If less than 50 get all
         const query = `
           SELECT * FROM healthInfo
