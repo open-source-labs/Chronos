@@ -1,4 +1,4 @@
-const { dialog, ipcMain } = require('electron');
+const { ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const connectSQL = require('../model/sql-connect');
@@ -11,6 +11,23 @@ const info = {};
 let pool;
 
 /**
+ * Connects user to db
+ */
+info.connect = () => {
+  ipcMain.on('connect', (message, index) => {
+    const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
+      encoding: 'UTF-8',
+    });
+
+    const userDatabase = JSON.parse(fileContents).services[index];
+    const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
+
+    if (databaseType === 'MongoDB') connectMongoose(index, URI);
+    if (databaseType === 'SQL') pool = connectSQL(index, URI);
+  });
+};
+
+/**
  * @desc fetches communications data from the database to be rendered via charts
  */
 info.commsData = () => {
@@ -18,20 +35,10 @@ info.commsData = () => {
 
   ipcMain.on('commsRequest', async (message, index) => {
     try {
-      // Extract databaseType and URI from settings.json with supplied index
-      const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
-        encoding: 'UTF-8',
-      });
-
-      const userDatabase = JSON.parse(fileContents).services[index];
-      const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
-
       let result;
 
       // Mongo Database
       if (databaseType === 'MongoDB') {
-        connectMongoose(index, URI);
-
         // Get all documents
         // const num = await CommunicationSchema.countDocuments();
         result = await CommunicationSchema.find().exec();
@@ -39,8 +46,6 @@ info.commsData = () => {
 
       // SQL Database
       if (databaseType === 'SQL') {
-        pool = connectSQL(index, URI);
-
         // Get all rows
         const getCommunications = 'SELECT * FROM communications';
         result = pool.query(getCommunications);
