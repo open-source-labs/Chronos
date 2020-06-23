@@ -14,19 +14,28 @@ const SpeedChart = props => {
   const createChart = () => {
     const xAxis = [];
     const yAxis = [];
+    let midIdx;
+    let backEnd;
 
-    for (let i = 0; i < healthData.length; i += 2) {
-      const element = healthData[i];
+    for (let i = 0; i < healthData.length; i += 1) {
+      const {
+        currentmicroservice,
+        currentMicroservice,
+        cpuCurrentSpeed,
+        cpucurrentspeed,
+      } = healthData[i];
       // If using a SQL Database
-      if (element.currentmicroservice === props.service && element.cpucurrentspeed) {
+      if (currentmicroservice === props.service && cpucurrentspeed) {
         xAxis.push(i);
-        yAxis.push(element.cpucurrentspeed);
+        yAxis.push(cpucurrentspeed);
       }
       // If using a Mongo Database
-      if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
+      if (currentMicroservice === props.service && cpuCurrentSpeed) {
         xAxis.push(i);
-        yAxis.push(element.cpuCurrentSpeed);
+        yAxis.push(cpuCurrentSpeed);
       }
+      midIdx = Math.floor(xAxis.length / 2);
+      backEnd = xAxis.slice(midIdx);
     }
 
     return (
@@ -34,9 +43,8 @@ const SpeedChart = props => {
         data={[
           {
             name: 'mbps',
-            x: xAxis,
+            x: backEnd,
             y: yAxis,
-            maxdisplayed: 50,
             type: 'scatter',
             mode: 'lines',
           },
@@ -54,14 +62,12 @@ const SpeedChart = props => {
           xaxis: {
             title: 'Service',
             tickmode: 'linear',
-            // consider changing to variable
-            tick0: 50,
-            dtick: 200,
-            nticks: 2000,
+            tick0: backEnd,
+            dtick: 5,
+            rangemode: 'nonnegative',
             rangeslider: true,
           },
           yaxis: {
-            range: [0, yAxis],
             title: 'Data Rates (MBPS)',
           },
           paper_bgcolor: 'white',
