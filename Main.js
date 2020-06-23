@@ -24,8 +24,8 @@ const createWindow = () => {
     icon: path.join(__dirname, 'app/assets/icons/icon.png'),
     // Node integration allows node.js to run
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   // Development: load the application window to port 8080
@@ -71,9 +71,9 @@ dashboardRouter.deleteService();
 /**
  * @desc fetches communications data from the database to be rendered via charts
  */
-infoRouter.communicationsData();
+infoRouter.commsData();
 
 /**
  * @desc fetches microservice health data from the database to be rendered via charts
  */
-infoRouter.microserviceHealthData();
+infoRouter.healthData();

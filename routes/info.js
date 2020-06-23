@@ -13,61 +13,46 @@ let pool;
 /**
  * @desc fetches communications data from the database to be rendered via charts
  */
-info.communicationsData = () => {
-  // Queries the database for communications information and returns it back to the render process.
-  ipcMain.on('commsRequest', (message, index) => {
-    console.log('ipc call to comms');
-    const { services } = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
+info.commsData = () => {
+  console.log('ipc call to comms');
+
+  ipcMain.on('commsRequest', async (message, index) => {
+    try {
+      // Extract databaseType and URI from settings.json with supplied index
+      const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
         encoding: 'UTF-8',
-      })
-    );
-
-    const databaseType = services[index][1];
-    const URI = services[index][2];
-
-    if (databaseType === 'MongoDB') {
-      connectMongoose(index, URI);
-      CommunicationSchema.countDocuments({}, (error, num) => {
-        console.log('number of documents', num);
-        CommunicationSchema.find().exec((err, data) => {
-          // Error object to log to Electron GUI
-          if (err) {
-            console.log(`An error occured while querying the database: ${err}`);
-            message.sender.send('commsResponse', JSON.stringify(err));
-          }
-          // console.log('Connected to Mongo Database');
-          console.log(data.length);
-          const queryResults = JSON.stringify(data);
-          // Asynchronous event emitter used to transmit query results back to the render process.
-          message.sender.send('commsResponse', queryResults);
-        });
       });
-    }
 
-    if (databaseType === 'SQL') {
-      pool = connectSQL(index, URI);
-      const getCommunications = 'SELECT * FROM communications';
-      pool.query(getCommunications, (err, result) => {
-        if (err) {
-          // Error object to log to Electron GUI
-          const errorAlert = {
-            type: 'error',
-            title: 'Error in Main process',
-            message: 'Database information could not be retreived. Check that table exists.',
-          };
+      const userDatabase = JSON.parse(fileContents).services[index];
+      const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-          // After requiring dialog, invoke the method showMessagebox passing the created error object
-          dialog.showMessageBox(errorAlert);
+      let result;
 
-          message.sender.send(JSON.stringify('Database info could not be retreived.'));
-        } else {
-          console.log('Connected to SQL Database');
-          const queryResults = JSON.stringify(result.rows);
-          // Asynchronous event emitter used to transmit query results back to the render process
-          message.sender.send('commsResponse', queryResults);
-        }
-      });
+      // Mongo Database
+      if (databaseType === 'MongoDB') {
+        connectMongoose(index, URI);
+
+        // Get all documents
+        // const num = await CommunicationSchema.countDocuments();
+        result = await CommunicationSchema.find().exec();
+      }
+
+      // SQL Database
+      if (databaseType === 'SQL') {
+        pool = connectSQL(index, URI);
+
+        // Get all rows
+        const getCommunications = 'SELECT * FROM communications';
+        result = pool.query(getCommunications);
+        result = result.rows;
+      }
+
+      // Async event emitter - send response
+      message.sender.send('commsResponse', JSON.stringify(result));
+    } catch (error) {
+      // Catch errors
+      console.log('Error in info.commsData', error.message);
+      message.sender.send('commsResponse', {});
     }
   });
 };
@@ -75,48 +60,55 @@ info.communicationsData = () => {
 /**
  * @desc fetches microservice health data from the database to be rendered via charts
  */
-info.microserviceHealthData = () => {
+info.healthData = () => {
   console.log('ipc call to health');
-  ipcMain.on('healthRequest', (message, index) => {
-    const databaseType = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
+
+  ipcMain.on('healthRequest', async (message, index) => {
+    try {
+      // Read from settings.json and get the database type
+      const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
         encoding: 'UTF-8',
-      })
-    ).services[index][1];
-
-    if (databaseType === 'MongoDB') {
-      HealthSchema.countDocuments({}, (err, num) => {
-        HealthSchema.find()
-          .skip(num - 50)
-          .exec({}, (err, data) => {
-            if (err) {
-              message.sender.send('healthResponse', JSON.stringify(err));
-            }
-            const queryResults = JSON.stringify(data);
-            // Asynchronous event emitter used to transmit query results back to the render process
-            message.sender.send('healthResponse', queryResults);
-            console.log('Message Sent');
-          });
       });
-    }
+      const databaseType = JSON.parse(fileContents).services[index][1];
 
-    if (databaseType === 'SQL') {
-      const getHealth = 'SELECT * FROM healthInfo';
-      pool.query(getHealth, (err, result) => {
-        if (err) {
-          message.sender.send(
-            'healthResponse',
-            JSON.stringify('Database info could not be retreived.')
-          );
-        }
-        const queryResults = JSON.stringify(result.rows);
-        // Asynchronous event emitter used to transmit query results back to the render process
-        message.sender.send('healthResponse', queryResults);
-      });
+      let result;
+
+      // Mongo Database
+      if (databaseType === 'MongoDB') {
+        // Get number of documents
+        let num = await HealthSchema.countDocuments();
+
+        // Get last 50 documents. If less than 50 documents, get all
+        num = Math.max(num, 50);
+        result = await HealthSchema.find().skip(num - 50);
+      }
+
+      // SQL Database
+      if (databaseType === 'SQL') {
+        // Get last 50 documents. If less than 50 get all
+        const query = `
+          SELECT * FROM healthInfo
+          ORDER BY id DESC
+          LIMIT 50`;
+
+        // Execute query
+        result = await pool.query(query);
+        result = result.rows.reverse();
+      }
+
+      // Async event emitter - send response
+      message.sender.send('healthResponse', JSON.stringify(result));
+    } catch (error) {
+      // Catch errors
+      console.log('Error in info.healthData', error.message);
+      message.sender.send('healthResponse', {});
     }
   });
 };
 
+/**
+ * Gets application data, including all its microservices
+ */
 info.appData = () => {
   ipcMain.on('appData', (message, index) => {});
 };
