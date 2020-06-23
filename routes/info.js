@@ -11,11 +11,13 @@ const info = {};
 // Initiate pool variable for SQL setup
 let pool;
 
-// Holds database type: 1) MongoDB or 2) SQL
+// Stores database type: 1) MongoDB or 2) SQL
 let currentDatabaseType;
 
 /**
- * Connects user to db
+ * @event   connect
+ * @desc    Connects user to database and sets global currentDatabaseType which
+ *          is accessed in info.commsData and info.healthData
  */
 info.connect = () => {
   ipcMain.on('connect', (message, index) => {
@@ -37,7 +39,8 @@ info.connect = () => {
 };
 
 /**
- * @desc fetches communications data from the database to be rendered via charts
+ * @event   commsRequest/commsResponse
+ * @desc    Query for comms data
  */
 info.commsData = () => {
   console.log('ipc call to comms');
@@ -72,7 +75,8 @@ info.commsData = () => {
 };
 
 /**
- * @desc fetches microservice health data from the database to be rendered via charts
+ * @event   healthRequest/healthResponse
+ * @desc    Query for health data (last 50 data points)
  */
 info.healthData = () => {
   console.log('ipc call to health');
