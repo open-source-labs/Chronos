@@ -23,7 +23,9 @@ const SidebarContainer = ({ setDetails }) => {
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
+        {/* Demo, Chronos */}
         <Applications handleClick={handleClick} />
+        {/* each microservice(order, books) */}
         {index && <ServicesList index={index} setDetails={setDetails} />}
         <div className="btn-container">
           {/* Route to AddService component */}

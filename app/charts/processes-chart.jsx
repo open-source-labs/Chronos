@@ -36,7 +36,7 @@ const ProcessesChart = props => {
       <Plot
         data={[
           {
-            type: 'scatter',
+            type: 'scattergl',
             x: { autorange: true },
             y: runningProcesses,
             mode: 'markers',

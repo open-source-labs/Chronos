@@ -2,6 +2,12 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
+/**
+ * @desc Latency Chart
+ * @param object props- passed from GraphsContainer
+ * @return component - component for latency graph
+ */
+
 const LatencyChart = ({ service }) => {
   const { healthData } = useContext(HealthContext);
 
@@ -9,7 +15,7 @@ const LatencyChart = ({ service }) => {
     const xAxis = [];
     const yAxis = [];
 
-    for (let i = 0; i < healthData.length; i++) {
+    for (let i = 0; i < healthData.length; i += 2) {
       const element = healthData[i];
       if (element.currentmicroservice === service || element.currentMicroservice === service) {
         xAxis.push(i);
@@ -22,7 +28,7 @@ const LatencyChart = ({ service }) => {
         data={[
           {
             name: 'CPU Latency',
-            type: 'scatter',
+            type: 'scattergl',
             x: xAxis,
             y: yAxis,
             mode: 'lines',
