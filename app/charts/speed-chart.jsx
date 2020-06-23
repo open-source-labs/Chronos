@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
-
+import moment from 'moment';
 /**
  * @desc Render Speed Chart
  * @param object props- passed from GraphsContainer
@@ -14,8 +14,6 @@ const SpeedChart = props => {
   const createChart = () => {
     const xAxis = [];
     const yAxis = [];
-    let midIdx;
-    let backEnd;
 
     for (let i = 0; i < healthData.length; i += 1) {
       const {
@@ -23,27 +21,29 @@ const SpeedChart = props => {
         currentMicroservice,
         cpuCurrentSpeed,
         cpucurrentspeed,
+        timestamp,
       } = healthData[i];
+      const milliseconds = moment(timestamp).format('h:mm a');
+
       // If using a SQL Database
       if (currentmicroservice === props.service && cpucurrentspeed) {
-        xAxis.push(i);
+        xAxis.push(milliseconds);
         yAxis.push(cpucurrentspeed);
       }
       // If using a Mongo Database
       if (currentMicroservice === props.service && cpuCurrentSpeed) {
-        xAxis.push(i);
+        xAxis.push(milliseconds);
         yAxis.push(cpuCurrentSpeed);
       }
-      midIdx = Math.floor(xAxis.length / 2);
-      backEnd = xAxis.slice(midIdx);
     }
+    const secondsArr = xAxis.map(dates => dates);
 
     return (
       <Plot
         data={[
           {
             name: 'mbps',
-            x: backEnd,
+            x: secondsArr,
             y: yAxis,
             type: 'scatter',
             mode: 'lines',
@@ -62,8 +62,10 @@ const SpeedChart = props => {
           xaxis: {
             title: 'Service',
             tickmode: 'linear',
-            tick0: backEnd,
-            dtick: 5,
+            tick0: secondsArr[0],
+            tickformat: '%d %B (%a)<br>%Y',
+            nticks: 5,
+            range: [1, 10],
             rangemode: 'nonnegative',
             rangeslider: true,
           },
