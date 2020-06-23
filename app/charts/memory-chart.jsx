@@ -35,7 +35,7 @@ const MemoryChart = props => {
       <Plot
         data={[
           {
-            type: 'scatter',
+            type: 'scattergl',
             fill: 'tonexty',
             fillcolor: 'rgb(0, 237, 160)',
             mode: 'none',

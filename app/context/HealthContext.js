@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
 
-// Used to save query results. Laid foundation for conditional rendering similar to how SetupContext was used.
+const { ipcRenderer } = window.require('electron');
+
 export const HealthContext = React.createContext();
 
 const HealthContextProvider = ({ children }) => {
-  const [healthData, setHealthData] = useState(null);
+  const [healthData, setHealthData] = useState([]);
+
+  // Fetches all data related to microservice health for a particular app
+  const fetchHealthData = index => {
+    ipcRenderer.send('healthRequest', index);
+    ipcRenderer.on('healthResponse', (event, data) => {
+      // Store resulting data in local state
+      const result = JSON.parse(data);
+      console.log('Number of data points (health):', result.length);
+      setHealthData(result);
+      // setHealthData(Object.values(JSON.parse(data)));
+    });
+  };
 
   return (
-    <HealthContext.Provider value={{ setHealthData, healthData }}>
+    <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData }}>
       {children}
     </HealthContext.Provider>
   );
