@@ -3,16 +3,19 @@ import { CommsContext } from '../context/CommsContext';
 import { HealthContext } from '../context/HealthContext';
 import ServiceDetails from './ServiceDetails';
 import '../stylesheets/ServicesList.css';
+import { ApplicationContext } from '../context/ApplicationContext';
 
 const ServicesList = ({ index, setDetails }) => {
   // The index prop points to one of the user's applications stored in /user/settings.json
 
   // Establish access to Health and Comms context
+  const { connectToDB } = useContext(ApplicationContext);
   const { fetchCommsData, commsData, setCommsData } = useContext(CommsContext);
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
 
   // On Mount: fetch all of an application's comms and health data
   useEffect(() => {
+    connectToDB(index);
     fetchCommsData(index);
     fetchHealthData(index);
 
