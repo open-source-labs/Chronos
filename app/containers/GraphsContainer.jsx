@@ -8,7 +8,6 @@ import TemperatureChart from '../charts/temperature-chart';
 import LatencyChart from '../charts/latency-chart';
 import MemoryChart from '../charts/memory-chart';
 import RouteTrace from '../charts/route-trace';
-// import RouteLocations from '../charts/route-copy';
 import DockerStatsChart from '../charts/docker-stats-chart';
 import '../stylesheets/GraphsContainer.css';
 

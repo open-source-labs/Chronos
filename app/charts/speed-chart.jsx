@@ -2,13 +2,17 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
+/**
+ * @desc Render Speed Chart
+ * @param object props- passed from GraphsContainer
+ * @return component - component for speed changes
+ */
+
 const SpeedChart = props => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
-    // Number from 0-1990
     const xAxis = [];
-    // For MBS: 2.4hz, 2.0hz, etc.
     const yAxis = [];
 
     for (let i = 0; i < healthData.length; i += 2) {
@@ -18,7 +22,6 @@ const SpeedChart = props => {
         xAxis.push(i);
         yAxis.push(element.cpucurrentspeed);
       }
-
       // If using a Mongo Database
       if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
         xAxis.push(i);
@@ -33,6 +36,7 @@ const SpeedChart = props => {
             name: 'mbps',
             x: xAxis,
             y: yAxis,
+            maxdisplayed: 50,
             type: 'scatter',
             mode: 'lines',
           },
@@ -44,15 +48,17 @@ const SpeedChart = props => {
           width: 400,
           font: {
             color: 'black',
-            size: 13,
+            size: 14,
             family: 'Nunito, san serif',
           },
           xaxis: {
             title: 'Service',
             tickmode: 'linear',
+            // consider changing to variable
             tick0: 50,
             dtick: 200,
             nticks: 2000,
+            rangeslider: true,
           },
           yaxis: {
             range: [0, yAxis],

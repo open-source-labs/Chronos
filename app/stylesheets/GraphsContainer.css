@@ -1,17 +1,16 @@
 .graphsGrid {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 30px;  /* align-items: center; */
+  grid-gap: 30px; /* align-items: center; */
   margin: auto;
   padding-bottom: 25px;
   border-radius: 2px;
-  box-shadow: 2px 2px 2px rgba(216, 210, 247, .5);
+  box-shadow: 2px 2px 2px rgba(216, 210, 247, 0.5);
 }
-
 
 svg {
   border-radius: 2px;
-  box-shadow: 2px 2px 2px rgba(216, 210, 247, .5);
+  box-shadow: 2px 2px 2px rgba(216, 210, 247, 0.5);
 }
 
 #docker-stats-chart {
@@ -20,7 +19,7 @@ svg {
   flex-direction: column;
   background-color: white;
   border-radius: 3px;
-  box-shadow: 3px 3px 3px rgba(216, 210, 247, .5);
+  box-shadow: 3px 3px 3px rgba(216, 210, 247, 0.5);
   height: 380px;
   width: 380px;
   padding: 10px 10px 10px 10px;
@@ -34,3 +33,23 @@ svg {
   width: 400;
 }
 
+/* Tablet */
+@media screen and (min-width: 601px) and (max-width: 980px) {
+  .graphsGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Normal */
+@media screen and (min-width: 1000px) and (max-width: 1500px) {
+  .graphsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Lg Screen */
+@media screen and (min-width: 1600px) {
+  .graphsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
