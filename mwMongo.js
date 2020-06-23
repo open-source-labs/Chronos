@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const si = require('systeminformation');
+const notifications = require('./notification');
 
 // Required to get rid of deprecation warnings
 mongoose.set('useUnifiedTopology', true);
@@ -27,7 +28,17 @@ const queryObj = {
 };
 
 // Create a coomunication table in the user database the stores all of the data from each request
-chronos.microCom = (userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized) => {
+chronos.microCom = (userOwnedDB,
+  microserviceName,
+  wantMicroHealth,
+  queryFreq,
+  isDockerized,
+  SlackUrl,
+  emailList,
+  emailHost,
+  emailPort,
+  user,
+  password,) => {
   //Connect chronos to the user's database
   chronos.connectDB(userOwnedDB);
   

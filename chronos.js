@@ -29,7 +29,13 @@ chronos.microCom = (
   userOwnedDB,
   wantMicroHealth,
   queryFreq = 'm',
-  isDockerized = 'no', 
+  isDockerized = 'no',
+  SlackUrl, //slackwebhook url
+  emailList, // receipient email addresses
+  emailHost, // email host 
+  emailPort,// host email port 
+  user, // email address-username
+  password, // email account password
   req, res, next) => {
   // Handles if user inputs an array. Grabs information and assigns to correct parameters
   if (Array.isArray(microserviceName) === true && microserviceName.length >= 4) {
@@ -48,7 +54,7 @@ chronos.microCom = (
   isDockerized = isDockerized.toLowerCase();
 
   // Ensures that the required parameters are entered, errors out otherwise
-  if (!microserviceName || !databaseType || !userOwnedDB || !wantMicroHealth) {
+  if (!microserviceName || !databaseType || !userOwnedDB || !wantMicroHealth || !SlackUrl || !emailList || !emailHost  || !emailPort || !user || !password) {
     throw new Error('Please verify that you have provided all four required parameters');
   }
 
@@ -60,6 +66,12 @@ chronos.microCom = (
       || typeof wantMicroHealth !== 'string'
       || typeof queryFreq !== 'string'
       || typeof isDockerized !== 'string'
+      || typeof SlackUrl !== 'string'
+      || typeof emailList !== 'string'
+      || typeof emailHost !== 'string'
+      || typeof emailPort !== 'number'
+      || typeof user !== 'string'
+      || typeof password !== 'string'
   ) {
     throw new Error('Please verify that the parameters you entered are all strings');
   }
@@ -67,10 +79,10 @@ chronos.microCom = (
   // Checks the type of database provided by the user and uses appropriate middleware files.
   // Throws error if input db type is not supported
   if (databaseType === 'mongo' || databaseType === 'mongodb') {
-    return mongoMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
+    return mongoMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized, SlackUrl,emailList,emailHost,emailPort,user,password);
   } 
   if (databaseType === 'sql' || databaseType === 'postgresql') {
-    return sqlMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized);
+    return sqlMiddleware.microCom(userOwnedDB, microserviceName, wantMicroHealth, queryFreq, isDockerized,SlackUrl,emailList,emailHost,emailPort,user,password);
   }
   throw new Error(
     'Chronos currently only supports Mongo and PostgreSQL databases. Please enter "mongo" or "sql"',

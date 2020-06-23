@@ -21,14 +21,15 @@
   "author": "Chronos 3.0",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "hpropagate": "0.0.7",
     "mongoose": "^5.9.16",
+    "nodemailer": "^6.4.10",
     "pg": "^7.18.2",
     "systeminformation": "^4.26.4"
-    },
+  },
   "optionalDependencies": {
     "osx-temperature-sensor": "^1.0.7",
     "wmic": "^0.3.0"
-
-    } 
+  }
 }
