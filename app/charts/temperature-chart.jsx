@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { HealthContext } from '../context/HealthContext';
 import moment from 'moment';
+import { HealthContext } from '../context/HealthContext';
 /**
  * @desc Renders Readout of CPU Temperature
  * @param object props - passed from GraphsContainer
  * @return Plot Component - Component for CPU Graph
  */
 
-const TemperatureChart = props => {
+const TemperatureChart = ({ service }) => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
@@ -18,21 +18,27 @@ const TemperatureChart = props => {
     const xAxis = [];
 
     for (let i = 0; i < healthData.length; i += 1) {
-      const element = healthData[i];
-      const milliseconds = moment(element.timestamp).format('SS');
+      const {
+        timestamp,
+        currentMicroservice,
+        currentmicroservice,
+        cpuTemperature,
+        cputemperature,
+      } = healthData[i];
+      const milliseconds = moment(timestamp).format('SS');
 
       // If Mongo
-      if (element.currentMicroservice === props.service && element.cpuTemperature) {
-        let seconds = (milliseconds /= 1000);
+      if (currentMicroservice === service && cpuTemperature) {
+        const seconds = milliseconds / 1000;
         xAxis.push(seconds);
-        yAxis.push(element.cpuTemperature);
+        yAxis.push(cpuTemperature);
       }
 
       // If SQL
-      if (element.currentmicroservice === props.service && element.cputemperature) {
-        let seconds = (milliseconds /= 1000);
+      if (currentmicroservice === service && cputemperature) {
+        const seconds = milliseconds / 1000;
         xAxis.push(seconds);
-        yAxis.push(element.cputemperature);
+        yAxis.push(cputemperature);
       }
     }
 
