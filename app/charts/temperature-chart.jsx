@@ -1,28 +1,45 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
+import moment from 'moment';
 import { HealthContext } from '../context/HealthContext';
+/**
+ * @desc Renders Readout of CPU Temperature
+ * @param object props - passed from GraphsContainer
+ * @return Plot Component - Component for CPU Graph
+ */
 
-const TemperatureChart = props => {
+const TemperatureChart = ({ service }) => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
+    // y should be temp
     const yAxis = [];
+    // x should be # of services
     const xAxis = [];
 
     for (let i = 0; i < healthData.length; i += 1) {
-      const element = healthData[i];
+      const {
+        timestamp,
+        currentMicroservice,
+        currentmicroservice,
+        cpuTemperature,
+        cputemperature,
+      } = healthData[i];
+      const milliseconds = moment(timestamp).format('h:mm a');
+
       // If Mongo
-      if (element.currentMicroservice === props.service && element.cpuTemperature) {
-        yAxis.push(i);
-        xAxis.push(element.cpuTemperature);
+      if (currentMicroservice === service && cpuTemperature) {
+        xAxis.push(milliseconds);
+        yAxis.push(cpuTemperature);
       }
 
       // If SQL
-      if (element.currentmicroservice === props.service && element.cputemperature) {
-        yAxis.push(i);
-        xAxis.push(element.cputemperature);
+      if (currentmicroservice === service && cputemperature) {
+        xAxis.push(milliseconds);
+        yAxis.push(cputemperature);
       }
     }
+    const secondsArr = xAxis.map(dates => dates);
 
     return (
       <Plot
@@ -30,15 +47,17 @@ const TemperatureChart = props => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            fillcolor: 'rgb(250, 26, 88)',
             mode: 'none',
-            x: yAxis,
-            y: xAxis,
+            fillcolor: 'rgb(250, 26, 88)',
+            x: secondsArr,
+            y: yAxis,
             name: 'CPU Temperature',
             showlegend: true,
           },
         ]}
+        config={{ responsive: true }}
         layout={{
+          title: 'CPU Temperature',
           height: 400,
           width: 400,
           font: {
@@ -48,13 +67,26 @@ const TemperatureChart = props => {
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
-
           legend: {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            y: 5,
           },
-          yaxis: { rangemode: 'nonnegative' },
+          xaxis: {
+            // title: 'Time (100ms)',
+            tickmode: 'linear',
+            tick0: secondsArr[0],
+            tickformat: '%d %B (%a)<br>%Y',
+            nticks: 5,
+            range: [1, 10],
+            // dtick: 30 * 24 * 60 * 60 * 1000 // milliseconds
+          },
+          yaxis: {
+            tickformat: '(\xB0C)',
+            title: `Temperature (\xB0C)`,
+            rangemode: 'nonnegative',
+          },
         }}
       />
     );

@@ -1,15 +1,16 @@
 {
   "name": "chronos",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./Main.js",
+  "version": "4.0.0",
+  "description": "Chronos Microservice Debugger",
+  "main": "./electron/main.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
     "test": "mocha ./__tests__/spectron.test.js",
-    "both": "npm run start & sleep 5 && npm run electron"
+    "both": "npm run start & sleep 5 && npm run electron",
+    "both:dev": "npm run start & nodemon --watch . --exec 'npm run electron'"
   },
   "babel": {
     "presets": [
@@ -31,12 +32,13 @@
     "chart.js": "^2.8.0",
     "d3": "^5.16.0",
     "electron": "^6.1.11",
+    "electron-devtools-installer": "^3.0.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "ify-loader": "^1.1.0",
+    "moment": "^2.27.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.13",
-    "nodemon": "^1.19.2",
     "pg": "^7.18.2",
     "plotly.js": "^1.54.1",
     "plotly.js-dist": "^1.54.1",
@@ -44,8 +46,7 @@
     "react-chartjs-2": "^2.9.0",
     "react-dom": "16.10.1",
     "react-plotly.js": "^2.4.0",
-    "ttf-loader": "^1.0.2",
-    "electron-devtools-installer": "^3.0.0"
+    "ttf-loader": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
@@ -67,6 +68,7 @@
     "file-loader": "^4.3.0",
     "html-webpack-plugin": "^3.2.0",
     "mocha": "^6.2.3",
+    "nodemon": "^1.19.4",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
     "spectron": "^8.0.0",

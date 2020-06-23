@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
-// import Plot from 'react-plotly.js';
 
 // A table that displays real-time Docker container stats.
 // Just need to pull data from most recent (last) obj in healthData.
@@ -81,7 +80,6 @@ const DockerStatsChart = props => {
       );
     }
 
-    console.log('dockerStatsArr (docker stats chart):', dockerStatsArr);
     return (
       <div id="docker-stats-chart">
         <header id="docker-stats-chart-header">Docker Container Stats</header>
