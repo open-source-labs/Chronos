@@ -23,4 +23,4 @@ const healthSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('microservicehealths', healthSchema);
+module.exports = serviceName => mongoose.model(serviceName, healthSchema);
