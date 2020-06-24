@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const healthInfoSchema = new Schema({
+const healthSchema = new Schema({
   currentMicroservice: {
     type: String,
   },
@@ -23,6 +23,4 @@ const healthInfoSchema = new Schema({
   },
 });
 
-const healthInfoModel = mongoose.model('microservicehealths', healthInfoSchema);
-
-module.exports = healthInfoModel;
+module.exports = mongoose.model('microservicehealths', healthSchema);
