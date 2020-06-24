@@ -2,9 +2,9 @@ const { ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const connectSQL = require('../models/relational/postgres');
-const connectMongoose = require('../models/nonrelational/mongoose-connect');
-const CommunicationSchema = require('../models/nonrelational/mongoose-communicatonSchema');
-const HealthSchema = require('../models/nonrelational/mongoose-healthInfoSchema');
+const connectMongoose = require('../models/nonrelational/connect');
+const CommunicationSchema = require('../models/nonrelational/communicatonSchema');
+const HealthSchema = require('../models/nonrelational/healthSchema');
 
 const info = {};
 
