@@ -14,6 +14,7 @@ const ServicesList = ({ index, setDetails }) => {
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
 
   // On Mount: fetch all of an application's comms and health data
+  // methods come from application context
   useEffect(() => {
     connectToDB(index);
     fetchCommsData(index);
@@ -38,6 +39,8 @@ const ServicesList = ({ index, setDetails }) => {
   const tabs = [];
 
   // Iterates through all datapoints (around 500) to find all distinct microservices
+
+  // GET RID OF FOR LOOP!!!!
   for (let i = 0; i < commsData.length; i += 1) {
     // Currently camelCase is for MongoDB, lowercase is for SQL
     // Todo: match the columns/keys in both MongoDB and SQL
