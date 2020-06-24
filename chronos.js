@@ -1,7 +1,6 @@
 const hpropagate = require('hpropagate');
 const mongoMiddleware = require('./controllers/mwMongo.js');
 const sqlMiddleware = require('./controllers/mwSQL.js');
-// const config = require('./cmd.config')
 
 const chronos = {};
 
@@ -66,18 +65,7 @@ chronos.microCom = (
   isDockerized = isDockerized.toLowerCase();
 
   // Ensures that the required parameters are entered, errors out otherwise
-  if (
-    !microserviceName ||
-    !databaseType ||
-    !userOwnedDB ||
-    !wantMicroHealth /*||
-    !SlackUrl ||
-    !emailList ||
-    !emailHost ||
-    !emailPort ||
-    !user ||
-    !password */
-  ) {
+  if (!microserviceName || !databaseType || !userOwnedDB || !wantMicroHealth) {
     throw new Error('Please verify that you have provided all four required parameters');
   }
 
