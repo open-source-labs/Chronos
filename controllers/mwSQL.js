@@ -120,7 +120,7 @@ chronos.microCom = (
       const resStatus = res.statusCode;
       // Grabs status message from response object
       const resMessage = res.statusMessage;
-      values = [
+      const values = [
         currentMicroservice,
         targetedEndpoint,
         reqType,
@@ -150,13 +150,12 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   let usedMemory;
   let activeMemory;
   let latency;
-  let currentMicroservice;
   let totalNumProcesses;
   let numBlockedProcesses;
   let numRunningProcesses;
   let numSleepingProcesses;
 
-  currentMicroservice = userInputMSName;
+  const currentMicroservice = userInputMSName;
 
   client.query(
     `CREATE TABLE IF NOT EXISTS healthInfo (
