@@ -1,8 +1,16 @@
 const hpropagate = require('hpropagate');
 const mongoMiddleware = require('./controllers/mwMongo.js');
 const sqlMiddleware = require('./controllers/mwSQL.js');
+// const config = require('./cmd.config')
 
 const chronos = {};
+
+/**
+ * Testing the config file
+ */
+chronos.use = config => {
+  console.log('in use!!', config);
+};
 
 /* 
 propagate places an unique x-correlating-id into the headers of each request/response.
@@ -41,6 +49,7 @@ chronos.microCom = (
   next
 ) => {
   // Handles if user inputs an array. Grabs information and assigns to correct parameters
+  // console.log('config file!', config);
   if (Array.isArray(microserviceName) === true && microserviceName.length >= 4) {
     microserviceName = microserviceName[0];
     databaseType = microserviceName[1];
@@ -79,7 +88,8 @@ chronos.microCom = (
     typeof userOwnedDB !== 'string' ||
     typeof wantMicroHealth !== 'string' ||
     typeof queryFreq !== 'string' ||
-    typeof isDockerized !== 'string' /* ||
+    typeof isDockerized !==
+      'string' /* ||
     typeof SlackUrl !== 'string' ||
     typeof emailList !== 'string' ||
     typeof emailHost !== 'string' ||

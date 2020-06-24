@@ -5,7 +5,6 @@ require('../models/Communication');
 require('../models/ContainerInfo');
 require('../models/MicroserviceHealth');
 
-
 // Required to get rid of deprecation warnings
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
