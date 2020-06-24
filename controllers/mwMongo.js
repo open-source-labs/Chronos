@@ -76,13 +76,14 @@ chronos.microCom = (
       // if the statusdoe is an error messsage a notice is sent to slack via axios in notifications.js
       if (res.statusCode >= 400) {
         /**
-         * If the user provides a SlackURL or email information, a notification will be
+         * OPTIONAL: If the user provides a SlackURL or email information, a notification will be
          * sent to the provided contact information.
          */
         if (SlackUrl) {
           const data = {
             text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
           };
+          // Call to the notifications controller for slack
           notifications.sendSlack(data, SlackUrl);
         }
 
@@ -100,22 +101,20 @@ chronos.microCom = (
               pass: `${password}`,
             },
           };
+          // Call to the notifications controller for emails
           notifications.sendEmail(message, config);
         }
       }
+
       newCommunication.resStatus = res.statusCode;
       newCommunication.resMessage = res.statusMessage;
       const communication = new Communication(newCommunication);
 
       communication
         .save()
-        .then(() => {
-          next();
-        })
+        .then(() => next())
         .catch(err => {
-          if (err) {
-            throw err;
-          }
+          throw err;
         });
     });
     next();
@@ -126,7 +125,6 @@ chronos.microCom = (
 // Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
 // Instead, will invoke another middlware called chronos.microDocker().
 chronos.microHealth = (microserviceName, queryFreq) => {
-
   const MicroserviceHealth = mongoose.model('MicroserviceHealth');
 
   let cpuCurrentSpeed;
@@ -245,7 +243,6 @@ chronos.microHealth = (microserviceName, queryFreq) => {
  * Collects information on the container
  */
 chronos.microDocker = function (microserviceName, queryFreq) {
-
   const ContainerInfo = mongoose.model('ContainerInfo');
 
   // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
