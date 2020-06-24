@@ -1,5 +1,3 @@
 node_modules
 *.ts
 .DS_Store
-.eslintrc.json
-.prettierrc
