@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const si = require('systeminformation');
 const notifications = require('./notification');
+require('../models/Communication');
+require('../models/ContainerInfo');
+require('../models/MicroserviceHealth');
+
 
 // Required to get rid of deprecation warnings
 mongoose.set('useUnifiedTopology', true);
@@ -55,7 +59,6 @@ chronos.microCom = (
   //returns a middleware that creates a new communication document in the mongoDB database whenever a response for the request comes thru
   return function (req, res, next) {
     // provides the schema for Communication
-    require('./Communication.js');
 
     // creates a model off of the Communication Schema
     const Communication = mongoose.model('Communication');
@@ -73,26 +76,33 @@ chronos.microCom = (
     res.on('finish', () => {
       // if the statusdoe is an error messsage a notice is sent to slack via axios in notifications.js
       if (res.statusCode >= 400) {
-        // this is the data that is fed into the axios post update to any information deemed important to error
-        const data = {
-          text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
-        };
-        const message = {
-          to:
-            `${emailList}`,
-          subject: 'Error from Middleware', // Subject line
-          text: `${res.statusCode}, ${res.statusMessage}`, // Plain text body
-        };
-        const config = {
-          host: `${emailHost}`,
-          port: `${emailPort}`,
-          auth: {
-             user: `${user}`,
-             pass: `${password}`
-          }
-      }
-        notifications.sendSlack(data,SlackUrl);
-        notifications.sendEmail(message,config);
+        /**
+         * If the user provides a SlackURL or email information, a notification will be
+         * sent to the provided contact information.
+         */
+        if (SlackUrl) {
+          const data = {
+            text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
+          };
+          notifications.sendSlack(data, SlackUrl);
+        }
+
+        if (emailList) {
+          const message = {
+            to: `${emailList}`,
+            subject: 'Error from Middleware', // Subject line
+            text: `${res.statusCode}, ${res.statusMessage}`, // Plain text body
+          };
+          const config = {
+            host: `${emailHost}`,
+            port: `${emailPort}`,
+            auth: {
+              user: `${user}`,
+              pass: `${password}`,
+            },
+          };
+          notifications.sendEmail(message, config);
+        }
       }
       newCommunication.resStatus = res.statusCode;
       newCommunication.resMessage = res.statusMessage;
@@ -117,7 +127,6 @@ chronos.microCom = (
 // Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
 // Instead, will invoke another middlware called chronos.microDocker().
 chronos.microHealth = (microserviceName, queryFreq) => {
-  require('./MicroserviceHealth.js');
 
   const MicroserviceHealth = mongoose.model('MicroserviceHealth');
 
@@ -232,8 +241,11 @@ chronos.microHealth = (microserviceName, queryFreq) => {
   }, queryObj[queryFreq]);
 };
 
+/**
+ * If dockerized is true, this function is invoked
+ * Collects information on the container
+ */
 chronos.microDocker = function (microserviceName, queryFreq) {
-  require('./ContainerInfo.js');
 
   const ContainerInfo = mongoose.model('ContainerInfo');
 

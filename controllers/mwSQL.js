@@ -1,6 +1,7 @@
 // NPM package that gathers health information
 const si = require('systeminformation');
 const { Client } = require('pg');
+const notifications = require('../controllers/notification');
 // const mwSqlDocker = require('./mwSqlDocker.js');
 
 let client;
@@ -116,9 +117,9 @@ chronos.microCom = (
         notifications.sendEmail(message, config);
       }
       // Grabs status code from response object
-      resStatus = res.statusCode;
+      const resStatus = res.statusCode;
       // Grabs status message from response object
-      resMessage = res.statusMessage;
+      const resMessage = res.statusMessage;
       values = [
         currentMicroservice,
         targetedEndpoint,
@@ -173,7 +174,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
       numRunningProcesses real DEFAULT 0,
       numBlockedProcesses real DEFAULT 0,
       numSleepingProcesses real DEFAULT 0,
-      latency float DEFAULT 0.0,
+      latency float DEFAULT 0.0
     )`,
     (err, results) => {
       if (err) {

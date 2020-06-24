@@ -1,6 +1,6 @@
 const hpropagate = require('hpropagate');
-const mongoMiddleware = require('./models/mwMongo.js');
-const sqlMiddleware = require('./models/mwSQL.js');
+const mongoMiddleware = require('./controllers/mwMongo.js');
+const sqlMiddleware = require('./controllers/mwSQL.js');
 
 const chronos = {};
 
@@ -61,13 +61,13 @@ chronos.microCom = (
     !microserviceName ||
     !databaseType ||
     !userOwnedDB ||
-    !wantMicroHealth ||
+    !wantMicroHealth /*||
     !SlackUrl ||
     !emailList ||
     !emailHost ||
     !emailPort ||
     !user ||
-    !password
+    !password */
   ) {
     throw new Error('Please verify that you have provided all four required parameters');
   }
@@ -79,13 +79,13 @@ chronos.microCom = (
     typeof userOwnedDB !== 'string' ||
     typeof wantMicroHealth !== 'string' ||
     typeof queryFreq !== 'string' ||
-    typeof isDockerized !== 'string' ||
+    typeof isDockerized !== 'string' /* ||
     typeof SlackUrl !== 'string' ||
     typeof emailList !== 'string' ||
     typeof emailHost !== 'string' ||
     typeof emailPort !== 'number' ||
     typeof user !== 'string' ||
-    typeof password !== 'string'
+    typeof password !== 'string' */
   ) {
     throw new Error('Please verify that the parameters you entered are all strings');
   }
