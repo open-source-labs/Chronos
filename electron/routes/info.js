@@ -1,10 +1,10 @@
 const { ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const connectSQL = require('../model/sql-connect');
-const connectMongoose = require('../model/mongoose-connect');
-const CommunicationSchema = require('../model/mongoose-communicatonSchema');
-const HealthSchema = require('../model/mongoose-healthInfoSchema');
+const connectSQL = require('../models/postgres');
+const connectMongoose = require('../models/mongoose-connect');
+const CommunicationSchema = require('../models/mongoose-communicatonSchema');
+const HealthSchema = require('../models/mongoose-healthInfoSchema');
 
 const info = {};
 
@@ -35,6 +35,18 @@ info.connect = () => {
 
     // Currently set to a global variable
     currentDatabaseType = databaseType;
+  });
+};
+
+/**
+ * @event   serviceRequest/serviceResponse
+ * @desc    Query to services table for all entries
+ */
+info.getServices = () => {
+  ipcMain.on('servicesRequest', async message => {
+    if (currentDatabaseType === 'MongoDB') {
+      result = await 
+    }
   });
 };
 

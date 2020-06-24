@@ -23,6 +23,4 @@ const communicationSchema = new Schema({
   },
 });
 
-const communicationModel = mongoose.model('communications', communicationSchema);
-
-module.exports = communicationModel;
+module.exports = mongoose.model('communications', communicationSchema);
