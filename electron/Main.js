@@ -83,3 +83,7 @@ infoRouter.commsData();
  */
 infoRouter.healthData();
 
+/**
+ * @desc  Fetches each of the microservices of the specified application
+ */
+infoRouter.getServices();
