@@ -8,7 +8,7 @@ const ApplicationContextProvider = ({ children }) => {
   const connectToDB = index => {
     ipcRenderer.send('connect', index);
   };
-  // Greg: Created route to grab name of all services associated with an app
+  // Greg: Created route to grab name of all services associated with an app!
   const [servicesData, setServicesData] = useState([]);
 
   const fetchServicesNames = application => {
