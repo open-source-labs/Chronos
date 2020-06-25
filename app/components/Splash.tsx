@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import icon from '../assets/icons/icon.png';
 import '../stylesheets/Splash.css';
 
 const Splash = ({ setFirstVisit }: any) => {
@@ -9,7 +10,7 @@ const Splash = ({ setFirstVisit }: any) => {
 
   return (
     <div id="splash">
-      <img alt="Chronos Logo" src="app/assets/icons/icon.png" />
+      <img alt="Chronos Logo" src={icon} />
       <span>chronos</span>
     </div>
   );
