@@ -50,21 +50,17 @@ const GraphsContainer = ({ service }) => {
 
   useEffect(fetchData, []);
 
-  // New fetch call here, change service to serviceName everywhere in here when ready:
-  const { fetchHealthData, healthData } = useContext(HealthContext);
-  const { fetchCommsData, commsData } = useContext(CommsContext)
+  const { fetchHealthData } = useContext(HealthContext);
+  const { fetchCommsData } = useContext(CommsContext);
 
-
+  // On Mount: fetch communication data and health data
   useEffect(() => {
-    fetchCommsData(99)
+    fetchCommsData();
     fetchHealthData(service);
   }, []);
-  // console.log('in the comDidmount', healthData)
-  console.log('in comp did mount', commsData)
 
   return (
     <div className="graphsGrid">
-      {/* Where we might render the Date Component */}
       <div className="routes">
         <div ref={canvas} />
       </div>
