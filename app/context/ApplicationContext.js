@@ -12,7 +12,7 @@ const ApplicationContextProvider = ({ children }) => {
    */
   const connectToDB = index => {
     if (index) ipcRenderer.send('connect', index);
-  }
+  };
   /**
    * Fetch all microservices of a certain applications
    */
