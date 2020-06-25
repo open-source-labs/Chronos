@@ -9,37 +9,23 @@ import { HealthContext } from '../context/HealthContext';
  */
 
 const TemperatureChart = ({ service }) => {
+  // Once we pass down specific props to our graph components
+  // (i.e cputemp, time, etc) we can remove our for loop, desctructured variables
   const { healthData } = useContext(HealthContext);
+  const { time, cputemp } = healthData;
 
   const createChart = () => {
-    // y should be temp
-    const yAxis = [];
-    // x should be # of services
-    const xAxis = [];
-
-    for (let i = 0; i < healthData.length; i += 1) {
-      const {
-        timestamp,
-        currentMicroservice,
-        currentmicroservice,
-        cpuTemperature,
-        cputemperature,
-      } = healthData[i];
-      const milliseconds = moment(timestamp).format('h:mm a');
-
-      // If Mongo
-      if (currentMicroservice === service && cpuTemperature) {
-        xAxis.push(milliseconds);
-        yAxis.push(cpuTemperature);
-      }
-
-      // If SQL
-      if (currentmicroservice === service && cputemperature) {
-        xAxis.push(milliseconds);
-        yAxis.push(cputemperature);
-      }
+    const yAxis = cputemp;
+    let month;
+    let timeArr;
+    if (time === undefined || cputemp === undefined) {
+      // Do Nothing
+    } else {
+      // const xAxis = healthData.time;
+      timeArr = time.map(el => moment(el).format('S A'));
+      month = moment(time[0]).format('MMM Do');
     }
-    const secondsArr = xAxis.map(dates => dates);
+    console.log('month1111', month);
 
     return (
       <Plot
@@ -49,7 +35,7 @@ const TemperatureChart = ({ service }) => {
             fill: 'tozeroy',
             mode: 'none',
             fillcolor: 'rgb(250, 26, 88)',
-            x: secondsArr,
+            x: timeArr,
             y: yAxis,
             name: 'CPU Temperature',
             showlegend: true,
@@ -74,16 +60,13 @@ const TemperatureChart = ({ service }) => {
             y: 5,
           },
           xaxis: {
-            // title: 'Time (100ms)',
+            title: month,
             tickmode: 'linear',
-            tick0: secondsArr[0],
             tickformat: '%d %B (%a)<br>%Y',
-            nticks: 5,
-            range: [1, 10],
-            // dtick: 30 * 24 * 60 * 60 * 1000 // milliseconds
+            nticks: 10,
+            range: [1, 4],
           },
           yaxis: {
-            tickformat: '(\xB0C)',
             title: `Temperature (\xB0C)`,
             rangemode: 'nonnegative',
           },
