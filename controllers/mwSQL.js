@@ -154,7 +154,7 @@ chronos.microServices = (microserviceName, queryFreq) => {
   const queryString = `INSERT INTO services
       (microservice, interval)
       VALUES ($1, $2)
-      ON CONFLICT microservice DO NOTHING;`;
+      ON CONFLICT (microservice) DO NOTHING;`;
   const values = [microserviceName, queryObj[queryFreq]];
 
   client.query(queryString, values, (err, result) => {
