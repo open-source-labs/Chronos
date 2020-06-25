@@ -4,33 +4,11 @@ import { HealthContext } from '../context/HealthContext';
 
 const ProcessesChart = props => {
   const { healthData } = useContext(HealthContext);
-
+  console.log('this is the healthData in process chart   ', healthData.totalprocesses);
   const createChart = () => {
-    const communicationLabel = [];
-    const totalProcesses = [];
-    const runningProcesses = [];
-    const blockedProcesses = [];
-    const sleepingProcesses = [];
-
-    for (let i = 0; i < healthData.length; i += 1) {
-      const element = healthData[i];
-      // If using a SQL Database
-      if (element.currentmicroservice === props.service) {
-        communicationLabel.push(i);
-        totalProcesses.push(element.totalnumprocesses);
-        runningProcesses.push(element.numrunningprocesses);
-        blockedProcesses.push(element.numblockedprocesses);
-        sleepingProcesses.push(element.numsleepingprocesses);
-      }
-      // If using a Mongo Database
-      if (element.currentMicroservice === props.service && element.cpuCurrentSpeed) {
-        communicationLabel.push(i);
-        totalProcesses.push(element.numTotalProcesses);
-        runningProcesses.push(element.numRunningProcesses);
-        blockedProcesses.push(element.numBlockedProcesses);
-        sleepingProcesses.push(element.numSleepingProcesses);
-      }
-    }
+    const runningProcesses = healthData.runningprocesses;
+    const blockedProcesses = healthData.blockedprocesses;
+    const sleepingProcesses = healthData.sleepingprocesses;
 
     return (
       <Plot
@@ -71,7 +49,6 @@ const ProcessesChart = props => {
               size: 3,
             },
           },
-          { label: communicationLabel },
         ]}
         layout={{
           height: 400,

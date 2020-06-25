@@ -52,15 +52,14 @@ const GraphsContainer = ({ service }) => {
 
   // New fetch call here, change service to serviceName everywhere in here when ready:
   const { fetchHealthData, healthData } = useContext(HealthContext);
-  const { fetchCommsData, commsData } = useContext(CommsContext)
-
+  const { fetchCommsData, commsData } = useContext(CommsContext);
 
   useEffect(() => {
-    fetchCommsData(99)
+    fetchCommsData(99);
     fetchHealthData(service);
   }, []);
-  // console.log('in the comDidmount', healthData)
-  // console.log('in comp did mount', commsData)
+  console.log('in the comDidmount', healthData);
+  console.log('in comp did mount', commsData);
 
   return (
     <div className="graphsGrid">
