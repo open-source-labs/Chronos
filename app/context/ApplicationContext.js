@@ -5,21 +5,29 @@ const { ipcRenderer } = window.require('electron');
 export const ApplicationContext = createContext();
 
 const ApplicationContextProvider = ({ children }) => {
-  const connectToDB = index => {
-    ipcRenderer.send('connect', index);
-  };
-  // Greg: Created route to grab name of all services associated with an app!
   const [servicesData, setServicesData] = useState([]);
 
+  /**
+   * Connect to database provided by user at 'index'
+   */
+  const connectToDB = index => {
+    if (index) ipcRenderer.send('connect', index);
+  }
+  /**
+   * Fetch all microservices of a certain applications
+   */
   const fetchServicesNames = application => {
+    // Send Async Request
     ipcRenderer.send('servicesRequest', application);
+
+    // Response
     ipcRenderer.on('servicesResponse', (event, data) => {
-      // Store resulting data in local state
-      // result: [{}] with cpuspeed, cputemp, etc.
+      // Parse JSON response
       const result = JSON.parse(data);
       console.log('Number of data points (service):', result.length);
+
+      // Set local state
       setServicesData(result);
-      // setHealthData(Object.values(JSON.parse(data)));
     });
   };
 
