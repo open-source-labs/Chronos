@@ -4,7 +4,7 @@ import { CommsContext } from '../context/CommsContext';
 
 const MicroServiceTraffic = props => {
   const { commsData } = useContext(CommsContext);
-
+  console.log('here is commsdata in microservicetraffic:     ', commsData);
   // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
   const resObj = {};
 
