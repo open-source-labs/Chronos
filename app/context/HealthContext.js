@@ -15,6 +15,7 @@ const HealthContextProvider = ({ children }) => {
       // result: [{}] with cpuspeed, cputemp, etc.
       const result = JSON.parse(data);
       console.log('Number of data points (service):', result.length);
+      console.log(result)
       setHealthData(result);
       // setHealthData(Object.values(JSON.parse(data)));
     });

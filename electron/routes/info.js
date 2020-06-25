@@ -119,6 +119,7 @@ info.healthData = () => {
     try {
       let result;
 
+      console.log('in healthRequest', service)
       // Mongo Database
       if (currentDatabaseType === 'MongoDB') {
         // Get document count
@@ -135,12 +136,12 @@ info.healthData = () => {
       if (currentDatabaseType === 'SQL') {
         // Get last 50 documents. If less than 50 get all
         const query = `
-          SELECT * FROM $1
+          SELECT * FROM ${service}
           ORDER BY id DESC
           LIMIT 50`;
 
         // Execute query
-        result = await pool.query(query, [service]);
+        result = await pool.query(query);
         result = result.rows.reverse();
       }
 
