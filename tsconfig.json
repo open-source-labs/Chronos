@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "noImplicitAny": true,
+    "pretty": true,
     "outDir": "./build",
     "sourceMap": true,
     "module": "commonjs",

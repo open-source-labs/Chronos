@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import '../stylesheets/Splash.css';
 
-const Splash = ({ setFirstVisit }) => {
+const Splash = ({ setFirstVisit }: any) => {
   // Display splash for 3 seconds
   useEffect(() => {
     setTimeout(() => setFirstVisit(false), 3000);
