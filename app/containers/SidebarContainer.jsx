@@ -43,16 +43,20 @@ const SidebarContainer = () => {
         <SidebarHeader />
         {/* Demo, Chronos */}
         <Applications handleClick={handleClick} />
-        {servicesData.map(service => (
-          <Link className="services-btn" to={`/${service.microservice}`} key={service.id}>
-            {service.microservice}
-          </Link>
-        ))}
         <div className="btn-container">
-          <Link to="/add">+</Link>
-          <Link to="/delete">-</Link>
+          {servicesData.map(service => (
+            <Link className="link" to={`/${service.microservice}`} key={service.id}>
+              {service.microservice}
+            </Link>
+          ))}
+          <Link className="link" to="/add">
+            +
+          </Link>
+          <Link className="link" to="/delete">
+            -
+          </Link>
           {/* Refresh page */}
-          <button type="button" onClick={() => location.reload()}>
+          <button className="link" type="button" onClick={() => location.reload()}>
             Refresh
           </button>
         </div>
