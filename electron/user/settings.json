@@ -1,0 +1,16 @@
+{
+  "setupRequired": false,
+  "services": [
+    [
+      "Demo",
+      "MongoDB",
+      "mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"
+    ],
+    [
+      "newDemo",
+      "SQL",
+      "postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm"
+    ]
+  ],
+  "splash": true
+}

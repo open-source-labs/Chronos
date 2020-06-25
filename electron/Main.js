@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const path = require('path');
 const dashboardRouter = require('./routes/dashboard.js');
-const dataRouter = require('./routes/data.js');
+const infoRouter = require('./routes/info.js');
 
 // Install React Dev Tools
 app.whenReady().then(() => {
@@ -24,8 +24,8 @@ const createWindow = () => {
     icon: path.join(__dirname, 'app/assets/icons/icon.png'),
     // Node integration allows node.js to run
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   // Development: load the application window to port 8080
@@ -69,11 +69,21 @@ dashboardRouter.dashboard();
 dashboardRouter.deleteService();
 
 /**
+ * @desc Connect user to selected database
+ */
+infoRouter.connect();
+
+/**
  * @desc fetches communications data from the database to be rendered via charts
  */
-dataRouter.communicationsData();
+infoRouter.commsData();
 
 /**
  * @desc fetches microservice health data from the database to be rendered via charts
  */
-dataRouter.microserviceHealthData();
+infoRouter.healthData();
+
+/**
+ * @desc  Fetches each of the microservices of the specified application
+ */
+infoRouter.getServices();

@@ -4,32 +4,30 @@ import { HealthContext } from '../context/HealthContext';
 
 const MemoryChart = props => {
   const { healthData } = useContext(HealthContext);
-
   const createChart = () => {
-    const xAxis = [];
-    const free = [];
-    const used = [];
-    const active = [];
-    const total = [];
+    const free = healthData.freememory;
+    const used = healthData.usedmemory;
+    const active = healthData.activememory;
+    const total = healthData.totalprocesses;
 
-    for (let i = 0; i < healthData.length; i += 1) {
-      xAxis.push(i);
-      // If Mongo
-      if (healthData[i].currentMicroservice === props.service) {
-        free.push(healthData[i].freeMemory);
-        active.push(healthData[i].activeMemory);
-        used.push(healthData[i].usedMemory);
-        total.push(healthData[i].totalMemory);
-      }
+    // for (let i = 0; i < healthData.length; i += 1) {
+    //   xAxis.push(i);
+    //   // If Mongo
+    //   if (healthData[i].currentMicroservice === props.service) {
+    //     free.push(healthData[i].freeMemory);
+    //     active.push(healthData[i].activeMemory);
+    //     used.push(healthData[i].usedMemory);
+    //     total.push(healthData[i].totalMemory);
+    //   }
 
-      // If SQL
-      if (healthData[i].currentmicroservice === props.service) {
-        free.push(healthData[i].freememory);
-        active.push(healthData[i].activememory);
-        used.push(healthData[i].usedmemory);
-        total.push(healthData[i].totalmemory);
-      }
-    }
+    //   // If SQL
+    //   // if (healthData[i].currentmicroservice === props.service) {
+    //   //   free.push(healthData[i].freememory);
+    //   //   active.push(healthData[i].activememory);
+    //   //   used.push(healthData[i].usedmemory);
+    //   //   total.push(healthData[i].totalmemory);
+    //   // }
+    // }
 
     return (
       <Plot
@@ -64,7 +62,6 @@ const MemoryChart = props => {
             name: 'Active Memory',
             rangemode: 'nonnegative',
           },
-          { label: xAxis },
         ]}
         layout={{
           height: 400,
@@ -85,7 +82,7 @@ const MemoryChart = props => {
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 100,
+            dtick: 5,
           },
         }}
       />

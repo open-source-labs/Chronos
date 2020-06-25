@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { HealthContext } from '../context/HealthContext';
+import { CommsContext } from '../context/CommsContext';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
 import MicroServiceTraffic from '../charts/microservice-traffic';
@@ -47,6 +49,17 @@ const GraphsContainer = ({ service }) => {
   }, [data]);
 
   useEffect(fetchData, []);
+
+  const { fetchHealthData, healthData} = useContext(HealthContext);
+  const { fetchCommsData } = useContext(CommsContext);
+
+  // On Mount: fetch communication data and health data
+  useEffect(() => {
+    fetchCommsData();
+    fetchHealthData(service);
+  }, []);
+
+  console.log('health', healthData)
 
   return (
     <div className="graphsGrid">

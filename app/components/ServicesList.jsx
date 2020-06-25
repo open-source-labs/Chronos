@@ -1,64 +1,53 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { CommunicationsContext } from '../context/CommunicationsContext';
+import React, { useContext, useEffect } from 'react';
+import { CommsContext } from '../context/CommsContext';
 import { HealthContext } from '../context/HealthContext';
+import { ApplicationContext } from '../context/ApplicationContext';
 import ServiceDetails from './ServiceDetails';
 import '../stylesheets/ServicesList.css';
 
-const { ipcRenderer } = window.require('electron');
-
 const ServicesList = ({ index, setDetails }) => {
-  // Overview state used to create service buttons
-  const [overviewState, setOverviewState] = useState([]);
+  // The index prop points to one of the user's applications stored in /user/settings.json
 
-  // Contexts have data added to them following successful IPC return. Data is later used to create charts.
-  const { setCommunicationsData } = useContext(CommunicationsContext);
-
-  useEffect(() => {
-    // IPC communication used to initiate query for information on microservices.
-    ipcRenderer.send('overviewRequest', index);
-    // IPC listener responsible for retrieving infomation from asynchronous main process message.
-    ipcRenderer.on('overviewResponse', (event, data) => {
-      // Adds to state and context.
-      setOverviewState(Object.values(JSON.parse(data)));
-      setCommunicationsData(JSON.parse(data));
-    });
-  }, []);
-
+  const { connectToDB, fetchServicesNames, servicesData, setServicesData } = useContext(
+    ApplicationContext
+  );
+  const { setCommsData } = useContext(CommsContext);
   const { setHealthData } = useContext(HealthContext);
 
-  const fetchData = microservice => {
-    // Fetch all data points
-    ipcRenderer.send('detailsRequest', index);
-    ipcRenderer.on('detailsResponse', (event, data) => {
-      // Store all data points in HealthContext
-      setHealthData(Object.values(JSON.parse(data)));
+  // On Mount: fetch all of an application's comms and health data
+  useEffect(() => {
+    connectToDB(index);
+    fetchServicesNames(index);
 
-      // Change view in Monitoring Component
-      setDetails(<ServiceDetails service={microservice} />);
-    });
+    // Clear context states when component is unmounted
+    return () => {
+      setCommsData([]);
+      setHealthData([]);
+      setServicesData([]);
+    };
+  }, []);
+
+  // Change view display in the MainContainer component
+  const changeView = microservice => {
+    setDetails(<ServiceDetails service={microservice} />);
   };
 
-  // Holds the buttons generated for unique services.
-  const componentButtons = [];
-
-  // Todo: Query for only the distinct microservices
-  const cache = {};
-  for (let i = 0; i < overviewState.length; i += 1) {
-    const { currentMicroservice, currentmicroservice, _id } = overviewState[i];
-    const service = currentMicroservice || currentmicroservice;
-
-    if (!cache[service]) {
-      cache[service] = true;
-      componentButtons.push(
-        <button className="services-btn" type="button" key={_id} onClick={() => fetchData(service)}>
-          {service}
-        </button>
-      );
-    }
-  }
-
-  // Display loading while data is fetched
-  return !componentButtons.length ? <p>Loading</p> : componentButtons;
+  return !servicesData.length ? (
+    // Display 'Loading' while data is fetched
+    <p>Loading</p>
+  ) : (
+    // Display dropdown of buttons per microservice
+    servicesData.map(service => (
+      <button
+        className="services-btn"
+        type="button"
+        key={service.id}
+        onClick={() => changeView(service.microservice)}
+      >
+        {service.microservice}
+      </button>
+    ))
+  );
 };
 
 export default ServicesList;
