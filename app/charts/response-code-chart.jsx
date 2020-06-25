@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { CommunicationsContext } from '../context/CommunicationsContext';
+import { CommsContext } from '../context/CommsContext';
 
 const ResponseCodeChart = props => {
-  const { communicationsData } = useContext(CommunicationsContext);
+  const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
     const responseCodes = {
@@ -15,41 +15,23 @@ const ResponseCodeChart = props => {
       NULL: 0,
     };
 
-    for (let i = 0; i < communicationsData.length; i += 1) {
-      const element = communicationsData[i];
-      // If Mongo Else SQL
-      if (element.currentMicroservice === props.service && element.resStatus) {
-        const statusCode = element.resStatus;
-        if (statusCode <= 199) {
-          responseCodes['100-199'] += 1;
-        } else if (statusCode <= 299) {
-          responseCodes['200-299'] += 1;
-        } else if (statusCode <= 399) {
-          responseCodes['300-399'] += 1;
-        } else if (statusCode <= 499) {
-          responseCodes['400-499'] += 1;
-        } else if (statusCode <= 599) {
-          responseCodes['500-599'] += 1;
-        } else {
-          responseCodes.NULL += 1;
-        }
-      } else if (element.currentmicroservice === props.service && element.resstatus) {
-        const statusCode = element.resstatus;
-        if (statusCode <= 199) {
-          responseCodes['100-199'] += 1;
-        } else if (statusCode <= 299) {
-          responseCodes['200-299'] += 1;
-        } else if (statusCode <= 399) {
-          responseCodes['300-399'] += 1;
-        } else if (statusCode <= 499) {
-          responseCodes['400-499'] += 1;
-        } else if (statusCode <= 599) {
-          responseCodes['500-599'] += 1;
-        } else {
-          responseCodes.NULL += 1;
-        }
+    // Record each status code in the responseCodes object
+    commsData.forEach(obj => {
+      const status = obj.responsestatus;
+      if (status >= 500) {
+        responseCodes['500-599'] += 1;
+      } else if (status >= 400) {
+        responseCodes['400-499'] += 1;
+      } else if (status >= 300) {
+        responseCodes['300-399'] += 1;
+      } else if (status >= 200) {
+        responseCodes['200-299'] += 1;
+      } else if (status >= 100) {
+        responseCodes['100-199'] += 1;
+      } else {
+        responseCodes.NULL += 1;
       }
-    }
+    });
 
     return (
       <Plot

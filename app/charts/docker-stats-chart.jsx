@@ -33,7 +33,7 @@ const DockerStatsChart = props => {
 
   // Note: The difference btw MongoDB and pSQL is whether a stat title is camelCased (mongo = yes, psql = no).
   // Extract Docker-related MongoDB data (if exists) and save to dockerStats obj.
-  if (healthData[index].containerId) {
+  if (index !== undefined && healthData[index].containerId) {
     dockerStats = {
       'Containerized service': healthData[index].currentMicroservice,
       'Container ID': healthData[index].containerId.slice(0, 7) + '[...]',
@@ -50,7 +50,7 @@ const DockerStatsChart = props => {
     };
   }
   // Extract Docker-related SQL data (if exists) and save to dockerStats obj.
-  if (healthData[index].containerid) {
+  if (index !== undefined && healthData[index].containerid) {
     dockerStats = {
       'Containerized service': healthData[index].currentmicroservice,
       'Container ID': healthData[index].containerid.slice(0, 7) + '[...]',
@@ -80,7 +80,6 @@ const DockerStatsChart = props => {
       );
     }
 
-    console.log('dockerStatsArr (docker stats chart):', dockerStatsArr);
     return (
       <div id="docker-stats-chart">
         <header id="docker-stats-chart-header">Docker Container Stats</header>

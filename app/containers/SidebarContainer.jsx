@@ -12,11 +12,12 @@ const SidebarContainer = ({ setDetails }) => {
   const [index, setIndex] = useState(null);
 
   const handleClick = id => {
-    // Toggle index to show/hide the app microservices
-    setIndex(index === null ? id : null);
-
-    // Clear main container
-    setDetails(null);
+    // Toggle the sidebar buttons to reveal or hide their microservices
+    if (index === null) {
+      setIndex(id);
+    } else {
+      setIndex(index === id ? null : id);
+    }
   };
 
   return (
@@ -25,17 +26,20 @@ const SidebarContainer = ({ setDetails }) => {
         <SidebarHeader />
         {/* Demo, Chronos */}
         <Applications handleClick={handleClick} />
-        {/* each microservice(order, books) */}
-        {index && <ServicesList index={index} setDetails={setDetails} />}
+
+        {/* Render the ServicesList if one of the Applications were clicked */}
+        {index !== null && <ServicesList index={index} setDetails={setDetails} />}
         <div className="btn-container">
           {/* Route to AddService component */}
           <button type="button" onClick={() => setDetails(<AddService />)}>
             +
           </button>
+
           {/* Route to DeleteService component */}
           <button type="button" onClick={() => setDetails(<DeleteService />)}>
             -
           </button>
+
           {/* Refresh page */}
           <button type="button" onClick={() => location.reload()}>
             Refresh
