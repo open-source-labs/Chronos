@@ -1,8 +1,8 @@
 import React from 'react';
 import icon from '../assets/pangolin.png';
-import '../stylesheets/Blank.css';
+import '../stylesheets/Home.css';
 
-const Blank = props => {
+const Home = props => {
   return (
     <div className="blank">
       <img width="300" height="auto" src={icon} alt="Chronos logo" />
@@ -12,4 +12,4 @@ const Blank = props => {
   );
 };
 
-export default Blank;
+export default Home;
