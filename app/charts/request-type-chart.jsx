@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const RequestTypesChart = ({ service }) => {
+const RequestTypesChart = () => {
   const { commsData } = useContext(CommsContext);
 
   const createRequestChart = () => {
-    const requestObj = {
+    const requestTypes = {
       DELETE: 0,
       GET: 0,
       PATCH: 0,
@@ -15,21 +15,19 @@ const RequestTypesChart = ({ service }) => {
       PUT: 0,
     };
 
-    for (let i = 0; i < commsData.length; i += 1) {
-      const element = commsData[i];
-      // if Mongo
-      if (element.currentMicroservice === service && element.reqType in requestObj)
-        requestObj[element.reqType] += 1;
-      // if SQL
-      else if (element.currentmicroservice === service && element.reqtype in requestObj)
-        requestObj[element.reqtype] += 1;
-    }
+    // Record each request type in the requestTypes object
+    commsData.forEach(obj => {
+      const type = obj.request;
+      if (type in requestTypes) {
+        requestTypes[type] += 1;
+      }
+    });
 
     return (
       <Plot
         data={[
           {
-            values: Object.values(requestObj),
+            values: Object.values(requestTypes),
             labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
             type: 'pie',
             textposition: 'inside',
