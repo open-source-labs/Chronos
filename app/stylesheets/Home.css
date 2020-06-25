@@ -1,0 +1,22 @@
+.blank {
+  background-color: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.blank img {
+  animation: twirl 20s infinite linear;
+  margin-bottom: 10px;
+}
+
+@keyframes twirl {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
