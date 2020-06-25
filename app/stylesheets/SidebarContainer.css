@@ -14,6 +14,7 @@
   justify-items: center;
   align-content: center;
   height: 1000px;
+  position: fixed
 }
 
 .btn-container {
