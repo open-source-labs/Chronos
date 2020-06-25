@@ -13,7 +13,8 @@ import RouteTrace from '../charts/route-trace';
 import DockerStatsChart from '../charts/docker-stats-chart';
 import '../stylesheets/GraphsContainer.css';
 
-const GraphsContainer = ({ service }) => {
+const GraphsContainer = ({ match }) => {
+  const { service } = match.params;
   const initialData = {
     nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
     links: [
@@ -50,31 +51,38 @@ const GraphsContainer = ({ service }) => {
 
   useEffect(fetchData, []);
 
-  const { fetchHealthData, healthData} = useContext(HealthContext);
-  const { fetchCommsData } = useContext(CommsContext);
+  const { fetchHealthData, healthData, setHealthData } = useContext(HealthContext);
+  const { fetchCommsData, commsData, setCommsData } = useContext(CommsContext);
 
   // On Mount: fetch communication data and health data
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
-  }, []);
+    return () => {
+      setHealthData({});
+      setCommsData({});
+    };
+  }, [service]);
 
-  console.log('health in GraphsContainer', healthData)
+  // console.log('health in GraphsContainer', healthData);
 
   return (
-    <div className="graphsGrid">
-      <div className="routes">
-        <div ref={canvas} />
+    <div id="serviceDetailsContainer">
+      <h3 id="microserviceHealthTitle">Microservice: {service}</h3>
+      <div className="graphsGrid">
+        <div className="routes">
+          <div ref={canvas} />
+        </div>
+        <SpeedChart service={service} />
+        <TemperatureChart service={service} />
+        <RequestTypesChart service={service} />
+        <ResponseCodesChart service={service} />
+        <ProcessesChart service={service} />
+        <LatencyChart service={service} />
+        <MicroServiceTraffic service={service} />
+        <MemoryChart service={service} />
+        <DockerStatsChart service={service} />
       </div>
-      <SpeedChart service={service} />
-      <TemperatureChart service={service} />
-      <RequestTypesChart service={service} />
-      <ResponseCodesChart service={service} />
-      <ProcessesChart service={service} />
-      <LatencyChart service={service} />
-      <MicroServiceTraffic service={service} />
-      <MemoryChart service={service} />
-      <DockerStatsChart service={service} />
     </div>
   );
 };

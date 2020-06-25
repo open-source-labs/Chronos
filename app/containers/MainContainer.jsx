@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import AddService from '../components/AddService';
 import DeleteService from '../components/DeleteService';
-import ServiceDetails from '../components/ServiceDetails';
+import GraphsContainer from './GraphsContainer';
 import '../stylesheets/MainContainer.css';
 
 // Details is the current microservice being displayed
@@ -10,9 +10,9 @@ import '../stylesheets/MainContainer.css';
 
 const MainContainer = props => (
   <>
-    <Route path="/add" component={AddService} />
-    <Route path="/delete" component={DeleteService} />
-    <Route path="/:service" component={ServiceDetails} />
+    <Route exact path="/add" component={AddService} />
+    <Route exact path="/delete" component={DeleteService} />
+    <Route exact path="/:service" component={GraphsContainer} />
   </>
 );
 
