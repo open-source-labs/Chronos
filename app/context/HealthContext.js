@@ -33,12 +33,12 @@ const HealthContextProvider = ({ children }) => {
       };
       result.forEach(obj => {
         for (let key in obj) {
-          if (key in freq){
+          if (key in freq) {
             freq[key].push(obj[key]);
           }
         }
       });
-      setHealthData(freq)
+      setHealthData(freq);
     });
   };
 
