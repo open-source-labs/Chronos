@@ -141,7 +141,7 @@ chronos.microServices = (microserviceName, queryFreq) => {
   client.query(
     `CREATE TABLE IF NOT EXISTS services (
       id SERIAL PRIMARY KEY NOT NULL,
-      microservice VARCHAR(248) NOT NULL,
+      microservice VARCHAR(248) NOT NULL UNIQUE,
       interval INTEGER NOT NULL
       )`,
     (err, results) => {
@@ -153,7 +153,8 @@ chronos.microServices = (microserviceName, queryFreq) => {
 
   const queryString = `INSERT INTO services
       (microservice, interval)
-      VALUES ($1, $2);`;
+      VALUES ($1, $2)
+      ON CONFLICT microservice DO NOTHING;`;
   const values = [microserviceName, queryObj[queryFreq]];
 
   client.query(queryString, values, (err, result) => {
