@@ -15,7 +15,7 @@ const HealthContextProvider = ({ children }) => {
       const result = JSON.parse(data);
       console.log('Number of data points (service):', result.length);
 
-      // Separate data in individual arrays
+      // Separate data into individual arrays
       const freq = {};
       result.forEach(obj => {
         for (const key in obj) {
