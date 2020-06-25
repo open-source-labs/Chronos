@@ -14,7 +14,6 @@ import DockerStatsChart from '../charts/docker-stats-chart';
 import '../stylesheets/GraphsContainer.css';
 
 const GraphsContainer = ({ match }) => {
-  const { service } = match.params;
   const initialData = {
     nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
     links: [
@@ -51,20 +50,23 @@ const GraphsContainer = ({ match }) => {
 
   useEffect(fetchData, []);
 
-  const { fetchHealthData, healthData, setHealthData } = useContext(HealthContext);
-  const { fetchCommsData, commsData, setCommsData } = useContext(CommsContext);
+  // Get current service name from params
+  const { service } = match.params;
+
+  const { fetchHealthData, setHealthData } = useContext(HealthContext);
+  const { fetchCommsData, setCommsData } = useContext(CommsContext);
 
   // On Mount: fetch communication data and health data
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
+
+    // On unmount: clear data
     return () => {
       setHealthData({});
-      setCommsData({});
+      setCommsData([]);
     };
   }, [service]);
-
-  // console.log('health in GraphsContainer', healthData);
 
   return (
     <div id="serviceDetailsContainer">
