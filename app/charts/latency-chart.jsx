@@ -12,16 +12,16 @@ const LatencyChart = ({ service }) => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
-    const xAxis = [];
-    const yAxis = [];
+    // const xAxis = [];
+    const yAxis = healthData.latency;
 
-    for (let i = 0; i < healthData.length; i += 2) {
-      const element = healthData[i];
-      if (element.currentmicroservice === service || element.currentMicroservice === service) {
-        xAxis.push(i);
-        yAxis.push(element.latency);
-      }
-    }
+    // for (let i = 0; i < healthData.length; i += 2) {
+    //   const element = healthData[i];
+    //   if (element.currentmicroservice === service || element.currentMicroservice === service) {
+    //     xAxis.push(i);
+    //     yAxis.push(element.latency);
+    //   }
+    // }
 
     return (
       <Plot
@@ -29,7 +29,7 @@ const LatencyChart = ({ service }) => {
           {
             name: 'CPU Latency',
             type: 'scattergl',
-            x: xAxis,
+            // x: xAxis,
             y: yAxis,
             mode: 'lines',
             rangemode: 'nonnegative',
@@ -56,7 +56,7 @@ const LatencyChart = ({ service }) => {
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 200,
+            dtick: 5,
             rangemode: 'nonnegative',
           },
           yaxis: { rangemode: 'nonnegative' },
