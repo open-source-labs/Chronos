@@ -1,18 +1,19 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, Props } from 'react';
+// import { IpcRendererEvent } from 'electron';
 
 const { ipcRenderer } = window.require('electron');
 
-export const ApplicationContext = createContext();
+export const ApplicationContext = React.createContext(null);
 
 const ApplicationContextProvider = ({ children }) => {
   const [servicesData, setServicesData] = useState([]);
-
+  console.log('this is your children in application context:   ', children);
   /**
    * Connect to database provided by user at 'index'
    */
   const connectToDB = index => {
     if (index) ipcRenderer.send('connect', index);
-  }
+  };
   /**
    * Fetch all microservices of a certain applications
    */
