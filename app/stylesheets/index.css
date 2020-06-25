@@ -3,6 +3,8 @@
 body {
   background-color: #333;
   background: rgb(25, 0, 36);
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
 }
 
 html {
