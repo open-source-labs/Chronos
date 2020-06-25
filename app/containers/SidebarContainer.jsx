@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ApplicationContext } from '../context/ApplicationContext';
 import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
-import ServicesList from '../components/ServicesList';
-import AddService from '../components/AddService';
-import DeleteService from '../components/DeleteService';
 import '../stylesheets/SidebarContainer.css';
 
-const SidebarContainer = ({ setDetails }) => {
+const SidebarContainer = () => {
   // Set view to selected index
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState(null);
@@ -20,26 +19,38 @@ const SidebarContainer = ({ setDetails }) => {
     }
   };
 
+  const { connectToDB, fetchServicesNames, servicesData } = useContext(ApplicationContext);
+
+  // On Mount: fetch all of an application's comms and health data
+  useEffect(() => {
+    connectToDB(index);
+    fetchServicesNames(index);
+  }, [index]);
+
+  const serviceList = [];
+
+  servicesData.forEach(service => {
+    serviceList.push(
+      <Link className="services-btn" to={`/${service.microservice}`} key={service.id}>
+        {service.microservice}
+      </Link>
+    );
+  });
+
   return (
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
         {/* Demo, Chronos */}
         <Applications handleClick={handleClick} />
-
-        {/* Render the ServicesList if one of the Applications were clicked */}
-        {index !== null && <ServicesList index={index} setDetails={setDetails} />}
+        {servicesData.map(service => (
+          <Link className="services-btn" to={`/${service.microservice}`} key={service.id}>
+            {service.microservice}
+          </Link>
+        ))}
         <div className="btn-container">
-          {/* Route to AddService component */}
-          <button type="button" onClick={() => setDetails(<AddService />)}>
-            +
-          </button>
-
-          {/* Route to DeleteService component */}
-          <button type="button" onClick={() => setDetails(<DeleteService />)}>
-            -
-          </button>
-
+          <Link to="/add">+</Link>
+          <Link to="/delete">-</Link>
           {/* Refresh page */}
           <button type="button" onClick={() => location.reload()}>
             Refresh
