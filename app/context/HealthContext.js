@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { set } from 'd3';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -12,33 +11,21 @@ const HealthContextProvider = ({ children }) => {
   const fetchHealthData = service => {
     ipcRenderer.send('healthRequest', service);
     ipcRenderer.on('healthResponse', (event, data) => {
-      // Store resulting data in local state
-      // result: [{}] with cpuspeed, cputemp, etc.
+      // Parse result
       const result = JSON.parse(data);
       console.log('Number of data points (service):', result.length);
-      const freq = {
-        cpuspeed: [],
-        cputemp: [],
-        activememory: [],
-        freememory: [],
-        totalmemory: [],
-        usedmemory: [],
-        latency: [],
-        blockedprocesses: [],
-        sleepingprocesses: [],
-        runningprocesses: [],
-        totalprocesses: [],
-        time: [],
-        cpuloadpercent: [],
-      };
+
+      // Separate data in individual arrays
+      const freq = {};
       result.forEach(obj => {
-        for (let key in obj) {
-          if (key in freq){
-            freq[key].push(obj[key]);
-          }
+        for (const key in obj) {
+          if (!(key in freq)) freq[key] = [];
+          freq[key].push(obj[key]);
         }
       });
-      setHealthData(freq)
+
+      // Update local context state
+      setHealthData(freq);
     });
   };
 
