@@ -27,21 +27,10 @@ const SidebarContainer = () => {
     fetchServicesNames(index);
   }, [index]);
 
-  const serviceList = [];
-
-  servicesData.forEach(service => {
-    serviceList.push(
-      <Link className="services-btn" to={`/${service.microservice}`} key={service.id}>
-        {service.microservice}
-      </Link>
-    );
-  });
-
   return (
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
-        {/* Demo, Chronos */}
         <Applications handleClick={handleClick} />
         <div className="btn-container">
           {servicesData.map(service => (
@@ -55,7 +44,6 @@ const SidebarContainer = () => {
           <Link className="link" to="/delete">
             -
           </Link>
-          {/* Refresh page */}
           <button className="link" type="button" onClick={() => location.reload()}>
             Refresh
           </button>
