@@ -21,14 +21,19 @@ let currentDatabaseType;
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
+
+// GET SERIVCES!
+
 info.connect = () => {
   ipcMain.on('connect', (message, index) => {
     // Extract databaseType and URI from settings.json at particular index
+    // get index from application context
     const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
       encoding: 'UTF-8',
     });
 
     const userDatabase = JSON.parse(fileContents).services[index];
+    // We get index from sidebar container: which is the mapplication (DEMO)
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
     // Connect to the proper database
@@ -71,6 +76,7 @@ info.getServices = () => {
  * @event   commsRequest/commsResponse
  * @desc    Query for comms data
  */
+
 info.commsData = () => {
   console.log('ipc call to comms');
 
