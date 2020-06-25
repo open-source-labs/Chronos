@@ -7,7 +7,6 @@ const CommunicationSchema = require('../models/nonrelational/communicatonSchema'
 const HealthSchema = require('../models/nonrelational/healthSchema');
 const ServicesSchema = require('../models/nonrelational/servicesSchema');
 
-// Controller
 const info = {};
 
 // Initiate pool variable for SQL setup
@@ -21,9 +20,6 @@ let currentDatabaseType;
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-
-// GET SERIVCES!
-
 info.connect = () => {
   ipcMain.on('connect', (message, index) => {
     // Extract databaseType and URI from settings.json at particular index
@@ -47,7 +43,7 @@ info.connect = () => {
 
 /**
  * @event   serviceRequest/serviceResponse
- * @desc    Query to services table for all entries
+ * @desc    Query to services table for all microservices of a specific app
  */
 info.getServices = () => {
   ipcMain.on('servicesRequest', async message => {
@@ -74,9 +70,8 @@ info.getServices = () => {
 
 /**
  * @event   commsRequest/commsResponse
- * @desc    Query for comms data
+ * @desc    Query for all communication data
  */
-
 info.commsData = () => {
   console.log('ipc call to comms');
 
@@ -119,7 +114,6 @@ info.healthData = () => {
     try {
       let result;
 
-      console.log('in healthRequest', service)
       // Mongo Database
       if (currentDatabaseType === 'MongoDB') {
         // Get document count
@@ -145,8 +139,6 @@ info.healthData = () => {
         result = result.rows.reverse();
       }
 
-      // Sync event emitter
-      // message.returnValue = JSON.stringify(result)
       // Async event emitter - send response
       message.sender.send('healthResponse', JSON.stringify(result));
     } catch (error) {
