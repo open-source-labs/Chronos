@@ -6,7 +6,11 @@ export const ApplicationContext = createContext();
 
 const ApplicationContextProvider = ({ children }) => {
   const connectToDB = index => {
-    ipcRenderer.send('connect', index);
+    if (!index) {
+      //do nothing
+    } else {
+      ipcRenderer.send('connect', index);
+    }
   };
   // Greg: Created route to grab name of all services associated with an app!
   const [servicesData, setServicesData] = useState([]);
