@@ -10,40 +10,23 @@ import moment from 'moment';
 
 const SpeedChart = props => {
   const { healthData } = useContext(HealthContext);
+  const { time } = healthData;
+  const yAxis = healthData.cpuspeed;
 
   const createChart = () => {
-    const xAxis = [];
-    const yAxis = [];
-
-    for (let i = 0; i < healthData.length; i += 1) {
-      const {
-        currentmicroservice,
-        currentMicroservice,
-        cpuCurrentSpeed,
-        cpucurrentspeed,
-        timestamp,
-      } = healthData[i];
-      const milliseconds = moment(timestamp).format('h:mm a');
-
-      // If using a SQL Database
-      if (currentmicroservice === props.service && cpucurrentspeed) {
-        xAxis.push(milliseconds);
-        yAxis.push(cpucurrentspeed);
-      }
-      // If using a Mongo Database
-      if (currentMicroservice === props.service && cpuCurrentSpeed) {
-        xAxis.push(milliseconds);
-        yAxis.push(cpuCurrentSpeed);
-      }
+    let timeArr;
+    if (time === undefined) {
+      // Do Nothing
+    } else {
+      // const xAxis = healthData.time;
+      timeArr = time.map(el => moment(el).format('hh:ss A'));
     }
-    const secondsArr = xAxis.map(dates => dates);
-
     return (
       <Plot
         data={[
           {
             name: 'mbps',
-            x: secondsArr,
+            x: timeArr,
             y: yAxis,
             type: 'scatter',
             mode: 'lines',
@@ -60,11 +43,11 @@ const SpeedChart = props => {
             family: 'Nunito, san serif',
           },
           xaxis: {
-            title: 'Service',
+            title: 'Time (PST)',
             tickmode: 'linear',
-            tick0: secondsArr[0],
+            // tick0: secondsArr[0],
             tickformat: '%d %B (%a)<br>%Y',
-            nticks: 5,
+            // nticks: 5,
             range: [1, 10],
             rangemode: 'nonnegative',
             rangeslider: true,
