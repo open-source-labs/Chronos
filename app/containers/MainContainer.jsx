@@ -10,9 +10,9 @@ import '../stylesheets/MainContainer.css';
 
 const MainContainer = props => (
   <>
-    <Route path="/add" component={AddService} />;
-    <Route path="/delete" component={DeleteService} />;
-    <Route path="/:service" component={ServiceDetails} />;
+    <Route path="/add" component={AddService} />
+    <Route path="/delete" component={DeleteService} />
+    <Route path="/:service" component={ServiceDetails} />
   </>
 );
 
