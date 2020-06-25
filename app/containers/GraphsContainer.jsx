@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
+import { CommsContext } from '../context/CommsContext';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
 import MicroServiceTraffic from '../charts/microservice-traffic';
@@ -50,11 +51,20 @@ const GraphsContainer = ({ service }) => {
   useEffect(fetchData, []);
 
   // New fetch call here, change service to serviceName everywhere in here when ready:
-  // const { fetchHealthData } = useContext(healthContext);
-  // useEffect(() => {
-  //   const healthData = fetchHealthData(service);
-  //   console.log('This is our healthData:    ', healthData);
-  // });
+  const { fetchHealthData, healthData } = useContext(HealthContext);
+  const { fetchCommsData, commsData } = useContext(CommsContext)
+
+  // const [health, setHealth] = useState([])
+  // const [comms, setComms] = useState([])
+
+  useEffect(() => {
+    fetchCommsData(99)
+    fetchHealthData(service);
+    console.log('in the comDidmount', healthData)
+    console.log('in comp did mount', commsData)
+  }, []);
+  // console.log('This is our healthData:    ', healthData);
+  // console.log('This is our comms:    ', comms);
 
   return (
     <div className="graphsGrid">
