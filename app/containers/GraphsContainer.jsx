@@ -54,17 +54,13 @@ const GraphsContainer = ({ service }) => {
   const { fetchHealthData, healthData } = useContext(HealthContext);
   const { fetchCommsData, commsData } = useContext(CommsContext)
 
-  // const [health, setHealth] = useState([])
-  // const [comms, setComms] = useState([])
 
   useEffect(() => {
     fetchCommsData(99)
     fetchHealthData(service);
-    console.log('in the comDidmount', healthData)
-    console.log('in comp did mount', commsData)
   }, []);
-  // console.log('This is our healthData:    ', healthData);
-  // console.log('This is our comms:    ', comms);
+  // console.log('in the comDidmount', healthData)
+  // console.log('in comp did mount', commsData)
 
   return (
     <div className="graphsGrid">

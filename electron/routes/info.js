@@ -145,6 +145,8 @@ info.healthData = () => {
         result = result.rows.reverse();
       }
 
+      // Sync event emitter
+      // message.returnValue = JSON.stringify(result)
       // Async event emitter - send response
       message.sender.send('healthResponse', JSON.stringify(result));
     } catch (error) {
