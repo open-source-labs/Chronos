@@ -58,7 +58,7 @@ const GraphsContainer = ({ service }) => {
     fetchCommsData(99);
     fetchHealthData(service);
   }, []);
-  console.log('in the comDidmount', healthData);
+  // console.log('in the comDidmount', healthData);
   console.log('in comp did mount', commsData);
 
   return (

@@ -4,7 +4,6 @@ import { HealthContext } from '../context/HealthContext';
 
 const ProcessesChart = props => {
   const { healthData } = useContext(HealthContext);
-  console.log('this is the healthData in process chart   ', healthData.totalprocesses);
   const createChart = () => {
     const runningProcesses = healthData.runningprocesses;
     const blockedProcesses = healthData.blockedprocesses;
