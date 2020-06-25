@@ -59,7 +59,7 @@ const GraphsContainer = ({ service }) => {
     fetchHealthData(service);
   }, []);
 
-  console.log('health', healthData)
+  console.log('health in GraphsContainer', healthData)
 
   return (
     <div className="graphsGrid">
