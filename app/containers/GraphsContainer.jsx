@@ -60,7 +60,7 @@ const GraphsContainer = ({ service }) => {
     fetchHealthData(service);
   }, []);
   // console.log('in the comDidmount', healthData)
-  // console.log('in comp did mount', commsData)
+  console.log('in comp did mount', commsData)
 
   return (
     <div className="graphsGrid">
