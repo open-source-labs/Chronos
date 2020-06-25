@@ -31,6 +31,8 @@
     "react/button-has-type": "off",
     "react/jsx-one-expression-per-line": "off",
     "no-restricted-globals": "off",
-    "react/no-array-index-key": "warn"
+    "react/no-array-index-key": "warn",
+    "no-restricted-syntax": "off",
+    "guard-for-in": "off"
   }
 }
