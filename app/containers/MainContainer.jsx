@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import AddService from '../components/AddService';
 import DeleteService from '../components/DeleteService';
 import GraphsContainer from './GraphsContainer';
@@ -11,10 +11,12 @@ import '../stylesheets/MainContainer.css';
 
 const MainContainer = props => (
   <>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/add" component={AddService} />
-    <Route exact path="/delete" component={DeleteService} />
-    <Route exact path="/:service" component={GraphsContainer} />
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/add" component={AddService} />
+      <Route exact path="/delete" component={DeleteService} />
+      <Route exact path="/:service" component={GraphsContainer} />
+    </Switch>
   </>
 );
 
