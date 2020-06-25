@@ -1,1 +1,20 @@
+<<<<<<< HEAD
 {"setupRequired":false,"services":[["Demo","MongoDB","mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"]],"splash":true}
+=======
+{
+  "setupRequired": false,
+  "services": [
+    [
+      "Demo",
+      "MongoDB",
+      "mongodb+srv://alon:testing123@cluster0-phsei.mongodb.net/test?retryWrites=true&w=majority"
+    ],
+    [
+      "newDemo",
+      "SQL",
+      "postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm"
+    ]
+  ],
+  "splash": true
+}
+>>>>>>> 2016037f86e554b2f5a1af90a33d197145a37792

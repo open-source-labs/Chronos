@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { HealthContext } from '../context/HealthContext';
+import { CommsContext } from '../context/CommsContext';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
 import MicroServiceTraffic from '../charts/microservice-traffic';
@@ -48,8 +50,21 @@ const GraphsContainer = ({ service }) => {
 
   useEffect(fetchData, []);
 
+  // New fetch call here, change service to serviceName everywhere in here when ready:
+  const { fetchHealthData, healthData } = useContext(HealthContext);
+  const { fetchCommsData, commsData } = useContext(CommsContext)
+
+
+  useEffect(() => {
+    fetchCommsData(99)
+    fetchHealthData(service);
+  }, []);
+  // console.log('in the comDidmount', healthData)
+  // console.log('in comp did mount', commsData)
+
   return (
     <div className="graphsGrid">
+      {/* Where we might render the Date Component */}
       <div className="routes">
         <div ref={canvas} />
       </div>
