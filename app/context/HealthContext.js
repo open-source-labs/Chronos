@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { set } from 'd3';
 
 const { ipcRenderer } = window.require('electron');
 
 export const HealthContext = React.createContext();
 
 const HealthContextProvider = ({ children }) => {
-  const [healthData, setHealthData] = useState([]);
+  const [healthData, setHealthData] = useState({});
 
   // Fetches all data related to a particular app
   const fetchHealthData = service => {
@@ -15,9 +16,29 @@ const HealthContextProvider = ({ children }) => {
       // result: [{}] with cpuspeed, cputemp, etc.
       const result = JSON.parse(data);
       console.log('Number of data points (service):', result.length);
-      console.log(result)
-      setHealthData(result);
-      // setHealthData(Object.values(JSON.parse(data)));
+      const freq = {
+        cpuspeed: [],
+        cputemp: [],
+        activememory: [],
+        freememory: [],
+        totalmemory: [],
+        usedmemory: [],
+        latency: [],
+        blockedprocesses: [],
+        sleepingprocesses: [],
+        runningprocesses: [],
+        totalprocesses: [],
+        time: [],
+        cpuloadpercent: [],
+      };
+      result.forEach(obj => {
+        for (let key in obj) {
+          if (key in freq){
+            freq[key].push(obj[key]);
+          }
+        }
+      });
+      setHealthData(freq)
     });
   };
 
