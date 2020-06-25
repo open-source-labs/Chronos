@@ -19,8 +19,8 @@ const queryObj = {
 
 // microCom
 chronos.microCom = (
+  microserviceName,
   userOwnedDB,
-  userInputMSName,
   wantMicroHealth,
   queryFreq,
   isDockerized,
@@ -49,25 +49,25 @@ chronos.microCom = (
     // Printing the beginning portion of URI to confirm it's connecting to the correct postgres DB.
     console.log('Chronos SQL is connected at ', uri.slice(0, 24), '...');
   });
-
+  chronos.microServices(microserviceName, queryFreq);
   // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
   // Invoke microDocker instead if user provides "yes" to "isDockerized".
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
-    chronos.microHealth(userInputMSName, queryFreq);
+    chronos.microHealth(microserviceName, queryFreq);
   } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
-    chronos.microDocker(userInputMSName, queryFreq);
+    chronos.microDocker(microserviceName, queryFreq);
   }
 
   // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
   client.query(
     `CREATE TABLE IF NOT EXISTS communications(
     id serial PRIMARY KEY,
-    currentMicroservice varchar(500) NOT NULL,
-    targetedEndpoint varchar(500) NOT NULL,
-    reqType varchar(500),
-    resStatus integer,
-    resMessage varchar(500),
-    timeSent timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    microservice VARCHAR(248) NOT NULL,
+    endpoint varchar(248) NOT NULL,
+    request varchar(16) NOT NULL,
+    responsestatus INTEGER NOT NULL,
+    responsemessage varchar(500) NOT NULL,
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     correlatingId varchar(500)
   )`,
     (err, results) => {
@@ -76,19 +76,18 @@ chronos.microCom = (
       }
     }
   );
-
   return (req, res, next) => {
     // correlating id that will persist thru the request from one server to the next
     const correlatingId = res.getHeaders()['x-correlation-id'];
     // user-input name for current microservice
-    const currentMicroservice = userInputMSName;
+    const microservice = microserviceName;
     // What was our endpoint? Grabbed from request object
-    const targetedEndpoint = req.originalUrl;
+    const endpoint = req.originalUrl;
     // Type of request. Grabbed from request object
-    const reqType = req.method;
+    const request = req.method;
 
     const queryString = `INSERT INTO communications
-      (currentMicroservice, targetedEndpoint, reqType, resStatus, resMessage, correlatingId)
+      (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
       VALUES ($1, $2, $3, $4, $5, $6);`;
 
     // Waits for response to finish before pushing information into database
@@ -117,15 +116,15 @@ chronos.microCom = (
         notifications.sendEmail(message, config);
       }
       // Grabs status code from response object
-      const resStatus = res.statusCode;
+      const responsestatus = res.statusCode;
       // Grabs status message from response object
-      const resMessage = res.statusMessage;
+      const responsemessage = res.statusMessage;
       const values = [
-        currentMicroservice,
-        targetedEndpoint,
-        reqType,
-        resStatus,
-        resMessage,
+        microservice,
+        endpoint,
+        request,
+        responsestatus,
+        responsemessage,
         correlatingId,
       ];
       client.query(queryString, values, (err, result) => {
@@ -138,42 +137,68 @@ chronos.microCom = (
   };
 };
 
+chronos.microServices = (microserviceName, queryFreq) => {
+  client.query(
+    `CREATE TABLE IF NOT EXISTS services (
+      id SERIAL PRIMARY KEY NOT NULL,
+      microservice VARCHAR(248) NOT NULL,
+      interval INTEGER NOT NULL
+      )`,
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+    }
+  );
+
+  const queryString = `INSERT INTO services
+      (microservice, interval)
+      VALUES ($1, $2);`;
+  const values = [microserviceName, queryObj[queryFreq]];
+
+  client.query(queryString, values, (err, result) => {
+    if (err) {
+      throw err;
+    }
+  });
+};
+
 // Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
 // Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
 // Instead, will invoke another middlware called chronos.microDocker().
-chronos.microHealth = (userInputMSName, queryFreq) => {
-  let cpuCurrentSpeed;
-  let cpuTemperature;
-  let cpuCurrentLoadPercentage;
+chronos.microHealth = (microserviceName, queryFreq) => {
+  let cpuspeed;
+  let cputemp;
+  let cpuloadpercent;
   let totalMemory;
   let freeMemory;
   let usedMemory;
   let activeMemory;
   let latency;
-  let totalNumProcesses;
-  let numBlockedProcesses;
-  let numRunningProcesses;
-  let numSleepingProcesses;
+  let totalprocesses;
+  let blockedprocesses;
+  let runningprocesses;
+  let sleepingprocesses;
 
-  const currentMicroservice = userInputMSName;
+  const microservice = microserviceName;
 
   client.query(
-    `CREATE TABLE IF NOT EXISTS healthInfo (
-      id SERIAL PRIMARY KEY,
-      time timestamp DEFAULT CURRENT_TIMESTAMP,
-      currentMicroservice varchar(500),
-      cpuCurrentSpeed float DEFAULT 0.0,
-      cpuCurrentLoadPercentage float DEFAULT 0.00,
-      cpuTemperature float DEFAULT 0.0,
-      totalMemory real DEFAULT 0,
-      freeMemory real DEFAULT 0,
-      usedMemory real DEFAULT 0,
-      activeMemory real DEFAULT 0,
-      totalNumProcesses real DEFAULT 0,
-      numRunningProcesses real DEFAULT 0,
-      numBlockedProcesses real DEFAULT 0,
-      numSleepingProcesses real DEFAULT 0,
-      latency float DEFAULT 0.0
+    `CREATE TABLE IF NOT EXISTS ${microserviceName} (
+      id SERIAL PRIMARY KEY NOT NULL,
+      cpuspeed FLOAT DEFAULT 0.0,
+      cputemp FLOAT DEFAULT 0.0,
+      activememory REAL DEFAULT 0,
+      freememory REAL DEFAULT 0,
+      totalmemory REAL DEFAULT 0,
+      usedmemory REAL DEFAULT 0,
+      latency FLOAT DEFAULT 0,
+      blockedprocesses REAL DEFAULT 0,
+      sleepingprocesses REAL DEFAULT 0,
+      runningprocesses REAL DEFAULT 0,
+      totalprocesses REAL DEFAULT 0,
+      cpuloadpercent float DEFAULT 0.00,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
     )`,
     (err, results) => {
       if (err) {
@@ -186,7 +211,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   setInterval(() => {
     si.cpuCurrentspeed()
       .then(data => {
-        cpuCurrentSpeed = data.avg;
+        cpuspeed = data.avg;
       })
       .catch(err => {
         throw err;
@@ -194,7 +219,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
 
     si.cpuTemperature()
       .then(data => {
-        cpuTemperature = data.main;
+        cputemp = data.main;
       })
       .catch(err => {
         throw err;
@@ -202,7 +227,7 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
 
     si.currentLoad()
       .then(data => {
-        cpuCurrentLoadPercentage = data.currentload;
+        cpuloadpercent = data.currentload;
       })
       .catch(err => {
         throw err;
@@ -221,10 +246,10 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
 
     si.processes()
       .then(data => {
-        totalNumProcesses = data.all;
-        numBlockedProcesses = data.blocked;
-        numRunningProcesses = data.running;
-        numSleepingProcesses = data.sleeping;
+        totalprocesses = data.all;
+        blockedprocesses = data.blocked;
+        runningprocesses = data.running;
+        sleepingprocesses = data.sleeping;
       })
       .catch(err => {
         throw err;
@@ -238,35 +263,33 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
         throw err;
       });
 
-    const queryString = `INSERT INTO healthInfo(
-      currentMicroservice,
-      cpuCurrentSpeed,
-      cpuTemperature,
-      cpuCurrentLoadPercentage,
+    const queryString = `INSERT INTO ${microserviceName}(
+      cpuspeed,
+      cputemp,
+      cpuloadpercent,
       totalMemory,
       freeMemory,
       usedMemory,
       activeMemory,
-      totalNumProcesses,
-      numRunningProcesses,
-      numBlockedProcesses,
-      numSleepingProcesses,
+      totalprocesses,
+      runningprocesses,
+      blockedprocesses,
+      sleepingprocesses,
       latency) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
 
     const values = [
-      currentMicroservice,
-      cpuCurrentSpeed,
-      cpuTemperature,
-      cpuCurrentLoadPercentage,
+      cpuspeed,
+      cputemp,
+      cpuloadpercent,
       totalMemory,
       freeMemory,
       usedMemory,
       activeMemory,
-      totalNumProcesses,
-      numRunningProcesses,
-      numBlockedProcesses,
-      numSleepingProcesses,
+      totalprocesses,
+      runningprocesses,
+      blockedprocesses,
+      sleepingprocesses,
       latency,
     ];
 
@@ -279,10 +302,10 @@ chronos.microHealth = (userInputMSName, queryFreq) => {
   }, queryObj[queryFreq]);
 };
 
-chronos.microDocker = function (userInputMSName, queryFreq) {
+chronos.microDocker = function (microserviceName, queryFreq) {
   // Create a table if it doesn't already exist.
   client.query(
-    'CREATE TABLE IF NOT EXISTS containerInfo(\n    id serial PRIMARY KEY,\n    currentMicroservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
+    'CREATE TABLE IF NOT EXISTS containerInfo(\n    id serial PRIMARY KEY,\n    microservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
     function (err, results) {
       if (err) throw err;
     }
@@ -300,7 +323,7 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
   var containerProcessCount;
   var containerRestartCount;
   // dockerContainers() return an arr of active containers (ea. container = an obj).
-  // Find the data pt with containerName that matches currentMicroservice name.
+  // Find the data pt with containerName that matches microservice name.
   // Extract container ID, name, platform, and start time.
   // Other stats will be retrieved by dockerContainerStats().
   si.dockerContainers()
@@ -309,7 +332,7 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
 
       for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
         var dataObj = data_1[_i];
-        if (dataObj.name === userInputMSName) {
+        if (dataObj.name === microserviceName) {
           containerName = dataObj.name;
           containerId = dataObj.id;
           containerPlatform = dataObj.platform;
@@ -337,9 +360,9 @@ chronos.microDocker = function (userInputMSName, queryFreq) {
               containerProcessCount = data[0].pids;
               containerRestartCount = data[0].restartCount;
               var queryString =
-                'INSERT INTO containerInfo(\n                currentMicroservice,\n                containerName,\n                containerId,\n                containerPlatform,\n                containerStartTime,\n                containerMemUsage,\n                containerMemLimit,\n                containerMemPercent,\n                containerCpuPercent,\n                networkReceived,\n                networkSent,\n                containerProcessCount,\n                containerRestartCount)\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13\n              )';
+                'INSERT INTO containerInfo(\n                microservice,\n                containerName,\n                containerId,\n                containerPlatform,\n                containerStartTime,\n                containerMemUsage,\n                containerMemLimit,\n                containerMemPercent,\n                containerCpuPercent,\n                networkReceived,\n                networkSent,\n                containerProcessCount,\n                containerRestartCount)\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13\n              )';
               var values = [
-                userInputMSName,
+                microserviceName,
                 containerName,
                 containerId,
                 containerPlatform,

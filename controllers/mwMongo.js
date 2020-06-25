@@ -32,8 +32,8 @@ const queryObj = {
 
 // Create a coomunication table in the user database the stores all of the data from each request
 chronos.microCom = (
-  userOwnedDB,
   microserviceName,
+  userOwnedDB,
   wantMicroHealth,
   queryFreq,
   isDockerized,

@@ -92,8 +92,8 @@ chronos.microCom = (
   // Throws error if input db type is not supported
   if (databaseType === 'mongo' || databaseType === 'mongodb') {
     return mongoMiddleware.microCom(
-      userOwnedDB,
       microserviceName,
+      userOwnedDB,
       wantMicroHealth,
       queryFreq,
       isDockerized,
@@ -107,8 +107,8 @@ chronos.microCom = (
   }
   if (databaseType === 'sql' || databaseType === 'postgresql') {
     return sqlMiddleware.microCom(
-      userOwnedDB,
       microserviceName,
+      userOwnedDB,
       wantMicroHealth,
       queryFreq,
       isDockerized,
