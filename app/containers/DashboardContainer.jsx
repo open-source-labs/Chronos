@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
 import HealthContextProvider from '../context/HealthContext';
@@ -11,16 +12,18 @@ const DashboardContainer = () => {
   const [details, setDetails] = useState();
 
   return (
-    <div className="dashboard">
-      <ApplicationContextProvider>
-        <CommsContextProvider>
-          <HealthContextProvider>
-            <SidebarContainer setDetails={setDetails} />
-            <MainContainer details={details} />
-          </HealthContextProvider>
-        </CommsContextProvider>
-      </ApplicationContextProvider>
-    </div>
+    <Router>
+      <div className="dashboard">
+        <ApplicationContextProvider>
+          <CommsContextProvider>
+            <HealthContextProvider>
+              <SidebarContainer setDetails={setDetails} />
+              <MainContainer details={details} />
+            </HealthContextProvider>
+          </CommsContextProvider>
+        </ApplicationContextProvider>
+      </div>
+    </Router>
   );
 };
 
