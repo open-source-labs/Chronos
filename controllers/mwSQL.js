@@ -61,7 +61,7 @@ chronos.microCom = (
   // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
   client.query(
     `CREATE TABLE IF NOT EXISTS communications(
-    id serial PRIMARY KEY,
+    _id serial PRIMARY KEY,
     microservice VARCHAR(248) NOT NULL,
     endpoint varchar(248) NOT NULL,
     request varchar(16) NOT NULL,
@@ -140,7 +140,7 @@ chronos.microCom = (
 chronos.microServices = (microserviceName, queryFreq) => {
   client.query(
     `CREATE TABLE IF NOT EXISTS services (
-      id SERIAL PRIMARY KEY NOT NULL,
+      _id SERIAL PRIMARY KEY NOT NULL,
       microservice VARCHAR(248) NOT NULL UNIQUE,
       interval INTEGER NOT NULL
       )`,
@@ -185,7 +185,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 
   client.query(
     `CREATE TABLE IF NOT EXISTS ${microserviceName} (
-      id SERIAL PRIMARY KEY NOT NULL,
+      _id SERIAL PRIMARY KEY NOT NULL,
       cpuspeed FLOAT DEFAULT 0.0,
       cputemp FLOAT DEFAULT 0.0,
       activememory REAL DEFAULT 0,
@@ -306,7 +306,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 chronos.microDocker = function (microserviceName, queryFreq) {
   // Create a table if it doesn't already exist.
   client.query(
-    'CREATE TABLE IF NOT EXISTS containerInfo(\n    id serial PRIMARY KEY,\n    microservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
+    'CREATE TABLE IF NOT EXISTS containerInfo(\n    _id serial PRIMARY KEY,\n    microservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
     function (err, results) {
       if (err) throw err;
     }

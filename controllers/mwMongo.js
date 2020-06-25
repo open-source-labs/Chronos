@@ -3,7 +3,8 @@ const si = require('systeminformation');
 const notifications = require('./notification');
 require('../models/Communication');
 require('../models/ContainerInfo');
-require('../models/MicroserviceHealth');
+const MicroserviceScheme = require('../models/Microservice');
+require('../models/Services');
 
 // Required to get rid of deprecation warnings
 mongoose.set('useUnifiedTopology', true);
@@ -46,7 +47,8 @@ chronos.microCom = (
 ) => {
   //Connect chronos to the user's database
   chronos.connectDB(userOwnedDB);
-
+  //passes microservice name and latency data for the population of the services mongo table
+  chronos.microServices(microserviceName, queryFreq);
   // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
   // Invoke microDocker instead if user provides "yes" to "isDockerized".
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
@@ -65,10 +67,10 @@ chronos.microCom = (
     // creates newCommunication object that stores the data from each request
     const newCommunication = {
       currentMicroservice: microserviceName,
-      targetedEndpoint: req.originalUrl,
-      reqType: req.method,
-      timeSent: Date.now(),
-      correlatingId: res.getHeaders()['x-correlation-id'],
+      endpoint: req.originalUrl,
+      request: req.method,
+      time: Date.now(),
+      correlatingid: res.getHeaders()['x-correlation-id'],
     };
     // adds resStatus and resMessage to the newCommunication object
     // sends the data to database and goes to the next middleware
@@ -106,8 +108,8 @@ chronos.microCom = (
         }
       }
 
-      newCommunication.resStatus = res.statusCode;
-      newCommunication.resMessage = res.statusMessage;
+      newCommunication.responsestatus = res.statusCode;
+      newCommunication.responsemessage = res.statusMessage;
       const communication = new Communication(newCommunication);
 
       communication
@@ -121,31 +123,50 @@ chronos.microCom = (
   };
 };
 
+chronos.microServices = (microserviceName, queryFreq) => {
+  const Services = mongoose.model('services');
+  // creates newServices object
+  const newServices = {
+    microservice: microserviceName,
+    interval: queryObj[queryFreq],
+  };
+  //creates new services document
+  const services = new Services(newServices);
+
+  services
+    .save()
+    .then()
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 // Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
 // Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
 // Instead, will invoke another middlware called chronos.microDocker().
 chronos.microHealth = (microserviceName, queryFreq) => {
-  const MicroserviceHealth = mongoose.model('MicroserviceHealth');
+  // creates a model off of the Services Schema
+  const MicroserviceHealth = MicroserviceScheme(`${microserviceName}`);
 
-  let cpuCurrentSpeed;
-  let cpuTemperature;
-  let cpuCurrentLoadPercentage;
-  let totalMemory;
-  let freeMemory;
-  let usedMemory;
-  let activeMemory;
+  let cpuspeed;
+  let cputemp;
+  let cpuloadpercent;
+  let totalmemory;
+  let freememory;
+  let usedmemory;
+  let activememory;
   let latency;
   let timestamp;
-  let totalNumProcesses;
-  let numBlockedProcesses;
-  let numRunningProcesses;
-  let numSleepingProcesses;
+  let totalprocesses;
+  let blockedprocesses;
+  let runningprocesses;
+  let sleepingprocesses;
 
   // Note the frequency setting (2nd argument: queryObj[queryFreq]) at the end of this setInterval.
   setInterval(() => {
     si.cpuCurrentspeed()
       .then(data => {
-        cpuCurrentSpeed = data.avg;
+        cpuspeed = data.avg;
       })
       .catch(err => {
         if (err) {
@@ -155,7 +176,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 
     si.cpuTemperature()
       .then(data => {
-        cpuTemperature = data.main;
+        cputemp = data.main;
       })
       .catch(err => {
         if (err) {
@@ -165,7 +186,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 
     si.currentLoad()
       .then(data => {
-        cpuCurrentLoadPercentage = data.currentload;
+        cpuloadpercent = data.currentload;
       })
       .catch(err => {
         throw err;
@@ -173,10 +194,10 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 
     si.mem()
       .then(data => {
-        totalMemory = data.total;
-        freeMemory = data.free;
-        usedMemory = data.used;
-        activeMemory = data.active;
+        totalmemory = data.total;
+        freememory = data.free;
+        usedmemory = data.used;
+        activememory = data.active;
       })
       .catch(err => {
         if (err) {
@@ -186,10 +207,10 @@ chronos.microHealth = (microserviceName, queryFreq) => {
 
     si.processes()
       .then(data => {
-        totalNumProcesses = data.all;
-        numBlockedProcesses = data.blocked;
-        numRunningProcesses = data.running;
-        numSleepingProcesses = data.sleeping;
+        totalprocesses = data.all;
+        blockedprocesses = data.blocked;
+        runningprocesses = data.running;
+        sleepingprocesses = data.sleeping;
       })
       .catch(err => {
         if (err) {
@@ -206,24 +227,24 @@ chronos.microHealth = (microserviceName, queryFreq) => {
           throw err;
         }
       });
-
+    //creates new microservice object
     const newHealthPoint = {
       timestamp: Date.now(),
       currentMicroservice: microserviceName,
-      cpuCurrentSpeed,
-      cpuTemperature,
-      cpuCurrentLoadPercentage,
-      totalMemory,
-      freeMemory,
-      usedMemory,
-      activeMemory,
-      totalNumProcesses,
-      numRunningProcesses,
-      numBlockedProcesses,
-      numSleepingProcesses,
+      cpuspeed,
+      cputemp,
+      cpuloadpercent,
+      totalmemory,
+      freememory,
+      usedmemory,
+      activememory,
+      totalprocesses,
+      runningprocesses,
+      blockedprocesses,
+      sleepingprocesses,
       latency,
     };
-
+    // creation of new microservice schema
     const healthPoint = new MicroserviceHealth(newHealthPoint);
     healthPoint
       .save()

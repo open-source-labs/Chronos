@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
 
 mongoose.model('Communication', {
-  currentMicroservice: {
+  microservice: {
     type: String,
   },
-  targetedEndpoint: {
+  endpoint: {
     type: String,
   },
-  reqType: {
+  request: {
     type: String,
   },
-  resStatus: {
+  responsestatus: {
     type: Number,
   },
-  resMessage: {
+  responsemessage: {
     type: String,
   },
-  timeSent: {
+  time: {
     type: Date,
   },
-  correlatingId: {
+  correlatingid: {
     type: String,
   },
 });
