@@ -50,7 +50,7 @@ const GraphsContainer = ({ service }) => {
 
   useEffect(fetchData, []);
 
-  const { fetchHealthData } = useContext(HealthContext);
+  const { fetchHealthData, healthData} = useContext(HealthContext);
   const { fetchCommsData } = useContext(CommsContext);
 
   // On Mount: fetch communication data and health data
@@ -58,6 +58,8 @@ const GraphsContainer = ({ service }) => {
     fetchCommsData();
     fetchHealthData(service);
   }, []);
+
+  console.log('health', healthData)
 
   return (
     <div className="graphsGrid">
