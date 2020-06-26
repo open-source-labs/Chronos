@@ -54,10 +54,10 @@ chronos.diagnose = () => {
   }
   if (database.type === 'PostgreSQL') {
     postgres.connect(userConfig);
-    postgres.microCom(userConfig);
-    postgres.health(userConfig);
-
+    postgres.services(userConfig)
     if (dockerized) postgres.docker(userConfig);
+    postgres.health(userConfig);
+    return postgres.communications(userConfig);
   }
   throw new Error(
     'Chronos currently only supports Mongo and PostgreSQL databases. Please enter "mongo" or "sql"'
