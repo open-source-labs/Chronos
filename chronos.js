@@ -1,6 +1,6 @@
 const hpropagate = require('hpropagate');
-const mongoMiddleware = require('./controllers/mwMongo.js');
-const sqlMiddleware = require('./controllers/mwSQL.js');
+const mongo = require('./controllers/mongo.js');
+const postgres = require('./controllers/postgres.js');
 const { validateInput, addNotifications } = require('./controllers/helpers');
 
 let userConfig = {};
@@ -47,13 +47,17 @@ chronos.propagate = () => {
 };
 
 chronos.diagnose = () => {
-  const { database } = userConfig;
+  const { database, dockerized } = userConfig;
 
   if (database.type === 'MongoDB') {
-    return mongoMiddleware.microCom(userConfig);
+    mongo.communications(userConfig);
   }
   if (database.type === 'PostgreSQL') {
-    return sqlMiddleware.microCom(userConfig);
+    postgres.connect(userConfig);
+    postgres.microCom(userConfig);
+    postgres.health(userConfig);
+
+    if (dockerized) postgres.docker(userConfig);
   }
   throw new Error(
     'Chronos currently only supports Mongo and PostgreSQL databases. Please enter "mongo" or "sql"'

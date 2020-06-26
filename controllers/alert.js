@@ -1,11 +1,11 @@
 const axios = require('axios');
 const nodemailer = require('nodemailer');
 
-const notifications = {};
+const alert = {};
 
 // notification to slack
 // url param is inpovided by the user microservice side
-notifications.sendSlack = (data, url) => {
+alert.sendSlack = (data, url) => {
   const config = {
     method: 'post',
     headers: {
@@ -26,7 +26,7 @@ notifications.sendSlack = (data, url) => {
 //email notification settings
 // message object is in the DBmiddlewares and recipient emails is provided from microservice
 //config object is in the DBmiddlewares and the object values are provided by the microservice user
-notifications.sendEmail = (message, config) => {
+alert.sendEmail = (message, config) => {
   let transport = nodemailer.createTransport(config);
   console.log('slack test--------->');
 
@@ -39,4 +39,4 @@ notifications.sendEmail = (message, config) => {
   });
 };
 
-module.exports = notifications;
+module.exports = alert;

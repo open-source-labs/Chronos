@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const si = require('systeminformation');
-const notifications = require('./notification');
+const notifications = require('./alert');
 require('../models/Communication');
 require('../models/ContainerInfo');
 const MicroserviceScheme = require('../models/Microservice');

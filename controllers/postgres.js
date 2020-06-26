@@ -1,14 +1,14 @@
 // NPM package that gathers health information
 const si = require('systeminformation');
 const { Client } = require('pg');
-const notifications = require('../controllers/notification');
+const alert = require('./alert');
 // const mwSqlDocker = require('./mwSqlDocker.js');
 
 let client;
 
 const chronos = {};
 
-// queryObj determines the setInterval needed for microHealth based on queryFreq parameter provided by user
+// queryObj determines the setInterval needed for health based on queryFreq parameter provided by user
 const queryObj = {
   s: 1000, // 1000 milliseconds per second
   m: 60000, // 1000 milliseconds * 60 seconds
@@ -17,8 +17,25 @@ const queryObj = {
   w: 604800000, // 60 sec/min * 60 min/hr * 1000 ms/sec * 24 hours/day * 7 days per week
 };
 
+chronos.connect(config) {
+  const {database} = config
+
+  client = new Client({
+    connectionString: database.URI
+  })
+
+  // Connect to user's database
+  client.connect((err, client, release) => {
+    console.log('Attempting to connect...')
+    if (err) {
+      throw new Error('Error connecting to database');
+    }
+    console.log('Connected to database at ', uri.slice(0, 24), '...');
+  });
+}
+
 // microCom
-chronos.microCom = (
+chronos.communications = (
   microserviceName,
   userOwnedDB,
   wantMicroHealth,
@@ -34,26 +51,14 @@ chronos.microCom = (
   res,
   next
 ) => {
-  const uri = userOwnedDB;
+  const { name, interval, dockerized, database, notifications } = config;
 
-  // creates a new instance of client
-  client = new Client({
-    connectionString: uri,
-  });
-
-  // connects to DB, else throws error
-  client.connect((err, client, release) => {
-    if (err) {
-      throw new Error('Issue connecting to db');
-    }
-    // Printing the beginning portion of URI to confirm it's connecting to the correct postgres DB.
-    console.log('Chronos SQL is connected at ', uri.slice(0, 24), '...');
-  });
-  chronos.microServices(microserviceName, queryFreq);
-  // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
+  
+  chronos.services(microserviceName, queryFreq);
+  // Invoke the health if the user provides "yes" when invoking chronos.microCom in the server.
   // Invoke microDocker instead if user provides "yes" to "isDockerized".
   if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
-    chronos.microHealth(microserviceName, queryFreq);
+    chronos.health(microserviceName, queryFreq);
   } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
     chronos.microDocker(microserviceName, queryFreq);
   }
@@ -112,8 +117,8 @@ chronos.microCom = (
             pass: `${password}`,
           },
         };
-        notifications.sendSlack(data, SlackUrl);
-        notifications.sendEmail(message, config);
+        alert.sendSlack(data, SlackUrl);
+        alert.sendEmail(message, config);
       }
       // Grabs status code from response object
       const responsestatus = res.statusCode;
@@ -137,7 +142,7 @@ chronos.microCom = (
   };
 };
 
-chronos.microServices = (microserviceName, queryFreq) => {
+chronos.services = (microserviceName, queryFreq) => {
   client.query(
     `CREATE TABLE IF NOT EXISTS services (
       _id SERIAL PRIMARY KEY NOT NULL,
@@ -164,27 +169,16 @@ chronos.microServices = (microserviceName, queryFreq) => {
   });
 };
 
-// Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
-// Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
-// Instead, will invoke another middlware called chronos.microDocker().
-chronos.microHealth = (microserviceName, queryFreq) => {
-  let cpuspeed;
-  let cputemp;
-  let cpuloadpercent;
-  let totalMemory;
-  let freeMemory;
-  let usedMemory;
-  let activeMemory;
-  let latency;
-  let totalprocesses;
-  let blockedprocesses;
-  let runningprocesses;
-  let sleepingprocesses;
+/**
+ * Read and store microservice health information in postgres database at every interval
+ * @param {Object} config The user provided config options
+ */
+chronos.health = (config) => {
+  const { name, interval } = config
 
-  const microservice = microserviceName;
-
+  // Create table for the microservice if it doesn't exist yet
   client.query(
-    `CREATE TABLE IF NOT EXISTS ${microserviceName} (
+    `CREATE TABLE IF NOT EXISTS ${name} (
       _id SERIAL PRIMARY KEY NOT NULL,
       cpuspeed FLOAT DEFAULT 0.0,
       cputemp FLOAT DEFAULT 0.0,
@@ -197,9 +191,8 @@ chronos.microHealth = (microserviceName, queryFreq) => {
       sleepingprocesses REAL DEFAULT 0,
       runningprocesses REAL DEFAULT 0,
       totalprocesses REAL DEFAULT 0,
-      cpuloadpercent float DEFAULT 0.00,
+      cpuloadpercent FLOAT DEFAULT 0.00,
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
     )`,
     (err, results) => {
       if (err) {
@@ -208,8 +201,12 @@ chronos.microHealth = (microserviceName, queryFreq) => {
     }
   );
 
-  // Collect metrics at intervals (determined by user input, e.g. 's', 'm', etc.)
+  // Initialize variables for database storage
+  let cpuspeed, cputemp, cpuloadpercent, totalMemory, freeMemory, usedMemory, activeMemory, latency, totalprocesses, blockedprocesses, runningprocesses, sleepingprocesses;
+
+  // Save data point at every interval (ms)
   setInterval(() => {
+    // Save cpu speed
     si.cpuCurrentspeed()
       .then(data => {
         cpuspeed = data.avg;
@@ -218,6 +215,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
         throw err;
       });
 
+    // Save cpu temp
     si.cpuTemperature()
       .then(data => {
         cputemp = data.main;
@@ -226,6 +224,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
         throw err;
       });
 
+    // Save cpu load percent
     si.currentLoad()
       .then(data => {
         cpuloadpercent = data.currentload;
@@ -234,6 +233,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
         throw err;
       });
 
+    // Save memory data
     si.mem()
       .then(data => {
         totalMemory = data.total;
@@ -245,6 +245,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
         throw err;
       });
 
+    // Save process data
     si.processes()
       .then(data => {
         totalprocesses = data.all;
@@ -256,6 +257,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
         throw err;
       });
 
+    // Save latency
     si.inetLatency()
       .then(data => {
         latency = data;
@@ -264,7 +266,7 @@ chronos.microHealth = (microserviceName, queryFreq) => {
         throw err;
       });
 
-    const queryString = `INSERT INTO ${microserviceName}(
+    const queryString = `INSERT INTO ${name}(
       cpuspeed,
       cputemp,
       cpuloadpercent,
@@ -300,10 +302,10 @@ chronos.microHealth = (microserviceName, queryFreq) => {
       }
       console.log('Saved to PostgreSQL!');
     });
-  }, queryObj[queryFreq]);
+  }, interval);
 };
 
-chronos.microDocker = function (microserviceName, queryFreq) {
+chronos.docker = function (microserviceName, queryFreq) {
   // Create a table if it doesn't already exist.
   client.query(
     'CREATE TABLE IF NOT EXISTS containerInfo(\n    _id serial PRIMARY KEY,\n    microservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
