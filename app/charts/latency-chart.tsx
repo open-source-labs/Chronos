@@ -12,7 +12,7 @@ const LatencyChart = () => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
-    const yAxis = healthData.latency;
+    const yAxis: Array<number> = healthData.latency;
 
     return (
       <Plot

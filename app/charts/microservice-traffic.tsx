@@ -17,7 +17,6 @@ const MicroServiceTraffic = () => {
   }
   // capture values of microServiceCountdictionary to use as data to populate chart object
   const serverPingCount: number[] = Object.values(microServiceCountdictionary);
-  console.log('this is your mixeoawecix:    ', microServiceCountdictionary);
   // variable 10 points higher than max number in microservicesDictionary aggregation --> variable allows for top level spacing on bar graph
   const yAxisHeadRoom: number = Math.max(...serverPingCount) + 10;
   // console.log('here is commsdata in microservicetraffic:     ', commsData);

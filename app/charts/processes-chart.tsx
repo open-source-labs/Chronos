@@ -2,22 +2,20 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-const ProcessesChart = props => {
+const ProcessesChart = () => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
-    const runningProcesses = healthData.runningprocesses;
-    const blockedProcesses = healthData.blockedprocesses;
-    const sleepingProcesses = healthData.sleepingprocesses;
+    const runningProcesses: Array<number> = healthData.runningprocesses;
+    const blockedProcesses: Array<number> = healthData.blockedprocesses;
+    const sleepingProcesses: Array<number> = healthData.sleepingprocesses;
 
     return (
       <Plot
         data={[
           {
             type: 'scattergl',
-            x: { autorange: true },
             y: runningProcesses,
             mode: 'markers',
-            rangemode: 'nonnegative',
             name: 'Running Processes',
             marker: {
               color: '#00d3f2',
@@ -26,10 +24,8 @@ const ProcessesChart = props => {
           },
           {
             type: 'scatter',
-            x: { autorange: true },
             y: blockedProcesses,
             mode: 'markers',
-            rangemode: 'nonnegative',
             name: 'Blocked Processes',
             marker: {
               color: '#00eda0',
@@ -38,10 +34,8 @@ const ProcessesChart = props => {
           },
           {
             type: 'scatter',
-            x: { autorange: true },
             y: sleepingProcesses,
             mode: 'markers',
-            rangemode: 'nonnegative',
             name: 'Sleeping Processes',
             marker: {
               color: '#4a4eee',
@@ -60,7 +54,6 @@ const ProcessesChart = props => {
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
           legend: {
-            itemsizing: 'constant',
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
