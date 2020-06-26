@@ -53,10 +53,25 @@ chronos.diagnose = () => {
     mongo.communications(userConfig);
   }
   if (database.type === 'PostgreSQL') {
+    // Connect to PostgreSQL Database
     postgres.connect(userConfig);
-    postgres.services(userConfig)
+
+    /**
+     * Creates a services table if one does not already exist
+     * Adds this microservice as one of the entries on that service table
+     */
+    postgres.services(userConfig);
+
+    // Save docker information if dockerized
     if (dockerized) postgres.docker(userConfig);
+
+    /**
+     * Every microservice creates a table to record their health information
+     * Entries are added per interval specified by the user
+     */
     postgres.health(userConfig);
+
+    // Save communications information
     return postgres.communications(userConfig);
   }
   throw new Error(
