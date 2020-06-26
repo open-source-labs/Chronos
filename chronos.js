@@ -7,6 +7,7 @@ let userConfig = {};
 const chronos = {};
 
 /**
+ * **********************************
  * CMD CONFIG FILE SETUP
  *
  * @field name {string} REQUIRED
@@ -26,12 +27,11 @@ const chronos = {};
  *
  * @field notifications {array} OPTIONAL
  *    Varies per notification method
+ * **********************************
  */
 chronos.use = config => {
-  // Validate all input fields exist
+  // Validate all input fields exist and setup notifications
   validateInput(config);
-
-  // Add notifications
   addNotifications(config);
 
   // Save config globally
@@ -49,34 +49,45 @@ chronos.propagate = () => {
 chronos.diagnose = () => {
   const { database, dockerized } = userConfig;
 
+  /**
+   * If the provided database is Mongo
+   * - Connection is made to MongoDB via the provided URI by the user.
+   *
+   * - 'services' collection will be created if not already and stores every microservice
+   * that is apart of the application.
+   *
+   * - Information is collected if the microservice is containerized
+   *
+   * - 'communications' collection will be created which creates a new document for every
+   * endpoint that the user Request travels through (tracked with hpropograte)
+   */
   if (database.type === 'MongoDB') {
-    mongo.communications(userConfig);
+    mongo.connect(userConfig);
+    mongo.services(userConfig);
+    if (dockerized) mongo.docker(userConfig);
+    mongo.health(userConfig);
+    return mongo.communications(userConfig);
   }
+
+  /**
+   * If the provided database is PostgreSQL
+   * - Connection is made to the postgres client via the provided URI by the user.
+   *
+   * - 'services' table will be created if not already and stores every microservice
+   * that is apart of the application.
+   *
+   * - Information is collected if the microservice is containerized
+   *
+   * - 'communications' table will be created which creates a new row entry for every
+   * endpoint that the user Request travels through (tracked with hpropograte)
+   */
   if (database.type === 'PostgreSQL') {
-    // Connect to PostgreSQL Database
     postgres.connect(userConfig);
-
-    /**
-     * Creates a services table if one does not already exist
-     * Adds this microservice as one of the entries on that service table
-     */
     postgres.services(userConfig);
-
-    // Save docker information if dockerized
     if (dockerized) postgres.docker(userConfig);
-
-    /**
-     * Every microservice creates a table to record their health information
-     * Entries are added per interval specified by the user
-     */
     postgres.health(userConfig);
-
-    // Save communications information
     return postgres.communications(userConfig);
   }
-  throw new Error(
-    'Chronos currently only supports Mongo and PostgreSQL databases. Please enter "mongo" or "sql"'
-  );
 };
 
 module.exports = chronos;
