@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import '../stylesheets/AddService.css';
 const { ipcRenderer } = window.require('electron');
 
-interface fields {
+interface IFields {
   database: string;
   URI: string;
   name: string;
 }
 
 const AddService: React.FC = () => {
-  const [field, setField] = useState<fields>({
+  const [field, setField] = useState<IFields>({
     database: 'SQL',
     URI: '',
     name: '',
