@@ -62,8 +62,8 @@ chronos.communications = ({ microservice, slack, email }) => {
     // Setup newComms object to store data from each request
     const newComms = {
       microservice: microservice,
-      // endpoint: req.originalUrl,
-      // request: req.method,
+      endpoint: req.originalUrl,
+      request: req.method,
       correlatingid: res.getHeaders()['x-correlation-id'],
     };
 
@@ -86,7 +86,9 @@ chronos.communications = ({ microservice, slack, email }) => {
       const communication = new CommunicationModel(newComms);
       communication
         .save()
-        .then(() => next())
+        .then(() => {
+          console.log('Request cycle saved');
+        })
         .catch(err => console.log(`Error saving communications: `, err.message));
     });
 

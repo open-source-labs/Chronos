@@ -125,6 +125,7 @@ chronos.communications = ({ microservice, slack, email }) => {
         if (err) {
           throw err;
         }
+        console.log('Request cycle saved');
       });
     });
     next();
@@ -268,12 +269,15 @@ chronos.health = ({ microservice, interval }) => {
       latency,
     ];
 
-    client.query(queryString, values, (err, results) => {
-      if (err) {
-        throw err;
-      }
-      console.log('Saved to PostgreSQL!');
-    });
+    // Only save entries if all values are not undefined
+    if (values.every(value => value !== undefined)) {
+      client.query(queryString, values, (err, results) => {
+        if (err) {
+          throw err;
+        }
+        console.log('Saved to PostgreSQL!');
+      });
+    }
   }, interval);
 };
 
