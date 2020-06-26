@@ -10,8 +10,8 @@ const chronos = {};
  * **********************************
  * CMD CONFIG FILE SETUP
  *
- * @field name {string} REQUIRED
- *    The user specified name for the microservice being diagnosed
+ * @field microservice {string} REQUIRED
+ *    The user specified name for the microservice being tracked
  *
  * @field interval {number} DEFAULT 60000
  *    The interval for every microservice health check in milliseconds
@@ -52,7 +52,7 @@ chronos.propagate = () => {
  * Only supports MongoDB and PostgreSQL for now!
  * **********************************************
  */
-chronos.diagnose = () => {
+chronos.track = () => {
   const { database, dockerized } = userConfig;
 
   /**

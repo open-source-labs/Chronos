@@ -29,12 +29,9 @@ chronos.connect = async ({ database }) => {
 };
 
 /**
- * Creates a communications if one does not yet exists and traces
- * the request throughout its life cycle. Will send a notification to
- * the user if contact information is provided
+ * Create services collection with each entry representing a microservice
  * @param {string} microservice Microservice name
- * @param {Object|undefined} slack Slack settings
- * @param {Object|undefined} email Email settings
+ * @param {number} interval Interval to collect data
  */
 chronos.services = ({ microservice, interval }) => {
   console.log(`Saving "${microservice}" to services...`);
@@ -51,8 +48,8 @@ chronos.services = ({ microservice, interval }) => {
 };
 
 /**
- * Creates a communications collection if one does not yet exists and 
- * traces the request throughout its life cycle. Will send a notification 
+ * Creates a communications collection if one does not yet exist and
+ * traces the request throughout its life cycle. Will send a notification
  * to the user if contact information is provided
  * @param {string} microservice Microservice name
  * @param {Object|undefined} slack Slack settings
@@ -212,10 +209,11 @@ chronos.health = ({ microservice, interval }) => {
 };
 
 /**
+ * Runs instead of health
  * If dockerized is true, this function is invoked
  * Collects information on the container
  */
-chronos.microDocker = function ({ microservice, interval }) {
+chronos.docker = ({ microservice, interval }) => {
   const ContainerInfo = mongoose.model('ContainerInfo');
 
   // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
