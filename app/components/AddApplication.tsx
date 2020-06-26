@@ -28,8 +28,6 @@ const AddApplication: React.FC = () => {
     event.preventDefault();
     // Add new application
     addApp(fields);
-    // Refresh window after submit.
-    // document.location.reload();
   };
 
   // Handle form field changes
