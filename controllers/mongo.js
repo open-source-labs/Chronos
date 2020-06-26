@@ -1,153 +1,109 @@
 const mongoose = require('mongoose');
 const si = require('systeminformation');
-const notifications = require('./alert');
-require('../models/Communication');
+const alert = require('./alert');
+const CommunicationModel = require('../models/CommunicationModel');
+const ServicesModel = require('../models/ServicesModel');
+const HealthModelFunc = require('../models/HealthModel');
 require('../models/ContainerInfo');
-const MicroserviceScheme = require('../models/Microservice');
-require('../models/Services');
 
-// Required to get rid of deprecation warnings
+// Handle deprecation warnings
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
 
 const chronos = {};
 
-// connectDB is a method that connects chronos to the user database
-chronos.connectDB = userOwnedDB => {
-  mongoose.connect(`${userOwnedDB}`, error => {
-    if (error) throw error;
-    // Printing the beginning portion of URI to confirm it's connecting to the correct MongoDB.
-    console.log(`Chronos MongoDB is connected at ${userOwnedDB.slice(0, 20)}...`);
-  });
-};
-
-// Use keys in queryObj to match users' queryFreq input and determine which time unit to use.
-// queryObj will be used as 2nd argument for the setInterval function.
-const queryObj = {
-  s: 1000, // 1000 milliseconds per second
-  m: 60000, // 1000 milliseconds * 60 seconds
-  h: 3600000, // 60 seconds * 60 minutes per hour * 1000 milliseconds per second
-  d: 86400000, // 60 sec. * 60 min * 1000 ms per sec * 24 hours per day
-  w: 604800000, // 60 sec/min * 60 min/hr * 1000 ms/sec * 24 hours/day * 7 days per week
-};
-
-// Create a coomunication table in the user database the stores all of the data from each request
-chronos.microCom = (
-  microserviceName,
-  userOwnedDB,
-  wantMicroHealth,
-  queryFreq,
-  isDockerized,
-  SlackUrl,
-  emailList,
-  emailHost,
-  emailPort,
-  user,
-  password
-) => {
-  //Connect chronos to the user's database
-  chronos.connectDB(userOwnedDB);
-  //passes microservice name and latency data for the population of the services mongo table
-  chronos.microServices(microserviceName, queryFreq);
-  // Invoke the microHealth if the user provides "yes" when invoking chronos.microCom in the server.
-  // Invoke microDocker instead if user provides "yes" to "isDockerized".
-  if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
-    chronos.microHealth(microserviceName, queryFreq);
-  } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
-    chronos.microDocker(microserviceName, queryFreq);
+/**
+ * Initializes connection to MongoDB database using provided URI
+ * @param {Object} database Contains DB type and DB URI
+ */
+chronos.connect = async ({ database }) => {
+  console.log('Attemping to connect to database...');
+  try {
+    await mongoose.connect(`${database.URI}`);
+    // Print success message
+    console.log(`Chronos MongoDB is connected at ${database.URI.slice(0, 20)}...`);
+  } catch ({ message }) {
+    // Print error message
+    console.log('Error connecting to MongoDB:', message);
   }
+};
 
-  //returns a middleware that creates a new communication document in the mongoDB database whenever a response for the request comes thru
+/**
+ * Creates a communications if one does not yet exists and traces
+ * the request throughout its life cycle. Will send a notification to
+ * the user if contact information is provided
+ * @param {string} microservice Microservice name
+ * @param {Object|undefined} slack Slack settings
+ * @param {Object|undefined} email Email settings
+ */
+chronos.services = ({ microservice, interval }) => {
+  console.log(`Saving "${microservice}" to services...`);
+  // Create newService object to store microservice information
+  const newService = { microservice, interval };
+
+  // Create MongoDB document from newService
+  const service = new ServicesModel(newService);
+
+  service
+    .save()
+    .then(() => console.log(`Added new service "${microservice}"`))
+    .catch(err => console.log(`Error saving service "${microservice}": `, err.message));
+};
+
+/**
+ * Creates a communications collection if one does not yet exists and 
+ * traces the request throughout its life cycle. Will send a notification 
+ * to the user if contact information is provided
+ * @param {string} microservice Microservice name
+ * @param {Object|undefined} slack Slack settings
+ * @param {Object|undefined} email Email settings
+ */
+chronos.communications = ({ microservice, slack, email }) => {
+  console.log('Recording request cycle...');
+
   return function (req, res, next) {
-    // provides the schema for Communication
-
-    // creates a model off of the Communication Schema
-    const Communication = mongoose.model('Communication');
-
-    // creates newCommunication object that stores the data from each request
-    const newCommunication = {
-      currentMicroservice: microserviceName,
-      endpoint: req.originalUrl,
-      request: req.method,
-      time: Date.now(),
+    // Setup newComms object to store data from each request
+    const newComms = {
+      microservice: microservice,
+      // endpoint: req.originalUrl,
+      // request: req.method,
       correlatingid: res.getHeaders()['x-correlation-id'],
     };
-    // adds resStatus and resMessage to the newCommunication object
-    // sends the data to database and goes to the next middleware
-    res.on('finish', () => {
-      // if the statusdoe is an error messsage a notice is sent to slack via axios in notifications.js
-      if (res.statusCode >= 400) {
-        /**
-         * OPTIONAL: If the user provides a SlackURL or email information, a notification will be
-         * sent to the provided contact information.
-         */
-        if (SlackUrl) {
-          const data = {
-            text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
-          };
-          // Call to the notifications controller for slack
-          notifications.sendSlack(data, SlackUrl);
-        }
 
-        if (emailList) {
-          const message = {
-            to: `${emailList}`,
-            subject: 'Error from Middleware', // Subject line
-            text: `${res.statusCode}, ${res.statusMessage}`, // Plain text body
-          };
-          const config = {
-            host: `${emailHost}`,
-            port: `${emailPort}`,
-            auth: {
-              user: `${user}`,
-              pass: `${password}`,
-            },
-          };
-          // Call to the notifications controller for emails
-          notifications.sendEmail(message, config);
-        }
+    res.on('finish', () => {
+      /**
+       * OPTIONAL FEATURE
+       * If user provides contact information, send an alert if the
+       * status code is over or equal to 400
+       */
+      if (res.statusCode >= 400) {
+        if (slack) alert.sendSlack(res.statusCode, res.statusMessage, slack);
+        if (email) alert.sendEmail(res.statusCode, res.statusMessage, email);
       }
 
-      newCommunication.responsestatus = res.statusCode;
-      newCommunication.responsemessage = res.statusMessage;
-      const communication = new Communication(newCommunication);
+      // Add status code and message to newComms
+      newComms.responsestatus = res.statusCode;
+      newComms.responsemessage = res.statusMessage;
 
+      // Create MongoDB document from newComms
+      const communication = new CommunicationModel(newComms);
       communication
         .save()
         .then(() => next())
-        .catch(err => {
-          throw err;
-        });
+        .catch(err => console.log(`Error saving communications: `, err.message));
     });
+
+    // Call next middleware
     next();
   };
 };
 
-chronos.microServices = (microserviceName, queryFreq) => {
-  const Services = mongoose.model('services');
-  // creates newServices object
-  const newServices = {
-    microservice: microserviceName,
-    interval: queryObj[queryFreq],
-  };
-  //creates new services document
-  const services = new Services(newServices);
-
-  services
-    .save()
-    .then()
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-// Invoked if user provided "yes" as 4th arg when invoking microCom() in servers.
-// Will NOT be invoked if user provided "yes" for "isDockerized" when invoking microCom().
-// Instead, will invoke another middlware called chronos.microDocker().
-chronos.microHealth = (microserviceName, queryFreq) => {
-  // creates a model off of the Services Schema
-  const MicroserviceHealth = MicroserviceScheme(`${microserviceName}`);
-
+/**
+ * Creates a new table per microservice which records all health data
+ * @param {string} microservice Microservice name
+ * @param {number} interval Interval for continuous data collection
+ */
+chronos.health = ({ microservice, interval }) => {
   let cpuspeed;
   let cputemp;
   let cpuloadpercent;
@@ -156,13 +112,12 @@ chronos.microHealth = (microserviceName, queryFreq) => {
   let usedmemory;
   let activememory;
   let latency;
-  let timestamp;
   let totalprocesses;
   let blockedprocesses;
   let runningprocesses;
   let sleepingprocesses;
 
-  // Note the frequency setting (2nd argument: queryObj[queryFreq]) at the end of this setInterval.
+  // Collect data at every interval
   setInterval(() => {
     si.cpuCurrentspeed()
       .then(data => {
@@ -227,10 +182,12 @@ chronos.microHealth = (microserviceName, queryFreq) => {
           throw err;
         }
       });
-    //creates new microservice object
-    const newHealthPoint = {
-      timestamp: Date.now(),
-      currentMicroservice: microserviceName,
+
+    // Create collection using name of microservice
+    const HealthModel = HealthModelFunc(`${microservice}`);
+
+    // Save new health document
+    const health = new HealthModel({
       cpuspeed,
       cputemp,
       cpuloadpercent,
@@ -243,27 +200,22 @@ chronos.microHealth = (microserviceName, queryFreq) => {
       blockedprocesses,
       sleepingprocesses,
       latency,
-    };
-    // creation of new microservice schema
-    const healthPoint = new MicroserviceHealth(newHealthPoint);
-    healthPoint
+    });
+
+    health
       .save()
       .then(() => {
-        console.log('Saved to MongoDB!');
+        console.log('Health data recorded');
       })
-      .catch(err => {
-        if (err) {
-          throw err;
-        }
-      });
-  }, queryObj[queryFreq]);
+      .catch(err => console.log('Error saving health data: ', err.message));
+  }, interval);
 };
 
 /**
  * If dockerized is true, this function is invoked
  * Collects information on the container
  */
-chronos.microDocker = function (microserviceName, queryFreq) {
+chronos.microDocker = function ({ microservice, interval }) {
   const ContainerInfo = mongoose.model('ContainerInfo');
 
   // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
@@ -279,7 +231,7 @@ chronos.microDocker = function (microserviceName, queryFreq) {
   var containerProcessCount;
   var containerRestartCount;
   // dockerContainers() return an arr of active containers (ea. container = an obj).
-  // Find the data pt with containerName that matches microserviceName.
+  // Find the data pt with containerName that matches microservice.
   // Extract container ID, name, platform, and start time.
   // Other stats will be retrieved by dockerContainerStats().
   si.dockerContainers()
@@ -287,7 +239,7 @@ chronos.microDocker = function (microserviceName, queryFreq) {
       var containerId = '';
       for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
         var dataObj = data_1[_i];
-        if (dataObj.name === microserviceName) {
+        if (dataObj.name === microservice) {
           containerName = dataObj.name;
           containerId = dataObj.id;
           containerPlatform = dataObj.platform;
@@ -316,7 +268,7 @@ chronos.microDocker = function (microserviceName, queryFreq) {
               containerRestartCount = data[0].restartCount;
 
               const newContainerInfo = {
-                microserviceName: microserviceName,
+                microservice: microservice,
                 containerName,
                 containerId,
                 containerPlatform,
@@ -342,7 +294,7 @@ chronos.microDocker = function (microserviceName, queryFreq) {
             ['catch'](function (err) {
               throw err;
             });
-        }, queryObj[queryFreq]);
+        }, interval);
       } else {
         throw new Error('Cannot find container data matching the microservice name.');
       }
