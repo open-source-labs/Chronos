@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
+import Electron from 'electron';
 
 const { ipcRenderer } = window.require('electron');
 
-export const CommsContext = React.createContext();
+export const CommsContext = React.createContext<any>(null);
 
-const CommsContextProvider = ({ children }) => {
+interface IProp {
+  id: number;
+  microservice: string;
+  endpoint: string;
+  request: string;
+  responsestatus: string;
+  responsemessage: string;
+  time: string;
+  correlatingid: string;
+}
+
+const CommsContextProvider: React.FC = ({ children }) => {
   const [commsData, setCommsData] = useState([]);
 
   // Fetches all data related to communication for a particular app
-  const fetchCommsData = index => {
+  const fetchCommsData = (index: number) => {
     ipcRenderer.send('commsRequest', index);
-    ipcRenderer.on('commsResponse', (event, data) => {
+    ipcRenderer.on('commsResponse', (event: Electron.Event, data) => {
       // Store resulting data in local state
       const result = JSON.parse(data);
       console.log('Number of data points (comms):', result.length);
