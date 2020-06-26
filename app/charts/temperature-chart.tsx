@@ -22,7 +22,7 @@ const TemperatureChart = () => {
       // Do Nothing
     } else {
       // const xAxis = healthData.time;
-      timeArr = time.map((el: string) => moment(el).format('S A'));
+      timeArr = time.map((el: string) => moment(el).format('hh:mm A'));
       month = moment(time[0]).format('MMM Do');
     }
 
@@ -32,7 +32,7 @@ const TemperatureChart = () => {
           {
             type: 'scatter',
             fill: 'tozeroy',
-            mode: 'none',
+            mode: 'lines',
             fillcolor: 'rgb(250, 26, 88)',
             x: timeArr,
             y: yAxis,
@@ -62,12 +62,16 @@ const TemperatureChart = () => {
             title: month,
             tickmode: 'linear',
             tickformat: '%d %B (%a)<br>%Y',
-            nticks: 10,
-            range: [1, 4],
+            mirror: false,
+            ticks: 'outside',
+            showline: true,
           },
           yaxis: {
             title: `Temperature (\xB0C)`,
             rangemode: 'nonnegative',
+            mirror: false,
+            ticks: 'outside',
+            showline: true,
           },
         }}
       />

@@ -118,7 +118,7 @@ ipcMain.on('healthRequest', async (message, service) => {
       // Get last 50 documents. If less than 50 get all
       const query = `
           SELECT * FROM ${service}
-          ORDER BY id DESC
+          ORDER BY _id DESC
           LIMIT 50`;
 
       // Execute query
