@@ -1,24 +1,19 @@
-import React, { useContext } from 'react';
-import DashboardContext from '../context/DashboardContext';
+import React, { useContext, useEffect } from 'react';
+import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/DeleteService.css';
 
-const { ipcRenderer } = window.require('electron');
 
-const DeleteService = () => {
-  const { applicationsList } = useContext(DashboardContext);
+const DeleteApplication: React.FC = () => {
+  const { applications, deleteApp } = useContext(DashboardContext);
 
   // Sends request to Main.js to delete application data
   const onDelete = (index: number) => {
-    ipcRenderer.send('deleteService', index);
-    ipcRenderer.on('deleteResponse', (event, services) => {
-      document.location.reload();
-    });
+    deleteApp(index);
   };
 
   // Ask user for deletetion confirmation
   const confirmDelete = (app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
-
     // Proceed with deletion if user confirms
     if (confirm(message)) onDelete(i);
   };
@@ -27,7 +22,7 @@ const DeleteService = () => {
     <div className="deleteMainContainer">
       <h1 className="overviewTitle">Select Database To Delete</h1>
       <div className="servicesList">
-        {applicationsList.map((app, i) => (
+        {applications.map((app: string, i: number) => (
           <button className="deleteMicroservice" key={i} onClick={() => confirmDelete(app, i)}>
             {app}
           </button>
@@ -37,4 +32,4 @@ const DeleteService = () => {
   );
 };
 
-export default DeleteService;
+export default DeleteApplication;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../stylesheets/AddService.css';
-const { ipcRenderer } = window.require('electron');
+import { DashboardContext } from '../context/DashboardContext';
 
 interface IFields {
   database: string;
@@ -8,39 +8,46 @@ interface IFields {
   name: string;
 }
 
-const AddService: React.FC = () => {
-  const [field, setField] = useState<IFields>({
+interface IDashboard {
+  addApp: (fields: IFields) => void
+}
+
+type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+type FormElement = React.FormEvent<HTMLFormElement>
+
+const AddApplication: React.FC = () => {
+  const { addApp }: IDashboard = useContext(DashboardContext);
+  const [fields, setFields] = useState<IFields>({
     database: 'SQL',
     URI: '',
     name: '',
   });
 
   // Submit form data and save to database
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormElement) => {
     event.preventDefault();
-    const { database, URI, name } = field;
-    ipcRenderer.send('submit', JSON.stringify([name, database, URI]));
-
+    // Add new application
+    addApp(fields);
     // Refresh window after submit.
-    document.location.reload();
+    // document.location.reload();
   };
 
   // Handle form field changes
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+  const handleChange = (event: InputElement) => {
     const { name, value } = event.target;
-    setField({
-      ...field,
+    setFields({
+      ...fields,
       [name]: value,
     });
   };
 
-  const { database, URI, name } = field;
+  const { database, URI, name } = fields;
   return (
     <div className="add-container">
       <h2>Enter Your Database Information</h2>
       <form onSubmit={handleSubmit}>
         Database Type:
-        <select name="database" value={database} onChange={(e) => handleChange(e)}>
+        <select name="database" value={database} onChange={e => handleChange(e)}>
           <option value="SQL">SQL</option>
           <option value="MongoDB">MongoDB</option>
         </select>
@@ -67,4 +74,4 @@ const AddService: React.FC = () => {
   );
 };
 
-export default AddService;
+export default AddApplication;
