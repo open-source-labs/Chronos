@@ -16,7 +16,8 @@ const helpers = {
     }
 
     // Validate database type
-    if (database.type !== 'PostgreSQL' || database.type !== 'MongoDB') {
+    console.log('our database', database.type);
+    if (database.type !== 'PostgreSQL' && database.type !== 'MongoDB') {
       throw new Error(
         `Invalid input "${database.type}". Chronos only supports PostgreSQL and MongoDB.`
       );
@@ -31,21 +32,22 @@ const helpers = {
 
   addNotifications(config) {
     const { notifications } = config;
+    if (notifications) {
+      // Current notification methods supported
+      const features = ['slack', 'email', 'sms'];
 
-    // Current notification methods supported
-    const features = ['slack', 'email', 'sms'];
+      // Setup notifications for user
+      notifications.forEach(obj => {
+        const type = obj.type;
 
-    // Setup notifications for user
-    notifications.forEach(obj => {
-      const type = obj.type;
-
-      // Throw errors on unsupported notification methods
-      if (!features.includes(type)) {
-        throw new Error(`${type} is not a supported notification method for Chronos`);
-      } else {
-        config[type] = true;
-      }
-    });
+        // Throw errors on unsupported notification methods
+        if (!features.includes(type)) {
+          throw new Error(`${type} is not a supported notification method for Chronos`);
+        } else {
+          config[type] = obj.settings;
+        }
+      });
+    }
   },
 };
 
