@@ -23,7 +23,6 @@ const CommsContextProvider: React.FC = ({ children }) => {
   const fetchCommsData = (index: number) => {
     ipcRenderer.send('commsRequest', index);
     ipcRenderer.on('commsResponse', (event: Electron.Event, data) => {
-      console.log('DATAAAAA', data);
       // Store resulting data in local state
       const result = JSON.parse(data);
       console.log('Number of data points (comms):', result.length);
