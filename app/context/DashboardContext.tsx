@@ -24,17 +24,31 @@ interface Props {
 const DashboardContextProvider = ({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
 
+  /**
+   * Sends a request for all existing applications belonging to a user
+   * and sets the applications state to the list of app names
+   */
   const getApplications = () => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
   };
 
+  /**
+   * Sends a synchronous request to add a new application to the user's
+   * list of applications with the provided fields. Returns the new list
+   * of applications
+   */
   const addApp = (fields: IFields) => {
     const { database, URI, name } = fields;
     const result = ipcRenderer.sendSync('addApp', JSON.stringify([name, database, URI]));
     setApplications(result)
   };
 
+  /**
+   * Sends a synchronous request to delete an application using a provided
+   * index. The index is used to locate the desired application info in the
+   * settings.json file in the backend. Returns the new list of applications
+   */
   const deleteApp = (index: number) => {
     const result = ipcRenderer.sendSync('deleteApp', index);
     setApplications(result);
