@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/DeleteService.css';
+import '../stylesheets/DeleteApplication.css';
 
 
 const DeleteApplication: React.FC = () => {

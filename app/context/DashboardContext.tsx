@@ -29,6 +29,7 @@ const DashboardContextProvider = ({ children }: Props) => {
    * and sets the applications state to the list of app names
    */
   const getApplications = () => {
+    console.log('getting apps')
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
   };

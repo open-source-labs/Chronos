@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import '../stylesheets/AddService.css';
+import '../stylesheets/AddApplication.css';
 import { DashboardContext } from '../context/DashboardContext';
 
 interface IFields {
@@ -28,8 +28,6 @@ const AddApplication: React.FC = () => {
     event.preventDefault();
     // Add new application
     addApp(fields);
-    // Refresh window after submit.
-    // document.location.reload();
   };
 
   // Handle form field changes
