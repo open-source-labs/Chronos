@@ -26,7 +26,7 @@ alert.sendSlack = (code, message, slackSettings) => {
 
   axios
     .post(slackurl, data, config)
-    .then(res => console.log(res.data))
+    .then(res => console.log('Status Code >= 400...\nError message sent'))
     .catch(error => console.log('test------>', error.message));
 };
 

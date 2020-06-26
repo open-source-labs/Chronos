@@ -1,10 +1,15 @@
 const helpers = {
+  /**
+   * Helper function to validate input from user's configuration options
+   * Throws an error on input valid data types or on missing fields
+   * Sets the default interval to 5 seconds and dockerized to false
+   */
   validateInput(config) {
-    let { name, database, interval, dockerized } = config;
+    let { microservice, database, interval, dockerized } = config;
 
     // Validate all required fields exist and are valid input types
-    if (!name || typeof name !== 'string') {
-      throw new Error('Invalid input "name": Please provide a name for your microservice');
+    if (!microservice || typeof microservice !== 'string') {
+      throw new Error('Invalid input "microservice": Please provide a name for your microservice');
     }
 
     if (!database.type || typeof database.type !== 'string') {
@@ -16,7 +21,6 @@ const helpers = {
     }
 
     // Validate database type
-    console.log('our database', database.type);
     if (database.type !== 'PostgreSQL' && database.type !== 'MongoDB') {
       throw new Error(
         `Invalid input "${database.type}". Chronos only supports PostgreSQL and MongoDB.`
@@ -30,6 +34,11 @@ const helpers = {
     if (dockerized === undefined || dockerized !== 'boolean') config.dockerized = false;
   },
 
+  /**
+   * Sets up notifications depending if the user provides the options
+   * Method adds properties to the existing userConfig object with the key
+   * being the notification type and the value being the notification settings
+   */
   addNotifications(config) {
     const { notifications } = config;
     if (notifications) {

@@ -8,36 +8,69 @@ let client;
 
 const chronos = {};
 
-// queryObj determines the setInterval needed for health based on queryFreq parameter provided by user
-const queryObj = {
-  s: 1000, // 1000 milliseconds per second
-  m: 60000, // 1000 milliseconds * 60 seconds
-  h: 3600000, // 60 seconds * 60 minutes per hour * 1000 milliseconds per second
-  d: 86400000, // 60 sec. * 60 min * 1000 ms per sec * 24 hours per day
-  w: 604800000, // 60 sec/min * 60 min/hr * 1000 ms/sec * 24 hours/day * 7 days per week
-};
+/**
+ * Initializes connection to PostgreSQL database using provided URI
+ * @param {Object} database Contains DB type and DB URI
+ */
+chronos.connect = async ({ database }) => {
+  try {
+    // Connect to user's database
+    client = new Client({ connectionString: database.URI });
+    await client.connect();
 
-chronos.connect = config => {
-  const { database } = config;
-
-  client = new Client({
-    connectionString: database.URI,
-  });
-
-  // Connect to user's database
-  client.connect((err, client, release) => {
-    console.log('Attempting to connect...');
-    if (err) {
-      throw new Error('Error connecting to database');
-    }
+    // Print success message
     console.log('Connected to database at ', database.URI.slice(0, 24), '...');
+  } catch ({ message }) {
+    // Print error message
+    console.log('Error connecting to PostgreSQL DB:', message);
+  }
+};
+
+/**
+ * Create services table with each entry representing a microservice
+ * @param {string} microservice Microservice name
+ * @param {number} interval Interval to collect data
+ */
+chronos.services = ({ microservice, interval }) => {
+  // Create services table if does not exist
+  client.query(
+    `CREATE TABLE IF NOT EXISTS services (
+      _id SERIAL PRIMARY KEY NOT NULL,
+      microservice VARCHAR(248) NOT NULL UNIQUE,
+      interval INTEGER NOT NULL
+      )`,
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+    }
+  );
+
+  // Insert microservice name and interval into services table
+  const queryString = `
+    INSERT INTO services (microservice, interval)
+    VALUES ($1, $2)
+    ON CONFLICT (microservice) DO NOTHING;`;
+
+  const values = [microservice, interval];
+
+  client.query(queryString, values, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log(`Microservice "${microservice}" recorded in services table`);
   });
 };
 
-// microCom
-chronos.communications = config => {
-  const { name, slack, email } = config;
-
+/**
+ * Creates a communications table if one does not yet exist and
+ * traces the request throughout its life cycle. Will send a notification
+ * to the user if contact information is provided
+ * @param {string} microservice Microservice name
+ * @param {Object|undefined} slack Slack settings
+ * @param {Object|undefined} email Email settings
+ */
+chronos.communications = ({ microservice, slack, email }) => {
   // Create communications table if one does not exist
   client.query(
     `CREATE TABLE IF NOT EXISTS communications(
@@ -80,7 +113,14 @@ chronos.communications = config => {
       const responsestatus = res.statusCode;
       // Grabs status message from response object
       const responsemessage = res.statusMessage;
-      const values = [name, endpoint, request, responsestatus, responsemessage, correlatingId];
+      const values = [
+        microservice,
+        endpoint,
+        request,
+        responsestatus,
+        responsemessage,
+        correlatingId,
+      ];
       client.query(queryString, values, (err, result) => {
         if (err) {
           throw err;
@@ -92,50 +132,14 @@ chronos.communications = config => {
 };
 
 /**
- * Create services table with each entry representing a microservice
- * @param {Object} config User specified config options
- */
-chronos.services = ({ name, interval }) => {
-  // Create services table if does not exist
-  client.query(
-    `CREATE TABLE IF NOT EXISTS services (
-      _id SERIAL PRIMARY KEY NOT NULL,
-      microservice VARCHAR(248) NOT NULL UNIQUE,
-      interval INTEGER NOT NULL
-      )`,
-    (err, results) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
-  // Insert microservice name and interval into services table
-  const queryString = `
-    INSERT INTO services (microservice, interval)
-    VALUES ($1, $2)
-    ON CONFLICT (microservice) DO NOTHING;`;
-
-  const values = [name, interval];
-
-  client.query(queryString, values, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`Microservice "${name}" recorded in services table`);
-  });
-};
-
-/**
  * Read and store microservice health information in postgres database at every interval
- * @param {Object} config User specified config options
+ * @param {string} microservice Microservice name
+ * @param {number} interval Interval for continuous data collection
  */
-chronos.health = config => {
-  const { name, interval } = config;
-
+chronos.health = ({ microservice, interval }) => {
   // Create table for the microservice if it doesn't exist yet
   client.query(
-    `CREATE TABLE IF NOT EXISTS ${name} (
+    `CREATE TABLE IF NOT EXISTS ${microservice} (
       _id SERIAL PRIMARY KEY NOT NULL,
       cpuspeed FLOAT DEFAULT 0.0,
       cputemp FLOAT DEFAULT 0.0,
@@ -234,7 +238,7 @@ chronos.health = config => {
         throw err;
       });
 
-    const queryString = `INSERT INTO ${name}(
+    const queryString = `INSERT INTO ${microservice}(
       cpuspeed,
       cputemp,
       cpuloadpercent,
@@ -273,7 +277,12 @@ chronos.health = config => {
   }, interval);
 };
 
-chronos.docker = function (microserviceName, queryFreq) {
+/**
+ * Runs instead of health
+ * If dockerized is true, this function is invoked
+ * Collects information on the container
+ */
+chronos.docker = function ({ microservice, interval }) {
   // Create a table if it doesn't already exist.
   client.query(
     'CREATE TABLE IF NOT EXISTS containerInfo(\n    _id serial PRIMARY KEY,\n    microservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
@@ -303,7 +312,7 @@ chronos.docker = function (microserviceName, queryFreq) {
 
       for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
         var dataObj = data_1[_i];
-        if (dataObj.name === microserviceName) {
+        if (dataObj.name === microservice) {
           containerName = dataObj.name;
           containerId = dataObj.id;
           containerPlatform = dataObj.platform;
@@ -333,7 +342,7 @@ chronos.docker = function (microserviceName, queryFreq) {
               var queryString =
                 'INSERT INTO containerInfo(\n                microservice,\n                containerName,\n                containerId,\n                containerPlatform,\n                containerStartTime,\n                containerMemUsage,\n                containerMemLimit,\n                containerMemPercent,\n                containerCpuPercent,\n                networkReceived,\n                networkSent,\n                containerProcessCount,\n                containerRestartCount)\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13\n              )';
               var values = [
-                microserviceName,
+                microservice,
                 containerName,
                 containerId,
                 containerPlatform,
@@ -355,7 +364,7 @@ chronos.docker = function (microserviceName, queryFreq) {
             ['catch'](function (err) {
               throw err;
             });
-        }, queryObj[queryFreq]);
+        }, interval);
       } else {
         throw new Error('Cannot find container data matching the microservice name.');
       }
