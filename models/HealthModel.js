@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const MicroserviceSchema = new Schema({
+const HealthSchema = new Schema({
   cpuspeed: {
     type: Number,
     default: 0,
@@ -56,4 +56,4 @@ const MicroserviceSchema = new Schema({
     default: Date.now(),
   },
 });
-module.exports = MicroSrvName => mongoose.model(MicroSrvName, MicroserviceSchema);
+module.exports = MicroSrvName => mongoose.model(MicroSrvName, HealthSchema);
