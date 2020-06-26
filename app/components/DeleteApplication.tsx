@@ -8,7 +8,7 @@ const DeleteService = () => {
   const { applicationsList } = useContext(DashboardContext);
 
   // Sends request to Main.js to delete application data
-  const onDelete = index => {
+  const onDelete = (index: number) => {
     ipcRenderer.send('deleteService', index);
     ipcRenderer.on('deleteResponse', (event, services) => {
       document.location.reload();
@@ -16,24 +16,23 @@ const DeleteService = () => {
   };
 
   // Ask user for deletetion confirmation
-  const confirmDelete = (app, i) => {
+  const confirmDelete = (app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
 
     // Proceed with deletion if user confirms
     if (confirm(message)) onDelete(i);
   };
 
-  // Create buttons are for each application
-  const buttons = applicationsList.map((app, i) => (
-    <button className="deleteMicroservice" key={i} onClick={() => confirmDelete(app, i)}>
-      {app}
-    </button>
-  ));
-
   return (
     <div className="deleteMainContainer">
       <h1 className="overviewTitle">Select Database To Delete</h1>
-      <div className="servicesList">{buttons}</div>
+      <div className="servicesList">
+        {applicationsList.map((app, i) => (
+          <button className="deleteMicroservice" key={i} onClick={() => confirmDelete(app, i)}>
+            {app}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
