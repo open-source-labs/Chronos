@@ -11,7 +11,7 @@ interface IService {
   microservice: string;
 }
 
-const SidebarContainer = () => {
+const SidebarContainer: React.FC = (): JSX.Element => {
   // Set view to selected index
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState<null | number>(null);
@@ -24,9 +24,7 @@ const SidebarContainer = () => {
       setIndex(index === id ? null : id);
     }
   };
-
   const { connectToDB, fetchServicesNames, servicesData } = useContext(ApplicationContext);
-
   // On Mount: fetch all of an application's comms and health data
   useEffect(() => {
     connectToDB(index);
