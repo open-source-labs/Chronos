@@ -14,6 +14,7 @@
   justify-items: center;
   align-content: center;
   height: 1000px;
+  position: fixed
 }
 
 .btn-container {
@@ -22,23 +23,29 @@
   align-content: center;
   grid-auto-columns: 100%;
   align-items: center;
-  align-content: center;
+  justify-content: center;
 }
 
-.btn-container button {
+.btn-container button,
+.btn-container .link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Nunito', sans-serif;
   background-color: #24262F;
   margin: 8% auto 0 auto;
   height: 40px;
   width: 150px;
   border: none;
-  font-size: 1.50vh;
+  font-size: 100%;
   color: whitesmoke;
   transition: 0.25s;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-decoration: none;
 }
 
-.btn-container button:hover {
+.btn-container button:hover,
+.btn-container .link:hover {
   background-color: #494FEE;
   color: azure;
   cursor: pointer;

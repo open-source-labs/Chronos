@@ -25,7 +25,6 @@ const TemperatureChart = ({ service }) => {
       timeArr = time.map(el => moment(el).format('S A'));
       month = moment(time[0]).format('MMM Do');
     }
-    console.log('month1111', month);
 
     return (
       <Plot

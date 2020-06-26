@@ -5,11 +5,12 @@ const { Schema } = mongoose;
 const servicesSchema = new Schema({
   microservice: {
     type: String,
-    required: true,
+    unique: true,
+    required: [true, 'microservice required'],
   },
   interval: {
     type: Number,
-    required: true,
+    required: [true, 'interval required'],
   },
 });
 
