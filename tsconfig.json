@@ -10,5 +10,5 @@
     "jsx": "react",
     "esModuleInterop": true
   },
-  "include": ["./app/**/*"]
+  "include": ["./app/**/*", "./electron/**/*"]
 }
