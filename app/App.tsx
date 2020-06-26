@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import Splash from './components/Splash';
 import DashboardContainer from './containers/DashboardContainer';
 
+// interface IProp {
+//   firstVisit: boolean;
+//   setFirstVisit: React.Dispatch<React.SetStateAction<IProp | undefined>>;
+//   // fn: (firstVisit: boolean) => void;
+// }
 interface IProp {
   firstVisit: boolean;
-  setFirstVisit: React.Dispatch<React.SetStateAction<IProp | undefined>>;
-  // fn: (firstVisit: boolean) => void;
 }
 
 const App: React.FC = () => {
@@ -13,7 +16,7 @@ const App: React.FC = () => {
   // const [firstVisit, setFirstVisit] = useState(false);
 
   // UNCOMMENT this for splash demo
-  const [firstVisit, setFirstVisit] = useState<IProp>();
+  const [firstVisit, setFirstVisit] = useState<IProp>({ firstVisit: true });
 
   // function useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
 

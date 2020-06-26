@@ -3,6 +3,13 @@ import Electron from 'electron';
 
 const { ipcRenderer } = window.require('electron');
 
+// interface IApplicationContext {
+//   connectToDB?: (index: number) => void;
+//   fetchServicesNames?: (application: string) => void;
+//   setServicesData?: React.Dispatch<React.SetStateAction<never[]>>;
+//   servicesData?: number[];
+// }
+
 export const ApplicationContext = React.createContext<any>(null);
 
 const ApplicationContextProvider: React.FC = ({ children }) => {
