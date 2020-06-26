@@ -1,6 +1,5 @@
 import React, { useState, createContext, Props } from 'react';
 import Electron from 'electron';
-// import { IpcRendererEvent } from 'electron';
 
 const { ipcRenderer } = window.require('electron');
 

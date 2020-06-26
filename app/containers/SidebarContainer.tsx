@@ -5,12 +5,18 @@ import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
 import '../stylesheets/SidebarContainer.css';
 
+interface service {
+  id: number;
+  interval: number;
+  microservice: string;
+}
+
 const SidebarContainer = () => {
   // Set view to selected index
   // Index is dependent on which microservice button is clicked
-  const [index, setIndex] = useState(null);
+  const [index, setIndex] = useState<null | number>(null);
 
-  const handleClick = id => {
+  const handleClick = (id: number) => {
     // Toggle the sidebar buttons to reveal or hide their microservices
     if (index === null) {
       setIndex(id);
@@ -33,7 +39,7 @@ const SidebarContainer = () => {
         <SidebarHeader />
         <Applications handleClick={handleClick} />
         <div className="btn-container">
-          {servicesData.map(service => (
+          {servicesData.map((service: service) => (
             <Link className="link" to={`/${service.microservice}`} key={service.id}>
               {service.microservice}
             </Link>
