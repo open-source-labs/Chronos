@@ -22,12 +22,8 @@ import '../stylesheets/Splash.css';
 // };
 
 // export default Splash;
-interface IProp {
-  firstVisit: boolean;
-}
 
 const Splash = ({ setFirstVisit }: any) => {
-  console.log('SetfirstVisis', setFirstVisit);
   // Display splash for 3 seconds
 
   useEffect(() => {

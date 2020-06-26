@@ -14,7 +14,6 @@ export const ApplicationContext = React.createContext<any>(null);
 
 const ApplicationContextProvider: React.FC = ({ children }) => {
   const [servicesData, setServicesData] = useState([]);
-  console.log('this is your children in application context:   ', children);
   /**
    * Connect to database provided by user at 'index'
    */

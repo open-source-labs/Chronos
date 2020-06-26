@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const RequestTypesChart = () => {
+const RequestTypesChart: React.FC = () => {
   const { commsData } = useContext(CommsContext);
 
   interface IObject {
@@ -47,6 +47,9 @@ const RequestTypesChart = () => {
             },
           },
         ]}
+        config={{
+          displaylogo: false,
+        }}
         layout={{
           title: {
             text: 'Request Types',

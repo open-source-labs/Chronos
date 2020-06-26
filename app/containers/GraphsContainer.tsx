@@ -13,18 +13,31 @@ import RouteTrace from '../charts/route-trace';
 import DockerStatsChart from '../charts/docker-stats-chart';
 import '../stylesheets/GraphsContainer.css';
 
-const GraphsContainer = ({ match }) => {
-  const initialData = {
-    nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
-    links: [
-      { source: 'reverse-proxy', target: 'books' },
-      { source: 'reverse-proxy', target: 'customers' },
-      { source: 'reverse-proxy', target: 'orders' },
-      { source: 'books', target: 'orders' },
-      { source: 'customers', target: 'books' },
-      { source: 'orders', target: 'customers' },
-    ],
+interface IParams {
+  service: string;
+}
+
+interface IMatch {
+  match: {
+    path: string;
+    url: string;
+    isExact: boolean;
+    params: IParams;
   };
+}
+
+const GraphsContainer = ({ match }: IMatch) => {
+  //   const initialData = {
+  //   nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
+  //   links: [
+  //     { source: 'reverse-proxy', target: 'books' },
+  //     { source: 'reverse-proxy', target: 'customers' },
+  //     { source: 'reverse-proxy', target: 'orders' },
+  //     { source: 'books', target: 'orders' },
+  //     { source: 'customers', target: 'books' },
+  //     { source: 'orders', target: 'customers' },
+  //   ],
+  // };
 
   const [data, setData] = useState(null);
   const width = 400;
@@ -32,23 +45,23 @@ const GraphsContainer = ({ match }) => {
   const [active, setActive] = useState(null);
   const canvas = useRef(null);
 
-  function fetchData() {
-    Promise.resolve().then(() => setData(Object.values(initialData)));
-  }
+  // function fetchData() {
+  //   Promise.resolve().then(() => setData(Object.values(initialData)));
+  // }
 
-  useEffect(() => {
-    if (data && data.length) {
-      const d3Props = {
-        data,
-        width,
-        height,
-        onClick: setActive,
-      };
-      new RouteTrace(canvas.current, d3Props);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data && data.length) {
+  //     const d3Props = {
+  //       data,
+  //       width,
+  //       height,
+  //       onClick: setActive,
+  //     };
+  //     new RouteTrace(canvas.current, d3Props);
+  //   }
+  // }, [data]);
 
-  useEffect(fetchData, []);
+  // useEffect(fetchData, []);
 
   // Get current service name from params
   const { service } = match.params;
@@ -60,7 +73,6 @@ const GraphsContainer = ({ match }) => {
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
-
     // On unmount: clear data
     return () => {
       setHealthData({});
@@ -75,15 +87,15 @@ const GraphsContainer = ({ match }) => {
         <div className="routes">
           <div ref={canvas} />
         </div>
-        <SpeedChart service={service} />
-        <TemperatureChart service={service} />
-        <RequestTypesChart service={service} />
-        <ResponseCodesChart service={service} />
-        <ProcessesChart service={service} />
-        <LatencyChart service={service} />
-        <MicroServiceTraffic service={service} />
-        <MemoryChart service={service} />
-        <DockerStatsChart service={service} />
+        <SpeedChart />
+        <TemperatureChart />
+        <RequestTypesChart />
+        <ResponseCodesChart />
+        <ProcessesChart />
+        <LatencyChart />
+        <MicroServiceTraffic />
+        <MemoryChart />
+        <DockerStatsChart />
       </div>
     </div>
   );
