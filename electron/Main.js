@@ -1,8 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const path = require('path');
-const dashboardRouter = require('./routes/dashboard.js');
-const infoRouter = require('./routes/info.js');
+require('./routes/dashboard.js');
+require('./routes/info.js');
 
 // Install React Dev Tools
 app.whenReady().then(() => {
@@ -50,40 +50,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-/**
- * @desc adds the new microservice to the service list and updates state accordingly
- */
-dashboardRouter.submit();
-
-/**
- * @desc renders the current microservices to the dashboard from state
- */
-dashboardRouter.dashboard();
-
-/**
- * @desc deletes the service at 'index' from services array (settings.json)
- * resets the settings.json to original settings if no services available
- * sends remainding services back to onDelete function within DeleteService in response
- */
-dashboardRouter.deleteService();
-
-/**
- * @desc Connect user to selected database
- */
-infoRouter.connect();
-
-/**
- * @desc fetches communications data from the database to be rendered via charts
- */
-infoRouter.commsData();
-
-/**
- * @desc fetches microservice health data from the database to be rendered via charts
- */
-infoRouter.healthData();
-
-/**
- * @desc  Fetches each of the microservices of the specified application
- */
-infoRouter.getServices();

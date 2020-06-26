@@ -2,87 +2,75 @@ const { ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
 
-const dashboard = {};
+/**
+ * @event   addApp
+ * @desc    Adds an application to the user's list in the settings.json with the provided fields
+ * @return  New list of applications
+ */
+// Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
+ipcMain.on('addApp', (message, application) => {
+  // Retrives file contents from settings.json
+  const state = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
+      encoding: 'UTF-8',
+    })
+  );
+
+  // Add new applicaiton to list
+  const newApp = JSON.parse(application);
+  state.services.push(newApp);
+
+  // Update settings.json with new list
+  fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
+
+  // Sync event - return new applications list
+  message.returnValue = state.services.map(arr => arr[0]);
+});
 
 /**
- * @desc adds the new microservice to the service list and updates state accordingly
+ * @event   getApps
+ * @desc    Retrieves the existing list of applications belonging to the user
+ * @return  Returns the list of applications
  */
-dashboard.submit = () => {
-  // Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
-  ipcMain.on('submit', (message, newService) => {
-    // Declares a variable state and initialize it to the returned parsed json object from the user/settings.json file
-    const state = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
-        encoding: 'UTF-8'
-      })
-    );
+// Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
+ipcMain.on('getApps', message => {
+  // Retrives file contents from settings.json
+  const state = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
+      encoding: 'UTF-8',
+    })
+  );
 
-    // Checks if setup is required by checking if the value for the state key 'setupRequired' is true
-    if (state.setupRequired) {
-      // If setup is required, the value for key 'setupRequired' is reassign to false and the value for key 'services' is reassign to an array with newService as its only element
-      state.setupRequired = false;
-      state.services = [JSON.parse(newService)];
-    } else {
-      // Else the newService is pushed into the services array
-      state.services.push(JSON.parse(newService));
-    }
+  // Destructure list of services from state to be rendered on the dashboard
+  const dashboardList = state.services.map(arr => arr[0]);
 
-    // Rewrites user/settings.json to show state
-    fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
-  });
-};
+  // Sync event - return new applications list
+  message.returnValue = dashboardList;
+});
 
 /**
- * @desc renders the current microservices to the dashboard from state
+ * @event   deleteApp
+ * @desc    Deletes the desired application from settings.json which is located with the provided index
+ * @return  Returns the new list of applications
  */
-dashboard.dashboard = () => {
-  // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
-  ipcMain.on('dashboard', message => {
-    // Declares variable state and initialize it to the returned parse json object from the user/settings.json file
-    const state = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
-        encoding: 'UTF-8'
-      })
-    );
-    // Destructure list of services from state to be rendered on the dashboard
-    const { services } = state;
-    const dashboardList = services.reduce((acc, curVal) => {
-      acc.push(curVal[0]);
-      return acc;
-    }, []);
+ipcMain.on('deleteApp', (message, index) => {
+  // Retrives file contents from settings.json
+  const state = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
+      encoding: 'UTF-8',
+    })
+  );
 
-    message.returnValue = dashboardList;
+  // Remove application from settings.json
+  state.services.splice(index, 1);
+
+  // Update settings.json with new list
+  fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state), {
+    encoding: 'UTF-8',
   });
-};
 
-/**
- * @desc deletes the service at 'index' from services array (settings.json) resets the settings.json to original settings if no services available sends remainding services back to onDelete function within DeleteService in response
- */
-dashboard.deleteService = () => {
-  ipcMain.on('deleteService', (message, index) => {
-    // Declares a variable state and initialize it to the returned parse json object from the user/settings.json file
-    let state = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
-        encoding: 'UTF-8'
-      })
-    );
-    // If there is more than one services in the services array, remove the service at 'index'
-    if (state.services.length > 1) {
-      state.services.splice(index, 1);
-    } else {
-      // Else reassign state to what the user/setting.json file was originally before any database was save
-      state = {
-        setupRequired: true,
-        services: ['hard', 'coded', 'in']
-      };
-    }
+  // Sync event - return new applications list
+  message.returnValue = state.services.map(arr => arr[0]);
+});
 
-    // Rewrite json from settings.json
-    fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state), {
-      encoding: 'UTF-8'
-    });
-    message.sender.send('deleteResponse', state.services);
-  });
-};
-
-module.exports = dashboard;
+// module.exports = dashboard;
