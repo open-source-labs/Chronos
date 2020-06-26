@@ -2,11 +2,26 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const RequestTypesChart = () => {
+interface IObj {
+  correlatingid: string;
+  endpoint: string;
+  id: number;
+  microservice: string;
+  request: string;
+  responsemessage: string;
+  responsestatus: number;
+  time: string;
+}
+
+interface IReq {
+  [key: string]: number;
+}
+
+const RequestTypesChart: React.FC = () => {
   const { commsData } = useContext(CommsContext);
 
   const createRequestChart = () => {
-    const requestTypes = {
+    const requestTypes: IReq = {
       DELETE: 0,
       GET: 0,
       PATCH: 0,
@@ -16,10 +31,10 @@ const RequestTypesChart = () => {
     };
 
     // Record each request type in the requestTypes object
-    commsData.forEach(obj => {
-      const type = obj.request;
-      if (type in requestTypes) {
-        requestTypes[type] += 1;
+    commsData.forEach((obj: IObj) => {
+      const request = obj.request;
+      if (request in requestTypes) {
+        requestTypes[request] += 1;
       }
     });
 
@@ -36,6 +51,9 @@ const RequestTypesChart = () => {
             },
           },
         ]}
+        config={{
+          displaylogo: false,
+        }}
         layout={{
           title: {
             text: 'Request Types',
@@ -48,7 +66,6 @@ const RequestTypesChart = () => {
             size: 15,
             family: 'Nunito, san serif',
           },
-          displaylogo: false,
           paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
