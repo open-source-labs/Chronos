@@ -5,7 +5,7 @@ import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
 import '../stylesheets/SidebarContainer.css';
 
-interface service {
+interface IService {
   id: number;
   interval: number;
   microservice: string;
@@ -39,7 +39,7 @@ const SidebarContainer = () => {
         <SidebarHeader />
         <Applications handleClick={handleClick} />
         <div className="btn-container">
-          {servicesData.map((service: service) => (
+          {servicesData.map((service: IService) => (
             <Link className="link" to={`/${service.microservice}`} key={service.id}>
               {service.microservice}
             </Link>
