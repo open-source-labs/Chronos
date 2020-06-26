@@ -13,42 +13,20 @@ import RouteTrace from '../charts/route-trace';
 import DockerStatsChart from '../charts/docker-stats-chart';
 import '../stylesheets/GraphsContainer.css';
 
-interface IParams{
-  service: string
-  
+interface IParams {
+  service: string;
 }
 
 interface IMatch {
-  match:{
+  match: {
     path: string;
-  url: string;
-  isExact: boolean;
-  params: IParams;
-  }
-  
-}
-
-interface IService{
-  service:{
-   service: string 
-  }
-  
-}
-
-interface ITemperatureChart extends React.Props<any>{
-
-}
-
-interface Props extends React.Props<any>{
-  service: any
+    url: string;
+    isExact: boolean;
+    params: IParams;
+  };
 }
 
 const GraphsContainer = ({ match }: IMatch) => {
-  console.log('match test-------->', match.params)
-    // for (let  keys in match){
-    //   console.log('test--------->key',keys)
-    //   console.log('test--------->objkey ',match[keys])
-    // }
   //   const initialData = {
   //   nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
   //   links: [
@@ -87,7 +65,6 @@ const GraphsContainer = ({ match }: IMatch) => {
 
   // Get current service name from params
   const { service } = match.params;
- 
 
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchCommsData, setCommsData } = useContext(CommsContext);
@@ -96,14 +73,13 @@ const GraphsContainer = ({ match }: IMatch) => {
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
-    console.log('maybe other service --------->',service)
     // On unmount: clear data
     return () => {
       setHealthData({});
       setCommsData([]);
     };
   }, [service]);
-  
+
   return (
     <div id="serviceDetailsContainer">
       <h3 id="microserviceHealthTitle">Microservice: {service}</h3>
@@ -113,13 +89,13 @@ const GraphsContainer = ({ match }: IMatch) => {
         </div>
         <SpeedChart />
         <TemperatureChart />
-        <RequestTypesChart  />
+        <RequestTypesChart />
         <ResponseCodesChart />
-        <ProcessesChart service={service} />
-        <LatencyChart  />
-        <MicroServiceTraffic service={service} />
+        <ProcessesChart />
+        <LatencyChart />
+        <MicroServiceTraffic />
         <MemoryChart />
-        <DockerStatsChart service={service} />
+        <DockerStatsChart />
       </div>
     </div>
   );

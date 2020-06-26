@@ -29,7 +29,6 @@ const DashboardContextProvider = ({ children }: Props) => {
    * and sets the applications state to the list of app names
    */
   const getApplications = () => {
-    console.log('getting apps')
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
   };
@@ -42,7 +41,7 @@ const DashboardContextProvider = ({ children }: Props) => {
   const addApp = (fields: IFields) => {
     const { database, URI, name } = fields;
     const result = ipcRenderer.sendSync('addApp', JSON.stringify([name, database, URI]));
-    setApplications(result)
+    setApplications(result);
   };
 
   /**

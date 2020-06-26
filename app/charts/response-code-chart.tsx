@@ -3,24 +3,18 @@ import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
 interface IObj {
-    correlatingid:string;
-    endpoint: string;
-    id: number;
-    microservice: string;
-    request: string;
-    responsemessage: string;
-    responsestatus: number;
-    time: string;
+  correlatingid: string;
+  endpoint: string;
+  id: number;
+  microservice: string;
+  request: string;
+  responsemessage: string;
+  responsestatus: number;
+  time: string;
 }
-
-interface IComms {
-  commsData: IObj
-}
-
 
 const ResponseCodeChart: React.FC = () => {
   const { commsData } = useContext(CommsContext);
-  console.log('what are comms---------?>',commsData)
 
   const createChart = () => {
     const responseCodes = {
@@ -34,7 +28,6 @@ const ResponseCodeChart: React.FC = () => {
 
     // Record each status code in the responseCodes object
     commsData.forEach((obj: IObj) => {
-      console.log('where is responsestatus------>',obj.responsestatus)
       const status = obj.responsestatus;
       if (status >= 500) {
         responseCodes['500-599'] += 1;
