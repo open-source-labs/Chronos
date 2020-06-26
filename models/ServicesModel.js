@@ -9,7 +9,8 @@ const ServicesSchema = new Schema({
   },
   interval: {
     type: String,
+    required: true,
   },
 });
 
-module.exports = service => mongoose.model(service, ServicesSchema);
+module.exports = mongoose.model('services', ServicesSchema);
