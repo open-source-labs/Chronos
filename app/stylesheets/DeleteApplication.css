@@ -15,6 +15,7 @@
   align-self: center;
   font-family: 'Nunito', sans-serif;
   width: 100%;
+  height: 100vh;
 }
 
 .servicesList {
@@ -34,7 +35,7 @@
   border: 1px solid rgb(0, 0, 0);
   background-color: black;
   transition: 0.25s;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .deleteMicroservice:hover {
@@ -42,5 +43,5 @@
   cursor: pointer;
   border-radius: 10px;
   color: white;
-  background-color: #494FEE;
+  background-color: #494fee;
 }
