@@ -17,53 +17,28 @@ const queryObj = {
   w: 604800000, // 60 sec/min * 60 min/hr * 1000 ms/sec * 24 hours/day * 7 days per week
 };
 
-chronos.connect(config) {
-  const {database} = config
+chronos.connect = config => {
+  const { database } = config;
 
   client = new Client({
-    connectionString: database.URI
-  })
+    connectionString: database.URI,
+  });
 
   // Connect to user's database
   client.connect((err, client, release) => {
-    console.log('Attempting to connect...')
+    console.log('Attempting to connect...');
     if (err) {
       throw new Error('Error connecting to database');
     }
-    console.log('Connected to database at ', uri.slice(0, 24), '...');
+    console.log('Connected to database at ', database.URI.slice(0, 24), '...');
   });
-}
+};
 
 // microCom
-chronos.communications = (
-  microserviceName,
-  userOwnedDB,
-  wantMicroHealth,
-  queryFreq,
-  isDockerized,
-  SlackUrl,
-  emailList,
-  emailHost,
-  emailPort,
-  user,
-  password,
-  req,
-  res,
-  next
-) => {
-  const { name, interval, dockerized, database, notifications } = config;
+chronos.communications = config => {
+  const { name, slack, email } = config;
 
-  
-  chronos.services(microserviceName, queryFreq);
-  // Invoke the health if the user provides "yes" when invoking chronos.microCom in the server.
-  // Invoke microDocker instead if user provides "yes" to "isDockerized".
-  if (wantMicroHealth === 'yes' || wantMicroHealth === 'y') {
-    chronos.health(microserviceName, queryFreq);
-  } else if (isDockerized === 'yes' || wantMicroHealth === 'y') {
-    chronos.microDocker(microserviceName, queryFreq);
-  }
-
-  // query created DB and create table if it doesn't already exist and create the columns. Throws error if needed.
+  // Create communications table if one does not exist
   client.query(
     `CREATE TABLE IF NOT EXISTS communications(
     _id serial PRIMARY KEY,
@@ -82,56 +57,30 @@ chronos.communications = (
     }
   );
   return (req, res, next) => {
-    // correlating id that will persist thru the request from one server to the next
+    // ID persists throughout request lifecycle
     const correlatingId = res.getHeaders()['x-correlation-id'];
-    // user-input name for current microservice
-    const microservice = microserviceName;
-    // What was our endpoint? Grabbed from request object
+
+    // Target endpoint
     const endpoint = req.originalUrl;
-    // Type of request. Grabbed from request object
+
+    // HTTP Request Method
     const request = req.method;
 
-    const queryString = `INSERT INTO communications
-      (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
+    const queryString = `
+      INSERT INTO communications (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
       VALUES ($1, $2, $3, $4, $5, $6);`;
 
     // Waits for response to finish before pushing information into database
     res.on('finish', () => {
       if (res.statusCode >= 400) {
-        //  Error data that is sent to the user in both the slack notification and email body
-        const data = {
-          text: `${res.statusCode}, ${res.statusMessage}, ${Date.now()}`,
-        };
-        //the message object contains the receipent email list and the email text body
-        const message = {
-          to: `${emailList}`,
-          subject: 'Error from Middleware', // Subject line
-          text: `${res.statusCode}, ${res.statusMessage}`, // Plain text body
-        };
-        // configuartion settings for  the email notifications
-        const config = {
-          host: `${emailHost}`,
-          port: `${emailPort}`,
-          auth: {
-            user: `${user}`,
-            pass: `${password}`,
-          },
-        };
-        alert.sendSlack(data, SlackUrl);
-        alert.sendEmail(message, config);
+        if (slack) alert.sendSlack(res.statusCode, res.statusMessage, slack);
+        if (email) alert.sendEmail(res.statusCode, res.statusMessage, email);
       }
       // Grabs status code from response object
       const responsestatus = res.statusCode;
       // Grabs status message from response object
       const responsemessage = res.statusMessage;
-      const values = [
-        microservice,
-        endpoint,
-        request,
-        responsestatus,
-        responsemessage,
-        correlatingId,
-      ];
+      const values = [name, endpoint, request, responsestatus, responsemessage, correlatingId];
       client.query(queryString, values, (err, result) => {
         if (err) {
           throw err;
@@ -142,7 +91,12 @@ chronos.communications = (
   };
 };
 
-chronos.services = (microserviceName, queryFreq) => {
+/**
+ * Create services table with each entry representing a microservice
+ * @param {Object} config User specified config options
+ */
+chronos.services = ({ name, interval }) => {
+  // Create services table if does not exist
   client.query(
     `CREATE TABLE IF NOT EXISTS services (
       _id SERIAL PRIMARY KEY NOT NULL,
@@ -156,25 +110,28 @@ chronos.services = (microserviceName, queryFreq) => {
     }
   );
 
-  const queryString = `INSERT INTO services
-      (microservice, interval)
-      VALUES ($1, $2)
-      ON CONFLICT (microservice) DO NOTHING;`;
-  const values = [microserviceName, queryObj[queryFreq]];
+  // Insert microservice name and interval into services table
+  const queryString = `
+    INSERT INTO services (microservice, interval)
+    VALUES ($1, $2)
+    ON CONFLICT (microservice) DO NOTHING;`;
+
+  const values = [name, interval];
 
   client.query(queryString, values, (err, result) => {
     if (err) {
       throw err;
     }
+    console.log(`Microservice "${name}" recorded in services table`);
   });
 };
 
 /**
  * Read and store microservice health information in postgres database at every interval
- * @param {Object} config The user provided config options
+ * @param {Object} config User specified config options
  */
-chronos.health = (config) => {
-  const { name, interval } = config
+chronos.health = config => {
+  const { name, interval } = config;
 
   // Create table for the microservice if it doesn't exist yet
   client.query(
@@ -202,7 +159,18 @@ chronos.health = (config) => {
   );
 
   // Initialize variables for database storage
-  let cpuspeed, cputemp, cpuloadpercent, totalMemory, freeMemory, usedMemory, activeMemory, latency, totalprocesses, blockedprocesses, runningprocesses, sleepingprocesses;
+  let cpuspeed,
+    cputemp,
+    cpuloadpercent,
+    totalMemory,
+    freeMemory,
+    usedMemory,
+    activeMemory,
+    latency,
+    totalprocesses,
+    blockedprocesses,
+    runningprocesses,
+    sleepingprocesses;
 
   // Save data point at every interval (ms)
   setInterval(() => {
