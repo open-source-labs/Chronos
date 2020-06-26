@@ -13,18 +13,53 @@ import RouteTrace from '../charts/route-trace';
 import DockerStatsChart from '../charts/docker-stats-chart';
 import '../stylesheets/GraphsContainer.css';
 
-const GraphsContainer = ({ match }) => {
-  const initialData = {
-    nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
-    links: [
-      { source: 'reverse-proxy', target: 'books' },
-      { source: 'reverse-proxy', target: 'customers' },
-      { source: 'reverse-proxy', target: 'orders' },
-      { source: 'books', target: 'orders' },
-      { source: 'customers', target: 'books' },
-      { source: 'orders', target: 'customers' },
-    ],
-  };
+interface IParams{
+  service: string
+  
+}
+
+interface IMatch {
+  match:{
+    path: string;
+  url: string;
+  isExact: boolean;
+  params: IParams;
+  }
+  
+}
+
+interface IService{
+  service:{
+   service: string 
+  }
+  
+}
+
+interface ITemperatureChart extends React.Props<any>{
+
+}
+
+interface Props extends React.Props<any>{
+  service: any
+}
+
+const GraphsContainer = ({ match }: IMatch) => {
+  console.log('match test-------->', match.params)
+    // for (let  keys in match){
+    //   console.log('test--------->key',keys)
+    //   console.log('test--------->objkey ',match[keys])
+    // }
+  //   const initialData = {
+  //   nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
+  //   links: [
+  //     { source: 'reverse-proxy', target: 'books' },
+  //     { source: 'reverse-proxy', target: 'customers' },
+  //     { source: 'reverse-proxy', target: 'orders' },
+  //     { source: 'books', target: 'orders' },
+  //     { source: 'customers', target: 'books' },
+  //     { source: 'orders', target: 'customers' },
+  //   ],
+  // };
 
   const [data, setData] = useState(null);
   const width = 400;
@@ -32,26 +67,27 @@ const GraphsContainer = ({ match }) => {
   const [active, setActive] = useState(null);
   const canvas = useRef(null);
 
-  function fetchData() {
-    Promise.resolve().then(() => setData(Object.values(initialData)));
-  }
+  // function fetchData() {
+  //   Promise.resolve().then(() => setData(Object.values(initialData)));
+  // }
 
-  useEffect(() => {
-    if (data && data.length) {
-      const d3Props = {
-        data,
-        width,
-        height,
-        onClick: setActive,
-      };
-      new RouteTrace(canvas.current, d3Props);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data && data.length) {
+  //     const d3Props = {
+  //       data,
+  //       width,
+  //       height,
+  //       onClick: setActive,
+  //     };
+  //     new RouteTrace(canvas.current, d3Props);
+  //   }
+  // }, [data]);
 
-  useEffect(fetchData, []);
+  // useEffect(fetchData, []);
 
   // Get current service name from params
   const { service } = match.params;
+ 
 
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchCommsData, setCommsData } = useContext(CommsContext);
@@ -60,14 +96,14 @@ const GraphsContainer = ({ match }) => {
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
-
+    console.log('maybe other service --------->',service)
     // On unmount: clear data
     return () => {
       setHealthData({});
       setCommsData([]);
     };
   }, [service]);
-
+  
   return (
     <div id="serviceDetailsContainer">
       <h3 id="microserviceHealthTitle">Microservice: {service}</h3>
@@ -75,14 +111,14 @@ const GraphsContainer = ({ match }) => {
         <div className="routes">
           <div ref={canvas} />
         </div>
-        <SpeedChart service={service} />
-        <TemperatureChart service={service} />
-        <RequestTypesChart service={service} />
-        <ResponseCodesChart service={service} />
+        <SpeedChart />
+        <TemperatureChart />
+        <RequestTypesChart  />
+        <ResponseCodesChart />
         <ProcessesChart service={service} />
-        <LatencyChart service={service} />
+        <LatencyChart  />
         <MicroServiceTraffic service={service} />
-        <MemoryChart service={service} />
+        <MemoryChart />
         <DockerStatsChart service={service} />
       </div>
     </div>
