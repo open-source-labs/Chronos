@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.model('services', {
+const { Schema } = mongoose;
+
+const ServicesSchema = new Schema({
   microservice: {
     type: String,
     unique: true,
@@ -9,3 +11,5 @@ mongoose.model('services', {
     type: String,
   },
 });
+
+module.exports = service => mongoose.model(service, ServicesSchema);

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 
-const MicroserviceScheme = new Schema({
+const MicroserviceSchema = new Schema({
   cpuspeed: {
     type: Number,
   },
@@ -42,4 +43,4 @@ const MicroserviceScheme = new Schema({
     type: Date,
   },
 });
-module.exports = MicroSrvName => mongoose.model(MicroSrvName, MicroserviceScheme);
+module.exports = MicroSrvName => mongoose.model(MicroSrvName, MicroserviceSchema);

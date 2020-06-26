@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.model('Communication', {
+const { Schema } = mongoose;
+
+const CommunicationsSchema = new Schema({
   microservice: {
     type: String,
   },
@@ -23,3 +25,5 @@ mongoose.model('Communication', {
     type: String,
   },
 });
+
+module.exports = mongoose.model('communications', CommunicationsSchema);
