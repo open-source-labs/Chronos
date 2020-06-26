@@ -6,7 +6,7 @@ import Applications from '../components/Applications';
 import '../stylesheets/SidebarContainer.css';
 
 interface IService {
-  id: number;
+  _id: number;
   interval: number;
   microservice: string;
 }
@@ -16,12 +16,12 @@ const SidebarContainer: React.FC = (): JSX.Element => {
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState<null | number>(null);
 
-  const handleClick = (id: any) => {
+  const handleClick = (_id: any) => {
     // Toggle the sidebar buttons to reveal or hide their microservices
     if (index === null) {
-      setIndex(id);
+      setIndex(_id);
     } else {
-      setIndex(index === id ? null : id);
+      setIndex(index === _id ? null : _id);
     }
   };
   const { connectToDB, fetchServicesNames, servicesData } = useContext(ApplicationContext);
@@ -38,7 +38,7 @@ const SidebarContainer: React.FC = (): JSX.Element => {
         <Applications handleClick={handleClick} />
         <div className="btn-container">
           {servicesData.map((service: IService) => (
-            <Link className="link" to={`/${service.microservice}`} key={service.id}>
+            <Link className="link" to={`/${service.microservice}`} key={service._id}>
               {service.microservice}
             </Link>
           ))}
