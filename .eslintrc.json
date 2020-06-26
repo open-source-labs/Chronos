@@ -33,6 +33,7 @@
     "no-restricted-globals": "off",
     "react/no-array-index-key": "warn",
     "no-restricted-syntax": "off",
-    "guard-for-in": "off"
+    "guard-for-in": "off",
+    "no-param-reassign": "off"
   }
 }
