@@ -8,20 +8,11 @@ import { HealthContext } from '../context/HealthContext';
  * @return component - component for latency graph
  */
 
-const LatencyChart = ({ service }) => {
+const LatencyChart = () => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
-    // const xAxis = [];
     const yAxis = healthData.latency;
-
-    // for (let i = 0; i < healthData.length; i += 2) {
-    //   const element = healthData[i];
-    //   if (element.currentmicroservice === service || element.currentMicroservice === service) {
-    //     xAxis.push(i);
-    //     yAxis.push(element.latency);
-    //   }
-    // }
 
     return (
       <Plot
@@ -29,10 +20,8 @@ const LatencyChart = ({ service }) => {
           {
             name: 'CPU Latency',
             type: 'scattergl',
-            // x: xAxis,
             y: yAxis,
             mode: 'lines',
-            rangemode: 'nonnegative',
             marker: { color: '#daaa17' },
           },
         ]}

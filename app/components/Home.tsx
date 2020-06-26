@@ -1,11 +1,10 @@
 import React from 'react';
-import icon from '../assets/pangolin.png';
 import '../stylesheets/Home.css';
 
-const Home = props => {
+const Home = () => {
   return (
     <div className="blank">
-      <img width="300" height="auto" src={icon} alt="Chronos logo" />
+      <img width="300" height="auto" src={'../assets/pangolin.png'} alt="Chronos logo" />
       <h1>Welcome to Chronos!</h1>
       <p>Select your application to get started!</p>
     </div>

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 const { ipcRenderer } = window.require('electron');
 
-export const HealthContext = React.createContext();
+export const HealthContext = React.createContext<any>(null);
 
-const HealthContextProvider = ({ children }) => {
+const HealthContextProvider: React.FC = ({ children }) => {
   const [healthData, setHealthData] = useState({});
 
   // Fetches all data related to a particular app
-  const fetchHealthData = service => {
+  const fetchHealthData = (service: string) => {
     ipcRenderer.send('healthRequest', service);
     ipcRenderer.on('healthResponse', (event, data) => {
       // Parse result
@@ -16,8 +16,8 @@ const HealthContextProvider = ({ children }) => {
       console.log('Number of data points (health):', result.length);
 
       // Separate data into individual arrays
-      const freq = {};
-      result.forEach(obj => {
+      const freq: any = {};
+      result.forEach((obj: any) => {
         for (const key in obj) {
           if (!(key in freq)) freq[key] = [];
           freq[key].push(obj[key]);

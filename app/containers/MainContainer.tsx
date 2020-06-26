@@ -7,7 +7,7 @@ import Home from '../components/Home';
 import '../stylesheets/MainContainer.css';
 
 // Follows the links in the Sidebar component
-const MainContainer = props => (
+const MainContainer = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/add" component={AddService} />
