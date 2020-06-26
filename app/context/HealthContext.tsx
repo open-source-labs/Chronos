@@ -7,6 +7,22 @@ export const HealthContext = React.createContext<any>(null);
 const HealthContextProvider: React.FC = ({ children }) => {
   const [healthData, setHealthData] = useState({});
 
+  // interface IFreq {
+  //   activememory?: number[];
+  //   blockedprocesses?: number[];
+  //   cpuloadpercent?: number[];
+  //   cpuspeed?: number[];
+  //   cputemp?: number[];
+  //   freememory?: number[];
+  //   id?: number[];
+  //   latency?: number[];
+  //   runningprocesses?: number[];
+  //   sleepingprocesses?: number[];
+  //   time?: string[];
+  //   totalmemory?: number[];
+  //   usememory?: number[];
+  // }
+
   // Fetches all data related to a particular app
   const fetchHealthData = (service: string) => {
     ipcRenderer.send('healthRequest', service);

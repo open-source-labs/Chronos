@@ -5,8 +5,18 @@ import { CommsContext } from '../context/CommsContext';
 const RequestTypesChart = () => {
   const { commsData } = useContext(CommsContext);
 
+  interface IObject {
+    correlatingid: string;
+    endpoint: string;
+    id: number;
+    microservice: string;
+    request: string;
+    responsemessage: string;
+    responsestatus: string;
+    time: string;
+  }
   const createRequestChart = () => {
-    const requestTypes = {
+    const requestTypes: { [key: string]: number } = {
       DELETE: 0,
       GET: 0,
       PATCH: 0,
@@ -16,8 +26,9 @@ const RequestTypesChart = () => {
     };
 
     // Record each request type in the requestTypes object
-    commsData.forEach(obj => {
-      const type = obj.request;
+    let type;
+    commsData.forEach((obj: IObject) => {
+      type = obj.request;
       if (type in requestTypes) {
         requestTypes[type] += 1;
       }
@@ -48,7 +59,6 @@ const RequestTypesChart = () => {
             size: 15,
             family: 'Nunito, san serif',
           },
-          displaylogo: false,
           paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
