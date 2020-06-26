@@ -16,7 +16,7 @@ const SidebarContainer = () => {
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState<null | number>(null);
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: any) => {
     // Toggle the sidebar buttons to reveal or hide their microservices
     if (index === null) {
       setIndex(id);

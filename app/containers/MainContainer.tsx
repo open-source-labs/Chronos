@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import AddService from '../components/AddService';
-import DeleteService from '../components/DeleteService';
+import AddService from '../components/AddApplication';
+import DeleteService from '../components/DeleteApplication';
 import GraphsContainer from './GraphsContainer';
 import Home from '../components/Home';
 import '../stylesheets/MainContainer.css';
