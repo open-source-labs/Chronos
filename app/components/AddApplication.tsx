@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import '../stylesheets/AddService.css';
+import '../stylesheets/AddApplication.css';
 import { DashboardContext } from '../context/DashboardContext';
 
 interface IFields {
