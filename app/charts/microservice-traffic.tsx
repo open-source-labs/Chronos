@@ -2,8 +2,23 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const MicroServiceTraffic = props => {
+const MicroServiceTraffic = () => {
   const { commsData } = useContext(CommsContext);
+
+  const microServiceCountdictionary: { [key: string]: number } = {};
+  // iterate over Trace Points
+  for (let i = 0; i < commsData.length; i += 1) {
+    // populate Micro-count dictionary
+    if (!microServiceCountdictionary[commsData[i].microservice]) {
+      microServiceCountdictionary[commsData[i].microservice] = 1;
+    } else {
+      microServiceCountdictionary[commsData[i].microservice] += 1;
+    }
+  }
+  // capture values of microServiceCountdictionary to use as data to populate chart object
+  const serverPingCount: number[] = Object.values(microServiceCountdictionary);
+  // variable 10 points higher than max number in microservicesDictionary aggregation --> variable allows for top level spacing on bar graph
+  const yAxisHeadRoom: number = Math.max(...serverPingCount) + 10;
   // console.log('here is commsdata in microservicetraffic:     ', commsData);
   // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
   // const resObj = {};
@@ -40,25 +55,9 @@ const MicroServiceTraffic = props => {
   // const tracePoints = Object.values(resObj);
 
   // Declare Micro-server-count dictinary to capture the amount of times a particular server is hit
-  const microServiceCountdictionary = {};
 
   // array logging every ping present in communications table ---> flat used to flatten multidimensional array and return 1d array
   // const tracePointLog = tracePoints.flat(Infinity);
-
-  // iterate over Trace Points
-  for (let i = 0; i < commsData.length; i += 1) {
-    // populate Micro-count dictionary
-    if (!microServiceCountdictionary[commsData[i].microservice]) {
-      microServiceCountdictionary[commsData[i].microservice] = 1;
-    } else {
-      microServiceCountdictionary[commsData[i].microservice] += 1;
-    }
-  }
-  // capture values of microServiceCountdictionary to use as data to populate chart object
-  const serverPingCount = Object.values(microServiceCountdictionary);
-
-  // variable 10 points higher than max number in microservicesDictionary aggregation --> variable allows for top level spacing on bar graph
-  const yAxisHeadRoom = Math.max(...serverPingCount) + 10;
 
   // Create chart object data to feed into bar component
   // const myChart = {

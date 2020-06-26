@@ -8,7 +8,7 @@ import moment from 'moment';
  * @return component - component for speed changes
  */
 
-const SpeedChart = props => {
+const SpeedChart = () => {
   const { healthData } = useContext(HealthContext);
   const { time } = healthData;
   const yAxis = healthData.cpuspeed;
@@ -19,7 +19,7 @@ const SpeedChart = props => {
       // Do Nothing
     } else {
       // const xAxis = healthData.time;
-      timeArr = time.map(el => moment(el).format('hh:ss A'));
+      timeArr = time.map((el: any) => moment(el).format('hh:ss A'));
     }
     return (
       <Plot
@@ -31,7 +31,6 @@ const SpeedChart = props => {
             type: 'scatter',
             mode: 'lines',
           },
-          { label: 'mbps' },
         ]}
         layout={{
           title: 'Speed Chart',
@@ -45,12 +44,9 @@ const SpeedChart = props => {
           xaxis: {
             title: 'Time (PST)',
             tickmode: 'linear',
-            // tick0: secondsArr[0],
             tickformat: '%d %B (%a)<br>%Y',
-            // nticks: 5,
             range: [1, 10],
             rangemode: 'nonnegative',
-            rangeslider: true,
           },
           yaxis: {
             title: 'Data Rates (MBPS)',

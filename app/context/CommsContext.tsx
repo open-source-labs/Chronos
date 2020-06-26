@@ -3,8 +3,6 @@ import Electron from 'electron';
 
 const { ipcRenderer } = window.require('electron');
 
-export const CommsContext = React.createContext<any>(null);
-
 interface IProp {
   id: number;
   microservice: string;
@@ -15,6 +13,12 @@ interface IProp {
   time: string;
   correlatingid: string;
 }
+
+interface ICommsContext {
+  commsData: [IProp];
+}
+
+export const CommsContext = React.createContext<any>(null);
 
 const CommsContextProvider: React.FC = ({ children }) => {
   const [commsData, setCommsData] = useState([]);

@@ -5,13 +5,13 @@ import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
 import '../stylesheets/SidebarContainer.css';
 
-interface service {
+interface IService {
   id: number;
   interval: number;
   microservice: string;
 }
 
-const SidebarContainer = () => {
+const SidebarContainer: React.FC = (): JSX.Element => {
   // Set view to selected index
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState<null | number>(null);
@@ -24,9 +24,7 @@ const SidebarContainer = () => {
       setIndex(index === id ? null : id);
     }
   };
-
   const { connectToDB, fetchServicesNames, servicesData } = useContext(ApplicationContext);
-
   // On Mount: fetch all of an application's comms and health data
   useEffect(() => {
     connectToDB(index);
@@ -39,7 +37,7 @@ const SidebarContainer = () => {
         <SidebarHeader />
         <Applications handleClick={handleClick} />
         <div className="btn-container">
-          {servicesData.map((service: service) => (
+          {servicesData.map((service: IService) => (
             <Link className="link" to={`/${service.microservice}`} key={service.id}>
               {service.microservice}
             </Link>

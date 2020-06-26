@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// import icon from '../assets/icons/icon.png';
 import '../stylesheets/Splash.css';
 
 //superset of JS
@@ -25,7 +24,6 @@ import '../stylesheets/Splash.css';
 // export default Splash;
 
 const Splash = ({ setFirstVisit }: any) => {
-  console.log('SetfirstVisis', setFirstVisit);
   // Display splash for 3 seconds
 
   useEffect(() => {
@@ -34,7 +32,7 @@ const Splash = ({ setFirstVisit }: any) => {
 
   return (
     <div id="splash">
-      <img alt="Chronos Logo" />
+      <img src={'../assets/icons/icon.png'} alt="Chronos Logo" />
       <span>chronos</span>
     </div>
   );
