@@ -13,7 +13,6 @@ const LatencyChart = () => {
 
   const createChart = () => {
     const yAxis: Array<number> = healthData.latency;
-    console.log('YAXIS----------->', yAxis);
 
     return (
       <Plot
