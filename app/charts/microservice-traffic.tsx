@@ -5,7 +5,7 @@ import { CommsContext } from '../context/CommsContext';
 const MicroServiceTraffic = () => {
   const { commsData } = useContext(CommsContext);
 
-  const microServiceCountdictionary: { [key: number]: any } = {};
+  const microServiceCountdictionary: { [key: string]: number } = {};
   // iterate over Trace Points
   for (let i = 0; i < commsData.length; i += 1) {
     // populate Micro-count dictionary
@@ -15,6 +15,7 @@ const MicroServiceTraffic = () => {
       microServiceCountdictionary[commsData[i].microservice] += 1;
     }
   }
+  console.log('this is the microc count:   ', microServiceCountdictionary);
   // capture values of microServiceCountdictionary to use as data to populate chart object
   const serverPingCount: number[] = Object.values(microServiceCountdictionary);
   // variable 10 points higher than max number in microservicesDictionary aggregation --> variable allows for top level spacing on bar graph
