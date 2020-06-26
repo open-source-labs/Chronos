@@ -3,34 +3,62 @@ const nodemailer = require('nodemailer');
 
 const alert = {};
 
-// notification to slack
-// url param is inpovided by the user microservice side
-alert.sendSlack = (data, url) => {
+/**
+ * Sends slack notifications to the provided slackurl with the status code
+ * and message via an axios POST request
+ * @param {integer} code Response status code
+ * @param {string} message Response message
+ * @param {Object} slackSettings User provided slack settings
+ */
+alert.sendSlack = (code, message, slackSettings) => {
+  const { slackurl } = slackSettings;
+
+  // Data for POST request
+  const data = { text: `${code}, ${message}, ${Date.now()}` };
+
+  // Options for POST request
   const config = {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  // data param is provided from the DBmiddlewares
-  return axios
-    .post(url, data, config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log('test------>', error.message);
-    });
+
+  axios
+    .post(slackurl, data, config)
+    .then(res => console.log(res.data))
+    .catch(error => console.log('test------>', error.message));
 };
 
-//email notification settings
-// message object is in the DBmiddlewares and recipient emails is provided from microservice
-//config object is in the DBmiddlewares and the object values are provided by the microservice user
-alert.sendEmail = (message, config) => {
-  let transport = nodemailer.createTransport(config);
-  console.log('slack test--------->');
+/**
+ * Sends email notifications using the provided email information with the
+ * status code and message via an axios POST request
+ * @param {integer} code Response status code
+ * @param {string} message Response message
+ * @param {Object} emailSettings User provided email settings
+ */
+alert.sendEmail = (code, message, emailSettings) => {
+  const { emails, emailHost, emailPort, user, password } = emailSettings;
 
-  transport.sendMail(message, function (err, info) {
+  // Message object contains receipent email list and email text body
+  const data = {
+    to: `${emails}`,
+    subject: 'Error from Middleware',
+    text: `${code}, ${message}`,
+  };
+
+  // Configuartion settings for email notifications
+  const config = {
+    host: `${emailHost}`,
+    port: `${emailPort}`,
+    auth: {
+      user: `${user}`,
+      pass: `${password}`,
+    },
+  };
+  const transport = nodemailer.createTransport(config);
+
+  transport.sendMail(data, function (err, info) {
     if (err) {
       console.log(err);
     } else {
