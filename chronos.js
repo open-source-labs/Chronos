@@ -46,6 +46,12 @@ chronos.propagate = () => {
   hpropagate({ propagateInResponses: true });
 };
 
+/**
+ * **********************************************
+ *              MAIN CONTROLLER
+ * Only supports MongoDB and PostgreSQL for now!
+ * **********************************************
+ */
 chronos.diagnose = () => {
   const { database, dockerized } = userConfig;
 
