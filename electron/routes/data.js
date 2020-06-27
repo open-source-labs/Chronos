@@ -1,8 +1,8 @@
 const { ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const connectSQL = require('../models/relational/postgres');
-const connectMongoose = require('../models/nonrelational/connect');
+const connectPostgres = require('../databases/postgres');
+const connectMongo = require('../databases/mongo');
 const CommunicationModel = require('../models/nonrelational/communicatonSchema');
 const HealthModelFunc = require('../models/nonrelational/healthSchema');
 const ServicesModel = require('../models/nonrelational/servicesSchema');
@@ -31,8 +31,8 @@ ipcMain.on('connect', (message, index) => {
   const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
   // Connect to the proper database
-  if (databaseType === 'MongoDB') connectMongoose(index, URI);
-  if (databaseType === 'SQL') pool = connectSQL(index, URI);
+  if (databaseType === 'MongoDB') connectMongo(index, URI);
+  if (databaseType === 'SQL') pool = connectPostgres(index, URI);
 
   // Currently set to a global variable
   currentDatabaseType = databaseType;
