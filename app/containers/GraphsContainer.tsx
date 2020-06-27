@@ -10,7 +10,7 @@ import TemperatureChart from '../charts/temperature-chart';
 import LatencyChart from '../charts/latency-chart';
 import MemoryChart from '../charts/memory-chart';
 import RouteTrace from '../charts/route-trace';
-import DockerStatsChart from '../charts/docker-stats-chart';
+import DockerChart from '../charts/DockerChart';
 import '../stylesheets/GraphsContainer.css';
 
 interface IParams {
@@ -95,7 +95,7 @@ const GraphsContainer = ({ match }: IMatch) => {
         <LatencyChart />
         <MicroServiceTraffic />
         <MemoryChart />
-        <DockerStatsChart />
+        <DockerChart />
       </div>
     </div>
   );
