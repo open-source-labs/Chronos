@@ -44,6 +44,7 @@ const ProcessesChart = () => {
           },
         ]}
         layout={{
+          title: 'Process Overview',
           height: 400,
           width: 400,
           font: {
