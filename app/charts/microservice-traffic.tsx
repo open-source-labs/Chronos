@@ -89,6 +89,7 @@ const MicroServiceTraffic = () => {
         },
       ]}
       layout={{
+        title: 'Microservice Traffic',
         height: 400,
         width: 400,
         font: {
