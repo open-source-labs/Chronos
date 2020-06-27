@@ -28,7 +28,7 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
     ipcRenderer.send('servicesRequest', application);
 
     // Response
-    ipcRenderer.on('servicesResponse', (event: Electron.Event, data) => {
+    ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       // Parse JSON response
       const result = JSON.parse(data);
       console.log('Number of data points (service):', result.length);

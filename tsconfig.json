@@ -8,7 +8,8 @@
     "allowJs": true,
     "target": "es5",
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
-  "include": ["./app/**/*", "./electron/**/*"]
+  "include": ["./electron/**/*", "./src/**/*", "./electron/**/*.json"]
 }

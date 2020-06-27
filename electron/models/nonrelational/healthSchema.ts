@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-
+// const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const healthSchema = new Schema(
@@ -18,7 +18,7 @@ const healthSchema = new Schema(
     },
     freememory: {
       type: Number,
-      required: [true, 'freememory required']
+      required: [true, 'freememory required'],
     },
     totalmemory: {
       type: Number,
@@ -42,7 +42,7 @@ const healthSchema = new Schema(
     },
     runningprocesses: {
       type: Number,
-      required: [true, 'runningprocesses required']
+      required: [true, 'runningprocesses required'],
     },
     totalprocesses: {
       type: Number,
@@ -56,4 +56,8 @@ const healthSchema = new Schema(
   { timestamps: { createdAt: 'time', updatedAt: 'time' } }
 );
 
-module.exports = serviceName => mongoose.model(serviceName, healthSchema);
+const test = (serviceName: any) => mongoose.model<any>(serviceName, healthSchema);
+// export default serviceName
+// module.exports = serviceName => mongoose.model(serviceName, healthSchema);
+
+export default test;

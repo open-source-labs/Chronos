@@ -26,10 +26,10 @@ const HealthContextProvider: React.FC = ({ children }) => {
   // Fetches all data related to a particular app
   const fetchHealthData = (service: string) => {
     ipcRenderer.send('healthRequest', service);
-    ipcRenderer.on('healthResponse', (event, data) => {
+    ipcRenderer.on('healthResponse', (event: Electron.Event, data: any) => {
       // Parse result
       const result = JSON.parse(data);
-      console.log('Number of data points (health):', result .length);
+      console.log('Number of data points (health):', result.length);
 
       // Separate data into individual arrays
       const freq: any = {};

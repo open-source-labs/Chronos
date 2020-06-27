@@ -26,7 +26,7 @@ const CommsContextProvider: React.FC = ({ children }) => {
   // Fetches all data related to communication for a particular app
   const fetchCommsData = (index: number) => {
     ipcRenderer.send('commsRequest', index);
-    ipcRenderer.on('commsResponse', (event: Electron.Event, data) => {
+    ipcRenderer.on('commsResponse', (event: Electron.Event, data: any) => {
       // Store resulting data in local state
       const result = JSON.parse(data);
       console.log('Number of data points (comms):', result.length);
