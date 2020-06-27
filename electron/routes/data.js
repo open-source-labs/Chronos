@@ -3,9 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const connectSQL = require('../models/relational/postgres');
 const connectMongoose = require('../models/nonrelational/connect');
-const CommunicationSchema = require('../models/nonrelational/communicatonSchema');
-const HealthSchema = require('../models/nonrelational/healthSchema');
-const ServicesSchema = require('../models/nonrelational/servicesSchema');
+const CommunicationModel = require('../models/nonrelational/communicatonSchema');
+const HealthModelFunc = require('../models/nonrelational/healthSchema');
+const ServicesModel = require('../models/nonrelational/servicesSchema');
+const DockerModelFunc = require('../models/nonrelational/DockerModel');
 
 // Initiate pool variable for SQL setup
 let pool;
@@ -47,7 +48,7 @@ ipcMain.on('servicesRequest', async message => {
   // Mongo Database
   if (currentDatabaseType === 'MongoDB') {
     // Get all documents from the services collection
-    result = await ServicesSchema.find();
+    result = await ServicesModel.find();
   }
 
   // SQL Database
@@ -73,7 +74,7 @@ ipcMain.on('commsRequest', async (message, index) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents
-      result = await CommunicationSchema.find().exec();
+      result = await CommunicationModel.find().exec();
     }
 
     // SQL Database
@@ -104,11 +105,12 @@ ipcMain.on('healthRequest', async (message, service) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
-      let num = await HealthSchema.countDocuments();
+      let num = await HealthModelFunc(service).countDocuments();
+      console.log('num', num)
 
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
-      result = await HealthSchema(service)
+      result = await HealthModelFunc(service)
         .find()
         .skip(num - 50);
     }
