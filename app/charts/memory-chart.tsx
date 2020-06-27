@@ -38,6 +38,7 @@ const MemoryChart = () => {
           },
         ]}
         layout={{
+          title: 'Memory Traces',
           height: 400,
           width: 400,
           font: {
