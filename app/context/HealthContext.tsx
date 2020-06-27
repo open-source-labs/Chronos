@@ -29,7 +29,8 @@ const HealthContextProvider: React.FC = ({ children }) => {
     ipcRenderer.on('healthResponse', (event, data) => {
       // Parse result
       const result = JSON.parse(data);
-      // console.log('Number of data points (health):', result .length);
+      console.log('Number of data points (health):', result .length);
+      console.log(result[49])
 
       // Separate data into individual arrays
       const freq: any = {};

@@ -1,1 +1,1 @@
-{"setupRequired":false,"services":[["newDemo","SQL","postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm"]],"splash":true}
+{"setupRequired":false,"services":[["myPostgres","SQL","postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm"],["myMongo","MongoDB","mongodb+srv://chronos:pass123@cluster0-xluio.mongodb.net/chronos?retryWrites=true&w=majority"]],"splash":true}
