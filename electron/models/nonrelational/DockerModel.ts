@@ -1,6 +1,19 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document } from 'mongoose';
 
-const { Schema } = mongoose;
+export interface IDock extends Document {
+  containername: string;
+  containerid: string;
+  platform: string;
+  starttime: string;
+  memoryusage: number;
+  memorylimit: number;
+  memorypercent: number;
+  cpupercent: number;
+  networkreceived: number;
+  networksent: number;
+  processcount: number;
+  restartcount: number;
+}
 
 const DockerSchema = new Schema({
   containername: {
@@ -53,4 +66,8 @@ const DockerSchema = new Schema({
   },
 });
 
-module.exports = service => mongoose.model(service, DockerSchema);
+// module.exports = service => mongoose.model(service, DockerSchema);
+
+const docker = (service: any) => mongoose.model<IDock>(service, DockerSchema);
+
+export default docker;
