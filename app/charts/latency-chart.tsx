@@ -26,6 +26,7 @@ const LatencyChart = () => {
           },
         ]}
         layout={{
+          title: 'Latency',
           height: 400,
           width: 400,
           font: {
@@ -47,8 +48,14 @@ const LatencyChart = () => {
             tick0: 0,
             dtick: 5,
             rangemode: 'nonnegative',
+            mirror: false,
+            ticks: 'outside',
+            showline: true,
           },
-          yaxis: { rangemode: 'nonnegative' },
+          yaxis: {
+            rangemode: 'nonnegative',
+            title: 'Milliseconds (ms)',
+          },
         }}
       />
     );
