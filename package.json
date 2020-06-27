@@ -29,6 +29,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@jest-runner/electron": "^2.0.3",
+    "@types/mongoose": "^5.7.28",
+    "@types/pg": "^7.14.3",
     "@types/react": "^16.9.36",
     "@types/react-dom": "^16.9.8",
     "@types/react-plotly.js": "^2.2.4",
