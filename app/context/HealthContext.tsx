@@ -30,7 +30,6 @@ const HealthContextProvider: React.FC = ({ children }) => {
       // Parse result
       const result = JSON.parse(data);
       console.log('Number of data points (health):', result .length);
-      console.log(result[49])
 
       // Separate data into individual arrays
       const freq: any = {};
