@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 import moment from 'moment';
+
 /**
  * @desc Render Speed Chart
- * @param object props- passed from GraphsContainer
  * @return component - component for speed changes
  */
 
@@ -29,7 +29,7 @@ const SpeedChart = () => {
             x: timeArr,
             y: yAxis,
             type: 'scatter',
-            mode: 'lines',
+            mode: 'lines+markers',
           },
         ]}
         layout={{
@@ -45,11 +45,18 @@ const SpeedChart = () => {
             title: 'Time (PST)',
             tickmode: 'linear',
             tickformat: '%d %B (%a)<br>%Y',
-            range: [1, 10],
+            tickangle: 30,
+            range: [0, 5],
             rangemode: 'nonnegative',
+            mirror: false,
+            ticks: 'outside',
+            showline: true,
           },
           yaxis: {
             title: 'Data Rates (MBPS)',
+            mirror: false,
+            ticks: 'outside',
+            showline: true,
           },
           paper_bgcolor: 'white',
           showlegend: true,
