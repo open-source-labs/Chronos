@@ -1,18 +1,32 @@
+import { WebPreferences, AllElectron } from 'electron';
+
 const { app, BrowserWindow } = require('electron');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const path = require('path');
 require('./routes/dashboard');
 require('./routes/data');
 
+interface IPref {
+  nodeIntergration: boolean;
+}
+
+interface IWin {
+  width: number;
+  height: number;
+  icon: File;
+  loadURL: (url: string) => void;
+  webPreferences: IPref;
+}
+
 // Install React Dev Tools
 app.whenReady().then(() => {
   installExtension(REACT_DEVELOPER_TOOLS)
-    .then(name => console.log(`Added Extension:  ${name}`))
-    .catch(err => console.log('An error occurred: ', err));
+    .then((name: string) => console.log(`Added Extension:  ${name}`))
+    .catch((err: any) => console.log('An error occurred: ', err));
 });
 
 // Declare variable to be used as the application window
-let win;
+let win: IWin;
 
 /**
  * @desc createWindow sets up the environment of the window (dimensions, port, initial settings)
