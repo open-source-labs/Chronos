@@ -1,6 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document } from 'mongoose';
 
-const { Schema } = mongoose;
+export interface IService extends Document {
+  microservice: string;
+  interval: number;
+}
 
 const servicesSchema = new Schema({
   microservice: {
@@ -14,4 +17,4 @@ const servicesSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('services', servicesSchema);
+export default mongoose.model<IService>('services', servicesSchema);
