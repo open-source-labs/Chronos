@@ -16,5 +16,5 @@ const servicesSchema = new Schema({
     required: [true, 'interval required'],
   },
 });
-
-export default mongoose.model<IService>('services', servicesSchema);
+module.exports = (serviceName:any) => mongoose.model(serviceName, servicesSchema);
+// export default mongoose.model<IService>('services', servicesSchema);

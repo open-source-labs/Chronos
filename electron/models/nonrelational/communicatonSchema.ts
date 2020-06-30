@@ -40,5 +40,5 @@ const communicationSchema = new Schema(
   },
   { timestamps: { createdAt: 'time', updatedAt: 'time' } }
 );
-
-export default mongoose.model<IComms>('communications', communicationSchema);
+module.exports = (serviceName:any) => mongoose.model(serviceName, communicationSchema);
+// export default mongoose.model<IComms>('communications', communicationSchema);

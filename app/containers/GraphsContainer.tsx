@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
+import{ DockerContext } from '../context/DockerContext';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
 import MicroServiceTraffic from '../charts/microservice-traffic';
@@ -68,14 +69,17 @@ const GraphsContainer = ({ match }: IMatch) => {
 
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchCommsData, setCommsData } = useContext(CommsContext);
+  const { fetchDockerData, setDockerData } = useContext(DockerContext);
 
   // On Mount: fetch communication data and health data
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
+    fetchDockerData(service);
     // On unmount: clear data
     return () => {
       setHealthData({});
+      setDockerData({})
       setCommsData([]);
     };
   }, [service]);

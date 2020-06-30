@@ -68,6 +68,6 @@ const DockerSchema = new Schema({
 
 // module.exports = service => mongoose.model(service, DockerSchema);
 
-const docker = (service: any) => mongoose.model<IDock>(service, DockerSchema);
-
-export default docker;
+// const docker = (service: any) => mongoose.model<IDock>(service, DockerSchema);
+module.exports = (serviceName:any) => mongoose.model(serviceName, DockerSchema);
+// export default docker;
