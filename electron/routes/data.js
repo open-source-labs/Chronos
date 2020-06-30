@@ -75,6 +75,7 @@ ipcMain.on('commsRequest', async (message, index) => {
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents
       result = await CommunicationModel.find().exec();
+      console.log('comm data -------->', result)
     }
 
     // SQL Database
@@ -133,5 +134,47 @@ ipcMain.on('healthRequest', async (message, service) => {
     // Catch errors
     console.log('Error in info.healthData', error.message);
     message.sender.send('healthResponse', {});
+  }
+});
+
+/**
+ * @event   dockerRequest/DockerResponse
+ * @desc    Query for health data for a particular microservice (last 50 data points)
+ */
+ipcMain.on('dockerequest', async (message, service) => {
+  try {
+    let result;
+
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      // Get document count
+      let num = await DockerModelFunc(service).countDocuments();
+
+      // Get last 50 documents. If less than 50 documents, get all
+      num = Math.max(num, 50);
+      result = await DockerModelFunc(service)
+        .find()
+        .skip(num - 50);
+    }
+
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get last 50 documents. If less than 50 get all
+      const query = `
+          SELECT * FROM ${service}
+          ORDER BY _id DESC
+          LIMIT 50`;
+
+      // Execute query
+      result = await pool.query(query);
+      result = result.rows.reverse();
+    }
+
+    // Async event emitter - send response
+    message.sender.send('DockerResponse', JSON.stringify(result));
+  } catch (error) {
+    // Catch errors
+    console.log('Error in info.dockerData', error.message);
+    message.sender.send('dockerResponse', {});
   }
 });

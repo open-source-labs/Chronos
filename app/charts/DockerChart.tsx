@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { HealthContext } from '../context/HealthContext';
+import { DockerContext } from '../context/DockerContext';
 
 interface IContainer {
   containername: string;
@@ -20,8 +20,9 @@ interface IContainer {
  * Table that displays real-time Docker container information using the
  * latest data point available ???
  */
-const DockerStatsChart = () => {
-  const { healthData } = useContext(HealthContext);
+const DockerStatsChart = () => {console.log('in docker chart')
+  const { dockerData } = useContext(DockerContext);
+  console.log('dockerdata ----->', dockerData)
   const {
     containername,
     containerid,
@@ -35,7 +36,7 @@ const DockerStatsChart = () => {
     networksent,
     processcount,
     restartcount,
-  }: IContainer = healthData;
+  }: IContainer = dockerData;
 
   return containerid ? (
     // Docker data

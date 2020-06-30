@@ -1,5 +1,5 @@
-// const mongoose = require('mongoose');
-import * as mongoose from 'mongoose';
+const mongoose = require('mongoose');
+// import * as mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const healthSchema = new Schema(
@@ -56,8 +56,8 @@ const healthSchema = new Schema(
   { timestamps: { createdAt: 'time', updatedAt: 'time' } }
 );
 
-const test = (serviceName: any) => mongoose.model<any>(serviceName, healthSchema);
+// const test = (serviceName: any) => mongoose.model<any>(serviceName, healthSchema);
 // export default serviceName
-// module.exports = serviceName => mongoose.model(serviceName, healthSchema);
+module.exports = (serviceName:any) => mongoose.model(serviceName, healthSchema);
 
-export default test;
+// export default test;

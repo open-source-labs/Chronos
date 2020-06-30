@@ -6,6 +6,7 @@ import HealthContextProvider from '../context/HealthContext';
 import CommsContextProvider from '../context/CommsContext';
 import ApplicationContextProvider from '../context/ApplicationContext';
 import DashboardContextProvider from '../context/DashboardContext';
+import DockerContexProvider from '../context/DockerContext'
 import '../stylesheets/DashboardContainer.css';
 
 const DashboardContainer = () => (
@@ -14,10 +15,12 @@ const DashboardContainer = () => (
       <ApplicationContextProvider>
         <DashboardContextProvider>
           <CommsContextProvider>
+            <DockerContexProvider>
             <HealthContextProvider>
               <SidebarContainer />
               <MainContainer />
             </HealthContextProvider>
+            </DockerContexProvider>
           </CommsContextProvider>
         </DashboardContextProvider>
       </ApplicationContextProvider>
