@@ -1,6 +1,6 @@
-const { ipcMain } = require('electron');
-const fs = require('fs');
-const path = require('path');
+import { ipcMain } from 'electron';
+import * as fs from 'fs';
+import path from 'path';
 const connectPostgres = require('../databases/postgres');
 const connectMongo = require('../databases/mongo');
 const CommunicationModel = require('../models/nonrelational/communicatonSchema');
@@ -9,22 +9,20 @@ const ServicesModel = require('../models/nonrelational/servicesSchema');
 const DockerModelFunc = require('../models/nonrelational/DockerModel');
 
 // Initiate pool variable for SQL setup
-let pool;
+let pool: any;
 
 // Stores database type: 1) MongoDB or 2) SQL
-let currentDatabaseType;
+let currentDatabaseType: string;
 
 /**
  * @event   connect
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-ipcMain.on('connect', (message, index) => {
+ipcMain.on('connect', (message: Electron.IpcMainEvent, index: number) => {
   // Extract databaseType and URI from settings.json at particular index
   // get index from application context
-  const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), {
-    encoding: 'UTF-8',
-  });
+  const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
 
   const userDatabase = JSON.parse(fileContents).services[index];
   // We get index from sidebar container: which is the mapplication (DEMO)
@@ -42,8 +40,8 @@ ipcMain.on('connect', (message, index) => {
  * @event   serviceRequest/serviceResponse
  * @desc    Query to services table for all microservices of a specific app
  */
-ipcMain.on('servicesRequest', async message => {
-  let result;
+ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
+  let result: any;
 
   // Mongo Database
   if (currentDatabaseType === 'MongoDB') {
@@ -67,9 +65,9 @@ ipcMain.on('servicesRequest', async message => {
  * @event   commsRequest/commsResponse
  * @desc    Query for all communication data
  */
-ipcMain.on('commsRequest', async (message, index) => {
+ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent, index: number) => {
   try {
-    let result;
+    let result: any;
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
@@ -98,9 +96,9 @@ ipcMain.on('commsRequest', async (message, index) => {
  * @event   healthRequest/healthResponse
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
-ipcMain.on('healthRequest', async (message, service) => {
+ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
-    let result;
+    let result: any;
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
