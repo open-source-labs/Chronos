@@ -5,7 +5,7 @@ export const DockerContext = React.createContext<any>(null);
 
 const DockerContextProvider: React.FC = ({ children }) => {
   const [dockerData, setDockerData] = useState({});
-  console.log('dockerdata------------>', dockerData);
+  console.log('dockerdata------------> in docker context', dockerData);
   // interface IContainer {
   //   (containername: string): string;
   //   (containerid: string): string;
@@ -57,7 +57,8 @@ const DockerContextProvider: React.FC = ({ children }) => {
 
       // Update context local state
       // setDockerData(freq);
-      setDockerData(result[0]);
+      const newDockerData = result[0] || {};
+      setDockerData(newDockerData);
     });
   };
   return (
