@@ -236,13 +236,13 @@ chronos.docker = ({ microservice, interval }) => {
   // Other stats will be retrieved by dockerContainerStats().
   si.dockerContainers()
     .then(function (data) {
-      var containerId = '';
+      var containerid = '';
       for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
         var dataObj = data_1[_i];
         if (dataObj.name === microservice) {
           containername = dataObj.name;
           containerid = dataObj.id;
-          containerPlatform = dataObj.platform;
+          platform = dataObj.platform;
           starttime = dataObj.startedAt;
           // End iterations as soon as the matching data pt is found.
           break;
@@ -251,9 +251,9 @@ chronos.docker = ({ microservice, interval }) => {
       // When containerId has a value:
       // Initiate periodic invoc. of si.dockerContainerStats to retrieve and log stats to DB.
       // The desired data pt is the first obj in the result array.
-      if (containerId !== '') {
+      if (containerid !== '') {
         setInterval(function () {
-          si.dockerContainerStats(containerId)
+          si.dockerContainerStats(containerid)
             .then(function (data) {
               // console.log('data[0] of dockerContainerStats', data[0]);
               // Reassign other vars to the values from retrieved data.
