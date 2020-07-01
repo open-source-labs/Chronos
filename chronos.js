@@ -90,8 +90,9 @@ chronos.track = () => {
   if (database.type === 'PostgreSQL') {
     postgres.connect(userConfig);
     postgres.services(userConfig);
-    if (dockerized) postgres.docker(userConfig);
+    postgres.docker(userConfig);
     postgres.health(userConfig);
+    chronos.dockerInfo(userConfig);
     return postgres.communications(userConfig);
   }
 };
