@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-// import { ipcRenderer } from 'electron';
+
 const { ipcRenderer } = window.require('electron');
 
-export const HealthContext = React.createContext<any>(null);
+export const DockerContext = React.createContext<any>(null);
 
-const HealthContextProvider: React.FC = ({ children }) => {
-  const [healthData, setHealthData] = useState({});
-   
+const DockerContextProvider: React.FC = ({ children }) => {
+  const [dockerData, setDockerData] = useState({});
+  console.log('dockerdata------------>',dockerData)
+
   // interface IFreq {
   //   activememory?: number[];
   //   blockedprocesses?: number[];
@@ -24,12 +25,12 @@ const HealthContextProvider: React.FC = ({ children }) => {
   // }
 
   // Fetches all data related to a particular app
-  const fetchHealthData = (service: string) => {
-    ipcRenderer.send('healthRequest', service);
-    ipcRenderer.on('healthResponse', (event: Electron.Event, data: any) => {
+  const fetchDockerData = (service: string) => {
+    ipcRenderer.send('dockerRequest', service);
+    ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {
       // Parse result
       const result = JSON.parse(data);
-      console.log('Number of data points (health):', result.length);
+      console.log('Number of data points (docker):', result.length);
 
       // Separate data into individual arrays
       const freq: any = {};
@@ -41,15 +42,15 @@ const HealthContextProvider: React.FC = ({ children }) => {
       });
 
       // Update context local state
-      setHealthData(freq);
+      setDockerData(freq);
     });
   };
 
   return (
-    <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData }}>
+    <DockerContext.Provider value={{ dockerData, setDockerData, fetchDockerData }}>
       {children}
-    </HealthContext.Provider>
+    </DockerContext.Provider>
   );
 };
 
-export default HealthContextProvider;
+export default DockerContextProvider;
