@@ -1,12 +1,16 @@
 import { ipcMain } from 'electron';
-import * as fs from 'fs';
+import fs from 'fs';
 import path from 'path';
-const connectPostgres = require('../databases/postgres');
-const connectMongo = require('../databases/mongo');
-const CommunicationModel = require('../models/nonrelational/communicatonSchema');
-const HealthModelFunc = require('../models/nonrelational/healthSchema');
-const ServicesModel = require('../models/nonrelational/servicesSchema');
-const DockerModelFunc = require('../models/nonrelational/DockerModel');
+// const connectPostgres = require('../databases/postgres');
+import connectPostgres from '../databases/postgres';
+// const connectMongo = require('../databases/mongo');
+import connectMongo from '../databases/mongo';
+// const CommunicationModel = require('../models/nonrelational/communicatonSchema');
+import CommunicationModel from '../models/nonrelational/communicatonSchema';
+// const HealthModelFunc = require('../models/nonrelational/healthSchema');
+import HealthModelFunc from '../models/nonrelational/healthSchema';
+import ServicesModel from '../models/nonrelational/servicesSchema';
+ const DockerModelFunc = require('../models/nonrelational/DockerModel');
 
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -111,6 +115,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       result = await HealthModelFunc(service)
         .find()
         .skip(num - 50);
+        console.log('healthdata results ------------>', result)
     }
 
     // SQL Database
@@ -150,9 +155,13 @@ ipcMain.on('dockerequest', async (message, service) => {
 
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
+      console.log('docker data -----> ', result, 'can i gt service --------->', service)
       result = await DockerModelFunc(service)
         .find()
         .skip(num - 50);
+      // result = await DockermModelFunc.find()
+        console.log('docker data---->',result)
+        
     }
 
     // SQL Database
