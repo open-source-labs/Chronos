@@ -21,7 +21,9 @@ interface IContainer {
  * latest data point available ???
  */
 const DockerStatsChart = () => {
-  const { DockerData } = useContext(DockerContext);
+  console.log('in docker chart');
+  const { dockerData } = useContext(DockerContext);
+  console.log('dockerdata ----->', dockerData);
   const {
     containername,
     containerid,
@@ -35,7 +37,7 @@ const DockerStatsChart = () => {
     networksent,
     processcount,
     restartcount,
-  }: IContainer = DockerData;
+  }: IContainer = dockerData;
 
   return containerid ? (
     // Docker data

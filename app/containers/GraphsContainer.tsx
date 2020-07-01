@@ -75,12 +75,12 @@ const GraphsContainer = ({ match }: IMatch) => {
   useEffect(() => {
     fetchCommsData();
     fetchHealthData(service);
-    fetchDockerData();
+    fetchDockerData(service);
     // On unmount: clear data
     return () => {
       setHealthData({});
       setCommsData([]);
-      setDockerData([]);
+      setDockerData({});
     };
   }, [service]);
 
