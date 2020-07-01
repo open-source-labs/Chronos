@@ -92,7 +92,7 @@ chronos.track = () => {
     postgres.services(userConfig);
     postgres.docker(userConfig);
     postgres.health(userConfig);
-    chronos.dockerInfo(userConfig);
+    postgres.dockerInfo(userConfig);
     return postgres.communications(userConfig);
   }
 };
