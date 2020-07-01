@@ -10,8 +10,8 @@ import CommunicationModel from '../models/nonrelational/communicatonSchema';
 // const HealthModelFunc = require('../models/nonrelational/healthSchema');
 import HealthModelFunc from '../models/nonrelational/healthSchema';
 import ServicesModel from '../models/nonrelational/servicesSchema';
- const DockerModelFunc = require('../models/nonrelational/DockerModel');
-
+//  const DockerModelFunc = require('../models/nonrelational/DockerModel');
+import DockerModelFunc from '../models/nonrelational/DockerModel'; 
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -77,7 +77,7 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent, index: number)
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents
       result = await CommunicationModel.find().exec();
-      console.log('comm data -------->', result)
+      
     }
 
     // SQL Database
@@ -109,13 +109,14 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
       let num = await HealthModelFunc(service).countDocuments();
-
+      console.log('what is service------>', service)
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
       result = await HealthModelFunc(service)
         .find()
         .skip(num - 50);
-        console.log('healthdata results ------------>', result)
+        
+        
     }
 
     // SQL Database
@@ -146,20 +147,20 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
  */
 ipcMain.on('dockerequest', async (message, service) => {
   try {
-    let result;
+    
+    let result: any;
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
       let num = await DockerModelFunc(service).countDocuments();
 
-      // Get last 50 documents. If less than 50 documents, get all
+      //Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
-      console.log('docker data -----> ', result, 'can i gt service --------->', service)
+      console.log('docker data -----> ', result, 'can i get service --------->', service)
       result = await DockerModelFunc(service)
         .find()
         .skip(num - 50);
-      // result = await DockermModelFunc.find()
         console.log('docker data---->',result)
         
     }
@@ -178,7 +179,7 @@ ipcMain.on('dockerequest', async (message, service) => {
     }
 
     // Async event emitter - send response
-    message.sender.send('DockerResponse', JSON.stringify(result));
+    message.sender.send('dockerResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
     console.log('Error in info.dockerData', error.message);
