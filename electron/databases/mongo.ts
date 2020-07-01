@@ -12,4 +12,4 @@ const connectMongoose = (i: number, URI: string) => {
     }
   );
 };
-module.exports = connectMongoose;
+export default connectMongoose;

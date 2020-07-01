@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+// import { ipcRenderer } from 'electron';
 const { ipcRenderer } = window.require('electron');
 
 export const HealthContext = React.createContext<any>(null);

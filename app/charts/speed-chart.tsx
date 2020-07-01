@@ -21,6 +21,8 @@ const SpeedChart = () => {
       // const xAxis = healthData.time;
       timeArr = time.map((el: any) => moment(el).format('hh:ss A'));
     }
+    console.log('this is the data in speedchart --->', yAxis);
+    console.log('timeARR--------->', timeArr);
     return (
       <Plot
         data={[

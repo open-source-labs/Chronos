@@ -18,3 +18,4 @@ const servicesSchema = new Schema({
 });
 
 export default mongoose.model<IService>('services', servicesSchema);
+// module.exports = mongoose.model('services', servicesSchema);

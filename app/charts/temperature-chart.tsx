@@ -13,6 +13,8 @@ const TemperatureChart = () => {
   // (i.e cputemp, time, etc) we can remove our for loop, desctructured variables
   const { healthData } = useContext(HealthContext);
   const { time, cputemp } = healthData;
+  console.log('in temp chart TIME =>', time);
+  console.log('in temp chart cpuTEMP => ', cputemp);
 
   const createChart = () => {
     const yAxis = cputemp;
