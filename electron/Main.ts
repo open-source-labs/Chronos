@@ -2,8 +2,10 @@ import { app, BrowserWindow } from 'electron';
 import { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 const { default: installExtension } = require('electron-devtools-installer');
 import path from 'path';
-require('./routes/dashboard');
-require('./routes/data');
+import './routes/dashboard';
+import './routes/data';
+// require('./routes/dashboard');
+// require('./routes/data');
 
 // Install React Dev Tools
 app.whenReady().then(() => {
