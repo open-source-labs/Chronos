@@ -12,3 +12,4 @@
     "resolveJsonModule": true
   },
   "include": ["./electron/**/*", "./src/**/*", "./electron/**/*.json"]
+}
