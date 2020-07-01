@@ -6,7 +6,7 @@ export const HealthContext = React.createContext<any>(null);
 
 const HealthContextProvider: React.FC = ({ children }) => {
   const [healthData, setHealthData] = useState({});
-
+   
   // interface IFreq {
   //   activememory?: number[];
   //   blockedprocesses?: number[];

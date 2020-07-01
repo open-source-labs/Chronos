@@ -28,41 +28,36 @@ const DockerContextProvider: React.FC = ({ children }) => {
   // [key: string]: number|string
   // Fetches all data related to a particular app
   const fetchDockerData = (service: string) => {
+    console.log('calling fetchDockerData', service);
     ipcRenderer.send('dockerRequest', service);
+
     ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {
       // Parse result
       const result: IContainer[] = JSON.parse(data);
       console.log('Number of data points (docker):', result.length);
       // Separate data into individual arrays
-      const freq: { [key: string]: string[] | number[] | [] | any } = {
-        containername: [],
-        memoryusage: [],
-        memorylimit: [],
-        memorypercent: [],
-        cpupercent: [],
-        networkreceived: [],
-        networksent: [],
-        processcount: [],
-        restartcount: [],
-      };
+      // const freq: { [key: string]: string[] | number[] | [] | any } = {
+      //   containername: [],
+      //   memoryusage: [],
+      //   memorylimit: [],
+      //   memorypercent: [],
+      //   cpupercent: [],
+      //   networkreceived: [],
+      //   networksent: [],
+      //   processcount: [],
+      //   restartcount: [],
+      // };
 
-      result.forEach(obj => {
-        for (const key in obj) {
-          if (!(key in freq)) freq[key] = [];
-          freq[key].push(obj[key]);
-        }
-      });
-
-      // for(let i = 0; i < result.length; i++){
-      //   const object = result[i];
-      //   const keys = Object.keys(object);
-      //   for(let j = 0; j < keys.length; j++){
-      //     if(!(keys[j] in freq)) freq[keys[j]] = []
-      //     freq[keys[j]].push(object[keys[i]])
+      // result.forEach(obj => {
+      //   for (const key in obj) {
+      //     if (!(key in freq)) freq[key] = [];
+      //     freq[key].push(obj[key]);
       //   }
-      // }
+      // });
+
       // Update context local state
-      setDockerData(freq);
+      // setDockerData(freq);
+      setDockerData(result[0]);
     });
   };
   return (
@@ -71,4 +66,5 @@ const DockerContextProvider: React.FC = ({ children }) => {
     </DockerContext.Provider>
   );
 };
+
 export default DockerContextProvider;

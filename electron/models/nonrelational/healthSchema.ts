@@ -58,6 +58,6 @@ const healthSchema = new Schema(
 
 const healthModel = (serviceName: any) => mongoose.model<any>(serviceName, healthSchema);
 // export default serviceName
-// module.exports = serviceName => mongoose.model(serviceName, healthSchema);
+module.exports = (serviceName:any) => mongoose.model(serviceName, healthSchema);
 
 export default healthModel;
