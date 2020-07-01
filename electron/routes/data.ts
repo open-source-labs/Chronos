@@ -10,8 +10,8 @@ import CommunicationModel from '../models/nonrelational/communicatonSchema';
 // const HealthModelFunc = require('../models/nonrelational/healthSchema');
 import HealthModelFunc from '../models/nonrelational/healthSchema';
 import ServicesModel from '../models/nonrelational/servicesSchema';
-// const DockerModelFunc = require('../models/nonrelational/DockerModel');
-
+//  const DockerModelFunc = require('../models/nonrelational/DockerModel');
+import DockerModelFunc from '../models/nonrelational/DockerModel'; 
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -77,6 +77,7 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent, index: number)
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents
       result = await CommunicationModel.find().exec();
+      
     }
 
     // SQL Database
@@ -108,12 +109,14 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
       let num = await HealthModelFunc(service).countDocuments();
-
+      console.log('what is service------>', service)
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
       result = await HealthModelFunc(service)
         .find()
         .skip(num - 50);
+        
+        
     }
 
     // SQL Database
@@ -135,5 +138,51 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     // Catch errors
     console.log('Error in info.healthData', error.message);
     message.sender.send('healthResponse', {});
+  }
+});
+
+/**
+ * @event   dockerRequest/DockerResponse
+ * @desc    Query for health data for a particular microservice (last 50 data points)
+ */
+ipcMain.on('dockerequest', async (message, service) => {
+  try {
+    
+    let result: any;
+
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      // Get document count
+      let num = await DockerModelFunc(service).countDocuments();
+
+      //Get last 50 documents. If less than 50 documents, get all
+      num = Math.max(num, 50);
+      console.log('docker data -----> ', result, 'can i get service --------->', service)
+      result = await DockerModelFunc(service)
+        .find()
+        .skip(num - 50);
+        console.log('docker data---->',result)
+        
+    }
+
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get last 50 documents. If less than 50 get all
+      const query = `
+          SELECT * FROM ${service}
+          ORDER BY _id DESC
+          LIMIT 50`;
+
+      // Execute query
+      result = await pool.query(query);
+      result = result.rows.reverse();
+    }
+
+    // Async event emitter - send response
+    message.sender.send('dockerResponse', JSON.stringify(result));
+  } catch (error) {
+    // Catch errors
+    console.log('Error in info.dockerData', error.message);
+    message.sender.send('dockerResponse', {});
   }
 });
