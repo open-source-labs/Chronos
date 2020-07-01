@@ -1,1 +1,21 @@
-{"setupRequired":false,"services":[["myPostgres","SQL","postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm"],["myMongo","MongoDB","mongodb+srv://chronos:pass123@cluster0-xluio.mongodb.net/chronos?retryWrites=true&w=majority"]],"splash":true}
+{
+  "setupRequired": false,
+  "services": [
+    [
+      "myPostgres",
+      "SQL",
+      "postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm"
+    ],
+    [
+      "myMongo",
+      "MongoDB",
+      "mongodb+srv://chronos:pass123@cluster0-xluio.mongodb.net/chronos?retryWrites=true&w=majority"
+    ],
+    [
+      "ToddDB",
+      "MongoDB",
+      "mongodb+srv://tdwolf6:password16@cluster0-0xvd7.gcp.mongodb.net/Chronos?retryWrites=true&w=majority"
+    ]
+  ],
+  "splash": true
+}

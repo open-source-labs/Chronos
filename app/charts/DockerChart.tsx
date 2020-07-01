@@ -20,9 +20,10 @@ interface IContainer {
  * Table that displays real-time Docker container information using the
  * latest data point available ???
  */
-const DockerStatsChart = () => {console.log('in docker chart')
+const DockerStatsChart = () => {
+  console.log('in docker chart');
   const { dockerData } = useContext(DockerContext);
-  console.log('dockerdata ----->', dockerData)
+  console.log('dockerdata ----->', dockerData);
   const {
     containername,
     containerid,
