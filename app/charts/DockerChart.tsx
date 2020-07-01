@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { HealthContext } from '../context/HealthContext';
+import { DockerContext } from '../context/DockerContext';
 
 interface IContainer {
   containername: string;
@@ -21,7 +21,7 @@ interface IContainer {
  * latest data point available ???
  */
 const DockerStatsChart = () => {
-  const { healthData } = useContext(HealthContext);
+  const { DockerData } = useContext(DockerContext);
   const {
     containername,
     containerid,
@@ -35,7 +35,7 @@ const DockerStatsChart = () => {
     networksent,
     processcount,
     restartcount,
-  }: IContainer = healthData;
+  }: IContainer = DockerData;
 
   return containerid ? (
     // Docker data
