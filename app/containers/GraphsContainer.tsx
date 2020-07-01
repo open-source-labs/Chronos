@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
-import{ DockerContext } from '../context/DockerContext';
+import { DockerContext } from '../context/DockerContext';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
 import MicroServiceTraffic from '../charts/microservice-traffic';
@@ -79,8 +79,8 @@ const GraphsContainer = ({ match }: IMatch) => {
     // On unmount: clear data
     return () => {
       setHealthData({});
-      setDockerData({})
       setCommsData([]);
+      setDockerData({});
     };
   }, [service]);
 

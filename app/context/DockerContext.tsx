@@ -1,51 +1,65 @@
 import React, { useState } from 'react';
-
 const { ipcRenderer } = window.require('electron');
 
 export const DockerContext = React.createContext<any>(null);
 
 const DockerContextProvider: React.FC = ({ children }) => {
   const [dockerData, setDockerData] = useState({});
-  console.log('dockerdata------------>',dockerData)
-
-  // interface IFreq {
-  //   activememory?: number[];
-  //   blockedprocesses?: number[];
-  //   cpuloadpercent?: number[];
-  //   cpuspeed?: number[];
-  //   cputemp?: number[];
-  //   freememory?: number[];
-  //   id?: number[];
-  //   latency?: number[];
-  //   runningprocesses?: number[];
-  //   sleepingprocesses?: number[];
-  //   time?: string[];
-  //   totalmemory?: number[];
-  //   usememory?: number[];
+  console.log('dockerdata------------>', dockerData);
+  // interface IContainer {
+  //   (containername: string): string;
+  //   (containerid: string): string;
+  //   (platform: string): string;
+  //   (starttime: string): string;
+  //   (memoryusage: string): number;
+  //   (memorylimit: string): number;
+  //   (memorypercent: string): number;
+  //   (cpupercent: string): number;
+  //   (networkreceived: string): number;
+  //   (networksent: string): number;
+  //   (processcount: string): number;
+  //   (restartcount: string): number;
   // }
 
+  interface IContainer {
+    [key: string]: string | number | never;
+  }
+
+  // [key: string]: number|string
   // Fetches all data related to a particular app
   const fetchDockerData = (service: string) => {
+    console.log('calling fetchDockerData', service);
     ipcRenderer.send('dockerRequest', service);
+
     ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {
       // Parse result
-      const result = JSON.parse(data);
+      const result: IContainer[] = JSON.parse(data);
       console.log('Number of data points (docker):', result.length);
-
       // Separate data into individual arrays
-      const freq: any = {};
-      result.forEach((obj: any) => {
-        for (const key in obj) {
-          if (!(key in freq)) freq[key] = [];
-          freq[key].push(obj[key]);
-        }
-      });
+      // const freq: { [key: string]: string[] | number[] | [] | any } = {
+      //   containername: [],
+      //   memoryusage: [],
+      //   memorylimit: [],
+      //   memorypercent: [],
+      //   cpupercent: [],
+      //   networkreceived: [],
+      //   networksent: [],
+      //   processcount: [],
+      //   restartcount: [],
+      // };
+
+      // result.forEach(obj => {
+      //   for (const key in obj) {
+      //     if (!(key in freq)) freq[key] = [];
+      //     freq[key].push(obj[key]);
+      //   }
+      // });
 
       // Update context local state
-      setDockerData(freq);
+      // setDockerData(freq);
+      setDockerData(result[0]);
     });
   };
-
   return (
     <DockerContext.Provider value={{ dockerData, setDockerData, fetchDockerData }}>
       {children}
