@@ -6,4 +6,4 @@ const connectSQL = (i: number, URI: string) => {
   });
 };
 
-module.exports = connectSQL;
+export default connectSQL;

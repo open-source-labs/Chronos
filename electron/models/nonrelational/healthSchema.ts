@@ -1,5 +1,5 @@
 // const mongoose = require('mongoose');
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const healthSchema = new Schema(
@@ -56,8 +56,8 @@ const healthSchema = new Schema(
   { timestamps: { createdAt: 'time', updatedAt: 'time' } }
 );
 
-const test = (serviceName: any) => mongoose.model<any>(serviceName, healthSchema);
+const healthModel = (serviceName: any) => mongoose.model<any>(serviceName, healthSchema);
 // export default serviceName
 // module.exports = serviceName => mongoose.model(serviceName, healthSchema);
 
-export default test;
+export default healthModel;
