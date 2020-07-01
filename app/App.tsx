@@ -13,10 +13,10 @@ interface IProp {
 
 const App: React.FC = () => {
   // HARD CODED for development
-  // const [firstVisit, setFirstVisit] = useState(false);
+  const [firstVisit, setFirstVisit] = useState(false);
 
   // UNCOMMENT this for splash demo
-  const [firstVisit, setFirstVisit] = useState<IProp>({ firstVisit: true });
+  // const [firstVisit, setFirstVisit] = useState<IProp>({ firstVisit: true });
 
   // function useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
 

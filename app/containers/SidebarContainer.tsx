@@ -35,22 +35,22 @@ const SidebarContainer: React.FC = (): JSX.Element => {
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
-        <Applications handleClick={handleClick} />
+        {/* <Applications handleClick={handleClick} /> */}
         <div className="btn-container">
-          {servicesData.map((service: IService) => (
+          {/* {servicesData.map((service: IService) => (
             <Link className="link" to={`/${service.microservice}`} key={service._id}>
               {service.microservice}
             </Link>
-          ))}
+          ))} */}
           <Link className="link" to="/add">
             +
           </Link>
           <Link className="link" to="/delete">
             -
           </Link>
-          <button className="link" type="button" onClick={() => location.reload()}>
+          {/* <button className="link" type="button" onClick={() => location.reload()}>
             Refresh
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
