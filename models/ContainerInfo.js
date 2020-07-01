@@ -2,45 +2,42 @@ const mongoose = require('mongoose');
 
 mongoose.model('ContainerInfo', {
   // Added additional schema for Docker container stats (9).
-  microserviceName: {
+  containerid: {
     type: String,
   },
-  containerId: {
+  containername: {
     type: String,
   },
-  containerName: {
+  platform: {
     type: String,
   },
-  containerPlatform: {
-    type: String,
-  },
-  containerStartTime: {
+  starttime: {
     type: Date,
   },
-  containerMemUsage: {
+  memoryusage: {
     type: Number, // bytes
   },
-  containerMemLimit: {
+  memorylimit: {
     type: Number,
   },
-  containerMemPercent: {
+  memorypercent: {
     type: Number,
   },
-  containerCpuPercent: {
+  cpupercent: {
     type: Number,
   },
-  networkReceived: {
-    type: Number, // bytes
-    default: 0,
-  },
-  networkSent: {
+  networkreceived: {
     type: Number, // bytes
     default: 0,
   },
-  containerProcessCount: {
+  networksent: {
+    type: Number, // bytes
+    default: 0,
+  },
+  processcount: {
     type: Number, // count
   },
-  containerRestartCount: {
+  restartcount: {
     type: Number, // count
   },
 });

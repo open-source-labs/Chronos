@@ -219,17 +219,17 @@ chronos.docker = ({ microservice, interval }) => {
   const ContainerInfo = mongoose.model('ContainerInfo');
 
   // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
-  var containerName;
-  var containerPlatform;
-  var containerStartTime;
-  var containerMemUsage;
-  var containerMemLimit;
-  var containerMemPercent;
-  var containerCpuPercent;
-  var networkReceived;
-  var networkSent;
-  var containerProcessCount;
-  var containerRestartCount;
+  var containername;
+  var platform;
+  var starttime;
+  var memoryusage;
+  var memorylimit;
+  var memorypercent;
+  var cpupercent;
+  var networkreceived;
+  var networksent;
+  var processcount;
+  var restartcount;
   // dockerContainers() return an arr of active containers (ea. container = an obj).
   // Find the data pt with containerName that matches microservice.
   // Extract container ID, name, platform, and start time.
@@ -240,10 +240,10 @@ chronos.docker = ({ microservice, interval }) => {
       for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
         var dataObj = data_1[_i];
         if (dataObj.name === microservice) {
-          containerName = dataObj.name;
-          containerId = dataObj.id;
+          containername = dataObj.name;
+          containerid = dataObj.id;
           containerPlatform = dataObj.platform;
-          containerStartTime = dataObj.startedAt;
+          starttime = dataObj.startedAt;
           // End iterations as soon as the matching data pt is found.
           break;
         }
@@ -258,29 +258,28 @@ chronos.docker = ({ microservice, interval }) => {
               // console.log('data[0] of dockerContainerStats', data[0]);
               // Reassign other vars to the values from retrieved data.
               // Then save to DB.
-              containerMemUsage = data[0].mem_usage;
-              containerMemLimit = data[0].mem_limit;
-              containerMemPercent = data[0].mem_percent;
-              containerCpuPercent = data[0].cpu_percent;
-              networkReceived = data[0].netIO.rx;
-              networkSent = data[0].netIO.wx;
-              containerProcessCount = data[0].pids;
-              containerRestartCount = data[0].restartCount;
+              memoryusage = data[0].mem_usage;
+              memorylimit = data[0].mem_limit;
+              memorypercent = data[0].mem_percent;
+              cpupercent = data[0].cpu_percent;
+              networkreceived = data[0].netIO.rx;
+              networksent = data[0].netIO.wx;
+              processcount = data[0].pids;
+              restartcount = data[0].restartCount;
 
               const newContainerInfo = {
-                microservice: microservice,
-                containerName,
-                containerId,
-                containerPlatform,
-                containerStartTime,
-                containerMemUsage,
-                containerMemLimit,
-                containerMemPercent,
-                containerCpuPercent,
-                networkReceived,
-                networkSent,
-                containerProcessCount,
-                containerRestartCount,
+                containerid,
+                containername,
+                platform,
+                starttime,
+                memoryusage,
+                memorylimit,
+                memorypercent,
+                cpupercent,
+                networkreceived,
+                networksent,
+                processcount,
+                restartcount,
               };
 
               const containerInfo = new ContainerInfo(newContainerInfo);
@@ -302,6 +301,17 @@ chronos.docker = ({ microservice, interval }) => {
     ['catch'](function (err) {
       throw err;
     });
+};
+
+// // grabs container data for multiple containers info - TBD
+chronos.dockerInfo = ({ microservice, interval }) => {
+  const ContainerInfo = mongoose.model('ContainerInfo');
+
+  si.dockerInfo()
+    .then(function (data) {
+      console.log('data from container info', data);
+    })
+    .catch(err => console.log('Error saving health data: ', err.message));
 };
 
 module.exports = chronos;
