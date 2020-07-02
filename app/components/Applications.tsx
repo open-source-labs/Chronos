@@ -1,10 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper, IconButton, Modal } from '@material-ui/core';
-=======
 import { Box, Button, Modal } from '@material-ui/core';
->>>>>>> 51bc884101e4eb262d3485705d604154595a1681
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
