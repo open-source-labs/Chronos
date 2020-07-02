@@ -68,10 +68,9 @@ const Occupied: React.FC = () => {
         container
         direction="column"
         alignItems="center"
-        justify="center"
-        style={{ minHeight: '100vh', minWidth: '100vw' }}
+        justify="space-between"
       >
-        <Grid container item xs={12} sm={6} spacing={4}>
+        <Grid container item xs={12} sm={6} >
           <Applications />
           <Button className={classes.paper} onClick={() => setOpen(true)}>
             <AddCircleOutlineTwoToneIcon className={classes.icon} style={{ boxShadow: 'none' }} />
