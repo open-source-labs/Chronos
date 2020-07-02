@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import { Paper, Button, Grid, Icon } from '@material-ui/core';
+import { Typography, Button, Grid, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal } from '@material-ui/core';
-import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
+import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import Applications from './Applications';
 import AddApplication from './AddApplication';
 
@@ -22,14 +22,15 @@ const Home = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      height: 110,
-      width: '32.5%',
-      padding: theme.spacing(4),
+      height: 256,
+      width: '45%',
+      marginRight: '1%',
       textAlign: 'center',
-      alignContent: 'center',
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(3),
       background: 'rgb(33, 34, 41)',
+      border: '2px solid black',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     },
     icon: {
       width: '50%',
@@ -47,8 +48,10 @@ const Home = () => {
       <Button variant="contained">Get Started, Bruh</Button>
     </div>
   ) : (
-    <div style={ApplicationStyle}>
-      <h1>These are your applications</h1>
+    <div>
+      <Typography variant="h1" align="center">
+        Applications!
+      </Typography>
       <Modal open={newAppModal} onClose={toggleNewAppModal}>
         <AddApplication />
       </Modal>
@@ -58,21 +61,21 @@ const Home = () => {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: '100vh', minWidth: '100vw', marginLeft: '8%' }}
+        style={{ minHeight: '100vh', minWidth: '100vw' }}
       >
-        <Grid container item xs={12} spacing={4}>
+        <Grid container item xs={12} sm={6} spacing={4}>
           <Applications />
-          <Paper className={classes.paper} onClick={toggleNewAppModal}>
-            <AddCircleOutlinedIcon className={classes.icon} color="primary" />
-          </Paper>
+          <Button className={classes.paper} onClick={toggleNewAppModal}>
+            <AddCircleOutlineTwoToneIcon className={classes.icon} color="primary" />
+          </Button>
         </Grid>
       </Grid>
     </div>
   );
 };
 
-const ApplicationStyle = {
-  height: '100vh',
-};
+// const ApplicationStyle = {
+//   height: '100vh',
+// };
 
 export default Home;
