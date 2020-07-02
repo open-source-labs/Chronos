@@ -10,6 +10,7 @@
     "electron": "electron .",
     "test": "mocha ./__tests__/spectron.test.js",
     "both": "npm run start & sleep 5 && npm run electron",
+    "both:tsc": "nodemon --watch ./app --exec tsc & npm run start & sleep 5 && npm run electron",
     "both:dev": "npm run start & nodemon --watch ./electron --exec 'npm run electron'"
   },
   "babel": {
