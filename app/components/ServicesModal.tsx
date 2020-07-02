@@ -4,12 +4,10 @@ import '../stylesheets/ServicesModal.css';
 import { Link } from 'react-router-dom';
 
 interface ServicesModalProps {
-  app: string;
   i: number;
 }
 
-const ServicesModal: React.SFC<ServicesModalProps> = ({ app, i }) => {
-  console.log('service modal props', i, app);
+const ServicesModal: React.SFC<ServicesModalProps> = ({ i }) => {
   const { fetchServicesNames, servicesData, setServicesData, connectToDB } = useContext(
     ApplicationContext
   );
@@ -23,22 +21,34 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ app, i }) => {
       console.log('component unmounting');
       setServicesData([]);
     };
-  }, [app, i]);
+  }, [i]);
 
+  /**
+   * TEMPORARY fix to allow us to fetch service names
+   * AFTER we connect to the Mongo Database. This error does
+   * not occur with PostgreSQL databases.
+   * 
+   * Just click on the whitespace of the modal to run another
+   * fetch request for service names
+   */
   const fetchStuff = () => {
     fetchServicesNames();
   };
 
   return (
-    <div className="modal">
+    <div className="modal" onClick={() => fetchStuff()}>
       {!servicesData.length ? (
-        <h1>The services modal!!</h1>
+        <h3>Loading...</h3>
       ) : (
-        servicesData.map((service: any) => (
-          <Link to={`/:${service.microservice}`}>{service.microservice}</Link>
-        ))
+        <>
+          <h3>Available Microservices</h3>
+          {servicesData.map((service: any) => (
+          <Link className="link" to={`/${service.microservice}`}>
+            {service.microservice}
+          </Link>
+          ))}
+        </>
       )}
-      <button onClick={() => fetchStuff()}>fetch test</button>
     </div>
   );
 };
