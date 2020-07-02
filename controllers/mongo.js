@@ -304,14 +304,12 @@ chronos.docker = ({ microservice, interval }) => {
 };
 
 // // grabs container data for multiple containers info - TBD
-chronos.dockerInfo = ({ microservice, interval }) => {
-  const ContainerInfo = mongoose.model('ContainerInfo');
-
-  si.dockerInfo()
-    .then(function (data) {
-      console.log('data from container info', data);
-    })
-    .catch(err => console.log('Error saving health data: ', err.message));
-};
+// chronos.dockerInfo = ({ microservice, interval }) => {
+//   si.dockerInfo()
+//     .then(function (data) {
+//       console.log('data from container info', data);
+//     })
+//     .catch(err => console.log('Error saving health data: ', err.message));
+// };
 
 module.exports = chronos;
