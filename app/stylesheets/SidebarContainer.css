@@ -1,10 +1,10 @@
-.container {
+.sidebar-container {
   color: white;
   background-color: #24262f;
   min-width: 200px;
 }
 
-.container div {
+.sidebar {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -18,15 +18,18 @@
 }
 
 .sidebar-link {
+  margin: 5px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #24262f;
   height: 40px;
   width: 150px;
-  border: thin solid rgb(30, 29, 44);
-  font-size: 250%;
+  border: thin solid rgb(79, 79, 85);
+  border-radius: 3px;
+  font-size: 125%;
   color: whitesmoke;
+  text-decoration: none;
   transition: 0.2s;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
