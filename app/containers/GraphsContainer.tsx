@@ -107,9 +107,6 @@ const GraphsContainer = ({ match }: IMatch) => {
         </button>
       </div>
       <div className="graphsGrid">
-        <div className="routes">
-          <div ref={canvas} />
-        </div>
         <SpeedChart />
         <TemperatureChart />
         <RequestTypesChart />
