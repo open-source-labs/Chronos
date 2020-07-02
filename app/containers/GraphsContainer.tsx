@@ -91,6 +91,7 @@ const GraphsContainer = ({ match }: IMatch) => {
     }
     // On unmount: clear data
     return () => {
+      if (intervalID) clearInterval(intervalID)
       setHealthData({});
       setCommsData([]);
       setDockerData({});
