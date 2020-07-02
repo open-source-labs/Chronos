@@ -1,20 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
-
-body {
-  background-color: #333;
-  background: rgb(25, 0, 36);
-  font-size: 16px;
-  font-family: 'Nunito', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-  background-color: #24262f;
-}
-
-body {
   background-color: rgb(248, 249, 253);
+  background: #24262F;
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
 }
 
-img {
+
+
+/* img {
   margin-bottom: -75px;
-}
+} */

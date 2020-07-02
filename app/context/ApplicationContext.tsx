@@ -14,18 +14,22 @@ export const ApplicationContext = React.createContext<any>(null);
 
 const ApplicationContextProvider: React.FC = ({ children }) => {
   const [servicesData, setServicesData] = useState([]);
+  const [app, setApp] = useState<string>('');
   /**
    * Connect to database provided by user at 'index'
    */
-  const connectToDB = (index: number) => {
-    if (index) ipcRenderer.send('connect', index);
+  const connectToDB = async (index: number) => {
+    console.log('Connecting to DB at index =>', index);
+    await ipcRenderer.send('connect', index);
   };
   /**
    * Fetch all microservices of a certain applications
    */
   const fetchServicesNames = (application: string) => {
+    console.log('Fetching service names');
+    setApp(application);
     // Send Async Request
-    ipcRenderer.send('servicesRequest', application);
+    ipcRenderer.send('servicesRequest');
 
     // Response
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
@@ -40,7 +44,7 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
 
   return (
     <ApplicationContext.Provider
-      value={{ connectToDB, fetchServicesNames, setServicesData, servicesData }}
+      value={{ connectToDB, fetchServicesNames, setServicesData, servicesData, app }}
     >
       {children}
     </ApplicationContext.Provider>
