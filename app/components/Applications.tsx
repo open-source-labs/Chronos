@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Button, Modal } from '@material-ui/core';
+import { Box, IconButton, Modal, Card, CardActions } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
@@ -46,6 +46,8 @@ const Applications = () => {
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     },
     customHoverFocus: {
+      position: 'relative',
+      margin: 'auto',
       '&:hover, &.Mui-focusVisible': { backgroundColor: 'yellow' },
     },
   }));
@@ -55,29 +57,27 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <div
-          key={i}
-          // onClick={e => handleClick(e, app, i)}
-          style={{ cursor: 'pointer' }}
-          className={classes.paper}
-        >
-          <Box
+        <div key={i} style={{ cursor: 'pointer' }} className={classes.paper}>
+          <Card
             id={i}
             key={i}
-            border={1}
-            borderColor="secondary.main"
             onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
           >
             {app}
-          </Box>
-          <Button
-            className={classes.customHoverFocus}
-            size="large"
-            aria-label="Delete"
-            onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
-          >
-            <DeleteForeverOutlinedIcon color="secondary" />
-          </Button>
+          </Card>
+          <CardActions>
+            <IconButton
+              className={classes.customHoverFocus}
+              // size="large"
+              aria-label="Delete"
+              onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+            >
+              <DeleteForeverOutlinedIcon
+                color="secondary"
+                style={{ boxShadow: 'none', width: 60, height: 60 }}
+              />
+            </IconButton>
+          </CardActions>
         </div>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
