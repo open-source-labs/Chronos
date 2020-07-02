@@ -13,7 +13,6 @@ const Occupied: React.FC = () => {
   const useStyles = makeStyles(theme => ({
     paper: {
       position: 'relative',
-      bottom: '40px',
       height: 340,
       width: '50%',
       whiteSpace: 'nowrap',
@@ -38,7 +37,7 @@ const Occupied: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{}}>
       <Typography
         className={classes.heroContent}
         component="h1"
