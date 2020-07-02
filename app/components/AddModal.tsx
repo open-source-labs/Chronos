@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import '../stylesheets/AddApplication.css';
 import { DashboardContext } from '../context/DashboardContext';
+import '../stylesheets/AddModal.css';
 
 interface IFields {
   database: string;
@@ -13,10 +12,14 @@ interface IDashboard {
   addApp: (fields: IFields) => void;
 }
 
+interface AddModalProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement>;
 type FormElement = React.FormEvent<HTMLFormElement>;
 
-const AddApplication: React.FC = () => {
+const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
   const { addApp }: IDashboard = useContext(DashboardContext);
   const [fields, setFields] = useState<IFields>({
     database: 'SQL',
@@ -26,10 +29,9 @@ const AddApplication: React.FC = () => {
 
   // Submit form data and save to database
   const handleSubmit = (event: FormElement) => {
-    console.log('hey you submitted');
     event.preventDefault();
-    // Add new application
-    addApp(fields);
+    addApp(fields); // Add new app
+    setOpen(false); // Close modal on submit
   };
 
   // Handle form field changes
@@ -83,5 +85,4 @@ const AddApplication: React.FC = () => {
   );
 };
 
-
-export default AddApplication;
+export default AddModal;

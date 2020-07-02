@@ -9,7 +9,7 @@ import ServicesModal from './ServicesModal';
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
-  const [index, setIndex] = useState<number | null>();
+  const [index, setIndex] = useState<number>(0);
 
   useEffect(() => {
     getApplications();

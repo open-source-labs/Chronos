@@ -12,6 +12,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
+  border-radius: 10px;
 }
 
 .add-container h2 {
