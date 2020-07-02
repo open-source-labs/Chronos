@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import '../stylesheets/Home.css';
 import { DashboardContext } from '../context/DashboardContext';
-import { Button, Grid } from '@material-ui/core';
-import Applications from './Applications';
-import { Modal } from '@material-ui/core';
-import AddApplication from './AddApplication'
+import Empty from './Empty';
+import Occupied from './Occupied';
+import '../stylesheets/Home.css';
 
 const Home = () => {
   const { applications, getApplications } = useContext(DashboardContext);
@@ -13,45 +11,35 @@ const Home = () => {
     getApplications();
   }, []);
 
-  const [newAppModal, setNewAppModal] = useState(false);
+  return <div className="blank">{applications.length ? <Occupied /> : <Empty />}</div>;
 
-  const toggleNewAppModal = () => {
-    setNewAppModal(!newAppModal);
-  };
+  // return !applications.length ? (
+  //   <div className="blank">
 
-  return !applications.length ? (
-    <div className="blank">
-      <img width="300" height="auto" src={'../assets/pangolin.png'} alt="Chronos logo" />
-      <h1>Welcome to Chronos!</h1>
-      {/* <p>Select your application to get started!</p> */}
-      <Button variant="contained">Get Started, Bruh</Button>
-    </div>
-  ) : (
-    <div style={ApplicationStyle}>
-      <h1>These are your applications</h1>
-      <button onClick={toggleNewAppModal}>Create</button>
-      <Modal open={newAppModal} onClose={toggleNewAppModal}>
-        <AddApplication />
-      </Modal>
-      {/* Grid Needs Aligning */}
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '100vh' }}
-        spacing={10}
-      >
-        <Grid container item justify="center" xs={12}>
-          <Applications />
-        </Grid>
-      </Grid>
-    </div>
-  );
-};
-
-const ApplicationStyle = {
-  height: '100vh',
+  //   </div>
+  // ) : (
+  //   <div style={ApplicationStyle}>
+  //     <h1>Applications</h1>
+  //     <hr/>
+  //     <button onClick={toggleNewAppModal}>Create</button>
+  //     <Modal open={newAppModal} onClose={toggleNewAppModal}>
+  //       <AddModal />
+  //     </Modal>
+  //     {/* Grid Needs Aligning */}
+  //     <Grid
+  //       container
+  //       direction="column"
+  //       alignItems="center"
+  //       justify="center"
+  //       style={{ minHeight: '100vh' }}
+  //       spacing={10}
+  //     >
+  //       <Grid container item justify="center" xs={12}>
+  //         <Applications />
+  //       </Grid>
+  //     </Grid>
+  //   </div>
+  // );
 };
 
 export default Home;

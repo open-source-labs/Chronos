@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  border: thin solid black
 }
 
 .blank img {
