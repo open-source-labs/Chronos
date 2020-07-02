@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import '../stylesheets/Home.css';
 import { DashboardContext } from '../context/DashboardContext';
-import { Button, Grid } from '@material-ui/core';
-import Applications from './Applications';
+import { Paper, Button, Grid, Icon } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Modal } from '@material-ui/core';
-import AddApplication from './AddApplication'
+import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
+import Applications from './Applications';
+import AddApplication from './AddApplication';
 
 const Home = () => {
   const { applications, getApplications } = useContext(DashboardContext);
@@ -19,6 +20,22 @@ const Home = () => {
     setNewAppModal(!newAppModal);
   };
 
+  const useStyles = makeStyles(theme => ({
+    paper: {
+      height: 128,
+      width: '33%',
+      padding: theme.spacing(4),
+      textAlign: 'center',
+      color: 'white',
+      fontSize: '2rem',
+      whiteSpace: 'nowrap',
+      marginBottom: theme.spacing(1),
+      background: 'rgb(33, 34, 41)',
+    },
+  }));
+
+  const classes = useStyles();
+
   return !applications.length ? (
     <div className="blank">
       <img width="300" height="auto" src={'../assets/pangolin.png'} alt="Chronos logo" />
@@ -29,7 +46,6 @@ const Home = () => {
   ) : (
     <div style={ApplicationStyle}>
       <h1>These are your applications</h1>
-      <button onClick={toggleNewAppModal}>Create</button>
       <Modal open={newAppModal} onClose={toggleNewAppModal}>
         <AddApplication />
       </Modal>
@@ -44,6 +60,9 @@ const Home = () => {
       >
         <Grid container item justify="center" xs={12}>
           <Applications />
+          <Button className={classes.paper} onClick={toggleNewAppModal}>
+            <AddCircleOutlinedIcon />
+          </Button>
         </Grid>
       </Grid>
     </div>
