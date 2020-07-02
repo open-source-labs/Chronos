@@ -13,6 +13,17 @@ svg {
   box-shadow: 2px 2px 2px rgba(216, 210, 247, 0.5);
 }
 
+#serviceDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: black;
+  border-radius: 5px;
+  background-color: #F9FAFE;
+  font-size: 22
+}
+
 #docker-stats-chart {
   position: relative;
   display: flex;
