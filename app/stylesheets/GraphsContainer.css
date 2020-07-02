@@ -62,8 +62,6 @@
   grid-gap: 30px;
   margin: auto;
   padding-bottom: 25px;
-  border-radius: 2px;
-  box-shadow: 2px 2px 2px rgba(216, 210, 247, 0.5);
 }
 
 svg {
