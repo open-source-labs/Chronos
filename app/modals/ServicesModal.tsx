@@ -46,7 +46,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
         <h3>Loading...</h3>
       ) : (
         <>
-          <h3>Available Microservices</h3>
+          <h3>Microservices for <strong>{app}</strong></h3>
           {servicesData.map((service: IService, i: number) => (
           <Link key={i} className="link" to={`/${service.microservice}`}>
             {service.microservice}
