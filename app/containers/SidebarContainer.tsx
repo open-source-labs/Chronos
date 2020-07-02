@@ -6,12 +6,12 @@ import '../stylesheets/SidebarContainer.css';
 
 const SidebarContainer: React.FC = (): JSX.Element => (
   <div className="container">
-    <img alt="Chronos Logo" id="serviceDashLogo" src={'../assets/icon2Cropped.png'} />
-    {/* <div className="btn-container"> */}
+    <div>
+      <img alt="Chronos Logo" id="serviceDashLogo" src={'../assets/icon2Cropped.png'} />
       <Link className="sidebar-link" to="/">
         <HomeSharpIcon />
       </Link>
-    {/* </div> */}
+    </div>
   </div>
 );
 export default SidebarContainer;
