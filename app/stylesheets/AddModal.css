@@ -2,8 +2,6 @@
   outline: none;
 }
 
-/* Header */
-
 .add-container {
   width: 500px;
   padding: 20px;
@@ -15,18 +13,17 @@
   border-radius: 10px;
 }
 
+/* Header */
+
 .add-container h2 {
-  margin: 0;
+  margin: 0 auto 25px;
   text-align: center;
   font-weight: 300;
   font-size: 200%;
   color: #333;
 }
 
-.add-container hr {
-  margin: 25px auto;
-  width: 300px;
-}
+/* Form */
 
 .add-container form {
   display: flex;
@@ -53,24 +50,14 @@
   font-size: 150%;
 }
 
-/* Select */
-
-.add-container form div select {
-  align-self: center;
-  width: 350px;
-  height: 30px;
-  font-size: 90%;
-  font-weight: 400;
-  text-align: center;
-}
-
 /* Text input */
 
+.add-container form div select,
 .add-container form div input {
   flex: 1;
-  border: 2px solid rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 10px;
-  height: 25px;
+  height: 30px;
   font-size: 90%;
   text-align: center;
 }
@@ -82,13 +69,13 @@
 /* Submit button */
 
 .add-container form button {
-  font-size: 150%;
+  font-size: 125%;
   width: 50%;
   height: 40px;
   color: white;
   background-color: black;
   border-radius: 10px;
-  transition: 0.1s;
+  transition: 0.2s;
   margin: 20px 0;
 }
 
