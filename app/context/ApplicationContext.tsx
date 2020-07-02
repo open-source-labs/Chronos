@@ -18,8 +18,8 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
    * Connect to database provided by user at 'index'
    */
   const connectToDB = async (index: number) => {
-    console.log('connecting to DB at index', index)
-    ipcRenderer.send('connect', index);
+    console.log('Connecting to DB at index =>', index)
+    await ipcRenderer.send('connect', index);
   };
   /**
    * Fetch all microservices of a certain applications
