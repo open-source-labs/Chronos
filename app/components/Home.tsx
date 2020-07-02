@@ -22,15 +22,18 @@ const Home = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      height: 128,
-      width: '33%',
+      height: 110,
+      width: '32.5%',
       padding: theme.spacing(4),
       textAlign: 'center',
-      color: 'white',
-      fontSize: '2rem',
+      alignContent: 'center',
       whiteSpace: 'nowrap',
       marginBottom: theme.spacing(1),
       background: 'rgb(33, 34, 41)',
+    },
+    icon: {
+      width: '50%',
+      height: '50%',
     },
   }));
 
@@ -55,14 +58,13 @@ const Home = () => {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: '100vh' }}
-        spacing={10}
+        style={{ minHeight: '100vh', minWidth: '100vw', marginLeft: '8%' }}
       >
-        <Grid container item justify="center" xs={12}>
+        <Grid container item xs={12} spacing={4}>
           <Applications />
-          <Button className={classes.paper} onClick={toggleNewAppModal}>
-            <AddCircleOutlinedIcon />
-          </Button>
+          <Paper className={classes.paper} onClick={toggleNewAppModal}>
+            <AddCircleOutlinedIcon className={classes.icon} color="primary" />
+          </Paper>
         </Grid>
       </Grid>
     </div>

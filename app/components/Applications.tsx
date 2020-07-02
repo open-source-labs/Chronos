@@ -20,16 +20,14 @@ const Applications = () => {
     paper: {
       height: 128,
       width: '33%',
-      padding: theme.spacing(1),
+      padding: theme.spacing(3),
+      marginRight: '1%',
       textAlign: 'center',
       color: 'white',
-      fontSize: '2rem',
+      fontSize: '4rem',
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(3),
       background: 'rgb(33, 34, 41)',
-    },
-    divider: {
-      margin: theme.spacing(2, 0),
     },
     customHoverFocus: {
       '&:hover, &.Mui-focusVisible': { backgroundColor: 'yellow' },
@@ -47,7 +45,7 @@ const Applications = () => {
     >
       {app}
       <IconButton className={classes.customHoverFocus} aria-label="Delete">
-        <DeleteForeverOutlinedIcon />
+        <DeleteForeverOutlinedIcon color="secondary" />
       </IconButton>
     </Paper>
   ));
