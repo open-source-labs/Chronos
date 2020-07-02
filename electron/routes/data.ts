@@ -110,10 +110,10 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       let num = await HealthModelFunc(service).countDocuments();
       console.log('what is service------>', service);
       // Get last 50 documents. If less than 50 documents, get all
-      num = Math.max(num, 50);
+      num = Math.max(num, 10);
       result = await HealthModelFunc(service)
         .find()
-        .skip(num - 50);
+        .skip(num - 10);
     }
 
     // SQL Database
