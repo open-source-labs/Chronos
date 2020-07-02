@@ -24,20 +24,27 @@ let currentDatabaseType: string;
  *          is accessed in info.commsData and info.healthData
  */
 ipcMain.on('connect', (message: Electron.IpcMainEvent, index: number) => {
-  // Extract databaseType and URI from settings.json at particular index
-  // get index from application context
-  const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
+  try {
+    console.log('Attempting to connect to DB');
+    // Extract databaseType and URI from settings.json at particular index
+    // get index from application context
+    const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
 
-  const userDatabase = JSON.parse(fileContents).services[index];
-  // We get index from sidebar container: which is the mapplication (DEMO)
-  const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
+    const userDatabase = JSON.parse(fileContents).services[index];
+    // We get index from sidebar container: which is the mapplication (DEMO)
+    const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-  // Connect to the proper database
-  if (databaseType === 'MongoDB') connectMongo(index, URI);
-  if (databaseType === 'SQL') pool = connectPostgres(index, URI);
+    // Connect to the proper database
+    if (databaseType === 'MongoDB') connectMongo(index, URI);
+    if (databaseType === 'SQL') pool = connectPostgres(index, URI);
 
-  // Currently set to a global variable
-  currentDatabaseType = databaseType;
+    console.log('connected?');
+
+    // Currently set to a global variable
+    currentDatabaseType = databaseType;
+  } catch ({ message }) {
+    console.log('Error in "connect" event', message);
+  }
 });
 
 /**
@@ -45,24 +52,29 @@ ipcMain.on('connect', (message: Electron.IpcMainEvent, index: number) => {
  * @desc    Query to services table for all microservices of a specific app
  */
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
-  let result: any;
+  try {
+    console.log('Requesting service names');
+    let result: any;
 
-  // Mongo Database
-  if (currentDatabaseType === 'MongoDB') {
-    // Get all documents from the services collection
-    result = await ServicesModel.find();
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      // Get all documents from the services collection
+      result = await ServicesModel.find();
+    }
+
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get all rows from the services table
+      const query = `SELECT * FROM services`;
+      result = await pool.query(query);
+      result = result.rows;
+    }
+
+    // Async event emitter - send response
+    message.sender.send('servicesResponse', JSON.stringify(result));
+  } catch ({ message }) {
+    console.log('Error in "servicesRequest" event', message);
   }
-
-  // SQL Database
-  if (currentDatabaseType === 'SQL') {
-    // Get all rows from the services table
-    const query = `SELECT * FROM services`;
-    result = await pool.query(query);
-    result = result.rows;
-  }
-
-  // Async event emitter - send response
-  message.sender.send('servicesResponse', JSON.stringify(result));
 });
 
 /**
