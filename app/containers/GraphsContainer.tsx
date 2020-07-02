@@ -14,6 +14,8 @@ import RouteTrace from '../charts/route-trace';
 import DockerChart from '../charts/DockerChart';
 import '../stylesheets/GraphsContainer.css';
 
+let flag = true;
+
 interface IParams {
   service: string;
 }
@@ -73,9 +75,17 @@ const GraphsContainer = ({ match }: IMatch) => {
 
   // On Mount: fetch communication data and health data
   useEffect(() => {
-    fetchCommsData();
-    fetchHealthData(service);
-    fetchDockerData(service);
+    if (flag) {
+      setInterval(function () {
+        fetchCommsData();
+        fetchHealthData(service);
+        fetchDockerData(service);
+      }, 3000);
+    } else {
+      fetchCommsData();
+      fetchHealthData(service);
+      fetchDockerData(service);
+    }
     // On unmount: clear data
     return () => {
       setHealthData({});
