@@ -1,14 +1,13 @@
-.blank {
+.home {
   background-color: #f4f4f4;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border: thin solid black
 }
 
-.blank img {
+.home img {
   animation: twirl 20s infinite linear;
   margin-bottom: 10px;
 }
