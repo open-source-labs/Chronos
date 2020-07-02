@@ -1,4 +1,4 @@
-.blank {
+.home {
   background-color: #f4f4f4;
   height: 100vh;
   display: flex;
@@ -7,7 +7,7 @@
   flex-direction: column;
 }
 
-.blank img {
+.home img {
   animation: twirl 20s infinite linear;
   margin-bottom: 10px;
 }

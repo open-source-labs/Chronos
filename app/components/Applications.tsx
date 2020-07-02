@@ -1,29 +1,33 @@
-import React, { useContext, useEffect } from 'react';
-import { DashboardContext } from '../context/DashboardContext';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Paper, Grid, Button, IconButton } from '@material-ui/core';
+import { Paper, IconButton, Modal } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-// import { DashboardContext } from '../context/DashboardContext';
+import { DashboardContext } from '../context/DashboardContext';
+
+import ServicesModal from '../modals/ServicesModal';
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
+  const [open, setOpen] = useState<boolean>(false);
+  const [index, setIndex] = useState<number>(0);
+  const [app, setApp] = useState<string>('');
 
   useEffect(() => {
     getApplications();
   }, []);
 
-  // const { applications, deleteApp } = useContext(DashboardContext);
-
-  // Sends request to Main.js to delete application data
-  const onDelete = (index: number) => {
-    deleteApp(index);
-  };
-
   // Ask user for deletetion confirmation
   const confirmDelete = (app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     // Proceed with deletion if user confirms
-    if (confirm(message)) onDelete(i);
+    if (confirm(message)) deleteApp(i);
+  };
+
+  // Handle clicks on Application cards
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>, app: string, i: number) => {
+    setIndex(i);
+    setApp(app)
+    setOpen(true);
   };
 
   const useStyles = makeStyles(theme => ({
@@ -48,28 +52,32 @@ const Applications = () => {
   }));
 
   const classes = useStyles();
-  // Create a button for each app
-  return applications.map((app: string, i: number | any | string | undefined) => (
-    <div className={classes.paper}>
-      <Box
-        id={i}
-        key={i}
-        border={1}
-        borderColor="secondary.main"
-        onClick={(event: React.MouseEvent<HTMLElement>) => console.log('clicking app!')}
-      >
-        {app}
-      </Box>
-      <Button
-        className={classes.customHoverFocus}
-        size="large"
-        aria-label="Delete"
-        onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
-      >
-        <DeleteForeverOutlinedIcon color="secondary" />
-      </Button>
-    </div>
-  ));
+
+  return (
+    <>
+      {applications.map((app: string, i: number | any | string | undefined) => (
+        <div key={i} onClick={e => handleClick(e, app, i)} style={{ cursor: 'pointer' }}>
+          <Paper
+            className={classes.paper}
+            id={i}
+            key={i}
+            onClick={(event: React.MouseEvent<HTMLElement>) => console.log('clicking app!')}
+          ></Paper>
+          <IconButton
+            className={classes.customHoverFocus}
+            aria-label="Delete"
+            onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+          >
+            {app}
+            <DeleteForeverOutlinedIcon />
+          </IconButton>
+        </div>
+      ))}
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <ServicesModal i={index} app={app}/>
+      </Modal>
+    </>
+  );
 };
 
 export default Applications;
