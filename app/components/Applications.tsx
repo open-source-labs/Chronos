@@ -1,34 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DashboardContext } from '../context/DashboardContext';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Button, IconButton, Modal } from '@material-ui/core';
+import { Paper, IconButton, Modal } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import { DashboardContext } from '../context/DashboardContext';
 
 import ServicesModal from './ServicesModal';
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string>('');
-  const [index, setIndex] = useState<number>(2);
+  const [index, setIndex] = useState<number | null>();
 
   useEffect(() => {
     getApplications();
   }, []);
 
-  // const { applications, deleteApp } = useContext(DashboardContext);
-
-  // Sends request to Main.js to delete application data
-  const onDelete = (index: number) => {
-    deleteApp(index);
-  };
-
   // Ask user for deletetion confirmation
   const confirmDelete = (app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     // Proceed with deletion if user confirms
-    if (confirm(message)) onDelete(i);
+    if (confirm(message)) deleteApp(i);
+  };
+
+  // Handle clicks on Application cards
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>, i: number) => {
+    setIndex(i);
+    setOpen(true);
   };
 
   const useStyles = makeStyles(theme => ({
@@ -56,25 +53,12 @@ const Applications = () => {
     },
   }));
 
-  const toggleOpen = () => {
-    setOpen(!open);
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>, app: string, i: number) => {
-    console.log('=====================')
-    console.log('handleclick, index =>', i)
-    console.log('handleclick, app =>', app)
-    setSelected(app);
-    setIndex(i);
-    toggleOpen();
-  };
-
   const classes = useStyles();
-  // Create a button for each app
+
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <div onClick={e => handleClick(e, app, i)} style={{ cursor: 'pointer' }}>
+        <div onClick={e => handleClick(e, i)} style={{ cursor: 'pointer' }}>
           <Paper
             className={classes.paper}
             id={i}
@@ -91,8 +75,8 @@ const Applications = () => {
           </IconButton>
         </div>
       ))}
-      <Modal open={open} onClose={toggleOpen}>
-        <ServicesModal app={selected} i={index} />
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <ServicesModal i={index} />
       </Modal>
     </>
   );
