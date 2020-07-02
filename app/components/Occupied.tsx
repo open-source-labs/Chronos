@@ -38,14 +38,26 @@ const Occupied: React.FC = () => {
     icon: {
       width: '50%',
       height: '50%',
+      color: ' rgb(255, 243, 72)',
+    },
+    heroContent: {
+      backgroundColor: theme.palette.background.paper,
+      padding: theme.spacing(8, 0, 6),
     },
   }));
 
   const classes = useStyles();
 
   return (
-    <div className="application">
-      <Typography variant="h1" align="center">
+    <div>
+      <Typography
+        className={classes.heroContent}
+        component="h1"
+        variant="h2"
+        align="center"
+        color="textPrimary"
+        gutterBottom
+      >
         Applications
       </Typography>
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -62,7 +74,7 @@ const Occupied: React.FC = () => {
         <Grid container item xs={12} sm={6} spacing={4}>
           <Applications />
           <Button className={classes.paper} onClick={() => setOpen(true)}>
-            <AddCircleOutlineTwoToneIcon className={classes.icon} color="primary" />
+            <AddCircleOutlineTwoToneIcon className={classes.icon} style={{ boxShadow: 'none' }} />
           </Button>
         </Grid>
         <Copyright />
