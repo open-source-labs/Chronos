@@ -11,7 +11,7 @@ const Empty: React.FC = () => {
       <img width="300" height="auto" src={'../assets/pangolin.png'} alt="Chronos logo" />
       <h1>Welcome to Chronos!</h1>
       {/* <p>Select your application to get started!</p> */}
-      <button onClick={() => setOpen(true)}>Get Started, Bruh</button>
+      <button onClick={() => setOpen(true)}>Get Started</button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <AddModal setOpen={setOpen} />
       </Modal>
