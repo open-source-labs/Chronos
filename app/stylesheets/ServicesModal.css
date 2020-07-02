@@ -6,6 +6,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
+  border-radius: 10px ;
+}
+
+.modal h3 {
+  text-align: center;
+  margin: 5px auto 10px
 }
 
 .link {
@@ -18,6 +24,7 @@
   background-color: #24262F;
   color: #fff;
   transition: 0.1s ease-in;
+  text-align: center;
 }
 
 .link:hover {
