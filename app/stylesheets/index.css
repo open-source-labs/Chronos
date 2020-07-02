@@ -6,13 +6,15 @@
   box-sizing: border-box;
 }
 
-body {
+html {
   background-color: rgb(248, 249, 253);
-  background: rgb(25, 0, 36);
+  background: #24262F;
   font-size: 16px;
   font-family: 'Nunito', sans-serif;
   overflow-x: hidden;
 }
+
+
 
 /* img {
   margin-bottom: -75px;

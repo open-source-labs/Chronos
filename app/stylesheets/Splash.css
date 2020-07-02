@@ -15,6 +15,7 @@
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
   animation-duration: 3s;
+  background-color: #24262F;
 }
 
 @keyframes fadeInOpacity {
