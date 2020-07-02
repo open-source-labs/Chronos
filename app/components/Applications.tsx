@@ -28,7 +28,7 @@ const Applications = () => {
   };
 
   // Handle clicks on Application cards
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>, app: string, i: number) => {
+  const handleClick = (app: string, i: number) => {
     setIndex(i);
     setApp(app);
     setOpen(true);
@@ -62,7 +62,7 @@ const Applications = () => {
       {applications.map((app: string, i: number | any | string | undefined) => (
         <div
           key={i}
-          onClick={e => handleClick(e, app, i)}
+          // onClick={e => handleClick(e, app, i)}
           style={{ cursor: 'pointer' }}
           className={classes.paper}
         >
@@ -71,7 +71,7 @@ const Applications = () => {
             key={i}
             border={1}
             borderColor="secondary.main"
-            onClick={(event: React.MouseEvent<HTMLElement>) => console.log('clicking app!')}
+            onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
           >
             {app}
           </Box>
