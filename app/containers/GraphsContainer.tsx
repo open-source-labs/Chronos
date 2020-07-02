@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
+import { ApplicationContext } from '../context/ApplicationContext';
 import RequestTypesChart from '../charts/request-type-chart';
 import ResponseCodesChart from '../charts/response-code-chart';
 import MicroServiceTraffic from '../charts/microservice-traffic';
@@ -72,6 +73,7 @@ const GraphsContainer = ({ match }: IMatch) => {
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchCommsData, setCommsData } = useContext(CommsContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
+  const { app } = useContext(ApplicationContext);
 
   // On Mount: fetch communication data and health data
   useEffect(() => {
@@ -95,8 +97,11 @@ const GraphsContainer = ({ match }: IMatch) => {
   }, [service]);
 
   return (
-    <div id="serviceDetailsContainer">
-      <h3 id="microserviceHealthTitle">Microservice: {service}</h3>
+    <div className="graphs-container">
+      <div className="headers">
+        <h3 className="header-app">Application: {app}</h3>
+        <h3 className="header-service">Microservice: {service}</h3>
+      </div>
       <div className="graphsGrid">
         <div className="routes">
           <div ref={canvas} />

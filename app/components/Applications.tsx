@@ -10,6 +10,7 @@ const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
+  const [app, setApp] = useState<string>('');
 
   useEffect(() => {
     getApplications();
@@ -23,8 +24,9 @@ const Applications = () => {
   };
 
   // Handle clicks on Application cards
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>, i: number) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>, app: string, i: number) => {
     setIndex(i);
+    setApp(app)
     setOpen(true);
   };
 
@@ -58,7 +60,7 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <div key={i} onClick={e => handleClick(e, i)} style={{ cursor: 'pointer' }}>
+        <div key={i} onClick={e => handleClick(e, app, i)} style={{ cursor: 'pointer' }}>
           <Paper
             className={classes.paper}
             id={i}
@@ -76,7 +78,7 @@ const Applications = () => {
         </div>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <ServicesModal i={index} />
+        <ServicesModal i={index} app={app}/>
       </Modal>
     </>
   );

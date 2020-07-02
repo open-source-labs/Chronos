@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 
 interface ServicesModalProps {
   i: number;
+  app: string
 }
 
 interface IService {
   microservice: string
 }
 
-const ServicesModal: React.SFC<ServicesModalProps> = ({ i }) => {
+const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   const { fetchServicesNames, servicesData, setServicesData, connectToDB } = useContext(
     ApplicationContext
   );
@@ -19,7 +20,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i }) => {
   useEffect(() => {
     console.log('running useEffect');
     connectToDB(i);
-    fetchServicesNames();
+    fetchServicesNames(app);
 
     return () => {
       console.log('component unmounting');
@@ -36,7 +37,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i }) => {
    * fetch request for service names
    */
   const fetchStuff = () => {
-    fetchServicesNames();
+    fetchServicesNames(app);
   };
 
   return (
