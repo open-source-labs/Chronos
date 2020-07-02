@@ -15,15 +15,19 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ app, i }) => {
   );
 
   useEffect(() => {
-    console.log('running useEffect')
+    console.log('running useEffect');
     connectToDB(i);
     fetchServicesNames();
 
     return () => {
-      console.log('component unmounting')
+      console.log('component unmounting');
       setServicesData([]);
     };
   }, [app, i]);
+
+  const fetchStuff = () => {
+    fetchServicesNames();
+  };
 
   return (
     <div className="modal">
@@ -34,6 +38,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ app, i }) => {
           <Link to={`/:${service.microservice}`}>{service.microservice}</Link>
         ))
       )}
+      <button onClick={() => fetchStuff()}>fetch test</button>
     </div>
   );
 };
