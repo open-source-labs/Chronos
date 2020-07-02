@@ -6,26 +6,31 @@ import HealthContextProvider from '../context/HealthContext';
 import CommsContextProvider from '../context/CommsContext';
 import ApplicationContextProvider from '../context/ApplicationContext';
 import DashboardContextProvider from '../context/DashboardContext';
-import DockerContexProvider from '../context/DockerContext'
-import '../stylesheets/DashboardContainer.css';
+import DockerContextProvider from '../context/DockerContext'
 
 const DashboardContainer = () => (
   <Router>
-    <div className="dashboard">
+    <div style={dashboardStyle}>
       <ApplicationContextProvider>
         <DashboardContextProvider>
           <CommsContextProvider>
-            <DockerContexProvider>
+            <DockerContextProvider>
             <HealthContextProvider>
               <SidebarContainer />
               <MainContainer />
             </HealthContextProvider>
-            </DockerContexProvider>
+            </DockerContextProvider>
           </CommsContextProvider>
         </DashboardContextProvider>
       </ApplicationContextProvider>
     </div>
   </Router>
 );
+
+// Style
+const dashboardStyle = {
+  display: 'flex',
+  backgroundColor: '#F7F8FC'
+}
 
 export default DashboardContainer;

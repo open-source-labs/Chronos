@@ -1,5 +1,4 @@
 import React from 'react';
-import '../stylesheets/SidebarHeader.css';
 
 const Header = () => {
   return (

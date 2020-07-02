@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import '../stylesheets/Home.css';
 import { DashboardContext } from '../context/DashboardContext';
 import { Button, Grid } from '@material-ui/core';
 import Applications from './Applications';
 import { Modal } from '@material-ui/core';
-import AddApplication from './AddApplication';
+import AddApplication from './AddApplication'
 
 const Home = () => {
   const { applications, getApplications } = useContext(DashboardContext);
