@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import { Grid, Modal, Button, Typography } from '@material-ui/core';
+import { Grid, Modal, Button, Typography, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 
 import AddModal from '../modals/AddModal';
 import Applications from './Applications';
-import '../stylesheets/Occupied.css';
+// import '../stylesheets/Occupied.css';
+
+const Copyright = () => {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Team Chronos
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+};
 
 const Occupied: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -52,6 +65,7 @@ const Occupied: React.FC = () => {
             <AddCircleOutlineTwoToneIcon className={classes.icon} color="primary" />
           </Button>
         </Grid>
+        <Copyright />
       </Grid>
     </div>
   );
