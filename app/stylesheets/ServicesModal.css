@@ -1,5 +1,5 @@
 .modal {
-  width: 250px;
+  width: 350px;
   padding: 20px;
   position: absolute;
   top: 50%;
@@ -10,18 +10,20 @@
 }
 
 .modal h3 {
+  font-size: 145%;
   text-align: center;
-  margin: 5px auto 10px
+  margin: 5px auto 25px
 }
 
 .link {
+  display: block;
+  width: 80%;
   font-size: 110%;
   text-decoration: none;
-  display: block;
   border: thin solid black;
   border-radius: 5px;
   padding: 8px;
-  margin: 5px auto;
+  margin: 10px auto;
   background-color: #24262F;
   color: #fff;
   transition: 0.1s ease-in;
