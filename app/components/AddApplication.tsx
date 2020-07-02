@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import '../stylesheets/AddApplication.css';
 import { DashboardContext } from '../context/DashboardContext';
 
@@ -45,32 +46,41 @@ const AddApplication: React.FC = () => {
     <div className="add-container">
       <h2>Enter Your Database Information</h2>
       <form onSubmit={handleSubmit}>
-        Database Type:
-        <select name="database" value={database} onChange={e => handleChange(e)}>
-          <option value="SQL">SQL</option>
-          <option value="MongoDB">MongoDB</option>
-        </select>
-        Database URI:
-        <input
-          name="URI"
-          value={URI}
-          onChange={e => handleChange(e)}
-          placeholder="Database URI"
-          required
-        />
-        Database Name:
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={e => handleChange(e)}
-          placeholder="Database Name"
-          required
-        />
+        <div className="input-field">
+          <label htmlFor="db-type">Type: </label>
+          <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
+            <option value="SQL">SQL</option>
+            <option value="MongoDB">MongoDB</option>
+          </select>
+        </div>
+        <div className="input-field">
+          <label htmlFor="db-uri">URI</label>
+          <input
+            id="db-uri"
+            name="URI"
+            value={URI}
+            onChange={e => handleChange(e)}
+            placeholder="Database URI"
+            required
+          />
+        </div>
+        <div className="input-field">
+          <label htmlFor="db-name">Name</label>
+          <input
+            id="db-name"
+            type="text"
+            name="name"
+            value={name}
+            onChange={e => handleChange(e)}
+            placeholder="Database Name"
+            required
+          />
+        </div>
         <button className="submitBtn">Submit</button>
       </form>
     </div>
   );
 };
+
 
 export default AddApplication;

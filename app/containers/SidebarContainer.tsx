@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
+import HomeSharpIcon from '@material-ui/icons/HomeSharp';
 import SidebarHeader from '../components/SidebarHeader';
 import Applications from '../components/Applications';
 import '../stylesheets/SidebarContainer.css';
@@ -12,10 +13,14 @@ interface IService {
 }
 
 const SidebarContainer: React.FC = (): JSX.Element => {
+  /* 
+  ******************* This logic will move to Applications.tsx!! ********************
+  ******************* This logic will move to Applications.tsx!! ********************
+  ******************* This logic will move to Applications.tsx!! ********************
+  
   // Set view to selected index
   // Index is dependent on which microservice button is clicked
   const [index, setIndex] = useState<null | number>(null);
-
   const handleClick = (_id: any) => {
     // Toggle the sidebar buttons to reveal or hide their microservices
     if (index === null) {
@@ -30,27 +35,18 @@ const SidebarContainer: React.FC = (): JSX.Element => {
     connectToDB(index);
     fetchServicesNames(index);
   }, [index]);
-
+ */
   return (
     <div className="container">
       <div className="sidebar">
         <SidebarHeader />
-        {/* <Applications handleClick={handleClick} /> */}
         <div className="btn-container">
-          {/* {servicesData.map((service: IService) => (
-            <Link className="link" to={`/${service.microservice}`} key={service._id}>
-              {service.microservice}
-            </Link>
-          ))} */}
-          <Link className="link" to="/add">
-            +
+          <Link className="link" to="/">
+            <HomeSharpIcon />
           </Link>
           <Link className="link" to="/delete">
             -
           </Link>
-          {/* <button className="link" type="button" onClick={() => location.reload()}>
-            Refresh
-          </button> */}
         </div>
       </div>
     </div>
