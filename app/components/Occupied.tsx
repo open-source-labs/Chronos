@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Modal } from '@material-ui/core';
 import '../stylesheets/Occupied.css'
 
-import AddModal from './AddModal'
+import AddModal from '../modals/AddModal'
 import Applications from './Applications';
 
 const Occupied: React.FC = () => {

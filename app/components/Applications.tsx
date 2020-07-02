@@ -4,7 +4,7 @@ import { Paper, IconButton, Modal } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { DashboardContext } from '../context/DashboardContext';
 
-import ServicesModal from './ServicesModal';
+import ServicesModal from '../modals/ServicesModal';
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
@@ -58,7 +58,7 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <div onClick={e => handleClick(e, i)} style={{ cursor: 'pointer' }}>
+        <div key={i} onClick={e => handleClick(e, i)} style={{ cursor: 'pointer' }}>
           <Paper
             className={classes.paper}
             id={i}
