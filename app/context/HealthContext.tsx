@@ -43,8 +43,9 @@ const HealthContextProvider: React.FC = ({ children }) => {
       // Update context local state
       setHealthData(freq);
     });
+    
   };
-
+  
   return (
     <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData }}>
       {children}
