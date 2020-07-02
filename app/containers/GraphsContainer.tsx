@@ -14,7 +14,7 @@ import RouteTrace from '../charts/route-trace';
 import DockerChart from '../charts/DockerChart';
 import '../stylesheets/GraphsContainer.css';
 
-let flag = true;
+let flag = false;
 
 interface IParams {
   service: string;
