@@ -25,20 +25,22 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      height: 256,
-      width: '45%',
-      marginRight: '1%',
-      textAlign: 'center',
+      position: 'relative',
+      bottom: '40px',
+      height: 340,
+      width: '50%',
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(3),
+      marginBottom: theme.spacing(1),
       background: 'rgb(33, 34, 41)',
       border: '2px solid black',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
     },
     icon: {
-      width: '50%',
-      height: '50%',
-      color: ' rgb(255, 243, 72)',
+      width: '100px',
+      height: '100px',
+      color: ' white',
+      '&:hover, &.Mui-focusVisible': { color: 'rgb(255, 243, 72)' },
     },
     heroContent: {
       backgroundColor: theme.palette.background.paper,
@@ -66,19 +68,17 @@ const Occupied: React.FC = () => {
       {/* Grid Needs Aligning */}
       <Grid
         container
-        direction="column"
-        alignItems="center"
+        direction="row"
         justify="center"
-        style={{ minHeight: '100vh', minWidth: '100vw' }}
+        alignItems="flex-end"
+        style={{ margin: '0 auto', maxWidth: '80%', maxHeight: '50%' }}
       >
-        <Grid container item xs={12} sm={6} spacing={4}>
-          <Applications />
-          <Button className={classes.paper} onClick={() => setOpen(true)}>
-            <AddCircleOutlineTwoToneIcon className={classes.icon} style={{ boxShadow: 'none' }} />
-          </Button>
-        </Grid>
-        <Copyright />
+        <Applications />
+        <Button className={classes.paper} onClick={() => setOpen(true)}>
+          <AddCircleOutlineTwoToneIcon className={classes.icon} style={{ boxShadow: 'none' }} />
+        </Button>
       </Grid>
+      <Copyright />
     </div>
   );
 };
