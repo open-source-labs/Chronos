@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, IconButton, Modal } from '@material-ui/core';
+=======
+import { Box, Button, Modal } from '@material-ui/core';
+>>>>>>> 51bc884101e4eb262d3485705d604154595a1681
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
 
 import ServicesModal from '../modals/ServicesModal';
@@ -19,14 +24,13 @@ const Applications = () => {
   // Ask user for deletetion confirmation
   const confirmDelete = (app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
-    // Proceed with deletion if user confirms
     if (confirm(message)) deleteApp(i);
   };
 
   // Handle clicks on Application cards
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, app: string, i: number) => {
     setIndex(i);
-    setApp(app)
+    setApp(app);
     setOpen(true);
   };
 
@@ -56,25 +60,33 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <div key={i} onClick={e => handleClick(e, app, i)} style={{ cursor: 'pointer' }}>
-          <Paper
-            className={classes.paper}
+        <div
+          key={i}
+          onClick={e => handleClick(e, app, i)}
+          style={{ cursor: 'pointer' }}
+          className={classes.paper}
+        >
+          <Box
             id={i}
             key={i}
+            border={1}
+            borderColor="secondary.main"
             onClick={(event: React.MouseEvent<HTMLElement>) => console.log('clicking app!')}
-          ></Paper>
-          <IconButton
+          >
+            {app}
+          </Box>
+          <Button
             className={classes.customHoverFocus}
+            size="large"
             aria-label="Delete"
             onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
           >
-            {app}
-            <DeleteForeverOutlinedIcon />
-          </IconButton>
+            <DeleteForeverOutlinedIcon color="secondary" />
+          </Button>
         </div>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <ServicesModal i={index} app={app}/>
+        <ServicesModal i={index} app={app} />
       </Modal>
     </>
   );
