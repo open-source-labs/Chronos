@@ -1,7 +1,7 @@
 .graphsGrid {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-gap: 30px; /* align-items: center; */
+  grid-gap: 30px;
   margin: auto;
   padding-bottom: 25px;
   border-radius: 2px;
