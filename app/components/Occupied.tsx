@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import { Grid, Modal, Button, Typography, Container } from '@material-ui/core';
+import { Grid, Modal, Button, Typography, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 
 import AddModal from '../modals/AddModal';
 import Applications from './Applications';
-import '../stylesheets/Occupied.css';
+// import '../stylesheets/Occupied.css';
+
+const Copyright = () => {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Team Chronos
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+};
 
 const Occupied: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -26,40 +39,34 @@ const Occupied: React.FC = () => {
       width: '50%',
       height: '50%',
     },
-    container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-    },
   }));
 
   const classes = useStyles();
 
   return (
     <div className="application">
+      <Typography variant="h1" align="center">
+        Applications
+      </Typography>
       <Modal open={open} onClose={() => setOpen(false)}>
         <AddModal setOpen={setOpen} />
       </Modal>
       {/* Grid Needs Aligning */}
-      <Container maxWidth="lg" className={classes.container}>
-        <Typography variant="h1" color="inherit" noWrap>
-          Applications
-        </Typography>
-        <Grid
-          container
-          direction="column"
-          alignItems="flex-end"
-          alignContent="center"
-          justify="center"
-          style={{ minHeight: '100vh' }}
-        >
-          <Grid container item xs={12} sm={6} spacing={4}>
-            <Applications />
-            <Button className={classes.paper} onClick={() => setOpen(true)}>
-              <AddCircleOutlineTwoToneIcon className={classes.icon} color="primary" />
-            </Button>
-          </Grid>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh', minWidth: '100vw' }}
+      >
+        <Grid container item xs={12} sm={6} spacing={4}>
+          <Applications />
+          <Button className={classes.paper} onClick={() => setOpen(true)}>
+            <AddCircleOutlineTwoToneIcon className={classes.icon} color="primary" />
+          </Button>
         </Grid>
-      </Container>
+        <Copyright />
+      </Grid>
     </div>
   );
 };
