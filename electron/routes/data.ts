@@ -1,17 +1,13 @@
 import { ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
-// const connectPostgres = require('../databases/postgres');
 import connectPostgres from '../databases/postgres';
-// const connectMongo = require('../databases/mongo');
 import connectMongo from '../databases/mongo';
-// const CommunicationModel = require('../models/nonrelational/communicatonSchema');
-import CommunicationModel from '../models/nonrelational/communicatonSchema';
-// const HealthModelFunc = require('../models/nonrelational/healthSchema');
-import HealthModelFunc from '../models/nonrelational/healthSchema';
-import ServicesModel from '../models/nonrelational/servicesSchema';
-//  const DockerModelFunc = require('../models/nonrelational/DockerModel');
-import DockerModelFunc from '../models/nonrelational/DockerModel';
+import CommunicationModel from '../models/CommunicationsModel';
+import HealthModelFunc from '../models/HealthModel';
+import ServicesModel from '../models/ServicesModel';
+import DockerModelFunc from '../models/DockerModel';
+
 // Initiate pool variable for SQL setup
 let pool: any;
 
