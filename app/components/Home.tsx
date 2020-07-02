@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
+
 import Empty from './Empty';
 import Occupied from './Occupied';
 import '../stylesheets/Home.css';
