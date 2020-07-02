@@ -22,22 +22,29 @@
   color: #333;
 }
 
+.add-container hr {
+  margin: 25px auto;
+  width: 300px;
+}
+
 .add-container form {
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
   font-size: 2vh;
-  border: thin solid black;
-  padding: 10px
+  padding: 0 30px
 }
 
+.add-container form div:first-of-type {
+  margin-top: 0;
+}
 
 .add-container form div {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin: 5px 0;
+  margin: 15px 0;
 }
 
 .add-container form div label {
@@ -48,9 +55,11 @@
 /* Select */
 
 .add-container form div select {
-  font-size: 1.75vh;
+  align-self: center;
+  width: 350px;
+  height: 30px;
+  font-size: 90%;
   font-weight: 400;
-  border: 2px solid black;
   text-align: center;
 }
 
@@ -61,7 +70,7 @@
   border: 2px solid rgb(0, 0, 0);
   border-radius: 10px;
   height: 25px;
-  font-size: 80%;
+  font-size: 90%;
   text-align: center;
 }
 
@@ -79,6 +88,7 @@
   background-color: black;
   border-radius: 10px;
   transition: 0.1s;
+  margin: 20px 0;
 }
 
 .add-container form button:hover {

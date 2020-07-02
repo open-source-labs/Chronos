@@ -45,6 +45,7 @@ const AddApplication: React.FC = () => {
   return (
     <div className="add-container">
       <h2>Enter Your Database Information</h2>
+      <hr />
       <form onSubmit={handleSubmit}>
         <div className="input-field">
           <label htmlFor="db-type">Type: </label>
