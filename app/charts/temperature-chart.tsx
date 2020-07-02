@@ -26,6 +26,7 @@ const TemperatureChart = () => {
       // const xAxis = healthData.time;
       timeArr = time.map((el: string) => moment(el).format('hh:mm A'));
       month = moment(time[0]).format('MMM Do');
+      console.log('what is timearr temp ------>', timeArr)
     }
 
     return (
