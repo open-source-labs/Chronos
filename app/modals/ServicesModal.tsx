@@ -7,6 +7,10 @@ interface ServicesModalProps {
   i: number;
 }
 
+interface IService {
+  microservice: string
+}
+
 const ServicesModal: React.SFC<ServicesModalProps> = ({ i }) => {
   const { fetchServicesNames, servicesData, setServicesData, connectToDB } = useContext(
     ApplicationContext
@@ -42,8 +46,8 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i }) => {
       ) : (
         <>
           <h3>Available Microservices</h3>
-          {servicesData.map((service: any) => (
-          <Link className="link" to={`/${service.microservice}`}>
+          {servicesData.map((service: IService, i: number) => (
+          <Link key={i} className="link" to={`/${service.microservice}`}>
             {service.microservice}
           </Link>
           ))}
