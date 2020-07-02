@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, IconButton, Modal, Card, CardActions } from '@material-ui/core';
+import { Grid, IconButton, Modal, Card, CardActions } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
@@ -31,16 +31,12 @@ const Applications = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      height: 256,
-      width: '45%',
-      marginRight: '1%',
+      height: 340,
       textAlign: 'center',
-      verticalAlign: 'middle',
-      alignItems: 'center',
       color: 'white',
       fontSize: '3rem',
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(3),
+      marginBottom: theme.spacing(6),
       background: 'rgb(33, 34, 41)',
       border: '2px solid black',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
@@ -48,7 +44,9 @@ const Applications = () => {
     customHoverFocus: {
       position: 'relative',
       margin: 'auto',
-      '&:hover, &.Mui-focusVisible': { backgroundColor: 'yellow' },
+    },
+    hover: {
+      '&:hover, &.Mui-focusVisible': { color: 'red' },
     },
   }));
 
@@ -57,7 +55,7 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <div key={i} style={{ cursor: 'pointer' }} className={classes.paper}>
+        <Grid className={classes.paper} item xs={6}>
           <Card
             id={i}
             key={i}
@@ -68,17 +66,17 @@ const Applications = () => {
           <CardActions>
             <IconButton
               className={classes.customHoverFocus}
-              // size="large"
               aria-label="Delete"
               onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+              color="primary"
             >
               <DeleteForeverOutlinedIcon
-                color="secondary"
+                className={classes.hover}
                 style={{ boxShadow: 'none', width: 60, height: 60 }}
               />
             </IconButton>
           </CardActions>
-        </div>
+        </Grid>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
         <ServicesModal i={index} app={app} />

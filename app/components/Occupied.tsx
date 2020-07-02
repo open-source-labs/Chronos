@@ -12,20 +12,22 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      height: 256,
-      width: '45%',
-      marginRight: '1%',
-      textAlign: 'center',
+      position: 'relative',
+      bottom: '40px',
+      height: 340,
+      width: '50%',
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(3),
+      marginBottom: theme.spacing(1),
       background: 'rgb(33, 34, 41)',
       border: '2px solid black',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
     },
     icon: {
-      width: '50%',
-      height: '50%',
-      color: ' rgb(255, 243, 72)',
+      width: '100px',
+      height: '100px',
+      color: ' white',
+      '&:hover, &.Mui-focusVisible': { color: 'rgb(255, 243, 72)' },
     },
     heroContent: {
       // backgroundColor: '#f4f4f4'/* theme.palette.background.paper */,
