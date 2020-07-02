@@ -9,11 +9,11 @@ interface IFields {
 }
 
 interface IDashboard {
-  addApp: (fields: IFields) => void
+  addApp: (fields: IFields) => void;
 }
 
-type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
-type FormElement = React.FormEvent<HTMLFormElement>
+type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement>;
+type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddApplication: React.FC = () => {
   const { addApp }: IDashboard = useContext(DashboardContext);
@@ -25,6 +25,7 @@ const AddApplication: React.FC = () => {
 
   // Submit form data and save to database
   const handleSubmit = (event: FormElement) => {
+    console.log('hey you submitted');
     event.preventDefault();
     // Add new application
     addApp(fields);
