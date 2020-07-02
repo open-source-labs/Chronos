@@ -57,6 +57,7 @@ const DockerContextProvider: React.FC = ({ children }) => {
 
       // Update context local state
       // setDockerData(freq);
+      
       const newDockerData = result[0] || {};
       setDockerData(newDockerData);
     });
