@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +15,20 @@ html {
   overflow-x: hidden;
 }
 
+button {
+  font-size: 90%;
+  padding: 6px;
+  border: thin solid #24262f;
+  border-radius: 3px;
+  background-color: #484e63;
+  color: #fff;
+  min-width: 105px;
+  transition: 0.2s;
+}
 
+button:hover {
+  background-color: #24262f;
+}
 
 /* img {
   margin-bottom: -75px;
