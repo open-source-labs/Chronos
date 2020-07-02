@@ -28,7 +28,7 @@ const Occupied: React.FC = () => {
       color: ' rgb(255, 243, 72)',
     },
     heroContent: {
-      backgroundColor: theme.palette.background.paper,
+      // backgroundColor: '#f4f4f4'/* theme.palette.background.paper */,
       padding: theme.spacing(8, 0, 6),
     },
   }));
