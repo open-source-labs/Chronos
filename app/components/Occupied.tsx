@@ -7,19 +7,6 @@ import AddModal from '../modals/AddModal';
 import Applications from './Applications';
 // import '../stylesheets/Occupied.css';
 
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Team Chronos
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-};
-
 const Occupied: React.FC = () => {
   const [open, setOpen] = useState(false);
 
@@ -64,19 +51,13 @@ const Occupied: React.FC = () => {
         <AddModal setOpen={setOpen} />
       </Modal>
       {/* Grid Needs Aligning */}
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justify="space-between"
-      >
-        <Grid container item xs={12} sm={6} >
+      <Grid container direction="column" alignItems="center" justify="space-between">
+        <Grid container item xs={12} sm={6}>
           <Applications />
           <Button className={classes.paper} onClick={() => setOpen(true)}>
             <AddCircleOutlineTwoToneIcon className={classes.icon} style={{ boxShadow: 'none' }} />
           </Button>
         </Grid>
-        <Copyright />
       </Grid>
     </div>
   );
