@@ -15,8 +15,6 @@ import RouteTrace from '../charts/route-trace';
 import DockerChart from '../charts/DockerChart';
 import '../stylesheets/GraphsContainer.css';
 
-let flag = false;
-
 interface IParams {
   service: string;
 }
@@ -31,6 +29,8 @@ interface IMatch {
 }
 
 const GraphsContainer = ({ match }: IMatch) => {
+  const [live, setLive] = useState<boolean>(false);
+  const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null)
   //   const initialData = {
   //   nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
   //   links: [
@@ -77,13 +77,14 @@ const GraphsContainer = ({ match }: IMatch) => {
 
   // On Mount: fetch communication data and health data
   useEffect(() => {
-    if (flag) {
-      setInterval(function () {
+    if (live) {
+      setIntervalID(setInterval(function () {
         fetchCommsData();
         fetchHealthData(service);
         fetchDockerData(service);
-      }, 3000);
+      }, 3000));
     } else {
+      if (intervalID) clearInterval(intervalID)
       fetchCommsData();
       fetchHealthData(service);
       fetchDockerData(service);
@@ -94,13 +95,16 @@ const GraphsContainer = ({ match }: IMatch) => {
       setCommsData([]);
       setDockerData({});
     };
-  }, [service]);
+  }, [service, live]);
 
   return (
     <div className="graphs-container">
       <div className="headers">
         <h3 className="header-app">Application: {app}</h3>
         <h3 className="header-service">Microservice: {service}</h3>
+        <button onClick={() => setLive(!live)}>
+          {live ? <div><span className="dot"></span>Live</div> : <div>Gather Live Data</div>}
+        </button>
       </div>
       <div className="graphsGrid">
         <div className="routes">
