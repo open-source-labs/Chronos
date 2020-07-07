@@ -41,11 +41,6 @@ const Applications = () => {
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       marginBottom: theme.spacing(1),
     },
-    icon: {
-      position: 'relative',
-      bottom: 150,
-      left: 725,
-    },
     hover: {
       height: 120,
       width: 120,
@@ -67,15 +62,14 @@ const Applications = () => {
             onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
           >
             {app}
+            <IconButton
+              aria-label="Delete"
+              onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+              color="primary"
+            >
+              <DeleteForeverOutlinedIcon className={classes.hover} />
+            </IconButton>
           </Paper>
-          <IconButton
-            className={classes.icon}
-            aria-label="Delete"
-            onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
-            color="primary"
-          >
-            <DeleteForeverOutlinedIcon className={classes.hover} />
-          </IconButton>
         </Grid>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
