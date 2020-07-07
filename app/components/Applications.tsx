@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, IconButton, Modal, Card, CardActions } from '@material-ui/core';
+import { Grid, IconButton, Modal, Card, CardActions, Paper } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
@@ -36,16 +36,20 @@ const Applications = () => {
       color: 'white',
       fontSize: '3rem',
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(6),
       background: 'rgb(33, 34, 41)',
       border: '2px solid black',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      marginBottom: theme.spacing(1),
     },
-    customHoverFocus: {
+    icon: {
       position: 'relative',
-      margin: 'auto',
+      bottom: 150,
+      left: 725,
     },
     hover: {
+      height: 120,
+      width: 120,
+      boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: 'red' },
     },
   }));
@@ -55,27 +59,23 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <Grid className={classes.paper} item xs={6}>
-          <Card
+        <Grid item xs={6}>
+          <Paper
+            className={classes.paper}
             id={i}
             key={i}
             onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
           >
             {app}
-          </Card>
-          <CardActions>
-            <IconButton
-              className={classes.customHoverFocus}
-              aria-label="Delete"
-              onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
-              color="primary"
-            >
-              <DeleteForeverOutlinedIcon
-                className={classes.hover}
-                style={{ boxShadow: 'none', width: 60, height: 60 }}
-              />
-            </IconButton>
-          </CardActions>
+          </Paper>
+          <IconButton
+            className={classes.icon}
+            aria-label="Delete"
+            onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+            color="primary"
+          >
+            <DeleteForeverOutlinedIcon className={classes.hover} />
+          </IconButton>
         </Grid>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
