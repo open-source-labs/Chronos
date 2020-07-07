@@ -12,11 +12,9 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      padding: theme.spacing(1),
       textAlign: 'center',
       color: theme.palette.text.secondary,
       whiteSpace: 'nowrap',
-      marginBottom: theme.spacing(1),
       background: 'rgb(33, 34, 41)',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
@@ -25,6 +23,7 @@ const Occupied: React.FC = () => {
       width: '100px',
       height: '100px',
       color: ' white',
+      boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: 'rgb(255, 243, 72)' },
     },
     heroContent: {
@@ -35,7 +34,7 @@ const Occupied: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div style={{}}>
+    <div>
       <Typography
         className={classes.heroContent}
         component="h1"
@@ -49,13 +48,12 @@ const Occupied: React.FC = () => {
       <Modal open={open} onClose={() => setOpen(false)}>
         <AddModal setOpen={setOpen} />
       </Modal>
-      {/* Grid Needs Aligning */}
-      <Grid container spacing={6}>
+      <Grid container spacing={3}>
         <Applications />
-        <Button className={classes.paper} onClick={() => setOpen(true)}>
-          <AddCircleOutlineTwoToneIcon className={classes.icon} style={{ boxShadow: 'none' }} />
-        </Button>
       </Grid>
+      <Button className={classes.paper} onClick={() => setOpen(true)}>
+        <AddCircleOutlineTwoToneIcon className={classes.icon} />
+      </Button>
     </div>
   );
 };
