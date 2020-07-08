@@ -42,6 +42,9 @@ const Applications = () => {
       marginBottom: theme.spacing(1),
     },
     hover: {
+      position: 'relative',
+      top: '5%',
+      right: '5%',
       height: 120,
       width: 120,
       boxShadow: 'none',

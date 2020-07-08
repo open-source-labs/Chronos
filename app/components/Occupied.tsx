@@ -12,12 +12,15 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      textAlign: 'center',
       color: theme.palette.text.secondary,
-      whiteSpace: 'nowrap',
+      // whiteSpace: 'nowrap',
       background: 'rgb(33, 34, 41)',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
+    },
+    grid: {
+      margin: '0 auto',
+      maxWidth: '75vw',
     },
     icon: {
       width: '100px',
@@ -48,7 +51,7 @@ const Occupied: React.FC = () => {
       <Modal open={open} onClose={() => setOpen(false)}>
         <AddModal setOpen={setOpen} />
       </Modal>
-      <Grid container spacing={3}>
+      <Grid className={classes.grid} container spacing={3}>
         <Applications />
       </Grid>
       <Button className={classes.paper} onClick={() => setOpen(true)}>
