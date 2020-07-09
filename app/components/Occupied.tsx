@@ -40,8 +40,8 @@ const Occupied: React.FC = () => {
     <div>
       <Typography
         className={classes.heroContent}
-        component="h1"
-        variant="h2"
+        // component="h1"
+        variant="h1"
         align="center"
         color="textPrimary"
         gutterBottom

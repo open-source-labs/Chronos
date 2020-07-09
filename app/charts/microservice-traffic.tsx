@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const MicroServiceTraffic = () => { 
+const MicroServiceTraffic = () => {
   const { commsData } = useContext(CommsContext);
-  console.log('hello from microservice traffice-->',commsData )
+  console.log('hello from microservice traffice-->', commsData);
   const microServiceCountdictionary: { [key: string]: number } = {};
-  
+
   // iterate over Trace Points
   for (let i = 0; i < commsData.length; i += 1) {
     // populate Micro-count dictionary
@@ -17,9 +17,9 @@ const MicroServiceTraffic = () => {
     }
   }
   // iterating through the microServiceCountdictionary object and setting each microservice name into Xaxis array to spread into the graph
-  const xAxis = []
-  for (const keys in microServiceCountdictionary){
-    xAxis.push(keys)
+  const xAxis = [];
+  for (const keys in microServiceCountdictionary) {
+    xAxis.push(keys);
   }
   // capture values of microServiceCountdictionary to use as data to populate chart object
   const serverPingCount: number[] = Object.values(microServiceCountdictionary);
