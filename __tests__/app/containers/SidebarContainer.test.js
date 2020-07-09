@@ -1,4 +1,5 @@
-import chai from 'chai';
+// import chai from 'chai';
+const chai = require('chai')
 
 describe('<SidebarContainer />', () => {
   it('should render an <img> tag with the Chronos logo');

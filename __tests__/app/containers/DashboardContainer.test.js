@@ -1,4 +1,5 @@
-import chai from 'chai';
+// import chai from 'chai';
+const chai = require('chai');
 
 describe('<DashboardContainer />', () => {
   it('should render <SidebarContainer />');
