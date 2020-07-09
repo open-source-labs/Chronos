@@ -4,9 +4,8 @@ const path = require('path');
 
 // Assert Facts About Promise Testing
 const chai = require('chai');
+const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-chai.should();
-chai.use(chaiAsPromised);
 
 // construct Paths:
 const baseDir = path.join(__dirname, '..');
@@ -20,14 +19,19 @@ const app = new Application({
   args: [baseDir],
 });
 
+global.before(() => {
+  chai.should();
+  chai.use(chaiAsPromised);
+});
+
 describe('Application launch', function () {
   this.timeout(30000);
 
-  before(() => {
+  this.beforeAll(() => {
     chaiAsPromised.transferPromiseness = app.transferPromiseness;
     return app.start();
   });
-  after(() => {
+  this.afterAll(() => {
     if (app && app.isRunning) {
       app.stop();
     }
@@ -57,8 +61,6 @@ describe('Application launch', function () {
   });
 
   it('Displays home screen', async () => {
-    await app.client.waitUntilWindowLoaded();
-    const text = app.client.waitUntilTextExists();
-    return assert.equal(text, true);
+    (await $('.home')).waitForDisplayed({ timeout: 40000 });
   });
 });
