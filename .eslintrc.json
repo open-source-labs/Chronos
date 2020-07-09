@@ -11,7 +11,8 @@
   "env": {
     "es6": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "extends": ["airbnb", "eslint:recommended", "plugin:react/recommended", "prettier"],
   "rules": {
