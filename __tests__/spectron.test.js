@@ -52,4 +52,10 @@ describe('Application launch', function () {
       .browserWindow.isDevToolsOpened();
     return assert.equal(devToolsAreOpen, false);
   });
+
+  it('Has get started button', async () => {
+    await app.client.waitUntilWindowLoaded();
+    const buttonText = await app.client.getSelectedText('#get-started');
+    return assert.equal(buttonText, 'Get Started');
+  });
 });
