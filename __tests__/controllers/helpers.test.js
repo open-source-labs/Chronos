@@ -2,7 +2,6 @@ const { validateInput, addNotifications } = require('../../controllers/helpers')
 const { expect } = require('chai');
 
 describe("'helpers.js' tests", () => {
-
   /**
    * Tests for helpers.validateInput
    */
@@ -32,7 +31,7 @@ describe("'helpers.js' tests", () => {
       expect(() => validateInput(config)).to.throw(errRegex);
 
       // Invalid microservice property
-      config.microservice = 007;
+      config.microservice = 143;
       expect(() => validateInput(config)).to.throw(errRegex);
     });
 
