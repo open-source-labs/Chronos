@@ -1,4 +1,4 @@
-const { validateInput, addNotifications } = require('./helpers');
+const { validateInput, addNotifications } = require('../../controllers/helpers');
 const { expect } = require('chai');
 
 describe("'helpers.js' tests", () => {

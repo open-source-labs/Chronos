@@ -1,4 +1,4 @@
-const chronos = require('./chronos');
+const chronos = require('../chronos');
 const { expect } = require('chai');
 
 describe('"chronos.js" tests', () => {
