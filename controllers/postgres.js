@@ -22,7 +22,7 @@ chronos.connect = async ({ database }) => {
     console.log('Connected to database at ', database.URI.slice(0, 24), '...');
   } catch ({ message }) {
     // Print error message
-    console.log('Error connecting to PostgreSQL DB:', message);
+    throw `Error connecting to PostgreSQL DB: ${message}`;
   }
 };
 
