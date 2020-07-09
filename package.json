@@ -59,7 +59,8 @@
     "react-dom": "16.10.1",
     "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.2.0",
-    "ttf-loader": "^1.0.2"
+    "ttf-loader": "^1.0.2",
+    "webdriverio": "^6.1.25"
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
@@ -70,6 +71,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "css-loader": "^3.5.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
