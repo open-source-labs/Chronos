@@ -37,14 +37,27 @@ describe('Application launch', function () {
     }
   });
 
-  it('opens a window', function () {
+  it('Opens a window', function () {
     return app.client.waitUntilWindowLoaded().getWindowCount().should.eventually.equal(2);
   });
 
-  it('is window is visible', async () => {
-    await app.client.waitUntilWindowLoaded();
-    const isVisible = await app.browserWindow.isVisible();
-    assert.equal(isVisible, true);
+  it('Should open a window to correct size', () => {
+    return app.client
+      .waitUntilWindowLoaded()
+      .browserWindow.getBounds()
+      .then(res => {
+        expect(res.width).to.be.above(800);
+        expect(res.height).to.be.above(600);
+      });
+  });
+
+  it('is window is visible', () => {
+    return app.client
+      .waitUntilWindowLoaded()
+      .browserWindow.isVisible()
+      .then(res => {
+        expect(res).to.be.true;
+      });
   });
 
   it('window title is chronos', async () => {
