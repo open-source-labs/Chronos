@@ -57,7 +57,7 @@ const helpers = {
 
         // Throw errors on unsupported notification methods
         if (!features.includes(type)) {
-          throw new Error(`${type} is not a supported notification method for Chronos`);
+          throw new Error(`"${type}" is not a supported notification method for Chronos`);
         } else {
           config[type] = obj.settings;
         }
