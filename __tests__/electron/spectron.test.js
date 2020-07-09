@@ -8,7 +8,7 @@ const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
 // construct Paths:
-const baseDir = path.join(__dirname, '..');
+const baseDir = path.join(__dirname, '..', '..')
 const electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
 
 if (process.platform === 'win32') {

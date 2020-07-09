@@ -8,6 +8,7 @@
     "start": "webpack-dev-server",
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
+    "test": "mocha",
     "test:electron": "mocha ./__tests__/electron/*",
     "test:app": "mocha ./__tests__/app/*",
     "both": "npm run start & sleep 5 && npm run electron",
