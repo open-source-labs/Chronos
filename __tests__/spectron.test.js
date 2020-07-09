@@ -2,6 +2,12 @@ const { Application } = require('spectron');
 const assert = require('assert');
 const path = require('path');
 
+// Assert Facts About Promise Testing
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.should();
+chai.use(chaiAsPromised);
+
 // construct Paths:
 const baseDir = path.join(__dirname, '..');
 const electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
@@ -17,21 +23,18 @@ const app = new Application({
 describe('Application launch', function () {
   this.timeout(30000);
 
-  this.beforeEach(() => app.start());
-  this.afterEach(() => {
+  before(() => {
+    chaiAsPromised.transferPromiseness = app.transferPromiseness;
+    return app.start();
+  });
+  after(() => {
     if (app && app.isRunning) {
       app.stop();
     }
   });
 
   it('opens a window', function () {
-    return app.client.waitUntilWindowLoaded().getWindowCount();
-  });
-
-  it('shows an initial window', async () => {
-    await app.client.waitUntilWindowLoaded();
-    const count = await app.client.getWindowCount();
-    assert.equal(count, 2);
+    return app.client.waitUntilWindowLoaded().getWindowCount().should.eventually.equal(2);
   });
 
   it('is window is visible', async () => {
@@ -53,9 +56,9 @@ describe('Application launch', function () {
     return assert.equal(devToolsAreOpen, false);
   });
 
-  it('Has get started button', async () => {
+  it('Displays home screen', async () => {
     await app.client.waitUntilWindowLoaded();
-    const buttonText = await app.client.getSelectedText('#get-started');
-    return assert.equal(buttonText, 'Get Started');
+    const text = app.client.waitUntilTextExists();
+    return assert.equal(text, true);
   });
 });
