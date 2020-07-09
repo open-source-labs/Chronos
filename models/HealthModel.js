@@ -53,7 +53,7 @@ const HealthSchema = new Schema({
   },
   time: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 module.exports = MicroSrvName => mongoose.model(MicroSrvName, HealthSchema);

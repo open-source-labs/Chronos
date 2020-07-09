@@ -25,7 +25,7 @@ const CommunicationsSchema = new Schema({
   },
   time: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   correlatingid: {
     type: String,
