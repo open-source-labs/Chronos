@@ -37,7 +37,7 @@ const helpers = {
     if (!interval || typeof interval !== 'number') config.interval = 10000;
 
     // Default dockerized to false
-    if (dockerized === undefined || dockerized !== 'boolean') config.dockerized = false;
+    if (dockerized === undefined || typeof dockerized !== 'boolean') config.dockerized = false;
   },
 
   /**
