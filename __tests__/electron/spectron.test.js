@@ -8,8 +8,8 @@ const { expect } = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
 // construct Paths:
-const baseDir = path.join(__dirname, '..', '..')
-const electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
+const baseDir = path.join(__dirname, '..', '..');
+let electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
 
 if (process.platform === 'win32') {
   electronPath += '.cmd';
@@ -24,7 +24,7 @@ global.before(() => {
   chai.use(chaiAsPromised);
 });
 
-describe('Application launch', function () {
+describe('Application launch', () => {
   this.timeout(30000);
 
   this.beforeAll(() => {
@@ -37,7 +37,7 @@ describe('Application launch', function () {
     }
   });
 
-  it('Opens a window', function () {
+  it('Opens a window', () => {
     return app.client.waitUntilWindowLoaded().getWindowCount().should.eventually.equal(2);
   });
 
@@ -56,7 +56,7 @@ describe('Application launch', function () {
       .waitUntilWindowLoaded()
       .browserWindow.isVisible()
       .then(res => {
-        expect(res).to.be.true;
+        expect(res).to.be.true();
       });
   });
 
