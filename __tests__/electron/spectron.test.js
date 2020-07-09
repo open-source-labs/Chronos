@@ -24,7 +24,7 @@ global.before(() => {
   chai.use(chaiAsPromised);
 });
 
-describe('Application launch', () => {
+describe('Application launch', function () {
   this.timeout(30000);
 
   this.beforeAll(() => {
@@ -37,7 +37,7 @@ describe('Application launch', () => {
     }
   });
 
-  it('Opens a window', () => {
+  it('Opens a window', function () {
     return app.client.waitUntilWindowLoaded().getWindowCount().should.eventually.equal(2);
   });
 
@@ -56,7 +56,7 @@ describe('Application launch', () => {
       .waitUntilWindowLoaded()
       .browserWindow.isVisible()
       .then(res => {
-        expect(res).to.be.true();
+        expect(res).to.be.true;
       });
   });
 
