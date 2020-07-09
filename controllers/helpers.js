@@ -12,6 +12,12 @@ const helpers = {
       throw new Error('Invalid input "microservice": Please provide a name for your microservice');
     }
 
+    if (!database || typeof database !== 'object' || Array.isArray(database)) {
+      throw new Error(
+        'Invalid or missing input "database": Must be an object with properties type and URI'
+      );
+    }
+
     if (!database.type || typeof database.type !== 'string') {
       throw new Error('Invalid input "database type": Chronos supports PostgreSQL and MongoDB');
     }
@@ -23,12 +29,12 @@ const helpers = {
     // Validate database type
     if (database.type !== 'PostgreSQL' && database.type !== 'MongoDB') {
       throw new Error(
-        `Invalid input "${database.type}". Chronos only supports PostgreSQL and MongoDB.`
+        `Invalid database type "${database.type}". Chronos only supports PostgreSQL and MongoDB.`
       );
     }
 
-    // Default interval to one minute
-    if (!interval || typeof interval !== 'number') config.interval = 60000;
+    // Default interval to every 10 seconds
+    if (!interval || typeof interval !== 'number') config.interval = 10000;
 
     // Default dockerized to false
     if (dockerized === undefined || dockerized !== 'boolean') config.dockerized = false;

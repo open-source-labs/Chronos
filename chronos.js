@@ -13,9 +13,9 @@ const chronos = {};
  * @field microservice {string} REQUIRED
  *    The user specified name for the microservice being tracked
  *
- * @field interval {number} DEFAULT 60000
+ * @field interval {number} DEFAULT 10000
  *    The interval for every microservice health check in milliseconds
- *    This defaults to 60000 ms or 1 minute
+ *    This defaults to 10000 ms
  *
  * @field dockerized {boolean} DEFAULT False
  *    True if the microservice is containerized. False otherwise
