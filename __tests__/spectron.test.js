@@ -59,8 +59,4 @@ describe('Application launch', function () {
       .browserWindow.isDevToolsOpened();
     return assert.equal(devToolsAreOpen, false);
   });
-
-  it('Displays home screen', async () => {
-    (await $('.home')).waitForDisplayed({ timeout: 40000 });
-  });
 });
