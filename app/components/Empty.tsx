@@ -9,7 +9,7 @@ const Empty: React.FC = () => {
   return (
     <>
       <img width="300" height="auto" src={'../assets/pangolin.png'} alt="Chronos logo" />
-      <h1>Welcome to Chronos!</h1>
+      <h1 id="welcome">Welcome to Chronos!</h1>
       {/* <p>Select your application to get started!</p> */}
       <button id="get-started" onClick={() => setOpen(true)}>
         Get Started
