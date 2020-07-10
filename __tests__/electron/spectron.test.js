@@ -9,16 +9,20 @@ let electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
 if (process.platform === 'win32') {
   electronPath += '.cmd';
 }
-const app = new Application({
-  path: electronPath,
-  args: [baseDir],
-});
+
+// utility functions
+const sleep = time => new Promise(r => setTimeout(r, time));
 
 describe('Application launch', () => {
-  beforeEach(() => {
+  const app = new Application({
+    path: electronPath,
+    args: [baseDir],
+  });
+
+  beforeAll(() => {
     return app.start();
   });
-  afterEach(() => {
+  afterAll(() => {
     if (app && app.isRunning) {
       app.stop();
     }
@@ -35,29 +39,27 @@ describe('Application launch', () => {
       .waitUntilWindowLoaded()
       .browserWindow.getBounds()
       .then(res => {
-        console.log(res);
         expect(res.width).toBeGreaterThan(800);
         expect(res.height).toBeGreaterThan(600);
       });
   });
 
-  xit('is window is visible', () => {
-    // return app.client
-    //   .waitUntilWindowLoaded()
-    //   .browserWindow.isVisible()
-    //   .then(res => {
-    //     expect(res).to.be.true();
-    //   });
-    return app.client.waitUntilWindowLoaded();
+  it('Checks window is visible', () => {
+    return app.client
+      .waitUntilWindowLoaded()
+      .browserWindow.isVisible()
+      .then(res => {
+        expect(res).toBe.true;
+      });
   });
 
-  xit('window title is chronos', async () => {
+  it('Window title is chronos', async () => {
     await app.client.waitUntilWindowLoaded();
     const title = await app.browserWindow.getTitle();
-    assert.equal(title, 'chronos');
+    return assert.equal(title, 'chronos');
   });
 
-  xit('Does not have the developer tools open', async () => {
+  it('Does not have the developer tools open', async () => {
     const devToolsAreOpen = await app.client
       .waitUntilWindowLoaded()
       .browserWindow.isDevToolsOpened();
