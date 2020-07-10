@@ -12,7 +12,7 @@
     "es6": true,
     "browser": true,
     "node": true,
-    "mocha": true
+    "jest": true
   },
   "extends": ["airbnb", "eslint:recommended", "plugin:react/recommended", "prettier"],
   "rules": {
