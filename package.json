@@ -24,11 +24,6 @@
       "@babel/plugin-proposal-class-properties"
     ]
   },
-  "jest": {
-    "moduleNameMapper": {
-      "electron": "<rootDir>/src/components/tests/mock/electron.js"
-    }
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
