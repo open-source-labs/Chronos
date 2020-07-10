@@ -19,31 +19,34 @@ const app = new Application({
   args: [baseDir],
 });
 
-global.before(() => {
+global.beforeAll(() => {
   chai.should();
   chai.use(chaiAsPromised);
 });
 
-describe('Application launch', function () {
-  this.timeout(30000);
+describe('Application launch', () => {
+  // this.timeout(30000);
 
-  this.beforeAll(() => {
+  beforeAll(() => {
     chaiAsPromised.transferPromiseness = app.transferPromiseness;
     return app.start();
   });
-  this.afterAll(() => {
+  afterAll(() => {
     if (app && app.isRunning) {
       app.stop();
     }
   });
 
   it('Opens a window', function () {
-    return app.client.waitUntilWindowLoaded().getWindowCount().should.eventually.equal(2);
+    return app.client
+      .waitUntilWindowLoaded({ timeout: 30000 })
+      .getWindowCount()
+      .should.eventually.equal(2);
   });
 
   it('Should open a window to correct size', () => {
     return app.client
-      .waitUntilWindowLoaded()
+      .waitUntilWindowLoaded({ timeout: 30000 })
       .browserWindow.getBounds()
       .then(res => {
         expect(res.width).to.be.above(800);
@@ -56,7 +59,7 @@ describe('Application launch', function () {
       .waitUntilWindowLoaded()
       .browserWindow.isVisible()
       .then(res => {
-        expect(res).to.be.true;
+        expect(res).to.be.true();
       });
   });
 
