@@ -1,5 +1,4 @@
 const { validateInput, addNotifications } = require('../../controllers/helpers');
-const { expect } = require('chai');
 
 describe("'helpers.js' tests", () => {
   /**
@@ -20,7 +19,7 @@ describe("'helpers.js' tests", () => {
     });
 
     it('should not throw error for a valid config file', () => {
-      expect(() => validateInput(config)).to.not.throw();
+      expect(() => validateInput(config)).not.toThrow();
     });
 
     it("should throw error for missing or invalid 'microservice' property", () => {
@@ -28,11 +27,11 @@ describe("'helpers.js' tests", () => {
 
       // Missing microservice property
       delete config['microservice'];
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
 
       // Invalid microservice property
       config.microservice = 143;
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
     });
 
     it("should throw error for missing or invalid 'database' property", () => {
@@ -40,11 +39,11 @@ describe("'helpers.js' tests", () => {
 
       // Missing database property
       delete config['database'];
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
 
       // Invalid database property
       config['database'] = ['PostgreSQL', 'testURI'];
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
     });
 
     it("should throw error for missing or invalid 'database.type'", () => {
@@ -52,11 +51,11 @@ describe("'helpers.js' tests", () => {
 
       // Missing database.type
       delete config['database']['type'];
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
 
       // Invalid database.type
       config['database']['type'] = 'Fake Database';
-      expect(() => validateInput(config)).to.throw(/Fake Database/g);
+      expect(() => validateInput(config)).toThrow(/Fake Database/g);
     });
 
     it("should throw error for missing or invalid 'database.URI'", () => {
@@ -64,29 +63,29 @@ describe("'helpers.js' tests", () => {
 
       // Missing database.URI
       delete config['database']['URI'];
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
 
       // Invalid database.URI
       config['database']['URI'] = { foo: 'bar' };
-      expect(() => validateInput(config)).to.throw(errRegex);
+      expect(() => validateInput(config)).toThrow(errRegex);
     });
 
     it("should not overwrite user-provided 'interval' or 'dockerized' property", () => {
       validateInput(config);
-      expect(config.interval).to.not.equal(10000);
-      expect(config.dockerized).to.not.equal(false);
+      expect(config.interval).not.toEqual(10000);
+      expect(config.dockerized).not.toEqual(false);
     });
 
     it("should provide default 'interval' for missing 'interval' property", () => {
       delete config.interval;
       validateInput(config);
-      expect(config.interval).to.equal(10000);
+      expect(config.interval).toEqual(10000);
     });
 
     it("should provide default 'dockerized' for missing 'dockerized' property", () => {
       delete config.dockerized;
       validateInput(config);
-      expect(config.dockerized).to.equal(false);
+      expect(config.dockerized).toEqual(false);
     });
   });
 
@@ -116,7 +115,7 @@ describe("'helpers.js' tests", () => {
     });
 
     it('should not throw an error for a valid notfications property', () => {
-      expect(() => addNotifications(config)).to.not.throw();
+      expect(() => addNotifications(config)).not.toThrow();
     });
 
     it('should throw an error for unsupported notfication methods', () => {
@@ -129,12 +128,12 @@ describe("'helpers.js' tests", () => {
       const errRegex = /"call" is not a supported notification method for Chronos/;
 
       config.notifications.push(method);
-      expect(() => addNotifications(config)).to.throw(errRegex);
+      expect(() => addNotifications(config)).toThrow(errRegex);
     });
     it('should add a new property to the config object for every notification method', () => {
       addNotifications(config);
-      expect(config).to.haveOwnProperty('slack');
-      expect(config.slack).to.deep.equal({ slackurl: 'test-slack-url' });
+      expect(config).toHaveProperty('slack');
+      expect(config.slack).toEqual({ slackurl: 'test-slack-url' });
     });
   });
 });
