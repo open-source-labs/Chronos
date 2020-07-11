@@ -9,7 +9,7 @@
   },
   "env": {
     "node": true,
-    "mocha": true
+    "jest": true
   },
   "plugins": ["prettier"],
   "rules": {
