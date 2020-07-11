@@ -1,8 +1,13 @@
 const postgres = require('../../controllers/postgres');
-const { expect } = require('chai');
 
 describe("'postgres.js' tests", () => {
-  it('should have the connect, services, communications, health, and docker methods');
+  it('should have the connect, services, communications, health, and docker methods', () => {
+    expect(postgres).toHaveProperty('connect');
+    expect(postgres).toHaveProperty('services');
+    expect(postgres).toHaveProperty('communications');
+    expect(postgres).toHaveProperty('health');
+    expect(postgres).toHaveProperty('docker');
+  });
 
   describe("'postgres.connect' tests", () => {
     it('should connect to the database using user-provided URI string');
