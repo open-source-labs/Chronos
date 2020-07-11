@@ -12,7 +12,14 @@ const Home = () => {
     getApplications();
   }, []);
 
-  return <div className="home">{!applications.length ? <Occupied /> : <Empty />}</div>;
+  return (
+    <div>
+      <h1>
+        Welcome to Chronos!
+      </h1>
+    </div>
+  )
+  // return <div className="home">{!applications.length ? <Occupied /> : <Empty />}</div>;
 };
 
 export default Home;
