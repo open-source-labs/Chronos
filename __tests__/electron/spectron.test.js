@@ -2,11 +2,6 @@ const { Application } = require('spectron');
 const assert = require('assert');
 const path = require('path');
 
-// Assert Facts About Promise Testing
-const chai = require('chai');
-const { expect } = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-
 // construct Paths:
 const baseDir = path.join(__dirname, '..', '..');
 let electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
@@ -14,21 +9,17 @@ let electronPath = path.join(baseDir, 'node_modules', '.bin', 'electron');
 if (process.platform === 'win32') {
   electronPath += '.cmd';
 }
-const app = new Application({
-  path: electronPath,
-  args: [baseDir],
-});
 
-global.beforeAll(() => {
-  chai.should();
-  chai.use(chaiAsPromised);
-});
+// utility functions
+const sleep = time => new Promise(r => setTimeout(r, time));
 
 describe('Application launch', () => {
-  // this.timeout(30000);
+  const app = new Application({
+    path: electronPath,
+    args: [baseDir],
+  });
 
   beforeAll(() => {
-    chaiAsPromised.transferPromiseness = app.transferPromiseness;
     return app.start();
   });
   afterAll(() => {
@@ -37,36 +28,35 @@ describe('Application launch', () => {
     }
   });
 
-  it('Opens a window', function () {
-    return app.client
-      .waitUntilWindowLoaded({ timeout: 30000 })
-      .getWindowCount()
-      .should.eventually.equal(2);
+  it('Opens a window', async () => {
+    await app.client.waitUntilWindowLoaded();
+    const count = await app.client.getWindowCount();
+    return assert.equal(count, 1);
   });
 
-  it('Should open a window to correct size', () => {
+  it('Should open a window to correct size', async () => {
     return app.client
-      .waitUntilWindowLoaded({ timeout: 30000 })
+      .waitUntilWindowLoaded()
       .browserWindow.getBounds()
       .then(res => {
-        expect(res.width).to.be.above(800);
-        expect(res.height).to.be.above(600);
+        expect(res.width).toBeGreaterThan(800);
+        expect(res.height).toBeGreaterThan(600);
       });
   });
 
-  it('is window is visible', () => {
+  it('Checks window is visible', () => {
     return app.client
       .waitUntilWindowLoaded()
       .browserWindow.isVisible()
       .then(res => {
-        expect(res).to.be.true();
+        expect(res).toBe.true;
       });
   });
 
-  it('window title is chronos', async () => {
+  it('Window title is chronos', async () => {
     await app.client.waitUntilWindowLoaded();
     const title = await app.browserWindow.getTitle();
-    assert.equal(title, 'chronos');
+    return assert.equal(title, 'chronos');
   });
 
   it('Does not have the developer tools open', async () => {
