@@ -30,7 +30,6 @@ describe('React unit tests', () => {
     });
 
     it('should contain a modal', () => {
-      console.log(wrapper.debug());
       expect(wrapper.length).toBe(1);
     });
   });
