@@ -1,0 +1,3 @@
+xdescribe('<Copyright />', () => {
+  it('should');
+});

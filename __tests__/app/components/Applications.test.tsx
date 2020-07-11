@@ -1,3 +1,8 @@
+xdescribe('<Applications />', () => {
+  it('should');
+});
+
+
 // import React from 'react';
 // import { configure, shallow, mount } from 'enzyme';
 // import { expect } from 'chai';
