@@ -1,6 +1,6 @@
 // NPM package that gathers health information
 const si = require('systeminformation');
-const { Client } = require('pg');
+const { Pool } = require('pg');
 const alert = require('./alert');
 // const mwSqlDocker = require('./mwSqlDocker.js');
 
@@ -15,8 +15,18 @@ const chronos = {};
 chronos.connect = async ({ database }) => {
   try {
     // Connect to user's database
-    client = new Client({ connectionString: database.URI });
+    client = new Pool({ connectionString: database.URI });
+    console.log('Your db...  ', client);
     await client.connect();
+    // // Connect to user's database
+    // client = new Pool({ connectionString: database.URI });
+    // console.log('Im outside');
+    // client.connect().then(result => {
+    //   console.log('Your db...  ', client);
+
+    //   // Print success message
+    //   console.log('Connected to database at ', database.URI.slice(0, 24), '...');
+    // });
 
     // Print success message
     console.log('Connected to database at ', database.URI.slice(0, 24), '...');
