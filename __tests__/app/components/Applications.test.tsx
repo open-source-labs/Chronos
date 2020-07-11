@@ -18,12 +18,11 @@ describe('React unit tests', () => {
       mount = createMount();
       shallow = createShallow();
 
-      const mockApp = (
+      wrapper = mount(
         <DashboardContext.Provider value={{ applications, getApplications }}>
           <Applications />
         </DashboardContext.Provider>
       );
-      wrapper = shallow(mockApp);
     });
 
     afterAll(() => {
@@ -31,6 +30,7 @@ describe('React unit tests', () => {
     });
 
     it('should contain a modal', () => {
+      console.log(wrapper.debug());
       expect(wrapper.length).toBe(1);
     });
   });
