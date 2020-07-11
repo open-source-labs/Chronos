@@ -6,3 +6,4 @@ user/settings.json
 dist
 build
 coverage
+__tests__/**/__snapshots__
