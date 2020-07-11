@@ -5,7 +5,8 @@
   "description": "Microservice communication and health visualizer.",
   "main": "chronos.js",
   "scripts": {
-    "test": "jest ./__tests__/*"
+    "test": "jest",
+    "test:all": "jest ./__tests__/*"
   },
   "deprecated": false,
   "keywords": [
