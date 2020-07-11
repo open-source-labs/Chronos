@@ -25,7 +25,6 @@ describe('React unit test', () => {
 
     it('renders correctly', () => {
       const wrapper = shallow(<Copyright />);
-      console.log(wrapper.debug());
       expect(wrapper).toMatchSnapshot();
     });
 
