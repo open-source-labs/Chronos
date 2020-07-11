@@ -1,11 +1,9 @@
 import React from 'react';
-// import Adapter from 'enzyme-adapter-react-16';
 import { mount } from 'enzyme';
 
 import Home from '../../../app/components/Home';
 import { DashboardContext } from '../../../app/context/DashboardContext';
 
-// configure({ adapter: new Adapter() });
 
 describe('<Home />', () => {
   let wrapper: any;
