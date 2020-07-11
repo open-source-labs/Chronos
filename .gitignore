@@ -5,3 +5,4 @@ package-lock.json
 user/settings.json
 dist
 build
+coverage
