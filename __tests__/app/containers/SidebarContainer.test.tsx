@@ -1,7 +1,4 @@
-// import chai from 'chai';
-const chai = require('chai')
-
-describe('<SidebarContainer />', () => {
+xdescribe('<SidebarContainer />', () => {
   it('should render an <img> tag with the Chronos logo');
   it("should render a <Link /> with the label as 'Home'");
   it("should render a <Link /> with the label as 'About'");
