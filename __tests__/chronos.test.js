@@ -1,16 +1,15 @@
 const chronos = require('../chronos');
-const { expect } = require('chai');
 
 describe('"chronos.js" tests', () => {
   describe('checking for all appropriate methods', () => {
     it("should have the 'use' method", () => {
-      expect(chronos).to.have.own.property('use');
+      expect(chronos).toHaveProperty('use');
     });
     it("should have the 'propogate' method", () => {
-      expect(chronos).to.have.own.property('propagate');
+      expect(chronos).toHaveProperty('propagate');
     });
     it("should have the 'track' method", () => {
-      expect(chronos).to.have.own.property('track');
+      expect(chronos).toHaveProperty('track');
     });
   });
 });
