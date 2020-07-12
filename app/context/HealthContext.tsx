@@ -52,8 +52,8 @@ const HealthContextProvider: React.FC = ({ children }) => {
   };
 
   // Helper function to parse data into individual arrays
-  const parseHealthData = (data: Data[]) => {
-    const output: AllData | {} = {};
+  const parseHealthData = (data: any) => {
+    const output: any = {};
 
     for (let entry of data) {
       for (const key in entry) {
