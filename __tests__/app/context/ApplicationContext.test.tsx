@@ -62,4 +62,10 @@ describe('<ApplicationContext />', () => {
     expect(ipcRenderer.send).toHaveBeenCalledWith('servicesRequest');
     expect(ipcRenderer.on).toBeCalledWith('servicesResponse', expect.any(Function));
   });
+
+  it('should update servicesData when setServices is invoked with new data', () => {
+    const setter = wrapper.find('#setServicesData');
+    setter.simulate('click');
+    expect(wrapper.find('p').text()).toEqual('new data');
+  });
 });
