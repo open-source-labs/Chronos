@@ -3,15 +3,35 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 }
 
 .home img {
+  margin-top: 75px;
+  width: 400px;
+  height: auto;
   animation: twirl 20s infinite linear;
-  margin-bottom: 10px;
+  transition: 0.2s;
 }
 
+.home h1 {
+  font-size: 325%;
+  letter-spacing: 2px;
+  margin: 0 0 15px;
+}
+
+.home button {
+  width: 175px;
+  font-size: 135%;
+  padding: 10px;
+  letter-spacing: 0.5px;
+}
+
+.home img:hover {
+  /* animation-play-state: paused; */
+  filter: brightness(0.85);
+}
 @keyframes twirl {
   from {
     transform: rotateZ(0deg);
