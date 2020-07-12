@@ -29,8 +29,8 @@ describe('React unit tests', () => {
       mount.cleanUp();
     });
 
-    it('should contain a modal', () => {
-      expect(wrapper.length).toBe(1);
+    it('should render properly', () => {
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });
