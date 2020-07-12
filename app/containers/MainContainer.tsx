@@ -13,7 +13,7 @@ const MainContainer = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/applications" component={Occupied} />
       <Route exact path="/applications/:app/:service" component={TempContainer} />
-      {/* <Route exact path="/:service" component={GraphsContainer} /> */}
+      <Route path="*" render={() => <h1>Not found</h1>} />
     </Switch>
     <Copyright />
   </div>
