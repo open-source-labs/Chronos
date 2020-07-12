@@ -18,7 +18,9 @@ describe('<HealthContext />', () => {
           <button id="fetchHealthData" onClick={() => fetchHealthData('books')}>
             Test fetchHealthData
           </button>
-          <button>Test setHealthData</button>
+          <button id="setHealthData" onClick={() => setHealthData({ foo: 'bar' })}>
+            Test setHealthData
+          </button>
         </>
       );
     };
@@ -42,5 +44,8 @@ describe('<HealthContext />', () => {
   });
 
   it('should update healthData when setHealthData is invoked with new data', () => {
+    const button = wrapper.find('#setHealthData');
+    button.simulate('click');
+    expect(wrapper.find('p').text()).toEqual(JSON.stringify({ foo: 'bar' }));
   });
 });
