@@ -57,7 +57,7 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <Grid item xs={6}>
+        <Grid item xs={6} key={i}>
           <Paper
             className={classes.paper}
             id={i}
