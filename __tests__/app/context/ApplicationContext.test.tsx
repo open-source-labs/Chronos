@@ -6,9 +6,7 @@ import ApplicationContextProvider, {
   ApplicationContext,
 } from '../../../app/context/ApplicationContext';
 
-/**
- * Mock ipcRenderer calls
- */
+// Setup mock ipc processes
 jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }));
 
 describe('<ApplicationContext />', () => {
@@ -36,6 +34,7 @@ describe('<ApplicationContext />', () => {
       );
     };
 
+    // Provide ApplicationContext to component
     wrapper = mount(
       <ApplicationContextProvider>
         <TestComponent />
