@@ -3,12 +3,24 @@ import { mount } from 'enzyme';
 import DashboardContextProvider, { DashboardContext } from '../../../app/context/DashboardContext';
 const { ipcRenderer } = require('electron');
 
-// Setup mock ipc processes
-jest.mock('electron', () => ({ ipcRenderer: { sendSync: () => [1,2,3] } }));
+interface IAppInfo {
+  database: string;
+  URI: string;
+  name: string;
+}
 
-xdescribe('<DashboardContext />', () => {
-  let wrapper;
+// Setup mock ipc processes
+jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
+
+describe('<DashboardContext />', () => {
+  let wrapper: any;
+  let mockAppInfo: IAppInfo;
   beforeEach(() => {
+    mockAppInfo = {
+      database: 'mockType',
+      URI: 'mockURI',
+      name: 'mockName',
+    };
     // Mock component that has access to Dashboard Context
     const TestComponent = () => {
       const { applications, getApplications, addApp, deleteApp } = useContext(DashboardContext);
@@ -16,10 +28,10 @@ xdescribe('<DashboardContext />', () => {
       return (
         <>
           <p>{JSON.stringify(applications)}</p>
-          <button id="addApp" onClick={() => addApp()}>
+          <button id="addApp" onClick={() => addApp(mockAppInfo)}>
             Test addApp
           </button>
-          <button id="deleteApp" onClick={() => deleteApp()}>
+          <button id="deleteApp" onClick={() => deleteApp(7)}>
             Test deleteApp
           </button>
           <button id="getApplications" onClick={() => getApplications()}>
@@ -28,7 +40,7 @@ xdescribe('<DashboardContext />', () => {
         </>
       );
     };
-    
+
     // Provide DashboardContext to component
     wrapper = mount(
       <DashboardContextProvider>
@@ -37,8 +49,29 @@ xdescribe('<DashboardContext />', () => {
     );
   });
 
-  xit('should render', () => {});
-  xit('should emit the \'addApp\' event when invoking addApp', () => {})
-  xit('should emit the \'deleteApp\' event when invoking deleteApp', () => {})
-  xit('should emit the \'getApps\' event when invoking getApplications', () => {})
+  it('should render', () => {
+    expect(wrapper.exists).toBeTruthy;
+  });
+
+  it("should emit the 'addApp' event when invoking addApp", () => {
+    const { name, database, URI } = mockAppInfo;
+    const button = wrapper.find('#addApp');
+    button.simulate('click');
+    expect(ipcRenderer.sendSync).toHaveBeenCalledWith(
+      'addApp',
+      JSON.stringify([name, database, URI])
+    );
+  });
+
+  it("should emit the 'deleteApp' event when invoking deleteApp", () => {
+    const button = wrapper.find('#deleteApp');
+    button.simulate('click');
+    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('deleteApp', 7);
+  });
+
+  it("should emit the 'getApps' event when invoking getApplications", () => {
+    const button = wrapper.find('#getApplications');
+    button.simulate('click');
+    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('getApps');
+  });
 });
