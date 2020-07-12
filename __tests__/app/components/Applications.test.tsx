@@ -4,7 +4,6 @@ import { createMount, createShallow } from '@material-ui/core/test-utils';
 
 import Applications from '../../../app/components/Applications';
 import { DashboardContext } from '../../../app/context/DashboardContext';
-import { create } from 'ts-node';
 
 describe('React unit tests', () => {
   describe('<Application/>', () => {
