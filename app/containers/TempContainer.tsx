@@ -4,10 +4,18 @@ import { useParams } from 'react-router-dom';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
-import { ApplicationContext } from '../context/ApplicationContext';
 import Header from '../components/Header';
-import CommsContainer from './CommsContainer';
-import HealthContainer from './HealthContainer';
+import SpeedChart from '../charts/speed-chart';
+import TemperatureChart from '../charts/temperature-chart';
+import LatencyChart from '../charts/latency-chart';
+import ProcessesChart from '../charts/processes-chart';
+import MemoryChart from '../charts/memory-chart';
+import RequestTypesChart from '../charts/request-type-chart';
+import ResponseCodeChart from '../charts/response-code-chart';
+import MicroServiceTraffic from '../charts/microservice-traffic';
+import DockerStatsChart from '../charts/DockerChart';
+import RouteTrace from '../charts/route-trace';
+import '../stylesheets/GraphsContainer.css';
 
 export interface Params {
   app: string;
@@ -24,43 +32,57 @@ export interface TempContainerProps {
 }
 
 const TempContainer: React.SFC<TempContainerProps> = () => {
-  const { app, service} = useParams()
+  const { app, service } = useParams();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchCommsData, setCommsData } = useContext(CommsContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
-  const { servicesData } = useContext(ApplicationContext);
 
   useEffect(() => {
     if (live) {
       setIntervalID(
         setInterval(function () {
-          fetchCommsData(app);
+          fetchCommsData(app, live);
           fetchHealthData(service);
           fetchDockerData(service);
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
-      fetchCommsData(app);
+      fetchCommsData(app, live);
       fetchHealthData(service);
       fetchDockerData(service);
     }
     // On unmount: clear data
     return () => {
       if (intervalID) clearInterval(intervalID);
-      setHealthData({});
-      setCommsData([]);
-      setDockerData({});
+      // setHealthData({});
+      // setCommsData([]);
+      // setDockerData({});
     };
   }, [service, live]);
 
   return (
     <>
-      <Header app={app} service={service} />
-      {service === 'communications' ? <CommsContainer /> : <HealthContainer />}
+      <Header app={app} service={service} live={live} setLive={setLive} />
+      {service === 'communications' ? (
+        <>
+          <RequestTypesChart />
+          <ResponseCodeChart />
+          <MicroServiceTraffic />
+        </>
+      ) : (
+        <>
+          <SpeedChart />
+          <TemperatureChart />
+          <LatencyChart />
+          <MemoryChart />
+          <ProcessesChart />
+          <DockerStatsChart />
+        </>
+      )}
     </>
   );
 };
