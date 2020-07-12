@@ -21,9 +21,7 @@ interface IContainer {
  * latest data point available ???
  */
 const DockerStatsChart = () => {
-  console.log('in docker chart');
   const { dockerData } = useContext(DockerContext);
-  console.log('dockerdata ----->', dockerData);
   const {
     containername,
     containerid,
@@ -39,8 +37,8 @@ const DockerStatsChart = () => {
     restartcount,
   }: IContainer = dockerData;
 
+  // Render the component if there is available data
   return containerid ? (
-    // Docker data
     <div id="docker-stats-chart">
       <header id="docker-stats-chart-header">Docker Container Stats</header>
       <span>Container Name: {containername}</span>
@@ -56,15 +54,7 @@ const DockerStatsChart = () => {
       <span>Process Count: {processcount}</span>
       <span>Restart Count: {restartcount}</span>
     </div>
-  ) : (
-    // No Docker data:
-    <div id="docker-stats-chart">
-      <header id="docker-stats-chart-header">
-        No valid container ID for current microservice. Please ensure the microservice is running in
-        a Docker container.
-      </header>
-    </div>
-  );
+  ) : null;
 };
 
 export default DockerStatsChart;
