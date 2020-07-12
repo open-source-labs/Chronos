@@ -1,27 +1,42 @@
 import React, { useState } from 'react';
-// import { ipcRenderer } from 'electron';
 const { ipcRenderer } = window.require('electron');
+
+interface Data {
+  activememory: number;
+  blockedprocesses: number;
+  cpuloadpercent: number;
+  cpuspeed: number;
+  cputemp: number;
+  freememory: number;
+  id: number;
+  latency: number;
+  runningprocesses: number;
+  sleepingprocesses: number;
+  time: string;
+  totalmemory: number;
+  usememory: number;
+}
+
+interface AllData {
+  activememory: number[];
+  blockedprocesses: number[];
+  cpuloadpercent: number[];
+  cpuspeed: number[];
+  cputemp: number[];
+  freememory: number[];
+  id: number[];
+  latency: number[];
+  runningprocesses: number[];
+  sleepingprocesses: number[];
+  time: string[];
+  totalmemory: number[];
+  usememory: number[];
+}
 
 export const HealthContext = React.createContext<any>(null);
 
 const HealthContextProvider: React.FC = ({ children }) => {
   const [healthData, setHealthData] = useState({});
-   
-  // interface IFreq {
-  //   activememory?: number[];
-  //   blockedprocesses?: number[];
-  //   cpuloadpercent?: number[];
-  //   cpuspeed?: number[];
-  //   cputemp?: number[];
-  //   freememory?: number[];
-  //   id?: number[];
-  //   latency?: number[];
-  //   runningprocesses?: number[];
-  //   sleepingprocesses?: number[];
-  //   time?: string[];
-  //   totalmemory?: number[];
-  //   usememory?: number[];
-  // }
 
   // Fetches all data related to a particular app
   const fetchHealthData = (service: string) => {
@@ -31,23 +46,27 @@ const HealthContextProvider: React.FC = ({ children }) => {
       const result = JSON.parse(data);
       console.log('Number of data points (health):', result.length);
 
-      // Separate data into individual arrays
-      const freq: any = {};
-      result.forEach((obj: any) => {
-        for (const key in obj) {
-          if (!(key in freq)) freq[key] = [];
-          freq[key].push(obj[key]);
-        }
-      });
-
       // Update context local state
-      setHealthData(freq);
+      setHealthData(parseHealthData(result));
     });
-    
   };
-  
+
+  // Helper function to parse data into individual arrays
+  const parseHealthData = (data: any) => {
+    const output: any = {};
+
+    for (let entry of data) {
+      for (const key in entry) {
+        if (!(key in output)) output[key] = [];
+        output[key].push(entry[key]);
+      }
+    }
+
+    return output;
+  };
+
   return (
-    <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData }}>
+    <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData, parseHealthData }}>
       {children}
     </HealthContext.Provider>
   );
