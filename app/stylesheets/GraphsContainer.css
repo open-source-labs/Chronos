@@ -6,56 +6,6 @@
   background-color: #f4f4f4;
 }
 
-/* Application and Microservice header */
-.headers {
-  margin: 25px auto 35px;
-  text-align: center;
-}
-
-.header-app {
-  font-size: 350%;
-}
-
-.header-service {
-  font-size: 200%;
-}
-
-/* Live data dot */
-.dot {
-  background-color: red;
-  display: inline-block;
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-  animation: blink 1s infinite;
-}
-
-.headers button {
-  padding: 6px;
-  border: thin solid #24262f;
-  border-radius: 3px;
-  background-color: #484e63;
-  color: #fff;
-  min-width: 105px;
-  transition: 0.2s;
-}
-
-.headers button:hover {
-  background-color: #24262f;
-}
-
-@keyframes blink {
-  0%,
-  65% {
-    background-color: red;
-  }
-  66%,
-  100% {
-    background-color: rgb(170, 1, 1);
-  }
-}
-
 .graphsGrid {
   display: grid;
   grid-template-columns: auto auto auto;

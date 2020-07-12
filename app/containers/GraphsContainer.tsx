@@ -66,22 +66,24 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
   return (
     <>
       <Header app={app} service={service} live={live} setLive={setLive} />
-      {service === 'communications' ? (
-        <>
-          <RequestTypesChart />
-          <ResponseCodeChart />
-          <MicroServiceTraffic />
-        </>
-      ) : (
-        <>
-          <SpeedChart />
-          <TemperatureChart />
-          <LatencyChart />
-          <MemoryChart />
-          <ProcessesChart />
-          <DockerStatsChart />
-        </>
-      )}
+      <div>
+        {service === 'communications' ? (
+          <>
+            <RequestTypesChart />
+            <ResponseCodeChart />
+            <MicroServiceTraffic />
+          </>
+        ) : (
+          <>
+            <SpeedChart />
+            <TemperatureChart />
+            <LatencyChart />
+            <MemoryChart />
+            <ProcessesChart />
+            <DockerStatsChart />
+          </>
+        )}
+      </div>
     </>
   );
 };
