@@ -1,17 +1,15 @@
 import React, { useContext } from 'react';
 import { mount } from 'enzyme';
+const { ipcRenderer } = require('electron');
 
 import ApplicationContextProvider, {
   ApplicationContext,
 } from '../../../app/context/ApplicationContext';
-const { ipcRenderer } = require('electron');
 
 /**
  * Mock ipcRenderer calls
  */
-jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }), {
-  virtual: true,
-});
+jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }));
 
 describe('<ApplicationContext />', () => {
   let wrapper: any;
