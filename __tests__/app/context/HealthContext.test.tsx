@@ -4,11 +4,13 @@ const { ipcRenderer } = require('electron');
 
 import HealthContextProvider, { HealthContext } from '../../../app/context/HealthContext';
 
+// Setup electron mock
 jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }));
 
 describe('<HealthContext />', () => {
   let wrapper: any;
   beforeEach(() => {
+    // Mock component that has access to HealthContext
     const TestComponent = () => {
       const { fetchHealthData, healthData, setHealthData } = useContext(HealthContext);
 
@@ -25,6 +27,7 @@ describe('<HealthContext />', () => {
       );
     };
 
+    // Provide HealthContext to component
     wrapper = mount(
       <HealthContextProvider>
         <TestComponent />
