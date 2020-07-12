@@ -1,18 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import { DashboardContext } from '../context/DashboardContext';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Empty from './Empty';
-import Occupied from './Occupied';
 import '../stylesheets/Home.css';
 
-const Home = () => {
-  const { applications, getApplications } = useContext(DashboardContext);
-
-  useEffect(() => {
-    getApplications();
-  }, []);
-
-  return <div className="home">{!applications.length ? <Occupied /> : <Empty />}</div>;
-};
+const Home = () => (
+  <div className="home">
+    <img src={'../assets/pangolin.png'} alt="Chronos logo" />
+    <h1 id="welcome">Welcome to Chronos!</h1>
+    <Link className="get-started-btn" to="/applications">Get Started</Link>
+  </div>
+);
 
 export default Home;

@@ -10,22 +10,18 @@ import moment from 'moment';
 
 const SpeedChart = () => {
   const { healthData } = useContext(HealthContext);
-  const { time,cpuspeed } = healthData;
+  const { time, cpuspeed } = healthData;
   const yAxis = cpuspeed;
-  console.log('speed in speed chart', yAxis)
-  console.log('time in speed chart----->', time)
   const createChart = () => {
     let timeArr;
     if (time === undefined) {
       // Do Nothing
     } else {
       // const xAxis = healthData.time;
-      
+
       timeArr = time.map((el: any) => moment(el).format('h:mm:ss A'));
     }
-    
-    console.log('this is the data in speedchart --->', yAxis);
-    console.log('timeARR--------->', timeArr);
+
     return (
       <Plot
         data={[
@@ -41,7 +37,7 @@ const SpeedChart = () => {
           title: 'Speed Chart',
           height: 400,
           width: 400,
-          font: { 
+          font: {
             color: 'black',
             size: 14,
             family: 'Nunito, san serif',

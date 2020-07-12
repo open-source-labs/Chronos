@@ -2,31 +2,24 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import moment from 'moment';
 import { HealthContext } from '../context/HealthContext';
+
 /**
  * @desc Renders Readout of CPU Temperature
  * @param object props - passed from GraphsContainer
  * @return Plot Component - Component for CPU Graph
  */
-
 const TemperatureChart = () => {
-  // Once we pass down specific props to our graph components
-  // (i.e cputemp, time, etc) we can remove our for loop, desctructured variables
   const { healthData } = useContext(HealthContext);
   const { time, cputemp } = healthData;
-  console.log('in temp chart TIME =>', time);
-  console.log('in temp chart cpuTEMP => ', cputemp);
 
   const createChart = () => {
     const yAxis = cputemp;
     let month: undefined | string;
     let timeArr: undefined | [number];
-    if (time === undefined || cputemp === undefined) {
-      // Do Nothing
-    } else {
+    if (time !== undefined && cputemp !== undefined) {
       // const xAxis = healthData.time;
       timeArr = time.map((el: string) => moment(el).format('hh:mm A'));
       month = moment(time[0]).format('MMM Do');
-      console.log('what is timearr temp ------>', timeArr)
     }
 
     return (
