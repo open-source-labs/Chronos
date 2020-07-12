@@ -52,7 +52,7 @@ describe('<ApplicationContext />', () => {
     expect(ipcRenderer.send).toHaveBeenCalledWith('connect', 1);
   });
 
-  it("should emit the 'servicesRequest' event and listen on the 'servicesResponse' when fetchServicesNames is invoked", () => {
+  it("should emit the 'servicesRequest' event and listen on the 'servicesResponse' when invoking fetchServicesNames", () => {
     const button = wrapper.find('#fetchServicesNames');
     button.simulate('click');
     expect(ipcRenderer.send).toHaveBeenCalledWith('servicesRequest');
