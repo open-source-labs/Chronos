@@ -18,12 +18,10 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   );
 
   useEffect(() => {
-    console.log('running useEffect');
     connectToDB(i);
     fetchServicesNames(app);
 
     return () => {
-      console.log('component unmounting');
       setServicesData([]);
     };
   }, [i]);
