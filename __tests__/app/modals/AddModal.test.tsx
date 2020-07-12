@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import AddModal from '../../../app/modals/AddModal';
 import { DashboardContext } from '../../../app/context/DashboardContext';
@@ -16,23 +16,44 @@ describe('<AddModal />', () => {
       </DashboardContext.Provider>
     );
 
-    wrapper = shallow(<AddModal setOpen={setOpen}/>);
+    wrapper = mount(mockAddModal);
   });
 
   it('should render a <form> with an onSubmit property', () => {
-    // const mockOnSubmit = jest.fn();
-    // console.log(wrapper.debug());
-    // const thing = wrapper.find('.add-container form');
-    // console.log('thing ==>>', thing);
+    const formTag = wrapper.find('.add-container form');
+    expect(formTag).toBeDefined()
+    expect(typeof formTag.prop('onSubmit')).toEqual('function')
   });
 
-  // it('should render a <select> with an onChange property');
+  it('should render a <select> with an onChange property', () => {
+    const selectTag = wrapper.find('#db-type')
+    expect(selectTag).toBeDefined()
+    expect(typeof selectTag.prop('onChange')).toEqual('function')
+  });
 
-  // it('should render a <input> for db types with an onChange property');
+  it('should render a <input> for db URI with an onChange property', () => {
+    const inputTag = wrapper.find('#db-uri')
+    expect(inputTag).toBeDefined()
+    expect(typeof inputTag.prop('onChange')).toEqual('function')
+  });
 
-  // it('should render a <input> for db URI with an onChange property');
+  it('should render a <input> for db name with an onChange property', () => {
+    const inputTag = wrapper.find('#db-name')
+    expect(inputTag).toBeDefined()
+    expect(typeof inputTag.prop('onChange')).toEqual('function')
+  });
 
-  // it('should render a <input> for db name with an onChange property');
+  it("should render a <button> with a label 'Submit'", () => {
+    const buttonTag = wrapper.find('form button')
+    expect(buttonTag).toBeDefined()
+    expect(buttonTag.text()).toEqual('Submit')
+  });
 
-  // it("should render a <button> with a label 'Submit'");
+  xit('should invoke onSubmit when the form button is clicked', () => {
+    // const buttonTag = wrapper.find('form button')
+    // const onSubmit = wrapper.find('.add-container form').prop('onSubmit')
+    // const formTag = wrapper.find('.add-container form')
+  })
+
+  xit('should invoke setOpen when the submit button is clicked', () => {})
 });
