@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 
 import ApplicationContextProvider, {
   ApplicationContext,
@@ -16,7 +16,6 @@ jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }
 describe('<ApplicationContext />', () => {
   let wrapper: any;
   beforeEach(() => {
-
     // Test component that accesses Application Context
     const TestComponent = () => {
       const { connectToDB, fetchServicesNames, setServicesData, servicesData } = useContext(
