@@ -4,7 +4,6 @@ import { CommsContext } from '../context/CommsContext';
 
 const MicroServiceTraffic = () => {
   const { commsData } = useContext(CommsContext);
-  console.log('hello from microservice traffice-->', commsData);
   const microServiceCountdictionary: { [key: string]: number } = {};
 
   // iterate over Trace Points
