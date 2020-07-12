@@ -6,11 +6,13 @@ import { ApplicationContext } from '../context/ApplicationContext';
 export interface HeaderProps {
   app: string;
   service: string;
+  live: boolean;
+  setLive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.SFC<HeaderProps> = ({ app, service }) => {
+const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
   const history = useHistory();
-  
+
   const { servicesData } = useContext(ApplicationContext);
 
   return (
@@ -27,6 +29,18 @@ const Header: React.SFC<HeaderProps> = ({ app, service }) => {
           communications
         </option>
       </select>
+      <button onClick={() => setLive(!live)}>
+        {live ? (
+          <div>
+            <span className="dot"></span>Live
+          </div>
+        ) : (
+          <div>Gather Live Data</div>
+        )}
+      </button>
+      <button onClick={() => history.goBack()}>
+        Return to Applications
+      </button>
     </div>
   );
 };
