@@ -12,7 +12,7 @@
   width: 400px;
   height: auto;
   animation: twirl 20s infinite linear;
-  transition: 0.2s;
+  transition: 0.3s ease-in;
 }
 
 .home h1 {
@@ -21,16 +21,28 @@
   margin: 0 0 15px;
 }
 
-.home button {
+.get-started-btn {
   width: 175px;
-  font-size: 135%;
+  font-size: 145%;
   padding: 10px;
   letter-spacing: 0.5px;
+  text-decoration: none;
+  border: thin solid #242631;
+  border-radius: 10px;
+  background-color: #242631;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.get-started-btn:hover {
+  background-color: #494fee;
 }
 
 .home img:hover {
-  /* animation-play-state: paused; */
-  filter: brightness(0.85);
+  filter: brightness(0.90);
 }
 @keyframes twirl {
   from {
