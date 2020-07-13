@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom';
 describe('<SidebarContainer />', () => {
   it('should render an <img> tag with the Chronos logo', () => {
     const wrapper = shallow(<SidebarContainer />);
-    console.log(wrapper.debug({ verbose: true }))
-
+    
     expect(wrapper.contains(<img alt="Chronos Logo" id="serviceDashLogo" src="../assets/icon2Cropped.png" />)).toBe(true);
   });
   it("should render a <Link /> with the label as 'Home'", () => {
