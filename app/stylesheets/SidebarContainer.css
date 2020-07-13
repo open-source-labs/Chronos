@@ -2,8 +2,19 @@
   color: white;
   background-color: #24262f;
   min-width: 200px;
+  transition: 0.3s;
 }
-
+/* .material-icons,
+.icon-text {
+  vertical-align: middle;
+}
+.material-icons {
+  padding-bottom: 3px;
+  margin-right: 30px;
+} */
+/* .sidebar-container:hover {
+  min-width: 400px;
+} */
 .sidebar {
   position: fixed;
   display: flex;
@@ -19,12 +30,14 @@
 
 .sidebar-link {
   margin: 5px 0;
+  padding: 1px 5px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   background-color: #24262f;
   height: 40px;
   width: 150px;
+  /* width: 42px; */
   border: thin solid rgb(79, 79, 85);
   border-radius: 3px;
   font-size: 125%;
@@ -37,4 +50,5 @@
 .sidebar-link:hover {
   background-color: #494fee;
   color: azure;
+  /* width: 150px; */
 }
