@@ -1,3 +1,5 @@
+@import './constants.scss';
+
 .home {
   background-color: #f4f4f4;
   height: 100%;
@@ -5,20 +7,32 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-}
 
-.home img {
-  margin-top: 75px;
-  width: 400px;
-  height: auto;
-  animation: twirl 20s infinite linear;
-  transition: 0.3s ease-in;
-}
+  .pangolin-container {
+    margin-top: 65px;
+    height: auto;
+    width: 40%;
+    max-width: 650px;
 
-.home h1 {
-  font-size: 325%;
-  letter-spacing: 2px;
-  margin: 0 0 15px;
+    img {
+      width: 100%;
+      animation: twirl 20s infinite linear;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+
+  h1 {
+    font-size: 325%;
+    letter-spacing: 2px;
+  }
+
+  p {
+    margin: 15px 0;
+  }
 }
 
 .get-started-btn {
@@ -39,16 +53,4 @@
 
 .get-started-btn:hover {
   background-color: #494fee;
-}
-
-.home img:hover {
-  filter: brightness(0.90);
-}
-@keyframes twirl {
-  from {
-    transform: rotateZ(0deg);
-  }
-  to {
-    transform: rotateZ(360deg);
-  }
 }
