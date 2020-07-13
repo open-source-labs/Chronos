@@ -90,7 +90,7 @@ const ResponseCodesChart: React.FC = () => {
     );
   };
 
-  return <div className="responseCodeChart">{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default ResponseCodesChart;

@@ -64,7 +64,7 @@ const ProcessesChart = () => {
     );
   };
 
-  return <div className="processesChart">{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default ProcessesChart;

@@ -73,7 +73,7 @@ const RequestTypesChart: React.FC = () => {
     );
   };
 
-  return <div className="requestChart">{createRequestChart()}</div>;
+  return <div className="chart">{createRequestChart()}</div>;
 };
 
 export default RequestTypesChart;
