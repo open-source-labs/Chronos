@@ -15,7 +15,7 @@ import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
 import RouteTrace from '../charts/RouteTrace';
-import '../stylesheets/GraphsContainer.css';
+import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
   app: string;
