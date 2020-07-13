@@ -13,7 +13,7 @@ interface IObj {
   time: string;
 }
 
-const ResponseCodeChart: React.FC = () => {
+const ResponseCodesChart: React.FC = () => {
   const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
@@ -93,4 +93,4 @@ const ResponseCodeChart: React.FC = () => {
   return <div className="responseCodeChart">{createChart()}</div>;
 };
 
-export default ResponseCodeChart;
+export default ResponseCodesChart;
