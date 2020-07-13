@@ -20,7 +20,7 @@
   margin-right: 30px;
 } */
 .sidebar-container:hover {
-  width: 200px;
+  width: 210px;
 }
 .sidebar-container:hover .sidebar-link {
   width: 150px;
@@ -55,7 +55,7 @@
 #miniLogo {
   position: absolute;
   animation: twirl 20s infinite linear;
-  left: 7px;
+  left: 12px;
   top: 35px;
   height: 75px;
   width: 75px;
@@ -74,14 +74,14 @@
   transition: 900ms;
 }
 
-.container img {
-  margin-bottom: 1px;
+.sidebar img {
+  margin-bottom: 100px;
 }
 
 .sidebar-link {
   overflow: hidden;
   z-index: 1;
-  margin: 5px 0;
+  margin: 5px 5px;
   padding: 1px 5px;
   display: flex;
   align-items: center;
