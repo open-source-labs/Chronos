@@ -1,12 +1,16 @@
 .sidebar-container {
   color: white;
   background-color: #24262f;
-  min-width: 100px;
-  transition: 300ms;
+  width: 100px;
+  transition: 900ms;
   overflow: hidden;
-  z-index: 10;
+  z-index: 1;
   white-space: nowrap;
 }
+/* .sidebar-container:hover .home { */
+/* .home {
+  background-color: black !important;
+} */
 /* .material-icons,
 .icon-text {
   vertical-align: middle;
@@ -16,17 +20,58 @@
   margin-right: 30px;
 } */
 .sidebar-container:hover {
-  min-width: 200px;
+  width: 200px;
+}
+.sidebar-container:hover .sidebar-link {
+  width: 150px;
+}
+.sidebar-container:hover .sidebar {
+  width: 200px;
+}
+.sidebar-container:hover #serviceDashLogo {
+  opacity: 1;
+}
+.sidebar-container:hover #miniLogo {
+  opacity: 0;
+}
+
+#home {
+  transition: 600ms;
+}
+#about {
+  transition: 700ms;
+}
+#contact {
+  transition: 800ms;
+}
+#settings {
+  transition: 900ms;
+}
+
+#serviceDashLogo {
+  opacity: 0;
+  transition: 900ms;
+}
+#miniLogo {
+  position: absolute;
+  animation: twirl 20s infinite linear;
+  left: 7px;
+  top: 35px;
+  height: 75px;
+  width: 75px;
+  opacity: 1;
+  transition: 400ms;
 }
 .sidebar {
   padding-left: 20px;
-  width: 250px;
+  width: 100px;
   position: fixed;
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-items: center;
   align-content: center;
+  transition: 900ms;
 }
 
 .container img {
@@ -56,5 +101,4 @@
 .sidebar-link:hover {
   background-color: #494fee;
   color: azure;
-  width: 150px;
 }
