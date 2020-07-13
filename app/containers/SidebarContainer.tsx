@@ -7,16 +7,22 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../stylesheets/SidebarContainer.css';
 
-const testIn = () => {
-  console.log('Hovering in sidebar');
-};
-const testOut = () => {
-  console.log('Hovering outside sidebar');
+// const [mini, setMini] = useState(false);
+let mini = true;
+const toggleSidebar = () => {
+  if (mini) {
+    console.log('Opening sidebar');
+    // document.getElementById('mySidebar').style.width = '250px';
+    mini = false;
+  } else {
+    console.log('Closing sidebar');
+    mini = true;
+  }
 };
 
 const SidebarContainer: React.FC = (): JSX.Element => (
-  <div className="sidebar-container" onMouseOver={testIn} onMouseOut={testOut}>
-    <div className="sidebar">
+  <div className="sidebar-container">
+    <div className="sidebar" id="mySidebar" onMouseOver={toggleSidebar} onMouseOut={toggleSidebar}>
       <img alt="Chronos Logo" id="serviceDashLogo" src={'../assets/icon2Cropped.png'} />
       <Link className="sidebar-link" to="/">
         <HomeSharpIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
