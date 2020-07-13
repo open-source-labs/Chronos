@@ -5,16 +5,16 @@ import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
 import Header from '../components/Header';
-import SpeedChart from '../charts/speed-chart';
-import TemperatureChart from '../charts/temperature-chart';
-import LatencyChart from '../charts/latency-chart';
-import ProcessesChart from '../charts/processes-chart';
-import MemoryChart from '../charts/memory-chart';
-import RequestTypesChart from '../charts/request-type-chart';
-import ResponseCodeChart from '../charts/response-code-chart';
-import MicroServiceTraffic from '../charts/microservice-traffic';
-import DockerStatsChart from '../charts/DockerChart';
-import RouteTrace from '../charts/route-trace';
+import SpeedChart from '../charts/SpeedChart';
+import TemperatureChart from '../charts/TemperatureChart';
+import LatencyChart from '../charts/LatencyChart';
+import ProcessesChart from '../charts/ProcessesChart';
+import MemoryChart from '../charts/MemoryChart';
+import RequestTypesChart from '../charts/RequestTypesChart';
+import ResponseCodesChart from '../charts/ResponseCodesChart';
+import TrafficChart from '../charts/TrafficChart';
+import DockerChart from '../charts/DockerChart';
+import RouteTrace from '../charts/RouteTrace';
 import '../stylesheets/GraphsContainer.css';
 
 export interface Params {
@@ -66,12 +66,12 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
   return (
     <>
       <Header app={app} service={service} live={live} setLive={setLive} />
-      <div>
+      <div className="graphs-container">
         {service === 'communications' ? (
           <>
             <RequestTypesChart />
-            <ResponseCodeChart />
-            <MicroServiceTraffic />
+            <ResponseCodesChart />
+            <TrafficChart />
           </>
         ) : (
           <>
@@ -80,7 +80,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
             <LatencyChart />
             <MemoryChart />
             <ProcessesChart />
-            <DockerStatsChart />
+            <DockerChart />
           </>
         )}
       </div>
