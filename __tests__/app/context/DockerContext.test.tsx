@@ -16,43 +16,26 @@ describe('React unit tests', () => {
         const { dockerData, setDockerData, fetchDockerData } = useContext(DockerContext);
         const [mockData, setMockData] = useState([
           {
-            activememory: 2599420000,
-            blockedprocesses: 0,
-            cpuloadpercent: 89,
-            cpuspeed: 2.7,
-            cputemp: 80,
-            freememory: 97890300,
-            latency: 21,
-            runningprocesses: 12,
-            sleepingprocesses: 427,
-            time: '2020-06-27T05:31:35.554Z',
-            totalmemory: 8589930000,
-            totalprocesses: 442,
-            usedmemory: 8492040000,
-            id: 36,
-          },
-          {
-            activememory: 2599420001,
-            blockedprocesses: 1,
-            cpuloadpercent: 90,
-            cpuspeed: 2.8,
-            cputemp: 81,
-            freememory: 97890301,
-            latency: 22,
-            runningprocesses: 13,
-            sleepingprocesses: 428,
-            time: '2020-06-28T05:31:35.554Z',
-            totalmemory: 8589930001,
-            totalprocesses: 443,
-            usedmemory: 8492040001,
-            id: 37,
+            containerid: 'f57f5815cb0',
+            containername: 'chronos-mon-2',
+            cpupercent: 0.3,
+            memorylimit: 16665812992,
+            memorypercent: 0.3,
+            memoryusage: 48480256,
+            networkreceived: 6562749,
+            networksent: 0,
+            platform: 'Linux',
+            processcount: 35,
+            restartcount: 0,
+            starttime: 'Thu Jul 02 2020 16:18:50 GMT-0700 ',
+            id: '5efe95ded17eaf0020a80c80',
           },
         ]);
         return (
           <>
             <div id="dockerData">{JSON.stringify(dockerData)}</div>
             <div id="parsedData">{JSON.stringify(mockData)}</div>
-            <button id="fetchDockerData" onClick={() => fetchDockerData('books')}>
+            <button id="fetchDockerData" onClick={() => fetchDockerData('chronos-mon-3')}>
               Test fetchDockerData
             </button>
             <button id="setDockerData" onClick={() => setDockerData({ foo: 'bar' })}>
@@ -99,14 +82,14 @@ describe('React unit tests', () => {
     it("should emit the 'dockerRequest' event and listen on 'dockerResponse' when invoking fetchDockerData", () => {
       const button = wrapper.find('#fetchDockerData');
       button.simulate('click');
-      expect(ipcRenderer.send).toHaveBeenCalledWith('dockerRequest', 'books');
+      expect(ipcRenderer.send).toHaveBeenCalledWith('dockerRequest', 'chronos-mon-3');
       expect(ipcRenderer.on).toHaveBeenCalledWith('dockerResponse', expect.any(Function));
     });
 
-    xit('should update healthData when setHealthData is invoked with new data', () => {
-      const button = wrapper.find('#setHealthData');
+    it('should update dockerData when setDockerData is invoked with new data', () => {
+      const button = wrapper.find('#setDockerData');
       button.simulate('click');
-      expect(wrapper.find('#healthData').text()).toEqual(JSON.stringify({ foo: 'bar' }));
+      expect(wrapper.find('#dockerData').text()).toEqual(JSON.stringify({ foo: 'bar' }));
     });
   });
 });
