@@ -30,6 +30,7 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
         </option>
       </select>
       <div className="header-btns">
+        <button onClick={() => history.goBack()}>Return to Applications</button>
         <button onClick={() => setLive(!live)}>
           {live ? (
             <div>
@@ -39,7 +40,6 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
             <div>Gather Live Data</div>
           )}
         </button>
-        <button onClick={() => history.goBack()}>Return to Applications</button>
       </div>
     </div>
   );
