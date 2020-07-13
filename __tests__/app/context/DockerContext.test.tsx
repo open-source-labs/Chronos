@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 const { ipcRenderer } = require('electron');
 
 import DockerContextProvider, { DockerContext } from '../../../app/context/DockerContext';
@@ -10,6 +10,7 @@ jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }
 describe('React unit tests', () => {
   describe('<DockerContext />', () => {
     let wrapper: any;
+    let shallow: any;
 
     beforeEach(() => {
       const TestComponent = () => {
@@ -43,7 +44,6 @@ describe('React unit tests', () => {
             </button>
           </>
         );
-        // Provide HealthContext to component
       };
       wrapper = mount(
         <DockerContextProvider>
@@ -56,27 +56,9 @@ describe('React unit tests', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    xit('should parse incoming docker info into an object of arrays for every data type', () => {
-      const parsedData = {
-        activememory: [2599420000, 2599420001],
-        blockedprocesses: [0, 1],
-        cpuloadpercent: [12, 1],
-        cpuspeed: [2.7, 2.8],
-        cputemp: [80, 81],
-        freememory: [97890300, 97890301],
-        latency: [21, 22],
-        runningprocesses: [12, 13],
-        sleepingprocesses: [427, 428],
-        time: ['2020-06-27T05:31:35.554Z', '2020-06-28T05:31:35.554Z'],
-        totalmemory: [8589930000, 8589930001],
-        totalprocesses: [442, 443],
-        usedmemory: [8492040000, 8492040001],
-        id: [36, 37],
-      };
-
-      const button = wrapper.find('#parseHealthData');
-      button.simulate('click');
-      expect(wrapper.find('#parsedData').text()).toEqual(JSON.stringify(parsedData));
+    it('should display a given container name', () => {
+      const containerName = wrapper.find('#parsedData');
+      expect(containerName.text()).toMatch('chronos-mon-2');
     });
 
     it("should emit the 'dockerRequest' event and listen on 'dockerResponse' when invoking fetchDockerData", () => {
@@ -90,6 +72,11 @@ describe('React unit tests', () => {
       const button = wrapper.find('#setDockerData');
       button.simulate('click');
       expect(wrapper.find('#dockerData').text()).toEqual(JSON.stringify({ foo: 'bar' }));
+    });
+
+    it('should note which platform is being used', () => {
+      const parsedData = wrapper.find('#parsedData');
+      expect(parsedData.text()).toMatch('Linux');
     });
   });
 });
