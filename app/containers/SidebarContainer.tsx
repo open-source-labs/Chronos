@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import HomeSharpIcon from '@material-ui/icons/HomeSharp';
 import InfoIcon from '@material-ui/icons/Info';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import '../stylesheets/SidebarContainer.css';
 
 const SidebarContainer: React.FC = (): JSX.Element => (
@@ -18,6 +19,7 @@ const SidebarContainer: React.FC = (): JSX.Element => (
         &emsp;About
       </Link>
       <Link className="sidebar-link" to="/contact">
+        <ContactSupportIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
         &emsp;Contact
       </Link>
       <Link className="sidebar-link" to="/settings">
