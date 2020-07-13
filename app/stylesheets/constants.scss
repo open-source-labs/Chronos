@@ -1,2 +1,8 @@
 $brandgold: #fce356;
 $sidebarblue: #24262f;
+
+@mixin centerWithFlex($justify: center) {
+  display: flex;
+  align-items: center;
+  justify-content: $justify;
+}
