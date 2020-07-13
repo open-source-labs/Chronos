@@ -30,7 +30,8 @@ const DashboardContainer = () => (
 // Style
 const dashboardStyle = {
   display: 'flex',
-  backgroundColor: '#F7F8FC'
+  backgroundColor: '#F7F8FC',
+  width: '100vw'
 }
 
 export default DashboardContainer;

@@ -68,20 +68,20 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
         {service === 'communications' ? (
-          <>
+          <div className="graphs">
             <RequestTypesChart />
             <ResponseCodesChart />
             <TrafficChart />
-          </>
+          </div>
         ) : (
-          <>
+          <div className="graphs">
             <SpeedChart />
             <TemperatureChart />
             <LatencyChart />
             <MemoryChart />
             <ProcessesChart />
             <DockerChart />
-          </>
+          </div>
         )}
       </div>
     </>
