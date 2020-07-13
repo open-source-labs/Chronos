@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const MicroServiceTraffic = () => {
+const TrafficChart = () => {
   const { commsData } = useContext(CommsContext);
   const microServiceCountdictionary: { [key: string]: number } = {};
 
@@ -116,4 +116,4 @@ const MicroServiceTraffic = () => {
   );
 };
 
-export default MicroServiceTraffic;
+export default TrafficChart;
