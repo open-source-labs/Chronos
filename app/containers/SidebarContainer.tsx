@@ -12,13 +12,13 @@ const SidebarContainer: React.FC = (): JSX.Element => (
         {/* <HomeSharpIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }}/> */}
         Home
       </Link>
-      <Link className="sidebar-link" to="/">
+      <Link className="sidebar-link" to="/about">
         About
       </Link>
-      <Link className="sidebar-link" to="/">
+      <Link className="sidebar-link" to="/contact">
         Contact
       </Link>
-      <Link className="sidebar-link" to="/">
+      <Link className="sidebar-link" to="/settings">
         Settings
       </Link>
     </div>
