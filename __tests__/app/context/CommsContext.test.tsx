@@ -10,6 +10,7 @@ jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }
 describe('React unit tests', () => {
   describe('<CommsContext />', () => {
     let wrapper: any;
+    let shallow: any;
 
     beforeEach(() => {
       const TestComponent = () => {
@@ -28,13 +29,13 @@ describe('React unit tests', () => {
         ]);
         return (
           <>
-            <div id="dockerData">{JSON.stringify(commsData)}</div>
+            <div id="commsData">{JSON.stringify(commsData)}</div>
             <div id="parsedData">{JSON.stringify(mockData)}</div>
-            <button id="fetchDockerData" onClick={() => fetchCommsData('customers')}>
-              Test fetchDockerData
+            <button id="fetchCommsData" onClick={() => fetchCommsData('customers')}>
+              Test fetchCommsData
             </button>
-            <button id="setDockerData" onClick={() => setCommsData({ foo: 'bar' })}>
-              Test setDockerData
+            <button id="setCommsData" onClick={() => setCommsData({ foo: 'bar' })}>
+              Test setCommsData
             </button>
           </>
         );
@@ -48,6 +49,25 @@ describe('React unit tests', () => {
 
     it('should render correctly', () => {
       expect(wrapper).toMatchSnapshot();
+    });
+
+    it("should emit the 'commsRequest' event and listen on 'commsResponse' when invoking fetchCommsData", () => {
+      const button = wrapper.find('#fetchCommsData');
+      button.simulate('click');
+      expect(ipcRenderer.send).toHaveBeenCalledWith('commsRequest', 'customers');
+      expect(ipcRenderer.on).toHaveBeenCalledWith('commsResponse', expect.any(Function));
+    });
+
+    it('should update dockerData when setCommsData is invoked with new data', () => {
+      const button = wrapper.find('#setCommsData');
+      button.simulate('click');
+      expect(wrapper.find('#commsData').text()).toEqual(JSON.stringify({ foo: 'bar' }));
+    });
+
+    it('should display status code information', () => {
+      console.log(wrapper.debug());
+      expect(wrapper.find('#parsedData').text()).toMatch('GET');
+      expect(wrapper.find('#parsedData').text()).toMatch('OK');
     });
   });
 });
