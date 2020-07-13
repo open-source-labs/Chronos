@@ -74,7 +74,7 @@ const TemperatureChart = () => {
     );
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default TemperatureChart;

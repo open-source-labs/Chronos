@@ -80,39 +80,41 @@ const TrafficChart = () => {
   // };
 
   return (
-    <Plot
-      data={[
-        {
-          type: 'bar',
-          x: [...xAxis],
-          y: [...serverPingCount, 0, yAxisHeadRoom],
-          fill: 'tozeroy',
-          marker: { color: '#5C80FF' },
-          mode: 'none',
-          name: 'Times Server Pinged',
-          showlegend: true,
-        },
-      ]}
-      layout={{
-        title: 'Microservice Traffic',
-        height: 400,
-        width: 400,
-        font: {
-          color: 'black',
-          size: 15,
-          family: 'Nunito, san serif',
-        },
-        paper_bgcolor: 'white',
-        plot_bgcolor: 'white',
-        legend: {
-          orientation: 'h',
-          xanchor: 'center',
-          x: 0.5,
-          y: 5,
-        },
-        yaxis: { rangemode: 'nonnegative' },
-      }}
-    />
+    <div className="chart">
+      <Plot
+        data={[
+          {
+            type: 'bar',
+            x: [...xAxis],
+            y: [...serverPingCount, 0, yAxisHeadRoom],
+            fill: 'tozeroy',
+            marker: { color: '#5C80FF' },
+            mode: 'none',
+            name: 'Times Server Pinged',
+            showlegend: true,
+          },
+        ]}
+        layout={{
+          title: 'Microservice Traffic',
+          height: 400,
+          width: 400,
+          font: {
+            color: 'black',
+            size: 15,
+            family: 'Nunito, san serif',
+          },
+          paper_bgcolor: 'white',
+          plot_bgcolor: 'white',
+          legend: {
+            orientation: 'h',
+            xanchor: 'center',
+            x: 0.5,
+            y: 5,
+          },
+          yaxis: { rangemode: 'nonnegative' },
+        }}
+      />
+    </div>
   );
 };
 

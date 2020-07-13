@@ -63,7 +63,7 @@ const MemoryChart = () => {
     );
   };
 
-  return <div className="memoryChart">{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default MemoryChart;

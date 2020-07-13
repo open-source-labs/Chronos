@@ -61,7 +61,7 @@ const LatencyChart = () => {
     );
   };
 
-  return <div className="latencyChart">{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default LatencyChart;

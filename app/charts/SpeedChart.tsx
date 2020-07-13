@@ -72,7 +72,7 @@ const SpeedChart = () => {
     );
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default SpeedChart;
