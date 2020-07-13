@@ -14,7 +14,7 @@ describe('React unit tests', () => {
 
     beforeEach(() => {
       const TestComponent = () => {
-        const { dockerData, setDockerData, fetchDockerData } = useContext(DockerContext);
+        const { dockerData } = useContext(DockerContext);
         const [mockData, setMockData] = useState([
           {
             containerid: 'f57f5815cb0',
@@ -70,6 +70,14 @@ describe('React unit tests', () => {
 
     it('should display <header> tag with docker stats', () => {
       expect(wrapper.find('header').text()).toEqual('Docker Container Stats');
+    });
+
+    it('should display container name, id, platform, and memory usage', () => {
+      expect(wrapper.find('div').find('span').at(0).text()).toContain('chronos-mon-2');
+      expect(wrapper.find('div').find('span').at(1).text()).toContain('f57f5815cb0');
+      expect(wrapper.find('div').find('span').at(2).text()).toContain('Linux');
+      expect(wrapper.find('div').find('span').at(4).text()).toContain('48.48');
+      expect(wrapper.find('div').find('span').at(5).text()).toContain('16665.81');
     });
   });
 });
