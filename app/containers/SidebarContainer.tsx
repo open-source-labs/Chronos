@@ -7,8 +7,15 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../stylesheets/SidebarContainer.css';
 
+const testIn = () => {
+  console.log('Hovering in sidebar');
+};
+const testOut = () => {
+  console.log('Hovering outside sidebar');
+};
+
 const SidebarContainer: React.FC = (): JSX.Element => (
-  <div className="sidebar-container">
+  <div className="sidebar-container" onMouseOver={testIn} onMouseOut={testOut}>
     <div className="sidebar">
       <img alt="Chronos Logo" id="serviceDashLogo" src={'../assets/icon2Cropped.png'} />
       <Link className="sidebar-link" to="/">
