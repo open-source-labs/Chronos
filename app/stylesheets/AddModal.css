@@ -18,7 +18,7 @@
 .add-container h2 {
   margin: 0 auto 25px;
   text-align: center;
-  font-weight: 300;
+  /* font-weight: 300; */
   font-size: 200%;
   color: #333;
 }

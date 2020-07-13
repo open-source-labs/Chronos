@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { ApplicationContext } from '../context/ApplicationContext';
-import '../stylesheets/Header.css';
+import '../stylesheets/Header.scss';
 
 export interface HeaderProps {
   app: string;
