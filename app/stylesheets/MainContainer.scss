@@ -6,6 +6,11 @@
   @include centerWithFlex(space-between);
   flex-direction: column;
 
+  .main-routes {
+    width: 100%;
+    height: 100%;
+  }
+
   .copyright-container {
     @include centerWithFlex();
     width: 100%;

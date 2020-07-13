@@ -18,3 +18,12 @@ $headergray: #dedede;
     background-color: rgb(170, 1, 1);
   }
 }
+
+@keyframes twirl {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

@@ -5,8 +5,11 @@ import '../stylesheets/Home.scss';
 
 const Home = () => (
   <div className="home">
-    <img src={'../assets/pangolin.png'} alt="Chronos logo" />
-    <h1 id="welcome">Welcome to Chronos!</h1>
+    <div className="pangolin-container">
+      <img src={'../assets/pangolin.png'} alt="Chronos logo" />
+    </div>
+    <h1 id="welcome">Welcome to Chronos</h1>
+    <p>A very short short description about Chronos...</p>
     <Link className="get-started-btn" to="/applications">
       Get Started
     </Link>
