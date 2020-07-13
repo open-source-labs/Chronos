@@ -1,0 +1,18 @@
+@import './constants.scss';
+
+.main-container {
+  flex: 1;
+  min-height: 100vh;
+
+  .copyright-container {
+    // position: absolute;
+    // bottom: 0;
+    margin-top: auto;
+    @include centerWithFlex();
+    width: 100%;
+
+    // p {
+    //   transform: translateX(-50%);
+    // }
+  }
+}
