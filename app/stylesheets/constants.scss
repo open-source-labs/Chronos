@@ -3,10 +3,11 @@ $sidebarblue: #24262f;
 $headergray: #e8e8e8;
 $lightgray: #c3c3c3;
 
-@mixin centerWithFlex($justify: center) {
+@mixin centerWithFlex($justify: center, $direction: row) {
   display: flex;
   align-items: center;
   justify-content: $justify;
+  flex-direction: $direction;
 }
 
 @keyframes blink {
