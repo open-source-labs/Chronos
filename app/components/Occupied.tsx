@@ -14,6 +14,9 @@ const Occupied: React.FC = () => {
     paper: {
       color: theme.palette.text.secondary,
       height: 340,
+      top: 10,
+      width: '49%',
+      marginLeft: '.5%',
       background: 'rgb(33, 34, 41)',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
@@ -21,6 +24,7 @@ const Occupied: React.FC = () => {
     grid: {
       margin: '0 auto',
       maxWidth: '75vw',
+      maxHeight: '75vh',
     },
     icon: {
       width: '100px',
@@ -31,6 +35,7 @@ const Occupied: React.FC = () => {
     },
     heroContent: {
       padding: theme.spacing(8, 0, 6),
+      backgroundColor: '#e8e8e8',
     },
   }));
 
@@ -40,7 +45,6 @@ const Occupied: React.FC = () => {
     <div>
       <Typography
         className={classes.heroContent}
-        // component="h1"
         variant="h1"
         align="center"
         color="textPrimary"
@@ -52,10 +56,10 @@ const Occupied: React.FC = () => {
         <AddModal setOpen={setOpen} />
       </Modal>
       <Grid className={classes.grid} container spacing={3}>
+        <Applications />
         <Button className={classes.paper} onClick={() => setOpen(true)}>
           <AddCircleOutlineTwoToneIcon className={classes.icon} />
         </Button>
-        <Applications />
       </Grid>
     </div>
   );
