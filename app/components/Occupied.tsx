@@ -14,12 +14,12 @@ const Occupied: React.FC = () => {
     paper: {
       color: theme.palette.text.secondary,
       height: 340,
-      top: 10,
-      width: '49%',
-      marginLeft: '.5%',
+      width: '100%',
       background: 'rgb(33, 34, 41)',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
+      '&:hover, &.Mui-focusVisible': {
+        backgroundColor: 'rgba(33, 34, 41, 0.75)',
+      },
     },
     grid: {
       margin: '0 auto',
@@ -51,15 +51,18 @@ const Occupied: React.FC = () => {
         gutterBottom
       >
         Applications
+        <Typography>Click a Card to Begin!</Typography>
       </Typography>
       <Modal open={open} onClose={() => setOpen(false)}>
         <AddModal setOpen={setOpen} />
       </Modal>
       <Grid className={classes.grid} container spacing={3}>
+        <Grid item xs={6}>
+          <Button className={classes.paper} onClick={() => setOpen(true)}>
+            <AddCircleOutlineTwoToneIcon className={classes.icon} />
+          </Button>
+        </Grid>
         <Applications />
-        <Button className={classes.paper} onClick={() => setOpen(true)}>
-          <AddCircleOutlineTwoToneIcon className={classes.icon} />
-        </Button>
       </Grid>
     </div>
   );
