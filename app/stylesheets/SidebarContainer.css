@@ -51,6 +51,8 @@
 
 #serviceDashLogo {
   opacity: 0;
+  width: 160px;
+  margin-top: 20px;
   transition: 300ms;
 }
 #miniLogo {
@@ -62,6 +64,7 @@
   width: 75px;
   opacity: 1;
   transition: 200ms;
+  margin-top: 10px;
 }
 .sidebar {
   background-color: #24262f;
