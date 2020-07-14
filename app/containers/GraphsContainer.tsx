@@ -18,7 +18,7 @@ import RouteTrace from '../charts/RouteTrace';
 import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
-  app: string;
+  app: any;
   service: string;
 }
 

@@ -6,7 +6,7 @@ export interface CopyrightProps {}
 const Copyright = () => (
   <Typography variant="body2" color="textSecondary" align="center">
     {'Copyright © '}
-    <Link color="inherit" href="https://chronoslany.com/">
+    <Link color="inherit" href="https://chronoslany.com/" target="_blank">
       Team Chronos
     </Link>{' '}
     {new Date().getFullYear()}
