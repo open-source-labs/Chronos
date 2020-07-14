@@ -7,6 +7,10 @@ const Contact: React.FC = () => {
         <h1>Contact Us!</h1>
         <p>The Chronos Team is always looking for any feedback or suggestions for Chronos.</p>
         <p>
+          You can find issues the team is currently working on&nbsp;
+          <a href="https://github.com/open-source-labs/Chronos/issues">here</a>.
+        </p>
+        <p>
           If you would like your voice heard, fill out the form and we will get back to you ASAP!
         </p>
       </div>
