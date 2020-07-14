@@ -1,4 +1,7 @@
-![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
+<!-- ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png) -->
+<p align="center">
+  <img src="./app/assets/chronos-v4.png" height=300/>
+</p>
 ## Chronos
 Microservice communication, health, and Docker container visualizer.
 Comes with a middleware and an Electron app.
