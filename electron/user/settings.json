@@ -5,18 +5,21 @@
       "myPostgres",
       "SQL",
       "postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm",
+      "Online bookstore with that keeps track of orders and customers",
       "Jun 28, 2020 4:58 PM"
     ],
     [
       "myMongo",
       "MongoDB",
       "mongodb+srv://chronos:pass123@cluster0-xluio.mongodb.net/chronos?retryWrites=true&w=majority",
+      "E-commerce website for buying and selling clothes",
       "Jul 01, 2020 10:33 PM"
     ],
     [
       "ToddDB",
       "MongoDB",
       "mongodb+srv://tdwolf6:password16@cluster0-0xvd7.gcp.mongodb.net/Chronos?retryWrites=true&w=majority",
+      "Web app deployed on AWS",
       "Jul 3, 2020 7:12AM"
     ]
   ],
