@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 
 // Need to add flag to turn off the splash at start
 // Need to add flag to turn off getting started page
