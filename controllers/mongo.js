@@ -4,6 +4,7 @@ const alert = require('./alert');
 const CommunicationModel = require('../models/CommunicationModel');
 const ServicesModel = require('../models/ServicesModel');
 const HealthModelFunc = require('../models/HealthModel');
+const ContainerInfoFunc = require('../models/ContainerInfo');
 require('../models/ContainerInfo');
 
 // Handle deprecation warnings
@@ -216,8 +217,6 @@ chronos.health = ({ microservice, interval }) => {
  * Collects information on the container
  */
 chronos.docker = ({ microservice, interval }) => {
-  const ContainerInfo = mongoose.model('ContainerInfo');
-
   // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
   var containername;
   var platform;
@@ -267,7 +266,10 @@ chronos.docker = ({ microservice, interval }) => {
               processcount = data[0].pids;
               restartcount = data[0].restartCount;
 
-              const newContainerInfo = {
+              // Create collection using name of microservice
+              const containerInfo = ContainerInfoFunc(`${containername}-containerinfo`);
+
+              const newContainerInfo = new containerInfo({
                 containerid,
                 containername,
                 platform,
@@ -280,15 +282,12 @@ chronos.docker = ({ microservice, interval }) => {
                 networksent,
                 processcount,
                 restartcount,
-              };
+              });
 
-              const containerInfo = new ContainerInfo(newContainerInfo);
-              containerInfo
+              newContainerInfo
                 .save()
                 .then(() => console.log('Saved to MongoDB!'))
-                .catch(err => {
-                  if (err) throw err;
-                });
+                .catch(err => console.log('Error saving container data: ', err.message));
             })
             ['catch'](function (err) {
               throw err;
