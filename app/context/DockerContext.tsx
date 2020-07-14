@@ -38,21 +38,6 @@ const DockerContextProvider: React.FC = ({ children }) => {
       setDockerData(newDockerData);
     });
   };
-
-  // Helper function to parse data into individual arrays
-  const parseDockerData = (data: any) => {
-    const output: any = {};
-
-    for (let entry of data) {
-      for (const key in entry) {
-        if (!(key in output)) output[key] = [];
-        output[key].push(entry[key]);
-      }
-    }
-
-    return output;
-  };
-
   return (
     <DockerContext.Provider value={{ dockerData, setDockerData, fetchDockerData }}>
       {children}
