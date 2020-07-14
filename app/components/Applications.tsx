@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
 
 import ServicesModal from '../modals/ServicesModal';
+import '../stylesheets/Applications.css';
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
@@ -44,7 +45,7 @@ const Applications = () => {
       color: 'white',
       fontSize: '3rem',
       whiteSpace: 'nowrap',
-      background: 'rgb(33, 34, 41)',
+      backgroundColor: '#24262f',
       border: '2px solid black',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': { background: 'rgba(33, 34, 41, 0.75)' },
@@ -52,6 +53,7 @@ const Applications = () => {
     hover: {
       color: 'white',
       boxShadow: 'none',
+      '&:hover, &.Mui-focusVisible': { color: 'red' },
     },
     btnStyle: {
       position: 'relative',
@@ -68,28 +70,31 @@ const Applications = () => {
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
         <Grid item xs={6} key={i}>
-          <Card
-            className={classes.paper}
-            variant="outlined"
-            onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
-          >
-            <CardHeader
-              avatar={
-                <IconButton
-                  className={classes.hover}
-                  aria-label="Delete"
-                  onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
-                >
-                  <DeleteForeverOutlinedIcon />
-                </IconButton>
-              }
-            ></CardHeader>
-            <CardContent>
-              <Typography variant="h2">{app}</Typography>
-            </CardContent>
-          </Card>
+          <div id="card-hover">
+            <Card
+              className={classes.paper}
+              variant="outlined"
+              onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
+            >
+              <CardHeader
+                avatar={
+                  <IconButton
+                    className={classes.hover}
+                    aria-label="Delete"
+                    onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+                  >
+                    <DeleteForeverOutlinedIcon />
+                  </IconButton>
+                }
+              ></CardHeader>
+              <CardContent>
+                <Typography variant="h2">{app}</Typography>
+              </CardContent>
+            </Card>
+          </div>
         </Grid>
       ))}
+
       <Modal open={open} onClose={() => setOpen(false)}>
         <ServicesModal i={index} app={app} />
       </Modal>
@@ -98,3 +103,5 @@ const Applications = () => {
 };
 
 export default Applications;
+
+//name, desc, creation date
