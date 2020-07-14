@@ -69,8 +69,8 @@ const Applications = () => {
 
   return (
     <>
-      {applications.map((app: string[], i: number | any | string | undefined) => (
-        <Grid item xs={6} key={i}>
+      {applications.map((app: string, i: number | any | string | undefined) => (
+        <Grid item xs={12} lg={6} key={i}>
           <div id="card-hover">
             <Card
               className={classes.paper}
@@ -105,3 +105,4 @@ const Applications = () => {
 export default Applications;
 
 //name, desc, creation date
+// start lighter and becomes darker
