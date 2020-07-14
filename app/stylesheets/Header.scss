@@ -26,17 +26,37 @@ select {
   appearance: none;
   cursor: pointer;
   margin: 15px auto;
+
+  &:hover {
+    background-color: darken(#fff, 5%);
+  }
 }
 
 .header-btns {
   display: flex;
 
   button {
+    &:first-of-type {
+      position: absolute;
+      top: 25px;
+      left: 50px;
+      background-color: transparent;
+      border: 2px solid $sidebarblue;
+      color: $sidebarblue;
+      transition: 0.1s;
+
+      &:hover {
+        background-color: $sidebarblue;
+        color: #fff;
+      }
+    }
+
     margin: 0 10px;
-    font-size: 115%;
+    font-size: 110%;
     letter-spacing: 1px;
-    padding: 10px;
+    padding: 12px;
     font-weight: 300;
+    border-radius: 30px;
 
     /* Live data dot */
     .dot {
