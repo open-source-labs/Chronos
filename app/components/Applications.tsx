@@ -32,9 +32,10 @@ const Applications = () => {
   };
 
   // Handle clicks on Application cards
-  const handleClick = (app: string, i: number) => {
+  const handleClick = (selectedApp: string, i: number) => {
     setIndex(i);
-    setApp(app);
+    setApp(selectedApp);
+    console.log('handle', selectedApp);
     setOpen(true);
   };
 
@@ -68,7 +69,7 @@ const Applications = () => {
 
   return (
     <>
-      {applications.map((app: string, i: number | any | string | undefined) => (
+      {applications.map((app: string[], i: number | any | string | undefined) => (
         <Grid item xs={6} key={i}>
           <div id="card-hover">
             <Card

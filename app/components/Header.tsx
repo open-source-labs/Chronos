@@ -5,7 +5,7 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import '../stylesheets/Header.scss';
 
 export interface HeaderProps {
-  app: string;
+  app: string[];
   service: string;
   live: boolean;
   setLive: React.Dispatch<React.SetStateAction<boolean>>;

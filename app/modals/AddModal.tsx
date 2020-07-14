@@ -6,6 +6,7 @@ interface IFields {
   database: string;
   URI: string;
   name: string;
+  description: string;
 }
 
 interface IDashboard {
@@ -16,7 +17,7 @@ interface AddModalProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement>;
+type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
 type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
@@ -25,6 +26,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
     database: 'SQL',
     URI: '',
     name: '',
+    description: '',
   });
 
   // Submit form data and save to database
@@ -43,7 +45,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
     });
   };
 
-  const { database, URI, name } = fields;
+  const { database, URI, name, description } = fields;
   return (
     <div className="add-container">
       <div className="add-header">
@@ -51,15 +53,16 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
         <p>Enter the database information used to track the service</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="input-field">
-          <label htmlFor="db-type">Type</label>
+      <p>Required*</p>
+        <div>
+          <label htmlFor="db-type">Type<span>*</span></label>
           <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
             <option value="SQL">SQL</option>
             <option value="MongoDB">MongoDB</option>
           </select>
         </div>
-        <div className="input-field">
-          <label htmlFor="db-uri">URI</label>
+        <div>
+          <label htmlFor="db-uri">URI<span>*</span></label>
           <input
             id="db-uri"
             name="URI"
@@ -69,8 +72,8 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
             required
           />
         </div>
-        <div className="input-field">
-          <label htmlFor="db-name">Name</label>
+        <div>
+          <label htmlFor="db-name">Name<span>*</span></label>
           <input
             id="db-name"
             type="text"
@@ -79,6 +82,16 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
             onChange={e => handleChange(e)}
             placeholder="Database Name"
             required
+          />
+        </div>
+        <div>
+          <label htmlFor="db-desc">Description</label>
+          <textarea
+            id="db-desc"
+            name="db-desc"
+            value={description}
+            onChange={e => handleChange(e)}
+            placeholder="Add a short description"
           />
         </div>
         <button>Submit</button>
