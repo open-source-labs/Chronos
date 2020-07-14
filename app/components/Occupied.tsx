@@ -5,7 +5,6 @@ import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoT
 
 import AddModal from '../modals/AddModal';
 import Applications from './Applications';
-// import '../stylesheets/Occupied.css';
 
 const Occupied: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -15,7 +14,7 @@ const Occupied: React.FC = () => {
       color: theme.palette.text.secondary,
       height: 340,
       width: '100%',
-      background: 'rgb(33, 34, 41)',
+      backgroundColor: '#24262f',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': {
         backgroundColor: 'rgba(33, 34, 41, 0.75)',
@@ -34,6 +33,8 @@ const Occupied: React.FC = () => {
       '&:hover, &.Mui-focusVisible': { color: 'rgb(255, 243, 72)' },
     },
     heroContent: {
+      fontWeight: 700,
+      color: '#333',
       padding: theme.spacing(8, 0, 6),
       backgroundColor: '#e8e8e8',
     },
@@ -42,10 +43,10 @@ const Occupied: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div>
+    <>
       <Typography
         className={classes.heroContent}
-        variant="h1"
+        variant="h2"
         align="center"
         color="textPrimary"
         gutterBottom
@@ -64,7 +65,7 @@ const Occupied: React.FC = () => {
         </Grid>
         <Applications />
       </Grid>
-    </div>
+    </>
   );
 };
 

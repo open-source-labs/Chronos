@@ -2,5 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './stylesheets/index.scss';
 import App from './App';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ['Nunito sans', 'sans-serif'].join(','),
+  },
+});
+
+ReactDOM.render(
+  <ThemeProvider theme={theme}>
+    <App />
+  </ThemeProvider>,
+  document.getElementById('app')
+);
