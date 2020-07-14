@@ -19,12 +19,15 @@
 
   /* Form */
   form {
-    @include centerWithFlex(center, column);
+    @include centerWithFlex($direction: column);
     padding: 0 30px;
 
     div {
+      display: flex;
+      align-items: center;
+
       &:first-of-type {
-        margin-top: 0;
+        margin-top: 20px;
       }
 
       @include centerWithFlex(space-between);
@@ -44,6 +47,7 @@
 
       /* Select field */
       select {
+        margin: 0;
         appearance: none;
         cursor: pointer;
         height: 30px;
