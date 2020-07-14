@@ -40,7 +40,7 @@ const SpeedChart = () => {
           font: {
             color: 'black',
             size: 14,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           xaxis: {
             title: 'Time (PST)',
