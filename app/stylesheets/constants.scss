@@ -2,6 +2,7 @@ $brandgold: #fce356;
 $sidebarblue: #24262f;
 $headergray: #e8e8e8;
 $lightgray: #c3c3c3;
+$boxshadow: 2px 2px 6px rgb(187, 187, 187);
 
 @mixin centerWithFlex($justify: center, $direction: row) {
   display: flex;
@@ -45,5 +46,17 @@ $lightgray: #c3c3c3;
   }
   to {
     transform: rotateZ(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: $sidebarblue;
+  }
+  66% {
+    background-color: lighten($sidebarblue, 35%);
+  }
+  100% {
+    background-color: $sidebarblue;
   }
 }
