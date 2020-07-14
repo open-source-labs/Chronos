@@ -1,5 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Grid, Modal, Card, CardHeader, CardContent, CardActions } from '@material-ui/core';
+import {
+  IconButton,
+  Grid,
+  Modal,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+} from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
@@ -39,11 +47,11 @@ const Applications = () => {
       background: 'rgb(33, 34, 41)',
       border: '2px solid black',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      '&:hover, &.Mui-focusVisible': { background: 'rgba(33, 34, 41, 0.75)' },
     },
     hover: {
       color: 'white',
       boxShadow: 'none',
-      '&:hover, &.Mui-focusVisible': { color: 'red' },
     },
     btnStyle: {
       position: 'relative',
@@ -67,18 +75,18 @@ const Applications = () => {
           >
             <CardHeader
               avatar={
-                <Button
+                <IconButton
                   className={classes.hover}
-                  startIcon={<DeleteForeverOutlinedIcon />}
-                ></Button>
+                  aria-label="Delete"
+                  onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+                >
+                  <DeleteForeverOutlinedIcon />
+                </IconButton>
               }
             ></CardHeader>
-            <CardContent>{app}</CardContent>
-            <CardActions>
-              <Button className={classes.btnStyle} size="large">
-                Click to View
-              </Button>
-            </CardActions>
+            <CardContent>
+              <Typography variant="h2">{app}</Typography>
+            </CardContent>
           </Card>
         </Grid>
       ))}
