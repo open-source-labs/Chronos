@@ -23,7 +23,7 @@ const Occupied: React.FC = () => {
     },
     grid: {
       margin: '0 auto',
-      maxWidth: '75vw',
+      maxWidth: '60vw',
       maxHeight: '75vh',
     },
     icon: {
@@ -57,7 +57,7 @@ const Occupied: React.FC = () => {
         <AddModal setOpen={setOpen} />
       </Modal>
       <Grid className={classes.grid} container spacing={3}>
-        <Grid item xs={6}>
+        <Grid item xs={12} lg={6}>
           <Button className={classes.paper} onClick={() => setOpen(true)}>
             <AddCircleOutlineTwoToneIcon className={classes.icon} />
           </Button>
