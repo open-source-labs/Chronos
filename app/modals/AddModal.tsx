@@ -51,14 +51,14 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
         <p>Enter the database information used to track the service</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="input-field">
+        <div>
           <label htmlFor="db-type">Type</label>
           <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
             <option value="SQL">SQL</option>
             <option value="MongoDB">MongoDB</option>
           </select>
         </div>
-        <div className="input-field">
+        <div>
           <label htmlFor="db-uri">URI</label>
           <input
             id="db-uri"
@@ -69,7 +69,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
             required
           />
         </div>
-        <div className="input-field">
+        <div>
           <label htmlFor="db-name">Name</label>
           <input
             id="db-name"
@@ -80,6 +80,10 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
             placeholder="Database Name"
             required
           />
+        </div>
+        <div>
+          <label htmlFor="db-desc">Description</label>
+          <textarea name="db-desc" id="db-desc" placeholder="Add a short description" />
         </div>
         <button>Submit</button>
       </form>
