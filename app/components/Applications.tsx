@@ -43,16 +43,19 @@ const Applications = () => {
     paper: {
       height: 340,
       textAlign: 'center',
-      color: 'white',
+      color: 'rgba(33, 34, 41, 1.2)',
+      fontWeight: 700,
       fontSize: '3rem',
       whiteSpace: 'nowrap',
-      backgroundColor: '#24262f',
-      border: '2px solid black',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      '&:hover, &.Mui-focusVisible': { background: 'rgba(33, 34, 41, 0.75)' },
+      backgroundColor: 'rgba(33, 34, 41, 0.2)',
+      border: '3px ridge #808080',
+      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
+      '&:hover, &.Mui-focusVisible': { color: 'white', background: 'rgba(33, 34, 41, 1.2)' },
     },
     hover: {
-      color: 'white',
+      position: 'relative',
+      bottom: 20,
+      right: 40,
       boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: 'red' },
     },
@@ -105,4 +108,6 @@ const Applications = () => {
 export default Applications;
 
 //name, desc, creation date
-// start lighter and becomes darker
+// three cards a row, same width
+// move trash can
+//change the font
