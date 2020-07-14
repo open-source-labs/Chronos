@@ -13,6 +13,7 @@ interface IFields {
   database: string;
   URI: string;
   name: string;
+  description: string;
 }
 
 export const DashboardContext = createContext<any>(null);
@@ -39,8 +40,11 @@ const DashboardContextProvider = ({ children }: Props) => {
    * of applications
    */
   const addApp = (fields: IFields) => {
-    const { database, URI, name } = fields;
-    const result = ipcRenderer.sendSync('addApp', JSON.stringify([name, database, URI]));
+    const { database, URI, name, description } = fields;
+    const result = ipcRenderer.sendSync(
+      'addApp',
+      JSON.stringify([name, database, URI, description])
+    );
     setApplications(result);
   };
 

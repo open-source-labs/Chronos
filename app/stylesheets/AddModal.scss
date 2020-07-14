@@ -1,10 +1,11 @@
 @import './constants.scss';
 
 .add-container {
-  @include centerModal();
+  @include centerModal(30%, 500px);
 
   /* Header */
   .add-header {
+    width: 100%;
     padding: 20px 30px;
     text-align: center;
     border-bottom: thin solid $lightgray;
@@ -19,41 +20,77 @@
 
   /* Form */
   form {
-    @include centerWithFlex(center, column);
-    padding: 0 30px;
+    @include centerWithFlex($direction: column);
+    padding: 20px 30px;
+    width: 100%;
+
+    p,
+    span {
+      color: rgb(211, 0, 0);
+    }
+
+    span {
+      font-weight: 300;
+      font-size: 80%;
+    }
+
+    p {
+      align-self: flex-start;
+    }
 
     div {
+      @include centerWithFlex();
+
+      // <select /> margins
       &:first-of-type {
-        margin-top: 0;
+        margin-top: 20px;
+      }
+
+      // <textarea>
+      &:last-of-type {
+        @include centerWithFlex($justify: flex-start, $align: flex-start);
       }
 
       @include centerWithFlex(space-between);
       width: 100%;
       margin: 15px 0;
 
-      /* Text input */
-      input {
-        height: 30px;
-        border: thin solid $lightgray;
-        border-radius: 3px;
-        flex: 1;
-        font-family: inherit;
+      select,
+      input,
+      textarea {
         font-size: 100%;
         padding: 5px;
-      }
-
-      /* Select field */
-      select {
-        appearance: none;
-        cursor: pointer;
-        height: 30px;
         border: thin solid $lightgray;
         flex: 1;
-        font-size: 100%;
+        border-radius: 3px;
+      }
+
+      // Select field
+      select {
+        cursor: pointer;
+        height: 30px;
+        margin: 0;
+        appearance: none;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: darken(#fff, 5%);
+        }
+      }
+
+      // Text input
+      input {
+        height: 30px;
+      }
+
+      // Textarea
+      textarea {
+        resize: none;
+        height: 90px;
       }
 
       label {
-        width: 100px;
+        width: 140px;
         font-size: 135%;
         font-weight: 400;
       }
@@ -61,6 +98,7 @@
 
     /* Submit button */
     button {
+      height: 40px;
       font-size: 115%;
       width: 50%;
       color: #fff;

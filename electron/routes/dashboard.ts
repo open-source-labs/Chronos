@@ -1,4 +1,5 @@
 import { ipcMain, IpcMainEvent } from 'electron';
+import moment from 'moment';
 import path from 'path';
 import fs from 'fs';
 /**
@@ -15,6 +16,12 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 
   // Add new applicaiton to list
   const newApp = JSON.parse(application);
+
+  // Add a creation date to the application
+  const createdOn = moment().format('lll');
+  newApp.push(createdOn);
+
+  // Add app to list of applications
   state.services.push(newApp);
 
   // Update settings.json with new list
@@ -37,7 +44,7 @@ ipcMain.on('getApps', message => {
   );
 
   // Destructure list of services from state to be rendered on the dashboard
-  const dashboardList = state.services.map((arr: string[]) => arr[0]);
+  const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 
   // Sync event - return new applications list
   message.returnValue = dashboardList;
