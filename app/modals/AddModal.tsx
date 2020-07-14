@@ -46,7 +46,10 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
   const { database, URI, name } = fields;
   return (
     <div className="add-container">
-      <h2>Enter Your Database Information</h2>
+      <div className="add-header">
+        <h2>Add an Application</h2>
+        <p>Enter the database information used to track the service</p>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="input-field">
           <label htmlFor="db-type">Type</label>

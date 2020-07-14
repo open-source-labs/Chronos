@@ -1,20 +1,29 @@
 @import './constants.scss';
 
 .services-container {
-  @include centerModal(400px);
-  padding: 20px 20px 30px;
+  @include centerModal(375px);
 
   // Header
   .services-header {
+    background-color: $headergray;
+    width: 100%;
+    padding: 0 0 15px;
     text-align: center;
     margin-bottom: 20px;
+    border-bottom: thin solid $lightgray;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
     h2 {
       @include modalHeader();
+      margin-top: 15px;
+      margin-bottom: 5px;
     }
   }
 
   // Buttons
   .services-links {
+    padding: 0 0 30px;
     width: 100%;
 
     .link {
