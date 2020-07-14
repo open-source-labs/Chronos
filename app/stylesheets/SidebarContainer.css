@@ -1,13 +1,9 @@
-/* html {
-  height: 100%;
-} */
 .sidebar-container {
   color: white;
   background-color: #24262f;
   width: 100px;
-  /* height: 200vh; */
   position: absolute;
-  transition: 900ms;
+  transition: 300ms;
   overflow: hidden;
   z-index: 1;
   white-space: nowrap;
@@ -41,21 +37,21 @@
 }
 
 #home {
-  transition: 600ms;
+  transition: 200ms;
 }
 #about {
-  transition: 700ms;
+  transition: 250ms;
 }
 #contact {
-  transition: 800ms;
+  transition: 300ms;
 }
 #settings {
-  transition: 900ms;
+  transition: 350ms;
 }
 
 #serviceDashLogo {
   opacity: 0;
-  transition: 900ms;
+  transition: 300ms;
 }
 #miniLogo {
   position: absolute;
@@ -65,7 +61,7 @@
   height: 75px;
   width: 75px;
   opacity: 1;
-  transition: 400ms;
+  transition: 200ms;
 }
 .sidebar {
   background-color: #24262f;
@@ -78,7 +74,7 @@
   align-items: left;
   justify-items: center;
   align-content: center;
-  transition: 900ms;
+  transition: 300ms;
 }
 
 .sidebar img {
