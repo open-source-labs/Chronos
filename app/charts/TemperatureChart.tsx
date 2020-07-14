@@ -44,7 +44,7 @@ const TemperatureChart = () => {
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',

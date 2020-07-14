@@ -1,11 +1,32 @@
 $brandgold: #fce356;
 $sidebarblue: #24262f;
 $headergray: #e8e8e8;
+$lightgray: #c3c3c3;
+$boxshadow: 2px 2px 6px rgb(187, 187, 187);
 
-@mixin centerWithFlex($justify: center) {
+@mixin centerWithFlex($justify: center, $direction: row) {
   display: flex;
   align-items: center;
   justify-content: $justify;
+  flex-direction: $direction;
+}
+
+@mixin centerModal($width: auto) {
+  @include centerWithFlex(center, column);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  width: $width;
+  min-height: 100px;
+  background-color: #f4f4f4;
+}
+
+@mixin modalHeader() {
+  font-weight: 700;
+  font-size: 200%;
+  color: #333;
 }
 
 @keyframes blink {
@@ -25,5 +46,17 @@ $headergray: #e8e8e8;
   }
   to {
     transform: rotateZ(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: $sidebarblue;
+  }
+  66% {
+    background-color: lighten($sidebarblue, 35%);
+  }
+  100% {
+    background-color: $sidebarblue;
   }
 }

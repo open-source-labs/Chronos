@@ -10,35 +10,33 @@
 
     .chart {
       margin: 10px 20px;
+
+      &.docker-chart {
+        @include centerWithFlex($justify: flex-start, $direction: column);
+        align-items: flex-start;
+        width: 400px;
+        height: 400px;
+        background-color: #fff;
+        color: #333;
+        box-shadow: 2px 2px 6px 2px rgb(187, 187, 187);
+        padding: 10px 20px;
+        border-radius: 4px;
+
+        h2 {
+          align-self: center;
+          font-size: 125%;
+          margin: 15px 0 20px;
+          font-weight: 700px;
+        }
+      }
     }
   }
 
   svg {
     border-radius: 3px;
     // border: thin solid rgb(155, 155, 155);
-    box-shadow: 2px 2px 6px rgb(187, 187, 187);
-
+    box-shadow: $boxshadow;
   }
-}
-
-#docker-stats-chart {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 3px;
-  box-shadow: 3px 3px 3px rgba(216, 210, 247, 0.5);
-  height: 380px;
-  width: 380px;
-  padding: 10px 10px 10px 10px;
-}
-
-#docker-stats-chart-header {
-  align-self: center;
-  font-size: 1.5em;
-  padding-bottom: 25px;
-  height: 400;
-  width: 400;
 }
 
 /* Tablet */
