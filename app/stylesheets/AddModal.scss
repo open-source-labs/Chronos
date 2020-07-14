@@ -4,8 +4,17 @@
   @include centerModal();
 
   /* Header */
-  h2 {
-    @include modalHeader();
+  .add-header {
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: thin solid $lightgray;
+    background-color: $headergray;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    h2 {
+      @include modalHeader();
+    }
   }
 
   /* Form */
@@ -54,19 +63,19 @@
     button {
       font-size: 115%;
       width: 50%;
-      color: #333;
-      background-color: transparent;
+      color: #fff;
+      background-color: $sidebarblue;
       transition: 0.1s;
       margin: 20px 0;
       font-weight: 400;
       letter-spacing: 2px;
-      border: 2px solid #333;
+      border: thin solid $sidebarblue;
       padding: 4px;
       text-transform: uppercase;
 
       &:hover {
-        color: #fff;
-        background-color: #333;
+        color: $sidebarblue;
+        background-color: lighten($sidebarblue, 65%);
       }
     }
   }
