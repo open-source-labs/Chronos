@@ -4,14 +4,14 @@ $headergray: #e8e8e8;
 $lightgray: #c3c3c3;
 $boxshadow: 2px 2px 6px rgb(187, 187, 187);
 
-@mixin centerWithFlex($justify: center, $direction: row) {
+@mixin centerWithFlex($justify: center, $direction: row, $align: center) {
   display: flex;
-  align-items: center;
+  align-items: $align;
   justify-content: $justify;
   flex-direction: $direction;
 }
 
-@mixin centerModal($width: auto) {
+@mixin centerModal($width: auto, $minwidth: 400px) {
   @include centerWithFlex(center, column);
   position: absolute;
   top: 50%;
@@ -19,6 +19,7 @@ $boxshadow: 2px 2px 6px rgb(187, 187, 187);
   transform: translate(-50%, -50%);
   border-radius: 5px;
   width: $width;
+  min-width: $minwidth;
   min-height: 100px;
   background-color: #f4f4f4;
 }
