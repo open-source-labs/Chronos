@@ -10,7 +10,7 @@ import ApplicationContextProvider from '../../../app/context/ApplicationContext'
 // configure({ adapter: new Adapter() });
 
 describe('<DashboardContainer />', () => {
-  it(' renders component Maincontainer ', () => {
+  it(' renders component MainContainer ', () => {
     const wrapper = shallow(<DashboardContainer />);
 
     expect(wrapper.contains(<MainContainer />)).toBe(true);
