@@ -94,7 +94,6 @@ const Applications = () => {
           </div>
         </Grid>
       ))}
-
       <Modal open={open} onClose={() => setOpen(false)}>
         <ServicesModal i={index} app={app} />
       </Modal>
