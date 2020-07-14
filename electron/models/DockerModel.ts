@@ -1,19 +1,21 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-export interface IDock extends Document {
-  containername: string;
-  containerid: string;
-  platform: string;
-  starttime: string;
-  memoryusage: number;
-  memorylimit: number;
-  memorypercent: number;
-  cpupercent: number;
-  networkreceived: number;
-  networksent: number;
-  processcount: number;
-  restartcount: number;
-}
+
+// export interface IDock extends Document {
+//   containername: string;
+//   containerid: string;
+//   platform: string;
+//   starttime: string;
+//   memoryusage: number;
+//   memorylimit: number;
+//   memorypercent: number;
+//   cpupercent: number;
+//   networkreceived: number;
+//   networksent: number;
+//   processcount: number;
+//   restartcount: number;
+// }
 
 const DockerSchema = new Schema({
   containername: {
@@ -66,4 +68,8 @@ const DockerSchema = new Schema({
   },
 });
 
-export default mongoose.model<IDock>('containerinfos', DockerSchema);
+// export default mongoose.model<IDock>('containerinfos', DockerSchema);
+
+const DockerModelFunc = (serviceName: any) => mongoose.model<any>(`${serviceName}-containerinfos`, DockerSchema);
+
+export default DockerModelFunc;

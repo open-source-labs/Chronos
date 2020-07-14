@@ -15,7 +15,7 @@ import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
 import RouteTrace from '../charts/RouteTrace';
-import '../stylesheets/GraphsContainer.css';
+import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
   app: string;
@@ -68,20 +68,20 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
         {service === 'communications' ? (
-          <>
+          <div className="graphs">
             <RequestTypesChart />
             <ResponseCodesChart />
             <TrafficChart />
-          </>
+          </div>
         ) : (
-          <>
+          <div className="graphs">
             <SpeedChart />
             <TemperatureChart />
             <LatencyChart />
             <MemoryChart />
             <ProcessesChart />
             <DockerChart />
-          </>
+          </div>
         )}
       </div>
     </>

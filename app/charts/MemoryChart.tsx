@@ -44,7 +44,7 @@ const MemoryChart = () => {
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -63,7 +63,7 @@ const MemoryChart = () => {
     );
   };
 
-  return <div className="memoryChart">{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default MemoryChart;

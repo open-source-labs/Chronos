@@ -40,7 +40,7 @@ const SpeedChart = () => {
           font: {
             color: 'black',
             size: 14,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           xaxis: {
             title: 'Time (PST)',
@@ -72,7 +72,7 @@ const SpeedChart = () => {
     );
   };
 
-  return <div>{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default SpeedChart;

@@ -1,18 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Nunito:wght@200&family=Quicksand:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Quicksand:wght@300&display=swap');
 @import './constants.scss';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  &:focus {
+    outline: none
+  }
 }
 
 body {
-  background-color: rgb(248, 249, 253);
-  background: #24262f;
+  background-color: #f4f4f4;
   font-size: 16px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito sans', sans-serif;
+  font-weight: 300;
   overflow-x: hidden;
 }
 
@@ -25,6 +29,7 @@ button {
   color: #fff;
   min-width: 105px;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 button:hover {

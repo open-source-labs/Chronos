@@ -60,7 +60,7 @@ const RequestTypesChart: React.FC = () => {
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           paper_bgcolor: 'white',
           legend: {
@@ -73,7 +73,7 @@ const RequestTypesChart: React.FC = () => {
     );
   };
 
-  return <div className="requestChart">{createRequestChart()}</div>;
+  return <div className="chart">{createRequestChart()}</div>;
 };
 
 export default RequestTypesChart;
