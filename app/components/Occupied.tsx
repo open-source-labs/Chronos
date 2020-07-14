@@ -11,19 +11,20 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      color: 'white',
+      color: 'rgba(33, 34, 41, 0.7)',
       height: 340,
       width: '100%',
-      backgroundColor: '#24262f',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      backgroundColor: 'rgba(33, 34, 41, 0.2)',
+      border: '3px ridge #808080',
+      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: 'rgba(33, 34, 41, 0.75)',
+        backgroundColor: 'rgba(33, 34, 41, 1.2)',
         color: 'rgb(255, 243, 72)',
       },
     },
     grid: {
       margin: '0 auto',
-      maxWidth: '60vw',
+      maxWidth: '50vw',
       maxHeight: '75vh',
     },
     icon: {
