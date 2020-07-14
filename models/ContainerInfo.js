@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.model('ContainerInfo', {
+const { Schema } = mongoose;
+
+const ContainerSchema = new Schema({
   // Added additional schema for Docker container stats (9).
   containerid: {
     type: String,
@@ -41,3 +43,5 @@ mongoose.model('ContainerInfo', {
     type: Number, // count
   },
 });
+
+module.exports = ContainerName => mongoose.model(ContainerName, ContainerSchema);
