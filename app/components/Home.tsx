@@ -10,7 +10,7 @@ const Home = () => (
     </div>
     <h1 id="welcome">Welcome to Chronos</h1>
     <p>A very short short description about Chronos...</p>
-    <Link className="get-started-btn" to="/applications">
+    <Link className="link" to="/applications">
       Get Started
     </Link>
   </div>

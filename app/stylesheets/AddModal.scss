@@ -1,0 +1,86 @@
+@import './constants.scss';
+
+.add-container {
+  @include centerModal();
+
+  /* Header */
+  .add-header {
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: thin solid $lightgray;
+    background-color: $headergray;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    h2 {
+      @include modalHeader();
+    }
+  }
+
+  /* Form */
+  form {
+    @include centerWithFlex(center, column);
+    padding: 0 30px;
+
+    div {
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      @include centerWithFlex(space-between);
+      width: 100%;
+      margin: 15px 0;
+
+      /* Text input */
+      input {
+        height: 30px;
+        border: thin solid $lightgray;
+        border-radius: 3px;
+        flex: 1;
+        font-family: inherit;
+        font-size: 100%;
+        padding: 5px;
+      }
+
+      /* Select field */
+      select {
+        appearance: none;
+        cursor: pointer;
+        height: 30px;
+        border: thin solid $lightgray;
+        flex: 1;
+        font-size: 100%;
+      }
+
+      label {
+        width: 100px;
+        font-size: 135%;
+        font-weight: 400;
+      }
+    }
+
+    /* Submit button */
+    button {
+      font-size: 115%;
+      width: 50%;
+      color: #fff;
+      background-color: $sidebarblue;
+      transition: 0.1s;
+      margin: 20px 0;
+      font-weight: 400;
+      letter-spacing: 2px;
+      border: thin solid $sidebarblue;
+      padding: 4px;
+      text-transform: uppercase;
+
+      &:hover {
+        color: $sidebarblue;
+        background-color: lighten($sidebarblue, 65%);
+      }
+    }
+  }
+}
+
+::placeholder {
+  color: rgb(201, 201, 201);
+}

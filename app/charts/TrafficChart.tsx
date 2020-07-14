@@ -95,13 +95,13 @@ const TrafficChart = () => {
           },
         ]}
         layout={{
-          title: 'Microservice Traffic',
+          title: 'Server Traffic',
           height: 400,
           width: 400,
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
