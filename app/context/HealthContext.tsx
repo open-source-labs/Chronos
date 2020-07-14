@@ -45,7 +45,6 @@ const HealthContextProvider: React.FC = ({ children }) => {
       // Parse result
       const result = JSON.parse(data);
       console.log('Number of data points (health):', result.length);
-
       // Update context local state
       setHealthData(parseHealthData(result));
     });
