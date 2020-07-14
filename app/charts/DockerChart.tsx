@@ -39,10 +39,9 @@ const DockerStatsChart = () => {
 
   // Render the component if there is available data
   return containerid ? (
-    <div id="chart">
+    <div className="chart docker-chart">
       <header id="docker-stats-chart-header">Docker Container Stats</header>
       <span>Container Name: {containername}</span>
-      <span>Container ID: {containerid}</span>
       <span>Platform: {platform}</span>
       <span>Start time: {starttime}</span>
       <span>Memory Usage: {(memoryusage / 1000000).toFixed(2)}</span>
