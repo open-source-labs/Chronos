@@ -6,6 +6,7 @@ interface IFields {
   database: string;
   URI: string;
   name: string;
+  description: string;
 }
 
 interface IDashboard {
@@ -16,7 +17,7 @@ interface AddModalProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement>;
+type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
 type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
@@ -25,6 +26,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
     database: 'SQL',
     URI: '',
     name: '',
+    description: '',
   });
 
   // Submit form data and save to database
@@ -43,7 +45,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
     });
   };
 
-  const { database, URI, name } = fields;
+  const { database, URI, name, description } = fields;
   return (
     <div className="add-container">
       <div className="add-header">
@@ -83,7 +85,13 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
         </div>
         <div>
           <label htmlFor="db-desc">Description</label>
-          <textarea name="db-desc" id="db-desc" placeholder="Add a short description" />
+          <textarea
+            id="db-desc"
+            name="db-desc"
+            value={description}
+            onChange={e => handleChange(e)}
+            placeholder="Add a short description"
+          />
         </div>
         <button>Submit</button>
       </form>
