@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Quicksand:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Quicksand:wght@300&display=swap');
 @import './constants.scss';
 
 * {
@@ -15,7 +15,7 @@
 body {
   background-color: #f4f4f4;
   font-size: 16px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito sans', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
 }
