@@ -11,13 +11,14 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      color: theme.palette.text.secondary,
+      color: 'white',
       height: 340,
       width: '100%',
       backgroundColor: '#24262f',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': {
         backgroundColor: 'rgba(33, 34, 41, 0.75)',
+        color: 'rgb(255, 243, 72)',
       },
     },
     grid: {
@@ -28,9 +29,7 @@ const Occupied: React.FC = () => {
     icon: {
       width: '100px',
       height: '100px',
-      color: ' white',
       boxShadow: 'none',
-      '&:hover, &.Mui-focusVisible': { color: 'rgb(255, 243, 72)' },
     },
     heroContent: {
       fontWeight: 700,
