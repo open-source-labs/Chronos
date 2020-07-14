@@ -13,7 +13,7 @@ const Occupied: React.FC = () => {
   const useStyles = makeStyles(theme => ({
     paper: {
       color: theme.palette.text.secondary,
-      // whiteSpace: 'nowrap',
+      height: 340,
       background: 'rgb(33, 34, 41)',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       '&:hover, &.Mui-focusVisible': { background: 'rgb(33, 34, 41)' },
@@ -52,11 +52,11 @@ const Occupied: React.FC = () => {
         <AddModal setOpen={setOpen} />
       </Modal>
       <Grid className={classes.grid} container spacing={3}>
+        <Button className={classes.paper} onClick={() => setOpen(true)}>
+          <AddCircleOutlineTwoToneIcon className={classes.icon} />
+        </Button>
         <Applications />
       </Grid>
-      <Button className={classes.paper} onClick={() => setOpen(true)}>
-        <AddCircleOutlineTwoToneIcon className={classes.icon} />
-      </Button>
     </div>
   );
 };

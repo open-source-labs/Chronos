@@ -1,5 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, IconButton, Modal, Paper } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  IconButton,
+  Modal,
+  Paper,
+  Card,
+  CardHeader,
+  CardContent,
+} from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
@@ -42,11 +51,7 @@ const Applications = () => {
       marginBottom: theme.spacing(1),
     },
     hover: {
-      position: 'relative',
-      top: '5%',
-      right: '5%',
-      height: 120,
-      width: 120,
+      color: 'white',
       boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: 'red' },
     },
@@ -58,21 +63,17 @@ const Applications = () => {
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
         <Grid item xs={6} key={i}>
-          <Paper
-            className={classes.paper}
-            id={i}
-            key={i}
-            onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
-          >
-            {app}
-            <IconButton
-              aria-label="Delete"
-              onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
-              color="primary"
-            >
-              <DeleteForeverOutlinedIcon className={classes.hover} />
-            </IconButton>
-          </Paper>
+          <Card className={classes.paper}>
+            <CardHeader
+              avatar={
+                <Button
+                  className={classes.hover}
+                  startIcon={<DeleteForeverOutlinedIcon />}
+                ></Button>
+              }
+            ></CardHeader>
+            <CardContent>{app}</CardContent>
+          </Card>
         </Grid>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -83,3 +84,19 @@ const Applications = () => {
 };
 
 export default Applications;
+
+//           <IconButton
+//             className={classes.btnStyle}
+//             aria-label="Delete"
+//             onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+//             color="primary"
+//           >
+//             <DeleteForeverOutlinedIcon className={classes.hover} />
+//           </IconButton>
+
+// <Paper
+// className={classes.paper}
+// id={i}
+// key={i}
+// onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
+// >
