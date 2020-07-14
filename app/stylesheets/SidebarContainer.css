@@ -84,8 +84,8 @@
 .sidebar-link {
   overflow: hidden;
   z-index: 1;
-  margin: 5px 5px;
-  padding: 1px 5px;
+  margin: 7px 5px;
+  padding: 20px 5px;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -93,7 +93,7 @@
   height: 40px;
   width: 50px;
   border: thin solid rgb(79, 79, 85);
-  border-radius: 3px;
+  border-radius: 8px;
   font-size: 125%;
   color: whitesmoke;
   text-decoration: none;
