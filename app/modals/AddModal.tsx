@@ -88,7 +88,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
           <label htmlFor="db-desc">Description</label>
           <textarea
             id="db-desc"
-            name="db-desc"
+            name="description"
             value={description}
             onChange={e => handleChange(e)}
             placeholder="Add a short description"

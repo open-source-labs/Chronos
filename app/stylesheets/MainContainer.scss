@@ -5,6 +5,7 @@
   min-height: 100vh;
   @include centerWithFlex(space-between);
   flex-direction: column;
+  padding-left: 100px;
 
   .main-routes {
     width: 100%;
