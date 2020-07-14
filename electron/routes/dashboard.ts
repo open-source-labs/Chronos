@@ -1,4 +1,5 @@
 import { ipcMain, IpcMainEvent } from 'electron';
+import moment from 'moment';
 import path from 'path';
 import fs from 'fs';
 /**
@@ -15,6 +16,12 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 
   // Add new applicaiton to list
   const newApp = JSON.parse(application);
+
+  // Add a creation date to the application
+  const createdOn = moment().format('lll')
+  newApp.push(createdOn)
+
+  // Add app to list of applications
   state.services.push(newApp);
 
   // Update settings.json with new list
