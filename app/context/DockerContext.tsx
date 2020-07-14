@@ -25,19 +25,34 @@ const DockerContextProvider: React.FC = ({ children }) => {
   }
 
   // Fetches all data related to a particular app
-  const fetchDockerData = (service: string) => {
+  const fetchDockerData = (service: string) => { 
     ipcRenderer.send('dockerRequest', service);
 
     ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {
       // Parse result
       const result: IContainer[] = JSON.parse(data);
+      console.log('docker data--->',result)
       console.log('Number of data points (docker):', result.length);
-
       // Display single data point
       const newDockerData = result[0] || {};
       setDockerData(newDockerData);
     });
   };
+
+  // Helper function to parse data into individual arrays
+  const parseDockerData = (data: any) => {
+    const output: any = {};
+
+    for (let entry of data) {
+      for (const key in entry) {
+        if (!(key in output)) output[key] = [];
+        output[key].push(entry[key]);
+      }
+    }
+
+    return output;
+  };
+
   return (
     <DockerContext.Provider value={{ dockerData, setDockerData, fetchDockerData }}>
       {children}

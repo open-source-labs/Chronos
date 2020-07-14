@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { ApplicationContext } from '../context/ApplicationContext';
-import '../stylesheets/Header.css';
+import '../stylesheets/Header.scss';
 
 export interface HeaderProps {
   app: string;
@@ -30,6 +30,7 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
         </option>
       </select>
       <div className="header-btns">
+        <button onClick={() => history.goBack()}>Return to Applications</button>
         <button onClick={() => setLive(!live)}>
           {live ? (
             <div>
@@ -39,7 +40,6 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
             <div>Gather Live Data</div>
           )}
         </button>
-        <button onClick={() => history.goBack()}>Return to Applications</button>
       </div>
     </div>
   );

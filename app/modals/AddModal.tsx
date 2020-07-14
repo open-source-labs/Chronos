@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/AddModal.css';
+import '../stylesheets/AddModal.scss';
 
 interface IFields {
   database: string;
@@ -46,10 +46,13 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
   const { database, URI, name } = fields;
   return (
     <div className="add-container">
-      <h2>Enter Your Database Information</h2>
+      <div className="add-header">
+        <h2>Add an Application</h2>
+        <p>Enter the database information used to track the service</p>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="input-field">
-          <label htmlFor="db-type">Type: </label>
+          <label htmlFor="db-type">Type</label>
           <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
             <option value="SQL">SQL</option>
             <option value="MongoDB">MongoDB</option>
@@ -78,7 +81,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
             required
           />
         </div>
-        <button className="submitBtn">Submit</button>
+        <button>Submit</button>
       </form>
     </div>
   );

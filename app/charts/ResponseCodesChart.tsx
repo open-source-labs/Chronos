@@ -77,7 +77,7 @@ const ResponseCodesChart: React.FC = () => {
           font: {
             color: 'black',
             size: 15,
-            family: 'Nunito, san serif',
+            family: 'Nunito sans, sans serif',
           },
           paper_bgcolor: 'white',
           legend: {
@@ -90,7 +90,7 @@ const ResponseCodesChart: React.FC = () => {
     );
   };
 
-  return <div className="responseCodeChart">{createChart()}</div>;
+  return <div className="chart">{createChart()}</div>;
 };
 
 export default ResponseCodesChart;

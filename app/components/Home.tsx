@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import '../stylesheets/Home.css';
+import '../stylesheets/Home.scss';
 
 const Home = () => (
   <div className="home">
-    <img src={'../assets/pangolin.png'} alt="Chronos logo" />
-    <h1 id="welcome">Welcome to Chronos!</h1>
-    <Link className="get-started-btn" to="/applications">
+    <div className="pangolin-container">
+      <img src={'../assets/pangolin.png'} alt="Chronos logo" />
+    </div>
+    <h1 id="welcome">Welcome to Chronos</h1>
+    <p>A very short short description about Chronos...</p>
+    <Link className="link" to="/applications">
       Get Started
     </Link>
   </div>
