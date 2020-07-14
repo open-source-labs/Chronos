@@ -1,7 +1,12 @@
+/* html {
+  height: 100%;
+} */
 .sidebar-container {
   color: white;
   background-color: #24262f;
   width: 100px;
+  /* height: 200vh; */
+  position: absolute;
   transition: 900ms;
   overflow: hidden;
   z-index: 1;
@@ -63,8 +68,10 @@
   transition: 400ms;
 }
 .sidebar {
+  background-color: #24262f;
   padding-left: 20px;
   width: 100px;
+  height: 100%;
   position: fixed;
   display: flex;
   flex-direction: column;
