@@ -7,10 +7,11 @@ import CommsContextProvider from '../context/CommsContext';
 import ApplicationContextProvider from '../context/ApplicationContext';
 import DashboardContextProvider from '../context/DashboardContext';
 import DockerContextProvider from '../context/DockerContext';
+import '../stylesheets/Dashboard.scss';
 
 const DashboardContainer = () => (
   <Router>
-    <div style={dashboardStyle}>
+    <div className="dash">
       <ApplicationContextProvider>
         <DashboardContextProvider>
           <CommsContextProvider>
@@ -26,11 +27,5 @@ const DashboardContainer = () => (
     </div>
   </Router>
 );
-
-// Style
-const dashboardStyle = {
-  display: 'flex',
-  width: '100vw'
-}
 
 export default DashboardContainer;
