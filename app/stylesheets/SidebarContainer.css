@@ -58,10 +58,10 @@
 #miniLogo {
   position: absolute;
   animation: twirl 20s infinite linear;
-  left: 12px;
-  top: 35px;
-  height: 75px;
-  width: 75px;
+  left: 18px;
+  top: 15px;
+  height: auto;
+  width: 65px;
   opacity: 1;
   transition: 200ms;
   margin-top: 10px;
