@@ -87,6 +87,7 @@ const Applications = () => {
               <CardHeader
                 avatar={
                   <IconButton
+                    ref={delRef}
                     className={classes.hover}
                     aria-label="Delete"
                     onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app[0], i)}
