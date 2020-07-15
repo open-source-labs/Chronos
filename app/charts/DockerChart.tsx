@@ -24,6 +24,7 @@ interface IContainer {
  */
 const DockerStatsChart = () => {
   const { dockerData } = useContext(DockerContext);
+
   const {
     containername,
     containerid,
