@@ -159,11 +159,11 @@ ipcMain.on('dockerRequest', async (message, service) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
-      let num = await DockerModelFunc.countDocuments();
+      let num = await DockerModelFunc(service).countDocuments();
 
       //Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
-      result = await DockerModelFunc.find().skip(num - 50);
+      result = await DockerModelFunc(service).find().skip(num - 50);
     }
 
     // SQL Database

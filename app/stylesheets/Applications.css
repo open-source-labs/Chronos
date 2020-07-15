@@ -1,18 +1,34 @@
-.app-btn {
-  width: 80%;
-  height: 50px;
-  background-color: #24262F;
-  padding: 2%;
-  margin: 10px 0 10px 0;
-  font-size: 2.5vh;
-  border: none;
-  text-align: center;
-  color: white;
-  transition: 0.1s;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.app-btn:hover {
+#card-hover {
   cursor: pointer;
-  background-color: #494FEE;
+  transition: all 1s;
+  &:after,
+  &:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    transition: all 1s;
+  }
+  &:after {
+    top: -1px;
+    right: -1px;
+    border-top: 2px solid rgba(255, 243, 72, 0.7);
+    border-right: 2px solid rgba(255, 243, 72, 0.7);
+  }
+  &:before {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 2px solid rgba(255, 243, 72, 0.7);
+    border-left: 2px solid rgba(255, 243, 72, 0.7);
+  }
+  &:hover {
+    position: relative;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    &:before,
+    &:after {
+      width: 25%;
+      height: 25%;
+    }
+  }
 }

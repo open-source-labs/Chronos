@@ -1,10 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Grid, IconButton, Modal, Paper } from '@material-ui/core';
+import {
+  IconButton,
+  Grid,
+  Modal,
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+} from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { DashboardContext } from '../context/DashboardContext';
 
 import ServicesModal from '../modals/ServicesModal';
+import '../stylesheets/Applications.css';
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
@@ -26,7 +35,7 @@ const Applications = () => {
   const handleClick = (selectedApp: string, i: number) => {
     setIndex(i);
     setApp(selectedApp);
-    console.log('handle', selectedApp)
+    console.log('handle', selectedApp);
     setOpen(true);
   };
 
@@ -34,22 +43,32 @@ const Applications = () => {
     paper: {
       height: 340,
       textAlign: 'center',
-      color: 'white',
-      fontSize: '3rem',
+      color: 'rgba(33, 34, 41, 1.2)',
       whiteSpace: 'nowrap',
-      background: 'rgb(33, 34, 41)',
-      border: '2px solid black',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      marginBottom: theme.spacing(1),
+      backgroundColor: 'rgba(33, 34, 41, 0.2)',
+      border: '3px ridge #808080',
+      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
+      '&:hover, &.Mui-focusVisible': { color: 'white', background: 'rgba(33, 34, 41, 1.2)' },
     },
     hover: {
       position: 'relative',
-      top: '5%',
-      right: '5%',
-      height: 120,
-      width: 120,
+      bottom: 20,
+      right: 40,
       boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: 'red' },
+    },
+    btnStyle: {
+      position: 'relative',
+      top: 50,
+      margin: '0 auto',
+      color: 'rgb(255, 243, 72)',
+      backgroundColor: 'grey',
+    },
+    fontStyles: {
+      fontSize: '3rem',
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '2.75rem',
+      },
     },
   }));
 
@@ -58,22 +77,29 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
-        <Grid item xs={6} key={i}>
-          <Paper
-            className={classes.paper}
-            id={i}
-            key={i}
-            onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app[0], i)}
-          >
-            {app[0]}
-            <IconButton
-              aria-label="Delete"
-              onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app[0], i)}
-              color="primary"
+        <Grid item lg={4} md={6} sm={12} key={i}>
+          <div id="card-hover">
+            <Card
+              className={classes.paper}
+              variant="outlined"
+              onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app[0], i)}
             >
-              <DeleteForeverOutlinedIcon className={classes.hover} />
-            </IconButton>
-          </Paper>
+              <CardHeader
+                avatar={
+                  <IconButton
+                    className={classes.hover}
+                    aria-label="Delete"
+                    onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app[0], i)}
+                  >
+                    <DeleteForeverOutlinedIcon />
+                  </IconButton>
+                }
+              ></CardHeader>
+              <CardContent>
+                <Typography className={classes.fontStyles}>{app[0]}</Typography>
+              </CardContent>
+            </Card>
+          </div>
         </Grid>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -84,3 +110,8 @@ const Applications = () => {
 };
 
 export default Applications;
+
+//name, desc, creation date
+// three cards a row, same width
+// move trash can
+//change the font

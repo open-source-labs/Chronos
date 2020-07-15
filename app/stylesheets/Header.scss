@@ -41,9 +41,10 @@ select {
       top: 25px;
       left: 130px;
       background-color: transparent;
-      border: 2px solid $sidebarblue;
+      border: 1px solid $sidebarblue;
       color: $sidebarblue;
       transition: 0.1s;
+      font-size: 90%;
 
       &:hover {
         background-color: $sidebarblue;
