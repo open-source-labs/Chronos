@@ -44,8 +44,6 @@ const Applications = () => {
       height: 340,
       textAlign: 'center',
       color: 'rgba(33, 34, 41, 1.2)',
-      fontWeight: 700,
-      fontSize: '1rem',
       whiteSpace: 'nowrap',
       backgroundColor: 'rgba(33, 34, 41, 0.2)',
       border: '3px ridge #808080',
@@ -65,6 +63,12 @@ const Applications = () => {
       margin: '0 auto',
       color: 'rgb(255, 243, 72)',
       backgroundColor: 'grey',
+    },
+    fontStyles: {
+      fontSize: '3rem',
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '2.75rem',
+      },
     },
   }));
 
@@ -92,7 +96,7 @@ const Applications = () => {
                 }
               ></CardHeader>
               <CardContent>
-                <Typography variant="h2">{app}</Typography>
+                <Typography className={classes.fontStyles}>{app}</Typography>
               </CardContent>
             </Card>
           </div>
