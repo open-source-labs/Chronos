@@ -2,12 +2,6 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-/**
- * @desc Latency Chart
- * @param object props- passed from GraphsContainer
- * @return component - component for latency graph
- */
-
 const LatencyChart = () => {
   const { healthData } = useContext(HealthContext);
 
