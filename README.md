@@ -1,43 +1,60 @@
-<!-- ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png) -->
 <p align="center">
   <img src="./app/assets/chronos-v4.png" height=300/>
 </p>
 
-## Chronos
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
+
+# Chronos
 
 > A developer tool that monitors the health and web traffic of servers, microservices, and containers.
 
-## Quick start
+## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
+
+- Improved user interface & experience
+- Real-time data monitoring
+- Decreased loading times
+- Automated notifications(Slack, email)
+- Easier to use configuration file
+- Now works on Linux, Mac, and Windows
+- Previous versions(less than 4.0) of Chronos are no longer supported
+
+
+## Core Features
+  <!-- * HTTP request tracing -->
+- Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+- Temperature, speed, latency, and memory tracking
+- Process monitoring
+
+# Quick start
 
 Install dependencies
 
 ```
-npm install chronos-tracker**
+npm install chronos-tracker
 ```
 
-Create `chronos-config.js`
+Create `chronos-config.js` within the **same directory** as your `server.js`
 
 ```js
 const chronos = require('chronos-tracker');
 
 cmd.use({
-  microservice: 'chronos-mon-2', // Microservice name
-  interval: 3000, // Interval to collect data
+  microservice: 'chronos-mon-2',
+  interval: 3000,
   dockerized: true,
   database: {
-    // Switch these to MongoDB
     type: 'MongoDB',
     URI: /* NEW DATABASE URI */,
   },
-  // Optional notifications
   notifications: [
     {
-      type: 'slack', // Notifications for slack
+      type: 'slack',
       settings: {
         slackurl: /* YOUR SLACK WEBHOOK URL*/,
       },
     },
-    // Email Notifications,
     {
       type: 'email',
       settings: {
@@ -52,54 +69,29 @@ cmd.use({
 });
 ```
 
+Refer to section setup for more information on these properties
+
+
 _NOTE: Email notification settings may require alternative security settings to work_
 
 Initialize chronos
 
 ```js
-const express = require('express');
 const cmd = require('chronos-tracker');
 require('./cmd-config'); // Bring in config file
 
-const app = express();
-
 cmd.propagate();
 app.use('/', cmd.track());
-
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 ```
 
+Download Chronos to view your application data [here]()
 
-Download chronos [here]()
-
-Upload your application to Chronos
-
-Enjoy...
-
-## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
-
-- Improved user interface & experience
-- Real-time data monitoring
-- Decreased loading times
-- Automated notifications(Slack, email)
-- Easier to use configuration file
-
-## Features
-
-  <!-- * HTTP request tracing -->
-
-- Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
-- Speed and latency tracking
-- Process monitoring
-- Memory usage
-
-## Installation
+<!-- # Installation
 
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application.
+[npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
-## Usage
+# Containerized Applications Using Docker
 
 IMPORTANT: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
@@ -118,24 +110,8 @@ volumes:
 
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
-#### Node module
 
-To begin, install the [Chronos](https://www.npmjs.com/package/chronos-microservice-debugger4) node module within each microservice of your application using the
-[`npm install`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)command:
-
-```
-npm install chronos-microservice-debugger4
-```
-
-Once installed, write the following two lines at the top of each microservice's server file:
-
-Then add a route handler for all incoming requests:
-
-The cmd.microCom handler function logs communication and health data to a user-provided database. This is to ensure that your private data stays private. We currently support MongoDB and SQL/PostgreSQL databases.
-
-cmd.microCom takes six parameters. You can enter the arguments as individual strings or as an array.
-
-The parameters are:
+## Configuration Setup
 
 - [1] microserviceName: To identify the microservice (i.e. "payments").
   - Make sure this name matches your container name. More details more below (param #6).
@@ -154,38 +130,8 @@ The parameters are:
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
-String parameter example:
 
-```javascript
-app.use(
-  '/',
-  cmd.microCom(
-    'payments',
-    'mongo',
-    'mongodb+srv://user:password@cluster0-abc.mongodb.net/',
-    'yes',
-    'm',
-    'no'
-  )
-);
-```
-
-Array parameter example:
-
-```javascript
-let values = [
-  'payments',
-  'mongo',
-  'mongodb+srv://user:password@cluster0-abc.mongodb.net/',
-  'no',
-  'h',
-  'yes'
-]
-
-app.use('/', cmd.microCom(values)
-```
-
-#### Microservice Test Suite
+## Microservice Test Suite
 
 Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app.
 
@@ -195,18 +141,22 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 
 #### Electron desktop application
 
-After installing the node module in each microservice, download the Electron desktop application from the public [Chronos](https://github.com/oslabs-beta/Chronos) repo.
+After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 
 ## Contributing
 
-Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
+Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
+
+- [Contributing Guide](https://github.com/oslabs-beta/Chronos/CONTRIBUTING.md)
 
 ## People
 
 [Tim Atapagra](https://github.com/timpagra),
+[Todd Buckner](https://github.com/tdwolf6),
 [Brian Bui](https://github.com/Umius-Brian),
+[Ronelle Caguioa](https://github.com/ronellecaguioa),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
 [Michelle Herrera](https://github.com/mesherrera),
@@ -214,11 +164,13 @@ Chronos hopes to inspire an active community of both users and developers. For q
 [Duane McFarlane](https://github.com/Duane11003),
 [Ben Mizel](https://github.com/ben-mizel),
 [Alon Ofengart](https://github.com/alon25),
+[Greg Palasciano](https://github.com/gregpalace),
 [Jenae Pennie](https://github.com/jenaepen),
 [Chris Romano](https://github.com/robicano22),
 [Brianna Sookhoo](https://github.com/briannasookhoo),
-[Natalie Umanzor](https://github.com/nmczormick)
+[Natalie Umanzor](https://github.com/nmczormick),
+[Michael Wang](https://github.com/wang3101)
 
 ## License
 
-[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
+Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
