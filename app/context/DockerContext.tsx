@@ -31,7 +31,7 @@ const DockerContextProvider: React.FC = ({ children }) => {
     ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {
       // Parse result
       const result: IContainer[] = JSON.parse(data);
-      console.log('docker data--->',result)
+
       console.log('Number of data points (docker):', result.length);
       // Display single data point
       const newDockerData = result[0] || {};
