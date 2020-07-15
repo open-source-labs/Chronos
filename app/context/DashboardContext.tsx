@@ -55,8 +55,6 @@ const DashboardContextProvider = ({ children }: Props) => {
    */
   const deleteApp = (index: number) => {
     const result = ipcRenderer.sendSync('deleteApp', index);
-    console.log('what is the res', result);
-    console.log('what is the string', JSON.stringify(result));
     setApplications(result);
   };
 

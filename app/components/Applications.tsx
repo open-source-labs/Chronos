@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import {
   IconButton,
   Grid,
@@ -20,23 +20,26 @@ const Applications = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
+  const delRef = useRef<any>(null);
+  const appRef = useRef<any>(null);
 
   useEffect(() => {
     getApplications();
   }, []);
 
   // Ask user for deletetion confirmation
-  const confirmDelete = (app: string, i: number) => {
+  const confirmDelete = (event: React.MouseEvent<HTMLElement>, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
 
   // Handle clicks on Application cards
-  const handleClick = (selectedApp: string, i: number) => {
-    setIndex(i);
-    setApp(selectedApp);
-    console.log('handle', selectedApp);
-    setOpen(true);
+  const handleClick = (event: React.MouseEvent<HTMLElement>, selectedApp: string, i: number) => {
+    if (!delRef.current.contains(event.target)) {
+      setIndex(i);
+      setApp(selectedApp);
+      setOpen(true);
+    }
   };
 
   const useStyles = makeStyles(theme => ({
@@ -80,9 +83,10 @@ const Applications = () => {
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
+              ref={appRef}
               className={classes.paper}
               variant="outlined"
-              onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app[0], i)}
+              onClick={event => handleClick(event, app[0], i)}
             >
               <CardHeader
                 avatar={
@@ -90,7 +94,7 @@ const Applications = () => {
                     ref={delRef}
                     className={classes.hover}
                     aria-label="Delete"
-                    onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app[0], i)}
+                    onClick={event => confirmDelete(event, app[0], i)}
                   >
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
