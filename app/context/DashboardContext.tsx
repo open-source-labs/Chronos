@@ -2,13 +2,6 @@ import React, { useState, createContext } from 'react';
 
 const { ipcRenderer } = window.require('electron');
 
-type IDashboard = {
-  applications: string[];
-  getApplications: () => void;
-  addApp: (fields: IFields) => void;
-  deleteApp: (index: number) => void;
-};
-
 interface IFields {
   database: string;
   URI: string;
@@ -16,12 +9,19 @@ interface IFields {
   description: string;
 }
 
-export const DashboardContext = createContext<any>(null);
-
 interface Props {
   children: React.ReactNode;
 }
 
+export const DashboardContext = createContext<any>(null);
+
+/**
+ * MANAGES THE FOLLOWING DATA AND ACTIONS:
+ * @property  {Array} applications List of all applications, their description and creation date
+ * @method    getApplications
+ * @method    addApp
+ * @method    deleteApp
+ */
 const DashboardContextProvider = ({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
 

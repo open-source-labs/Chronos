@@ -3,22 +3,13 @@ import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 import moment from 'moment';
 
-/**
- * @desc Render Speed Chart
- * @return component - component for speed changes
- */
-
 const SpeedChart = () => {
   const { healthData } = useContext(HealthContext);
   const { time, cpuspeed } = healthData;
   const yAxis = cpuspeed;
   const createChart = () => {
     let timeArr;
-    if (time === undefined) {
-      // Do Nothing
-    } else {
-      // const xAxis = healthData.time;
-
+    if (time !== undefined) {
       timeArr = time.map((el: any) => moment(el).format('h:mm:ss A'));
     }
 

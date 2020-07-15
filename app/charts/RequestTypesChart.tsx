@@ -16,6 +16,7 @@ const RequestTypesChart: React.FC = () => {
     time: string;
   }
   const createRequestChart = () => {
+    // Counter for request types
     const requestTypes: { [key: string]: number } = {
       DELETE: 0,
       GET: 0,
@@ -25,7 +26,7 @@ const RequestTypesChart: React.FC = () => {
       PUT: 0,
     };
 
-    // Record each request type in the requestTypes object
+    // Record each request type frequencies
     let type;
     commsData.forEach((obj: IObject) => {
       type = obj.request;

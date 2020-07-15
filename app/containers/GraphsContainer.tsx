@@ -14,7 +14,7 @@ import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
-import RouteTrace from '../charts/RouteTrace';
+// import RouteTrace from '../charts/RouteTrace';
 import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
@@ -37,8 +37,8 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
-  const { fetchCommsData, setCommsData } = useContext(CommsContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
+  const { fetchCommsData } = useContext(CommsContext);
 
   useEffect(() => {
     if (live) {
@@ -55,7 +55,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
       fetchHealthData(service);
       fetchDockerData(service);
     }
-    // On unmount: clear data
+    // On unmount: clear data and interval
     return () => {
       if (intervalID) clearInterval(intervalID);
       setHealthData({});
@@ -63,6 +63,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
     };
   }, [service, live]);
 
+  // Conditionally render the communications or health graphs
   return (
     <>
       <Header app={app} service={service} live={live} setLive={setLive} />
