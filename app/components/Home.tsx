@@ -6,7 +6,7 @@ import '../stylesheets/Home.scss';
 const Home = () => (
   <div className="home">
     <div className="pangolin-container">
-      <img src={'../assets/pangolin.png'} alt="Chronos logo" />
+      <img src={'../assets/chronos-v4-pangolin.png'} alt="Chronos logo" />
     </div>
     <h1 id="welcome">Welcome to Chronos</h1>
     <p>A very short short description about Chronos...</p>

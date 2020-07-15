@@ -28,7 +28,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
 
   // Sync event - return new applications list
-  message.returnValue = state.services.map((arr: string[]) => arr[0]);
+  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 });
 
 /**
@@ -70,7 +70,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   });
 
   // Sync event - return new applications list
-  message.returnValue = state.services.map((arr: string[]) => arr[0]);
+  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 });
 
 // module.exports = dashboard;

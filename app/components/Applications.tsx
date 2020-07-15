@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import {
   IconButton,
   Grid,
@@ -10,33 +10,37 @@ import {
 } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import { DashboardContext } from '../context/DashboardContext';
 
+import { DashboardContext } from '../context/DashboardContext';
 import ServicesModal from '../modals/ServicesModal';
 import '../stylesheets/Applications.css';
+
+type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
+  const delRef = useRef<any>(null);
 
   useEffect(() => {
     getApplications();
   }, []);
 
   // Ask user for deletetion confirmation
-  const confirmDelete = (app: string, i: number) => {
+  const confirmDelete = (event: ClickEvent, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
 
   // Handle clicks on Application cards
-  const handleClick = (selectedApp: string, i: number) => {
-    setIndex(i);
-    setApp(selectedApp);
-    console.log('handle', selectedApp);
-    setOpen(true);
+  const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
+    if (!delRef.current.contains(event.target)) {
+      setIndex(i);
+      setApp(selectedApp);
+      setOpen(true);
+    }
   };
 
   const useStyles = makeStyles(theme => ({
@@ -82,14 +86,15 @@ const Applications = () => {
             <Card
               className={classes.paper}
               variant="outlined"
-              onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app[0], i)}
+              onClick={event => handleClick(event, app[0], i)}
             >
               <CardHeader
                 avatar={
                   <IconButton
+                    ref={delRef}
                     className={classes.hover}
                     aria-label="Delete"
-                    onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app[0], i)}
+                    onClick={event => confirmDelete(event, app[0], i)}
                   >
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
