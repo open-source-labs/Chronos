@@ -12,7 +12,7 @@ import ProcessesChart from '../charts/ProcessesChart';
 import TemperatureChart from '../charts/TemperatureChart';
 import LatencyChart from '../charts/LatencyChart';
 import MemoryChart from '../charts/MemoryChart';
-import RouteTrace from '../charts/RouteTrace';
+// import RouteTrace from '../charts/RouteTrace';
 import DockerChart from '../charts/DockerChart';
 
 interface IParams {
