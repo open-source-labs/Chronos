@@ -3,7 +3,7 @@ import Splash from './components/Splash';
 import DashboardContainer from './containers/DashboardContainer';
 
 const App: React.FC = () => {
-  // HARD CODED for development
+  // Disable splash for development
   // const [firstVisit, setFirstVisit] = useState(false);
 
   // UNCOMMENT this for splash demo
