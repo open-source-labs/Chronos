@@ -4,80 +4,24 @@ import { CommsContext } from '../context/CommsContext';
 
 const TrafficChart = () => {
   const { commsData } = useContext(CommsContext);
-  const microServiceCountdictionary: { [key: string]: number } = {};
+  const microserviceCount: { [key: string]: number } = {};
 
-  // iterate over Trace Points
+  // Iterate over trace points
   for (let i = 0; i < commsData.length; i += 1) {
-    // populate Micro-count dictionary
-    if (!microServiceCountdictionary[commsData[i].microservice]) {
-      microServiceCountdictionary[commsData[i].microservice] = 1;
-    } else {
-      microServiceCountdictionary[commsData[i].microservice] += 1;
-    }
+    const curr = commsData[i].microservice;
+    // Add to counter
+    if (!microserviceCount[curr]) microserviceCount[curr] = 0;
+    microserviceCount[curr] += 1;
   }
-  // iterating through the microServiceCountdictionary object and setting each microservice name into Xaxis array to spread into the graph
-  const xAxis = [];
-  for (const keys in microServiceCountdictionary) {
-    xAxis.push(keys);
-  }
-  // capture values of microServiceCountdictionary to use as data to populate chart object
-  const serverPingCount: number[] = Object.values(microServiceCountdictionary);
-  // variable 10 points higher than max number in microservicesDictionary aggregation --> variable allows for top level spacing on bar graph
-  const yAxisHeadRoom: number = Math.max(...serverPingCount) + 10;
-  // console.log('here is commsdata in microservicetraffic:     ', commsData);
-  // initialize an empty object resObj. This object will store the microservice names as values and its corresponding correlatingId or correlatingid as keys. The microservice names will be stored in array within the order it was to the database.
-  // const resObj = {};
 
-  // if (commsData.length > 0) {
-  //   // Sort the communication array from latest to earliest document
-  //   commsData.sort((a, b) => {
-  //     if (new Date(a.timeSent) > new Date(b.timeSent)) return 1;
-  //     if (new Date(a.timeSent) < new Date(b.timeSent)) return -1;
-  //     return 0;
-  //   });
-  //   console.log('here is commsdata in microservicetraffic after sorting:     ', commsData);
+  // Prepare x axis
+  const xAxis = Object.keys(microserviceCount);
 
-  // Iterate over sorted commsData array from the end to the beginning
-  //   for (let i = 0; i < commsData.length; i += 1) {
-  //     // declare a constant element and initialize it as the object at index i of the commsData array
-  //     const element = commsData[i];
-  //     // Pushes the microservice name into the object
-  //     if (resObj[element.correlatingId]) {
-  //       resObj[element.correlatingId].push(element.currentMicroservice);
-  //     } else resObj[element.correlatingId] = [element.currentMicroservice];
-  //   }
-  // } else {
-  //   for (let i = commsData.length - 1; i >= 0; i--) {
-  //     const element = commsData[i];
-  //     if (resObj[element.correlatingid])
-  //       resObj[element.correlatingid].push(element.currentmicroservice);
-  //     else resObj[element.correlatingid] = [element.currentmicroservice];
-  //     // initializing the object with the first microservice
-  //   }
-  // }
+  // Prepare data points
+  const serverPings: number[] = Object.values(microserviceCount);
 
-  // use object values to destructure locations
-  // const tracePoints = Object.values(resObj);
-
-  // Declare Micro-server-count dictinary to capture the amount of times a particular server is hit
-
-  // array logging every ping present in communications table ---> flat used to flatten multidimensional array and return 1d array
-  // const tracePointLog = tracePoints.flat(Infinity);
-
-  // Create chart object data to feed into bar component
-  // const myChart = {
-  //   // spread dictionary keys inorder to properly label chart x axis
-  //   labels: [...Object.keys(microServiceCountdictionary)],
-  //   datasets: [
-  //     {
-  //       label: 'Times server Pinged',
-  //       backgroundColor: 'rgba(241, 207, 70,1)',
-  //       borderColor: 'rgba(0,0,0,1)',
-  //       borderWidth: 1,
-  //       data: [...serverPingCount, 0, yAxisHeadRoom], // spread ping count array into data array to have chart populate the Y axis
-  //     },
-  //   ],
-  // };
+  // Factor top margins
+  const yAxisHeadRoom: number = Math.max(...serverPings) + 10;
 
   return (
     <div className="chart">
@@ -86,7 +30,7 @@ const TrafficChart = () => {
           {
             type: 'bar',
             x: [...xAxis],
-            y: [...serverPingCount, 0, yAxisHeadRoom],
+            y: [...serverPings, 0, yAxisHeadRoom],
             fill: 'tozeroy',
             marker: { color: '#5C80FF' },
             mode: 'none',
