@@ -8,18 +8,7 @@
   z-index: 1;
   white-space: nowrap;
 }
-/* .sidebar-container:hover .home { */
-/* .home {
-  background-color: black !important;
-} */
-/* .material-icons,
-.icon-text {
-  vertical-align: middle;
-}
-.material-icons {
-  padding-bottom: 3px;
-  margin-right: 30px;
-} */
+
 .sidebar-container:hover {
   width: 210px;
 }
