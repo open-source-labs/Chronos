@@ -31,6 +31,7 @@ const DashboardContextProvider = ({ children }: Props) => {
    */
   const getApplications = () => {
     const result = ipcRenderer.sendSync('getApps');
+    console.log('result', result)
     setApplications(result);
   };
 
