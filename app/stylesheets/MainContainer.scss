@@ -1,0 +1,22 @@
+@import './constants.scss';
+
+.main-container {
+  flex: 1;
+  min-height: 100vh;
+  @include centerWithFlex(space-between);
+  flex-direction: column;
+  padding-left: 100px;
+
+  .main-routes {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 20px;
+  }
+
+  .copyright-container {
+    @include centerWithFlex(center);
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+  }
+}

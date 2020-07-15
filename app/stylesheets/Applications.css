@@ -1,0 +1,34 @@
+#card-hover {
+  cursor: pointer;
+  transition: all 1s;
+  &:after,
+  &:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    transition: all 1s;
+  }
+  &:after {
+    top: -1px;
+    right: -1px;
+    border-top: 2px solid rgba(255, 243, 72, 0.7);
+    border-right: 2px solid rgba(255, 243, 72, 0.7);
+  }
+  &:before {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 2px solid rgba(255, 243, 72, 0.7);
+    border-left: 2px solid rgba(255, 243, 72, 0.7);
+  }
+  &:hover {
+    position: relative;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    &:before,
+    &:after {
+      width: 25%;
+      height: 25%;
+    }
+  }
+}

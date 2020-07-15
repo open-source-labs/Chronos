@@ -1,0 +1,61 @@
+@import './constants.scss';
+
+.graphs-container {
+  width: 100%;
+  padding: 0 5%;
+
+  .graphs {
+    @include centerWithFlex();
+    flex-wrap: wrap;
+
+    .chart {
+      margin: 10px 20px;
+
+      &.docker-chart {
+        @include centerWithFlex($justify: flex-start, $direction: column);
+        align-items: flex-start;
+        width: 400px;
+        height: 400px;
+        background-color: #fff;
+        color: #333;
+        box-shadow: 2px 2px 6px 2px rgb(187, 187, 187);
+        padding: 10px 20px;
+        border-radius: 4px;
+
+        h2 {
+          align-self: center;
+          font-size: 125%;
+          margin: 15px 0 20px;
+          font-weight: 700px;
+        }
+      }
+    }
+  }
+
+  svg {
+    border-radius: 3px;
+    // border: thin solid rgb(155, 155, 155);
+    box-shadow: $boxshadow;
+  }
+}
+
+/* Tablet */
+@media screen and (min-width: 601px) and (max-width: 980px) {
+  .graphsGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Normal */
+@media screen and (min-width: 1000px) and (max-width: 1500px) {
+  .graphsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Lg Screen */
+@media screen and (min-width: 1600px) {
+  .graphsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
