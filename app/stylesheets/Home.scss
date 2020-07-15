@@ -1,0 +1,57 @@
+@import './constants.scss';
+
+.home {
+  background-color: #f2f2f2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .pangolin-container {
+    height: auto;
+    width: 40%;
+    max-width: 650px;
+
+    img {
+      width: 100%;
+      animation: twirl 20s infinite linear;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+
+  h1 {
+    font-size: 325%;
+    letter-spacing: 2px;
+  }
+
+  p {
+    margin: 15px 0;
+  }
+
+  // Get Started Button
+  .link {
+    width: 175px;
+    font-size: 145%;
+    padding: 10px 15px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border: thin solid $sidebarblue;
+    border-radius: 30px;
+    background-color: $sidebarblue;
+    color: #fff;
+    @include centerWithFlex();
+    transition: 0.1s;
+    animation: glow linear 2s infinite;
+
+    &:hover {
+      background-color: $brandgold;
+      color: #333;
+      animation: none;
+    }
+  }
+}

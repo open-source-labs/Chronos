@@ -1,0 +1,73 @@
+@import './constants.scss';
+
+.microservice-header {
+  width: 100%;
+  @include centerWithFlex(center);
+  flex-direction: column;
+  padding: 30px 0 50px;
+  background-color: $headergray;
+  color: #333;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 425%;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0;
+  }
+}
+
+select {
+  width: 250px;
+  padding: 5px 35px;
+  font-size: 100%;
+  border: thin solid #ccc;
+  height: 30px;
+  appearance: none;
+  cursor: pointer;
+  margin: 15px auto;
+
+  &:hover {
+    background-color: darken(#fff, 5%);
+  }
+}
+
+.header-btns {
+  display: flex;
+
+  button {
+    &:first-of-type {
+      position: absolute;
+      top: 20px;
+      left: 115px;
+      background-color: transparent;
+      border: 1px solid $sidebarblue;
+      color: $sidebarblue;
+      transition: 0.1s;
+      font-size: 90%;
+
+      &:hover {
+        background-color: $sidebarblue;
+        color: #fff;
+      }
+    }
+
+    margin: 0 10px;
+    font-size: 110%;
+    letter-spacing: 1px;
+    padding: 12px;
+    font-weight: 300;
+    border-radius: 30px;
+
+    /* Live data dot */
+    .dot {
+      background-color: red;
+      display: inline-block;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: blink 1s infinite;
+    }
+  }
+}

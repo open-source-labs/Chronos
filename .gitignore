@@ -4,3 +4,6 @@ package-lock.json
 .DS_Store
 user/settings.json
 dist
+build
+coverage
+__tests__/**/__snapshots__
