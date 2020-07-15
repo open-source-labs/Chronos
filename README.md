@@ -2,19 +2,104 @@
 <p align="center">
   <img src="./app/assets/chronos-v4.png" height=300/>
 </p>
+
 ## Chronos
-Microservice communication, health, and Docker container visualizer.
-Comes with a middleware and an Electron app.
+
+> A developer tool that monitors the health and web traffic of servers, microservices, and containers.
+
+## Quick start
+
+Install dependencies
+
+```
+npm install chronos-tracker**
+```
+
+Create `chronos-config.js`
+
+```js
+const chronos = require('chronos-tracker');
+
+cmd.use({
+  microservice: 'chronos-mon-2', // Microservice name
+  interval: 3000, // Interval to collect data
+  dockerized: true,
+  database: {
+    // Switch these to MongoDB
+    type: 'MongoDB',
+    URI: /* NEW DATABASE URI */,
+  },
+  // Optional notifications
+  notifications: [
+    {
+      type: 'slack', // Notifications for slack
+      settings: {
+        slackurl: /* YOUR SLACK WEBHOOK URL*/,
+      },
+    },
+    // Email Notifications,
+    {
+      type: 'email',
+      settings: {
+        emails: /* EMAIL RECIPIENT LIST */,
+        emailHost: /* EMAIL HOST */,
+        emailPort: /* EMAIL PORT */,
+        user: /* SENDER EMAIL ADDRESS */,
+        password: process.env.EMAIL_PASSWORD,
+      },
+    },
+  ],
+});
+```
+
+_NOTE: Email notification settings may require alternative security settings to work_
+
+Initialize chronos
+
+```js
+const express = require('express');
+const cmd = require('chronos-tracker');
+require('./cmd-config'); // Bring in config file
+
+const app = express();
+
+cmd.propagate();
+app.use('/', cmd.track());
+
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+```
+
+
+Download chronos [here]()
+
+Upload your application to Chronos
+
+Enjoy...
+
+## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
+
+- Improved user interface & experience
+- Real-time data monitoring
+- Decreased loading times
+- Automated notifications(Slack, email)
+- Easier to use configuration file
 
 ## Features
 
-  * NEW (3.0+): Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.) (New middleware compiled from TypeScript.)
-  * HTTP request tracing
-  * Speed and latency tracking
-  * Process monitoring
-  * Memory usage
+  <!-- * HTTP request tracing -->
 
-## NEW FEATURE FOR 3.0+ - Logging Docker Container Stats
+- Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+- Speed and latency tracking
+- Process monitoring
+- Memory usage
+
+## Installation
+
+Chronos consists of a [Node](https://nodejs.org/en/) module available through the
+[npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application.
+
+## Usage
 
 IMPORTANT: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
@@ -25,17 +110,13 @@ For example, you can type the following when starting up a container:
 `docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
 
 If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
+
 ```
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
-*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
-
-## Installation
-
-Chronos consists of a [Node](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application.
+\*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
 #### Node module
 
@@ -47,53 +128,50 @@ npm install chronos-microservice-debugger4
 ```
 
 Once installed, write the following two lines at the top of each microservice's server file:
-```javascript
-const cmd = require('chronos-microservice-debugger4');
-cmd.propagate();
-```
 
 Then add a route handler for all incoming requests:
-```js
-app.use('/', 
-  cmd.microCom(
-    'microserviceName', 
-    'databaseType',
-    'databaseURL',
-    'wantMicroHealth', 
-    'queryFrequency',
-    'isDockerized'
-  )
-)
-```
 
 The cmd.microCom handler function logs communication and health data to a user-provided database. This is to ensure that your private data stays private. We currently support MongoDB and SQL/PostgreSQL databases.
 
 cmd.microCom takes six parameters. You can enter the arguments as individual strings or as an array.
 
 The parameters are:
-* [1] microserviceName: To identify the microservice (i.e. "payments").
+
+- [1] microserviceName: To identify the microservice (i.e. "payments").
   - Make sure this name matches your container name. More details more below (param #6).
   - Your input name for the microservice will be turned to an all-lowercase string.
-* [2] databaseType: Enter either "mongo" or "sql".
-* [3] databaseURL: Enter the URL of your database.
-* [4] wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
+- [2] databaseType: Enter either "mongo" or "sql".
+- [3] databaseURL: Enter the URL of your database.
+- [4] wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
   - Note: If you choose "yes" for this param, the middleware will NOT log container stats. In other words, if you want container stats instead, input "no" here and "yes" for param #6.
-* [5] queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
+- [5] queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
   - "s" : every second
   - "m" : every minute (default)
   - "h" : every hour
   - "d" : once per day
   - "w" : once per week
-* [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
+- [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
 String parameter example:
+
 ```javascript
-app.use('/', cmd.microCom('payments', 'mongo', 'mongodb+srv://user:password@cluster0-abc.mongodb.net/','yes','m','no'))
+app.use(
+  '/',
+  cmd.microCom(
+    'payments',
+    'mongo',
+    'mongodb+srv://user:password@cluster0-abc.mongodb.net/',
+    'yes',
+    'm',
+    'no'
+  )
+);
 ```
 
 Array parameter example:
+
 ```javascript
 let values = [
   'payments',
@@ -106,11 +184,12 @@ let values = [
 
 app.use('/', cmd.microCom(values)
 ```
+
 #### Microservice Test Suite
 
-Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app. 
+Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app.
 
-The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together. 
+The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 
@@ -127,14 +206,14 @@ Chronos hopes to inspire an active community of both users and developers. For q
 ## People
 
 [Tim Atapagra](https://github.com/timpagra),
-[Brian Bui](https://github.com/Umius-Brian), 
+[Brian Bui](https://github.com/Umius-Brian),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
 [Michelle Herrera](https://github.com/mesherrera),
-[Alan Lee](https://github.com/ajlee12/), 
+[Alan Lee](https://github.com/ajlee12/),
 [Duane McFarlane](https://github.com/Duane11003),
 [Ben Mizel](https://github.com/ben-mizel),
-[Alon Ofengart](https://github.com/alon25), 
+[Alon Ofengart](https://github.com/alon25),
 [Jenae Pennie](https://github.com/jenaepen),
 [Chris Romano](https://github.com/robicano22),
 [Brianna Sookhoo](https://github.com/briannasookhoo),
