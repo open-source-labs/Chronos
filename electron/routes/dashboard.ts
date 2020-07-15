@@ -62,9 +62,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   );
 
   // Remove application from settings.json
-  console.log('before state', state)
   state.services.splice(index, 1);
-  console.log('after state', state)
 
   // Update settings.json with new list
   fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state), {
