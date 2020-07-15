@@ -24,7 +24,7 @@ interface IContainer {
  */
 const DockerStatsChart = () => {
   const { dockerData } = useContext(DockerContext);
-  console.log('in dockerchart',dockerData )
+
   const {
     containername,
     containerid,
@@ -39,7 +39,7 @@ const DockerStatsChart = () => {
     processcount,
     restartcount,
   }: IContainer = dockerData;
-  console.log('in dockerchart',dockerData.contaiinername )
+
   // Render the component if there is available data
   return containerid ? (
     <div className="chart docker-chart">
