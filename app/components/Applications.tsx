@@ -45,7 +45,7 @@ const Applications = () => {
       textAlign: 'center',
       color: 'rgba(33, 34, 41, 1.2)',
       fontWeight: 700,
-      fontSize: '3rem',
+      fontSize: '1rem',
       whiteSpace: 'nowrap',
       backgroundColor: 'rgba(33, 34, 41, 0.2)',
       border: '3px ridge #808080',
@@ -73,7 +73,7 @@ const Applications = () => {
   return (
     <>
       {applications.map((app: string, i: number | any | string | undefined) => (
-        <Grid item xs={12} lg={6} key={i}>
+        <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
               className={classes.paper}
