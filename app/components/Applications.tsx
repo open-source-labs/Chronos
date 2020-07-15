@@ -54,7 +54,10 @@ const Applications = () => {
       backgroundColor: 'rgba(33, 34, 41, 0.2)',
       border: '3px ridge #808080',
       boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
-      '&:hover, &.Mui-focusVisible': { color: 'white', background: 'rgba(33, 34, 41, 1.2)' },
+      '&:hover, &.Mui-focusVisible': {
+        color: 'white',
+        background: 'rgba(33, 34, 41, 1.2)',
+      },
     },
     hover: {
       position: 'relative',
