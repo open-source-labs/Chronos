@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
 import { ApplicationContext } from '../context/ApplicationContext';
-import RequestTypesChart from '../charts/request-type-chart';
-import ResponseCodesChart from '../charts/response-code-chart';
-import MicroServiceTraffic from '../charts/microservice-traffic';
-import SpeedChart from '../charts/speed-chart';
-import ProcessesChart from '../charts/processes-chart';
-import TemperatureChart from '../charts/temperature-chart';
-import LatencyChart from '../charts/latency-chart';
-import MemoryChart from '../charts/memory-chart';
-import RouteTrace from '../charts/route-trace';
+import RequestTypesChart from '../charts/RequestTypesChart';
+import ResponseCodesChart from '../charts/ResponseCodesChart';
+import MicroServiceTraffic from '../charts/TrafficChart';
+import SpeedChart from '../charts/SpeedChart';
+import ProcessesChart from '../charts/ProcessesChart';
+import TemperatureChart from '../charts/TemperatureChart';
+import LatencyChart from '../charts/LatencyChart';
+import MemoryChart from '../charts/MemoryChart';
+// import RouteTrace from '../charts/RouteTrace';
 import DockerChart from '../charts/DockerChart';
-import '../stylesheets/GraphsContainer.css';
 
 interface IParams {
   service: string;
@@ -28,9 +28,13 @@ interface IMatch {
   };
 }
 
+/**
+ * Includes information on route tracing of HTTP Requests displayed in
+ * the RouteTrace and RouteCopy components
+ */
 const GraphsContainer = ({ match }: IMatch) => {
   const [live, setLive] = useState<boolean>(false);
-  const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null)
+  const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
   //   const initialData = {
   //   nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
   //   links: [
@@ -43,11 +47,11 @@ const GraphsContainer = ({ match }: IMatch) => {
   //   ],
   // };
 
-  const [data, setData] = useState(null);
-  const width = 400;
-  const height = 400;
-  const [active, setActive] = useState(null);
-  const canvas = useRef(null);
+  // const [data, setData] = useState(null);
+  // const width = 400;
+  // const height = 400;
+  // const [active, setActive] = useState(null);
+  // const canvas = useRef(null);
 
   // function fetchData() {
   //   Promise.resolve().then(() => setData(Object.values(initialData)));
@@ -65,8 +69,6 @@ const GraphsContainer = ({ match }: IMatch) => {
   //   }
   // }, [data]);
 
-  // useEffect(fetchData, []);
-
   // Get current service name from params
   const { service } = match.params;
 
@@ -78,20 +80,22 @@ const GraphsContainer = ({ match }: IMatch) => {
   // On Mount: fetch communication data and health data
   useEffect(() => {
     if (live) {
-      setIntervalID(setInterval(function () {
-        fetchCommsData();
-        fetchHealthData(service);
-        fetchDockerData(service);
-      }, 3000));
+      setIntervalID(
+        setInterval(function () {
+          fetchCommsData();
+          fetchHealthData(service);
+          fetchDockerData(service);
+        }, 3000)
+      );
     } else {
-      if (intervalID) clearInterval(intervalID)
+      if (intervalID) clearInterval(intervalID);
       fetchCommsData();
       fetchHealthData(service);
       fetchDockerData(service);
     }
     // On unmount: clear data
     return () => {
-      if (intervalID) clearInterval(intervalID)
+      if (intervalID) clearInterval(intervalID);
       setHealthData({});
       setCommsData([]);
       setDockerData({});
@@ -99,15 +103,21 @@ const GraphsContainer = ({ match }: IMatch) => {
   }, [service, live]);
 
   return (
-    <div className="graphs-container">
-      <div className="headers">
-        <h3 className="header-app">Application: {app}</h3>
-        <h3 className="header-service">Microservice: {service}</h3>
+    <>
+      <div>
+        <h3>Application: {app}</h3>
+        <h3>Microservice: {service}</h3>
         <button onClick={() => setLive(!live)}>
-          {live ? <div><span className="dot"></span>Live</div> : <div>Gather Live Data</div>}
+          {live ? (
+            <div>
+              <span className="dot"></span>Live
+            </div>
+          ) : (
+            <div>Gather Live Data</div>
+          )}
         </button>
       </div>
-      <div className="graphsGrid">
+      <div>
         <SpeedChart />
         <TemperatureChart />
         <RequestTypesChart />
@@ -118,7 +128,7 @@ const GraphsContainer = ({ match }: IMatch) => {
         <MemoryChart />
         <DockerChart />
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,40 +1,15 @@
 import React, { useState } from 'react';
 const { ipcRenderer } = window.require('electron');
 
-interface Data {
-  activememory: number;
-  blockedprocesses: number;
-  cpuloadpercent: number;
-  cpuspeed: number;
-  cputemp: number;
-  freememory: number;
-  id: number;
-  latency: number;
-  runningprocesses: number;
-  sleepingprocesses: number;
-  time: string;
-  totalmemory: number;
-  usememory: number;
-}
-
-interface AllData {
-  activememory: number[];
-  blockedprocesses: number[];
-  cpuloadpercent: number[];
-  cpuspeed: number[];
-  cputemp: number[];
-  freememory: number[];
-  id: number[];
-  latency: number[];
-  runningprocesses: number[];
-  sleepingprocesses: number[];
-  time: string[];
-  totalmemory: number[];
-  usememory: number[];
-}
-
 export const HealthContext = React.createContext<any>(null);
 
+/**
+ * MANAGES THE FOLLOWING DATA AND ACTIONS:
+ * @property  {Object} healthData At most, 50 points of health data
+ * @method    fetchHealthData
+ * @method    parseHealthData
+ * @method    setHealthData
+ */
 const HealthContextProvider: React.FC = ({ children }) => {
   const [healthData, setHealthData] = useState({});
 
@@ -50,7 +25,7 @@ const HealthContextProvider: React.FC = ({ children }) => {
     });
   };
 
-  // Helper function to parse data into individual arrays
+  // Helper function to fetched data into individual arrays
   const parseHealthData = (data: any) => {
     const output: any = {};
 

@@ -22,6 +22,7 @@ type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
   const { addApp }: IDashboard = useContext(DashboardContext);
+
   const [fields, setFields] = useState<IFields>({
     database: 'SQL',
     URI: '',
@@ -32,11 +33,11 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
   // Submit form data and save to database
   const handleSubmit = (event: FormElement) => {
     event.preventDefault();
-    addApp(fields); // Add new app
+    addApp(fields);
     setOpen(false); // Close modal on submit
   };
 
-  // Handle form field changes
+  // Handle form changes
   const handleChange = (event: InputElement) => {
     const { name, value } = event.target;
     setFields({
@@ -46,6 +47,7 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
   };
 
   const { database, URI, name, description } = fields;
+
   return (
     <div className="add-container">
       <div className="add-header">
@@ -53,16 +55,20 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
         <p>Enter the database information used to track the service</p>
       </div>
       <form onSubmit={handleSubmit}>
-      <p>Required*</p>
+        <p>Required*</p>
         <div>
-          <label htmlFor="db-type">Type<span>*</span></label>
+          <label htmlFor="db-type">
+            Type<span>*</span>
+          </label>
           <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
             <option value="SQL">SQL</option>
             <option value="MongoDB">MongoDB</option>
           </select>
         </div>
         <div>
-          <label htmlFor="db-uri">URI<span>*</span></label>
+          <label htmlFor="db-uri">
+            URI<span>*</span>
+          </label>
           <input
             id="db-uri"
             name="URI"
@@ -73,7 +79,9 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
           />
         </div>
         <div>
-          <label htmlFor="db-name">Name<span>*</span></label>
+          <label htmlFor="db-name">
+            Name<span>*</span>
+          </label>
           <input
             id="db-name"
             type="text"

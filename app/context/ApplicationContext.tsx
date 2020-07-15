@@ -5,7 +5,7 @@ const { ipcRenderer } = window.require('electron');
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {string} app Current Application being accessed
+ * @property  {string} app Name of the current application in view
  * @property  {Array} servicesData The microservices of that application
  * @method    connectToDB
  * @method    fetchServicesNames

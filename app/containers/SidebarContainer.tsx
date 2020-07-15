@@ -7,26 +7,8 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../stylesheets/SidebarContainer.css';
 
-// Toggle logic if JS needed in the future
-
-let mini = true;
-// const toggleSidebar = () => {
-//   if (mini) {
-//     console.log('Opening sidebar');
-//     document.getElementById('mySidebar').style.width = '250px';
-//     mini = false;
-//   } else {
-//     console.log('Closing sidebar');
-//     mini = true;
-//   }
-// };
 const SidebarContainer: React.FC = (): JSX.Element => (
-  <div
-    className="sidebar-container"
-    id="mySidebar"
-    /*onMouseOver={toggleSidebar}
-    onMouseOut={toggleSidebar}*/
-  >
+  <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
       <img alt="Chronos Logo" id="serviceDashLogo" src={'../assets/icon2Cropped.png'} />
       <img alt="Chronos Logo Mini" id="miniLogo" src={'../assets/chronos-v4-pangolin.png'} />

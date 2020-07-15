@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
 const { ipcRenderer } = window.require('electron');
 
+interface IContainer {
+  [key: string]: string | number | never;
+}
+
 export const DockerContext = React.createContext<any>(null);
 
+/**
+ * MANAGES THE FOLLOWING DATA AND ACTIONS:
+ * @property  {Object} dockerData Single data point consisting of docker data
+ * @method    setDockerData
+ * @method    fetchDockerData
+ */
 const DockerContextProvider: React.FC = ({ children }) => {
   const [dockerData, setDockerData] = useState({});
-  // interface IContainer {
-  //   (containername: string): string;
-  //   (containerid: string): string;
-  //   (platform: string): string;
-  //   (starttime: string): string;
-  //   (memoryusage: string): number;
-  //   (memorylimit: string): number;
-  //   (memorypercent: string): number;
-  //   (cpupercent: string): number;
-  //   (networkreceived: string): number;
-  //   (networksent: string): number;
-  //   (processcount: string): number;
-  //   (restartcount: string): number;
-  // }
-
-  interface IContainer {
-    [key: string]: string | number | never;
-  }
 
   // Fetches all data related to a particular app
-  const fetchDockerData = (service: string) => { 
+  const fetchDockerData = (service: string) => {
     ipcRenderer.send('dockerRequest', service);
 
     ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {
