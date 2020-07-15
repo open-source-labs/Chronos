@@ -11,7 +11,7 @@ const Occupied: React.FC = () => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      color: 'rgba(33, 34, 41, 0.7)',
+      color: 'rgba(33, 34, 41, 0.75)',
       height: 340,
       width: '100%',
       backgroundColor: 'rgba(33, 34, 41, 0.2)',
@@ -24,7 +24,7 @@ const Occupied: React.FC = () => {
     },
     grid: {
       margin: '0 auto',
-      maxWidth: '50vw',
+      maxWidth: '65vw',
       maxHeight: '75vh',
     },
     icon: {
@@ -58,7 +58,7 @@ const Occupied: React.FC = () => {
         <AddModal setOpen={setOpen} />
       </Modal>
       <Grid className={classes.grid} container spacing={3}>
-        <Grid item xs={12} lg={6}>
+        <Grid item lg={4} md={6} sm={12}>
           <Button className={classes.paper} onClick={() => setOpen(true)}>
             <AddCircleOutlineTwoToneIcon className={classes.icon} />
           </Button>
