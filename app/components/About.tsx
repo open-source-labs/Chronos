@@ -23,6 +23,7 @@ const About: React.FC = () => {
         <span>Greg </span>
         <span>Ronelle </span>
         <span>Todd </span>
+        <span>Alan </span>
       </div>
       <h1>History</h1>
       <div>
