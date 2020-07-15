@@ -10,10 +10,12 @@ import {
 } from '@material-ui/core';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import { DashboardContext } from '../context/DashboardContext';
 
+import { DashboardContext } from '../context/DashboardContext';
 import ServicesModal from '../modals/ServicesModal';
 import '../stylesheets/Applications.css';
+
+type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Applications = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
@@ -21,20 +23,19 @@ const Applications = () => {
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const delRef = useRef<any>(null);
-  const appRef = useRef<any>(null);
 
   useEffect(() => {
     getApplications();
   }, []);
 
   // Ask user for deletetion confirmation
-  const confirmDelete = (event: React.MouseEvent<HTMLElement>, app: string, i: number) => {
+  const confirmDelete = (event: ClickEvent, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
 
   // Handle clicks on Application cards
-  const handleClick = (event: React.MouseEvent<HTMLElement>, selectedApp: string, i: number) => {
+  const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
     if (!delRef.current.contains(event.target)) {
       setIndex(i);
       setApp(selectedApp);
@@ -83,7 +84,6 @@ const Applications = () => {
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
-              ref={appRef}
               className={classes.paper}
               variant="outlined"
               onClick={event => handleClick(event, app[0], i)}
