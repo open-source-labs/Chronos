@@ -2,11 +2,11 @@ import React from 'react';
 import { configure, shallow, render } from 'enzyme';
 
 import GraphsContainer from '../../../app/containers/GraphsContainer'
-// import SpeedChart from '../../../app/charts/speed-chart'
+ import SpeedChart from '../../../app/charts/SpeedChart'
 
-xdescribe('<GraphsContainer />', () => {
-  it('should render graphs')
-})
+// xdescribe('<GraphsContainer />', () => {
+//   it('should render graphs')
+// })
 
 // xdescribe('<GraphsContainer />', () => {
 //   it('should', () => {
