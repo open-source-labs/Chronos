@@ -42,11 +42,7 @@ const Contact: React.FC = () => {
             <br />
             <label htmlFor="message">Message: </label>
             <br />
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Write something.." /*style="height:200px"*/
-            ></textarea>
+            <textarea id="message" name="message" placeholder="Write something.."></textarea>
             <br />
             <label htmlFor="myfile">Select a file: </label>
             <input type="file" id="myfile" name="myfile" accept="image/*"></input>
