@@ -22,7 +22,9 @@ const Applications = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
-  const delRef = useRef<any>(null);
+
+  // Dynamic refs
+  const delRef = useRef<any>([]);
 
   useEffect(() => {
     getApplications();
@@ -36,7 +38,7 @@ const Applications = () => {
 
   // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
-    if (!delRef.current.contains(event.target)) {
+    if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       setIndex(i);
       setApp(selectedApp);
       setOpen(true);
@@ -52,7 +54,10 @@ const Applications = () => {
       backgroundColor: 'rgba(33, 34, 41, 0.2)',
       border: '3px ridge #808080',
       boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
-      '&:hover, &.Mui-focusVisible': { color: 'white', background: 'rgba(33, 34, 41, 1.2)' },
+      '&:hover, &.Mui-focusVisible': {
+        color: 'white',
+        background: 'rgba(33, 34, 41, 1.2)',
+      },
     },
     hover: {
       position: 'relative',
@@ -91,7 +96,7 @@ const Applications = () => {
               <CardHeader
                 avatar={
                   <IconButton
-                    ref={delRef}
+                    ref={element => (delRef.current[i] = element)}
                     className={classes.hover}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, app[0], i)}
@@ -115,8 +120,3 @@ const Applications = () => {
 };
 
 export default Applications;
-
-//name, desc, creation date
-// three cards a row, same width
-// move trash can
-//change the font
