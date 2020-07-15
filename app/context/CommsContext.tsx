@@ -3,23 +3,14 @@ import Electron from 'electron';
 
 const { ipcRenderer } = window.require('electron');
 
-interface IProp {
-  id: number;
-  microservice: string;
-  endpoint: string;
-  request: string;
-  responsestatus: string;
-  responsemessage: string;
-  time: string;
-  correlatingid: string;
-}
-
-interface ICommsContext {
-  commsData: [IProp];
-}
-
 export const CommsContext = React.createContext<any>(null);
 
+/**
+ * MANAGES THE FOLLOWING DATA AND ACTIONS:
+ * @property  {Array} commsData Communications data of current application
+ * @method    setCommsData
+ * @method    fetchCommsData
+ */
 const CommsContextProvider: React.FC = ({ children }) => {
   const [commsData, setCommsData] = useState([]);
   const [currentApp, setCurrentApp] = useState('');
