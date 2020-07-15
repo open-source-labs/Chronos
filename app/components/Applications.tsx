@@ -76,27 +76,27 @@ const Applications = () => {
 
   return (
     <>
-      {applications.map((app: string, i: number | any | string | undefined) => (
+      {applications.map((app: string[], i: number | any | string | undefined) => (
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
               className={classes.paper}
               variant="outlined"
-              onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app, i)}
+              onClick={(event: React.MouseEvent<HTMLElement>) => handleClick(app[0], i)}
             >
               <CardHeader
                 avatar={
                   <IconButton
                     className={classes.hover}
                     aria-label="Delete"
-                    onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app, i)}
+                    onClick={(event: React.MouseEvent<HTMLElement>) => confirmDelete(app[0], i)}
                   >
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
                 }
               ></CardHeader>
               <CardContent>
-                <Typography className={classes.fontStyles}>{app}</Typography>
+                <Typography className={classes.fontStyles}>{app[0]}</Typography>
               </CardContent>
             </Card>
           </div>
