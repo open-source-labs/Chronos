@@ -29,7 +29,7 @@ const SidebarContainer: React.FC = (): JSX.Element => (
   >
     <div className="sidebar">
       <img alt="Chronos Logo" id="serviceDashLogo" src={'../assets/icon2Cropped.png'} />
-      <img alt="Chronos Logo Mini" id="miniLogo" src={'../assets/pangolin.png'} />
+      <img alt="Chronos Logo Mini" id="miniLogo" src={'../assets/chronos-v4-pangolin.png'} />
       <Link className="sidebar-link" to="/" id="home">
         <HomeSharpIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
         &emsp;Home
