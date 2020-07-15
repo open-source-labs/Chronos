@@ -17,6 +17,7 @@ const ResponseCodesChart: React.FC = () => {
   const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
+    // Counter for request types
     const responseCodes = {
       '100-199': 0,
       '200-299': 0,
@@ -26,7 +27,7 @@ const ResponseCodesChart: React.FC = () => {
       NULL: 0,
     };
 
-    // Record each status code in the responseCodes object
+    // Record each status code frequencies
     commsData.forEach((obj: IObj) => {
       const status = obj.responsestatus;
       if (status >= 500) {
