@@ -164,7 +164,6 @@ ipcMain.on('dockerRequest', async (message, service) => {
       //Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
       result = await DockerModelFunc(service).find().skip(num - 50);
-      console.log('data result', result)
     }
 
     // SQL Database
