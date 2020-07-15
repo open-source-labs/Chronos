@@ -36,11 +36,11 @@ const Applications = () => {
 
   // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
-    if (!delRef.current.contains(event.target)) {
-      setIndex(i);
-      setApp(selectedApp);
-      setOpen(true);
-    }
+    // if (!delRef.current.contains(event.target)) {
+    setIndex(i);
+    setApp(selectedApp);
+    setOpen(true);
+    // }
   };
 
   const useStyles = makeStyles(theme => ({
