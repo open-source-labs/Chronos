@@ -1,4 +1,6 @@
 import React from 'react';
+import Github from '../../assets/github.png';
+import Linkedin from '../../assets/linkedin.png';
 import bioOusmanPic from '../../assets/Bio_picture_ousman.jpg';
 import bioBenPic from '../../assets/Bio_picture_ben.jpg';
 import bioJenaePic from '../../assets/Bio_picture_jenae.jpg';
@@ -13,7 +15,8 @@ import bioRonellePic from '../../assets/Bio_picture_Ronelle.jpg';
 import bioToddPic from '../../assets/Bio_picture_Todd.jpg';
 import bioGregoryPic from '../../assets/Bio_picture_Gregory.jpg';
 
-import '../../index.css';
+import '../../stylesheets/Team.scss';
+// import '../../index.css';
 
 const bios = [
   {
@@ -164,22 +167,30 @@ const bios = [
 const Team = () => (
   <div className="team-container" id="teamPage">
     {bios.map((obj) => (
-      <div>
-        <img src={obj.picture} alt="loading" />
-        <p>{obj.name}</p>
-        <p>{obj.bioParagraph}</p>
-        <p>
-          <a href={obj.contact.gitHub} target="__blank">
-            Github
+      <div className="bio-card">
+        <img className="bio-pic" src={obj.picture} alt="loading" />
+        <p className="name">{obj.name}</p>
+        <p className="bio">{obj.bioParagraph}</p>
+        <p className="member-contact">
+          <a
+            className="member-github"
+            href={obj.contact.gitHub}
+            target="__blank"
+          >
+            <img src={Github} alt="loading..." />
           </a>
-          <span> | </span>
-          <a href={obj.contact.linkedIn} target="__blank">
-            LinkedIn
+
+          <a
+            className="member-linkedin"
+            href={obj.contact.linkedIn}
+            target="__blank"
+          >
+            <img src={Linkedin} alt="loading.." />
           </a>
-        </p>
-        <p>
-          Location:
-          {obj.location}
+          <p className="member-location">
+            Location:&nbsp;
+            {obj.location}
+          </p>
         </p>
       </div>
     ))}
