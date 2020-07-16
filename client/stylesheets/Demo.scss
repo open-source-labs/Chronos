@@ -1,0 +1,12 @@
+@import './constants.scss';
+
+.section-demo {
+  background-color: darken($lightgray, 10%);
+  padding: 0 10%;
+  @include centerWithFlex;
+
+  div {
+    width: 33%;
+    padding: 15px 25px;
+  }
+}

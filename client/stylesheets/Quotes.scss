@@ -1,0 +1,15 @@
+@import './constants.scss';
+
+.section-quotes {
+  background-color: #f4f4f4;
+  padding: 0 10%;
+  @include centerWithFlex;
+
+  .quote-container {
+    @include centerWithFlex($direction: column);
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    border-radius: 3px;
+    padding: 20px;
+  }
+}

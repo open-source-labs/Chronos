@@ -1,0 +1,39 @@
+@import './constants.scss';
+
+.section-action {
+  background-color: #f4f4f4;
+  padding: 0 10%;
+  @include centerWithFlex;
+
+  .action {
+    text-align: center;
+
+    h2 {
+      font-size: 400%;
+      font-weight: 300;
+      margin-bottom: 40px;
+      color: #555;
+    }
+
+    p {
+      font-size: 110%;
+    }
+
+    .download-btns {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 25px;
+
+      button {
+        width: 140px;
+        padding: 10px 15px;
+        font-size: 125%;
+        border-radius: 5px;
+        background: #333;
+        color: white;
+        font-weight: 400;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}
