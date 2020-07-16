@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import '../stylesheets/Action.scss';
+import '../stylesheets/Action.scss';
 
 const Action = () => {
   return (
@@ -8,10 +8,28 @@ const Action = () => {
       <div className="action">
         <h2>Ready to Begin?</h2>
         <p>Download chronos as an electron app</p>
-        <div>
-          <button>Download for macOS</button>
-          <button>Download for Linux</button>
-          <button>Download for Windows</button>
+        <div className="download-btns">
+          <button>
+            macOS
+            <br />
+            v4.0
+            <br />
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+          <button>
+            Linux
+            <br />
+            v4.0
+            <br />
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
+          <button>
+            Windows
+            <br />
+            v4.0
+            <br />
+            <ion-icon name="download-outline"></ion-icon>
+          </button>
         </div>
       </div>
     </div>

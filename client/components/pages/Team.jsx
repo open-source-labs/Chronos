@@ -16,7 +16,6 @@ import bioToddPic from '../../assets/Bio_picture_Todd.jpg';
 import bioGregoryPic from '../../assets/Bio_picture_Gregory.jpg';
 
 import '../../stylesheets/Team.scss';
-// import '../../index.css';
 
 const bios = [
   {
