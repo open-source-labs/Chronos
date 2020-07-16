@@ -6,7 +6,7 @@ import '../stylesheets/Nav.scss';
 
 const Nav = () => {
   return (
-    <div className="nav-container">
+    <nav>
       <div className="nav-left">
         <img src={chronosbrand} alt="Chronos Brand" />
         <ul>
@@ -31,21 +31,32 @@ const Nav = () => {
         <ul>
           <li>
             <a href="https://github.com/open-source-labs/Chronos" target="_blank">
-              Github
+              <ion-icon className="icon icon-github" name="logo-octocat"></ion-icon>
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/company/chronosmd">LinkedIn</a>
+            <a href="https://www.npmjs.com/package/chronos-tracker">
+              <ion-icon className="icon icon-npm" name="logo-npm"></ion-icon>
+            </a>
           </li>
           <li>
-            <a href="https://www.npmjs.com/package/chronos-tracker">NPM</a>
+            <a href="https://www.linkedin.com/company/chronosmd">
+              <ion-icon className="icon icon-linkedin" name="logo-linkedin"></ion-icon>
+            </a>
           </li>
           <li>
-            <a href="https://www.facebook.com/ChronosLA/">Facebook</a>
+            <a href="https://www.facebook.com/ChronosLA/">
+              <ion-icon className="icon icon-facebook" name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li>
+            <a href="https://twitter.com/teamchronosla">
+              <ion-icon className="icon icon-twitter" name="logo-twitter"></ion-icon>
+            </a>
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
   );
 };
 

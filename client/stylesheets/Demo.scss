@@ -8,5 +8,15 @@
   div {
     width: 33%;
     padding: 15px 0px;
+    text-align: center;
+    height: 400px;
+    @include centerWithFlex($direction: column, $justify: space-around);
+
+    figure {
+      img {
+        width: 400px;
+        border-radius: 4px;
+      }
+    }
   }
 }

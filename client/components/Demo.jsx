@@ -1,6 +1,9 @@
 import React from 'react';
 // import demoVideo from '../assets/ChronosDemo.mov';
 
+import health from '../assets/health-screenshot.png';
+import apps from '../assets/apps-screenshot.png';
+import code from '../assets/code-screenshot.png';
 import '../stylesheets/Demo.scss';
 
 const Demo = () => {
@@ -8,7 +11,7 @@ const Demo = () => {
     <div className="section-demo">
       <div className="example-1">
         <figure>
-          <img src="" alt="Config file" />
+          <img src={code} alt="Config file" />
         </figure>
         <figcaption>
           <p>
@@ -19,7 +22,7 @@ const Demo = () => {
       </div>
       <div className="example-2">
         <figure>
-          <img src="" alt="Application cards" />
+          <img src={apps} alt="Application cards" />
         </figure>
         <figcaption>
           <p>Upload your application to the Chronos Electron app</p>
@@ -27,7 +30,7 @@ const Demo = () => {
       </div>
       <div className="example-3">
         <figure>
-          <img src="" alt="Graphs" />
+          <img src={health} alt="Graphs" />
         </figure>
         <figcaption>
           <p>View server health, microservice route tracing, and container information</p>

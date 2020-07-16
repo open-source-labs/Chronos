@@ -2,5 +2,60 @@
 
 .section-features {
   background-color: #f4f4f4;
-  padding: 50px 10%;
+  padding: 100px 10%;
+  @include centerWithFlex($direction: column, $justify: flex-start);
+  height: 100vh;
+
+  .features-header {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 100px;
+    font-size: 135%;
+
+    h2 {
+      font-weight: 300;
+      font-size: 225%;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 110%;
+      line-height: 135%;
+    }
+  }
+
+  .features-content {
+    @include centerWithFlex($align: flex-start, $justify: space-evenly);
+
+    div {
+      width: 33%;
+      text-align: center;
+      padding: 0 75px;
+      height: 100%;
+      transition: 0.1s;
+
+      &:nth-of-type(2) {
+        border-left: thin solid #333;
+        border-right: thin solid #333;
+      }
+
+      &:hover {
+        background-color: #fff;
+      }
+
+      ion-icon {
+        font-size: 700%;
+        margin-bottom: 15px;
+      }
+
+      h3 {
+        font-size: 145%;
+        margin-bottom: 15px;
+      }
+
+      p {
+        line-height: 135%;
+      }
+    }
+  }
 }

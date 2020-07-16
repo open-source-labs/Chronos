@@ -28,11 +28,18 @@
         width: 140px;
         padding: 10px 15px;
         font-size: 125%;
-        border-radius: 5px;
-        background: #333;
-        color: white;
+        border: 2px solid #333;
+        background: transparent;
+        color: #333;
         font-weight: 400;
-        letter-spacing: 1px;
+        letter-spacing: 0px;
+        transition: 0.1s;
+        border-radius: 3px;
+
+        &:hover {
+          background-color: lighten(#555, 10%);
+          color: white;
+        }
       }
     }
   }

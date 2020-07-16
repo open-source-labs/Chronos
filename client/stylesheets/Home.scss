@@ -19,7 +19,7 @@
 
     .hero-chronos {
       @include centerWithFlex;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
 
       img {
         width: 225px;
@@ -34,7 +34,7 @@
     }
 
     .hero-details {
-      margin-bottom: 25px;
+      margin-bottom: 45px;
     }
 
     .hero-btns {
