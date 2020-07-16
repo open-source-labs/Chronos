@@ -3,6 +3,7 @@
 .section-home {
   width: 100vw;
   height: 70vh;
+  min-height: 700px;
   background-image: $dark-gradient, url('../assets/background.jpeg');
   background-position: center;
   background-size: cover;
@@ -16,6 +17,7 @@
     top: 400px;
     transform: translate(-50%, -50%);
     @include centerWithFlex($direction: column);
+    animation: appear linear 1s forwards;
 
     .hero-chronos {
       @include centerWithFlex;
@@ -23,6 +25,12 @@
 
       img {
         width: 225px;
+        animation: twirl infinite 20s linear;
+        animation-play-state: running;
+      }
+
+      &:hover img {
+        animation-play-state: paused;
       }
 
       h2 {
@@ -35,12 +43,14 @@
 
     .hero-details {
       margin-bottom: 45px;
+      text-align: center;
     }
 
+    // Buttons
     .hero-btns {
       display: flex;
       justify-content: space-between;
-      width: 35%;
+      width: 300px;
       margin-bottom: 25px;
 
       button {
@@ -52,10 +62,9 @@
         transition: 0.2s;
 
         &:first-of-type {
-
           &:hover {
             background-color: white;
-            color: #333
+            color: #333;
           }
         }
 
@@ -70,10 +79,8 @@
         }
 
         &:hover {
-
         }
       }
-
     }
   }
 }

@@ -13,16 +13,22 @@ const Action = () => {
             macOS
             <br />
             v4.0
+            <br />
+            <ion-icon name="download-outline"></ion-icon>
           </button>
           <button>
             Linux
             <br />
             v4.0
+            <br />
+            <ion-icon name="download-outline"></ion-icon>
           </button>
           <button>
             Windows
             <br />
             v4.0
+            <br />
+            <ion-icon name="download-outline"></ion-icon>
           </button>
         </div>
       </div>

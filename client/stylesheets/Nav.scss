@@ -7,6 +7,7 @@ nav {
   height: 85px;
   color: #fff;
   background-image: $dark-gradient;
+  z-index: 100;
 
   // Left half of nav
   .nav-left {

@@ -1,15 +1,38 @@
 $primary: #8bf6f2;
 $lightgray: #f4f4f4;
-$box-shadow: 4px 4px 14px 3px rgba(214,214,214,1);
+$box-shadow: 4px 4px 14px 3px rgba(214, 214, 214, 1);
 $dark-gradient: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 $npm: #cc3534;
 $linkedin: #0072b1;
-$facebook: #4267B2;
-
+$facebook: #4267b2;
 
 @mixin centerWithFlex($align: center, $justify: center, $direction: row) {
   display: flex;
   align-items: $align;
   justify-content: $justify;
   flex-direction: $direction;
+}
+
+@keyframes twirl {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
