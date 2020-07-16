@@ -1,0 +1,55 @@
+.team-container {
+  justify-content: center;
+  width: 100%;
+  padding: 3px 12px;
+  margin: 5px 5px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
+
+  .bio-card {
+    justify-content: center;
+    text-align: center;
+    margin: 5px 5px;
+    width: 25vh;
+    height: 48vh;
+    padding: 10px 10px;
+    position: relative;
+    border-radius: 5px;
+    .bio-pic {
+      height: 20vh;
+      width: 20vh;
+      border: 1px solid black;
+      border-radius: 50%;
+    }
+    .name {
+      font-size: 28px;
+      margin: 5px 0;
+    }
+    .bio {
+      display: flex;
+      line-height: 1.8vh;
+      padding: 10px 0;
+      flex-grow: 1;
+    }
+    .member-contact {
+      margin: 0 27%;
+      position: absolute;
+      bottom: 10px;
+    }
+    .member-contact img {
+      height: 50px;
+      width: 50px;
+      padding: 5px 5px;
+    }
+    .member-linkedin:hover {
+      opacity: 0.5;
+    }
+    .member-github:hover {
+      opacity: 0.5;
+    }
+  }
+  .bio-card:hover {
+    background-color: grey;
+  }
+}
