@@ -9,8 +9,16 @@
 
   // Left half of nav
   .nav-left {
+    height: 100%;
     position: absolute;
-    left: 10%;
+    width: 50%;
+    left: 0;
+    @include centerWithFlex;
+
+    img {
+      height: 75px;
+      margin-right: 10px;
+    }
 
     ul {
       @include centerWithFlex;
@@ -19,13 +27,15 @@
         margin-right: 30px;
         font-size: 120%;
         letter-spacing: 1px;
+        height: 25px;
 
-        .link {
-          color: #fff;
+        &:hover {
+          border-bottom: 2px solid #f4f4f4;
         }
 
-        img {
-          height: 75px;
+        .link {
+          height: 100%;
+          color: #f4f4f4;
         }
       }
     }
@@ -33,19 +43,27 @@
 
   // Right half of nav
   .nav-right {
+    height: 100%;
     position: absolute;
-    right: 10%;
+    width: 50%;
+    right: 0;
+    @include centerWithFlex;
 
     ul {
       @include centerWithFlex;
 
       li {
-        margin-left: 30px;
+        margin-right: 30px;
         font-size: 120%;
         letter-spacing: 1px;
-        
+        height: 25px;
+
+        &:hover {
+          border-bottom: 2px solid #f4f4f4;
+        }
+
         a {
-          color: #fff;
+          color: #f4f4f4;
         }
       }
     }

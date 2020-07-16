@@ -8,16 +8,22 @@ const Nav = () => {
   return (
     <div className="nav-container">
       <div className="nav-left">
+        <img src={chronosbrand} alt="Chronos Brand" />
         <ul>
           <li>
-            <img src={chronosbrand} alt="Chronos Brand" />
-          </li>
-          <li>Download</li>
-          <li>
-            <Link className="link" to="/team">Meet the Team</Link>
+            <Link className="link" to="/">
+              Home
+            </Link>
           </li>
           <li>
-            <Link className="link" to="/contact">Contact Us</Link>
+            <Link className="link" to="/team">
+              Meet the Team
+            </Link>
+          </li>
+          <li>
+            <Link className="link" to="/contact">
+              Contact Us
+            </Link>
           </li>
         </ul>
       </div>
@@ -35,7 +41,7 @@ const Nav = () => {
             <a href="https://www.npmjs.com/package/chronos-tracker">NPM</a>
           </li>
           <li>
-            <a href="https://www.facebook.com/ChronosLA/">FaceBook</a>
+            <a href="https://www.facebook.com/ChronosLA/">Facebook</a>
           </li>
         </ul>
       </div>

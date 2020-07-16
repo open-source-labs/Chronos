@@ -2,11 +2,11 @@
 
 .section-demo {
   background-color: darken($lightgray, 10%);
-  padding: 0 10%;
-  @include centerWithFlex;
+  padding: 50px 10%;
+  @include centerWithFlex($justify: space-between);
 
   div {
     width: 33%;
-    padding: 15px 25px;
+    padding: 15px 0px;
   }
 }
