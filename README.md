@@ -8,7 +8,7 @@
 
 # Chronos
 
-> A developer tool that monitors the health and web traffic of servers, microservices, and containers.
+### A developer tool that monitors the health and web traffic of servers, microservices, and containers.
 
 ## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
 
@@ -27,54 +27,36 @@
 - Temperature, speed, latency, and memory tracking
 - Process monitoring
 
-# Quick start
+## Quick start
 
-Install dependencies
+### Install dependencies
 
 ```
 npm install chronos-tracker
 ```
 
-Create `chronos-config.js` within the **same directory** as your `server.js`
+### Create a `chronos-config.js`
 
 ```js
+// An example `chronos-config.js` file
+
 const chronos = require('chronos-tracker');
 
-cmd.use({
-  microservice: 'chronos-mon-2',
-  interval: 3000,
+chronos.use({
+  microservice: 'payments',
+  interval: 2000,
   dockerized: true,
   database: {
     type: 'MongoDB',
-    URI: /* NEW DATABASE URI */,
+    URI: process.env.MONGO_URI,
   },
-  notifications: [
-    {
-      type: 'slack',
-      settings: {
-        slackurl: /* YOUR SLACK WEBHOOK URL*/,
-      },
-    },
-    {
-      type: 'email',
-      settings: {
-        emails: /* EMAIL RECIPIENT LIST */,
-        emailHost: /* EMAIL HOST */,
-        emailPort: /* EMAIL PORT */,
-        user: /* SENDER EMAIL ADDRESS */,
-        password: process.env.EMAIL_PASSWORD,
-      },
-    },
-  ],
+  notifications: [],
 });
 ```
 
-Refer to section setup for more information on these properties
+**More information on configuring Chronos and setting up notifications below**
 
-
-_NOTE: Email notification settings may require alternative security settings to work_
-
-Initialize chronos
+### Initialize chronos
 
 ```js
 const cmd = require('chronos-tracker');
@@ -84,14 +66,14 @@ cmd.propagate();
 app.use('/', cmd.track());
 ```
 
-Download Chronos to view your application data [here]()
+**Download Chronos** to start monitoring your application data [here]()
 
 <!-- # Installation
 
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
-# Containerized Applications Using Docker
+## Docker - Containerized Applications
 
 IMPORTANT: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
@@ -111,25 +93,76 @@ volumes:
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
 
-## Configuration Setup
+## Configuration
 
-- [1] microserviceName: To identify the microservice (i.e. "payments").
-  - Make sure this name matches your container name. More details more below (param #6).
-  - Your input name for the microservice will be turned to an all-lowercase string.
-- [2] databaseType: Enter either "mongo" or "sql".
-- [3] databaseURL: Enter the URL of your database.
-- [4] wantMicroHealth: Do you want to monitor the health of this microservice? Enter "yes" or "no".
-  - Note: If you choose "yes" for this param, the middleware will NOT log container stats. In other words, if you want container stats instead, input "no" here and "yes" for param #6.
-- [5] queryFrequency (optional): How frequently do you want to log the health of this microservice? It defaults to every minute, but you can choose:
-  - "s" : every second
-  - "m" : every minute (default)
-  - "h" : every hour
-  - "d" : once per day
-  - "w" : once per week
+The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the same name of the microservice should reflect the name of the corresponding Docker container.
+
+The `interval` property is optional and takes in an integer in milliseconds. This controls the monitoring frequency between data points. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
+
+The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
+
+The `database` property is required. T takes in the following:
+- `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
+- `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, communication, and container infomation to. A `.env` is recommended.
+
 - [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
+## Notifications
+
+The `notifications` property is optional and allows developers to set up notifications when the monitored server responds to request with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects each with a `type` and `settings` property. 
+
+Chronos only supports Slack and email notifications.
+
+### Slack
+
+Chronos uses the **Slack API** to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
+
+An example of configured **slack** settings:
+
+```js
+// ...
+notifications: [
+  {
+    type: 'email',
+    settings: {
+      slackurl: process.env.WEBHOOK
+    }
+  }
+]
+// ...
+```
+
+### Email
+
+Chronos provides the option to send emails. The properties that should be provided are the following
+- `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
+- `emailHost` - The smtp host (string) of your email server
+- `emailPort` - The email port (integer) is either **465** or **587** depending on the sender email security settings. Learn more about email ports at the [nodemailer docs](https://nodemailer.com/smtp/)
+- `user` - The email address (string) of the sender
+- `password` - The password (string) of the sender email
+
+_NOTE: Email notification settings may require alternative security settings to work_
+ 
+An example of configured **email** settings:
+
+```js
+// ...
+notifications: [
+  {
+    type: 'email',
+    settings: {
+      emails: 'foobar@email.com, bizbaz@email.edu',
+      emailHost: 'smpt@gmail.com',
+      emailPort: 465,
+      user: process.env.SENDER_EMAIL,
+      password: process.env.SENDER_PASSWORD
+    }
+  }
+]
+// ...
+```
 
 ## Microservice Test Suite
 
@@ -149,27 +182,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
-- [Contributing Guide](https://github.com/oslabs-beta/Chronos/CONTRIBUTING.md)
-
-## People
-
-[Tim Atapagra](https://github.com/timpagra),
-[Todd Buckner](https://github.com/tdwolf6),
-[Brian Bui](https://github.com/Umius-Brian),
-[Ronelle Caguioa](https://github.com/ronellecaguioa),
-[Mohtasim Chowdhury](https://github.com/mohtasim317),
-[Ousman Diallo](https://github.com/Dialloousman),
-[Michelle Herrera](https://github.com/mesherrera),
-[Alan Lee](https://github.com/ajlee12/),
-[Duane McFarlane](https://github.com/Duane11003),
-[Ben Mizel](https://github.com/ben-mizel),
-[Alon Ofengart](https://github.com/alon25),
-[Greg Palasciano](https://github.com/gregpalace),
-[Jenae Pennie](https://github.com/jenaepen),
-[Chris Romano](https://github.com/robicano22),
-[Brianna Sookhoo](https://github.com/briannasookhoo),
-[Natalie Umanzor](https://github.com/nmczormick),
-[Michael Wang](https://github.com/wang3101)
+- [Contributing](https://github.com/oslabs-beta/Chronos/CONTRIBUTING.md)
 
 ## License
 
