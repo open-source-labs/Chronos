@@ -15,7 +15,7 @@ class Home extends React.Component {
           </div>
           <hr id="MainHr" />
           <div id="ChronosMainTextTwo">
-            <h5>THE MACRO VIEW OF YOUR MICROSERVICE </h5>
+            <h5>THE MACRO VIEW OF YOUR APPLICATION </h5>
           </div>
           <hr id="MainHr" />
           <div id="ChronosMainTextThree">

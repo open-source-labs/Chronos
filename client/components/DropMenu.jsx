@@ -8,22 +8,29 @@ const DropMenu = () => {
   return (
     <div className="DropMenu">
       <li id="MenuItem">
-        <Link to="/">Chronos</Link>{' '}
+        <Link to="/">Chronos</Link>
       </li>
       <li id="MenuItem">
         <Link to="/demo">Demo</Link>
       </li>
       <li id="MenuItem">
-        <a href="https://www.npmjs.com/package/chronos-tracker">NPM</a>
-      </li>
-      <li id="MenuItem">
-        <Link to="/team">Team</Link>{' '}
+        <Link to="/team">Team</Link>
       </li>
       <li id="MenuItem">
         <Link to="/contact">Contact</Link>
       </li>
       <li id="MenuItem">
-        <a href="https://github.com/oslabs-beta/Chronos">Github</a>
+        <a
+          href="https://www.npmjs.com/package/chronos-tracker"
+          target="__blank"
+        >
+          NPM
+        </a>
+      </li>
+      <li id="MenuItem">
+        <a href="https://github.com/oslabs-beta/Chronos" target="__blank">
+          Github
+        </a>
       </li>
     </div>
   );
