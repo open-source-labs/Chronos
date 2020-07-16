@@ -8,7 +8,7 @@
 
 # Chronos
 
-> A developer tool that monitors the health and web traffic of servers, microservices, and containers.
+### A developer tool that monitors the health and web traffic of servers, microservices, and containers.
 
 ## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
 
@@ -182,7 +182,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
-- [Contributing Guide](https://github.com/oslabs-beta/Chronos/CONTRIBUTING.md)
+- [Contributing](https://github.com/oslabs-beta/Chronos/CONTRIBUTING.md)
 
 ## License
 
