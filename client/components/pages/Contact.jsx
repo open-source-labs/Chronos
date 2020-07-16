@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Logo from '../../assets/chronos-v4.png';
 import '../../stylesheets/Contact.scss';
 
 const Contact = () => (
@@ -29,7 +29,7 @@ const Contact = () => (
           </p>
         </div>
         <div className="chronos-contact-container">
-          {/* <img src={'../assets/chronos-v4.png'} alt="Chronos logo" /> */}
+          <img src={Logo} alt="Chronos logo" />
         </div>
       </div>
       <div className="email-container">
