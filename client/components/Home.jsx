@@ -4,10 +4,10 @@ import '../stylesheets/Home.scss';
 
 const Home = () => {
   return (
-    <div>
-      <div>
+    <div className="section-home">
+      <div className="hero-container">
         <div>
-          <h2>CHRONOS</h2>
+          <h2>Chronos</h2>
         </div>
         <hr />
         <div>

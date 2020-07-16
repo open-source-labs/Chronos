@@ -28,7 +28,7 @@ const App = () => {
   // }
 
   return (
-    <div>
+    <div className="container">
       {/* <div className="hamburgerMenu">
         <button
           onClick={() => {
@@ -41,7 +41,7 @@ const App = () => {
       </div>
       {dropMenu} */}
       <Nav />
-      <div className="container">
+      <div className="routes">
         <Switch>
           <Route exact path="/" component={Main} />
           <Route exact path="/team" component={Team} />
