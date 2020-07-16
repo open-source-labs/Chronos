@@ -1,20 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import chronosbrand from '../assets/chronos-v4-pangolin.png';
 
-import '../stylesheets/Nav.scss'
+import '../stylesheets/Nav.scss';
 
 const Nav = () => {
   return (
     <div className="nav-container">
       <div className="nav-left">
         <ul>
-          <li>Chronos Brand</li>
+          <li>
+            <img src={chronosbrand} alt="Chronos Brand" />
+          </li>
           <li>Download</li>
           <li>
-            <Link to="/team">Meet the Team</Link>
+            <Link className="link" to="/team">Meet the Team</Link>
           </li>
           <li>
-            <Link to="/contact">Contact Us</Link>
+            <Link className="link" to="/contact">Contact Us</Link>
           </li>
         </ul>
       </div>
