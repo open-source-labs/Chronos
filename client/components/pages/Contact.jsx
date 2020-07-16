@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../../stylesheets/Contact.scss';
+
 const Contact = () => (
   <div className="contact">
     <div className="contact-border">

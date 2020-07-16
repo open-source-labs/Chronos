@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../stylesheets/Features.scss'
+
 const Features = () => (
   <div className="section-features">
     <div className="features-header">
