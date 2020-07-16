@@ -6,10 +6,27 @@
   @include centerWithFlex;
 
   .quote-container {
-    @include centerWithFlex($direction: column);
+    @include centerWithFlex;
     background-color: #fff;
     box-shadow: $box-shadow;
     border-radius: 3px;
-    padding: 20px;
+    padding: 40px;
+
+    img {
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+
+    .quote-content {
+      @include centerWithFlex($direction: column);
+      p {
+        font-size: 135%;
+
+        &:last-of-type {
+          align-self: flex-end;
+          font-size: 115%;
+        }
+      }
+    }
   }
 }
