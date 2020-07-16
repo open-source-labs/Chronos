@@ -1,8 +1,6 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
-import { render } from 'react-dom';
-import Logo from './Logo.jsx';
 import '../index.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const DropMenu = () => {
   return (
