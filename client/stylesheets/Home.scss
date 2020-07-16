@@ -2,9 +2,8 @@
 
 .section-home {
   width: 100vw;
-  height: 100vh;
-  background-image: $dark-gradient,
-    url('../assets/background.jpeg');
+  height: 70vh;
+  background-image: $dark-gradient, url('../assets/background.jpeg');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -14,12 +13,13 @@
     color: #fff;
     position: absolute;
     left: 50%;
-    top: 35%;
+    top: 400px;
     transform: translate(-50%, -50%);
     @include centerWithFlex($direction: column);
 
     .hero-chronos {
-      @include centerWithFlex($align: flex-start);
+      @include centerWithFlex;
+      margin-bottom: 10px;
 
       img {
         width: 225px;
@@ -31,6 +31,49 @@
         text-align: center;
         letter-spacing: 5px;
       }
+    }
+
+    .hero-details {
+      margin-bottom: 25px;
+    }
+
+    .hero-btns {
+      display: flex;
+      justify-content: space-between;
+      width: 35%;
+      margin-bottom: 25px;
+
+      button {
+        border: thin solid white;
+        border-radius: 3px;
+        color: white;
+        padding: 15px 20px;
+        font-size: 130%;
+        transition: 0.2s;
+
+        &:first-of-type {
+
+          &:hover {
+            background-color: white;
+            color: #333
+          }
+        }
+
+        &:last-of-type {
+          border: thin solid $primary;
+          color: #333;
+          background-color: $primary;
+
+          &:hover {
+            background-color: darken($primary, 35%);
+          }
+        }
+
+        &:hover {
+
+        }
+      }
+
     }
   }
 }

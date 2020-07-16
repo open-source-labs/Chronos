@@ -1,7 +1,7 @@
-
+$primary: #8bf6f2;
 $lightgray: #f4f4f4;
 $box-shadow: 4px 4px 14px 3px rgba(214,214,214,1);
-$dark-gradient: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+$dark-gradient: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 
 @mixin centerWithFlex($align: center, $justify: center, $direction: row) {
   display: flex;

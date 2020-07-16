@@ -11,23 +11,21 @@ const Home = () => {
           <img src={pangolin} alt="Chronos logo" />
           <h2>Chronos</h2>
         </div>
-        <div>
+        <div className="hero-details">
           <p>
             A network monitoring tool for servers, microservices, and containerized applications.
           </p>
         </div>
+        <div className="hero-btns">
+          <button>
+            Get started
+          </button>
+          <button>
+            Download
+          </button>
+        </div>
         <div>
-          <p>
-            Introducing Chronos - an all-in-one application network and health monitoring tool,
-            containerized or not! Simply install the NPM package into each of your services, provide
-            a database connection string, and peer inside your application’s inner workings.
-          </p>
-          <p>
-            Chronos also accesses the systems information API to monitor data pertinent to the
-            health of the server on which the service lives, all beautifully displayed and
-            dynamically rendered.
-          </p>
-          <a
+          {/* <a
             className="github-button"
             href="https://github.com/open-source-labs/Chronos"
             data-icon="octicon-star"
@@ -35,11 +33,22 @@ const Home = () => {
             aria-label="Star ntkme/github-buttons on GitHub"
           >
             Star
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
   );
 };
-
+/*
+<p>
+  Introducing Chronos - an all-in-one application network and health monitoring tool,
+  containerized or not! Simply install the NPM package into each of your services, provide
+  a database connection string, and peer inside your application’s inner workings.
+</p>
+<p>
+  Chronos also accesses the systems information API to monitor data pertinent to the
+  health of the server on which the service lives, all beautifully displayed and
+  dynamically rendered.
+</p>
+*/
 export default Home;
