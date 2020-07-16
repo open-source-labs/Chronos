@@ -11,14 +11,14 @@
     justify-content: center;
     text-align: center;
     margin: 5px 5px;
-    width: 25vh;
-    height: 48vh;
+    width: 450px;
+    height: 580px;
     padding: 10px 10px;
     position: relative;
     border-radius: 5px;
     .bio-pic {
-      height: 20vh;
-      width: 20vh;
+      height: 270px;
+      width: 270px;
       border: 1px solid black;
       border-radius: 50%;
     }
@@ -28,12 +28,12 @@
     }
     .bio {
       display: flex;
-      line-height: 1.8vh;
+      line-height: 25px;
       padding: 10px 0;
       flex-grow: 1;
     }
     .member-contact {
-      margin: 0 27%;
+      margin-left: 140px;
       position: absolute;
       bottom: 10px;
     }
