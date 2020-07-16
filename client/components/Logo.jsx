@@ -1,15 +1,10 @@
 import React from 'react';
-import { render } from 'react-dom';
 import logo from '../assets/icon.png';
 
-class Logo extends React.Component {
-    render () {
-        return (
-            <div >
-                <img className="MainImage"  src={logo} />
-            </div>
-        )
-    }
-}
+const Logo = () => (
+  <div>
+    <img className="MainImage" src={logo} alt="loading..." />
+  </div>
+);
 
 export default Logo;
