@@ -8,10 +8,13 @@ const Demo = () => {
     <div className="section-demo">
       <div className="example-1">
         <figure>
-          <img src="" alt="Application cards" />
+          <img src="" alt="Config file" />
         </figure>
         <figcaption>
-          <p>View all of your applications in one place</p>
+          <p>
+            Install and configure Chronos in your Node.js server. For more information visit our{' '}
+            <a href="https://github.com/open-source-labs/Chronos">Github page</a>
+          </p>
         </figcaption>
       </div>
       <div className="example-2">
@@ -19,44 +22,18 @@ const Demo = () => {
           <img src="" alt="Application cards" />
         </figure>
         <figcaption>
-          <p>View all of your applications in one place</p>
+          <p>Upload your application to the Chronos Electron app</p>
         </figcaption>
       </div>
       <div className="example-3">
         <figure>
-          <img src="" alt="Application cards" />
+          <img src="" alt="Graphs" />
         </figure>
         <figcaption>
-          <p>View all of your applications in one place</p>
+          <p>View server health, microservice route tracing, and container information</p>
         </figcaption>
       </div>
-      {/* <div id="lightDemoWrapper">
-        <div className="demoTitle1">
-          <h2>Install</h2>
-          <p>npm install chronos-microservice-debugger4</p>
-        </div>
-        <div className="demoTitle1">
-          <h2>Prep</h2>
-          <p>insert chronos middleware within each server</p>
-        </div>
-        <div className="demoTitle1">
-          <h2>Connect</h2>
-          <p>link your database to our middleware and the chronos application</p>
-        </div>
-        <div className="demoTitle1">
-          <h2>Monitor</h2>
-          <p>open application to view microservices data</p>
-        </div>
-      </div>
-
-      <div className="space"></div>
-      <div className="demoTitle2">
-        <h2>Video Demonstration</h2>
-        <hr id="MainHr" />
-        <div className="videoDemo">
-          <video src={demoVideo} controls={true} />
-        </div>
-      </div> */}
+      {/* <video src={demoVideo} controls={true} /> */}
     </div>
   );
 };
