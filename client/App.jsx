@@ -16,7 +16,7 @@ import {
     Link
 } from "react-router-dom";
 import './index.css';
-import Navbar from './components/Navbar.jsx';
+import Nav from './components/Nav.jsx';
 import Hamburger from './components/Hamburger.jsx';
 import DropMenu from './components/DropMenu.jsx';
 
@@ -48,7 +48,7 @@ const App = () => {
                 }} id="hamburgerButton">&#9776;</button>
             </div>
             {dropMenu}
-            <Navbar/>
+            <Nav/>
             <Logo/>
             <Switch>
                 <Route exact path="/" component={Home}  />
