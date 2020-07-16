@@ -8,7 +8,7 @@
 
 # Chronos
 
-### A developer tool that monitors the health and web traffic of servers, microservices, and containers.
+A developer tool that monitors the health and web traffic of servers, microservices, and containers.
 
 ## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
 
@@ -26,16 +26,17 @@
 - Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Temperature, speed, latency, and memory tracking
 - Process monitoring
+- HTTP route tracing
 
 ## Quick start
 
-### Install dependencies
+#### Install dependencies
 
 ```
 npm install chronos-tracker
 ```
 
-### Create a `chronos-config.js`
+#### Create a `chronos-config.js`
 
 ```js
 // An example `chronos-config.js` file
@@ -56,7 +57,7 @@ chronos.use({
 
 **More information on configuring Chronos and setting up notifications below**
 
-### Initialize chronos
+#### Initialize chronos
 
 ```js
 const cmd = require('chronos-tracker');
@@ -67,7 +68,6 @@ app.use('/', cmd.track());
 ```
 
 **Download Chronos** to start monitoring your application data [here]()
-
 <!-- # Installation
 
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
@@ -92,18 +92,17 @@ volumes:
 
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
-
 ## Configuration
 
-The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the same name of the microservice should reflect the name of the corresponding Docker container.
+The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the name of the microservice should be the same as the name of the corresponding Docker container.
 
-The `interval` property is optional and takes in an integer in milliseconds. This controls the monitoring frequency between data points. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
+The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
 
 The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
 
-The `database` property is required. T takes in the following:
+The `database` property is required and takes in the following:
 - `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
-- `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, communication, and container infomation to. A `.env` is recommended.
+- `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
 
 - [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
@@ -111,9 +110,9 @@ The `database` property is required. T takes in the following:
 
 ## Notifications
 
-The `notifications` property is optional and allows developers to set up notifications when the monitored server responds to request with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects each with a `type` and `settings` property. 
+The `notifications` property is optional and allows developers to be alerted when the server responds to requests with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects, each with a `type` and `settings` property. 
 
-Chronos only supports Slack and email notifications.
+Chronos only supports **Slack** and **email** notifications.
 
 ### Slack
 
@@ -172,7 +171,7 @@ The microservices include individual Dockerfiles in their respective directories
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 
-#### Electron desktop application
+## Electron desktop application
 
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
 
@@ -182,7 +181,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
-- [Contributing](https://github.com/oslabs-beta/Chronos/CONTRIBUTING.md)
+- [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
 
 ## License
 
