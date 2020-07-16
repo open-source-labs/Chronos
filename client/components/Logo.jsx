@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Logo = () => {
-  return <div></div>;
+  return (
+    <div>
+      <img src="" alt="Chronos logo"/>
+    </div>
+  );
 };
 
 export default Logo;
