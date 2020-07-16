@@ -8,6 +8,11 @@ import bioBrianPic from '../../assets/Bio_picture_Brian.jpg';
 import bioBriannaPic from '../../assets/Bio_picture_Brianna.png';
 import bioAlanPic from '../../assets/Bio_picture_Alan.png';
 import bioAlonPic from '../../assets/Bio_picture_Alon.jpg';
+import bioMichaelPic from '../../assets/Bio_picture_Michael.jpg';
+import bioRonellePic from '../../assets/Bio_picture_Ronelle.jpg';
+import bioToddPic from '../../assets/Bio_picture_Todd.jpg';
+import bioGregoryPic from '../../assets/Bio_picture_Gregory.jpg';
+
 import '../../index.css';
 
 const bios = [
@@ -110,6 +115,50 @@ const bios = [
     },
     location: 'Los Angeles',
   },
+  {
+    name: 'Michael Wang',
+    bioParagraph:
+      'Michael is a passionate software engineer who is always deeply entrenched in new technologies while reinforcing his core knowledge. He is always looking to improve in all aspects of his craft, whether it be on an indiviual or team basis.',
+    picture: bioMichaelPic,
+    contact: {
+      gitHub: 'https://github.com/wang3101',
+      linkedIn: 'https://www.linkedin.com/in/michael--wang/',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Ronelle Caguioa',
+    bioParagraph:
+      'Ronelle is a fullstack engineer who has a passion for building innovative products and the creative outlet that comes along with it. He has grown a liking to the community encompassing tech and hopes to make significant contributions with his talent.',
+    picture: bioRonellePic,
+    contact: {
+      gitHub: 'https://github.com/ronellecaguioa',
+      linkedIn: 'https://www.linkedin.com/in/ronellecaguioa/',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Todd Buckner',
+    bioParagraph:
+      'Todd Buckner is a software engineer originally from Ohio, now living in Los Angeles. He enjoys the Los Angeles Philharmonic, hiking, science fiction, and live comedy.',
+    picture: bioToddPic,
+    contact: {
+      gitHub: 'https://github.com/RToddBuckner',
+      linkedIn: 'TBD',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Gregory Palasciano',
+    bioParagraph:
+      'Gregory Palasciano is a full-stack software engineer committed to improving user experiences through responsive and scalable applications.',
+    picture: bioGregoryPic,
+    contact: {
+      gitHub: 'https://github.com/gregpalace',
+      linkedIn: 'https://www.linkedin.com/in/gregory-palasciano',
+    },
+    location: 'Los Angeles',
+  },
 ];
 
 const Team = () => (
@@ -120,8 +169,13 @@ const Team = () => (
         <p>{obj.name}</p>
         <p>{obj.bioParagraph}</p>
         <p>
-          <span>{obj.contact.gitHub}</span>
-          <span>{obj.contact.LinkedIn}</span>
+          <a href={obj.contact.gitHub} target="__blank">
+            Github
+          </a>
+          <span> | </span>
+          <a href={obj.contact.linkedIn} target="__blank">
+            LinkedIn
+          </a>
         </p>
         <p>
           Location:
