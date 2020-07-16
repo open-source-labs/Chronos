@@ -13,7 +13,7 @@ import bioRonellePic from '../../assets/Bio_picture_Ronelle.jpg';
 import bioToddPic from '../../assets/Bio_picture_Todd.jpg';
 import bioGregoryPic from '../../assets/Bio_picture_Gregory.jpg';
 
-import '../../index.css';
+// import '../../index.css';
 
 const bios = [
   {

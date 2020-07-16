@@ -3,10 +3,34 @@
 .section-home {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/background.jpeg');
+  background-image: $dark-gradient,
+    url('../assets/background.jpeg');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
 
-  // .hero-container
+  .hero-container {
+    width: 50%;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    @include centerWithFlex($direction: column);
+
+    .hero-chronos {
+      @include centerWithFlex($align: flex-start);
+
+      img {
+        width: 225px;
+      }
+
+      h2 {
+        font-size: 800%;
+        font-weight: 400;
+        text-align: center;
+        letter-spacing: 5px;
+      }
+    }
+  }
 }
