@@ -4,17 +4,17 @@ import '../stylesheets/Home.scss';
 
 const Home = () => {
   return (
-    <div>
-      <div id="titleChronosAndMiniTitle">
-        <div id="ChronosMainText">
-          <h2>CHRONOS</h2>
+    <div className="section-home">
+      <div className="hero-container">
+        <div>
+          <h2>Chronos</h2>
         </div>
-        <hr id="MainHr" />
-        <div id="ChronosMainTextTwo">
+        <hr />
+        <div>
           <h5>THE MACRO VIEW OF YOUR APPLICATION </h5>
         </div>
-        <hr id="MainHr" />
-        <div id="ChronosMainTextThree">
+        <hr />
+        <div>
           <p>
             Introducing Chronos - an all-in-one application network and health
             monitoring tool, containerized or not! Simply install the NPM

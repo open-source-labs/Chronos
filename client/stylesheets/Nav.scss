@@ -1,0 +1,53 @@
+@import './constants.scss';
+
+.nav-container {
+  @include centerWithFlex;
+  position: fixed;
+  width: 100%;
+  height: 85px;
+  color: #fff;
+
+  // Left half of nav
+  .nav-left {
+    position: absolute;
+    left: 10%;
+
+    ul {
+      @include centerWithFlex;
+
+      li {
+        margin-right: 30px;
+        font-size: 120%;
+        letter-spacing: 1px;
+
+        .link {
+          color: #fff;
+        }
+
+        img {
+          height: 75px;
+        }
+      }
+    }
+  }
+
+  // Right half of nav
+  .nav-right {
+    position: absolute;
+    right: 10%;
+
+    ul {
+      @include centerWithFlex;
+
+      li {
+        margin-left: 30px;
+        font-size: 120%;
+        letter-spacing: 1px;
+        
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
