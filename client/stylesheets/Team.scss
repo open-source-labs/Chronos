@@ -2,7 +2,8 @@
   justify-content: center;
   width: 100%;
   padding: 3px 12px;
-  margin: 5px 5px;
+  padding-top: 110px;
+  margin: 0px 5px;
   display: flex;
   flex-wrap: wrap;
   background-color: white;
@@ -50,6 +51,6 @@
     }
   }
   .bio-card:hover {
-    background-color: grey;
+    background-color: #f0f0f5;
   }
 }
