@@ -19,6 +19,94 @@ import '../../stylesheets/Team.scss';
 
 const bios = [
   {
+    name: 'Michael Wang',
+    bioParagraph:
+      'Michael is a passionate software engineer who is always deeply entrenched in new technologies while reinforcing his core knowledge. He is always looking to improve in all aspects of his craft, whether it be on an indiviual or team basis.',
+    picture: bioMichaelPic,
+    contact: {
+      gitHub: 'https://github.com/wang3101',
+      linkedIn: 'https://www.linkedin.com/in/michael--wang/',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Ronelle Caguioa',
+    bioParagraph:
+      'Ronelle is a fullstack engineer who has a passion for building innovative products and the creative outlet that comes along with it. He has grown a liking to the community encompassing tech and hopes to make significant contributions with his talent.',
+    picture: bioRonellePic,
+    contact: {
+      gitHub: 'https://github.com/ronellecaguioa',
+      linkedIn: 'https://www.linkedin.com/in/ronellecaguioa/',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Todd Buckner',
+    bioParagraph:
+      'Todd Buckner is a software engineer originally from Ohio, now living in Los Angeles. He enjoys the Los Angeles Philharmonic, hiking, science fiction, and live comedy.',
+    picture: bioToddPic,
+    contact: {
+      gitHub: 'https://github.com/RToddBuckner',
+      linkedIn: 'TBD',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Gregory Palasciano',
+    bioParagraph:
+      'Gregory Palasciano is a full-stack software engineer committed to improving user experiences through responsive and scalable applications.',
+    picture: bioGregoryPic,
+    contact: {
+      gitHub: 'https://github.com/gregpalace',
+      linkedIn: 'https://www.linkedin.com/in/gregory-palasciano',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Brianna Sookhoo',
+    bioParagraph:
+      'Brianna Sookhoo is a full-stack software engineer who loves to code in her sleep.',
+    picture: bioBriannaPic,
+    contact: {
+      gitHub: 'https://github.com/briannasookhoo',
+      linkedIn: 'https://www.linkedin.com/in/brianna-sookhoo-b03502135/',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Brian Bui',
+    bioParagraph:
+      'Brian Bui is a passionate full-stack software engineer dedicated to the craft of bringing his imagination to life onto the code editor.',
+    picture: bioBrianPic,
+    contact: {
+      gitHub: 'https://github.com/umius-brian/',
+      linkedIn: 'https://www.linkedin.com/in/umius-brian/',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Alon Ofengart',
+    bioParagraph:
+      'Alon Ofengart is a full-stack software engineer who will one day develop Python4++.',
+    picture: bioAlonPic,
+    contact: {
+      gitHub: 'https://github.com/alon25',
+      linkedIn: 'https://www.linkedin.com/in/alon-ofengart',
+    },
+    location: 'Los Angeles',
+  },
+  {
+    name: 'Alan Lee',
+    bioParagraph:
+      'Alan Lee is a full-stack software engineer who loves dealing with Docker containers and microservices.',
+    picture: bioAlanPic,
+    contact: {
+      gitHub: 'https://github.com/ajlee12',
+      linkedIn: 'https://www.linkedin.com/in/alan-lee-1ba1aa93/',
+    },
+    location: 'Los Angeles',
+  },
+  {
     name: 'Ousman Diallo',
     bioParagraph:
       "Ousman is a full-stack software engineer passionate about building performant, modular React applications giving special interest to mobile-driven web development and SPAs. Ousman's other interest lie in  microservices, architecting/optimizing communication between distributed systems, and all things written by Tim Ferris.",
@@ -72,94 +160,6 @@ const bios = [
       linkedIn: 'https://www.linkedin.com/in/timpagra/',
     },
     location: 'New York',
-  },
-  {
-    name: 'Brianna Sookhoo',
-    bioParagraph:
-      'Brianna Sookhoo is a full-stack software engineer who loves to code in her sleep.',
-    picture: bioBriannaPic,
-    contact: {
-      gitHub: 'https://github.com/briannasookhoo',
-      linkedIn: 'https://www.linkedin.com/in/brianna-sookhoo-b03502135/',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Brian Bui',
-    bioParagraph:
-      'Brian Bui is a passionate full-stack software engineer dedicated to the craft of bringing his imagination to life onto the code editor.',
-    picture: bioBrianPic,
-    contact: {
-      gitHub: 'https://github.com/umius-brian/',
-      linkedIn: 'https://www.linkedin.com/in/umius-brian/',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Alon Ofengart',
-    bioParagraph:
-      'Alon Ofengart is a full-stack software engineer who will one day develop Python4++.',
-    picture: bioAlonPic,
-    contact: {
-      gitHub: 'https://github.com/alon25',
-      linkedIn: 'https://www.linkedin.com/in/alon-ofengart',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Alan Lee',
-    bioParagraph:
-      'Alan Lee is a full-stack software engineer who loves dealing with Docker containers and microservices.',
-    picture: bioAlanPic,
-    contact: {
-      gitHub: 'https://github.com/ajlee12',
-      linkedIn: 'https://www.linkedin.com/in/alan-lee-1ba1aa93/',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Michael Wang',
-    bioParagraph:
-      'Michael is a passionate software engineer who is always deeply entrenched in new technologies while reinforcing his core knowledge. He is always looking to improve in all aspects of his craft, whether it be on an indiviual or team basis.',
-    picture: bioMichaelPic,
-    contact: {
-      gitHub: 'https://github.com/wang3101',
-      linkedIn: 'https://www.linkedin.com/in/michael--wang/',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Ronelle Caguioa',
-    bioParagraph:
-      'Ronelle is a fullstack engineer who has a passion for building innovative products and the creative outlet that comes along with it. He has grown a liking to the community encompassing tech and hopes to make significant contributions with his talent.',
-    picture: bioRonellePic,
-    contact: {
-      gitHub: 'https://github.com/ronellecaguioa',
-      linkedIn: 'https://www.linkedin.com/in/ronellecaguioa/',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Todd Buckner',
-    bioParagraph:
-      'Todd Buckner is a software engineer originally from Ohio, now living in Los Angeles. He enjoys the Los Angeles Philharmonic, hiking, science fiction, and live comedy.',
-    picture: bioToddPic,
-    contact: {
-      gitHub: 'https://github.com/RToddBuckner',
-      linkedIn: 'TBD',
-    },
-    location: 'Los Angeles',
-  },
-  {
-    name: 'Gregory Palasciano',
-    bioParagraph:
-      'Gregory Palasciano is a full-stack software engineer committed to improving user experiences through responsive and scalable applications.',
-    picture: bioGregoryPic,
-    contact: {
-      gitHub: 'https://github.com/gregpalace',
-      linkedIn: 'https://www.linkedin.com/in/gregory-palasciano',
-    },
-    location: 'Los Angeles',
   },
 ];
 
