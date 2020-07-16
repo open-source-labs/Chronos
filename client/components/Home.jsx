@@ -1,9 +1,16 @@
-import React from 'react';
-
+import React, { useRef } from 'react';
 import pangolin from '../assets/chronos-v4-pangolin.png';
 import '../stylesheets/Home.scss';
 
 const Home = () => {
+  // const myRef = useRef(null);
+  // const executeScroll = () => scroll(myRef);
+  // const scroll = () => {
+  // if (ref && ref.current) {
+  // ref.scrollIntoView();
+  // }
+  // };
+
   return (
     <div className="section-home">
       <div className="hero-container">
@@ -13,16 +20,13 @@ const Home = () => {
         </div>
         <div className="hero-details">
           <p>
-            A network monitoring tool for servers, microservices, and containerized applications.
+            A network monitoring tool for servers, microservices, and
+            containerized applications.
           </p>
         </div>
         <div className="hero-btns">
-          <button>
-            Get started
-          </button>
-          <button>
-            Download
-          </button>
+          {/* <button onClick={scroll}>Get started</button>
+          <button>Download</button> */}
         </div>
         <div>
           {/* <a
