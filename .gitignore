@@ -3,3 +3,5 @@ node_modules
 package-lock.json
 settings.json
 .DS_Store
+coverage
+build
