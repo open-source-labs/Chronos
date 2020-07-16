@@ -6,7 +6,9 @@ import Main from './components/pages/Main';
 import Team from './components/pages/Team';
 import Contact from './components/pages/Contact';
 import Footer from './components/Footer';
+
 import './stylesheets/index.scss';
+import './stylesheets/App.scss'
 
 const App = () => {
   // const [burgerState, setBurgerState] = useState(false);
@@ -39,12 +41,14 @@ const App = () => {
       </div>
       {dropMenu} */}
       <Nav />
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/team" component={Team} />
-        <Route exact path="/contact" component={Contact} />
-        {/* <Route exact path="*" component={NotFound} /> */}
-      </Switch>
+      <div className="container">
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route exact path="/team" component={Team} />
+          <Route exact path="/contact" component={Contact} />
+          {/* <Route exact path="*" component={NotFound} /> */}
+        </Switch>
+      </div>
       <Footer />
     </div>
   );
