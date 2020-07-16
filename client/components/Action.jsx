@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../stylesheets/Action.scss';
+// import '../stylesheets/Action.scss';
 
 const Action = () => {
   return (
