@@ -2,9 +2,11 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Nav from './components/Nav';
-import Main from './components/pages/Main'
-import Team from './components/pages/Team'
+import Main from './components/pages/Main';
+import Team from './components/pages/Team';
 import Contact from './components/pages/Contact';
+import Quotes from './components/Quotes';
+import Footer from './components/Footer';
 import './stylesheets/index.scss';
 
 const App = () => {
@@ -44,6 +46,8 @@ const App = () => {
         <Route exact path="/contact" component={Contact} />
         {/* <Route exact path="*" component={NotFound} /> */}
       </Switch>
+      <Quotes />
+      <Footer />
     </div>
   );
 };
