@@ -2,9 +2,9 @@
 
 .section-features {
   background-color: #f4f4f4;
-  padding: 100px 10%;
+  padding: 140px 10%;
   @include centerWithFlex($direction: column, $justify: flex-start);
-  height: 100vh;
+  height: 70vh;
 
   .features-header {
     width: 50%;

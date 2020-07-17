@@ -6,6 +6,23 @@ const Contact = () => (
   <div className="contact">
     <div className="contact-border">
       <div className="contact-container">
+        <h3>
+          The Chronos Team is always looking for any feedback or suggestions for
+          Chronos.
+        </h3>
+        <p>
+          If you would like your voice heard, send us an e-mail at
+          teamchronosla@gmail.com!
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+const ContactWIP = () => (
+  <div className="contact">
+    <div className="contact-border">
+      <div className="contact-container">
         <div className="contact-blurb">
           <h1>Contact Us!</h1>
           <br />

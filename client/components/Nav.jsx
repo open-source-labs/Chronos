@@ -30,28 +30,49 @@ const Nav = () => {
       <div className="nav-right">
         <ul>
           <li>
-            <a href="https://github.com/open-source-labs/Chronos" target="_blank">
-              <ion-icon className="icon icon-github" name="logo-octocat"></ion-icon>
+            <a
+              href="https://github.com/open-source-labs/Chronos"
+              target="_blank"
+            >
+              <ion-icon
+                className="icon icon-github"
+                name="logo-octocat"
+              ></ion-icon>
             </a>
           </li>
           <li>
-            <a href="https://www.npmjs.com/package/chronos-tracker">
+            <a
+              href="https://www.npmjs.com/package/chronos-tracker"
+              target="_blank"
+            >
               <ion-icon className="icon icon-npm" name="logo-npm"></ion-icon>
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/company/chronosmd">
-              <ion-icon className="icon icon-linkedin" name="logo-linkedin"></ion-icon>
+            <a
+              href="https://www.linkedin.com/company/chronosmd"
+              target="_blank"
+            >
+              <ion-icon
+                className="icon icon-linkedin"
+                name="logo-linkedin"
+              ></ion-icon>
             </a>
           </li>
           <li>
-            <a href="https://www.facebook.com/ChronosLA/">
-              <ion-icon className="icon icon-facebook" name="logo-facebook"></ion-icon>
+            <a href="https://www.facebook.com/ChronosLA/" target="_blank">
+              <ion-icon
+                className="icon icon-facebook"
+                name="logo-facebook"
+              ></ion-icon>
             </a>
           </li>
           <li>
-            <a href="https://twitter.com/teamchronosla">
-              <ion-icon className="icon icon-twitter" name="logo-twitter"></ion-icon>
+            <a href="https://twitter.com/teamchronosla" target="_blank">
+              <ion-icon
+                className="icon icon-twitter"
+                name="logo-twitter"
+              ></ion-icon>
             </a>
           </li>
         </ul>

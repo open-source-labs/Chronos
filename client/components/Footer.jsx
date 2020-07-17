@@ -7,14 +7,15 @@ const Footer = () => (
   <footer>
     <div className="footer-container">
       <img id="logo-img" alt="none" src={Logo} />
-      <ul>
+      <p>&nbsp;Chronos is Open Source and MIT licensed.</p>
+      {/* <ul>
         <li>placeholder</li>
         <li>placeholder</li>
         <li>placeholder</li>
         <li>placeholder</li>
         <li>placeholder</li>
         <li>placeholder</li>
-      </ul>
+      </ul> */}
     </div>
   </footer>
 );
