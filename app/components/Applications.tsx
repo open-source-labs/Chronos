@@ -46,37 +46,42 @@ const Applications = () => {
   };
 
   const useStyles = makeStyles(theme => ({
+    // card: myPostgres, myMongo, ToddDB buttons
     paper: {
       height: 340,
       textAlign: 'center',
       color: 'rgba(33, 34, 41, 1.2)',
       whiteSpace: 'nowrap',
-      backgroundColor: 'rgba(33, 34, 41, 0.2)',
-      border: '3px ridge #808080',
+      backgroundColor: '#ffffff',
+      // border: '3px ridge #808080',
+      border: '0',
       boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
       '&:hover, &.Mui-focusVisible': {
-        color: 'white',
-        background: 'rgba(33, 34, 41, 1.2)',
+        backgroundColor: 'rgb(61, 67, 78)',
+        color: '#ffffff',
       },
     },
     hover: {
       position: 'relative',
       bottom: 20,
-      right: 40,
+      right: 47,
       boxShadow: 'none',
-      '&:hover, &.Mui-focusVisible': { color: 'red' },
+      '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
+      backgroundColor: 'transparent',
     },
     btnStyle: {
       position: 'relative',
       top: 50,
       margin: '0 auto',
-      color: 'rgb(255, 243, 72)',
-      backgroundColor: 'grey',
+      color: '#e0e7ef',
+      backgroundColor: 'transparent',
     },
     fontStyles: {
       fontSize: '3rem',
       [theme.breakpoints.up('lg')]: {
         fontSize: '2.75rem',
+        // MAIN PAGE SQUARE BUTTON FONTS
+        fontFamily: 'Montserrat'
       },
     },
   }));
@@ -89,6 +94,7 @@ const Applications = () => {
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
+              id={`card-${i}`}
               className={classes.paper}
               variant="outlined"
               onClick={event => handleClick(event, app[0], i)}

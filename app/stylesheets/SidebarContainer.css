@@ -1,9 +1,9 @@
 .sidebar-container {
   color: white;
-  background-color: #24262f;
+  /* background-color: #24262f; */
   width: 100px;
   position: absolute;
-  transition: 300ms;
+  transition: 200ms;
   overflow: hidden;
   z-index: 1;
   white-space: nowrap;
@@ -39,11 +39,13 @@
 }
 
 #serviceDashLogo {
+  animation: twirl 20s infinite linear;
   opacity: 0;
   width: 160px;
   margin-top: 20px;
   transition: 300ms;
 }
+
 #miniLogo {
   position: absolute;
   animation: twirl 20s infinite linear;
@@ -55,8 +57,9 @@
   transition: 200ms;
   margin-top: 10px;
 }
+
 .sidebar {
-  background-color: #24262f;
+  background-color: #161b2d;
   padding-left: 20px;
   width: 100px;
   height: 100%;
@@ -81,11 +84,12 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  background-color: #24262f;
+  background-color: #161b2d;
   height: 40px;
   width: 50px;
-  border: thin solid rgb(79, 79, 85);
-  border-radius: 8px;
+  border: 0.3px solid #ffffff;
+  border: 0;
+  border-radius: 3px;
   font-size: 125%;
   color: whitesmoke;
   text-decoration: none;
@@ -94,6 +98,6 @@
 }
 
 .sidebar-link:hover {
-  background-color: #494fee;
-  color: azure;
+  /* background-color: #494fee; */
+  color:#5490c8;
 }

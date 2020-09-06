@@ -14,7 +14,7 @@ const Splash: React.FC<SplashProps> = ({ setFirstVisit }) => {
   return (
     <div id="splash">
       <img src={'../assets/icon.png'} alt="Chronos Logo" />
-      <span>chronos</span>
+      <span>CHRONOS</span>
     </div>
   );
 };

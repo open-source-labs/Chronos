@@ -1,6 +1,7 @@
 @import './constants.scss';
 
 .main-container {
+  background-color: #e0e7ef;
   flex: 1;
   min-height: 100vh;
   @include centerWithFlex(space-between);
@@ -15,8 +16,10 @@
 
   .copyright-container {
     @include centerWithFlex(center);
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding: 10px;
+    margin-top: 30px;
   }
 }

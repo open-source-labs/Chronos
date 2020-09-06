@@ -40,7 +40,7 @@
     padding: 10px 15px;
     letter-spacing: 0.5px;
     text-decoration: none;
-    border: thin solid $sidebarblue;
+    // border: thin solid $sidebarblue;
     border-radius: 30px;
     background-color: $sidebarblue;
     color: #fff;
@@ -49,8 +49,9 @@
     animation: glow linear 2s infinite;
 
     &:hover {
-      background-color: $brandgold;
-      color: #333;
+      background-color: #bc0b0b;
+      opacity: 0.85;
+      // color: rgb(132, 132, 132);
       animation: none;
     }
   }

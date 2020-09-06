@@ -10,16 +10,18 @@ const Occupied: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const useStyles = makeStyles(theme => ({
+    // card: "+" button only
     paper: {
       color: 'rgba(33, 34, 41, 0.75)',
       height: 340,
       width: '100%',
-      backgroundColor: 'rgba(33, 34, 41, 0.2)',
-      border: '3px ridge #808080',
+      backgroundColor: '#ffffff',
+      // border: '3px ridge #808080',
+      border: '0',
       boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: 'rgba(33, 34, 41, 1.2)',
-        color: 'rgb(255, 243, 72)',
+        backgroundColor: 'rgb(61, 67, 78)',
+        color: '#ffffff',
       },
     },
     grid: {
@@ -28,16 +30,22 @@ const Occupied: React.FC = () => {
       maxHeight: '75vh',
     },
     icon: {
-      width: '100px',
-      height: '100px',
+      width: '75px',
+      height: '75px',
       boxShadow: 'none',
     },
-    heroContent: {
+    // APPLICATION HEADER
+    applicationHeader: {
       fontWeight: 700,
-      color: '#333',
+      fontFamily: 'Montserrat',
+      color: '#ffffff',
       padding: theme.spacing(8, 0, 6),
-      backgroundColor: '#e8e8e8',
+      backgroundColor: '#5490c8',
+      boxShadow: '2px 2px 2px 2px rgba(0,0,0,0.5)',
     },
+    subTitle: {
+      fontFamily: 'Montserrat',
+    }
   }));
 
   const classes = useStyles();
@@ -45,14 +53,14 @@ const Occupied: React.FC = () => {
   return (
     <>
       <Typography
-        className={classes.heroContent}
+        className={classes.applicationHeader}
         variant="h2"
         align="center"
         color="textPrimary"
         gutterBottom
       >
         Applications
-        <Typography>Click a Card to Begin!</Typography>
+        <Typography className={classes.subTitle}>Select A Microservice</Typography>
       </Typography>
       <Modal open={open} onClose={() => setOpen(false)}>
         <AddModal setOpen={setOpen} />
