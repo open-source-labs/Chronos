@@ -40,7 +40,7 @@ const Occupied: React.FC = () => {
       fontFamily: 'Montserrat',
       color: '#ffffff',
       padding: theme.spacing(8, 0, 6),
-      backgroundColor: '#5490c8',
+      backgroundColor: '#4fa3f1',
       boxShadow: '2px 2px 2px 2px rgba(0,0,0,0.5)',
     },
     subTitle: {
