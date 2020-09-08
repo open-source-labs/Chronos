@@ -94,7 +94,7 @@ const Applications = () => {
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
-              id={`card-${i}`}
+              // key={`card-${i}`}
               className={classes.paper}
               variant="outlined"
               onClick={event => handleClick(event, app[0], i)}
