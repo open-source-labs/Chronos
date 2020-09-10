@@ -1,0 +1,50 @@
+@import './constants.scss';
+
+.makeStyles-paper-8 {
+  font-size: 28px;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+#card-hover {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:after,
+  &:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+  &:after {
+    top: -1px;
+    right: -1px;
+    // border-top: 2px solid rgba(132, 216, 255, 0.7);
+    // border-right: 2px solid rgba(132, 216, 255, 0.7);
+  }
+  &:before {
+    bottom: -1px;
+    left: -1px;
+    // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
+    // border-left: 2px solid rgba(132, 216, 255, 0.7);
+  }
+  &:hover {
+    position: relative;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    &:before,
+    &:after {
+      width: 25%;
+      height: 25%;
+    }
+  }
+}

@@ -78,6 +78,10 @@
   margin-left: -30px; 
 }
 
+#dashboardIcon:hover {
+  cursor: pointer;
+}
+
 #personIcon {
   margin-right: 50px;
 }
@@ -112,10 +116,27 @@ button:hover {
 
 #listIcon:hover {
   box-shadow: $boxshadow3;
+  cursor: pointer;
 }
 
 #searchIcon:hover {
   box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#dashboardIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#notificationsIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#personIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
 }
 
 .form {

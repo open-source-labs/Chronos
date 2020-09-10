@@ -24,33 +24,38 @@ const Occupied: React.FC = () => {
   const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     // card: "+" button only
     paper: {
-      color: 'rgba(33, 34, 41, 0.75)',
-      height: 340,
-      width: '100%',
+      height: 280,
+      width: 280,
+      textAlign: 'center',
+      color: 'rgba(33, 34, 41, 1.2)',
+      whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
-      // border: '3px ridge #808080',
+      borderRadius: 8,
       border: '0',
-      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
+      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: 'rgb(61, 67, 78)',
+        backgroundColor: `#ccd8e1`,
         color: '#ffffff',
       },
-    },
-    grid: {
-      margin: '0 auto',
-      maxWidth: '65vw',
-      maxHeight: '75vh',
     },
     icon: {
       width: '75px',
       height: '75px',
       boxShadow: 'none',
+      color: '#999999',
     },
   }));
 
   const classes = useStyles({} as StyleProps);
+  
+  function append(parent:any, child:any) {
+    const parentNode: HTMLElement = document.querySelector(parent);
+    const childNode: HTMLElement = document.querySelector(child);
+    return parentNode.append(childNode);
+  }
 
   return (
+    
     <div>
       <div className="sidebarArea">
       </div>
@@ -78,14 +83,10 @@ const Occupied: React.FC = () => {
         <Modal open={open} onClose={() => setOpen(false)}>
           <AddModal setOpen={setOpen} />
         </Modal>
-        <Grid className={classes.grid} container spacing={3}>
-          <Grid item lg={4} md={6} sm={12}>
-            <Button className={classes.paper} onClick={() => setOpen(true)}>
-              <AddCircleOutlineTwoToneIcon className={classes.icon} />
-            </Button>
-          </Grid>
-          <Applications />
-        </Grid>
+        <Button className={classes.paper} onClick={() => setOpen(true)}>
+          <AddCircleOutlineTwoToneIcon className={classes.icon} />
+        </Button>
+        <Applications />
       </div>
     </div>
   );
