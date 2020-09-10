@@ -1,5 +1,6 @@
 @import './constants.scss';
 
+// HEADER
 .mainHeader {
   display: flex;
   flex-direction: row;
@@ -183,4 +184,60 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: green;
   -webkit-box-shadow: 0 0 0px 1000px #000 inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+// MAIN DASHBOARD
+.dashboardArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+// DATABASE CARDS
+.cardContainer {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  width: 80%;
+  margin: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 20px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:after,
+  &:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+  &:after {
+    top: -1px;
+    right: -1px;
+    // border-top: 2px solid rgba(132, 216, 255, 0.7);
+    // border-right: 2px solid rgba(132, 216, 255, 0.7);
+  }
+  &:before {
+    bottom: -1px;
+    left: -1px;
+    // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
+    // border-left: 2px solid rgba(132, 216, 255, 0.7);
+  }
+  &:hover {
+    position: relative;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    &:before,
+    &:after {
+      width: 25%;
+      height: 25%;
+    }
+  }
 }
