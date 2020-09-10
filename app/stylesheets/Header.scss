@@ -71,3 +71,25 @@ select {
     }
   }
 }
+.microserviceTitle {
+  color: $grey;
+  font-size: 24px;
+}
+
+#gatherLiveData {
+  color: $grey;
+}
+
+#returnToAppIcon {
+  font-size: 42px;
+  font-weight: 400px;
+  margin: 10px;
+  padding: 5px;
+  margin-left: 160px;
+  margin-top: 50px;
+}
+
+#returnToAppIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
