@@ -37,7 +37,7 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
               <span className="dot"></span>Live
             </div>
           ) : (
-            <div>Gather Live Data</div>
+            <div id='gather'>Gather Live Data</div>
           )}
         </button>
       </div>

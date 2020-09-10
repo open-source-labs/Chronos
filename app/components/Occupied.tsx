@@ -17,6 +17,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import ListIcon from '@material-ui/icons/List';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SearchIcon from '@material-ui/icons/Search';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -67,14 +68,13 @@ const Occupied: React.FC = () => {
       setOpen(true);
     }
   };
-
   const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     // card: "+" button only
     paper: {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: 'rgba(33, 34, 41, 1.2)',
+      color: '#888888',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
       borderRadius: 8,
@@ -85,21 +85,30 @@ const Occupied: React.FC = () => {
         color: '#ffffff',
       },
     },
+    hover: {
+      boxShadow: 'none',
+      color: 'transparent'
+    },
+    btnStyle: {
+      position: 'absolute',
+      top: -10,
+      left: -10,
+      margin: '0',
+      color: '#eeeeee',
+      borderRadius: '0',
+      backgroundColor: 'transparent',
+      '&:hover' : {
+        backgroundColor: 'none'
+      }
+    },
     icon: {
       width: '75px',
       height: '75px',
       boxShadow: 'none',
-      color: '#999999',
     },
   }));
 
   const classes = useStyles({} as StyleProps);
-  
-  function append(parent:any, child:any) {
-    const parentNode: HTMLElement = document.querySelector(parent);
-    const childNode: HTMLElement = document.querySelector(child);
-    return parentNode.append(childNode);
-  };
 
   return (
     
@@ -150,7 +159,7 @@ const Occupied: React.FC = () => {
                       aria-label="Delete"
                       onClick={event => confirmDelete(event, app[0], i)}
                     >
-                      <DeleteForeverOutlinedIcon />
+                      <HighlightOffIcon className={classes.btnStyle} id='deleteIcon' />
                     </IconButton>
                   }
                 ></CardHeader>
