@@ -1,0 +1,57 @@
+@import './constants.scss';
+
+.mainHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+#leftHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#rightHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#dashboard {
+  font-size: 18px;
+}
+
+#listIcon {
+  vertical-align: middle;
+  text-align: center;
+  color: $icon;
+  background-color: $background;
+  font-size: 34px;
+  font-weight: 400px;
+  margin: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  box-shadow: $boxshadow1;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  display: inline-flex;
+  outline: 0;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  min-height: auto;
+  white-space: nowrap;
+}
+
+#listIcon:hover {
+  box-shadow: $boxshadow3;
+}

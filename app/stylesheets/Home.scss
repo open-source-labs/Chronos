@@ -54,13 +54,12 @@
     padding: 10px 15px;
     letter-spacing: 0.5px;
     text-decoration: none;
-    // border: thin solid $navy;
     border-radius: 30px;
     background-color: $navy;
     color: #fff;
     @include centerWithFlex();
-    transition: 0.1s;
-    animation: glow linear 2s infinite;
+    transition: 1s;
+    animation: glow linear 4s infinite;
 
     &:hover {
       background-color: $hover;
