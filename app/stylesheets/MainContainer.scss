@@ -1,7 +1,7 @@
 @import './constants.scss';
 
 .main-container {
-  background-color: #e0e7ef;
+  background-color: $background;
   flex: 1;
   min-height: 100vh;
   @include centerWithFlex(space-between);

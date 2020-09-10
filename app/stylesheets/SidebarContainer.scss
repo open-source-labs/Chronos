@@ -1,0 +1,144 @@
+@import './constants.scss';
+
+.sidebar-container {
+  color: $background;
+  width: 100px;
+  position: absolute;
+  transition: 200ms;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.sidebar-container:hover {
+  width: 210px;
+}
+
+.sidebar-container:hover .sidebar-link {
+  width: 150px;
+}
+
+.sidebar-container:hover .sidebar {
+  width: 300px;
+}
+
+.sidebar-container:hover #home {
+  opacity: 1;
+}
+
+.sidebar-container:hover #about {
+  opacity: 1;
+}
+
+.sidebar-container:hover #contact {
+  opacity: 1;
+}
+
+.sidebar-container:hover #settings {
+  opacity: 1;
+}
+
+.sidebar-container:hover #logo {
+  opacity: 1;
+}
+
+.sidebar-container:hover #C {
+  opacity: 0;
+}
+
+.firstRow {
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
+}
+
+#C {
+  position: absolute;
+  left: 50px;
+  top: 40px;
+  opacity: 1;
+  height: 25px;
+  transition: 100ms;
+}
+
+#logo {
+  position: absolute;
+  left: 47px;
+  top: 40px;
+  height: 25px;
+  opacity: 0;
+  transition: 100ms;
+  z-index: 2;
+}
+
+.line {
+  color: white;
+  width: 78%;
+  margin-right: 5px;
+   &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+}
+
+#firstLine {
+  margin-top: 50px;
+}
+
+#secondLine {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.sidebar {
+  background-image: url("../../app/assets/background.png");
+  background-size: cover;
+  background-position: relative;
+  background: cover;
+  width: 140px;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  transition: 300ms;
+}
+
+.sidebar-link {
+  transition: 300ms;
+  overflow: hidden;
+  z-index: 1;
+  margin: 7px 5px;
+  padding: 20px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: transparent;
+  height: 40px;
+  width: 50px;
+  border: 0.3px solid #ffffff;
+  border: 0;
+  border-radius: 3px;
+  font-size: 125%;
+  color: whitesmoke;
+  text-decoration: none;
+  transition: 300ms;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+   &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+}
+
+.sidebar-link:hover {
+  -webkit-tap-highlight-color: transparent;
+}
+

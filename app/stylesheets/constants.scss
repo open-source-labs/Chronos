@@ -1,8 +1,11 @@
-$brandgold: #fce356;
-$sidebarblue: #24262f;
-$headergray: #e8e8e8;
-$lightgray: #c3c3c3;
+$yellow: #fce356;
+$navy: #161b2d;
+$background: #fff;
+$grey: #eeeeee;
+$hover: rgba(255,255,255, 0.1);
+$red: rgb(170, 1, 1);
 $boxshadow: 2px 2px 6px rgb(187, 187, 187);
+$boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 @mixin centerWithFlex($justify: center, $direction: row, $align: center) {
   display: flex;
@@ -21,23 +24,23 @@ $boxshadow: 2px 2px 6px rgb(187, 187, 187);
   width: $width;
   min-width: $minwidth;
   min-height: 100px;
-  background-color: #f4f4f4;
+  background-color: $background;
 }
 
 @mixin modalHeader() {
   font-weight: 700;
   font-size: 200%;
-  color: #333;
+  color: $navy;
 }
 
 @keyframes blink {
   0%,
   65% {
-    background-color: red;
+    background-color: $red;
   }
   66%,
   100% {
-    background-color: rgb(170, 1, 1);
+    background-color: $red;
   }
 }
 
@@ -52,12 +55,12 @@ $boxshadow: 2px 2px 6px rgb(187, 187, 187);
 
 @keyframes glow {
   0% {
-    background-color: $sidebarblue;
+    background-color: $navy;
   }
   66% {
-    background-color: lighten($sidebarblue, 35%);
+    background-color: lighten($navy, 35%);
   }
   100% {
-    background-color: $sidebarblue;
+    background-color: $navy;
   }
 }

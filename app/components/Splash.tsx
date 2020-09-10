@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../stylesheets/Splash.css';
+import '../stylesheets/Splash.scss';
 
 interface SplashProps {
   setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;

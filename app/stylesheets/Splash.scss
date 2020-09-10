@@ -1,3 +1,5 @@
+@import './constants.scss';
+
 #splash {
   display: flex;
   flex-direction: column;
@@ -16,7 +18,7 @@
   -moz-animation: fadeOut ease 6s;
   -o-animation: fadeOut ease 6s;
   -ms-animation: fadeOut ease 6s;
-  background-color: #161b2d;
+  background-color: $navy;
 }
 
 @keyframes fadeOut {
