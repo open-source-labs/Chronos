@@ -8,8 +8,8 @@
     width: 100%;
     padding: 20px 30px;
     text-align: center;
-    border-bottom: thin solid $lightgray;
-    background-color: $headergray;
+    border-bottom: thin solid $grey;
+    background-color: $grey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
@@ -60,7 +60,7 @@
       textarea {
         font-size: 100%;
         padding: 5px;
-        border: thin solid $lightgray;
+        border: thin solid $grey;
         flex: 1;
         border-radius: 3px;
       }
@@ -102,18 +102,18 @@
       font-size: 115%;
       width: 50%;
       color: #fff;
-      background-color: $sidebarblue;
+      background-color: $navy;
       transition: 0.1s;
       margin: 20px 0;
       font-weight: 400;
       letter-spacing: 2px;
-      border: thin solid $sidebarblue;
+      border: thin solid $navy;
       padding: 4px;
       text-transform: uppercase;
 
       &:hover {
-        color: $sidebarblue;
-        background-color: lighten($sidebarblue, 65%);
+        color: $navy;
+        background-color: lighten($navy, 65%);
       }
     }
   }
