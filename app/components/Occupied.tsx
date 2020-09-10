@@ -42,6 +42,7 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 const Occupied: React.FC = () => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
+  const [addOpen, setAddOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
 
@@ -132,7 +133,7 @@ const Occupied: React.FC = () => {
 
         <div className="cardContainer">
           <div className="card" id={`card-add`}>
-            <Button className={classes.paper} onClick={() => setOpen(true)}>
+            <Button className={classes.paper} onClick={() => setAddOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
@@ -162,12 +163,12 @@ const Occupied: React.FC = () => {
               </Card>
             </div>
           ))}
-          {/* <Modal open={open} onClose={() => setOpen(false)}>
-            <ServicesModal open={open} onClose={() => setOpen(false)} i={index} app={app} />
-          </Modal> */}
-          {/* <Modal open={open} onClose={() => setOpen(false)}>
-            <AddModal open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
-          </Modal> */}
+          <Modal open={open} onClose={() => setAddOpen(false)}>
+            <AddModal setOpen={setAddOpen} />
+          </Modal>
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <ServicesModal i={index} app={app} />
+          </Modal>
         </div>
       </div>
     </div>

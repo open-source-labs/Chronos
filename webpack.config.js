@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: './app/index.tsx',
@@ -57,6 +58,10 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html',
+    }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static',
     }),
   ],
   resolve: {
