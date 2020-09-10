@@ -16,7 +16,9 @@
     "both:tsc": "nodemon --watch ./app --exec tsc & npm run start & sleep 5 && npm run electron",
     "both:dev": "npm run start & nodemon --watch ./electron --exec 'npm run electron'",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos"
+    "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
+    "delete": "rm -r dist & rm -r build",
+    "reinstall": "rm -r node_modules && npm install"
   },
   "babel": {
     "presets": [
@@ -64,6 +66,7 @@
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^26.0.4",
+    "@types/material-ui": "^0.21.8",
     "@types/mongoose": "^5.7.28",
     "@types/node": "^14.0.14",
     "@types/pg": "^7.14.3",
