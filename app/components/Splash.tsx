@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../stylesheets/Splash.css';
+import '../stylesheets/Splash.scss';
 
 interface SplashProps {
   setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,8 +13,7 @@ const Splash: React.FC<SplashProps> = ({ setFirstVisit }) => {
 
   return (
     <div id="splash">
-      <img src={'../assets/icon.png'} alt="Chronos Logo" />
-      <span>chronos</span>
+      <img id="splashLogo" src={'../assets/logo.svg'} alt="Chronos" />
     </div>
   );
 };

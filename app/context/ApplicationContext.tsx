@@ -35,7 +35,7 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       // Parse JSON response
       const result = JSON.parse(data);
-      console.log('Number of data points (service):', result.length);
+      if (result.length) console.log('Number of data points (service):', result.length);
 
       // Set local state
       setServicesData(result);

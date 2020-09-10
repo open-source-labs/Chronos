@@ -24,7 +24,7 @@ const DockerContextProvider: React.FC = ({ children }) => {
       // Parse result
       const result: IContainer[] = JSON.parse(data);
 
-      console.log('Number of data points (docker):', result.length);
+      if (result.length) console.log('Number of data points (docker):', result.length);
       // Display single data point
       const newDockerData = result[0] || {};
       setDockerData(newDockerData);
