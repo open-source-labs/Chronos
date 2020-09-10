@@ -14,7 +14,7 @@
     "test:app": "jest ./__tests__/app/*",
     "both": "npm run start & sleep 5 && npm run electron",
     "both:tsc": "nodemon --watch ./app & npm run start & sleep 5 && npm run electron",
-    "both:dev": "&& npm run start & nodemon --watch ./electron --exec 'npm run electron'",
+    "both:dev": "npm run start & nodemon --watch ./electron --exec 'npm run electron'",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
     "delete": "rm -r dist & rm -r build",

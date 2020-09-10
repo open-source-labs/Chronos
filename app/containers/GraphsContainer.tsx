@@ -14,7 +14,7 @@ import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
-import RouteCopy from '../charts/RouteCopy';
+import RouteChart from '../charts/RouteChart';
 import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
@@ -73,7 +73,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
             <RequestTypesChart />
             <ResponseCodesChart />
             <TrafficChart />
-            <RouteCopy />
+            <RouteChart />
           </div>
         ) : (
           <div className="graphs">
@@ -83,7 +83,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
             <MemoryChart />
             <ProcessesChart />
             <DockerChart />
-            {/* <RouteCopy /> */}
+            {/* <RouteChart /> */}
           </div>
         )}
       </div>

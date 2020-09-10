@@ -42,7 +42,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   return (
     <div className="services-container" onClick={() => fetchStuff()}>
       {!servicesData.length ? (
-        <h2>Loading...</h2>
+        <h2 id="loadingMessage">Loading...</h2>
       ) : (
         <>
           <div className="services-header">
