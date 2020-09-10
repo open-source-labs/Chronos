@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './app/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     filename: 'index_bundle.js',
   },
   devtool: 'eval-source-map',
@@ -52,7 +52,7 @@ module.exports = {
   devServer: {
     hot: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, 'app'),
+    contentBase: path.resolve(process.cwd(), 'app'),
   },
   plugins: [
     new HtmlWebpackPlugin({
