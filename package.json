@@ -18,7 +18,8 @@
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
     "delete": "rm -r dist & rm -r build",
-    "reinstall": "rm -r node_modules && npm install"
+    "reinstall": "rm -r node_modules && npm install",
+    "prepare": "tsc -v && tsc -p . && npm run build"
   },
   "babel": {
     "presets": [
