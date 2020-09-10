@@ -2,16 +2,12 @@
 
 .sidebar-container {
   color: $background;
-  width: 100px;
+  width: 10px;
   position: absolute;
   transition: 200ms;
   overflow: hidden;
   white-space: nowrap;
   z-index: 1;
-}
-
-.sidebar-container:hover {
-  width: 210px;
 }
 
 .sidebar-container:hover .sidebar-link {
@@ -91,14 +87,11 @@
 
 #secondLine {
   margin-top: 50px;
-  margin-bottom: 50px;
 }
 
 .sidebar {
   background-image: url("../../app/assets/background.png");
   background-size: cover;
-  background-position: relative;
-  background: cover;
   width: 140px;
   height: 100%;
   position: fixed;
@@ -114,8 +107,8 @@
   transition: 300ms;
   overflow: hidden;
   z-index: 1;
-  margin: 7px 5px;
-  padding: 20px 5px;
+  margin: 30px 15px;
+  padding: 30px 5px;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -129,7 +122,7 @@
   color: whitesmoke;
   text-decoration: none;
   transition: 300ms;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
    &:hover {
       background-color: $hover;

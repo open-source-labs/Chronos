@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { Grid, Modal, Button, Typography, Link } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Modal, Button, Typography } from '@material-ui/core';
+import { Theme, makeStyles } from '@material-ui/core/styles';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-
+import Copyright from '../components/Copyright';
 import AddModal from '../modals/AddModal';
 import Applications from './Applications';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ListIcon from '@material-ui/icons/List';
+import '../stylesheets/Occupied.scss';
+import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
+
+interface StyleProps {
+  root: BaseCSSProperties,
+};
 
 const Occupied: React.FC = () => {
   const [open, setOpen] = useState(false);
 
-  const useStyles = makeStyles(theme => ({
+  const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     // card: "+" button only
     paper: {
       color: 'rgba(33, 34, 41, 0.75)',
@@ -34,46 +42,38 @@ const Occupied: React.FC = () => {
       height: '75px',
       boxShadow: 'none',
     },
-    // APPLICATION HEADER
-    applicationHeader: {
-      fontWeight: 700,
-      fontFamily: 'Inter',
-      color: '#ffffff',
-      padding: theme.spacing(8, 0, 6),
-      backgroundColor: '#4fa3f1',
-      boxShadow: '2px 2px 2px 2px rgba(0,0,0,0.5)',
-    },
-    subTitle: {
-      fontFamily: 'Inter',
-    }
   }));
 
-  const classes = useStyles();
+  const classes = useStyles({} as StyleProps);
 
   return (
-    <>
-      <Typography
-        className={classes.applicationHeader}
-        variant="h2"
-        align="center"
-        color="textPrimary"
-        gutterBottom
-      >
-        Applications
-        <Typography className={classes.subTitle}>Select A Microservice</Typography>
-      </Typography>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <AddModal setOpen={setOpen} />
-      </Modal>
-      <Grid className={classes.grid} container spacing={3}>
-        <Grid item lg={4} md={6} sm={12}>
-          <Button className={classes.paper} onClick={() => setOpen(true)}>
-            <AddCircleOutlineTwoToneIcon className={classes.icon} />
-          </Button>
+    <div>
+      <div className="sidebarArea">
+
+      </div>
+      <div className="dashboardArea">
+        <header className="mainHeader">
+          <section className="header" id="leftHeader">
+            <span><ListIcon className="icon" id="listIcon" /></span>
+            <span><p id="dashboard">Dashboard</p></span>
+          </section>
+          <section className="header" id="rightHeader">
+            Search Magnifying Glass DashBoard Alerts Profile
+          </section>
+        </header>
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <AddModal setOpen={setOpen} />
+        </Modal>
+        <Grid className={classes.grid} container spacing={3}>
+          <Grid item lg={4} md={6} sm={12}>
+            <Button className={classes.paper} onClick={() => setOpen(true)}>
+              <AddCircleOutlineTwoToneIcon className={classes.icon} />
+            </Button>
+          </Grid>
+          <Applications />
         </Grid>
-        <Applications />
-      </Grid>
-    </>
+      </div>
+    </div>
   );
 };
 

@@ -7,12 +7,22 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../stylesheets/SidebarContainer.scss';
 
+const iconStyles = {
+  WebkitBoxSizing: 'border-box',
+  boxShadow: 'none',
+  width: '35px',
+  height: '35px',
+  padding: '10px',
+  margin: '5px'
+}
+
 const SidebarContainer: React.FC = (): JSX.Element => (
   <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
       <div className="firstRow">
+        
         <span><img alt="C" id="C" src={'../assets/C.svg'} /></span>
-        <img alt="Chronos" id="logo" src={'../assets/logo.svg'} />
+        
       </div>
       <hr className="line" id="firstLine"></hr>
 
@@ -20,22 +30,41 @@ const SidebarContainer: React.FC = (): JSX.Element => (
       </div>
 
       <hr className="line" id="secondLine"></hr>
-
       <div className="thirdRow">
         <Link className="sidebar-link" to="/" id="home">
-          <HomeSharpIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
+          <HomeSharpIcon style={{ 
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none', 
+            width: '35px', 
+            height: '35px', 
+            }} />
           &emsp;Home
         </Link>
         <Link className="sidebar-link" to="/about" id="about">
-          <InfoIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
+          <InfoIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
           &emsp;About
         </Link>
         <Link className="sidebar-link" to="/contact" id="contact">
-          <ContactSupportIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
+          <ContactSupportIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
           &emsp;Contact
         </Link>
         <Link className="sidebar-link" to="/settings" id="settings">
-          <SettingsIcon style={{ boxShadow: 'none', width: '40px', height: '40px' }} />
+          <SettingsIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
           &emsp;Settings
         </Link>
       </div>
