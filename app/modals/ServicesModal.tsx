@@ -40,9 +40,12 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   };
 
   return (
-    <div className="services-container" onClick={() => fetchStuff()}>
+    <div className="servicesContainer" onClick={() => fetchStuff()}>
       {!servicesData.length ? (
-        <h2 id="loadingMessage">Loading...</h2>
+        <div className="loadingMessageModal">
+          <h2 id="loadingMessage">Loading...</h2>
+        </div>
+        
       ) : (
         <>
           <div className="services-header">

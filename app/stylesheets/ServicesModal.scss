@@ -1,7 +1,9 @@
 @import './constants.scss';
 
-.services-container {
+.servicesContainer {
+  width: 100px;
   @include centerModal(375px);
+  
 
   // Header
   .services-header {
@@ -53,7 +55,10 @@
   }
 }
 
+.loadingMessage {
+  max-width: 80px;
+}
+
 #loadingMessage {
   font-size: 14px;
-  width: 100px;
 }
