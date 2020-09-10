@@ -1,25 +1,70 @@
-import React, { useState } from 'react';
-import { Grid, Modal, Button, Typography } from '@material-ui/core';
+import React, { useContext, useEffect, useState, useRef } from 'react';
+
+// MATERIAL UI METHODS
+import {
+  IconButton,
+  Modal, 
+  Card,
+  CardHeader,
+  CardContent,
+  Button, 
+  Typography } from '@material-ui/core';
 import { Theme, makeStyles } from '@material-ui/core/styles';
-import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import Copyright from '../components/Copyright';
-import AddModal from '../modals/AddModal';
-import Applications from './Applications';
+import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
+
+// MATERIAL UI ICONS
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import ListIcon from '@material-ui/icons/List';
 import SearchIcon from '@material-ui/icons/Search';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonIcon from '@material-ui/icons/Person';
-import '../stylesheets/Occupied.scss';
-import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
+// MODALS
+import AddModal from '../modals/AddModal';
+import ServicesModal from '../modals/ServicesModal';
+
+// STYLESHEETS
+import '../stylesheets/Occupied.scss';
+
+// DASHBOARD CONTEXT
+import { DashboardContext } from '../context/DashboardContext';
+
+// TYPESCRIPT
 interface StyleProps {
   root: BaseCSSProperties,
 };
+type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const { applications, getApplications, deleteApp } = useContext(DashboardContext);
+  const [open, setOpen] = useState<boolean>(false);
+  const [index, setIndex] = useState<number>(0);
+  const [app, setApp] = useState<string>('');
+  
+  // Dynamic refs
+  const delRef = useRef<any>([]);
+
+  useEffect(() => {
+    getApplications();
+  }, []);
+
+  // Ask user for deletetion confirmation
+  const confirmDelete = (event: ClickEvent, app: string, i: number) => {
+    const message = `The application '${app}' will be permanently deleted. Continue?`;
+    if (confirm(message)) deleteApp(i);
+  };
+
+  // Handle clicks on Application cards
+  const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
+    if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
+      setIndex(i);
+      setApp(selectedApp);
+      setOpen(true);
+    }
+  };
 
   const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     // card: "+" button only
@@ -56,7 +101,7 @@ const Occupied: React.FC = () => {
 
   return (
     
-    <div>
+    <div className="entireArea">
       <div className="sidebarArea">
       </div>
       <div className="dashboardArea">
@@ -80,13 +125,46 @@ const Occupied: React.FC = () => {
             <PersonIcon className="sideIcon" id="personIcon"/>
           </section>
         </header>
-        <Modal open={open} onClose={() => setOpen(false)}>
-          <AddModal setOpen={setOpen} />
-        </Modal>
-        <Button className={classes.paper} onClick={() => setOpen(true)}>
-          <AddCircleOutlineTwoToneIcon className={classes.icon} />
-        </Button>
-        <Applications />
+
+        <div className="cardContainer">
+          <div className="card" id={`card-add`}>
+            <Button className={classes.paper} onClick={() => setOpen(true)}>
+              <AddCircleOutlineTwoToneIcon className={classes.icon} />
+            </Button>
+          </div>
+          {applications.map((app: string[], i: number | any | string | undefined) => (
+            <div className="card" id={`card-${i}`}>
+              <Card
+                key={`card-${i}`}
+                className={classes.paper}
+                variant="outlined"
+                onClick={event => handleClick(event, app[0], i)}
+              >
+                <CardHeader
+                  avatar={
+                    <IconButton
+                      ref={element => (delRef.current[i] = element)}
+                      className={classes.hover}
+                      aria-label="Delete"
+                      onClick={event => confirmDelete(event, app[0], i)}
+                    >
+                      <DeleteForeverOutlinedIcon />
+                    </IconButton>
+                  }
+                ></CardHeader>
+                <CardContent>
+                  <Typography className={'cardContent'}>{app[0]}</Typography>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <ServicesModal open={open} onClose={() => setOpen(false)} i={index} app={app} />
+          </Modal>
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <AddModal open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
+          </Modal>
+        </div>
       </div>
     </div>
   );

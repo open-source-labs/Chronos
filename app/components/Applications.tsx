@@ -82,50 +82,52 @@ const Applications = () => {
         backgroundColor: 'transparent'
       }
     },
-    // fontStyles: {
-    //   fontSize: '16px',
-    //   [theme.breakpoints.up('lg')]: {
-    //     fontSize: '18px',
-    //     // MAIN PAGE SQUARE BUTTON FONTS
-    //     fontFamily: 'Inter'
-    //   },
-    // },
+    fontStyles: {
+      fontSize: '16px',
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '18px',
+        // MAIN PAGE SQUARE BUTTON FONTS
+        fontFamily: 'Inter'
+      },
+    },
   }));
 
   const classes = useStyles();
 
   return (
-    <div className="cardContainer">
+    <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
-        <div id={'card-hover'}>
-          <Card
-            key={`card-${i}`}
-            className={classes.paper}
-            variant="outlined"
-            onClick={event => handleClick(event, app[0], i)}
-          >
-            <CardHeader
-              avatar={
-                <IconButton
-                  ref={element => (delRef.current[i] = element)}
-                  className={classes.hover}
-                  aria-label="Delete"
-                  onClick={event => confirmDelete(event, app[0], i)}
-                >
-                  <DeleteForeverOutlinedIcon />
-                </IconButton>
-              }
-            ></CardHeader>
-            <CardContent>
-              <Typography className={'cardContent'}>{app[0]}</Typography>
-            </CardContent>
-          </Card>
-        </div>
+        <Grid item lg={4} md={6} sm={12} key={i}>
+          <div id="card-hover">
+            <Card
+              // key={`card-${i}`}
+              className={classes.paper}
+              variant="outlined"
+              onClick={event => handleClick(event, app[0], i)}
+            >
+              <CardHeader
+                avatar={
+                  <IconButton
+                    ref={element => (delRef.current[i] = element)}
+                    className={classes.hover}
+                    aria-label="Delete"
+                    onClick={event => confirmDelete(event, app[0], i)}
+                  >
+                    <DeleteForeverOutlinedIcon />
+                  </IconButton>
+                }
+              ></CardHeader>
+              <CardContent>
+                <Typography className={classes.fontStyles}>{app[0]}</Typography>
+              </CardContent>
+            </Card>
+          </div>
+        </Grid>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
         <ServicesModal i={index} app={app} />
       </Modal>
-    </div>
+    </>
   );
 };
 
