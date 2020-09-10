@@ -8,7 +8,7 @@ export interface CopyrightProps {}
 const Copyright = () => {
   const useStyles = makeStyles(theme => ({
     copyright: {
-      fontFamily: 'Montserrat',
+      fontFamily: 'Inter',
       position: 'fixed',
     }
   }))

@@ -37,14 +37,14 @@ const Occupied: React.FC = () => {
     // APPLICATION HEADER
     applicationHeader: {
       fontWeight: 700,
-      fontFamily: 'Montserrat',
+      fontFamily: 'Inter',
       color: '#ffffff',
       padding: theme.spacing(8, 0, 6),
       backgroundColor: '#4fa3f1',
       boxShadow: '2px 2px 2px 2px rgba(0,0,0,0.5)',
     },
     subTitle: {
-      fontFamily: 'Montserrat',
+      fontFamily: 'Inter',
     }
   }));
 

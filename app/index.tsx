@@ -7,7 +7,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 const theme = createMuiTheme({
   typography: {
     // Graph font when you shrink window
-    fontFamily: ['Montserrat', 'sans-serif'].join(','),
+    fontFamily: ['Inter', 'sans-serif'].join(','),
   },
 });
 
