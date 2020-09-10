@@ -46,6 +46,7 @@
     "plotly.js-dist": "^1.54.1",
     "react": "16.10.1",
     "react-dom": "16.10.1",
+    "react-graph-vis": "^1.0.5",
     "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.2.0",
     "webdriverio": "^6.1.25"
