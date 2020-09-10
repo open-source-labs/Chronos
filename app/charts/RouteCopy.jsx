@@ -32,7 +32,7 @@ const RouteLocations = props => {
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
           microservice: element.microservice,
-          time: element.time
+          time: element.time,
         });
       } else {
         // The value that corresp. to the correlationId key is an array of obj containing name and time data.
@@ -40,7 +40,7 @@ const RouteLocations = props => {
         resObj[element.correlatingid] = [
           {
             microservice: element.microservice,
-            time: element.time
+            time: element.time,
           },
         ];
       }
@@ -51,7 +51,7 @@ const RouteLocations = props => {
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
           microservice,
-          time
+          time,
         });
       } else {
         // The value that corresp. to the correlationId key is an array of obj containing name and time data.
@@ -59,13 +59,13 @@ const RouteLocations = props => {
         resObj[element.correlatingid] = [
           {
             microservice,
-            time
+            time,
           },
         ];
       }
       // initializing the object with the first microservice
     }
-    console.log('B', resObj)
+    console.log('B', resObj);
   }
   console.log('+++RESOBJ+++');
   console.log(resObj);
@@ -196,15 +196,15 @@ const RouteLocations = props => {
   for (let route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
       // check if node exists if not then add node
-      let id = route[i].microservice
+      let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { id: id, label: id, color: '#e04141' }
+        nodeListObj[id] = { id: id, label: id, color: '#e04141' };
       }
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
-        let duration = new Date(route[i].time) - new Date(route[i-1].time);
-        let edge = { from: route[i - 1].microservice, to: id, label: `${duration} ms`}
-        edgeList.push(edge)
+        let duration = new Date(route[i].time) - new Date(route[i - 1].time);
+        let edge = { from: route[i - 1].microservice, to: id, label: `${duration} ms` };
+        edgeList.push(edge);
       }
     }
   }
@@ -214,7 +214,7 @@ const RouteLocations = props => {
 
   const graph = {
     nodes: nodeList,
-    edges: edgeList
+    edges: edgeList,
   };
   // const graph = {
   //   nodes: [
@@ -228,28 +228,27 @@ const RouteLocations = props => {
   // };
   const options = {
     layout: {
-      hierarchical: false
+      hierarchical: false,
     },
     edges: {
-      color: "#000000",
+      color: '#000000',
       physics: false,
       smooth: {
-        type: "curvedCCW",
-        forceDirection: "none"
-      }
+        type: 'curvedCCW',
+        forceDirection: 'none',
+      },
     },
   };
 
   const events = {
     select: function (event) {
       var { nodes, edges } = event;
-      console.log("Selected nodes:");
+      console.log('Selected nodes:');
       console.log(nodes);
-      console.log("Selected edges:");
+      console.log('Selected edges:');
       console.log(edges);
-    }
+    },
   };
-
 
   return (
     // <div id="routeDataArea">
@@ -268,7 +267,9 @@ const RouteLocations = props => {
     //   </div>
     // </div>
     // <h1>ROUTE COPY</h1>
-    <Graph graph={graph} options={options} events={events} style={{ height: "640px" }} />
+    // <div className="chart">
+    <Graph graph={graph} options={options} events={events} style={{ height: '640px' }} />
+    // </div>
   );
 };
 
