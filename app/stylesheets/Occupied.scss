@@ -100,10 +100,71 @@ button {
   outline: none;
   margin: 0px;
   padding: 0px;
+  color: transparent;
 }
 
 button:hover {
   background-color: transparent;
+}
+
+// button.MuiButtonBase-root.MuiIconButton-root.makeStyles-hover-7 {
+//   position: relative;
+//   bottom: 50;
+//   right: 50;
+// }
+
+.MuiButtonBase-root {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
+}
+
+.MuiIconButton-root {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
+}
+
+.makeStyles-hover-7 {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
+}
+
+.MuiIconButton-label {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
+}
+
+.MuiSvgIcon-root {
+  background: none;
+  position: 'relative';
+  bottom: 200;
+  right: 200;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  filter: none;
+}
+
+#deleteIcon {
+  background: none;
+  position: 'absolute';
+  top: 300;
+  right: 300;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  filter: none;
+}
+
+#deleteIcon:hover {
+  background: none;
+  background-color: none;
+  color: $red;
+  filter: none;
+  cursor: pointer;
 }
 
 #searchIcon {
@@ -113,11 +174,6 @@ button:hover {
   padding: 8px;
   margin: 0px;
   margin-left: 15px;
-}
-
-#listIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
 }
 
 #searchIcon:hover {
@@ -219,14 +275,14 @@ select:-webkit-autofill:focus {
     transition: all 0.5s;
   }
   &:after {
-    top: -1px;
-    right: -1px;
+    // top: -1px;
+    // right: -1px;
     // border-top: 2px solid rgba(132, 216, 255, 0.7);
     // border-right: 2px solid rgba(132, 216, 255, 0.7);
   }
   &:before {
-    bottom: -1px;
-    left: -1px;
+    // bottom: -1px;
+    // left: -1px;
     // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
     // border-left: 2px solid rgba(132, 216, 255, 0.7);
   }

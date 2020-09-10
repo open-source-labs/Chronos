@@ -16,6 +16,7 @@ import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ListIcon from '@material-ui/icons/List';
 import SearchIcon from '@material-ui/icons/Search';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -73,7 +74,7 @@ const Occupied: React.FC = () => {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: 'rgba(33, 34, 41, 1.2)',
+      color: '#888888',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
       borderRadius: 8,
@@ -84,11 +85,26 @@ const Occupied: React.FC = () => {
         color: '#ffffff',
       },
     },
+    hover: {
+      boxShadow: 'none',
+      color: 'transparent'
+    },
+    btnStyle: {
+      position: 'absolute',
+      top: -10,
+      left: -10,
+      margin: '0',
+      color: '#eeeeee',
+      borderRadius: '0',
+      backgroundColor: 'transparent',
+      '&:hover' : {
+        backgroundColor: 'none'
+      }
+    },
     icon: {
       width: '75px',
       height: '75px',
       boxShadow: 'none',
-      color: '#999999',
     },
   }));
 
@@ -149,7 +165,7 @@ const Occupied: React.FC = () => {
                       aria-label="Delete"
                       onClick={event => confirmDelete(event, app[0], i)}
                     >
-                      <DeleteForeverOutlinedIcon />
+                      <HighlightOffIcon className={classes.btnStyle} id="deleteIcon" />
                     </IconButton>
                   }
                 ></CardHeader>
