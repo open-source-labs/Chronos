@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { DashboardContext } from '../context/DashboardContext';
 import ServicesModal from '../modals/ServicesModal';
-import '../stylesheets/Applications.css';
+import '../stylesheets/Applications.scss';
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
@@ -48,16 +48,17 @@ const Applications = () => {
   const useStyles = makeStyles(theme => ({
     // card: myPostgres, myMongo, ToddDB buttons
     paper: {
-      height: 340,
+      height: 280,
+      width: 280,
       textAlign: 'center',
       color: 'rgba(33, 34, 41, 1.2)',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
-      // border: '3px ridge #808080',
+      borderRadius: 8,
       border: '0',
-      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
+      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: 'rgb(61, 67, 78)',
+        backgroundColor: `#ccd8e1`,
         color: '#ffffff',
       },
     },
@@ -73,55 +74,58 @@ const Applications = () => {
       position: 'relative',
       top: 50,
       margin: '0 auto',
-      color: '#e0e7ef',
-      backgroundColor: 'transparent',
+      color: '#eeeeee',
+      backgroundColor: '#ccd8e1',
+      opacity: 1,
+      '&:hover': {
+        color: '#ffffff',
+        backgroundColor: 'transparent'
+      }
     },
-    fontStyles: {
-      fontSize: '3rem',
-      [theme.breakpoints.up('lg')]: {
-        fontSize: '2.75rem',
-        // MAIN PAGE SQUARE BUTTON FONTS
-        fontFamily: 'Inter'
-      },
-    },
+    // fontStyles: {
+    //   fontSize: '16px',
+    //   [theme.breakpoints.up('lg')]: {
+    //     fontSize: '18px',
+    //     // MAIN PAGE SQUARE BUTTON FONTS
+    //     fontFamily: 'Inter'
+    //   },
+    // },
   }));
 
   const classes = useStyles();
 
   return (
-    <>
+    <div className="cardContainer">
       {applications.map((app: string[], i: number | any | string | undefined) => (
-        <Grid item lg={4} md={6} sm={12} key={i}>
-          <div id="card-hover">
-            <Card
-              // key={`card-${i}`}
-              className={classes.paper}
-              variant="outlined"
-              onClick={event => handleClick(event, app[0], i)}
-            >
-              <CardHeader
-                avatar={
-                  <IconButton
-                    ref={element => (delRef.current[i] = element)}
-                    className={classes.hover}
-                    aria-label="Delete"
-                    onClick={event => confirmDelete(event, app[0], i)}
-                  >
-                    <DeleteForeverOutlinedIcon />
-                  </IconButton>
-                }
-              ></CardHeader>
-              <CardContent>
-                <Typography className={classes.fontStyles}>{app[0]}</Typography>
-              </CardContent>
-            </Card>
-          </div>
-        </Grid>
+        <div id={'card-hover'}>
+          <Card
+            key={`card-${i}`}
+            className={classes.paper}
+            variant="outlined"
+            onClick={event => handleClick(event, app[0], i)}
+          >
+            <CardHeader
+              avatar={
+                <IconButton
+                  ref={element => (delRef.current[i] = element)}
+                  className={classes.hover}
+                  aria-label="Delete"
+                  onClick={event => confirmDelete(event, app[0], i)}
+                >
+                  <DeleteForeverOutlinedIcon />
+                </IconButton>
+              }
+            ></CardHeader>
+            <CardContent>
+              <Typography className={'cardContent'}>{app[0]}</Typography>
+            </CardContent>
+          </Card>
+        </div>
       ))}
       <Modal open={open} onClose={() => setOpen(false)}>
         <ServicesModal i={index} app={app} />
       </Modal>
-    </>
+    </div>
   );
 };
 
