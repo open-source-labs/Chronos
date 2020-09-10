@@ -163,7 +163,7 @@ const Occupied: React.FC = () => {
               </Card>
             </div>
           ))}
-          <Modal open={open} onClose={() => setAddOpen(false)}>
+          <Modal open={addOpen} onClose={() => setAddOpen(false)}>
             <AddModal setOpen={setAddOpen} />
           </Modal>
           <Modal open={open} onClose={() => setOpen(false)}>
