@@ -76,7 +76,7 @@ const RouteLocations = props => {
   // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
   console.log('tracepoints =======>', tracePoints);
-  
+
   // // Construct an obj that stores data necessary for calculating avg speed of requests btw 2 pts.
   // const avgDataObj = {};
   // /****** Build the object here w/ nested loops ************/
@@ -107,10 +107,10 @@ const RouteLocations = props => {
 
   // Array of <divs> to be rendered. Each <div> contains route name and time difference.
   // const resArray = []
-  
+
   // // const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
   // const position = 0;
-  
+
   // // iterate over ONE elem in tracePoints, creating a <div> for every data obj.
   // for (let i = 0; i < tracePoints[position].length; i += 1) {
   //   if (i !== tracePoints[position].length - 1) {
@@ -191,17 +191,41 @@ const RouteLocations = props => {
   // console.log('totalTime:', totalTime);
   // console.log('count:', count);
   /****************/
+  const nodeListObj = {};
+  const edgeList = [];
+  for (let route of tracePoints) {
+    for (let i = 0; i < route.length; i += 1) {
+      // check if node exists if not then add node
+      let id = route[i].microservice
+      if (nodeListObj[id] === undefined) {
+        nodeListObj[id] = { id: id, label: id, color: '#e04141' }
+      }
+      // add edge from node 1 to node 2 (repeat til end)
+      if (i !== 0) {
+        let duration = new Date(route[i].time) - new Date(route[i-1].time);
+        let edge = { from: route[i - 1].microservice, to: id, label: `${duration} ms`}
+        edgeList.push(edge)
+      }
+    }
+  }
+  const nodeList = Object.values(nodeListObj);
+  console.log(edgeList);
+  console.log(nodeList);
 
   const graph = {
-    nodes: [
-      { id: 1, label: "Node 1", color: "#e04141" },
-      { id: 2, label: "Node 2", color: "#e09c41" },
-      { id: 3, label: "Node 3", color: "#e0df41" },
-      { id: 4, label: "Node 4", color: "#7be041" },
-      { id: 5, label: "Node 5", color: "#41e0c9" }
-    ],
-    edges: [{ from: 4, to: 2, label:'hello' }, { from: 1, to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }]
+    nodes: nodeList,
+    edges: edgeList
   };
+  // const graph = {
+  //   nodes: [
+  //     { id: 'one', label: "Node 1", color: "#e04141" },
+  //     { id: 2, label: "Node 2", color: "#e09c41" },
+  //     { id: 3, label: "Node 3", color: "#e0df41" },
+  //     { id: 4, label: "Node 4", color: "#7be041" },
+  //     { id: 5, label: "Node 5", color: "#41e0c9" }
+  //   ],
+  //   edges: [{ from: 4, to: 2, label: 'hello' }, { from: 'one', to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }]
+  // };
   const options = {
     layout: {
       hierarchical: false
@@ -217,7 +241,7 @@ const RouteLocations = props => {
   };
 
   const events = {
-    select: function(event) {
+    select: function (event) {
       var { nodes, edges } = event;
       console.log("Selected nodes:");
       console.log(nodes);
