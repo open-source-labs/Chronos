@@ -73,6 +73,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
             <RequestTypesChart />
             <ResponseCodesChart />
             <TrafficChart />
+            <RouteCopy />
           </div>
         ) : (
           <div className="graphs">
