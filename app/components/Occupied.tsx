@@ -97,7 +97,7 @@ const Occupied: React.FC = () => {
     const parentNode: HTMLElement = document.querySelector(parent);
     const childNode: HTMLElement = document.querySelector(child);
     return parentNode.append(childNode);
-  }
+  };
 
   return (
     
@@ -158,12 +158,12 @@ const Occupied: React.FC = () => {
               </Card>
             </div>
           ))}
-          <Modal open={open} onClose={() => setOpen(false)}>
+          {/* <Modal open={open} onClose={() => setOpen(false)}>
             <ServicesModal open={open} onClose={() => setOpen(false)} i={index} app={app} />
-          </Modal>
-          <Modal open={open} onClose={() => setOpen(false)}>
+          </Modal> */}
+          {/* <Modal open={open} onClose={() => setOpen(false)}>
             <AddModal open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
-          </Modal>
+          </Modal> */}
         </div>
       </div>
     </div>
