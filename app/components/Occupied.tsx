@@ -7,6 +7,10 @@ import AddModal from '../modals/AddModal';
 import Applications from './Applications';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ListIcon from '@material-ui/icons/List';
+import SearchIcon from '@material-ui/icons/Search';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonIcon from '@material-ui/icons/Person';
 import '../stylesheets/Occupied.scss';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
@@ -49,7 +53,6 @@ const Occupied: React.FC = () => {
   return (
     <div>
       <div className="sidebarArea">
-
       </div>
       <div className="dashboardArea">
         <header className="mainHeader">
@@ -58,7 +61,18 @@ const Occupied: React.FC = () => {
             <span><p id="dashboard">Dashboard</p></span>
           </section>
           <section className="header" id="rightHeader">
-            Search Magnifying Glass DashBoard Alerts Profile
+            <form className="form">
+              <label className="inputContainer">
+                <input className="form" id="textInput" value={`Search`} type="text" name="search" />
+                <hr />
+              </label>
+              <button className="form" id="submitBtn" type="submit">
+                <SearchIcon className="icon" id="searchIcon"/>
+              </button>
+            </form>
+            <DashboardIcon className="sideIcon" id="dashboardIcon"/>
+            <NotificationsIcon className="sideIcon" id="notificationsIcon"/>
+            <PersonIcon className="sideIcon" id="personIcon"/>
           </section>
         </header>
         <Modal open={open} onClose={() => setOpen(false)}>
