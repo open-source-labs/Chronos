@@ -34,12 +34,37 @@
   opacity: 1;
 }
 
+.sidebar-container:hover #C {
+  opacity: 0;
+}
+
 .sidebar-container:hover #logo {
   opacity: 1;
 }
 
-.sidebar-container:hover #C {
+.sidebar-container:hover #sprout0 {
   opacity: 0;
+}
+
+.sidebar-container:hover #sprout1 {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout2 {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout3 {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout4 {
+  opacity: 1;
+}
+
+#sprout1:active, #sprout2:active, #sprout3:active, #sprout4:active {
+  background-image: url('../assets/background.png');
+  background-size: contain;
 }
 
 .firstRow {
@@ -53,25 +78,26 @@
 
 #C {
   position: absolute;
-  left: 50px;
-  top: 40px;
+  left: $logoPositionLeft;
+  top: $logoPositionTop;
   opacity: 1;
-  height: 25px;
-  transition: 100ms;
+  height: $logoSize;
+  transition: $logoTransition;
 }
 
 #logo {
   position: absolute;
-  left: 47px;
-  top: 40px;
-  height: 25px;
+  left: $logoPositionLeft - 3px;
+  top: $logoPositionTop;
+  height: $logoSize;
   opacity: 0;
-  transition: 100ms;
+  transition: $logoTransition;
   z-index: 2;
 }
 
 .line {
   color: white;
+  opacity: .65;
   width: 78%;
   margin-right: 5px;
    &:hover {
@@ -85,8 +111,61 @@
   margin-top: 50px;
 }
 
+.sprout {
+  height: $sproutSize;
+  width: $sproutSize;
+  // background-color: $background;
+  background-color: transparent;
+  border-radius: 50%;
+  margin: 30px 0px;;
+  background-size: scale-down;
+  &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+}
+
+#sprout0 {
+  position: absolute;
+  left: $logoPositionLeft + $originalSproutLeftOffset;
+  top: $logoPositionTop + $sproutTopOffset;
+}
+
+#sprout1 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 0;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#sprout2 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 1;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#sprout3 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 2;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#sprout4 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 3;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
 #secondLine {
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 .sidebar {

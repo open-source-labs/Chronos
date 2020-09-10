@@ -20,13 +20,18 @@ const SidebarContainer: React.FC = (): JSX.Element => (
   <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
       <div className="firstRow">
-        
         <span><img alt="C" id="C" src={'../assets/C.svg'} /></span>
-        
+        <span><img alt="Chronos" id="logo" src={'../assets/logo.svg'} /></span>
       </div>
+      
       <hr className="line" id="firstLine"></hr>
-
+      
       <div className="secondRow">
+        <span><img alt="Doya" className="sprout" id="sprout0" src={'../assets/clean-sprout.gif'}></img></span>
+        <span><img alt="Doya" className="sprout" id="sprout1" src={'../assets/growing-bean-1.gif'}></img></span>
+        <span><img alt="Doya" className="sprout" id="sprout2" src={'../assets/growing-bean-2.gif'}></img></span>
+        <span><img alt="Doya" className="sprout" id="sprout3" src={'../assets/growing-bean-3.gif'}></img></span>
+        <span><img alt="Doya" className="sprout" id="sprout4" src={'../assets/clean-sprout.gif'}></img></span>
       </div>
 
       <hr className="line" id="secondLine"></hr>
