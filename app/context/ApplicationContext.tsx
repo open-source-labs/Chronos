@@ -19,8 +19,20 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
   /**
    * Connect to database provided by user at 'index'
    */
-  const connectToDB = async (index: number) => {
+  const connectToDB = async (index: number, application: string) => {
     await ipcRenderer.send('connect', index);
+    console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
+    
+    // Response
+    ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
+      // Parse JSON response
+      const result = data;
+      if (result.length)
+        console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ${result}`);
+
+      fetchServicesNames(application);
+    });
+    
   };
 
   /**

@@ -19,8 +19,8 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   );
 
   useEffect(() => {
-    connectToDB(i);
-    fetchServicesNames(app);
+    connectToDB(i, app);
+    // fetchServicesNames(app);
 
     return () => {
       setServicesData([]);
