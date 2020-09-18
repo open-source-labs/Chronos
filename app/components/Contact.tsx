@@ -7,23 +7,16 @@ const Contact: React.FC = () => {
       <div className="contact-border">
         <div className="contact-container">
           <div className="contact-blurb">
-            <h1>Contact Us!</h1>
+            <h1>Contact Us</h1>
             <br />
-            <p>The Chronos Team is always looking for any feedback or suggestions for Chronos.</p>
+            <p>Please feel free to provide any feedback, concerns, or comments.</p>
             <p>
               You can find issues the team is currently working on&nbsp;
-              <a href="https://github.com/open-source-labs/Chronos/issues" target="_blank">
+              <a id="issueLink" href="https://github.com/open-source-labs/Chronos/issues" target="_blank">
                 here
               </a>
               .
             </p>
-            <p>
-              If you would like your voice heard, fill out the form and we will get back to you
-              ASAP!
-            </p>
-          </div>
-          <div className="chronos-contact-container">
-            <img src={'../assets/chronos-v4.png'} alt="Chronos logo" />
           </div>
         </div>
         <div className="email-container">
@@ -40,9 +33,12 @@ const Contact: React.FC = () => {
             <label htmlFor="subject">Subject: &nbsp;</label>
             <input type="text" id="subject" name="subject" placeholder="Subject" />
             <br />
-            <label htmlFor="message">Message: </label>
-            <br />
-            <textarea id="message" name="message" placeholder="Write something.."></textarea>
+            <label htmlFor="message">Message: 
+              <span>
+                <textarea id="message" name="message" placeholder="Write something.."></textarea>
+              </span>
+            </label>
+            
             <br />
             <label htmlFor="myfile">Select a file: </label>
             <input type="file" id="myfile" name="myfile" accept="image/*"></input>
