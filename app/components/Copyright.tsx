@@ -8,8 +8,9 @@ export interface CopyrightProps {}
 const Copyright = () => {
   const useStyles = makeStyles(theme => ({
     copyright: {
-      fontFamily: 'Inter',
+      fontFamily: 'Open Sans',
       position: 'fixed',
+      color: "#ffffff"
     }
   }))
   const classes = useStyles();

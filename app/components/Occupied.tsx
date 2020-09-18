@@ -69,7 +69,6 @@ const Occupied: React.FC = () => {
   };
 
   const useStyles = makeStyles<Theme, StyleProps>(theme => ({
-    // card: "+" button only
     paper: {
       height: 280,
       width: 280,
@@ -81,7 +80,7 @@ const Occupied: React.FC = () => {
       border: '0',
       boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: `#ccd8e1`,
+        backgroundColor: `#b5d3e9`,
         color: '#ffffff',
       },
     },
@@ -130,7 +129,7 @@ const Occupied: React.FC = () => {
           <section className="header" id="rightHeader">
             <form className="form">
               <label className="inputContainer">
-                <input className="form" id="textInput" value={`Search`} type="text" name="search" />
+                <input className="form" id="textInput" value="Search..." type="text" name="search" />
                 <hr />
               </label>
               <button className="form" id="submitBtn" type="submit">

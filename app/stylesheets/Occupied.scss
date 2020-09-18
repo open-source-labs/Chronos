@@ -76,11 +76,10 @@
 }
 
 #dashboardIcon {
-  margin-left: -30px; 
-}
-
-#dashboardIcon:hover {
-  cursor: pointer;
+  margin-left: -30px;
+  &:hover {
+    cursor: pointer;
+  } 
 }
 
 #personIcon {
@@ -101,17 +100,11 @@ button {
   margin: 0px;
   padding: 0px;
   color: transparent;
+  
+  &:hover{
+    background-color: transparent;
+  }
 }
-
-button:hover {
-  background-color: transparent;
-}
-
-// button.MuiButtonBase-root.MuiIconButton-root.makeStyles-hover-7 {
-//   position: relative;
-//   bottom: 50;
-//   right: 50;
-// }
 
 .MuiButtonBase-root {
   position: 'relative';
@@ -157,14 +150,14 @@ button:hover {
   outline: none;
   box-shadow: none;
   filter: none;
-}
 
-#deleteIcon:hover {
-  background: none;
-  background-color: none;
-  color: $red;
-  filter: none;
-  cursor: pointer;
+  &:hover {
+    background: none;
+    background-color: none;
+    color: $red;
+    filter: none;
+    cursor: pointer;
+  }
 }
 
 #searchIcon {
@@ -216,9 +209,11 @@ button:hover {
 
 #textInput {
   background-color: transparent;
+  font-family: 'Open Sans';
+  font-size: 16px;
   outline: none;
   border: 0;
-  padding: 5px;
+  padding: 2px;
   // transform: translateY(-50%);
   transition: all 0.25s ease;
   pointer-events: none;
@@ -252,7 +247,8 @@ select:-webkit-autofill:focus {
 // DATABASE CARDS
 .cardContainer {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   align-self: center;
   width: 80%;
   margin: 20px;
@@ -274,18 +270,18 @@ select:-webkit-autofill:focus {
     position: absolute;
     transition: all 0.5s;
   }
-  &:after {
+  // &:after {
     // top: -1px;
     // right: -1px;
     // border-top: 2px solid rgba(132, 216, 255, 0.7);
     // border-right: 2px solid rgba(132, 216, 255, 0.7);
-  }
-  &:before {
+  // }
+  // &:before {
     // bottom: -1px;
     // left: -1px;
     // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
     // border-left: 2px solid rgba(132, 216, 255, 0.7);
-  }
+  // }
   &:hover {
     position: relative;
     border-top-right-radius: 0px;

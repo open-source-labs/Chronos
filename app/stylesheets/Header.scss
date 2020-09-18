@@ -10,7 +10,6 @@
   margin-bottom: 30px;
 
   h1 {
-    font-size: 425%;
     font-weight: 700;
     letter-spacing: 2px;
     margin: 0;
@@ -40,15 +39,16 @@ select {
       position: absolute;
       top: 20px;
       left: 115px;
-      background-color: transparent;
-      border: 1px solid $navy;
-      color: $navy;
+      width: 100px;
+      height: 60px;
+      background-color: $background;
+      color: $darkgrey;
       transition: 0.1s;
       font-size: 90%;
 
       &:hover {
-        background-color: $navy;
-        color: #fff;
+        background-color: $lightblue;
+        color: black;
       }
     }
 
@@ -72,12 +72,20 @@ select {
   }
 }
 .microserviceTitle {
-  color: $grey;
-  font-size: 24px;
+  color: $header;
+  font-size: 36px;
+  font-family: 'Open Sans';
 }
 
 #gatherLiveData {
-  color: $grey;
+  font-size: 16px;
+  color: $background;
+  background-color: $header;
+  padding: 10px;
+  border-radius: 25px;
+  &:hover {
+    background-color: $lightblue;
+  }
 }
 
 #returnToAppIcon {

@@ -3,19 +3,19 @@
 .para {
   color: $background;
   text-align: left;
-  font-size: 18px;
-}
-
-h3 {
-  font-size: 20px;
-  color: $background;
-  font-weight: 700;
+  
+  p {
+    font-size: 18px;
+  }
+  
+  h3 {
+    font-size: 32px;
+  }
 }
 
 .doya {
   display: flex;
   flex-direction: row;
-  // justify-content: left;
   align-items: flex-start;
   align-self: flex-start;
   align-content: flex-start;
@@ -23,7 +23,8 @@ h3 {
 }
 
 .blurb {
-  margin: 500px;
+  margin-left: 300px;
+  margin-right: 200px;
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -31,6 +32,8 @@ h3 {
 
 #sproutSpan {
   display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-left: 15px;
   margin-right: 10px;
   height: $sproutSize;

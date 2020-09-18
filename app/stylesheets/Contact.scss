@@ -1,85 +1,79 @@
 @import './constants.scss';
 
 .contact {
-  background-color: #f4f4f4;
   height: 100%;
-  display: flex;
-  justify-content: flex-start;
+  vertical-align: top;
+  justify-content: center;
+  color: $darkgrey;
 }
 .contact-border {
-  width: 120vh;
-  margin: 10vh 20vh;
-  background-color: rgb(245, 237, 237);
-  border-radius: 10px;
-  border: 1px solid black;
-  z-index: 0;
   display: flex;
-  flex-direction: row;
-  padding-top: 50px;
-  padding-left: 40px;
+  flex-direction: column;
+  font-size: 14px;
+  width: 60vw;
+  margin: 10vh 20vh;
+  background-color: $background;
+  border-radius: 10px;
+  border: none;
+  box-shadow: $boxshadow2;
+  padding: 30px;
 }
 .contact-container {
   padding: 20px;
   margin-right: 0;
-  height: 70vh;
   justify-content: left;
-  width: 45%;
-  min-width: 30vh;
-  line-height: 3vh;
+  min-width: 50%;
 }
 .contact-blurb {
-  padding-left: 2vh;
-  font-size: 20px;
+  min-width: 50%;
+  font-size: 14px;
 }
 .email-container {
   flex-direction: row;
-  margin: 0 0;
-  margin-left: 20vh;
-  width: 50vh;
-  min-width: 20vh;
-  line-height: 5vh;
-  font-size: 20px;
+  padding: 20px;
+  margin: 0;
+  min-width: 50%;
+  font-size: 14px;
 }
 .email-container textarea {
-  font-size: 15px;
-  width: 30vh;
-  height: 20vh;
+  font-size: 12px;
 }
 .email-container input {
-  font-size: 15px;
+  font-size: 12px;
 }
-.chronos-contact-container {
-  height: 20vh;
-  width: 40vh;
-}
-.chronos-contact-container img {
-  margin-top: 5vh;
-  height: 20vh;
-  width: 40vh;
-}
+
 .email-container input[type='text'] {
-  width: 20vh;
+  width: 300px;
 }
 .email-container #email {
-  width: 23.5vh;
+  width: 300px;
 }
 .email-container #subject {
-  width: 22.5vh;
+  width: 300px;
 }
 
 #myfile {
-  font-size: 17px;
+  font-size: 12px;
 }
 
 #contact-submit {
-  font-size: 16px;
+  font-size: 14px;
   width: 9vh;
+  border: none;
+  outline: none;
+  color: $background;
+  background-color: $header;
+  border-radius: 4px;
+  padding: 5px;
+  &:hover {
+    background-color: $lightblue;
+  }
 }
 
-#contact-submit:hover {
-  font-size: 13px;
-  background-color: cyan;
-  padding: 3px 7px;
-  border-radius: 4px;
-  border-color: #313639;
+#issueLink {
+  color: $header;
+  text-decoration: none;
+  &:hover {
+    color: $lightblue;
+  }
 }
