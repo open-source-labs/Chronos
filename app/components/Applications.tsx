@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { DashboardContext } from '../context/DashboardContext';
 import ServicesModal from '../modals/ServicesModal';
-import '../stylesheets/Applications.css';
+import '../stylesheets/Applications.scss';
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
@@ -46,37 +46,48 @@ const Applications = () => {
   };
 
   const useStyles = makeStyles(theme => ({
+    // card: myPostgres, myMongo, ToddDB buttons
     paper: {
-      height: 340,
+      height: 280,
+      width: 280,
       textAlign: 'center',
       color: 'rgba(33, 34, 41, 1.2)',
       whiteSpace: 'nowrap',
-      backgroundColor: 'rgba(33, 34, 41, 0.2)',
-      border: '3px ridge #808080',
-      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
+      border: '0',
+      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        color: 'white',
-        background: 'rgba(33, 34, 41, 1.2)',
+        backgroundColor: `#ccd8e1`,
+        color: '#ffffff',
       },
     },
     hover: {
       position: 'relative',
       bottom: 20,
-      right: 40,
+      right: 47,
       boxShadow: 'none',
-      '&:hover, &.Mui-focusVisible': { color: 'red' },
+      '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
+      backgroundColor: 'transparent',
     },
     btnStyle: {
       position: 'relative',
       top: 50,
       margin: '0 auto',
-      color: 'rgb(255, 243, 72)',
-      backgroundColor: 'grey',
+      color: '#eeeeee',
+      backgroundColor: '#ccd8e1',
+      opacity: 1,
+      '&:hover': {
+        color: '#ffffff',
+        backgroundColor: 'transparent'
+      }
     },
     fontStyles: {
-      fontSize: '3rem',
+      fontSize: '16px',
       [theme.breakpoints.up('lg')]: {
-        fontSize: '2.75rem',
+        fontSize: '18px',
+        // MAIN PAGE SQUARE BUTTON FONTS
+        fontFamily: 'Inter'
       },
     },
   }));
@@ -89,6 +100,7 @@ const Applications = () => {
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
+              // key={`card-${i}`}
               className={classes.paper}
               variant="outlined"
               onClick={event => handleClick(event, app[0], i)}

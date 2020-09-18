@@ -5,15 +5,19 @@
   @include centerWithFlex(center);
   flex-direction: column;
   padding: 30px 0 50px;
-  background-color: $headergray;
+  background-color: $grey;
   color: #333;
   margin-bottom: 30px;
 
   h1 {
-    font-size: 425%;
+    font-size: 24px;
     font-weight: 700;
     letter-spacing: 2px;
     margin: 0;
+    color: #555555;
+  }
+  #gather {
+    color: #555555;
   }
 }
 
@@ -41,13 +45,13 @@ select {
       top: 20px;
       left: 115px;
       background-color: transparent;
-      border: 1px solid $sidebarblue;
-      color: $sidebarblue;
+      border: 1px solid $navy;
+      color: $navy;
       transition: 0.1s;
       font-size: 90%;
 
       &:hover {
-        background-color: $sidebarblue;
+        background-color: $navy;
         color: #fff;
       }
     }

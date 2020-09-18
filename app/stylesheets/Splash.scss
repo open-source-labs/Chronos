@@ -1,0 +1,56 @@
+@import './constants.scss';
+
+#splash {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background-color: $navy;  
+  animation: fadeOut ease-out 7.5s;
+  -webkit-animation: fadeOut ease-in-out 7.5s;
+  -moz-animation: fadeOut ease-in-out 7.5s;
+  -o-animation: fadeOut ease-in-out 7.5s;
+  -ms-animation: fadeOut ease-in-out 7.5s;
+}
+
+#splash img {
+  width: 60%;
+}
+
+@keyframes fadeOut {
+0% {opacity:1;}
+55% {opacity:0.005;}
+100% {opacity:1;}
+}
+
+@-moz-keyframes fadeOut {
+0% {opacity:1;}
+55% {opacity:0.005;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeOut {
+0% {opacity:1;}
+55% {opacity:0.005;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fadeOut {
+0% {opacity:1;}
+55% {opacity:0.005;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeOut {
+0% {opacity:1;}
+55% {opacity:0.005;}
+100% {opacity:1;}
+}

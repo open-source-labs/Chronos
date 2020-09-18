@@ -1,0 +1,261 @@
+@import './constants.scss';
+
+// HEADER
+.mainHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.header {
+  margin-top: $logoPositionTop - 18px;
+  font-size: $headerFontSize;
+  color: $header;
+}
+
+#leftHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: $logoPositionLeft - 30px;
+}
+
+#rightHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  margin-top: 20px;
+}
+
+#dashboard {
+  margin-left: $logoPositionLeft - 34px;
+}
+
+.icon {
+  vertical-align: middle;
+  text-align: center;
+  color: $icon;
+  background-color: $background;
+  box-sizing: content-box;
+  border-radius: 50%;
+  box-shadow: $boxshadow1;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  display: inline-flex;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  min-height: auto;
+  white-space: nowrap;
+}
+
+.sideIcon {
+  font-size: 34px;
+  vertical-align: middle;
+  text-align: center;
+  color: $icon;
+  background-color: transparent;
+  box-sizing: content-box;
+  border-radius: 50%;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  display: inline-flex;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  min-height: auto;
+  white-space: nowrap;
+  margin: 5px;
+  margin-top: 15px;
+  padding: 5px;
+}
+
+#dashboardIcon {
+  margin-left: -30px; 
+}
+
+#dashboardIcon:hover {
+  cursor: pointer;
+}
+
+#personIcon {
+  margin-right: 50px;
+}
+
+#listIcon {
+  font-size: 42px;
+  font-weight: 400px;
+  margin: 10px;
+  padding: 5px;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+button:hover {
+  background-color: transparent;
+}
+
+#searchIcon {
+  background-color: $background;
+  font-size: 26px;
+  font-weight: 400px;
+  padding: 8px;
+  margin: 0px;
+  margin-left: 15px;
+}
+
+#listIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#searchIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#dashboardIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#notificationsIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+#personIcon:hover {
+  box-shadow: $boxshadow3;
+  cursor: pointer;
+}
+
+.form {
+  height: 30px;
+  font-weight: 100;
+  font-size: inherit;
+  color: inherit;
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  justify-items: center;
+  align-items: center;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#textInput {
+  background-color: transparent;
+  outline: none;
+  border: 0;
+  padding: 5px;
+  // transform: translateY(-50%);
+  transition: all 0.25s ease;
+  pointer-events: none;
+  text-align: left;
+  margin-top: 5px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid green;
+  box-shadow: $boxshadow1;
+  -webkit-text-fill-color: green;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+// MAIN DASHBOARD
+.dashboardArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+// DATABASE CARDS
+.cardContainer {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  width: 80%;
+  margin: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 20px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:after,
+  &:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+  &:after {
+    top: -1px;
+    right: -1px;
+    // border-top: 2px solid rgba(132, 216, 255, 0.7);
+    // border-right: 2px solid rgba(132, 216, 255, 0.7);
+  }
+  &:before {
+    bottom: -1px;
+    left: -1px;
+    // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
+    // border-left: 2px solid rgba(132, 216, 255, 0.7);
+  }
+  &:hover {
+    position: relative;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    &:before,
+    &:after {
+      width: 25%;
+      height: 25%;
+    }
+  }
+}
+
+#deleteIcon {
+  background: none;
+  position: 'absolute';
+  top: 300;
+  right: 300;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  filter: none;
+}
+#deleteIcon:hover {
+  background: none;
+  background-color: none;
+  color: $red;
+  filter: none;
+  cursor: pointer;
+}
