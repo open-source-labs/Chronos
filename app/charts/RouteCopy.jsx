@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { Theme, makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
@@ -98,7 +98,8 @@ const RouteLocations = props => {
       backgroundColor: '#ffffff',
       borderRadius: 8,
       border: '0',
-      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
+      boxShadow:
+        '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
         backgroundColor: `#ccd8e1`,
         color: '#ffffff',
@@ -106,7 +107,7 @@ const RouteLocations = props => {
     },
     hover: {
       boxShadow: 'none',
-      color: 'transparent'
+      color: 'transparent',
     },
     btnStyle: {
       position: 'absolute',
@@ -117,8 +118,8 @@ const RouteLocations = props => {
       borderRadius: '0',
       backgroundColor: 'transparent',
       '&:hover': {
-        backgroundColor: 'none'
-      }
+        backgroundColor: 'none',
+      },
     },
     icon: {
       width: '75px',
@@ -128,24 +129,31 @@ const RouteLocations = props => {
   }));
   const classes = useStyles({});
 
-
-
   // ======Graphs logic =======//
   const nodeListObj = {};
   const edgeList = [];
   for (let route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
-      const colors = ['#75b6d7', '#cc000', '#fce356', '#888888', '#ccd8e1']
+      const colors = ['#75b6d7', '#cc000', '#fce356', '#888888', '#ccd8e1'];
       // check if node exists if not then add node
       let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { id: id, label: id, color: { background: '#24d2f1', border: 'white', hover: {background:'#4d55ec',border: 'white'} }, shape: 'circle' }
+        nodeListObj[id] = {
+          id: id,
+          label: id,
+          color: {
+            background: '#24d2f1',
+            border: 'white',
+            hover: { background: '#4d55ec', border: 'white' },
+          },
+          shape: 'circle',
+        };
       }
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
-        let edge = { from: route[i - 1].microservice, to: id, label: `${duration * 100} ms` }
-        edgeList.push(edge)
+        let edge = { from: route[i - 1].microservice, to: id, label: `${duration * 100} ms` };
+        edgeList.push(edge);
       }
     }
   }
@@ -168,7 +176,6 @@ const RouteLocations = props => {
   //   edges: [{ from: 4, to: 2, label: 'hello' }, { from: 'one', to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }]
   // };
   const options = {
-
     height: '400px',
     width: '400px',
     style: 'surface',
@@ -176,22 +183,13 @@ const RouteLocations = props => {
       hierarchical: false,
     },
     edges: {
-<<<<<<< HEAD
       color: '#000000',
-      physics: false,
+      physics: true,
       smooth: {
         type: 'curvedCCW',
         forceDirection: 'none',
+        roundness: 0.3,
       },
-=======
-      color: "#000000",
-      physics: true,
-      smooth: {
-        type: "curvedCCW",
-        forceDirection: "none",
-        roundness: 0.3
-      }
->>>>>>> 284dbf139c261e9f23a67f0c4965183e6af7d12e
     },
   };
 
@@ -206,32 +204,22 @@ const RouteLocations = props => {
   };
 
   return (
-<<<<<<< HEAD
-    // <div id="routeDataArea">
-    //   {/* Data on the lastest route */}
-    //   {resArray}
-
-    //   {/* Rendering avg-speed related data */}
-    //   <div id="avgData">
-    //     {/* {avgData} */}
-    //     {/* <span className="avgData-titles">Average time between points:</span>
-    //     {avgTime}
-    //     <span className="avgData-titles">Total time between points:</span>
-    //     {totalTime}
-    //     <span className="avgData-titles">Number of trips between points:</span>
-    //     {count} */}
-    //   </div>
-    // </div>
-    // <h1>ROUTE COPY</h1>
-    // <div className="chart">
-    <Graph graph={graph} options={options} events={events} style={{ height: '640px' }} />
-    // </div>
-=======
-    <div className='traceContainer'> 
-      <span id='trace'>Traces</span>
-      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '8px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', backgroundColor: 'white' }} />
+    <div className="traceContainer">
+      <span id="trace">Traces</span>
+      <Graph
+        className={classes.paper}
+        graph={graph}
+        options={options}
+        events={events}
+        style={{
+          fontSize: '8px',
+          color: '#555555',
+          fontFamily: 'Open Sans',
+          boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+          backgroundColor: 'white',
+        }}
+      />
     </div>
->>>>>>> 284dbf139c261e9f23a67f0c4965183e6af7d12e
   );
 };
 
