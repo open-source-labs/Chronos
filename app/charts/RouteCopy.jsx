@@ -1,3 +1,14 @@
+import {
+  IconButton,
+  Modal,
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  Typography
+} from '@material-ui/core';
+import { Theme, makeStyles } from '@material-ui/core/styles';
+import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 import React, { useContext } from 'react';
 // import OverviewContext from '../context/OverviewContext';
 import { CommsContext } from '../context/CommsContext';
@@ -77,134 +88,64 @@ const RouteLocations = props => {
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
   console.log('tracepoints =======>', tracePoints);
 
-  // // Construct an obj that stores data necessary for calculating avg speed of requests btw 2 pts.
-  // const avgDataObj = {};
-  // /****** Build the object here w/ nested loops ************/
-  // /****** WARNING: tracePoints arr can be very long (100+) ************/
-  // for (let i = 0; i < tracePoints.length; i += 1) {
-  //   let subArr = tracePoints[i];
-  //   for (let j = 0; j < subArr.length; j += 1) {
-  //     let currDataObj = subArr[j];
-  //     if (j < subArr.length - 1) {
-  //       let nextDataObj = subArr[j + 1];
-  //       let routeName = `${currDataObj.microservice}-${nextDataObj.microservice}`;
-  //       // Key/value pair that keeps COUNT of two-point routes
-  //       if (!avgDataObj[`${routeName}Count`]) avgDataObj[`${routeName}Count`] = 1;
-  //       else avgDataObj[`${routeName}Count`] += 1;
+  const useStyles = makeStyles(theme => ({
+    paper: {
+      height: 280,
+      width: 280,
+      textAlign: 'center',
+      color: '#888888',
+      whiteSpace: 'nowrap',
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
+      border: '0',
+      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
+      '&:hover, &.Mui-focusVisible': {
+        backgroundColor: `#ccd8e1`,
+        color: '#ffffff',
+      },
+    },
+    hover: {
+      boxShadow: 'none',
+      color: 'transparent'
+    },
+    btnStyle: {
+      position: 'absolute',
+      top: -10,
+      left: -10,
+      margin: '0',
+      color: '#eeeeee',
+      borderRadius: '0',
+      backgroundColor: 'transparent',
+      '&:hover': {
+        backgroundColor: 'none'
+      }
+    },
+    icon: {
+      width: '75px',
+      height: '75px',
+      boxShadow: 'none',
+    },
+  }));
+  const classes = useStyles({});
 
-  //       // Key/value that accumulates TOTAL TIME a req travels btw 2 certain points
-  //       let timeDiff = new Date(nextDataObj.time) - new Date(currDataObj.time);
-  //       if (!avgDataObj[`${routeName}TotalTime`]) {
-  //         avgDataObj[`${routeName}TotalTime`] = timeDiff;
-  //       } else avgDataObj[`${routeName}TotalTime`] += timeDiff;
 
-  //       // Key/value that calculates AVG TIME of travel (dividing the 2 values above)
-  //       let avgTime = avgDataObj[`${routeName}TotalTime`] / avgDataObj[`${routeName}Count`];
-  //       avgDataObj[`${routeName}AvgTime`] = avgTime;
-  //     }
-  //   }
-  // }
 
-  // Array of <divs> to be rendered. Each <div> contains route name and time difference.
-  // const resArray = []
-
-  // // const position = communicationsData[0].correlatingid ? 0 : tracePoints.length - 1;
-  // const position = 0;
-
-  // // iterate over ONE elem in tracePoints, creating a <div> for every data obj.
-  // for (let i = 0; i < tracePoints[position].length; i += 1) {
-  //   if (i !== tracePoints[position].length - 1) {
-  //     // Calc time difference (when not at the end of array):
-  //     // Convert time str to Date obj w/ new Date(), then get the time difference.
-  //     const timeDiff =
-  //       new Date(tracePoints[position][i + 1].timeSent) -
-  //       new Date(tracePoints[position][i].timeSent);
-  //     resArray.push(
-  //       <div className="RouteCircle" key={i}>
-  //         {/* Altering this <p> so it displays only microsvc_name */}
-  //         <p id="routeText">
-  //           Point {i + 1}: {tracePoints[position][i].microservice_name}
-  //         </p>
-  //         {/* Adding another <p> that displays time difference btw curr obj and next obj */}
-  //         <p id="routeTimeDiff">
-  //           {/* Time: {tracePoints[position][i].timeSent} */}
-  //           Time elapsed: {timeDiff} ms
-  //         </p>
-  //       </div>
-  //     );
-  //   } else {
-  //     // If at the end of array, don't push the timeDiff <p> to resArray (only push a <p> w/ name).
-  //     resArray.push(
-  //       <div className="RouteCircle" key={i}>
-  //         <p id="routeText">
-  //           Point {i + 1}: {tracePoints[position][i].microservice_name}
-  //         </p>
-  //       </div>
-  //     );
-  //   }
-  // }
-  // // console.log('resArray: ', resArray);
-
-  /**** Making a list of avg speed-related data. ********/
-  // const avgData = [];
-  // Object.entries(avgDataObj).forEach((el, i) => {
-  //   avgData.push(
-  //     <span className="avgDataDetails" key={`${i}+${el[0]}`}>
-  //       {el[0]}: {el[1]}
-  //     </span>
-  //   )
-  // })
-  // console.log('avgData (array):', avgData);
-
-  // /**** Making CATEGORIZED lists of avg speed-related data. ********/
-  // const avgTime = [],
-  //   totalTime = [],
-  //   count = [];
-  // let i = 0; // For unique keys for each <span> //
-
-  // for (const key in avgDataObj) {
-  //   i += 1;
-
-  //   if (key.endsWith('AvgTime')) {
-  //     avgTime.push(
-  //       <span className="avgDataDetails" key={i}>
-  //         {key.slice(0, -7)}: {avgDataObj[key]} ms
-  //       </span>
-  //     );
-  //   }
-  //   if (key.endsWith('TotalTime')) {
-  //     totalTime.push(
-  //       <span className="avgDataDetails" key={i}>
-  //         {key.slice(0, -9)}: {avgDataObj[key]} ms
-  //       </span>
-  //     );
-  //   }
-  //   if (key.endsWith('Count')) {
-  //     count.push(
-  //       <span className="avgDataDetails" key={i}>
-  //         {key.slice(0, -5)}: {avgDataObj[key]}
-  //       </span>
-  //     );
-  //   }
-  // }
-  // console.log('avgTime:', avgTime);
-  // console.log('totalTime:', totalTime);
-  // console.log('count:', count);
-  /****************/
+  // ======Graphs logic =======//
   const nodeListObj = {};
   const edgeList = [];
   for (let route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
+      const colors = ['#75b6d7', '#cc000', '#fce356', '#888888', '#ccd8e1']
       // check if node exists if not then add node
       let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { id: id, label: id, color: '#e04141' };
+        nodeListObj[id] = { id: id, label: id, color: { background: '#24d2f1', border: 'white', hover: {background:'#4d55ec',border: 'white'} }, shape: 'circle' }
       }
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
-        let edge = { from: route[i - 1].microservice, to: id, label: `${duration} ms` };
-        edgeList.push(edge);
+        let edge = { from: route[i - 1].microservice, to: id, label: `${duration * 100} ms` }
+        edgeList.push(edge)
       }
     }
   }
@@ -227,16 +168,30 @@ const RouteLocations = props => {
   //   edges: [{ from: 4, to: 2, label: 'hello' }, { from: 'one', to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }]
   // };
   const options = {
+
+    height: '400px',
+    width: '400px',
+    style: 'surface',
     layout: {
       hierarchical: false,
     },
     edges: {
+<<<<<<< HEAD
       color: '#000000',
       physics: false,
       smooth: {
         type: 'curvedCCW',
         forceDirection: 'none',
       },
+=======
+      color: "#000000",
+      physics: true,
+      smooth: {
+        type: "curvedCCW",
+        forceDirection: "none",
+        roundness: 0.3
+      }
+>>>>>>> 284dbf139c261e9f23a67f0c4965183e6af7d12e
     },
   };
 
@@ -251,6 +206,7 @@ const RouteLocations = props => {
   };
 
   return (
+<<<<<<< HEAD
     // <div id="routeDataArea">
     //   {/* Data on the lastest route */}
     //   {resArray}
@@ -270,6 +226,12 @@ const RouteLocations = props => {
     // <div className="chart">
     <Graph graph={graph} options={options} events={events} style={{ height: '640px' }} />
     // </div>
+=======
+    <div className='traceContainer'> 
+      <span id='trace'>Traces</span>
+      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '8px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', backgroundColor: 'white' }} />
+    </div>
+>>>>>>> 284dbf139c261e9f23a67f0c4965183e6af7d12e
   );
 };
 

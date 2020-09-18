@@ -241,3 +241,21 @@ select:-webkit-autofill:focus {
     }
   }
 }
+
+#deleteIcon {
+  background: none;
+  position: 'absolute';
+  top: 300;
+  right: 300;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  filter: none;
+}
+#deleteIcon:hover {
+  background: none;
+  background-color: none;
+  color: $red;
+  filter: none;
+  cursor: pointer;
+}
