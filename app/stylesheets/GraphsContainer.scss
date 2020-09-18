@@ -38,6 +38,19 @@
     box-shadow: $boxshadow;
   }
 }
+.traceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  #trace {
+    position: absolute;
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Arial';
+  }
+}
 
 /* Tablet */
 @media screen and (min-width: 601px) and (max-width: 980px) {
