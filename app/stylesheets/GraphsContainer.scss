@@ -38,11 +38,25 @@
     box-shadow: $boxshadow;
   }
 }
+.traceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  #trace {
+    position: absolute;
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Arial';
+  }
+}
 
 /* Tablet */
 @media screen and (min-width: 601px) and (max-width: 980px) {
   .graphsGrid {
     grid-template-columns: repeat(1, 1fr);
+    font-family: 'Inter', sans-serif;
   }
 }
 
@@ -50,6 +64,7 @@
 @media screen and (min-width: 1000px) and (max-width: 1500px) {
   .graphsGrid {
     grid-template-columns: repeat(2, 1fr);
+    font-family: 'Inter', sans-serif;
   }
 }
 
@@ -57,5 +72,6 @@
 @media screen and (min-width: 1600px) {
   .graphsGrid {
     grid-template-columns: repeat(3, 1fr);
+    font-family: 'Inter', sans-serif;
   }
 }

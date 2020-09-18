@@ -1,6 +1,6 @@
 {
   "name": "chronos",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Chronos Microservice Debugger",
   "main": "./build/Main.js",
   "scripts": {
@@ -13,10 +13,13 @@
     "test:electron": "jest --detectOpenHandles ./__tests__/electron/*",
     "test:app": "jest ./__tests__/app/*",
     "both": "npm run start & sleep 5 && npm run electron",
-    "both:tsc": "nodemon --watch ./app --exec tsc & npm run start & sleep 5 && npm run electron",
+    "both:tsc": "nodemon --watch ./app & npm run start & sleep 5 && npm run electron",
     "both:dev": "npm run start & nodemon --watch ./electron --exec 'npm run electron'",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos"
+    "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
+    "delete": "rm -r dist & rm -r build",
+    "reinstall": "rm -r node_modules && npm install",
+    "prepare": "tsc -v && tsc -p . && npm run build"
   },
   "babel": {
     "presets": [
@@ -48,6 +51,7 @@
     "plotly.js-dist": "^1.54.1",
     "react": "16.10.1",
     "react-dom": "16.10.1",
+    "react-graph-vis": "^1.0.5",
     "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.2.0",
     "webdriverio": "^6.1.25"
@@ -64,6 +68,7 @@
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^26.0.4",
+    "@types/material-ui": "^0.21.8",
     "@types/mongoose": "^5.7.28",
     "@types/node": "^14.0.14",
     "@types/pg": "^7.14.3",
@@ -107,6 +112,7 @@
     "typescript": "^3.9.5",
     "url-loader": "^2.1.0",
     "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   }
