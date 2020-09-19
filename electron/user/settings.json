@@ -9,11 +9,19 @@
       "Jul 3, 2020 7:12AM"
     ],
     [
+
       "myPostgres",
       "SQL",
       "postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm",
       "Online bookstore with that keeps track of orders and customers",
       "Jun 28, 2020 4:58 PM"
+     ],
+    [
+      "pattyDB",
+      "MongoDB",
+      "mongodb+srv://chronos:chronos@cluster0.tpeie.mongodb.net/chronos?retryWrites=true&w=majority",
+      "dummy microservice: books/customer/orders/reverse-proxy",
+      "Jul 3, 2020 11:12AM"
     ]
   ],
   "splash": true
