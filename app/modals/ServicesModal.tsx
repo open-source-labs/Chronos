@@ -36,7 +36,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
    * fetch request for service names
    */
   const fetchStuff = () => {
-    fetchServicesNames(app);
+    // fetchServicesNames(app);
   };
 
   return (
