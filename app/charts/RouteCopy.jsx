@@ -1,4 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import {
+  IconButton,
+  Modal,
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+  Typography
+} from '@material-ui/core';
+import { Theme, makeStyles } from '@material-ui/core/styles';
+import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
+import React, { useContext } from 'react';
 // import OverviewContext from '../context/OverviewContext';
 import { CommsContext } from '../context/CommsContext';
 // import { log } from 'console';
@@ -6,17 +17,6 @@ import Graph from 'react-graph-vis';
 
 const RouteLocations = props => {
   const communicationsData = useContext(CommsContext).commsData;
-  
-  useEffect(() => {
-    const parentNode = document.querySelector('div.chart');
-    const childNode = document.querySelectorAll('canvas')[0];
-    if (parentNode && childNode) {
-      parentNode.append(childNode);
-      childNode.id = `canvasGraph`
-    }
-    return childNode;
-  })
-
   console.log('commdata=======>', communicationsData);
   console.log('try again');
 
@@ -88,19 +88,63 @@ const RouteLocations = props => {
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
   console.log('tracepoints =======>', tracePoints);
 
+  const useStyles = makeStyles(theme => ({
+    paper: {
+      height: 280,
+      width: 280,
+      textAlign: 'center',
+      color: '#888888',
+      whiteSpace: 'nowrap',
+      backgroundColor: '#ffffff',
+      borderRadius: 8,
+      border: '0',
+      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
+      '&:hover, &.Mui-focusVisible': {
+        backgroundColor: `#ccd8e1`,
+        color: '#ffffff',
+      },
+    },
+    hover: {
+      boxShadow: 'none',
+      color: 'transparent'
+    },
+    btnStyle: {
+      position: 'absolute',
+      top: -10,
+      left: -10,
+      margin: '0',
+      color: '#eeeeee',
+      borderRadius: '0',
+      backgroundColor: 'transparent',
+      '&:hover': {
+        backgroundColor: 'none'
+      }
+    },
+    icon: {
+      width: '75px',
+      height: '75px',
+      boxShadow: 'none',
+    },
+  }));
+  const classes = useStyles({});
+
+
+
+  // ======Graphs logic =======//
   const nodeListObj = {};
   const edgeList = [];
   for (let route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
+      const colors = ['#75b6d7', '#cc000', '#fce356', '#888888', '#ccd8e1']
       // check if node exists if not then add node
       let id = route[i].microservice
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { id: id, label: id, color: '#e04141' }
+        nodeListObj[id] = { id: id, label: id, color: { background: '#24d2f1', border: 'white', hover: { background: '#4d55ec', border: 'white' } }, shape: 'circle' }
       }
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
-        let duration = new Date(route[i].time) - new Date(route[i-1].time);
-        let edge = { from: route[i - 1].microservice, to: id, label: `${duration} ms`}
+        let duration = new Date(route[i].time) - new Date(route[i - 1].time);
+        let edge = { from: route[i - 1].microservice, to: id, label: `${duration * 100} ms` }
         edgeList.push(edge)
       }
     }
@@ -124,15 +168,20 @@ const RouteLocations = props => {
   //   edges: [{ from: 4, to: 2, label: 'hello' }, { from: 'one', to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }]
   // };
   const options = {
+
+    height: '400px',
+    width: '400px',
+    style: 'surface',
     layout: {
       hierarchical: false
     },
     edges: {
       color: "#000000",
-      physics: false,
+      physics: true,
       smooth: {
         type: "curvedCCW",
-        forceDirection: "none"
+        forceDirection: "none",
+        roundness: 0.3
       }
     },
   };
@@ -147,10 +196,11 @@ const RouteLocations = props => {
     }
   };
 
-  
+
   return (
-    <div className="chart">
-      <Graph id="visGraph" graph={graph} options={options} events={events} style={{ height: "640px" }} />
+    <div className='traceContainer'>
+      <span id='trace'>Traces</span>
+      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '8px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', backgroundColor: 'white' }} />
     </div>
   );
 };

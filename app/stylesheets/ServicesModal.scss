@@ -39,22 +39,15 @@
       margin: 10px;
       padding: 12px;
       margin: 0 auto;
-      // background-color: lighten($navy, 70%);
       background-color: $grey;
       color: rgb(31, 31, 31);
       transition: 0.1s;
       text-align: center;
       font-weight: 700;
-
-      // &:last-of-type {
-        // border-bottom: thin solid lighten($navy, 35%);
-        // border: none;
-      // }
-    }
-
-    .link:hover {
-      color: #fff;
-      background-color: $header;
+      &:hover { 
+        color: #fff;
+        background-color: $header;
+      }
     }
   }
 }

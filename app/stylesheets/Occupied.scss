@@ -30,8 +30,29 @@
   margin-top: 20px;
 }
 
+#listIcon {
+  position: absolute;
+  top: 20px;
+  left: 250px;
+  font-size: 42px;
+  margin: 10px;
+  padding: 5px;
+
+  &:hover{
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    color: $lightblue;
+  }
+}
+
 #dashboard {
+  position: absolute;
+  top: 43px;
+  left: 300px;
   margin-left: $logoPositionLeft - 34px;
+  &:hover {
+    color: $lightblue;
+  }
 }
 
 .icon {
@@ -75,22 +96,44 @@
   padding: 5px;
 }
 
+#searchIcon {
+  background-color: $background;
+  font-size: 26px;
+  font-weight: 400px;
+  padding: 8px;
+  margin: 0px;
+  margin-left: 15px;
+  
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+  }
+}
+
 #dashboardIcon {
   margin-left: -30px;
   &:hover {
     cursor: pointer;
-  } 
+    box-shadow: $boxshadow3;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 #personIcon {
   margin-right: 50px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
-#listIcon {
-  font-size: 42px;
-  font-weight: 400px;
-  margin: 10px;
-  padding: 5px;
+#notificationsIcon {
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 button {
@@ -158,35 +201,6 @@ button {
     filter: none;
     cursor: pointer;
   }
-}
-
-#searchIcon {
-  background-color: $background;
-  font-size: 26px;
-  font-weight: 400px;
-  padding: 8px;
-  margin: 0px;
-  margin-left: 15px;
-}
-
-#searchIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
-}
-
-#dashboardIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
-}
-
-#notificationsIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
-}
-
-#personIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
 }
 
 .form {

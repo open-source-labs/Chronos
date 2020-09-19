@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef, forwardRef } from 'react';
 
 // MATERIAL UI METHODS
 import {
@@ -39,13 +39,13 @@ interface StyleProps {
 };
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
-const Occupied: React.FC = () => {
+const Occupied: React.FC = React.memo(function Occupied (props) {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
-  
+  const [searchTerm, setSearchTerm] = useState<string>('Search...');
   // Dynamic refs
   const delRef = useRef<any>([]);
 
@@ -108,18 +108,9 @@ const Occupied: React.FC = () => {
   }));
 
   const classes = useStyles({} as StyleProps);
-  
-  // function append(parent:any, child:any) {
-  //   const parentNode: HTMLElement = document.querySelector(parent);
-  //   const childNode: HTMLElement = document.querySelector(child);
-  //   return parentNode.append(childNode);
-  // };
 
   return (
-    
     <div className="entireArea">
-      <div className="sidebarArea">
-      </div>
       <div className="dashboardArea">
         <header className="mainHeader">
           <section className="header" id="leftHeader">
@@ -129,7 +120,7 @@ const Occupied: React.FC = () => {
           <section className="header" id="rightHeader">
             <form className="form">
               <label className="inputContainer">
-                <input className="form" id="textInput" value="Search..." type="text" name="search" />
+                <input className="form" id="textInput" placeholder={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
                 <hr />
               </label>
               <button className="form" id="submitBtn" type="submit">
@@ -149,7 +140,7 @@ const Occupied: React.FC = () => {
             </Button>
           </div>
           {applications.map((app: string[], i: number | any | string | undefined) => (
-            <div className="card" id={`card-${i}`}>
+            <div className="card" key={`card-${i}`} id={`card-${i}`}>
               <Card
                 key={`card-${i}`}
                 className={classes.paper}
@@ -178,12 +169,12 @@ const Occupied: React.FC = () => {
             <AddModal setOpen={setAddOpen} />
           </Modal>
           <Modal open={open} onClose={() => setOpen(false)}>
-            <ServicesModal i={index} app={app} />
+            <ServicesModal key={`key-${index}`} i={index} app={app} />
           </Modal>
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default Occupied;
