@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-
+import { useHistory, Link } from 'react-router-dom';
+import ListIcon from '@material-ui/icons/List';
 import { ApplicationContext } from '../context/ApplicationContext';
 import '../stylesheets/Header.scss';
 
@@ -18,7 +18,7 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
 
   return (
     <div className="microservice-header">
-      <h1>{app}</h1>
+      <h1 className="microserviceTitle">{app}</h1>
       <select name="microservice" value={service} onChange={e => history.replace(e.target.value)}>
         {servicesData.map(({ _id, microservice }: any) => (
           <option key={_id} value={`${microservice}`} selected={service === microservice}>
@@ -29,16 +29,22 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
           communications
         </option>
       </select>
-      <div className="header-btns">
-        <button onClick={() => history.goBack()}>Return to Applications</button>
-        <button onClick={() => setLive(!live)}>
+      <div className="header">
+        <Link className="link" id="return" to="/applications">
+          <span>
+            <ListIcon className="icon" id="returnIcon" />
+          </span>
+          <p id="returnToDash">Dashboard</p>
+        </Link>
+        {/* <button id="returnButton" onClick={() => history.goBack()}><ListIcon className="icon" id="returnIcon" /></button> */}
+        <button id="liveButton" onClick={() => setLive(!live)}>
           {live ? (
             <div>
-              <span className="dot"></span>Live
+              <span id="live">Live</span>
             </div>
           ) : (
-            <div id='gather'>Gather Live Data</div>
-          )}
+              <div id="gatherLiveData" >Gather Live Data</div>
+            )}
         </button>
       </div>
     </div>

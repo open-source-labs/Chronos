@@ -8,13 +8,14 @@ export interface CopyrightProps {}
 const Copyright = () => {
   const useStyles = makeStyles(theme => ({
     copyright: {
-      fontFamily: 'Inter',
+      fontFamily: 'Open Sans',
       position: 'fixed',
+      color: "#ffffff"
     }
   }))
   const classes = useStyles();
   return (
-  <Typography className={classes.copyright} variant="body2" color="textSecondary" align="center">
+  <Typography className={classes.copyright} variant="body2" align="center">
     {'Copyright © '}
     <Link color="inherit" href="https://chronoslany.com/" target="_blank">
       Team Chronos
