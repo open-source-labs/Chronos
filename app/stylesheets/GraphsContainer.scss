@@ -38,7 +38,19 @@
     box-shadow: $boxshadow;
   }
 }
+.traceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  #tracesTitle {
+    position: absolute;
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Open Sans';
+  }
+}
 /* Tablet */
 @media screen and (min-width: 601px) and (max-width: 980px) {
   .graphsGrid {
@@ -61,12 +73,4 @@
     grid-template-columns: repeat(3, 1fr);
     font-family: 'Open Sans', sans-serif;
   }
-}
-
-#visGraph {
-  visibility: hidden;
-}
-
-#canvasGraph {
-  background: pink;
 }

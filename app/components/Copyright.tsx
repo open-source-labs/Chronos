@@ -15,7 +15,7 @@ const Copyright = () => {
   }))
   const classes = useStyles();
   return (
-  <Typography className={classes.copyright} variant="body2" color="textSecondary" align="center">
+  <Typography className={classes.copyright} variant="body2" align="center">
     {'Copyright © '}
     <Link color="inherit" href="https://chronoslany.com/" target="_blank">
       Team Chronos

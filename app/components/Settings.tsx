@@ -7,7 +7,7 @@ import React from 'react';
 const Settings: React.FC = () => {
   return (
     <div className="home">
-      <p>Contact the Chronos Team for anything you'd like to see</p>
+      <p id="settings"></p>
     </div>
   );
 };

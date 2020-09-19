@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import ListIcon from '@material-ui/icons/Search';
+import { useHistory, Link } from 'react-router-dom';
+import ListIcon from '@material-ui/icons/List';
 import { ApplicationContext } from '../context/ApplicationContext';
 import '../stylesheets/Header.scss';
-import '../stylesheets/Occupied.scss';
 
 export interface HeaderProps {
   app: string[];
@@ -30,8 +29,14 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
           communications
         </option>
       </select>
-      <div className="header-btns">
-        <button onClick={() => history.goBack()}><ListIcon className="icon" id="returnToAppIcon" />Return to Applications</button>
+      <div className="header">
+        <Link className="link" id="return" to="/applications">
+          <span>
+            <ListIcon className="icon" id="returnIcon" />
+          </span>
+          <p id="returnToDash">Dashboard</p>
+        </Link>
+        {/* <button id="returnButton" onClick={() => history.goBack()}><ListIcon className="icon" id="returnIcon" /></button> */}
         <button onClick={() => setLive(!live)}>
           {live ? (
             <div>

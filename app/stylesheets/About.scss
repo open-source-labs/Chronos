@@ -1,16 +1,28 @@
 @import './constants.scss';
 
-.para {
+.sprout {
+  margin: 0;
+}
+
+.mainTitle {
+  font-size: 36px;
   color: $background;
   text-align: left;
-  
-  p {
-    font-size: 18px;
-  }
-  
-  h3 {
-    font-size: 32px;
-  }
+  font-weight: 600;
+}
+
+.title {
+  font-size: 18px;
+  color: $background;
+  text-align: left;
+  font-weight: 600;
+}
+
+.text {
+  font-size: 18px;
+  color: $background;
+  text-align: left;
+  font-weight: 100;
 }
 
 .doya {
@@ -28,6 +40,14 @@
   display: flex;
   flex-direction: column;
   justify-content: left;
+  border-radius: 10px;
+  border: none;
+  box-shadow: $boxshadow2;
+  padding: 30px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }
 
 #sproutSpan {

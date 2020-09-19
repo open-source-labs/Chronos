@@ -33,8 +33,7 @@ const Contact: React.FC = () => {
             <label htmlFor="subject">Subject: &nbsp;</label>
             <input type="text" id="subject" name="subject" placeholder="Subject" />
             <br />
-            <label htmlFor="message">Message: 
-              <span>
+            <label id="messageLabel" htmlFor="message">Message: <span>
                 <textarea id="message" name="message" placeholder="Write something.."></textarea>
               </span>
             </label>
