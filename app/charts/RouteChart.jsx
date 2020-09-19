@@ -1,12 +1,3 @@
-import {
-  IconButton,
-  Modal,
-  Card,
-  CardHeader,
-  CardContent,
-  Button,
-  Typography,
-} from '@material-ui/core';
 import { Theme, makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 import React, { useContext } from 'react';
@@ -90,14 +81,15 @@ const RouteLocations = props => {
 
   const useStyles = makeStyles(theme => ({
     paper: {
-      height: 280,
-      width: 280,
+      height: 300,
+      width: 300,
       textAlign: 'center',
       color: '#888888',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
-      borderRadius: 8,
+      borderRadius: 3,
       border: '0',
+<<<<<<< HEAD:app/charts/RouteCopy.jsx
       boxShadow:
         '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
@@ -125,6 +117,9 @@ const RouteLocations = props => {
       width: '75px',
       height: '75px',
       boxShadow: 'none',
+=======
+      boxShadow: '2px 2px 6px #bbbbbb',
+>>>>>>> 50f13071f2225c509ec51921f966dc3c8979699d:app/charts/RouteChart.jsx
     },
   }));
   const classes = useStyles({});
@@ -138,6 +133,7 @@ const RouteLocations = props => {
       // check if node exists if not then add node
       let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
+<<<<<<< HEAD:app/charts/RouteCopy.jsx
         nodeListObj[id] = {
           id: id,
           label: id,
@@ -148,6 +144,9 @@ const RouteLocations = props => {
           },
           shape: 'circle',
         };
+=======
+        nodeListObj[id] = { id: id, label: id, color: { background: '#24d2f1', border: 'white', hover: { background: '#4d55ec', border: 'white' } }, shape: 'circle' }
+>>>>>>> 50f13071f2225c509ec51921f966dc3c8979699d:app/charts/RouteChart.jsx
       }
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
@@ -176,8 +175,13 @@ const RouteLocations = props => {
   //   edges: [{ from: 4, to: 2, label: 'hello' }, { from: 'one', to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }]
   // };
   const options = {
+<<<<<<< HEAD:app/charts/RouteCopy.jsx
     height: '400px',
     width: '400px',
+=======
+    height: '300px',
+    width: '300px',
+>>>>>>> 50f13071f2225c509ec51921f966dc3c8979699d:app/charts/RouteChart.jsx
     style: 'surface',
     layout: {
       hierarchical: false,
@@ -204,6 +208,7 @@ const RouteLocations = props => {
   };
 
   return (
+<<<<<<< HEAD:app/charts/RouteCopy.jsx
     <div className="traceContainer">
       <span id="trace">Traces</span>
       <Graph
@@ -219,6 +224,11 @@ const RouteLocations = props => {
           backgroundColor: 'white',
         }}
       />
+=======
+    <div className='traceContainer'>
+      <span id='tracesTitle'>Route Traces</span>
+      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '2px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
+>>>>>>> 50f13071f2225c509ec51921f966dc3c8979699d:app/charts/RouteChart.jsx
     </div>
   );
 };

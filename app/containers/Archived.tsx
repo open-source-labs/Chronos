@@ -30,7 +30,7 @@ interface IMatch {
 
 /**
  * Includes information on route tracing of HTTP Requests displayed in
- * the RouteTrace and RouteCopy components
+ * the RouteTrace and RouteChart components
  */
 const GraphsContainer = ({ match }: IMatch) => {
   const [live, setLive] = useState<boolean>(false);

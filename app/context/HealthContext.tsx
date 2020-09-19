@@ -17,9 +17,11 @@ const HealthContextProvider: React.FC = ({ children }) => {
   const fetchHealthData = (service: string) => {
     ipcRenderer.send('healthRequest', service);
     ipcRenderer.on('healthResponse', (event: Electron.Event, data: any) => {
+      let result: any;
       // Parse result
-      if (data) console.log('HealthContext.tsx: data: ', data)
-      const result = JSON.parse(data);
+      if (data) {
+        result = JSON.parse(data);
+      }
       if (result) console.log('HealthContext.tsx: JSON.parse(data): ', result)
       if (result.length) console.log('Number of data points (health):', result.length);
       // Update context local state
