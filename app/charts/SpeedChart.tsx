@@ -10,7 +10,7 @@ const SpeedChart = () => {
   const createChart = () => {
     let timeArr;
     if (time !== undefined) {
-      timeArr = time.map((el: any) => moment(el).format('h:mm:ss A'));
+      timeArr = time.map((el: any) => moment(el).format('hh:mm A'));
     }
 
     return (
@@ -26,19 +26,19 @@ const SpeedChart = () => {
         ]}
         layout={{
           title: 'Speed Chart',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 14,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           xaxis: {
-            title: 'Time (PST)',
+            title: 'Time (EST)',
             tickmode: 'linear',
-            tickformat: '%d %B (%a)<br>%Y',
-            tickangle: 30,
-            range: [0, 5],
+            tickformat: '%H %M %p',
+            // tickangle: 30,
+            // range: [0, 5],
             rangemode: 'nonnegative',
             mirror: false,
             ticks: 'outside',

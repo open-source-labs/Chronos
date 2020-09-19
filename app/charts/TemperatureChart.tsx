@@ -33,12 +33,12 @@ const TemperatureChart = () => {
         config={{ responsive: true }}
         layout={{
           title: 'CPU Temperature',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -49,9 +49,9 @@ const TemperatureChart = () => {
             y: 5,
           },
           xaxis: {
-            title: month,
+            title: 'Time (EST)',
             tickmode: 'linear',
-            tickformat: '%d %B (%a)<br>%Y',
+            tickformat: '%H %M %p',
             mirror: false,
             ticks: 'outside',
             showline: true,

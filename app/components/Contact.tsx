@@ -34,10 +34,10 @@ const Contact: React.FC = () => {
             <input type="text" id="subject" name="subject" placeholder="Subject" />
             <br />
             <label id="messageLabel" htmlFor="message">Message: <span>
-              <textarea id="message" name="message" placeholder="Write something.."></textarea>
-            </span>
+                <textarea id="message" name="message" placeholder="Write something.."></textarea>
+              </span>
             </label>
-
+            
             <br />
             <label htmlFor="myfile">Select a file: </label>
             <input type="file" id="myfile" name="myfile" accept="image/*"></input>

@@ -39,12 +39,12 @@ const MemoryChart = () => {
         ]}
         layout={{
           title: 'Memory Traces',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -56,8 +56,11 @@ const MemoryChart = () => {
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 5,
+            dtick: 10,
           },
+          yaxis: {
+            title: 'Bytes'
+          }
         }}
       />
     );
