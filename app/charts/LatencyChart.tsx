@@ -21,12 +21,12 @@ const LatencyChart = () => {
         ]}
         layout={{
           title: 'Latency',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -38,9 +38,10 @@ const LatencyChart = () => {
             y: 5,
           },
           xaxis: {
+            title: 'Time Elapsed (min)',
             tickmode: 'linear',
             tick0: 0,
-            dtick: 5,
+            dtick: 10,
             rangemode: 'nonnegative',
             mirror: false,
             ticks: 'outside',
