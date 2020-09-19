@@ -8,64 +8,57 @@
   background-color: $grey;
   color: #333;
   margin-bottom: 30px;
+  margin-top: 20px;
 
   h1 {
-    font-size: 24px;
     font-weight: 700;
     letter-spacing: 2px;
     margin: 0;
-    color: #555555;
-  }
-  #gather {
-    color: #555555;
   }
 }
 
 select {
+  height: 50px;
   width: 250px;
   padding: 5px 35px;
-  font-size: 100%;
-  border: thin solid #ccc;
+  background-color: $background;
+  font-size: 14px;
+  color: $header;
+  border: none;
   height: 30px;
   appearance: none;
   cursor: pointer;
   margin: 15px auto;
 
   &:hover {
-    background-color: darken(#fff, 5%);
+    opacity: 0.75;
   }
 }
 
-.header-btns {
+.header {
   display: flex;
+  color: $header;
 
-  button {
-    &:first-of-type {
+  #return {
       position: absolute;
       top: 20px;
-      left: 115px;
-      background-color: transparent;
-      border: 1px solid $navy;
-      color: $navy;
+      left: 300px;
+      font-size: 18px;
+      color: $header;
+      margin: 10px;
+      padding: 5px;
+      text-decoration: none;
+      color: $darkgrey;
       transition: 0.1s;
       font-size: 90%;
-
-      &:hover {
-        background-color: $navy;
-        color: #fff;
-      }
-    }
-
-    margin: 0 10px;
-    font-size: 110%;
-    letter-spacing: 1px;
-    padding: 12px;
-    font-weight: 300;
-    border-radius: 30px;
-
+    
+      // &:hover{
+      //   background-color: $background;
+      // }
+    
     /* Live data dot */
     .dot {
-      background-color: red;
+      background-color: $red;
       display: inline-block;
       height: 10px;
       width: 10px;
@@ -73,5 +66,88 @@ select {
       margin-right: 5px;
       animation: blink 1s infinite;
     }
+  }
+
+  #returnToDash {
+    font-size: 18px;
+    color: $header;
+    text-decoration: none;
+    position: absolute;
+    top: 13px;
+    left: 11px;
+    
+    &:hover{
+      cursor: pointer;
+      color: $lightblue;
+    }
+  }
+}
+.microserviceTitle {
+  color: $header;
+  font-size: 32px;
+  font-family: 'Open Sans';
+}
+
+#gatherLiveData {
+  height: auto;
+  width: 120px;
+  font-size: 12px;
+  color: $background;
+  background-color: $header;
+  padding: 10px;
+  border-radius: 10px;
+  &:hover {
+    background-color: $lightblue;
+  }
+}
+
+#live {
+  height: auto;
+  width: 120px;
+  font-size: 12px;
+  color: $red;
+  background-color: $background;
+  padding: 10px;
+  border-radius: 10px;
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.icon {
+  vertical-align: middle;
+  text-align: center;
+  color: $icon;
+  background-color: $background;
+  box-sizing: content-box;
+  border-radius: 50%;
+  box-shadow: $boxshadow1;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  display: inline-flex;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  min-height: auto;
+  white-space: nowrap;
+}
+
+#returnIcon {
+  position: absolute;
+  top: -10px;
+  left: -60px;
+  font-size: 42px;
+  margin: 10px;
+  padding: 5px;
+
+  &:hover{
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    color: $lightblue;
   }
 }

@@ -199,7 +199,7 @@ const RouteLocations = props => {
 
   return (
     <div className='traceContainer'> 
-      <span id='trace'>Traces</span>
+      <span id='tracesTitle'>Traces</span>
       <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '8px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', backgroundColor: 'white' }} />
     </div>
   );
