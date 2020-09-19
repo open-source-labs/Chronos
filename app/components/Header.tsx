@@ -37,14 +37,14 @@ const Header: React.SFC<HeaderProps> = ({ app, service, setLive, live }) => {
           <p id="returnToDash">Dashboard</p>
         </Link>
         {/* <button id="returnButton" onClick={() => history.goBack()}><ListIcon className="icon" id="returnIcon" /></button> */}
-        <button id="liveButton" onClick={() => setLive(!live)}>
+        <button onClick={() => setLive(!live)}>
           {live ? (
             <div>
               <span id="live">Live</span>
             </div>
           ) : (
-              <div id="gatherLiveData" >Gather Live Data</div>
-            )}
+            <div id="gatherLiveData">Gather Live Data</div>
+          )}
         </button>
       </div>
     </div>

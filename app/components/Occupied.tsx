@@ -34,13 +34,16 @@ import '../stylesheets/Occupied.scss';
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
 
+import { ApplicationContext } from '../context/ApplicationContext';
+
 // TYPESCRIPT
 interface StyleProps {
   root: BaseCSSProperties,
 };
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
-const Occupied: React.FC = React.memo(function Occupied(props) {
+const Occupied: React.FC = React.memo(function Occupied (props) {
+  const { setServicesData } = useContext(ApplicationContext);
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
@@ -51,6 +54,7 @@ const Occupied: React.FC = React.memo(function Occupied(props) {
   const delRef = useRef<any>([]);
 
   useEffect(() => {
+    setServicesData([]);
     getApplications();
   }, []);
 
@@ -97,7 +101,7 @@ const Occupied: React.FC = React.memo(function Occupied(props) {
       color: '#eeeeee',
       borderRadius: '0',
       backgroundColor: 'transparent',
-      '&:hover': {
+      '&:hover' : {
         backgroundColor: 'none'
       }
     },
