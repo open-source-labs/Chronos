@@ -262,10 +262,13 @@ select:-webkit-autofill:focus {
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-self: center;
+  // justify-content: flex-start;
+  // align-self: center;
+  align-items: center;
   width: 80%;
-  margin: 20px;
+  margin-top: 20px;
+  margin-left: 200px;
+  margin-right: 160px;
 }
 
 .card {
