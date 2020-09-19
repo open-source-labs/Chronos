@@ -28,7 +28,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   }, [i]);
 
   return (
-    <div className="services-container">
+    <div className="servicesContainer">
       {!servicesData.length ? (
         <div className="loadingMessageModal">
           <h2 id="loadingMessage">Loading...</h2>
