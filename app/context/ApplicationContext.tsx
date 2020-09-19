@@ -20,6 +20,7 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
    * Connect to database provided by user at 'index'
    */
   const connectToDB = async (index: number, application: string) => {
+    ipcRenderer.removeAllListeners('databaseConnected');
     await ipcRenderer.send('connect', index);
     console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
     
@@ -32,7 +33,6 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
 
       fetchServicesNames(application);
     });
-    
   };
 
   /**
@@ -51,6 +51,7 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
 
       // Set local state
       setServicesData(result);
+      ipcRenderer.removeAllListeners('servicesResponse');
     });
   };
 
