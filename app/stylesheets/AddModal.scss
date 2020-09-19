@@ -12,9 +12,12 @@
     background-color: $grey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    color: $darkgrey;
 
     h2 {
       @include modalHeader();
+      font-size: 24px;
+      color: $darkgrey;
     }
   }
 
@@ -23,6 +26,9 @@
     @include centerWithFlex($direction: column);
     padding: 20px 30px;
     width: 100%;
+    font-size: 12px;
+    font-family: 'Open Sans';
+    color: $darkgrey;
 
     p,
     span {
@@ -31,7 +37,7 @@
 
     span {
       font-weight: 300;
-      font-size: 80%;
+      font-size: 90%;
     }
 
     p {
@@ -58,16 +64,19 @@
       select,
       input,
       textarea {
-        font-size: 100%;
+        font-family: 'Open Sans';
+        font-size: 14px;
         padding: 5px;
         border: thin solid $grey;
         flex: 1;
         border-radius: 3px;
+        color: $darkgrey;
       }
 
       // Select field
       select {
         cursor: pointer;
+        font-family: 'Open Sans';
         height: 30px;
         margin: 0;
         appearance: none;
@@ -81,6 +90,7 @@
       // Text input
       input {
         height: 30px;
+        color: $darkgrey;
       }
 
       // Textarea
@@ -98,22 +108,23 @@
 
     /* Submit button */
     button {
+      font-family: 'Open Sans';
+      font-size: 16px;
+      font-weight: 800;
       height: 40px;
-      font-size: 115%;
       width: 50%;
       color: #fff;
-      background-color: $navy;
+      background-color: $header;
       transition: 0.1s;
       margin: 20px 0;
       font-weight: 400;
       letter-spacing: 2px;
-      border: thin solid $navy;
+      border: none;
       padding: 4px;
       text-transform: uppercase;
 
       &:hover {
-        color: $navy;
-        background-color: lighten($navy, 65%);
+        background-color: $lightblue;
       }
     }
   }
