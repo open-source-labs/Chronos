@@ -15,6 +15,7 @@ const HealthContextProvider: React.FC = ({ children }) => {
 
   // Fetches all data related to a particular app
   const fetchHealthData = (service: string) => {
+    ipcRenderer.removeAllListeners('healthResponse');
     ipcRenderer.send('healthRequest', service);
     ipcRenderer.on('healthResponse', (event: Electron.Event, data: any) => {
       let result: any;
