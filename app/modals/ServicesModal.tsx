@@ -19,28 +19,16 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
   );
 
   useEffect(() => {
-    connectToDB(i);
-    fetchServicesNames(app);
+    connectToDB(i, app);
+    // fetchServicesNames(app);
 
     return () => {
       setServicesData([]);
     };
   }, [i]);
 
-  /**
-   * TEMPORARY fix to allow us to fetch service names
-   * AFTER we connect to the Mongo Database. This error does
-   * not occur with PostgreSQL databases.
-   *
-   * Just click on the whitespace of the modal to run another
-   * fetch request for service names
-   */
-  const fetchStuff = () => {
-    fetchServicesNames(app);
-  };
-
   return (
-    <div className="servicesContainer" onClick={() => fetchStuff()}>
+    <div className="services-container">
       {!servicesData.length ? (
         <div className="loadingMessageModal">
           <h2 id="loadingMessage">Loading...</h2>
