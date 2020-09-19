@@ -16,13 +16,14 @@ const CommsContextProvider: React.FC = ({ children }) => {
   const [currentApp, setCurrentApp] = useState('');
 
   // Fetches all data related to communication for a particular app
-  const fetchCommsData = (app: string, live: boolean) => {
+  const fetchCommsData = React.useCallback((app: string, live: boolean) => {
     /**
      * Caches results of requesting communication data for a specific app
      * Communication data will be the same across the microservices. Prevents
      * fetch requests that result in repeating data 
      */
     if (app !== currentApp || live) {
+      ipcRenderer.removeAllListeners('commsResponse');
       setCurrentApp(app)
       ipcRenderer.send('commsRequest', app);
       ipcRenderer.on('commsResponse', (event: Electron.Event, data: any) => {
@@ -32,7 +33,7 @@ const CommsContextProvider: React.FC = ({ children }) => {
         setCommsData(result);
       });
     }
-  };
+  }, []);
 
   return (
     <CommsContext.Provider value={{ commsData, setCommsData, fetchCommsData }}>

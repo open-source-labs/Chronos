@@ -69,6 +69,7 @@ const Occupied: React.FC = React.memo(function Occupied (props) {
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       setIndex(i);
       setApp(selectedApp);
+      setServicesData([]);
       setOpen(true);
     }
   };
