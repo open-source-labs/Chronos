@@ -51,11 +51,11 @@ const ResponseCodesChart: React.FC = () => {
           {
             values: Object.values(responseCodes),
             labels: [
-              'Informational 1xx',
-              'Successful 2xx',
-              'Redirectional 3xx',
-              'Client Error 4xx',
-              'Server Error 5xx',
+              'Informational (100-199',
+              'Success (200-299)',
+              'Redirects (300-399)',
+              'Client errors (400-499)',
+              'Server errors (500-599)',
             ],
             type: 'pie',
             textposition: 'inside',
@@ -71,20 +71,22 @@ const ResponseCodesChart: React.FC = () => {
         layout={{
           title: {
             text: 'Response Status Codes',
-            font: { size: 22 },
           },
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            font: {
+              size: 6,
+            }
           },
         }}
       />

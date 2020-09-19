@@ -22,6 +22,10 @@
   opacity: 1;
 }
 
+.sidebar-container:hover #dash {
+  opacity: 1;
+}
+
 .sidebar-container:hover #about {
   opacity: 1;
 }
@@ -197,7 +201,7 @@
   border: 0.3px solid #ffffff;
   border: 0;
   border-radius: 3px;
-  font-size: 125%;
+  font-size: 90%;
   color: whitesmoke;
   text-decoration: none;
   transition: 300ms;
@@ -207,10 +211,8 @@
       background-color: $hover;
       opacity: 0.85;
       animation: none;
+      -webkit-tap-highlight-color: transparent;
     }
 }
 
-.sidebar-link:hover {
-  -webkit-tap-highlight-color: transparent;
-}
 
