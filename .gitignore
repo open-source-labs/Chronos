@@ -1,7 +1,6 @@
 node_modules
 .eslintrc.js
 .DS_Store
-user/settings.json
 dist
 build
 coverage

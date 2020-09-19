@@ -45,12 +45,12 @@ const ProcessesChart = () => {
         ]}
         layout={{
           title: 'Process Overview',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -59,6 +59,12 @@ const ProcessesChart = () => {
             xanchor: 'center',
             x: 0.5,
           },
+          xaxis: {
+            dtick: 10,
+          },
+          yaxis: {
+            title: 'Number of Processes'
+          }
         }}
       />
     );
