@@ -32,7 +32,7 @@ export interface GraphsContainerProps {
 }
 
 const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
-  const { app, service } = useParams();
+  const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
@@ -73,6 +73,7 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
             <RequestTypesChart />
             <ResponseCodesChart />
             <TrafficChart />
+            <RouteCopy />
           </div>
         ) : (
           <div className="graphs">

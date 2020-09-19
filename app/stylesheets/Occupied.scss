@@ -30,8 +30,29 @@
   margin-top: 20px;
 }
 
+#listIcon {
+  position: absolute;
+  top: 20px;
+  left: 250px;
+  font-size: 42px;
+  margin: 10px;
+  padding: 5px;
+
+  &:hover{
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    color: $lightblue;
+  }
+}
+
 #dashboard {
+  position: absolute;
+  top: 43px;
+  left: 300px;
   margin-left: $logoPositionLeft - 34px;
+  &:hover {
+    color: $lightblue;
+  }
 }
 
 .icon {
@@ -75,23 +96,44 @@
   padding: 5px;
 }
 
-#dashboardIcon {
-  margin-left: -30px; 
+#searchIcon {
+  background-color: $background;
+  font-size: 26px;
+  font-weight: 400px;
+  padding: 8px;
+  margin: 0px;
+  margin-left: 15px;
+  
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+  }
 }
 
-#dashboardIcon:hover {
-  cursor: pointer;
+#dashboardIcon {
+  margin-left: -30px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 #personIcon {
   margin-right: 50px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
-#listIcon {
-  font-size: 42px;
-  font-weight: 400px;
-  margin: 10px;
-  padding: 5px;
+#notificationsIcon {
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 button {
@@ -100,44 +142,65 @@ button {
   outline: none;
   margin: 0px;
   padding: 0px;
+  color: transparent;
+  
+  &:hover{
+    background-color: transparent;
+  }
 }
 
-button:hover {
-  background-color: transparent;
+.MuiButtonBase-root {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
 }
 
-#searchIcon {
-  background-color: $background;
-  font-size: 26px;
-  font-weight: 400px;
-  padding: 8px;
-  margin: 0px;
-  margin-left: 15px;
+.MuiIconButton-root {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
 }
 
-#listIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
+.makeStyles-hover-7 {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
 }
 
-#searchIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
+.MuiIconButton-label {
+  position: 'relative';
+  bottom: 200;
+  right: 200;
 }
 
-#dashboardIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
+.MuiSvgIcon-root {
+  background: none;
+  position: 'relative';
+  bottom: 200;
+  right: 200;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  filter: none;
 }
 
-#notificationsIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
-}
+#deleteIcon {
+  background: none;
+  position: 'absolute';
+  top: 300;
+  right: 300;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  filter: none;
 
-#personIcon:hover {
-  box-shadow: $boxshadow3;
-  cursor: pointer;
+  &:hover {
+    background: none;
+    background-color: none;
+    color: $red;
+    filter: none;
+    cursor: pointer;
+  }
 }
 
 .form {
@@ -160,9 +223,11 @@ button:hover {
 
 #textInput {
   background-color: transparent;
+  font-family: 'Open Sans';
+  font-size: 16px;
   outline: none;
   border: 0;
-  padding: 5px;
+  padding: 2px;
   // transform: translateY(-50%);
   transition: all 0.25s ease;
   pointer-events: none;
@@ -196,7 +261,8 @@ select:-webkit-autofill:focus {
 // DATABASE CARDS
 .cardContainer {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   align-self: center;
   width: 80%;
   margin: 20px;
@@ -218,18 +284,18 @@ select:-webkit-autofill:focus {
     position: absolute;
     transition: all 0.5s;
   }
-  &:after {
-    top: -1px;
-    right: -1px;
+  // &:after {
+    // top: -1px;
+    // right: -1px;
     // border-top: 2px solid rgba(132, 216, 255, 0.7);
     // border-right: 2px solid rgba(132, 216, 255, 0.7);
-  }
-  &:before {
-    bottom: -1px;
-    left: -1px;
+  // }
+  // &:before {
+    // bottom: -1px;
+    // left: -1px;
     // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
     // border-left: 2px solid rgba(132, 216, 255, 0.7);
-  }
+  // }
   &:hover {
     position: relative;
     border-top-right-radius: 0px;
