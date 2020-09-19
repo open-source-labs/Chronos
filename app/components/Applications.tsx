@@ -87,7 +87,7 @@ const Applications = () => {
       [theme.breakpoints.up('lg')]: {
         fontSize: '18px',
         // MAIN PAGE SQUARE BUTTON FONTS
-        fontFamily: 'Inter'
+        fontFamily: 'Open Sans'
       },
     },
   }));
