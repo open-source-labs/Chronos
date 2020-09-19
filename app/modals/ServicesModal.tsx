@@ -23,7 +23,7 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
     fetchServicesNames(app);
 
     return () => {
-      setServicesData([]);
+      // setServicesData([]);
     };
   }, [i]);
 

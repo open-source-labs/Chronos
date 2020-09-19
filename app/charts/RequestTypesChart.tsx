@@ -46,6 +46,7 @@ const RequestTypesChart: React.FC = () => {
             marker: {
               colors: ['#fa1a58', '#4a4eee', '#00eda0', '#00d3f2', '#73605b', '#d09683'],
             },
+            
           },
         ]}
         config={{
@@ -54,20 +55,22 @@ const RequestTypesChart: React.FC = () => {
         layout={{
           title: {
             text: 'Request Types',
-            font: { size: 22 },
           },
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            font: {
+              size: 6,
+            }
           },
         }}
       />
