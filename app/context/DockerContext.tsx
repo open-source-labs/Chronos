@@ -18,6 +18,7 @@ const DockerContextProvider: React.FC = ({ children }) => {
 
   // Fetches all data related to a particular app
   const fetchDockerData = (service: string) => {
+    ipcRenderer.removeAllListeners('dockerResponse');
     ipcRenderer.send('dockerRequest', service);
 
     ipcRenderer.on('dockerResponse', (event: Electron.Event, data: any) => {

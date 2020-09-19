@@ -31,7 +31,7 @@ export interface GraphsContainerProps {
   };
 }
 
-const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
+const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function GraphsContainer (props) {
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
@@ -88,6 +88,6 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
       </div>
     </>
   );
-};
+});
 
 export default GraphsContainer;
