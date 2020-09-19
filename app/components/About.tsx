@@ -14,7 +14,7 @@ const About: React.FC = () => {
         </p>
         <div className="doya">
           <h3 className="title">Team Doya</h3><span><img className="sprout" id="sproutSpan" src="../assets/clean-sprout.gif" alt="sprout"></img></span>
-          <br />
+          <br/>
           <div>
             <span className="text">Grace </span><br />
             <span className="text">Jen </span><br />

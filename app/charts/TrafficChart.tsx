@@ -34,18 +34,18 @@ const TrafficChart = () => {
             fill: 'tozeroy',
             marker: { color: '#5C80FF' },
             mode: 'none',
-            name: 'Times Server Pinged',
+            name: 'Open Sans',
             showlegend: true,
           },
         ]}
         layout={{
           title: 'Server Traffic',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
             color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            size: 11.5,
+            family: 'Open Sans',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
