@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import HomeSharpIcon from '@material-ui/icons/HomeSharp';
+import ListIcon from '@material-ui/icons/List';
 import InfoIcon from '@material-ui/icons/Info';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -44,6 +45,15 @@ const SidebarContainer: React.FC = (): JSX.Element => (
             height: '35px', 
             }} />
           &emsp;Home
+        </Link>
+        <Link className="sidebar-link" to="/applications" id="dash">
+          <ListIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
+          &emsp;Dashboard
         </Link>
         <Link className="sidebar-link" to="/about" id="about">
           <InfoIcon style={{
