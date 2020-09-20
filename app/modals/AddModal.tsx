@@ -20,7 +20,7 @@ interface AddModalProps {
 type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
 type FormElement = React.FormEvent<HTMLFormElement>;
 
-const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
+const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const { addApp }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
@@ -106,6 +106,6 @@ const AddModal: React.FC<AddModalProps> = ({ setOpen }) => {
       </form>
     </div>
   );
-};
+});
 
 export default AddModal;

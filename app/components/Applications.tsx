@@ -17,7 +17,7 @@ import '../stylesheets/Applications.scss';
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
-const Applications = () => {
+const Applications: React.FC = React.memo((props) => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
@@ -129,6 +129,6 @@ const Applications = () => {
       </Modal>
     </>
   );
-};
+});
 
 export default Applications;
