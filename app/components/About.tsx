@@ -1,7 +1,7 @@
 import React from 'react';
 import '../stylesheets/About.scss';
 
-const About: React.FC = () => {
+const About: React.FC = React.memo(() => {
   return (
     <div className="home">
       <div className="blurb">
@@ -29,6 +29,6 @@ const About: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default About;

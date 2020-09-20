@@ -17,7 +17,8 @@ const iconStyles = {
   margin: '5px'
 }
 
-const SidebarContainer: React.FC = (): JSX.Element => (
+const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Element {
+  return (
   <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
       <div className="firstRow">
@@ -85,5 +86,5 @@ const SidebarContainer: React.FC = (): JSX.Element => (
       </div>
     </div>
   </div>
-);
+)});
 export default SidebarContainer;

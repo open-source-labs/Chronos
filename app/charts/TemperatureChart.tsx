@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import moment from 'moment';
 import { HealthContext } from '../context/HealthContext';
 
-const TemperatureChart = () => {
+const TemperatureChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const { time, cputemp } = healthData;
 
@@ -69,6 +69,6 @@ const TemperatureChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default TemperatureChart;

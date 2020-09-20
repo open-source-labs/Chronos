@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const TrafficChart = () => {
+const TrafficChart = React.memo(() => {
   const { commsData } = useContext(CommsContext);
   const microserviceCount: { [key: string]: number } = {};
 
@@ -60,6 +60,6 @@ const TrafficChart = () => {
       />
     </div>
   );
-};
+});
 
 export default TrafficChart;
