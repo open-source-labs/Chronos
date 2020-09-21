@@ -12,8 +12,6 @@
 
 ### :star: Star us on GitHub — it helps! :star:
 
-----
-
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
@@ -35,6 +33,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Notifications](#notifications)
 - [License](#license)
 - [Links](#links)
+<br>
 
 ## Features 
 
@@ -44,14 +43,16 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Provides <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
+<br>
+###### Return to [Top](#Chronos)
+<br>
 
 ## Demo
 <img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
 
-
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Branches
 
@@ -108,7 +109,7 @@ Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Installation
 This is for the latest Chronos verion **5.1 release and later**.
@@ -176,7 +177,7 @@ Chronos consists of a [Node](https://nodejs.org/en/) module available through th
 
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Configuration
 ###### Return to [Top](#Chronos)
@@ -196,7 +197,7 @@ The `database` property is required and takes in the following:
 
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Notifications
 
@@ -254,7 +255,7 @@ notifications: [
 ```
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Microservice Test Suite
 
@@ -266,7 +267,7 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Electron desktop application
 
@@ -276,7 +277,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## Contributing
 
@@ -286,7 +287,7 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 ###### Return to [Top](#Chronos)
 <br>
-----
+
 
 ## License
 
