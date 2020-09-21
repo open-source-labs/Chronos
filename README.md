@@ -34,6 +34,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [License](#license)
 - [Links](#links)
 #
+###### Return to [Top](#Chronos)
 <br>
 
 ## Features 
@@ -177,12 +178,6 @@ require('./cmd-config'); // Bring in config file
 cmd.propagate();
 app.use('/', cmd.track());
 ```
-
-**Download Chronos** to start monitoring your application data [here]()
-<!-- # Installation
-
-Chronos consists of a [Node](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
 #
 ###### Return to [Top](#Chronos)
