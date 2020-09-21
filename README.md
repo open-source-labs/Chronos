@@ -1,5 +1,5 @@
 <a href="https://chronoslany.com/">
-    <img src="./app/assets/animated_logo.gif" alt="Chronos" title="Chronos" align="right" height="300" />
+    <img src="./app/assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="300" />
 </a>
 
 #
@@ -11,6 +11,8 @@
 
 :star: Star us on GitHub — it helps!
 
+<hr>
+
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of content
@@ -19,7 +21,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Installation](#installation)
     - [TER](#typo3-extension-repository)
     - [Composer](#composer)
-- [TYPO3 setup](#typo3-setup)
+- [Setup](#typo3-setup)
     - [Extension](#extension)
     - [Database](#database)
 - [Page setup](#page-setup)
@@ -43,14 +45,14 @@ This is for the latest Chronos verion **5.1 release and later**.
 - Stable release: 5.1.0
 - LTS release: 5.0.1
 
-#### Install dependencies
+### Install dependencies
 
 To use Chronos in your existing application, download and install:
 ```
 npm install chronos-tracker
 ```
 
-#### Create a `chronos-config.js`
+### Create a `chronos-config.js`
 
 ```js
 // An example `chronos-config.js` file
