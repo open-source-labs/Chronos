@@ -216,11 +216,10 @@ The `notifications` property is optional and allows developers to be alerted whe
 
 Chronos only supports **Slack** and **email** notifications.
 <br>
-<br>
 
 ### Slack
 
-Chronos uses the **Slack API** to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
+Chronos uses the <img src="./app/assets/slack-icon-color.png" alt="Slack" title="Slack" align="center" height="20" /> API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
 
 An example of configured **slack** settings:
 
@@ -236,10 +235,9 @@ notifications: [
 ]
 // ...
 ```
-<br>
 
 ### Email
-Chronos provides the option to send emails. The properties that should be provided are the following
+Chronos provides the option to send <img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /> emails. The properties that should be provided are the following
 - `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
 - `emailHost` - The smtp host (string) of your email server
 - `emailPort` - The email port (integer) is either **465** or **587** depending on the sender email security settings. Learn more about email ports at the [nodemailer docs](https://nodemailer.com/smtp/)
