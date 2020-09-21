@@ -70,7 +70,9 @@ The **'docker/microservice'** branch is where we provide a sample _dockerized_ m
 ```
 
 For example, you can type the following when starting up a container:
-`docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
+```
+docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]
+```
 
 If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
 
@@ -97,14 +99,29 @@ This is for the latest Chronos verion **5.1 release and later**.
 - Stable release: 5.1.0
 - LTS release: 5.0.1
 
-### Install dependencies
+### 1. Pre-installation
 
-To use Chronos in your existing application, download and install:
+Make sure you're running version 12.18.3 of <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" />, which is the most recent LTS (long-term support) version. 
+
+If you need to roll back from <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" /> 14.9.0, make sure to run 
+```npm rebuild```
+in the root directory.
+
+If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
+```npm rebuild```
+in each microservices folder **after you roll back to version 12.18.3.**
+
+
+### 2. Install dependencies
+
+To use Chronos in your existing application, download and install the following in the root directory:
 ```
 npm install chronos-tracker
 ```
 
-### Create a `chronos-config.js`
+### 3. Configure Chronos
+
+After you've installed `chronos-tracker` in the root directory of your application, add a `chronos-config.js` file in the root directory. If your application has 
 
 ```js
 // A sample `chronos-config.js` file
