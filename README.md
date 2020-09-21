@@ -170,7 +170,7 @@ chronos.use({
 <br>
 <br>
 
-### 4. Initialize chronos
+### 4. Initialize Chronos
 ```js
 const cmd = require('chronos-tracker');
 require('./cmd-config'); // Bring in config file
@@ -281,9 +281,9 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 <br>
 
 
-## Electron desktop application
+## Electron Desktop Application
 
-After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
+After installing the node module in each microservice, download the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> desktop application from the public [Chronos]() repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 #
