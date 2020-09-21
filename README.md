@@ -46,6 +46,16 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 
+<!-- blank line -->
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="./app/assets/Chronos-Demo-poster.png">
+    <source src="path/to/video.mp4" type="./app/assets/Chronos-Demo.mp4">
+  </video>
+</figure>
+<!-- blank line -->
+
+
+
 ## Branches
 
 ### Master
