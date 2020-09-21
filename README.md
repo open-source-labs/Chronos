@@ -7,7 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
-<p style="visibility:hidden;display=:none;color:red">Top</p>
+<div style="visibility:hidden;display=:none;color:red">Top</div>
 
 # Chronos 
 
@@ -49,7 +49,9 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 <!-- blank line -->
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" poster="./app/assets/Chronos-Demo-poster.png">
-    <source src="path/to/video.mp4" type="./app/assets/Chronos-Demo.mp4">
+    <source src="./app/assets/Chronos-Demo.mp4" type="video/mp4" alt="Chronos">
+    <source src="./app/assets/Chronos-Demo.ogg" type="video/ogg" alt="Chronos">
+    <source src="./app/assets/Chronos-Demo.webm" type="video/webm" alt="Chronos">
   </video>
 </figure>
 <!-- blank line -->
