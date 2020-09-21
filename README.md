@@ -2,14 +2,17 @@
     <img src="./app/assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="500" />
 </a>
 
+
 #
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
+###### Top
+<hr>
 
-# Chronos
+# Chronos 
 
-### :star: Star us on GitHub — it helps!
+### :star: Star us on GitHub — it helps! :star:
 
 <hr>
 
@@ -26,12 +29,17 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - [ChronosWebsite](#chronoswebsite)
     - [Others](#others)
 - [Installation](#installation)
-    - [TER](#typo3-extension-repository)
-    - [Composer](#composer)
+    - [1. Pre-Installation](#1.-pre-installation)
+    - [2. Install Dependencies](#2.-install-dependencies)
+    - [3. Configure Chronos](#3.-configure-chronos)
+    - [4. Initialize Chronos](#4.-initialize-chronos)
+- [Configuration](#configuration)
+- [Notifications](#notifications)
 - [License](#license)
 - [Links](#links)
 
-## Features
+## Features 
+###### Return to [Top](#top)
 - Distributed tracing enabled across microservices applications
 - Supports <img src="./app/assets/http-icon-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-icon-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
 - Compatible with <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
@@ -99,7 +107,7 @@ This is for the latest Chronos verion **5.1 release and later**.
 - Stable release: 5.1.0
 - LTS release: 5.0.1
 
-### 1. Pre-installation
+### 1. Pre-Installation
 
 Make sure you're running version 12.18.3 of <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" />, which is the most recent LTS (long-term support) version. 
 
@@ -112,7 +120,7 @@ If you're installing Chronos into a microservices application, and you have diff
 in each microservices folder **after you roll back to version 12.18.3.**
 
 
-### 2. Install dependencies
+### 2. Install Dependencies
 
 To use Chronos in your existing application, download and install the following in the root directory:
 ```
@@ -142,7 +150,7 @@ chronos.use({
 
 **More information on configuring Chronos and setting up notifications below**
 
-### Initialize chronos
+### 4. Initialize chronos
 
 ```js
 const cmd = require('chronos-tracker');
