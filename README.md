@@ -33,9 +33,9 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## Features
 - Distributed tracing enabled across microservices applications
-- HTTP and gRPC protocols supported
-- GraphQL compatible
-- Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+- Supports <img src="./app/assets/http-icon-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-icon-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
+- <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /> compatible
+- <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Temperature, speed, latency, and memory statistics
 - Process monitoring
 
@@ -43,16 +43,16 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ### Master
 
-The **'master'** branch of this repository is where the Electron application for Chronos is deployed. The Chronos monitoring tool's default configuration includes _two default databases_, one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
+The **'master'** branch of this repository is where the Electron application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
 
 **NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
 ```
-electron -> user -> settings.json
+root directory -> electron -> user -> settings.json
 ```
 
 ### Middleware
 
-The **'middleware'** branch is where the NPM package is being deployed, which is what you will install and configure in your own application.
+The **'middleware'** branch is what is ultimately deployed to the NPM package, which is what you will install and configure in your own application in order to use Chronos.
 
 ### Microservices
 
