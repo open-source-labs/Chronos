@@ -82,8 +82,6 @@ The **'dummy-microservice'** branch is where we provide a test suite of sample m
 The microservices include individual <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
-
-
 <br>
 <br>
 
