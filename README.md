@@ -111,7 +111,7 @@ volumes:
 
 ### ChronosWebsite
 
-The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="20" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-icon-color.png" alt="MacBook" title="MacBook" align="center" height="20" />.
+The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="15" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-icon-color.png" alt="MacBook" title="MacBook" align="center" height="15" />.
 <br>
 <br>
 
