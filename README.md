@@ -44,6 +44,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 <br>
+
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -64,14 +65,17 @@ The **'master'** branch of this repository is where the Electron application for
 ```
 root directory -> electron -> user -> settings.json
 ```
+<br>
 
 ### Middleware
 
 The **'middleware'** branch is what is ultimately deployed to the NPM package, which is what you will install and configure in your own application in order to use Chronos.
+<br>
 
 ### Microservices
 
 The **'dummy-microservices'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
+<br>
 
 ### Docker
 
@@ -98,10 +102,12 @@ volumes:
 
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
+<br>
 
 ### ChronosWebsite
 
 The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the Apple Store to buy a Macbook Pro.
+<br>
 
 ### Others
 
@@ -128,6 +134,7 @@ in the root directory.
 If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
 ```npm rebuild```
 in each microservices folder **after you roll back to version 12.18.3.**
+<br>
 
 ### 2. Install Dependencies
 
@@ -135,6 +142,7 @@ To use Chronos in your existing application, download and install the following 
 ```
 npm install chronos-tracker
 ```
+<br>
 
 ### 3. Configure Chronos
 
@@ -158,6 +166,7 @@ chronos.use({
 ```
 
 **More information on configuring Chronos and setting up notifications below**
+<br>
 
 ### 4. Initialize chronos
 
@@ -178,9 +187,8 @@ Chronos consists of a [Node](https://nodejs.org/en/) module available through th
 ###### Return to [Top](#Chronos)
 <br>
 
-
 ## Configuration
-###### Return to [Top](#Chronos)
+
 The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the name of the microservice should be the same as the name of the corresponding Docker container.
 
 The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
@@ -204,6 +212,7 @@ The `database` property is required and takes in the following:
 The `notifications` property is optional and allows developers to be alerted when the server responds to requests with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects, each with a `type` and `settings` property. 
 
 Chronos only supports **Slack** and **email** notifications.
+<br>
 
 ### Slack
 
@@ -223,6 +232,7 @@ notifications: [
 ]
 // ...
 ```
+<br>
 
 ### Email
 
@@ -264,6 +274,7 @@ Additionally, the repo includes a test suite of microservices utilizing the Chro
 The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
+<hr>
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -274,6 +285,7 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
+<hr>
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -284,6 +296,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
+<hr>
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -292,5 +305,6 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 ## License
 
 Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
+<hr>
 
 ###### Return to [Top](#Chronos)
