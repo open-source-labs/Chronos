@@ -29,12 +29,11 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     2. [Install Dependencies](#2.-install-dependencies)
     3. [Configure Chronos](#3.-configure-chronos)
     4. [Initialize Chronos](#4.-initialize-chronos)
-- [Configuration](#configuration)
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
 - [License](#license)
-- [Links](#links)
+
 #
 ###### Return to [Top](#Chronos)
 <br>
@@ -72,13 +71,19 @@ root directory -> electron -> user -> settings.json
 
 ### Middleware
 
-The **'middleware'** branch is what is ultimately deployed to the NPM package, which is what you will install and configure in your own application in order to use Chronos.
+The **'middleware'** branch is what is ultimately deployed to the <img src="./app/assets/npm-icon-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install and configure in your own application in order to use Chronos.
 <br>
 <br>
 
 ### Microservices
 
-The **'dummy-microservice'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
+The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
+
+The microservices include individual <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
+
+Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
+
+
 <br>
 <br>
 
@@ -124,7 +129,7 @@ Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 
 
 ## Installation
-This is for the latest Chronos verion **5.1 release and later**.
+This is for the latest Chronos version **5.1 release and later**.
 
 - Stable release: 5.1.0
 - LTS release: 5.0.1
@@ -168,7 +173,19 @@ chronos.use({
 });
 ```
 
-**More information on configuring Chronos and setting up notifications below**
+The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the name of the microservice should be the same as the name of the corresponding Docker container.
+
+The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
+
+The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
+
+The `database` property is required and takes in the following:
+- `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
+- `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
+
+- `isDockerized`: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
+  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
+  - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 <br>
 <br>
 
@@ -184,27 +201,6 @@ app.use('/', cmd.track());
 #
 ###### Return to [Top](#Chronos)
 <br>
-
-## Configuration
-
-The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the name of the microservice should be the same as the name of the corresponding Docker container.
-
-The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
-
-The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
-
-The `database` property is required and takes in the following:
-- `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
-- `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
-
-- [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
-  - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
-  - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
-
-#
-###### Return to [Top](#Chronos)
-<br>
-
 
 ## Notifications
 
@@ -264,19 +260,6 @@ notifications: [
 ###### Return to [Top](#Chronos)
 <br>
 
-
-## Microservice Test Suite
-
-Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app.
-
-The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
-
-Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
-#
-###### Return to [Top](#Chronos)
-<br>
-
-
 ## Electron Desktop Application
 
 After installing the node module in each microservice, download the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> desktop application from the public [Chronos]() repo.
@@ -299,6 +282,6 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 ## License
 
-Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
+Chronos is <img src="./app/assets/mit-icon-color.png" alt="MIT" title="MIT" align="center" height="20" /> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
 #
 ###### Return to [Top](#Chronos)
