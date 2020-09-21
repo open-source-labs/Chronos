@@ -12,7 +12,7 @@
 
 ### :star: Star us on GitHub — it helps! :star:
 
-<hr>
+<br>
 
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
 
@@ -50,7 +50,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Branches
 
@@ -106,7 +106,7 @@ The **'chronosWebsite'** branch is where the source code for the website, chrono
 Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Installation
 This is for the latest Chronos verion **5.1 release and later**.
@@ -173,7 +173,7 @@ Chronos consists of a [Node](https://nodejs.org/en/) module available through th
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Configuration
 ###### Return to [Top](#Chronos)
@@ -192,7 +192,7 @@ The `database` property is required and takes in the following:
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Notifications
 
@@ -249,7 +249,7 @@ notifications: [
 // ...
 ```
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Microservice Test Suite
 
@@ -260,7 +260,7 @@ The microservices include individual Dockerfiles in their respective directories
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Electron desktop application
 
@@ -269,7 +269,7 @@ After installing the node module in each microservice, download the Electron des
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## Contributing
 
@@ -278,7 +278,7 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
 
 ###### Return to [Top](#Chronos)
-<hr>
+<br>
 
 ## License
 
