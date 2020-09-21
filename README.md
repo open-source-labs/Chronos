@@ -84,7 +84,7 @@ The **'dummy-microservices'** branch is where we provide a sample microservices 
 
 ### Docker
 
-The **'docker/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
+The '<img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
 
 <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
@@ -111,7 +111,7 @@ volumes:
 
 ### ChronosWebsite
 
-The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the Apple Store to buy a Macbook Pro.
+The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="20" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-icon-color.png" alt="MacBook" title="MacBook" align="center" height="20" />.
 <br>
 <br>
 
