@@ -9,7 +9,7 @@
 
 # Chronos
 
-:star: Star us on GitHub — it helps!
+### :star: Star us on GitHub — it helps!**
 
 <hr>
 
