@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./app/assets/chronos-v4.png" height=300/>
+  <img src="./app/assets/animated_logo" height=300/>
 </p>
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
