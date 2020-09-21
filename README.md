@@ -9,34 +9,84 @@
 
 # Chronos
 
-### :star: Star us on GitHub — it helps!**
+### :star: Star us on GitHub — it helps!
 
 <hr>
 
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
 
-## Table of content
+## Table of Contents
 
-- [Core Features](#features)
+- [Features](#features)
+- [Branches](#branches)
+    - [Master](#master)
+    - [Middleware](#middleware)
+    - [Microservices](#microservices)
+    - [Docker](#docker)
+    - [ChronosWebsite](#chronoswebsite)
+    - [Others](#others)
 - [Installation](#installation)
     - [TER](#typo3-extension-repository)
     - [Composer](#composer)
-- [Setup](#typo3-setup)
-    - [Extension](#extension)
-    - [Database](#database)
-- [Page setup](#page-setup)
-    - [Upload the page tree file](#upload-the-page-tree-file)
-    - [Go to the import view](#go-to-the-import-view)
-    - [Import the uploaded page tree file](#import-the-uploaded-page-tree-file)
 - [License](#license)
 - [Links](#links)
 
 ## Features
-- Distributed tracing enabled for both HTTP and gRPC
+- Distributed tracing enabled across microservices applications
+- HTTP and gRPC protocols supported
 - GraphQL compatible
 - Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Temperature, speed, latency, and memory statistics
 - Process monitoring
+
+## Branches
+
+### Master
+
+The **'master'** branch of this repository is where the Electron application for Chronos is deployed. The Chronos monitoring tool's default configuration includes _two default databases_, one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
+
+**NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
+```
+electron -> user -> settings.json
+```
+
+### Middleware
+
+The **'middleware'** branch is where the NPM package is being deployed, which is what you will install and configure in your own application.
+
+### Microservices
+
+The **'dummy-microservices'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
+
+### Docker
+
+The **'docker/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
+
+**IMPORTANT**: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
+
+**IMPORTANT**: In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
+`/var/run/docker.sock`
+
+For example, you can type the following when starting up a container:
+`docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
+
+If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
+
+```
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+```
+
+\*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
+
+
+### ChronosWebsite
+
+The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the Apple Store to buy a Macbook Pro.
+
+### Others
+
+Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 
 ## Installation
 
@@ -55,7 +105,7 @@ npm install chronos-tracker
 ### Create a `chronos-config.js`
 
 ```js
-// An example `chronos-config.js` file
+// A sample `chronos-config.js` file
 
 const chronos = require('chronos-tracker');
 
@@ -73,7 +123,7 @@ chronos.use({
 
 **More information on configuring Chronos and setting up notifications below**
 
-#### Initialize chronos
+### Initialize chronos
 
 ```js
 const cmd = require('chronos-tracker');
@@ -89,24 +139,7 @@ app.use('/', cmd.track());
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
-## Docker - Containerized Applications
 
-IMPORTANT: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
-
-IMPORTANT: In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
-`/var/run/docker.sock`
-
-For example, you can type the following when starting up a container:
-`docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
-
-If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
-
-```
-volumes:
-  - "/var/run/docker.sock:/var/run/docker.sock"
-```
-
-\*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 
 ## Configuration
 
