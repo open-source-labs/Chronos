@@ -115,7 +115,7 @@ The **'chronosWebsite'** branch is where the source code for the website, chrono
 ### Others
 
 Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
-
+#
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -144,7 +144,6 @@ To use Chronos in your existing application, download and install the following 
 ```
 npm install chronos-tracker
 ```
-<br>
 
 ### 3. Configure Chronos
 After you've installed `chronos-tracker` in the root directory of your application, add a `chronos-config.js` file in the root directory. If your application has 
