@@ -11,30 +11,41 @@
 
 :star: Star us on GitHub — it helps!
 
-Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. 
+Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
 
-## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
+## Table of content
 
-- Improved user interface & experience
-- Real-time data monitoring
-- Decreased loading times
-- Automated notifications(Slack, email)
-- Easier to use configuration file
-- Now works on Linux, Mac, and Windows
-- Previous versions(less than 4.0) of Chronos are no longer supported
+- [Core Features](#features)
+- [Installation](#installation)
+    - [TER](#typo3-extension-repository)
+    - [Composer](#composer)
+- [TYPO3 setup](#typo3-setup)
+    - [Extension](#extension)
+    - [Database](#database)
+- [Page setup](#page-setup)
+    - [Upload the page tree file](#upload-the-page-tree-file)
+    - [Go to the import view](#go-to-the-import-view)
+    - [Import the uploaded page tree file](#import-the-uploaded-page-tree-file)
+- [License](#license)
+- [Links](#links)
 
-
-## Core Features
-  <!-- * HTTP request tracing -->
+## Features
+- Distributed tracing enabled for both HTTP and gRPC
+- GraphQL compatible
 - Docker container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
-- Temperature, speed, latency, and memory tracking
+- Temperature, speed, latency, and memory statistics
 - Process monitoring
-- HTTP route tracing
 
-## Quick start
+## Installation
+
+This is for the latest Chronos verion **5.1 release and later**.
+
+- Stable release: 5.1.0
+- LTS release: 5.0.1
 
 #### Install dependencies
 
+To use Chronos in your existing application, download and install:
 ```
 npm install chronos-tracker
 ```
