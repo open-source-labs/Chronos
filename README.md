@@ -46,13 +46,8 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Displays real-time temperature, speed, latency, and memory statistics
 
 ## Demo
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="./app/assets/Chronos-Demo-poster.png">
-    <source src="./app/assets/Chronos-Demo.mp4" type="video/mp4" alt="Chronos">
-    <source src="./app/assets/Chronos-Demo.ogg" type="video/ogg" alt="Chronos">
-    <source src="./app/assets/Chronos-Demo.webm" type="video/webm" alt="Chronos">
-  </video>
-</figure>
+<img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
+
 
 ###### Return to [Top](#Chronos)
 <hr>
