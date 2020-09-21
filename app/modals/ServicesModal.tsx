@@ -13,7 +13,7 @@ interface IService {
   microservice: string;
 }
 
-const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
+const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   const { fetchServicesNames, servicesData, setServicesData, connectToDB } = useContext(
     ApplicationContext
   );
@@ -54,6 +54,6 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
       )}
     </div>
   );
-};
+});
 
 export default ServicesModal;

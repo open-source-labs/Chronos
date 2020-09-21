@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const RequestTypesChart: React.FC = () => {
+const RequestTypesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
 
   interface IObject {
@@ -78,6 +78,6 @@ const RequestTypesChart: React.FC = () => {
   };
 
   return <div className="chart">{createRequestChart()}</div>;
-};
+});
 
 export default RequestTypesChart;

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-const MemoryChart = () => {
+const MemoryChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
     const free: number[] = healthData.freememory;
@@ -67,6 +67,6 @@ const MemoryChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default MemoryChart;

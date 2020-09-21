@@ -5,7 +5,7 @@ import '../stylesheets/Applications.scss';
 
 export interface CopyrightProps {}
 
-const Copyright = () => {
+const Copyright: React.SFC = React.memo((props) => {
   const useStyles = makeStyles(theme => ({
     copyright: {
       fontFamily: 'Open Sans',
@@ -23,5 +23,5 @@ const Copyright = () => {
     {new Date().getFullYear()}
     {'.'}
   </Typography>
-)};
+)});
 export default Copyright;
