@@ -71,10 +71,12 @@ root directory -> electron -> user -> settings.json
 
 The **'middleware'** branch is what is ultimately deployed to the NPM package, which is what you will install and configure in your own application in order to use Chronos.
 <br>
+<br>
 
 ### Microservices
 
 The **'dummy-microservices'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
+<br>
 <br>
 
 ### Docker
@@ -102,10 +104,13 @@ volumes:
 
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 <br>
+<br>
 
 ### ChronosWebsite
 
 The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the Apple Store to buy a Macbook Pro.
+<br>
+<br>
 
 ### Others
 
@@ -132,12 +137,14 @@ If you're installing Chronos into a microservices application, and you have diff
 ```npm rebuild```
 in each microservices folder **after you roll back to version 12.18.3.**
 <br>
+<br>
 
 ### 2. Install Dependencies
 To use Chronos in your existing application, download and install the following in the root directory:
 ```
 npm install chronos-tracker
 ```
+<br>
 <br>
 
 ### 3. Configure Chronos
@@ -161,6 +168,7 @@ chronos.use({
 ```
 
 **More information on configuring Chronos and setting up notifications below**
+<br>
 <br>
 
 ### 4. Initialize chronos
@@ -209,6 +217,7 @@ The `notifications` property is optional and allows developers to be alerted whe
 
 Chronos only supports **Slack** and **email** notifications.
 <br>
+<br>
 
 ### Slack
 
@@ -228,6 +237,7 @@ notifications: [
 ]
 // ...
 ```
+<br>
 <br>
 
 ### Email
