@@ -78,7 +78,7 @@ The **'middleware'** branch is what is ultimately deployed to the NPM package, w
 
 ### Microservices
 
-The **'dummy-microservices'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
+The **'dummy-microservice'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
 <br>
 <br>
 
