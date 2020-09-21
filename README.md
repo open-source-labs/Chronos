@@ -34,10 +34,10 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Features
 - Distributed tracing enabled across microservices applications
 - Supports <img src="./app/assets/http-icon-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-icon-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
-- <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /> compatible
-- <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
-- Temperature, speed, latency, and memory statistics
-- Process monitoring
+- Compatible with <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
+- Provides <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+- Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
+- Displays real-time temperature, speed, latency, and memory statistics
 
 ## Branches
 
@@ -62,10 +62,12 @@ The **'dummy-microservices'** branch is where we provide a sample microservices 
 
 The **'docker/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
 
-**IMPORTANT**: Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
+<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
-**IMPORTANT**: In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
-`/var/run/docker.sock`
+<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
+```
+/var/run/docker.sock
+```
 
 For example, you can type the following when starting up a container:
 `docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]`
