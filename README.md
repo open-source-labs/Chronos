@@ -12,7 +12,7 @@
 
 ### :star: Star us on GitHub — it helps! :star:
 
-<br>
+----
 
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
 
@@ -51,6 +51,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Branches
 
@@ -107,6 +108,7 @@ Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Installation
 This is for the latest Chronos verion **5.1 release and later**.
@@ -174,6 +176,7 @@ Chronos consists of a [Node](https://nodejs.org/en/) module available through th
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Configuration
 ###### Return to [Top](#Chronos)
@@ -193,6 +196,7 @@ The `database` property is required and takes in the following:
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Notifications
 
@@ -250,6 +254,7 @@ notifications: [
 ```
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Microservice Test Suite
 
@@ -261,6 +266,7 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Electron desktop application
 
@@ -270,6 +276,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## Contributing
 
@@ -279,6 +286,7 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 ###### Return to [Top](#Chronos)
 <br>
+----
 
 ## License
 
