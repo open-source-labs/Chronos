@@ -7,7 +7,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
-<div style="visibility:hidden">top</div>
 
 # Chronos 
 
@@ -38,7 +37,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Links](#links)
 
 ## Features 
-###### Return to [Top](#top)
+###### Return to [Top](#Chronos)
 - Distributed tracing enabled across microservices applications
 - Supports <img src="./app/assets/http-icon-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-icon-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
 - Compatible with <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
@@ -59,6 +58,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 
 ## Branches
+###### Return to [Top](#Chronos)
 
 ### Master
 
@@ -180,7 +180,7 @@ Chronos consists of a [Node](https://nodejs.org/en/) module available through th
 
 
 ## Configuration
-
+###### Return to [Top](#Chronos)
 The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the name of the microservice should be the same as the name of the corresponding Docker container.
 
 The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
@@ -196,7 +196,7 @@ The `database` property is required and takes in the following:
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
 ## Notifications
-
+###### Return to [Top](#Chronos)
 The `notifications` property is optional and allows developers to be alerted when the server responds to requests with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects, each with a `type` and `settings` property. 
 
 Chronos only supports **Slack** and **email** notifications.
@@ -251,7 +251,7 @@ notifications: [
 ```
 
 ## Microservice Test Suite
-
+###### Return to [Top](#Chronos)
 Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app.
 
 The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
@@ -259,17 +259,17 @@ The microservices include individual Dockerfiles in their respective directories
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 
 ## Electron desktop application
-
+###### Return to [Top](#Chronos)
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 
 ## Contributing
-
+###### Return to [Top](#Chronos)
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
 
 ## License
-
+###### Return to [Top](#Chronos)
 Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
