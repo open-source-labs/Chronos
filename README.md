@@ -73,13 +73,11 @@ root directory -> electron -> user -> settings.json
 
 The **'middleware'** branch is what is ultimately deployed to the NPM package, which is what you will install and configure in your own application in order to use Chronos.
 #
-<br>
 
 ### Microservices
 
 The **'dummy-microservices'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
 #
-<br>
 
 ### Docker
 
@@ -106,11 +104,12 @@ volumes:
 
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
 #
-<br>
 
 ### ChronosWebsite
 
 The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the Apple Store to buy a Macbook Pro.
+#
+
 ### Others
 
 Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
@@ -125,8 +124,7 @@ This is for the latest Chronos verion **5.1 release and later**.
 - Stable release: 5.1.0
 - LTS release: 5.0.1
 
-### 1. Pre-Installation
-#
+### 1. Pre-Installation #
 Make sure you're running version 12.18.3 of <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" />, which is the most recent LTS (long-term support) version. 
 
 If you need to roll back from <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" /> 14.9.0, make sure to run 
