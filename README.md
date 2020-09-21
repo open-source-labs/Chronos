@@ -1,6 +1,7 @@
 <a href="https://chronoslany.com/">
     <img src="./app/assets/animated_logo.gif" alt="Chronos" title="Chronos" align="right" height="300" />
 </a>
+
 ======================
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
