@@ -37,7 +37,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Links](#links)
 
 ## Features 
-###### Return to [Top](#Chronos)
+
 - Distributed tracing enabled across microservices applications
 - Supports <img src="./app/assets/http-icon-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-icon-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
 - Compatible with <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
@@ -45,7 +45,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 
-<!-- blank line -->
+## Demo
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" poster="./app/assets/Chronos-Demo-poster.png">
     <source src="./app/assets/Chronos-Demo.mp4" type="video/mp4" alt="Chronos">
@@ -53,12 +53,11 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     <source src="./app/assets/Chronos-Demo.webm" type="video/webm" alt="Chronos">
   </video>
 </figure>
-<!-- blank line -->
 
-
+###### Return to [Top](#Chronos)
+<hr>
 
 ## Branches
-###### Return to [Top](#Chronos)
 
 ### Master
 
@@ -111,8 +110,10 @@ The **'chronosWebsite'** branch is where the source code for the website, chrono
 
 Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 
-## Installation
+###### Return to [Top](#Chronos)
+<hr>
 
+## Installation
 This is for the latest Chronos verion **5.1 release and later**.
 
 - Stable release: 5.1.0
@@ -129,7 +130,6 @@ in the root directory.
 If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
 ```npm rebuild```
 in each microservices folder **after you roll back to version 12.18.3.**
-
 
 ### 2. Install Dependencies
 
@@ -177,7 +177,8 @@ app.use('/', cmd.track());
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
-
+###### Return to [Top](#Chronos)
+<hr>
 
 ## Configuration
 ###### Return to [Top](#Chronos)
@@ -195,8 +196,11 @@ The `database` property is required and takes in the following:
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
-## Notifications
 ###### Return to [Top](#Chronos)
+<hr>
+
+## Notifications
+
 The `notifications` property is optional and allows developers to be alerted when the server responds to requests with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects, each with a `type` and `settings` property. 
 
 Chronos only supports **Slack** and **email** notifications.
@@ -249,27 +253,40 @@ notifications: [
 ]
 // ...
 ```
+###### Return to [Top](#Chronos)
+<hr>
 
 ## Microservice Test Suite
-###### Return to [Top](#Chronos)
+
 Additionally, the repo includes a test suite of microservices utilizing the Chronos node module so that their communication, health, and container data can be logged. You can then visualize the data with the Electron app.
 
 The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 
-## Electron desktop application
 ###### Return to [Top](#Chronos)
+<hr>
+
+## Electron desktop application
+
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
 
-## Contributing
 ###### Return to [Top](#Chronos)
+<hr>
+
+## Contributing
+
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
 
-## License
 ###### Return to [Top](#Chronos)
+<hr>
+
+## License
+
 Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
+
+###### Return to [Top](#Chronos)
