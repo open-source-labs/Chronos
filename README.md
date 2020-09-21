@@ -43,13 +43,15 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Provides <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
-<br>
+#
 
 ###### Return to [Top](#Chronos)
 <br>
 
 ## Demo
 <img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
+
+#
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -112,6 +114,7 @@ The **'chronosWebsite'** branch is where the source code for the website, chrono
 ### Others
 
 Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
+#
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -184,6 +187,8 @@ app.use('/', cmd.track());
 Chronos consists of a [Node](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) and a lightweight [Electron](https://electronjs.org/) desktop application. -->
 
+#
+
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -202,6 +207,8 @@ The `database` property is required and takes in the following:
 - [6] isDockerized: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - IMPORTANT: When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
+
+#
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -263,6 +270,8 @@ notifications: [
 ]
 // ...
 ```
+#
+
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -274,7 +283,7 @@ Additionally, the repo includes a test suite of microservices utilizing the Chro
 The microservices include individual Dockerfiles in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
-<hr>
+#
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -285,7 +294,7 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos]() repo.
 
 Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
-<hr>
+#
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -296,7 +305,7 @@ Inside the downloaded directory, install all dependencies using the `npm install
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
 
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
-<hr>
+#
 
 ###### Return to [Top](#Chronos)
 <br>
@@ -305,6 +314,6 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 ## License
 
 Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
-<hr>
+#
 
 ###### Return to [Top](#Chronos)
