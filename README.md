@@ -33,6 +33,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Notifications](#notifications)
 - [License](#license)
 - [Links](#links)
+#
 <br>
 
 ## Features 
@@ -145,7 +146,6 @@ To use Chronos in your existing application, download and install the following 
 npm install chronos-tracker
 ```
 <br>
-<br>
 
 ### 3. Configure Chronos
 After you've installed `chronos-tracker` in the root directory of your application, add a `chronos-config.js` file in the root directory. If your application has 
@@ -237,7 +237,6 @@ notifications: [
 ]
 // ...
 ```
-<br>
 <br>
 
 ### Email
