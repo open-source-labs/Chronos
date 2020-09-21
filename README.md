@@ -44,7 +44,6 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 #
-
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -52,7 +51,6 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 <img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
 
 #
-
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -67,17 +65,17 @@ The **'master'** branch of this repository is where the Electron application for
 ```
 root directory -> electron -> user -> settings.json
 ```
-#
+<br>
 
 ### Middleware
 
 The **'middleware'** branch is what is ultimately deployed to the NPM package, which is what you will install and configure in your own application in order to use Chronos.
-#
+<br>
 
 ### Microservices
 
 The **'dummy-microservices'** branch is where we provide a sample microservices application to test out Chronos and to apply all the powerful, built-in features of Chronos as a monitoring tool on an existing application for your testing convenience. 
-#
+<br>
 
 ### Docker
 
@@ -103,17 +101,16 @@ volumes:
 ```
 
 \*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
-#
+<br>
 
 ### ChronosWebsite
 
 The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the Apple Store to buy a Macbook Pro.
-#
 
 ### Others
 
 Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
-#
+
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -124,7 +121,7 @@ This is for the latest Chronos verion **5.1 release and later**.
 - Stable release: 5.1.0
 - LTS release: 5.0.1
 
-### 1. Pre-Installation #
+### 1. Pre-Installation
 Make sure you're running version 12.18.3 of <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" />, which is the most recent LTS (long-term support) version. 
 
 If you need to roll back from <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" /> 14.9.0, make sure to run 
@@ -137,7 +134,6 @@ in each microservices folder **after you roll back to version 12.18.3.**
 <br>
 
 ### 2. Install Dependencies
-#
 To use Chronos in your existing application, download and install the following in the root directory:
 ```
 npm install chronos-tracker
@@ -145,7 +141,6 @@ npm install chronos-tracker
 <br>
 
 ### 3. Configure Chronos
-#
 After you've installed `chronos-tracker` in the root directory of your application, add a `chronos-config.js` file in the root directory. If your application has 
 
 ```js
@@ -169,7 +164,6 @@ chronos.use({
 <br>
 
 ### 4. Initialize chronos
-#
 ```js
 const cmd = require('chronos-tracker');
 require('./cmd-config'); // Bring in config file
@@ -205,7 +199,6 @@ The `database` property is required and takes in the following:
   - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
 
 #
-
 ###### Return to [Top](#Chronos)
 <br>
 
@@ -218,7 +211,6 @@ Chronos only supports **Slack** and **email** notifications.
 <br>
 
 ### Slack
-#
 
 Chronos uses the **Slack API** to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
 
@@ -239,7 +231,6 @@ notifications: [
 <br>
 
 ### Email
-#
 Chronos provides the option to send emails. The properties that should be provided are the following
 - `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
 - `emailHost` - The smtp host (string) of your email server
