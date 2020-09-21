@@ -2,14 +2,16 @@
     <img src="./app/assets/animated_logo.gif" alt="Chronos" title="Chronos" align="right" height="300" />
 </a>
 
-
+#
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
 
 # Chronos
 
-A developer tool that monitors the health and web traffic of servers, microservices, and containers.
+:star: Star us on GitHub — it helps!
+
+Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. 
 
 ## NEW FEATURES FOR 4.0+ - Real-time Data and Docker Container Stats
 
