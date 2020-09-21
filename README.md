@@ -6,8 +6,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 [!License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 [!Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
-[!Build Passing](https://img.shields.io/badge/build-passing-brightgreen)
-
 
 # Chronos
 
