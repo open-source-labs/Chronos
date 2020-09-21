@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AddModal.scss';
 
@@ -31,20 +31,20 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   });
 
   // Submit form data and save to database
-  const handleSubmit = (event: FormElement) => {
+  const handleSubmit = useCallback((event: FormElement) => {
     event.preventDefault();
     addApp(fields);
     setOpen(false); // Close modal on submit
-  };
+  }, []);
 
   // Handle form changes
-  const handleChange = (event: InputElement) => {
+  const handleChange = useCallback((event: InputElement) => {
     const { name, value } = event.target;
     setFields({
       ...fields,
       [name]: value,
     });
-  };
+  }, []);
 
   const { database, URI, name, description } = fields;
 

@@ -10,7 +10,7 @@ export const HealthContext = React.createContext<any>(null);
  * @method    parseHealthData
  * @method    setHealthData
  */
-const HealthContextProvider: React.SFC = ({ children }) => {
+const HealthContextProvider: React.FC = React.memo(({ children }) => {
   const [healthData, setHealthData] = useState({});
 
   function tryParseJSON(jsonString:any) {
@@ -65,6 +65,6 @@ const HealthContextProvider: React.SFC = ({ children }) => {
       {children}
     </HealthContext.Provider>
   );
-};
+});
 
 export default HealthContextProvider;

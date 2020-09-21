@@ -22,7 +22,7 @@ export const DashboardContext = createContext<any>(null);
  * @method    addApp
  * @method    deleteApp
  */
-const DashboardContextProvider = ({ children }: Props) => {
+const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
 
   /**
@@ -63,6 +63,6 @@ const DashboardContextProvider = ({ children }: Props) => {
       {children}
     </DashboardContext.Provider>
   );
-};
+});
 
 export default DashboardContextProvider;

@@ -13,7 +13,7 @@ export const DockerContext = React.createContext<any>(null);
  * @method    setDockerData
  * @method    fetchDockerData
  */
-const DockerContextProvider: React.SFC = ({ children }) => {
+const DockerContextProvider: React.FC = React.memo(({ children }) => {
   const [dockerData, setDockerData] = useState({});
 
   function tryParseJSON(jsonString: any) {
@@ -55,6 +55,6 @@ const DockerContextProvider: React.SFC = ({ children }) => {
       {children}
     </DockerContext.Provider>
   );
-};
+});
 
 export default DockerContextProvider;
