@@ -11,7 +11,7 @@ import Occupied from '../components/Occupied';
 import GraphsContainer from './GraphsContainer';
 import '../stylesheets/MainContainer.scss';
 
-const MainContainer = () => (
+const MainContainer = React.memo(() => (
   <div className="main-container">
     <div className="main-routes">
       <Switch>
@@ -28,6 +28,6 @@ const MainContainer = () => (
       <Copyright />
     </div>
   </div>
-);
+));
 
 export default MainContainer;
