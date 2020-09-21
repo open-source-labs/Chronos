@@ -66,7 +66,6 @@ The **'master'** branch of this repository is where the Electron application for
 ```
 root directory -> electron -> user -> settings.json
 ```
-<br>
 
 ### Middleware
 
