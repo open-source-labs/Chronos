@@ -63,7 +63,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ### Master
 
-The **'master'** branch of this repository is where the Electron application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
+The **'master'** branch of this repository is where the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
 
 **NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
 ```
