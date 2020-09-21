@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Splash from './components/Splash';
 import DashboardContainer from './containers/DashboardContainer';
 
-const App: React.FC = () => {
+const App: React.FC = React.memo(() => {
   // Disable splash for development
   // const [firstVisit, setFirstVisit] = useState(false);
 
@@ -11,6 +11,6 @@ const App: React.FC = () => {
 
   // Splash image on startup
   return firstVisit ? <Splash setFirstVisit={setFirstVisit} /> : <DashboardContainer />;
-};
+});
 
 export default App;

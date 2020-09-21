@@ -6,7 +6,7 @@ import { CommsContext } from '../context/CommsContext';
 // import { log } from 'console';
 import Graph from 'react-graph-vis';
 
-const RouteLocations = props => {
+const RouteLocations = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
   console.log('commdata=======>', communicationsData);
   console.log('try again');
@@ -143,7 +143,6 @@ const RouteLocations = props => {
   const options = {
     height: '300px',
     width: '300px',
-    style: 'surface',
     layout: {
       hierarchical: false,
     },
@@ -187,6 +186,6 @@ const RouteLocations = props => {
       />
     </div>
   );
-};
+});
 
 export default RouteLocations;

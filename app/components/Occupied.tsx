@@ -42,7 +42,7 @@ interface StyleProps {
 }
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
-const Occupied: React.FC = React.memo(function Occupied (props) {
+const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../stylesheets/Contact.scss';
 
-const Contact: React.FC = () => {
+const Contact = React.memo((props) => {
   return (
     <div className="contact">
       <div className="contact-border">
@@ -48,6 +48,6 @@ const Contact: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Contact;
