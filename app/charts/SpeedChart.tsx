@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 import moment from 'moment';
 
-const SpeedChart = () => {
+const SpeedChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const { time, cpuspeed } = healthData;
   const yAxis = cpuspeed;
@@ -64,6 +64,6 @@ const SpeedChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default SpeedChart;

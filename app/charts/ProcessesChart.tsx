@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-const ProcessesChart = () => {
+const ProcessesChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
     const runningProcesses: Array<number> = healthData.runningprocesses;
@@ -71,6 +71,6 @@ const ProcessesChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default ProcessesChart;

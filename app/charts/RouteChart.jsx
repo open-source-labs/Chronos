@@ -6,7 +6,7 @@ import { CommsContext } from '../context/CommsContext';
 // import { log } from 'console';
 import Graph from 'react-graph-vis';
 
-const RouteLocations = props => {
+const RouteLocations = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
   console.log('commdata=======>', communicationsData);
   console.log('try again');
@@ -136,7 +136,6 @@ const RouteLocations = props => {
   const options = {
     height: '300px',
     width: '300px',
-    style: 'surface',
     layout: {
       hierarchical: false
     },
@@ -168,6 +167,6 @@ const RouteLocations = props => {
       <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '2px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
     </div>
   );
-};
+});
 
 export default RouteLocations;

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-const LatencyChart = () => {
+const LatencyChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
@@ -57,6 +57,6 @@ const LatencyChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default LatencyChart;
