@@ -12,7 +12,7 @@ const { ipcRenderer } = window.require('electron');
  */
 export const ApplicationContext = React.createContext<any>(null);
 
-const ApplicationContextProvider: React.FC = ({ children }) => {
+const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
   
@@ -79,6 +79,6 @@ const ApplicationContextProvider: React.FC = ({ children }) => {
       {children}
     </ApplicationContext.Provider>
   );
-};
+});
 
 export default ApplicationContextProvider;

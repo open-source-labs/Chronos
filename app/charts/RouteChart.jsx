@@ -6,7 +6,7 @@ import { CommsContext } from '../context/CommsContext';
 // import { log } from 'console';
 import Graph from 'react-graph-vis';
 
-const RouteLocations = React.memo((props) => {
+const RouteLocations = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
   console.log('commdata=======>', communicationsData);
   console.log('try again');
