@@ -24,17 +24,14 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     2. [Install Dependencies](#2.-install-dependencies)
     3. [Configure Chronos](#3.-configure-chronos)
     4. [Initialize Chronos](#4.-initialize-chronos)
+    5. [Docker Configuration](#docker-configuration)
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
 - [Branches](#branches)
-    - [Master](#master)
+    - [Master](#master-branch)
       - [Examples](#examples)
-    - [Middleware](#middleware)
-    - [Microservices](#microservices)
-    - [Docker](#docker)
-    - [ChronosWebsite](#chronoswebsite)
-    - [Others](#others)  
+    - [Middleware](#middleware-branch)
 - [Technologies](#technologies)
 - [License](#license)
 
@@ -155,9 +152,30 @@ chronos.propagate();
 app.use('/', chronos.track());
 ```
 
-You should be good to go!
+You should be good to go! The last step, Step #5, is **only applicable** if you need to configure <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> for your application. 
 
+### 5. Docker Configuration
 
+Again, this step is **only applicable** if you are currently using <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> containers for your microservices. 
+
+<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you pass as arguments for microservice names.
+
+<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> In order to have container stats saved to your database, along with other health info, bind volumes to this path when starting up the containers:
+```
+/var/run/docker.sock
+```
+
+For example, you can type the following when starting up a container:
+```
+docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]
+```
+
+If you're using `docker-compose` to start up multiple containers, you can add a `volumes` key for each of your services in the `docker-compose.yml` file:
+
+```
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+```
 #
 ###### Return to [Top](#Chronos)
 <br>
@@ -222,7 +240,8 @@ notifications: [
 
 ## Branches
 
-### Master
+### Master Branch
+#
 
 The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool includes two database examples, one PostgresQL and one MongoDB, with sample data sets.
 
@@ -231,46 +250,31 @@ The **'master'** branch of this repository is where the <img src="./app/assets/e
 root directory -> electron -> user -> settings.json
 ```
 
-#### Examples
+### Examples
+#
 
-We provide two working example microservice applications in the `master` branch for you to test out Chronos.
+We provide two working example microservice applications in the `master` branch for you to test out Chronos: `microservices` and `docker`.
 
 #### Microservices
+#
 
-The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
+In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
 
-The microservices include individual <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
-
-Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
-<br>
 <br>
 
 #### Docker
+#
 
-The '<img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
+In the <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> folder within the `master` branch, we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.
 
-<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
+The `docker` folder includes individual <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
-<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
-```
-/var/run/docker.sock
-```
+Refer to the [README](link) in the `docker` folder for more details.
 
-For example, you can type the following when starting up a container:
-```
-docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]
-```
-
-If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
-
-```
-volumes:
-  - "/var/run/docker.sock:/var/run/docker.sock"
-```
 <br>
 
-### Middleware
-
+### Middleware Branch
+#
 The **'middleware'** branch is the current codebase for the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install in your own application in order to use Chronos.
 <br>
 
