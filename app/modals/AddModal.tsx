@@ -31,20 +31,20 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   });
 
   // Submit form data and save to database
-  const handleSubmit = useCallback((event: FormElement) => {
+  const handleSubmit = (event: FormElement) => {
     event.preventDefault();
     addApp(fields);
     setOpen(false); // Close modal on submit
-  }, []);
+  };
 
   // Handle form changes
-  const handleChange = useCallback((event: InputElement) => {
+  const handleChange = (event: InputElement) => {
     const { name, value } = event.target;
     setFields({
       ...fields,
       [name]: value,
     });
-  }, []);
+  };
 
   const { database, URI, name, description } = fields;
 
