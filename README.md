@@ -6,14 +6,14 @@
 #
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
+![Release: 5.1](https://img.shields.io/badge/Release-5.1-orange)
 ![Build Passing](https://img.shields.io/badge/build-passing-brightgreen)
 
 # Chronos 
 
 ### :star: Star us on GitHub — it helps! :star:
 
-Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Install the Chronos NPM package in your application to see real-time data monitoring and receive automated notifications over Slack or email.
+Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos  to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
 
