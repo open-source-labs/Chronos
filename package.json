@@ -31,7 +31,10 @@
       "@babel/plugin-proposal-class-properties"
     ]
   },
-  "keywords": [],
+  "keywords": [
+    "distributed tracing",
+    "tracing"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
