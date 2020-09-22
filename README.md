@@ -24,7 +24,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     2. [Install Dependencies](#2.-install-dependencies)
     3. [Configure Chronos](#3.-configure-chronos)
     4. [Initialize Chronos](#4.-initialize-chronos)
-    5. [Docker Configuration](#docker-configuration)
+    5. [Docker Configuration](#5.-docker-configuration)
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
