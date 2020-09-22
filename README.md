@@ -273,12 +273,12 @@ Chronos was built using the following technology stacks:
 - <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="40" />
 - <img src="./app/assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="40" />
 - <img src="./app/assets/jest-logo-color.png" alt="Jest" title="Jest" align="center" height="40" />
-- Enzyme <img src="./app/assets/enzyme-logo-color.png" alt="Enzyme" title="Enzyme" align="center" height="40" />
-- Spectron <img src="./app/assets/spectron-logo-color.png" alt="Spectron" title="Spectron" align="center" height="40" />
-- Webpack <img src="./app/assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="40" />
-- Material-UI <img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="40" />
-- Vis <img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="40" />
-- Plotly <img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="40" />
+- <img src="./app/assets/enzyme-logo-color.png" alt="Enzyme" title="Enzyme" align="center" height="40" />
+- <img src="./app/assets/spectron-logo-color.png" alt="Spectron" title="Spectron" align="center" height="40" />
+- <img src="./app/assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="40" />
+- <img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="40" />
+- <img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="40" />
+- <img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="40" />
  
 #
 ###### Return to [Top](#Chronos)
