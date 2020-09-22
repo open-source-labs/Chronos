@@ -206,7 +206,7 @@ notifications: [
 Chronos provides the option to send <img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /> emails. The properties that should be provided are the following
 - `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
 - `emailHost` - The smtp host (string) of your email server
-- `emailPort` - The email port (integer) is either **465** or **587** depending on the sender email security settings. Learn more about email ports at the [nodemailer docs](https://nodemailer.com/smtp/)
+- `emailPort` - The email port (integer) is either **465** or **587** depending on the sender email security settings. Learn more about email ports by reading the [nodemailer docs](https://nodemailer.com/smtp/)
 - `user` - The email address (string) of the sender
 - `password` - The password (string) of the sender email
 
@@ -252,6 +252,8 @@ We provide two working example microservice applications in the `master` branch 
 #### _Microservices_
 
 In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
+
+Refer to the [README](link) in the `microservices` folder for more details.
 
 #### _Docker_
 
