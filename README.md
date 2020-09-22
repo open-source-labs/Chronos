@@ -29,9 +29,9 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - [Slack](#slack)
     - [Email](#email)
 - [Branches](#branches)
-    1. [Master](#1.-master-branch)
-        <br>[Examples](#examples)
-    2. [Middleware](#2.-middleware-branch)
+    - [Master](#master-branch)
+      - [Examples](#examples)
+    - [Middleware](#middleware-branch)
 - [Technologies](#technologies)
 - [License](#license)
 
@@ -240,7 +240,7 @@ notifications: [
 
 ## Branches
 
-### 1. Master Branch
+### Master Branch
 #
 
 The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool includes two database examples, one PostgresQL and one MongoDB, with sample data sets.
@@ -271,7 +271,7 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 <br>
 
-### 2. Middleware Branch
+### Middleware Branch
 #
 The **'middleware'** branch is the current codebase for the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install in your own application in order to use Chronos.
 <br>
