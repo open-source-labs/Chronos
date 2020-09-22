@@ -134,15 +134,21 @@ The `notifications` property is optional. Jump to the section below, [Notificati
 
 ### 4. Initialize Chronos
 
-Add text here<br>
-Add text here<br>
-Add text here<br>
-Add text here<br>
-Add text here<br>
+Wherever you create an instance of your server (see example below),
+
+```js
+// Example 
+const express = require('express');
+const app = express());
+```
+
+you will also need to require in `chronos-tracker` as well as the `./chronos-config` file:
 
 ```js
 const chronos = require('chronos-tracker');
 require('./chronos-config'); // Bring in config file
+
+// ...
 
 chronos.propagate();
 app.use('/', chronos.track());
