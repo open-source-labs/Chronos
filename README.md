@@ -87,15 +87,15 @@ in each microservices folder **after you roll back to version 12.18.3.**
 <br>
 
 ### 2. Install Dependencies
-To use Chronos in your existing application, download and install the following in the root directory:
+
+To use Chronos in your existing application, download and install the following in the **root directory** of _each of your microservice applications_:
 ```
 npm install chronos-tracker
 ```
 
 ### 3. Configure Chronos
-In the root directory of _each of your microservice applications_, do two things:
-  1. Run `npm install chronos-tracker`
-  2. Create a `chronos-config.js` file with properties listed below:
+
+Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
 ```js
 // A sample `chronos-config.js` file
