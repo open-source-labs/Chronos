@@ -93,7 +93,9 @@ npm install chronos-tracker
 ```
 
 ### 3. Configure Chronos
-After you've installed `chronos-tracker` in the root directory of your application, add a `chronos-config.js` file in the root directory. If your application has 
+In the root directory of _each of your microservice applications_, do two things:
+  1. Run `npm install chronos-tracker`
+  2. Create a `chronos-config.js` file with properties listed below:
 
 ```js
 // A sample `chronos-config.js` file
@@ -139,11 +141,11 @@ Add text here<br>
 Add text here<br>
 
 ```js
-const cmd = require('chronos-tracker');
-require('./cmd-config'); // Bring in config file
+const chronos = require('chronos-tracker');
+require('./chronos-config'); // Bring in config file
 
-cmd.propagate();
-app.use('/', cmd.track());
+chronos.propagate();
+app.use('/', chronos.track());
 ```
 
 #
