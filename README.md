@@ -29,6 +29,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - [Email](#email)
 - [Branches](#branches)
     - [Master](#master)
+      - [Examples](#examples)
     - [Middleware](#middleware)
     - [Microservices](#microservices)
     - [Docker](#docker)
@@ -142,7 +143,7 @@ const express = require('express');
 const app = express());
 ```
 
-you will also need to require in `chronos-tracker` as well as the `./chronos-config` file:
+you will also need to require in `chronos-tracker` and initialize Chronos, as well as the `./chronos-config` file. You will then need to invoke `chronos.propagate()` to initiate the route tracing, in addition to implementing `chronos.track()` for all endpoints.
 
 ```js
 const chronos = require('chronos-tracker');
@@ -153,6 +154,9 @@ require('./chronos-config'); // Bring in config file
 chronos.propagate();
 app.use('/', chronos.track());
 ```
+
+You should be good to go!
+
 
 #
 ###### Return to [Top](#Chronos)
@@ -220,20 +224,18 @@ notifications: [
 
 ### Master
 
-The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
+The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool includes two database examples, one PostgresQL and one MongoDB, with sample data sets.
 
-**NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
+**NOTE:** To _replace_ or _delete_ these two databases, simply change the database URIs stored in the following path: 
 ```
 root directory -> electron -> user -> settings.json
 ```
 
-### Middleware
+#### Examples
 
-The **'middleware'** branch is what is ultimately deployed to the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install and configure in your own application in order to use Chronos.
-<br>
-<br>
+We provide two working example microservice applications in the `master` branch for you to test out Chronos.
 
-### Microservices
+#### Microservices
 
 The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
 
@@ -243,7 +245,7 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 <br>
 <br>
 
-### Docker
+#### Docker
 
 The '<img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
 
@@ -267,15 +269,11 @@ volumes:
 ```
 <br>
 
-### ChronosWebsite
+### Middleware
 
-The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="15" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-logo-color.png" alt="MacBook" title="MacBook" align="center" height="15" />.
+The **'middleware'** branch is the current codebase for the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install in your own application in order to use Chronos.
 <br>
-<br>
 
-### Others
-
-Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
 #
 ###### Return to [Top](#Chronos)
 <br>
