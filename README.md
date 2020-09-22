@@ -32,6 +32,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
+- [Stack](#stack)
 - [License](#license)
 
 #
@@ -41,10 +42,10 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Features 
 
 - Distributed tracing enabled across microservices applications
-- Supports <img src="./app/assets/http-icon-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-icon-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
-- Compatible with <img src="./app/assets/graphql-icon-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
-- Provides <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
-- Supports <img src="./app/assets/postgres-icon-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-icon-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
+- Supports <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
+- Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
+- Provides <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+- Supports <img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 #
 ###### Return to [Top](#Chronos)
@@ -62,7 +63,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ### Master
 
-The **'master'** branch of this repository is where the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
+The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
 
 **NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
 ```
@@ -71,15 +72,15 @@ root directory -> electron -> user -> settings.json
 
 ### Middleware
 
-The **'middleware'** branch is what is ultimately deployed to the <img src="./app/assets/npm-icon-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install and configure in your own application in order to use Chronos.
+The **'middleware'** branch is what is ultimately deployed to the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install and configure in your own application in order to use Chronos.
 <br>
 <br>
 
 ### Microservices
 
-The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
+The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
 
-The microservices include individual <img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
+The microservices include individual <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
 <br>
@@ -87,7 +88,7 @@ Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microse
 
 ### Docker
 
-The '<img src="./app/assets/docker-icon-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
+The '<img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
 
 <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
 
@@ -107,14 +108,11 @@ If you're using docker-compose to start up multiple containers at once, you can 
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
-
-\*Note: This module leverages the features of [systeminformation](https://systeminformation.io/).
-<br>
 <br>
 
 ### ChronosWebsite
 
-The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="15" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-icon-color.png" alt="MacBook" title="MacBook" align="center" height="15" />.
+The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="15" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-logo-color.png" alt="MacBook" title="MacBook" align="center" height="15" />.
 <br>
 <br>
 
@@ -133,9 +131,9 @@ This is for the latest Chronos version **5.1 release and later**.
 - LTS release: 5.0.1
 
 ### 1. Pre-Installation
-Make sure you're running version 12.18.3 of <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" />, which is the most recent LTS (long-term support) version. 
+Make sure you're running version 12.18.3 of <img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" />, which is the most recent LTS (long-term support) version. 
 
-If you need to roll back from <img src="./app/assets/node-icon-color.png" alt="Node" title="Node" align="center" height="20" /> 14.9.0, make sure to run 
+If you need to roll back from <img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /> 14.9.0, make sure to run 
 ```npm rebuild```
 in the root directory.
 
@@ -209,7 +207,7 @@ Chronos only supports **Slack** and **email** notifications.
 
 ### Slack
 
-Chronos uses the <img src="./app/assets/slack-icon-color.png" alt="Slack" title="Slack" align="center" height="20" /> API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
+Chronos uses the <img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /> API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
 
 An example of configured **slack** settings:
 
@@ -258,11 +256,30 @@ notifications: [
 ###### Return to [Top](#Chronos)
 <br>
 
-## Electron Desktop Application
+## Stack
 
-After installing the node module in each microservice, download the <img src="./app/assets/electron-icon-color.png" alt="Electron" title="Electron" align="center" height="20" /> desktop application from the public [Chronos]() repo.
-
-Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
+Chronos was built using the following technology stacks:
+- <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" />
+- <img src="./app/assets/react-logo-color.png" alt="React" title="React" align="center" height="17" />
+- <img src="./app/assets/js-logo-color.png" alt="JavaScript" title="JavaScript" align="center" height="17" />
+- <img src="./app/assets/ts-logo-long-blue.png" alt="TypeScript" title="TypeScript" align="center" height="17" />
+- <img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" />
+- <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" />
+- <img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" />
+- <img src="./app/assets/express-logo-color.png" alt="Express" title="Express" align="center" height="20" />
+- <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" />
+- <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> 
+- <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
+- <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />
+- <img src="./app/assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="20" />
+- <img src="./app/assets/jest-logo-color.png" alt="Jest" title="Jest" align="center" height="20" />
+- <img src="./app/assets/enzyme-logo-color.png" alt="Enzyme" title="Enzyme" align="center" height="20" />
+- <img src="./app/assets/spectron-logo-color.png" alt="Spectron" title="Spectron" align="center" height="20" />
+- <img src="./app/assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="20" />
+- <img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="20" />
+- <img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="20" />
+- <img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="20" />
+ 
 #
 ###### Return to [Top](#Chronos)
 <br>
@@ -280,6 +297,6 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 ## License
 
-Chronos is <img src="./app/assets/mit-icon-color.png" alt="MIT" title="MIT" align="center" height="20" /> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
+Chronos is <img src="./app/assets/mit-logo-color.png" alt="MIT" title="MIT" align="center" height="20" /> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
 #
 ###### Return to [Top](#Chronos)
