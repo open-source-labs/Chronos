@@ -181,7 +181,7 @@ The `database` property is required and takes in the following:
 
 - `isDockerized`: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
   - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
-  - Don't forget to bind mount to Docker socket. See NEW FEATURE section above.
+  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Don't forget to bind mount to Docker socket.
 <br>
 <br>
 
