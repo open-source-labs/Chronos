@@ -55,7 +55,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## Demo
 
-<img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
+<a href="#"><img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a>
 
 #
 ###### Return to [Top](#Chronos)
