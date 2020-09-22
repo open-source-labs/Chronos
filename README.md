@@ -267,7 +267,7 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 ### Middleware Branch
 
-The **'middleware'** branch is the current codebase for the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install in your own application in order to use Chronos.
+The **'middleware'** branch is the current codebase for the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install in your own application in order to use Chronos. Download the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package [here](link).
 <br>
 
 #
