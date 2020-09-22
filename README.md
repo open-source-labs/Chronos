@@ -253,17 +253,14 @@ root directory -> electron -> user -> settings.json
 ```
 
 ### _Examples_
-#
 
 We provide two working example microservice applications in the `master` branch for you to test out Chronos: `microservices` and `docker`.
 
 #### _Microservices_
-#
 
 In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
 
 #### _Docker_
-#
 
 In the <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> folder within the `master` branch, we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.
 
