@@ -44,7 +44,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Features 
 
 - Distributed tracing enabled across microservices applications
-- Supports <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> and <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> protocols
+- Supports <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> protocol, with <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> _coming soon_
 - Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
 - Provides <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Supports <img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
@@ -54,12 +54,6 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 <br>
 
 ## Demo
-
-Add text here<br>
-Add text here<br>
-Add text here<br>
-Add text here<br>
-Add text here<br>
 
 <img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
 
@@ -83,7 +77,6 @@ in the root directory.
 If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
 ```npm rebuild```
 in each microservices folder **after you roll back to version 12.18.3.**
-<br>
 <br>
 
 ### 2. Install Dependencies
@@ -155,6 +148,7 @@ app.use('/', chronos.track());
 ```
 
 You should be good to go! The last step, Step #5, is **only applicable** if you need to configure <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> for your application. 
+<br>
 
 ### 5. Docker Configuration
 
@@ -289,7 +283,7 @@ The **'middleware'** branch is the current codebase for the <img src="./app/asse
 - <img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="30" />
 - <img src="./app/assets/express-logo-color.png" alt="Express" title="Express" align="center" height="30" />
 - <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="30" />
-- <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /> 
+- <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /> _coming soon_
 - <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="30" />
 - <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="30" />
 - <img src="./app/assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="30" />
