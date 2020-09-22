@@ -242,8 +242,7 @@ notifications: [
 
 ## Branches
 
-### Master Branch
-#
+### Master Branch #
 
 The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool includes two database examples, one PostgresQL and one MongoDB, with sample data sets.
 
