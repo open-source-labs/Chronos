@@ -31,6 +31,8 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Branches](#branches)
     - [Master](#master-branch)
       - [Examples](#examples)
+        - [Microservices](#microservices)
+        - [Docker](#docker)
     - [Middleware](#middleware-branch)
 - [Technologies](#technologies)
 - [License](#license)
@@ -250,17 +252,17 @@ The **'master'** branch of this repository is where the <img src="./app/assets/e
 root directory -> electron -> user -> settings.json
 ```
 
-### Examples
+### _Examples_
 #
 
 We provide two working example microservice applications in the `master` branch for you to test out Chronos: `microservices` and `docker`.
 
-#### Microservices
+#### _Microservices_
 #
 
 In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
 
-#### Docker
+#### _Docker_
 #
 
 In the <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> folder within the `master` branch, we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.
