@@ -179,9 +179,11 @@ The `database` property is required and takes in the following:
 - `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
 - `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
 
-- `isDockerized`: Is this microservice running in a Docker container? Enter "yes" or "no". (Defaults to "no".)
+<!-- - `isDockerized`: Is this microservice running in a Docker container? Enter `yes` or `no`. The current default setting is `no`.
   - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Don't forget to bind mount to Docker socket.
+  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Don't forget to bind mount to Docker socket. -->
+
+The `notifications` property is optional. Please see the section below to configure Slack or email notifications [here](#notifications).
 <br>
 <br>
 
