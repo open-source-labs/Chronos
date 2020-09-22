@@ -7,6 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 4.0](https://img.shields.io/badge/Release-4.0-orange)
+![Build Passing](https://img.shields.io/badge/build-passing-brightgreen)
 
 # Chronos 
 
@@ -17,6 +18,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Table of Contents
 
 - [Features](#features)
+- [Demo](#demo)
 - [Branches](#branches)
     - [Master](#master)
     - [Middleware](#middleware)
@@ -52,6 +54,13 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 <br>
 
 ## Demo
+
+Add text here<br>
+Add text here<br>
+Add text here<br>
+Add text here<br>
+Add text here<br>
+
 <img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" />
 
 #
@@ -183,11 +192,18 @@ The `database` property is required and takes in the following:
   - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
   - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Don't forget to bind mount to Docker socket. -->
 
-The `notifications` property is optional. Please see the section below to configure Slack or email notifications [here](#notifications).
+The `notifications` property is optional. Jump to the section below, [Notifications](#notifications) to configure <img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /> or email <img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /> notifications.
 <br>
 <br>
 
 ### 4. Initialize Chronos
+
+Add text here<br>
+Add text here<br>
+Add text here<br>
+Add text here<br>
+Add text here<br>
+
 ```js
 const cmd = require('chronos-tracker');
 require('./cmd-config'); // Bring in config file
