@@ -19,13 +19,6 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 - [Features](#features)
 - [Demo](#demo)
-- [Branches](#branches)
-    - [Master](#master)
-    - [Middleware](#middleware)
-    - [Microservices](#microservices)
-    - [Docker](#docker)
-    - [ChronosWebsite](#chronoswebsite)
-    - [Others](#others)
 - [Installation](#installation)
     1. [Pre-Installation](#1.-pre-installation)
     2. [Install Dependencies](#2.-install-dependencies)
@@ -34,7 +27,14 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
-- [Stack](#stack)
+- [Branches](#branches)
+    - [Master](#master)
+    - [Middleware](#middleware)
+    - [Microservices](#microservices)
+    - [Docker](#docker)
+    - [ChronosWebsite](#chronoswebsite)
+    - [Others](#others)  
+- [Technologies](#technologies)
 - [License](#license)
 
 #
@@ -66,72 +66,6 @@ Add text here<br>
 #
 ###### Return to [Top](#Chronos)
 <br>
-
-
-## Branches
-
-### Master
-
-The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
-
-**NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
-```
-root directory -> electron -> user -> settings.json
-```
-
-### Middleware
-
-The **'middleware'** branch is what is ultimately deployed to the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install and configure in your own application in order to use Chronos.
-<br>
-<br>
-
-### Microservices
-
-The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
-
-The microservices include individual <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
-
-Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
-<br>
-<br>
-
-### Docker
-
-The '<img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
-
-<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
-
-<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
-```
-/var/run/docker.sock
-```
-
-For example, you can type the following when starting up a container:
-```
-docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]
-```
-
-If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
-
-```
-volumes:
-  - "/var/run/docker.sock:/var/run/docker.sock"
-```
-<br>
-
-### ChronosWebsite
-
-The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="15" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-logo-color.png" alt="MacBook" title="MacBook" align="center" height="15" />.
-<br>
-<br>
-
-### Others
-
-Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
-#
-###### Return to [Top](#Chronos)
-<br>
-
 
 ## Installation
 This is for the latest Chronos version **5.1 release and later**.
@@ -274,9 +208,72 @@ notifications: [
 ###### Return to [Top](#Chronos)
 <br>
 
-## Stack
+## Branches
 
-Chronos was built using the following technology stacks:
+### Master
+
+The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool's _default configuration_ includes two databases: one PostgresQL and one MongoDB, that are both connected and configured for you in the dashboard so you can easily view the metrics and graphs available to you. 
+
+**NOTE:** To _replace_ or _override_ these two default databases that we provide, change the database URIs stored in the following path: 
+```
+root directory -> electron -> user -> settings.json
+```
+
+### Middleware
+
+The **'middleware'** branch is what is ultimately deployed to the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install and configure in your own application in order to use Chronos.
+<br>
+<br>
+
+### Microservices
+
+The **'dummy-microservice'** branch is where we provide a test suite of sample microservices application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
+
+The microservices include individual <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
+
+Refer to the [README](https://github.com/oslabs-beta/Chronos/tree/docker/microservice) of that branch for more details.
+<br>
+<br>
+
+### Docker
+
+The '<img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> **/microservice'** branch is where we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.. 
+
+<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you use for arguments for microservice names. Read more about it under the INSTALLATION section below.
+
+<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> In order to have container stats saved to your database along with other health info, when starting up the containers, bind volumes to this path:
+```
+/var/run/docker.sock
+```
+
+For example, you can type the following when starting up a container:
+```
+docker run -v /var/run/docker.sock:/var/run/docker.sock [your-image-tag]
+```
+
+If you're using docker-compose to start up multiple containers at once, you can add a `volumes` key for each of your services in the YAML file:
+
+```
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
+```
+<br>
+
+### ChronosWebsite
+
+The **'chronosWebsite'** branch is where the source code for the website, chronoslany.com, exists. The website currently has a working download link for Chronos as a desktop application for **MacOS**, and the Windows and Linux download links will redirect you to the <img src="./app/assets/apple-icon-black.png" alt="Apple" title="Apple" align="center" height="15" /> Apple Store to buy a Macbook Pro <img src="./app/assets/macbook-logo-color.png" alt="MacBook" title="MacBook" align="center" height="15" />.
+<br>
+<br>
+
+### Others
+
+Please feel free to ignore the other branches in the repository ('Demo', 'Dev')
+#
+###### Return to [Top](#Chronos)
+<br>
+
+## Technologies
+
 - <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="30" />
 - <img src="./app/assets/react-logo-color.png" alt="React" title="React" align="center" height="30" />
 - <img src="./app/assets/js-logo-color.png" alt="JavaScript" title="JavaScript" align="center" height="30" />
