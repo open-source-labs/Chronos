@@ -57,7 +57,6 @@ app.get('/customers/getbooksinfo', controller.getbooksinfo, (req, res) => {
 
 // Global error handler
 app.use((error, req, res, next) => {
-  //  console.log(err.stack);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,
