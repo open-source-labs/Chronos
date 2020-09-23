@@ -44,10 +44,10 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Features 
 
 - Distributed tracing enabled across microservices applications
-- Supports <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /> protocol, with <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /> _coming soon_
-- Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" />
-- Provides <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
-- Supports <img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /> databases
+- Supports <a href="#"><img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /></a> protocol, with <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /></a> _coming soon_
+- Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
+- Provides <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
+- Supports <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 #
 ###### Return to [Top](#Chronos)
@@ -55,7 +55,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## Demo
 
-<a href="#"><img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a>
+<a href="#"><img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
 
 #
 ###### Return to [Top](#Chronos)
@@ -68,9 +68,9 @@ This is for the latest Chronos version **5.1 release and later**.
 - LTS release: 5.0.1
 
 ### 1. Pre-Installation
-Make sure you're running version 12.18.3 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a>, which is the most recent LTS (long-term support) version. 
+Make sure you're running version 12.18.3 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
 
-If you need to roll back from <img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /> 14.9.0, make sure to run 
+If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a> 14.9.0, make sure to run 
 ```npm rebuild```
 in the root directory.
 
@@ -118,10 +118,10 @@ The `database` property is required and takes in the following:
 - `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
 
 <!-- - `isDockerized`: Is this microservice running in a Docker container? Enter `yes` or `no`. The current default setting is `no`.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Don't forget to bind mount to Docker socket. -->
+  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
+  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Don't forget to bind mount to Docker socket. -->
 
-The `notifications` property is optional. Jump to the section below, [Notifications](#notifications) to configure <img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /> or email <img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /> notifications.
+The `notifications` property is optional. Jump to the section below, [Notifications](#notifications) to configure <a href="#"><img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /></a> or email <a href="#"><img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /></a> notifications.
 <br>
 <br>
 
@@ -147,16 +147,16 @@ chronos.propagate();
 app.use('/', chronos.track());
 ```
 
-You should be good to go! The last step, Step #5, is **only applicable** if you need to configure <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> for your application. 
+You should be good to go! The last step, Step #5, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
 <br>
 
 ### 5. Docker Configuration
 
-Again, this step is **only applicable** if you are currently using <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> containers for your microservices. 
+Again, this step is **only applicable** if you are currently using <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> containers for your microservices. 
 
-<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you pass as arguments for microservice names.
+<a href="#"><img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Give your containers the same names you pass as arguments for microservice names.
 
-<img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> In order to have container stats saved to your database, along with other health info, bind volumes to this path when starting up the containers:
+<a href="#"><img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> In order to have container stats saved to your database, along with other health info, bind volumes to this path when starting up the containers:
 ```
 /var/run/docker.sock
 ```
@@ -185,7 +185,7 @@ Chronos only supports **Slack** and **email** notifications.
 
 ### Slack
 
-Chronos uses the <img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /> API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
+Chronos uses the <a href="#"><img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /></a> API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
 
 An example of configured **slack** settings:
 
@@ -203,7 +203,7 @@ notifications: [
 ```
 
 ### Email
-Chronos provides the option to send <img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /> emails. The properties that should be provided are the following
+Chronos provides the option to send <a href="#"><img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /></a> emails. The properties that should be provided are the following
 - `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
 - `emailHost` - The smtp host (string) of your email server
 - `emailPort` - The email port (integer) is either **465** or **587** depending on the sender email security settings. Learn more about email ports by reading the [nodemailer docs](https://nodemailer.com/smtp/)
@@ -238,7 +238,7 @@ notifications: [
 
 ### Master Branch
 
-The **'master'** branch of this repository is where the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> application for Chronos is deployed. The Chronos monitoring tool includes two database examples, one PostgresQL and one MongoDB, with sample data sets.
+The **'master'** branch of this repository is where the <a href="#"><img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /></a> application for Chronos is deployed. The Chronos monitoring tool includes two database examples, one PostgresQL and one MongoDB, with sample data sets.
 
 **NOTE:** To _replace_ or _delete_ these two databases, simply change the database URIs stored in the following path: 
 ```
@@ -251,15 +251,15 @@ We provide two working example microservice applications in the `master` branch 
 
 #### _Microservices_
 
-In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> app.
+In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our  monitoring tool. You can then visualize the data with the <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /></a> app.
 
 Refer to the [README](link) in the `microservices` folder for more details.
 
 #### _Docker_
 
-In the <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> folder within the `master` branch, we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.
+In the <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> folder within the `master` branch, we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.
 
-The `docker` folder includes individual <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /> files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
+The `docker` folder includes individual <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [README](link) in the `docker` folder for more details.
 
@@ -267,7 +267,7 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 ### Middleware Branch
 
-The **'middleware'** branch is the current codebase for the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package, which is what you will install in your own application in order to use Chronos. Download the <img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /> package [here](link).
+The **'middleware'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](link).
 <br>
 
 #
@@ -276,26 +276,26 @@ The **'middleware'** branch is the current codebase for the <img src="./app/asse
 
 ## Technologies
 
-- <img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="30" />
-- <img src="./app/assets/react-logo-color.png" alt="React" title="React" align="center" height="30" />
-- <img src="./app/assets/js-logo-color.png" alt="JavaScript" title="JavaScript" align="center" height="30" />
-- <img src="./app/assets/ts-logo-long-blue.png" alt="TypeScript" title="TypeScript" align="center" height="30" />
-- <img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="30" />
-- <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="30" />
-- <img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="30" />
-- <img src="./app/assets/express-logo-color.png" alt="Express" title="Express" align="center" height="30" />
-- <img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="30" />
-- <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /> _coming soon_
-- <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="30" />
-- <img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="30" />
-- <img src="./app/assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="30" />
-- <img src="./app/assets/jest-logo-color.png" alt="Jest" title="Jest" align="center" height="30" />
-- <img src="./app/assets/enzyme-logo-color.png" alt="Enzyme" title="Enzyme" align="center" height="30" />
-- <img src="./app/assets/spectron-logo-color.png" alt="Spectron" title="Spectron" align="center" height="30" />
-- <img src="./app/assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="30" />
-- <img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="30" />
-- <img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" />
-- <img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" />
+- <a href="#"><img src="./app/assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/react-logo-color.png" alt="React" title="React" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/js-logo-color.png" alt="JavaScript" title="JavaScript" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/ts-logo-long-blue.png" alt="TypeScript" title="TypeScript" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/express-logo-color.png" alt="Express" title="Express" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /></a> _coming soon_
+- <a href="#"><img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/jest-logo-color.png" alt="Jest" title="Jest" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/enzyme-logo-color.png" alt="Enzyme" title="Enzyme" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/spectron-logo-color.png" alt="Spectron" title="Spectron" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
  
 #
 ###### Return to [Top](#Chronos)
@@ -314,6 +314,6 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 ## License
 
-Chronos is <img src="./app/assets/mit-logo-color.png" alt="MIT" title="MIT" align="center" height="20" /> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
+Chronos is <a href="#"><img src="./app/assets/mit-logo-color.png" alt="MIT" title="MIT" align="center" height="20" /></a> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
 #
 ###### Return to [Top](#Chronos)
