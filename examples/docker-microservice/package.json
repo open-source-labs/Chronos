@@ -1,0 +1,42 @@
+{
+  "name": "microservices-chronos-test",
+  "version": "2.0.0",
+  "description": "A set of basic microservices to test Chronos' features.",
+  "scripts": {
+    "dev": "(cd books && npm start) & (cd customers && npm start) & (cd orders && npm start) & (cd frontend && npm start)"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "keywords": [
+    "microservices",
+    "docker",
+    "docker-compose"
+  ],
+  "author": "Chronos Team",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.7.1",
+    "nodemon": "^1.19.2",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0"
+  }
+}
