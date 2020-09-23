@@ -20,11 +20,11 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
-    1. [Pre-Installation](#1.-pre-installation)
-    2. [Install Dependencies](#2.-install-dependencies)
-    3. [Configure Chronos](#3.-configure-chronos)
-    4. [Initialize Chronos](#4.-initialize-chronos)
-    5. [Docker Configuration](#5.-docker-configuration)
+    - [Pre-Installation](#pre-installation)
+    - [Install Dependencies](#install-dependencies)
+    - [Configure Chronos](#configure-chronos)
+    - [Initialize Chronos](#initialize-chronos)
+    - [Docker Configuration](#docker-configuration)
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
@@ -67,7 +67,7 @@ This is for the latest Chronos version **5.1 release and later**.
 - Stable release: 5.1.0
 - LTS release: 5.0.1
 
-### 1. Pre-Installation
+### Pre-Installation
 Make sure you're running version 12.18.3 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
 
 If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a> 14.9.0, make sure to run 
@@ -79,14 +79,14 @@ If you're installing Chronos into a microservices application, and you have diff
 in each microservices folder **after you roll back to version 12.18.3.**
 <br>
 
-### 2. Install Dependencies
+### Install Dependencies
 
 To use Chronos in your existing application, download and install the following in the **root directory** of _each of your microservice applications_:
 ```
 npm install chronos-tracker
 ```
 
-### 3. Configure Chronos
+### Configure Chronos
 
 Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
@@ -125,7 +125,7 @@ The `notifications` property is optional. Jump to the section below, [Notificati
 <br>
 <br>
 
-### 4. Initialize Chronos
+### Initialize Chronos
 
 Wherever you create an instance of your server (see example below),
 
@@ -147,10 +147,10 @@ chronos.propagate();
 app.use('/', chronos.track());
 ```
 
-You should be good to go! The last step, Step #5, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
+You should be good to go! The last step, **Docker Configuration**, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
 <br>
 
-### 5. Docker Configuration
+### Docker Configuration
 
 Again, this step is **only applicable** if you are currently using <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> containers for your microservices. 
 
