@@ -4,10 +4,11 @@
 
 
 #
+![Build Passing](https://img.shields.io/badge/build-passing-blue)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 5.1](https://img.shields.io/badge/Release-5.1-orange)
-![Build Passing](https://img.shields.io/badge/build-passing-brightgreen)
+
 
 # Chronos 
 
@@ -267,7 +268,7 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 ### Middleware Branch
 
-The **'middleware'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](link).
+The **'middleware'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 <br>
 
 #
