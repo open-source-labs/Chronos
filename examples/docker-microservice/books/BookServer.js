@@ -64,10 +64,6 @@ app.use((error, req, res, next) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
-// app.listen(process.env.BOOKS_PORT, () => {
-//   console.log(`Book server running on port ${process.env.BOOKS_PORT} ...`);
-// });
-
 app.listen(8888, () => {
   console.log(`Book server running on port 8888...`);
 });

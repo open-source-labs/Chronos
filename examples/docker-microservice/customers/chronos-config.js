@@ -9,5 +9,5 @@ chronos.use({
     URI:
       ' < INSERT MONGODB LINK HERE > ',
   },
-  // notifications: [],
+  notifications: [],
 });

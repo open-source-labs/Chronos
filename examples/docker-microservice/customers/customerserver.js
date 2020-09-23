@@ -69,12 +69,6 @@ app.use((error, req, res, next) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
-// app.listen(process.env.CUSTOMERS_PORT, () => {
-//   console.log(
-//     `Customer server running on port ${process.env.CUSTOMERS_PORT}...`
-//   );
-// });
-
 app.listen(5555, () => {
   console.log(`Customer server running on port 5555...`);
 });
