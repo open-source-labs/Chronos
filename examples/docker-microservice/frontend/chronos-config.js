@@ -6,8 +6,7 @@ chronos.use({
   dockerized: true,
   database: {
     type: 'MongoDB',
-    URI:
-      ' < INSERT MONGODB URL HERE > ',
+    URI: ' < INSERT MONGODB URL HERE > ',
   },
-  // notifications: [],
+  notifications: [],
 });
