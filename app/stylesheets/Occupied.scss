@@ -63,7 +63,7 @@
   box-sizing: content-box;
   border-radius: 50%;
   box-shadow: $boxshadow1;
-  line-height: 1.42857143;
+  line-height: 1.5;
   white-space: nowrap;
   display: inline-flex;
   outline: 0;
@@ -82,7 +82,7 @@
   background-color: transparent;
   box-sizing: content-box;
   border-radius: 50%;
-  line-height: 1.42857143;
+  line-height: 1.5;
   white-space: nowrap;
   display: inline-flex;
   outline: 0;
@@ -149,41 +149,6 @@ button {
   }
 }
 
-.MuiButtonBase-root {
-  position: 'relative';
-  bottom: 200;
-  right: 200;
-}
-
-.MuiIconButton-root {
-  position: 'relative';
-  bottom: 200;
-  right: 200;
-}
-
-.makeStyles-hover-7 {
-  position: 'relative';
-  bottom: 200;
-  right: 200;
-}
-
-.MuiIconButton-label {
-  position: 'relative';
-  bottom: 200;
-  right: 200;
-}
-
-.MuiSvgIcon-root {
-  background: none;
-  position: 'relative';
-  bottom: 200;
-  right: 200;
-  border: 0;
-  outline: none;
-  box-shadow: none;
-  filter: none;
-}
-
 #deleteIcon {
   background: none;
   position: 'absolute';
@@ -197,7 +162,7 @@ button {
   &:hover {
     background: none;
     background-color: none;
-    color: $red;
+    color: $warningred;
     filter: none;
     cursor: pointer;
   }
@@ -223,7 +188,7 @@ button {
 
 #textInput {
   background-color: transparent;
-  font-family: 'Open Sans';
+  font-family: 'Roboto';
   font-size: 16px;
   outline: none;
   border: 0;
@@ -287,18 +252,6 @@ select:-webkit-autofill:focus {
     position: absolute;
     transition: all 0.5s;
   }
-  // &:after {
-    // top: -1px;
-    // right: -1px;
-    // border-top: 2px solid rgba(132, 216, 255, 0.7);
-    // border-right: 2px solid rgba(132, 216, 255, 0.7);
-  // }
-  // &:before {
-    // bottom: -1px;
-    // left: -1px;
-    // border-bottom: 2px solid rgba(132, 216, 255, 0.7);
-    // border-left: 2px solid rgba(132, 216, 255, 0.7);
-  // }
   &:hover {
     position: relative;
     border-top-right-radius: 0px;
@@ -309,4 +262,4 @@ select:-webkit-autofill:focus {
       height: 25%;
     }
   }
-}
+};

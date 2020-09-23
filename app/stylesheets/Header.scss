@@ -11,7 +11,7 @@
   margin-top: 20px;
 
   h1 {
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 2px;
     margin: 0;
   }
@@ -58,7 +58,7 @@ select {
     
     /* Live data dot */
     .dot {
-      background-color: $red;
+      background-color: $warningred;
       display: inline-block;
       height: 10px;
       width: 10px;
@@ -85,7 +85,7 @@ select {
 .microserviceTitle {
   color: $header;
   font-size: 32px;
-  font-family: 'Open Sans';
+  font-family: 'Roboto';
 }
 
 #gatherLiveData {
@@ -104,7 +104,7 @@ select {
   height: auto;
   width: 120px;
   font-size: 12px;
-  color: $red;
+  color: $warningred;
   background-color: $background;
   padding: 10px;
   border-radius: 10px;

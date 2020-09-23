@@ -87,7 +87,8 @@ const Applications: React.FC = React.memo((props) => {
       [theme.breakpoints.up('lg')]: {
         fontSize: '18px',
         // MAIN PAGE SQUARE BUTTON FONTS
-        fontFamily: 'Open Sans'
+        fontFamily: 'Roboto',
+        fontWeight: 100,
       },
     },
   }));

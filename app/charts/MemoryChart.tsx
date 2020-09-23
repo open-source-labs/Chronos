@@ -15,7 +15,7 @@ const MemoryChart = React.memo(() => {
           {
             type: 'scattergl',
             fill: 'tonexty',
-            fillcolor: 'rgb(0, 237, 160)',
+            fillcolor: '#24d3f0',
             mode: 'none',
             y: free,
             name: 'Free Memory',
@@ -23,7 +23,7 @@ const MemoryChart = React.memo(() => {
           {
             type: 'scatter',
             fill: 'tonexty',
-            fillcolor: 'rgba(0, 237, 160, .4)',
+            fillcolor: '#4b54ea',
             mode: 'none',
             y: used,
             name: 'Used Memory',
@@ -31,7 +31,7 @@ const MemoryChart = React.memo(() => {
           {
             type: 'scatter',
             fill: 'tonexty',
-            fillcolor: 'rgba(74, 78, 238, .5)',
+            fillcolor: '#5e84fb',
             mode: 'none',
             y: active,
             name: 'Active Memory',
@@ -42,9 +42,9 @@ const MemoryChart = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',

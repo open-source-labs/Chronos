@@ -111,6 +111,13 @@ const Occupied = React.memo(() => {
       height: '75px',
       boxShadow: 'none',
     },
+    // EACH CARD CONTENT
+    fontStyles: {
+      fontSize: '16px',
+      fontFamily: 'Roboto',
+      fontWeight: 100,
+      color: '#444d56'
+    }
   }));
 
   const classes = useStyles({} as StyleProps);
@@ -166,7 +173,7 @@ const Occupied = React.memo(() => {
                   }
                 ></CardHeader>
                 <CardContent>
-                  <Typography className={'cardContent'}>{app[0]}</Typography>
+                  <Typography className={classes.fontStyles}>{app[0]}</Typography>
                 </CardContent>
               </Card>
             </div>
