@@ -84,7 +84,7 @@ const RouteLocations = React.memo(() => {
       height: 300,
       width: 300,
       textAlign: 'center',
-      color: '#888888',
+      color: '#444d56',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
       borderRadius: 3,
@@ -105,7 +105,10 @@ const RouteLocations = React.memo(() => {
       // check if node exists if not then add node
       let id = route[i].microservice
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { id: id, label: id, color: { background: '#24d2f1', border: 'white', hover: { background: '#4d55ec', border: 'white' } }, shape: 'circle' }
+        nodeListObj[id] = { 
+          id: id, 
+          label: id
+        }
       }
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
@@ -140,15 +143,37 @@ const RouteLocations = React.memo(() => {
       hierarchical: false
     },
     edges: {
-      color: "#000000",
+      color: "#444d56",
       physics: true,
       smooth: {
         type: "curvedCCW",
         forceDirection: "none",
         roundness: 0.3
-      }
+      },
+      font: {
+        color: '#444d56',
+        size: 9,
+      },
     },
-  };
+    nodes: {
+      borderWidth: 0,
+      color: {
+        background: '#24d3f0',
+        hover: {
+          background: '#4b54ea',
+        },
+        highlight: {
+          background: '#f7215b',
+        }
+      },
+      shape: 'circle',
+      font: {
+        color: '#444d56',
+        size: 10,
+        face: 'roboto'
+      },
+    }
+  }
 
   const events = {
     select: function (event) {
@@ -164,7 +189,7 @@ const RouteLocations = React.memo(() => {
   return (
     <div className='traceContainer'>
       <span id='tracesTitle'>Route Traces</span>
-      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '2px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
+      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontFamily: 'Roboto', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
     </div>
   );
 });

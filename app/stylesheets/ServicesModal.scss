@@ -7,6 +7,7 @@
 
   // Header
   .services-header {
+    color: #444d56;
     background-color: $grey;
     width: 100%;
     padding: 0 0 15px;
@@ -21,6 +22,7 @@
       margin-top: 15px;
       margin-bottom: 5px;
       font-size: 26px;
+      font-weight: 300;
     }
   }
 
@@ -43,7 +45,7 @@
       color: rgb(31, 31, 31);
       transition: 0.1s;
       text-align: center;
-      font-weight: 700;
+      font-weight: 100;
       &:hover { 
         color: #fff;
         background-color: $header;
@@ -58,4 +60,6 @@
 
 #loadingMessage {
   font-size: 14px;
+  font-weight: 100;
+  color: #444d56;
 }

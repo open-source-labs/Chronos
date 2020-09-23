@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
+import '../stylesheets/constants.scss';
 
 const RequestTypesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
@@ -44,7 +45,7 @@ const RequestTypesChart: React.FC = React.memo(() => {
             type: 'pie',
             textposition: 'inside',
             marker: {
-              colors: ['#fa1a58', '#4a4eee', '#00eda0', '#00d3f2', '#73605b', '#d09683'],
+              colors: ['#fa1a58', '#4a4eee', '#00eda0', '#00d3f2', '#9c27b0', '#ff9800'],
             },
             
           },
@@ -59,9 +60,9 @@ const RequestTypesChart: React.FC = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           legend: {
@@ -69,7 +70,7 @@ const RequestTypesChart: React.FC = React.memo(() => {
             xanchor: 'center',
             x: 0.5,
             font: {
-              size: 6,
+              size: 7,
             }
           },
         }}

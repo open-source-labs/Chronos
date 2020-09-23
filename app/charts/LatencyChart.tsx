@@ -16,7 +16,7 @@ const LatencyChart = React.memo(() => {
             type: 'scattergl',
             y: yAxis,
             mode: 'lines',
-            marker: { color: '#daaa17' },
+            marker: { color: '#f7215b' },
           },
         ]}
         layout={{
@@ -24,9 +24,9 @@ const LatencyChart = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
