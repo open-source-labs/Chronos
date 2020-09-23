@@ -4,10 +4,11 @@
 
 
 #
+![Build Passing](https://img.shields.io/badge/build-passing-blue)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Release: 5.1](https://img.shields.io/badge/Release-5.1-orange)
-![Build Passing](https://img.shields.io/badge/build-passing-brightgreen)
+
 
 # Chronos 
 
