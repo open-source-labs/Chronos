@@ -1,5 +1,18 @@
 @import './constants.scss';
 
 
+.card {
+  &:hover p {
+    color: $background;
+    font-weight: 400;
+  }
 
+  p {
+    font-size: 18px;
+    &:hover {
+      color: $background;
+      font-weight: 400;
+    }
+  }
+}
 

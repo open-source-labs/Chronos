@@ -61,7 +61,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
             textposition: 'inside',
             domain: { y: [0, 2] },
             marker: {
-              colors: ['#f7215b', '#4b54ea', '#24d3f0', '#27eba2', '#9c27b0'],
+              colors: ['#fc4039', '#4b54ea', '#3788fc', '#32b44f', '#9c27b0'],
             },
           },
         ]}

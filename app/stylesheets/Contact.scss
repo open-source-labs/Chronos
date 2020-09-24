@@ -151,7 +151,7 @@ input[type='file'] {
   background-color: transparent;
   border-radius: 8px;
   &:hover {
-    background-color: $lightblue;
+    background-color: $gblue;
   }
 }
 
@@ -159,6 +159,6 @@ input[type='file'] {
   color: $header;
   text-decoration: none;
   &:hover {
-    color: $lightblue;
+    color: $gblue;
   }
 }

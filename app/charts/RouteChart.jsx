@@ -158,17 +158,17 @@ const RouteLocations = React.memo(() => {
     nodes: {
       borderWidth: 0,
       color: {
-        background: '#24d3f0',
+        background: '#3788fc',
         hover: {
-          background: '#4b54ea',
+          background: '#febc2c',
         },
         highlight: {
-          background: '#f7215b',
+          background: '#fc4039',
         }
       },
       shape: 'circle',
       font: {
-        color: '#444d56',
+        color: '#ffffff',
         size: 10,
         face: 'roboto'
       },

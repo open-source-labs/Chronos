@@ -32,7 +32,7 @@ const TrafficChart = React.memo(() => {
             x: [...xAxis],
             y: [...serverPings, 0, yAxisHeadRoom],
             fill: 'tozeroy',
-            marker: { color: '#fa1a58' },
+            marker: { color: '#fc4039' },
             mode: 'none',
             name: 'Times Server Pinged',
             showlegend: false,
