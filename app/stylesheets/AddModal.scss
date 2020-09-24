@@ -16,7 +16,8 @@
 
     h2 {
       @include modalHeader();
-      font-size: 24px;
+      font-size: 26px;
+      font-weight: 300;
       color: $darkgrey;
     }
   }
@@ -27,7 +28,7 @@
     padding: 20px 30px;
     width: 100%;
     font-size: 12px;
-    font-family: 'Open Sans';
+    font-family: 'Roboto';
     color: $darkgrey;
 
     p,
@@ -64,7 +65,7 @@
       select,
       input,
       textarea {
-        font-family: 'Open Sans';
+        font-family: 'Roboto';
         font-size: 14px;
         padding: 5px;
         border: thin solid $grey;
@@ -76,7 +77,7 @@
       // Select field
       select {
         cursor: pointer;
-        font-family: 'Open Sans';
+        font-family: 'Roboto';
         height: 30px;
         margin: 0;
         appearance: none;
@@ -108,7 +109,7 @@
 
     /* Submit button */
     button {
-      font-family: 'Open Sans';
+      font-family: 'Roboto';
       font-size: 16px;
       font-weight: 800;
       height: 40px;
@@ -124,7 +125,7 @@
       text-transform: uppercase;
 
       &:hover {
-        background-color: $lightblue;
+        background-color: $gblue;
       }
     }
   }

@@ -2,6 +2,7 @@
 
 .contact {
   background-image: url('../assets/mountain_longer.png');
+  background-size: contain;
   display: flex;
   flex-direction: column;
   flex-direction: column;
@@ -10,6 +11,7 @@
   justify-content: center;
   justify-items: center;
   position: absolute;
+  margin-left: 50px;
   top: 0;
   left: 0;
   width: 100vw;
@@ -150,7 +152,7 @@ input[type='file'] {
   background-color: transparent;
   border-radius: 8px;
   &:hover {
-    background-color: $lightblue;
+    background-color: $gblue;
   }
 }
 
@@ -158,6 +160,6 @@ input[type='file'] {
   color: $header;
   text-decoration: none;
   &:hover {
-    color: $lightblue;
+    color: $gblue;
   }
 }

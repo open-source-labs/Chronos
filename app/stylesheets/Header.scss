@@ -6,12 +6,12 @@
   flex-direction: column;
   padding: 30px 0 50px;
   background-color: $grey;
-  color: #333;
+  color: $darkgrey;
   margin-bottom: 30px;
   margin-top: 20px;
 
   h1 {
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: 2px;
     margin: 0;
   }
@@ -48,7 +48,6 @@ select {
       margin: 10px;
       padding: 5px;
       text-decoration: none;
-      color: $darkgrey;
       transition: 0.1s;
       font-size: 90%;
     
@@ -58,7 +57,7 @@ select {
     
     /* Live data dot */
     .dot {
-      background-color: $red;
+      background-color: $warningred;
       display: inline-block;
       height: 10px;
       width: 10px;
@@ -78,14 +77,20 @@ select {
     
     &:hover{
       cursor: pointer;
-      color: $lightblue;
+      color: $gblue;
+      font-weight: 500;
     }
   }
 }
 .microserviceTitle {
   color: $header;
   font-size: 32px;
-  font-family: 'Open Sans';
+  font-family: 'Roboto';
+  &:hover {
+    color: $gblue;
+    font-weight: 700;
+    cursor: pointer;
+  }
 }
 
 #gatherLiveData {
@@ -96,7 +101,7 @@ select {
   padding: 10px;
   border-radius: 10px;
   &:hover {
-    background-color: $lightblue;
+    background-color: $gblue;
   }
 }
 
@@ -104,7 +109,7 @@ select {
   height: auto;
   width: 120px;
   font-size: 12px;
-  color: $red;
+  color: $warningred;
   background-color: $background;
   padding: 10px;
   border-radius: 10px;
@@ -147,6 +152,6 @@ select {
   &:hover{
     cursor: pointer;
     box-shadow: $boxshadow3;
-    color: $lightblue;
+    color: $gblue;
   }
 }

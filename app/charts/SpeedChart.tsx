@@ -22,6 +22,9 @@ const SpeedChart = React.memo(() => {
             y: yAxis,
             type: 'scatter',
             mode: 'lines+markers',
+            marker: {
+              color: '#3788fc'
+            },
           },
         ]}
         layout={{
@@ -29,9 +32,9 @@ const SpeedChart = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           xaxis: {
             title: 'Time (EST)',

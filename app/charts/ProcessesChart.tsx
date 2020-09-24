@@ -18,7 +18,7 @@ const ProcessesChart = React.memo(() => {
             mode: 'markers',
             name: 'Running Processes',
             marker: {
-              color: '#00d3f2',
+              color: '#3788fc',
               size: 3,
             },
           },
@@ -28,7 +28,7 @@ const ProcessesChart = React.memo(() => {
             mode: 'markers',
             name: 'Blocked Processes',
             marker: {
-              color: '#00eda0',
+              color: '#fc4039',
               size: 3,
             },
           },
@@ -38,7 +38,7 @@ const ProcessesChart = React.memo(() => {
             mode: 'markers',
             name: 'Sleeping Processes',
             marker: {
-              color: '#4a4eee',
+              color: '#4b54ea',
               size: 3,
             },
           },
@@ -48,9 +48,9 @@ const ProcessesChart = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -58,9 +58,14 @@ const ProcessesChart = React.memo(() => {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            y: -1.0,
+          font: {
+            size: 9
+          }
           },
           xaxis: {
             dtick: 10,
+            title: 'Time Elapsed (min)',
           },
           yaxis: {
             title: 'Number of Processes'

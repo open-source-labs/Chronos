@@ -21,7 +21,8 @@ let currentDatabaseType: string;
  */
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
-    console.log('electron/routes/data.ts, ipcMain.on(connect): 1 Attempting to connect to DB');
+    // console.log('electron/routes/data.ts, ipcMain.on(connect): 1 Attempting to connect to DB');
+    
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
     const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
@@ -30,13 +31,13 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     // We get index from sidebar container: which is the mapplication (DEMO)
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-    console.log('electron/routes/data.ts, ipcMain.on(connect): 2 pre-connect');
+    // console.log('electron/routes/data.ts, ipcMain.on(connect): 2 pre-connect');
 
     // Connect to the proper database
     if (databaseType === 'MongoDB') await connectMongo(index, URI);
     if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
 
-    console.log('electron/routes/data.ts, ipcMain.on(connect): 3 connected');
+    // console.log('electron/routes/data.ts, ipcMain.on(connect): 3 connected');
 
     // Currently set to a global variable
     currentDatabaseType = databaseType;
@@ -53,7 +54,8 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
  */
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
-    console.log('electron/routes/data.ts, ipcMain.on(servicesRequest): 4 Requesting application microservices');
+    // console.log('electron/routes/data.ts, ipcMain.on(servicesRequest): 4 Requesting application microservices');
+    
     let result: any;
 
     // Mongo Database
@@ -83,7 +85,8 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
   try {
-    console.log(`Requesting communication data`)
+    // console.log(`Requesting communication data`)
+    
     let result: any;
 
     // Mongo Database
@@ -115,7 +118,8 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
-    console.log(`Requesting microservice health for "${service}"`)
+    // console.log(`Requesting microservice health for "${service}"`)
+    
     let result: any;
 
     // Mongo Database
@@ -158,7 +162,8 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
  */
 ipcMain.on('dockerRequest', async (message, service) => {
   try {
-    console.log(`Requesting container information for "${service}"`)
+    // console.log(`Requesting container information for "${service}"`)
+    
     let result: any;
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {

@@ -7,20 +7,22 @@
 
   // Header
   .services-header {
+    color: #444d56;
     background-color: $grey;
     width: 100%;
     padding: 0 0 15px;
     text-align: center;
     margin-bottom: 30px;
     border-bottom: thin solid $grey;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 
     h2 {
       @include modalHeader();
       margin-top: 15px;
       margin-bottom: 5px;
       font-size: 26px;
+      font-weight: 300;
     }
   }
 
@@ -35,7 +37,7 @@
       font-size: 90%;
       text-decoration: none;
       border: 2px solid white;
-      border-radius: 8px;
+      border-radius: 3px;
       margin: 10px;
       padding: 12px;
       margin: 0 auto;
@@ -43,10 +45,10 @@
       color: rgb(31, 31, 31);
       transition: 0.1s;
       text-align: center;
-      font-weight: 700;
+      font-weight: 100;
       &:hover { 
         color: #fff;
-        background-color: $header;
+        background-color: $gblue;
       }
     }
   }
@@ -58,4 +60,7 @@
 
 #loadingMessage {
   font-size: 14px;
+  font-weight: 100;
+  color: #444d56;
+  border-radius: 3px;
 }
