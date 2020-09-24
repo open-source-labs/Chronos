@@ -108,7 +108,6 @@ describe('<HealthContext />', () => {
   it("should emit the 'healthRequest' event and listen on 'healthResponse' when invoking fetchHealthData", () => {
     const button = wrapper.find('#fetchHealthData');
     button.simulate('click');
-    // expect(ipcRenderer.removeAllListeners).toHaveBeenCalledWith('healthResponse');
     expect(ipcRenderer.send).toHaveBeenCalledWith('healthRequest', 'books');
     expect(ipcRenderer.on).toHaveBeenCalledWith('healthResponse', expect.any(Function));
   });
