@@ -5,7 +5,9 @@ const { ipcRenderer } = require('electron');
 import HealthContextProvider, { HealthContext } from '../../../app/context/HealthContext';
 
 // Setup electron mock
-jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }));
+jest.mock('electron', () => ({
+  ipcRenderer: { on: jest.fn(), send: jest.fn(), removeAllListeners: jest.fn() },
+}));
 
 describe('<HealthContext />', () => {
   let wrapper: any;
@@ -106,6 +108,7 @@ describe('<HealthContext />', () => {
   it("should emit the 'healthRequest' event and listen on 'healthResponse' when invoking fetchHealthData", () => {
     const button = wrapper.find('#fetchHealthData');
     button.simulate('click');
+    // expect(ipcRenderer.removeAllListeners).toHaveBeenCalledWith('healthResponse');
     expect(ipcRenderer.send).toHaveBeenCalledWith('healthRequest', 'books');
     expect(ipcRenderer.on).toHaveBeenCalledWith('healthResponse', expect.any(Function));
   });
