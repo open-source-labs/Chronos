@@ -40,8 +40,8 @@ import { ApplicationContext } from '../context/ApplicationContext';
 
 // TYPESCRIPT
 interface StyleProps {
-  root: BaseCSSProperties,
-};
+  root: BaseCSSProperties;
+}
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
@@ -93,7 +93,8 @@ const Occupied = React.memo(() => {
       backgroundColor: '#ffffff',
       borderRadius: 3,
       border: '0',
-      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
+      boxShadow:
+        '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
         backgroundColor: `#3788fc`,
         color: '#ffffff',
@@ -136,8 +137,12 @@ const Occupied = React.memo(() => {
       <div className="dashboardArea">
         <header className="mainHeader">
           <section className="header" id="leftHeader">
-            <span><ListIcon className="icon" id="listIcon" /></span>
-            <span><p id="dashboard">Dashboard</p></span>
+            <span>
+              <ListIcon className="icon" id="listIcon" />
+            </span>
+            <span>
+              <p id="dashboard">Dashboard</p>
+            </span>
           </section>
           <section className="header" id="rightHeader">
             <form className="form">

@@ -57,7 +57,6 @@ app.get('/customers/getbooksinfo', controller.getbooksinfo, (req, res) => {
 
 // Global error handler
 app.use((error, req, res, next) => {
-  //  console.log(err.stack);
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,
@@ -68,12 +67,6 @@ app.use((error, req, res, next) => {
 
   res.status(errorObj.status).json(errorObj.message);
 });
-
-// app.listen(process.env.CUSTOMERS_PORT, () => {
-//   console.log(
-//     `Customer server running on port ${process.env.CUSTOMERS_PORT}...`
-//   );
-// });
 
 app.listen(5555, () => {
   console.log(`Customer server running on port 5555...`);

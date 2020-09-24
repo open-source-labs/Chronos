@@ -85,7 +85,7 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
           &emsp;Settings
         </Link>
         <Link className="sidebar-link" to="/" id="logout">
-          <HomeSharpIcon style={{
+            <ExitToAppIcon style={{
             WebkitBoxSizing: 'content-box',
             boxShadow: 'none',
             width: '35px',
