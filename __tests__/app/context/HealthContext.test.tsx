@@ -5,7 +5,9 @@ const { ipcRenderer } = require('electron');
 import HealthContextProvider, { HealthContext } from '../../../app/context/HealthContext';
 
 // Setup electron mock
-jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }));
+jest.mock('electron', () => ({
+  ipcRenderer: { on: jest.fn(), send: jest.fn(), removeAllListeners: jest.fn() },
+}));
 
 describe('<HealthContext />', () => {
   let wrapper: any;

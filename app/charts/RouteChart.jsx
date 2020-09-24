@@ -25,13 +25,13 @@ const RouteChart = React.memo(() => {
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
           microservice: element.microservice,
-          time: element.time
+          time: element.time,
         });
       } else {
         resObj[element.correlatingid] = [
           {
             microservice: element.microservice,
-            time: element.time
+            time: element.time,
           },
         ];
       }
@@ -42,13 +42,13 @@ const RouteChart = React.memo(() => {
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
           microservice,
-          time
+          time,
         });
       } else {
         resObj[element.correlatingid] = [
           {
             microservice,
-            time
+            time,
           },
         ];
       }
@@ -75,17 +75,24 @@ const RouteChart = React.memo(() => {
   }));
   const classes = useStyles({});
 
-
-
   // ======Graphs logic =======//
   const nodeListObj = {};
   const edgeListObj = {};
   for (let route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
       // check if node exists if not then add node
-      let id = route[i].microservice
+      let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { id: id, label: id, color: { background: '#24d2f1', border: 'white', hover: { background: '#4d55ec', border: 'white' } }, shape: 'circle' }
+        nodeListObj[id] = {
+          id: id,
+          label: id,
+          color: {
+            background: '#24d2f1',
+            border: 'white',
+            hover: { background: '#4d55ec', border: 'white' },
+          },
+          shape: 'circle',
+        };
       }
       // add edge from node to node (repeat til end)
       if (i !== 0) {
@@ -113,40 +120,52 @@ const RouteChart = React.memo(() => {
 
   const graph = {
     nodes: nodeList,
-    edges: edgeList
+    edges: edgeList,
   };
   const options = {
     height: '300px',
     width: '300px',
     layout: {
-      hierarchical: false
+      hierarchical: false,
     },
     edges: {
-      color: "#000000",
+      color: '#000000',
       physics: true,
       smooth: {
-        type: "curvedCCW",
-        forceDirection: "none",
-        roundness: 0.3
-      }
+        type: 'curvedCCW',
+        forceDirection: 'none',
+        roundness: 0.3,
+      },
     },
   };
 
   const events = {
     select: function (event) {
       var { nodes, edges } = event;
-      console.log("Selected nodes:");
+      console.log('Selected nodes:');
       console.log(nodes);
-      console.log("Selected edges:");
+      console.log('Selected edges:');
       console.log(edges);
-    }
+    },
   };
 
-
   return (
-    <div className='traceContainer'>
-      <span id='tracesTitle'>Route Traces</span>
-      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontSize: '2px', color: '#555555', fontFamily: 'Open Sans', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
+    <div className="traceContainer">
+      <span id="tracesTitle">Route Traces</span>
+      <Graph
+        className={classes.paper}
+        graph={graph}
+        options={options}
+        events={events}
+        style={{
+          fontSize: '2px',
+          color: '#555555',
+          fontFamily: 'Open Sans',
+          boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)',
+          backgroundColor: 'white',
+          borderRadius: '3px',
+        }}
+      />
     </div>
   );
 });
