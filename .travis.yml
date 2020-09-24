@@ -2,16 +2,14 @@ language: node_js
 node_js:
   - 'stable'
 os: osx
-git:
-  quiet: true
 jobs:
-  allow_failures:
-    - os: osx
+  # allow_failures:
+  #   - os: osx
   fast_finish: true
 install:
   - npm install
 script:
-  npm test:app
+  npm run test:app
   # safelist
   # branches:
   #   only:
