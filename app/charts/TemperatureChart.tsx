@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import moment from 'moment';
 import { HealthContext } from '../context/HealthContext';
 
-const TemperatureChart = () => {
+const TemperatureChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const { time, cputemp } = healthData;
 
@@ -23,7 +23,7 @@ const TemperatureChart = () => {
             type: 'scatter',
             fill: 'tozeroy',
             mode: 'lines',
-            fillcolor: 'rgb(250, 26, 88)',
+            fillcolor: '#4b54ea',
             x: timeArr,
             y: yAxis,
             name: 'CPU Temperature',
@@ -33,12 +33,12 @@ const TemperatureChart = () => {
         config={{ responsive: true }}
         layout={{
           title: 'CPU Temperature',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            color: '#444d56',
+            size: 11.5,
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -49,9 +49,9 @@ const TemperatureChart = () => {
             y: 5,
           },
           xaxis: {
-            title: month,
+            title: 'Time (EST)',
             tickmode: 'linear',
-            tickformat: '%d %B (%a)<br>%Y',
+            tickformat: '%H %M %p',
             mirror: false,
             ticks: 'outside',
             showline: true,
@@ -69,6 +69,6 @@ const TemperatureChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default TemperatureChart;

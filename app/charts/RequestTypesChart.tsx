@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
+import '../stylesheets/constants.scss';
 
-const RequestTypesChart: React.FC = () => {
+const RequestTypesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
 
   interface IObject {
@@ -44,8 +45,9 @@ const RequestTypesChart: React.FC = () => {
             type: 'pie',
             textposition: 'inside',
             marker: {
-              colors: ['#fa1a58', '#4a4eee', '#00eda0', '#00d3f2', '#73605b', '#d09683'],
+              colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
             },
+            
           },
         ]}
         config={{
@@ -54,20 +56,22 @@ const RequestTypesChart: React.FC = () => {
         layout={{
           title: {
             text: 'Request Types',
-            font: { size: 22 },
           },
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            color: '#444d56',
+            size: 11.5,
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            font: {
+              size: 7,
+            }
           },
         }}
       />
@@ -75,6 +79,6 @@ const RequestTypesChart: React.FC = () => {
   };
 
   return <div className="chart">{createRequestChart()}</div>;
-};
+});
 
 export default RequestTypesChart;

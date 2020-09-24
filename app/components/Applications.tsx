@@ -13,11 +13,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { DashboardContext } from '../context/DashboardContext';
 import ServicesModal from '../modals/ServicesModal';
-import '../stylesheets/Applications.css';
+import '../stylesheets/Applications.scss';
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
-const Applications = () => {
+const Applications: React.FC = React.memo((props) => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
@@ -46,49 +46,51 @@ const Applications = () => {
   };
 
   const useStyles = makeStyles(theme => ({
+    // cards: myPostgres, myMongo, ToddDB
     paper: {
-      height: 340,
+      height: 280,
+      width: 280,
       textAlign: 'center',
-      color: 'rgba(33, 34, 41, 1.2)',
       whiteSpace: 'nowrap',
-      backgroundColor: 'rgba(33, 34, 41, 0.2)',
-      border: '3px ridge #808080',
-      boxShadow: '0 10px 10px rgba(0,0,0,0.5)',
+      backgroundColor: '#ffffff',
+      borderRadius: 3,
+      border: '0',
+      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        color: 'white',
-        background: 'rgba(33, 34, 41, 1.2)',
+        backgroundColor: `#3788fc`,
+      },
+      '&:active': {
+        backgroundColor: `#3788fc`,
       },
     },
-    hover: {
+    iconbutton: {
       position: 'relative',
       bottom: 20,
-      right: 40,
+      right: 47,
       boxShadow: 'none',
-      '&:hover, &.Mui-focusVisible': { color: 'red' },
-    },
-    btnStyle: {
-      position: 'relative',
-      top: 50,
-      margin: '0 auto',
-      color: 'rgb(255, 243, 72)',
-      backgroundColor: 'grey',
+      '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
+      backgroundColor: 'transparent',
     },
     fontStyles: {
-      fontSize: '3rem',
+      color: '#444d56',
+      fontSize: '22px',
       [theme.breakpoints.up('lg')]: {
-        fontSize: '2.75rem',
+        fontSize: '22px',
+        fontFamily: 'Roboto',
+        fontWeight: 100,
       },
     },
   }));
 
   const classes = useStyles();
-
+  
   return (
     <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
         <Grid item lg={4} md={6} sm={12} key={i}>
           <div id="card-hover">
             <Card
+              // key={`card-${i}`}
               className={classes.paper}
               variant="outlined"
               onClick={event => handleClick(event, app[0], i)}
@@ -97,7 +99,7 @@ const Applications = () => {
                 avatar={
                   <IconButton
                     ref={element => (delRef.current[i] = element)}
-                    className={classes.hover}
+                    className={classes.iconbutton}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, app[0], i)}
                   >
@@ -117,6 +119,6 @@ const Applications = () => {
       </Modal>
     </>
   );
-};
+});
 
 export default Applications;

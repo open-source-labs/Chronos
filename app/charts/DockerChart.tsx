@@ -22,7 +22,7 @@ interface IContainer {
  * Table that displays real-time Docker container information using the
  * latest data point available ???
  */
-const DockerStatsChart = () => {
+const DockerStatsChart = React.memo(() => {
   const { dockerData } = useContext(DockerContext);
 
   const {
@@ -57,6 +57,6 @@ const DockerStatsChart = () => {
       <span>Restart Count: {restartcount}</span>
     </div>
   ) : null;
-};
+});
 
 export default DockerStatsChart;

@@ -3,17 +3,15 @@ import { Link } from 'react-router-dom';
 
 import '../stylesheets/Home.scss';
 
-const Home = () => (
-  <div className="home">
-    <div className="pangolin-container">
-      <img src={'../assets/chronos-v4-pangolin.png'} alt="Chronos logo" />
+const Home = React.memo(function Home(props) {
+  return (
+    <div className="home">
+      <p className="welcomeMessage">Your all-in-one application monitoring tool</p>
+      <Link className="link" to="/applications">
+        Get Started
+      </Link>
     </div>
-    <h1 id="welcome">Welcome to Chronos</h1>
-    <p>Your all-in-one application monitoring tool.</p>
-    <Link className="link" to="/applications">
-      Get Started
-    </Link>
-  </div>
-);
+  );
+});
 
 export default Home;

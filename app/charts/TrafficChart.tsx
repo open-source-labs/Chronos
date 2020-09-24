@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
 
-const TrafficChart = () => {
+const TrafficChart = React.memo(() => {
   const { commsData } = useContext(CommsContext);
   const microserviceCount: { [key: string]: number } = {};
 
@@ -32,20 +32,20 @@ const TrafficChart = () => {
             x: [...xAxis],
             y: [...serverPings, 0, yAxisHeadRoom],
             fill: 'tozeroy',
-            marker: { color: '#5C80FF' },
+            marker: { color: '#fc4039' },
             mode: 'none',
             name: 'Times Server Pinged',
-            showlegend: true,
+            showlegend: false,
           },
         ]}
         layout={{
           title: 'Server Traffic',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            color: '#444d56',
+            size: 11.5,
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -55,11 +55,15 @@ const TrafficChart = () => {
             x: 0.5,
             y: 5,
           },
-          yaxis: { rangemode: 'nonnegative' },
+          yaxis: { 
+            rangemode: 'nonnegative',
+            title: 'Times Server Pinged',
+            showline: true,
+          },
         }}
       />
     </div>
   );
-};
+});
 
 export default TrafficChart;

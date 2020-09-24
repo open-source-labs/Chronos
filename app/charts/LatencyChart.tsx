@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-const LatencyChart = () => {
+const LatencyChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
 
   const createChart = () => {
@@ -16,17 +16,17 @@ const LatencyChart = () => {
             type: 'scattergl',
             y: yAxis,
             mode: 'lines',
-            marker: { color: '#daaa17' },
+            marker: { color: '#fc4039' },
           },
         ]}
         layout={{
           title: 'Latency',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            color: '#444d56',
+            size: 11.5,
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -38,9 +38,10 @@ const LatencyChart = () => {
             y: 5,
           },
           xaxis: {
+            title: 'Time Elapsed (min)',
             tickmode: 'linear',
             tick0: 0,
-            dtick: 5,
+            dtick: 10,
             rangemode: 'nonnegative',
             mirror: false,
             ticks: 'outside',
@@ -56,6 +57,6 @@ const LatencyChart = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default LatencyChart;

@@ -13,36 +13,27 @@ interface IService {
   microservice: string;
 }
 
-const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
+const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   const { fetchServicesNames, servicesData, setServicesData, connectToDB } = useContext(
     ApplicationContext
   );
 
   useEffect(() => {
-    connectToDB(i);
-    fetchServicesNames(app);
+    connectToDB(i, app);
+    // fetchServicesNames(app);
 
     return () => {
-      setServicesData([]);
+      // setServicesData([]);
     };
   }, [i]);
 
-  /**
-   * TEMPORARY fix to allow us to fetch service names
-   * AFTER we connect to the Mongo Database. This error does
-   * not occur with PostgreSQL databases.
-   *
-   * Just click on the whitespace of the modal to run another
-   * fetch request for service names
-   */
-  const fetchStuff = () => {
-    fetchServicesNames(app);
-  };
-
   return (
-    <div className="services-container" onClick={() => fetchStuff()}>
+    <div className="servicesContainer">
       {!servicesData.length ? (
-        <h2>Loading...</h2>
+        <div className="loadingMessageModal">
+          <h2 id="loadingMessage">Loading...</h2>
+        </div>
+        
       ) : (
         <>
           <div className="services-header">
@@ -63,6 +54,6 @@ const ServicesModal: React.SFC<ServicesModalProps> = ({ i, app }) => {
       )}
     </div>
   );
-};
+});
 
 export default ServicesModal;

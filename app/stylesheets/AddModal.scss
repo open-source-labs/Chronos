@@ -8,13 +8,17 @@
     width: 100%;
     padding: 20px 30px;
     text-align: center;
-    border-bottom: thin solid $lightgray;
-    background-color: $headergray;
+    border-bottom: thin solid $grey;
+    background-color: $grey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    color: $darkgrey;
 
     h2 {
       @include modalHeader();
+      font-size: 26px;
+      font-weight: 300;
+      color: $darkgrey;
     }
   }
 
@@ -23,6 +27,9 @@
     @include centerWithFlex($direction: column);
     padding: 20px 30px;
     width: 100%;
+    font-size: 12px;
+    font-family: 'Roboto';
+    color: $darkgrey;
 
     p,
     span {
@@ -31,7 +38,7 @@
 
     span {
       font-weight: 300;
-      font-size: 80%;
+      font-size: 90%;
     }
 
     p {
@@ -58,16 +65,19 @@
       select,
       input,
       textarea {
-        font-size: 100%;
+        font-family: 'Roboto';
+        font-size: 14px;
         padding: 5px;
-        border: thin solid $lightgray;
+        border: thin solid $grey;
         flex: 1;
         border-radius: 3px;
+        color: $darkgrey;
       }
 
       // Select field
       select {
         cursor: pointer;
+        font-family: 'Roboto';
         height: 30px;
         margin: 0;
         appearance: none;
@@ -81,6 +91,7 @@
       // Text input
       input {
         height: 30px;
+        color: $darkgrey;
       }
 
       // Textarea
@@ -98,22 +109,23 @@
 
     /* Submit button */
     button {
+      font-family: 'Roboto';
+      font-size: 16px;
+      font-weight: 800;
       height: 40px;
-      font-size: 115%;
       width: 50%;
       color: #fff;
-      background-color: $sidebarblue;
+      background-color: $header;
       transition: 0.1s;
       margin: 20px 0;
       font-weight: 400;
       letter-spacing: 2px;
-      border: thin solid $sidebarblue;
+      border: none;
       padding: 4px;
       text-transform: uppercase;
 
       &:hover {
-        color: $sidebarblue;
-        background-color: lighten($sidebarblue, 65%);
+        background-color: $gblue;
       }
     }
   }

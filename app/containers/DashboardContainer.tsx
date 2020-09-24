@@ -9,7 +9,7 @@ import DashboardContextProvider from '../context/DashboardContext';
 import DockerContextProvider from '../context/DockerContext';
 import '../stylesheets/Dashboard.scss';
 
-const DashboardContainer = () => (
+const DashboardContainer = React.memo(() => (
   <Router>
     <div className="dash">
       <ApplicationContextProvider>
@@ -26,6 +26,6 @@ const DashboardContainer = () => (
       </ApplicationContextProvider>
     </div>
   </Router>
-);
+));
 
 export default DashboardContainer;

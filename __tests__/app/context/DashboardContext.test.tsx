@@ -59,7 +59,7 @@ describe('<DashboardContext />', () => {
     button.simulate('click');
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith(
       'addApp',
-      JSON.stringify([name, database, URI])
+      JSON.stringify([name, database, URI, null])
     );
   });
 
