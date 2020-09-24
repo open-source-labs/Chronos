@@ -43,8 +43,8 @@ const DockerContextProvider: React.FC = React.memo(({ children }) => {
       
       // Parse result
       if (tryParseJSON(data)) result = JSON.parse(data);
-
-      if (result.length) console.log('Number of data points (docker):', result.length);
+      // if (result.length) console.log('Number of data points (docker):', result.length);
+      
       // Display single data point
       const newDockerData = result[0] || {};
       setDockerData(newDockerData);

@@ -83,8 +83,6 @@ const Applications: React.FC = React.memo((props) => {
   }));
 
   const classes = useStyles();
-
-  console.log('Applications.tsx: applications', applications)
   
   return (
     <>

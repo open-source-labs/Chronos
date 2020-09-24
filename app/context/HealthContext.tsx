@@ -36,11 +36,11 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
       let result: any;
       // Parse result
       if (tryParseJSON(data)) result = JSON.parse(data); // doesn't need to be parsed?
-      if (result) console.log('HealthContext.tsx: JSON.parse(data): ', result);
-      if (result !== undefined) {
-        if (result.length !== undefined)
-          console.log('Number of data points (health):', result.length);
-      }
+      // if (result) console.log('HealthContext.tsx: JSON.parse(data): ', result);
+      // if (result !== undefined) {
+      //   if (result.length !== undefined) console.log('Number of data points (health):', result.length);
+      // }
+      
       // Update context local state
       if (result && result.length) setHealthData(parseHealthData(result));
     });

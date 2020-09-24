@@ -38,14 +38,13 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
   const connectToDB = useCallback((index: number, application: string) => {
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', index);
-    console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
+    // console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
     
     // Response
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       // Parse JSON response
       const result = data;
-      if (result.length)
-        console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ${result}`);
+      // if (result) console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ${result}`);
 
       fetchServicesNames(application);
     });
@@ -64,7 +63,7 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
       let result: any;
       // Parse JSON response
       if (tryParseJSON(data)) result = JSON.parse(data);
-      if (result.length) console.log('Number of data points (service):', result.length);
+      // if (result.length) console.log('Number of data points (service):', result.length);
 
       // Set local state
       setServicesData(result);

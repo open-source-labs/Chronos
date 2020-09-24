@@ -157,11 +157,7 @@ const RouteChart = React.memo(() => {
 
   const events = {
     select: function (event) {
-      var { nodes, edges } = event;
-      console.log('Selected nodes:');
-      console.log(nodes);
-      console.log('Selected edges:');
-      console.log(edges);
+      let { nodes, edges } = event;
     },
   };
 
