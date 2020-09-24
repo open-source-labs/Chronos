@@ -1,7 +1,8 @@
 @import './constants.scss';
 
 .main-container {
-  background-color: $grey;
+  background-image: url('../assets/mountain_longer.png');
+  background-size: contain;
   flex: 1;
   min-height: 100vh;
   @include centerWithFlex(space-between);

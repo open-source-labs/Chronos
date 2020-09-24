@@ -15,6 +15,7 @@ export const ApplicationContext = React.createContext<any>(null);
 const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
+  const [mode, setMode] = useState<string>('');
   
   function tryParseJSON(jsonString: any) {
     try {
@@ -72,9 +73,16 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
     });
   }, []);
 
+  /**
+   * Change from light to dark mode
+   */
+  const changeMode = useCallback(() => {
+
+  }, []);
+
   return (
     <ApplicationContext.Provider
-      value={{ connectToDB, fetchServicesNames, setServicesData, servicesData, app }}
+      value={{ connectToDB, fetchServicesNames, setServicesData, changeMode, servicesData, app }}
     >
       {children}
     </ApplicationContext.Provider>

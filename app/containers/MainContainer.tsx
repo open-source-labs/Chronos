@@ -8,10 +8,16 @@ import Contact from '../components/Contact';
 import Settings from '../components/Settings';
 import Copyright from '../components/Copyright';
 import Occupied from '../components/Occupied';
+// import Occupied from '../components/Occupied_darkmode';
 import GraphsContainer from './GraphsContainer';
 import '../stylesheets/MainContainer.scss';
+// import '../stylesheets/MainContainer_darkmode.scss';
 
-const MainContainer = React.memo(() => (
+import ApplicationContextProvider from '../context/ApplicationContext';
+
+const MainContainer = React.memo(() => {
+  
+  return (
   <div className="main-container">
     <div className="main-routes">
       <Switch>
@@ -28,6 +34,6 @@ const MainContainer = React.memo(() => (
       <Copyright />
     </div>
   </div>
-));
+)});
 
 export default MainContainer;
