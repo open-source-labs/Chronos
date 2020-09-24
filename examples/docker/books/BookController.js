@@ -35,7 +35,7 @@ BookController.getBooks = (req, res, next) => {
       return res.status(404).json(err);
     }
     res.locals.getBooks = result;
-    console.log('Book retrieval was successful', res.locals.getBooks);
+    // console.log('Book retrieval was successful', res.locals.getBooks);
     return next();
   });
 };
@@ -55,7 +55,7 @@ BookController.deleteBook = (req, res, next) => {
 
 //  This controller gets order info from the order application
 BookController.getorderinfo = (req, res, next) => {
-  console.log('req.headers (in bookController.js):', req.headers);
+  // console.log('req.headers (in bookController.js):', req.headers);
   fetch(`http://orders:7777/orders/getorders`, {
     method: 'GET',
     headers: {
