@@ -1,3 +1,0 @@
-xdescribe('<Empty />', () => {
-  it('should');
-});
