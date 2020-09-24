@@ -1,10 +1,20 @@
 language: node_js
-node_js: 
-  - "stable"
-os:
-  osx
-# jobs:
-#   allow_failures:
-#     - os: osx
+node_js:
+  - 'stable'
+os: osx
+git:
+  quiet: true
+jobs:
+  allow_failures:
+    - os: osx
+  fast_finish: true
 install:
   - npm install
+script:
+  npm test:app
+  # safelist
+  # branches:
+  #   only:
+  #     - master
+  #     - middleware
+  #     - chronosWebsite
