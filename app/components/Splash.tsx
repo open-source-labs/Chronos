@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import '../stylesheets/Splash.css';
+import '../stylesheets/Splash.scss';
 
 interface SplashProps {
   setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Splash: React.FC<SplashProps> = ({ setFirstVisit }) => {
+const Splash: React.SFC<SplashProps> = React.memo( function Splash ({ setFirstVisit }) {
   // Display splash for 3 seconds
   useEffect(() => {
     setTimeout(() => setFirstVisit(false), 3000);
@@ -13,10 +13,9 @@ const Splash: React.FC<SplashProps> = ({ setFirstVisit }) => {
 
   return (
     <div id="splash">
-      <img src={'../assets/icon.png'} alt="Chronos Logo" />
-      <span>chronos</span>
+      <img id="splashLogo" src={'../assets/logo.svg'} alt="Chronos" />
     </div>
   );
-};
+});
 
 export default Splash;

@@ -13,7 +13,7 @@ interface IObj {
   time: string;
 }
 
-const ResponseCodesChart: React.FC = () => {
+const ResponseCodesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
@@ -51,17 +51,17 @@ const ResponseCodesChart: React.FC = () => {
           {
             values: Object.values(responseCodes),
             labels: [
-              'Informational 1xx',
-              'Successful 2xx',
-              'Redirectional 3xx',
-              'Client Error 4xx',
-              'Server Error 5xx',
+              'Informational (100-199)',
+              'Success (200-299)',
+              'Redirects (300-399)',
+              'Client errors (400-499)',
+              'Server errors (500-599)',
             ],
             type: 'pie',
             textposition: 'inside',
             domain: { y: [0, 2] },
             marker: {
-              colors: ['#fa1a58', '#f3f5fe', '#00eda0', '#00fff2', '#73605b'],
+              colors: ['#fc4039', '#4b54ea', '#3788fc', '#32b44f', '#9c27b0'],
             },
           },
         ]}
@@ -71,20 +71,22 @@ const ResponseCodesChart: React.FC = () => {
         layout={{
           title: {
             text: 'Response Status Codes',
-            font: { size: 22 },
           },
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            color: '#444d56',
+            size: 11.5,
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           legend: {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            font: {
+              size: 7,
+            }
           },
         }}
       />
@@ -92,6 +94,6 @@ const ResponseCodesChart: React.FC = () => {
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default ResponseCodesChart;

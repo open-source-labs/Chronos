@@ -1,0 +1,24 @@
+{
+  "name": "dummy",
+  "version": "1.0.0",
+  "description": "![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png) ## Microservices Architecture Microservices architecture for testing [Chronos](https://github.com/oslabs-beta/Chronos), a microservice communication and health visualizer.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": " (cd books && npm install) & (cd customers && npm install) & (cd orders && npm install) & (cd 'reverse proxy' && npm install)",
+    "clean": " (cd books && npm run clean) & (cd customers && npm run clean) & (cd orders && npm run clean) & (cd 'reverse proxy' && npm run clean)",
+    "dev": " (cd books && npm start) & (cd customers && npm start) & (cd orders && npm start) & (cd 'reverse proxy' && npm start)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patpat20/Chronos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patpat20/Chronos/issues"
+  },
+  "homepage": "https://github.com/patpat20/Chronos#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}

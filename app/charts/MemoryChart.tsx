@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 
-const MemoryChart = () => {
+const MemoryChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
     const free: number[] = healthData.freememory;
@@ -15,7 +15,7 @@ const MemoryChart = () => {
           {
             type: 'scattergl',
             fill: 'tonexty',
-            fillcolor: 'rgb(0, 237, 160)',
+            fillcolor: '#fc4039',
             mode: 'none',
             y: free,
             name: 'Free Memory',
@@ -23,7 +23,7 @@ const MemoryChart = () => {
           {
             type: 'scatter',
             fill: 'tonexty',
-            fillcolor: 'rgba(0, 237, 160, .4)',
+            fillcolor: '#4b54ea',
             mode: 'none',
             y: used,
             name: 'Used Memory',
@@ -31,7 +31,7 @@ const MemoryChart = () => {
           {
             type: 'scatter',
             fill: 'tonexty',
-            fillcolor: 'rgba(74, 78, 238, .5)',
+            fillcolor: '#3788fc',
             mode: 'none',
             y: active,
             name: 'Active Memory',
@@ -39,12 +39,12 @@ const MemoryChart = () => {
         ]}
         layout={{
           title: 'Memory Traces',
-          height: 400,
-          width: 400,
+          height: 300,
+          width: 300,
           font: {
-            color: 'black',
-            size: 15,
-            family: 'Nunito sans, sans serif',
+            color: '#444d56',
+            size: 11.5,
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -52,18 +52,26 @@ const MemoryChart = () => {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
+            y: -1.0,
+            font: {
+              size: 9
+            }
           },
           xaxis: {
             tickmode: 'linear',
             tick0: 0,
-            dtick: 5,
+            dtick: 10,
+            title: 'Time Elapsed (min)',
           },
+          yaxis: {
+            title: 'Bytes'
+          }
         }}
       />
     );
   };
 
   return <div className="chart">{createChart()}</div>;
-};
+});
 
 export default MemoryChart;

@@ -14,7 +14,7 @@ import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
-// import RouteTrace from '../charts/RouteTrace';
+import RouteChart from '../charts/RouteChart';
 import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
@@ -31,8 +31,8 @@ export interface GraphsContainerProps {
   };
 }
 
-const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
-  const { app, service } = useParams();
+const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function GraphsContainer (props) {
+  const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
@@ -73,20 +73,21 @@ const GraphsContainer: React.SFC<GraphsContainerProps> = () => {
             <RequestTypesChart />
             <ResponseCodesChart />
             <TrafficChart />
+            <RouteChart />
           </div>
         ) : (
-          <div className="graphs">
-            <SpeedChart />
-            <TemperatureChart />
-            <LatencyChart />
-            <MemoryChart />
-            <ProcessesChart />
-            <DockerChart />
-          </div>
-        )}
+            <div className="graphs">
+              <SpeedChart />
+              <TemperatureChart />
+              <LatencyChart />
+              <MemoryChart />
+              <ProcessesChart />
+              <DockerChart />
+            </div>
+          )}
       </div>
     </>
   );
-};
+});
 
 export default GraphsContainer;

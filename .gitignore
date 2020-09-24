@@ -1,8 +1,8 @@
 node_modules
 .eslintrc.js
 .DS_Store
-user/settings.json
 dist
 build
 coverage
 __tests__/**/__snapshots__
+release-builds

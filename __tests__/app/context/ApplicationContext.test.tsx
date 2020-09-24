@@ -7,7 +7,9 @@ import ApplicationContextProvider, {
 } from '../../../app/context/ApplicationContext';
 
 // Setup mock ipc processes
-jest.mock('electron', () => ({ ipcRenderer: { on: jest.fn(), send: jest.fn() } }));
+jest.mock('electron', () => ({
+  ipcRenderer: { on: jest.fn(), send: jest.fn(), removeAllListeners: jest.fn() },
+}));
 
 describe('<ApplicationContext />', () => {
   let wrapper: any;

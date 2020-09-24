@@ -1,25 +1,39 @@
 @import './constants.scss';
 
 .home {
-  background-color: #f2f2f2;
-  height: 100%;
+  background-image: url('../assets/mountain_longer.png');
+  background-size: contain;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
   flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  position: absolute;
+  margin-left: 50px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+  animation: fadeIn ease 2s;
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
+  -o-animation: fadeIn ease 2s;
+  -ms-animation: fadeIn ease 2s;
 
-  .pangolin-container {
+  .logo-container {
     height: auto;
     width: 40%;
     max-width: 650px;
 
     img {
       width: 100%;
-      animation: twirl 20s infinite linear;
+      // animation: twirl 20s infinite linear;
       transition: 0.3s ease-in;
 
       &:hover {
-        filter: brightness(0.9);
+        filter: brightness(0.7);
       }
     }
   }
@@ -31,6 +45,7 @@
 
   p {
     margin: 15px 0;
+    color: white;
   }
 
   // Get Started Button
@@ -40,18 +55,42 @@
     padding: 10px 15px;
     letter-spacing: 0.5px;
     text-decoration: none;
-    border: thin solid $sidebarblue;
     border-radius: 30px;
-    background-color: $sidebarblue;
+    background-color: $navy;
     color: #fff;
     @include centerWithFlex();
-    transition: 0.1s;
-    animation: glow linear 2s infinite;
+    transition: 1s;
+    animation: glow linear 4s infinite;
 
     &:hover {
-      background-color: $brandgold;
-      color: #333;
+      background-color: $hover;
+      opacity: 0.85;
       animation: none;
     }
   }
+}
+
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
 }
