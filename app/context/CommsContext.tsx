@@ -47,7 +47,7 @@ const CommsContextProvider: React.SFC = React.memo(({ children }) => {
         let result: any;
         // Store resulting data in local state
         if (tryParseJSON(data)) result = JSON.parse(data);
-        if (result.length) console.log('Number of data points (comms):', result.length);
+        // if (result.length) console.log('Number of data points (comms):', result.length);
         setCommsData(result);
       });
     }

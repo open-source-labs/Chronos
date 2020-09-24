@@ -46,23 +46,24 @@ const Applications: React.FC = React.memo((props) => {
   };
 
   const useStyles = makeStyles(theme => ({
-    // card: myPostgres, myMongo, ToddDB buttons
+    // cards: myPostgres, myMongo, ToddDB
     paper: {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: 'rgba(33, 34, 41, 1.2)',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
-      borderRadius: 8,
+      borderRadius: 3,
       border: '0',
       boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: `#ccd8e1`,
-        color: '#ffffff',
+        backgroundColor: `#3788fc`,
+      },
+      '&:active': {
+        backgroundColor: `#3788fc`,
       },
     },
-    hover: {
+    iconbutton: {
       position: 'relative',
       bottom: 20,
       right: 47,
@@ -70,30 +71,19 @@ const Applications: React.FC = React.memo((props) => {
       '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
       backgroundColor: 'transparent',
     },
-    btnStyle: {
-      position: 'relative',
-      top: 50,
-      margin: '0 auto',
-      color: '#eeeeee',
-      backgroundColor: '#ccd8e1',
-      opacity: 1,
-      '&:hover': {
-        color: '#ffffff',
-        backgroundColor: 'transparent'
-      }
-    },
     fontStyles: {
-      fontSize: '16px',
+      color: '#444d56',
+      fontSize: '22px',
       [theme.breakpoints.up('lg')]: {
-        fontSize: '18px',
-        // MAIN PAGE SQUARE BUTTON FONTS
-        fontFamily: 'Open Sans'
+        fontSize: '22px',
+        fontFamily: 'Roboto',
+        fontWeight: 100,
       },
     },
   }));
 
   const classes = useStyles();
-
+  
   return (
     <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
@@ -109,7 +99,7 @@ const Applications: React.FC = React.memo((props) => {
                 avatar={
                   <IconButton
                     ref={element => (delRef.current[i] = element)}
-                    className={classes.hover}
+                    className={classes.iconbutton}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, app[0], i)}
                   >

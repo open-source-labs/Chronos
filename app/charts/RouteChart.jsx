@@ -65,7 +65,7 @@ const RouteChart = React.memo(() => {
       height: 300,
       width: 300,
       textAlign: 'center',
-      color: '#888888',
+      color: '#444d56',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
       borderRadius: 3,
@@ -83,16 +83,10 @@ const RouteChart = React.memo(() => {
       // check if node exists if not then add node
       let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = {
-          id: id,
-          label: id,
-          color: {
-            background: '#24d2f1',
-            border: 'white',
-            hover: { background: '#4d55ec', border: 'white' },
-          },
-          shape: 'circle',
-        };
+        nodeListObj[id] = { 
+          id: id, 
+          label: id
+        }
       }
       // add edge from node to node (repeat til end)
       if (i !== 0) {
@@ -129,43 +123,48 @@ const RouteChart = React.memo(() => {
       hierarchical: false,
     },
     edges: {
-      color: '#000000',
+      color: "#444d56",
       physics: true,
       smooth: {
-        type: 'curvedCCW',
-        forceDirection: 'none',
-        roundness: 0.3,
+        type: "curvedCCW",
+        forceDirection: "none",
+        roundness: 0.3
+      },
+      font: {
+        color: '#444d56',
+        size: 9,
       },
     },
-  };
+    nodes: {
+      borderWidth: 0,
+      color: {
+        background: '#3788fc',
+        hover: {
+          background: '#febc2c',
+        },
+        highlight: {
+          background: '#fc4039',
+        }
+      },
+      shape: 'circle',
+      font: {
+        color: '#ffffff',
+        size: 10,
+        face: 'roboto'
+      },
+    }
+  }
 
   const events = {
     select: function (event) {
-      var { nodes, edges } = event;
-      console.log('Selected nodes:');
-      console.log(nodes);
-      console.log('Selected edges:');
-      console.log(edges);
+      let { nodes, edges } = event;
     },
   };
 
   return (
-    <div className="traceContainer">
-      <span id="tracesTitle">Route Traces</span>
-      <Graph
-        className={classes.paper}
-        graph={graph}
-        options={options}
-        events={events}
-        style={{
-          fontSize: '2px',
-          color: '#555555',
-          fontFamily: 'Open Sans',
-          boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)',
-          backgroundColor: 'white',
-          borderRadius: '3px',
-        }}
-      />
+    <div className='traceContainer'>
+      <span id='tracesTitle'>Route Traces</span>
+      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontFamily: 'Roboto', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
     </div>
   );
 });

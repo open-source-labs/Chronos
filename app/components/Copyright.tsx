@@ -8,7 +8,7 @@ export interface CopyrightProps {}
 const Copyright: React.SFC = React.memo((props) => {
   const useStyles = makeStyles(theme => ({
     copyright: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Roboto',
       position: 'fixed',
       color: "#ffffff"
     }

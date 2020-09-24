@@ -30,8 +30,7 @@ import AddModal from '../modals/AddModal';
 import ServicesModal from '../modals/ServicesModal';
 
 // STYLESHEETS
-// import '../stylesheets/Occupied.scss';
-import '../stylesheets/Occupied.scss';
+import '../stylesheets/Occupied_darkmode.scss';
 
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
@@ -40,8 +39,8 @@ import { ApplicationContext } from '../context/ApplicationContext';
 
 // TYPESCRIPT
 interface StyleProps {
-  root: BaseCSSProperties;
-}
+  root: BaseCSSProperties,
+};
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
@@ -88,15 +87,14 @@ const Occupied = React.memo(() => {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: '#888888',
+      color: '#ffffff', // dark mode
       whiteSpace: 'nowrap',
-      backgroundColor: '#ffffff',
+      backgroundColor: 'transparent', // dark mode
       borderRadius: 3,
       border: '0',
-      boxShadow:
-        '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
+      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', // dark mode
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: `#3788fc`,
+        backgroundColor: 'rgba(255, 255, 255, 0.2)', // dark mode
         color: '#ffffff',
         fontWeight: 600,
       },
@@ -126,7 +124,8 @@ const Occupied = React.memo(() => {
       fontSize: '18px',
       fontFamily: 'Roboto',
       fontWeight: 300,
-      color: '#444d56',
+      // color: '#444d56',
+      color: '#ffffff', // dark mode
     }
   }));
 
@@ -137,12 +136,8 @@ const Occupied = React.memo(() => {
       <div className="dashboardArea">
         <header className="mainHeader">
           <section className="header" id="leftHeader">
-            <span>
-              <ListIcon className="icon" id="listIcon" />
-            </span>
-            <span>
-              <p id="dashboard">Dashboard</p>
-            </span>
+            <span><ListIcon className="icon" id="listIcon" /></span>
+            <span><p id="dashboard">Dashboard</p></span>
           </section>
           <section className="header" id="rightHeader">
             <form className="form">
@@ -188,7 +183,8 @@ const Occupied = React.memo(() => {
 
                   <div className="databaseIconContainer">
                     <div className="databaseIconHeader">
-                      <img className="databaseIcon" src="../assets/mongo-icon-white.png" alt="MongoDB"></img>
+                      {/** dark mode */}
+                      <img className="databaseIcon" src="../assets/mongo-icon-green-light.png" alt="MongoDB"></img>
                     </div>
                   </div>
                   

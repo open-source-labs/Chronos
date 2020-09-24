@@ -32,10 +32,10 @@ const TrafficChart = React.memo(() => {
             x: [...xAxis],
             y: [...serverPings, 0, yAxisHeadRoom],
             fill: 'tozeroy',
-            marker: { color: '#5C80FF' },
+            marker: { color: '#fc4039' },
             mode: 'none',
-            name: 'Open Sans',
-            showlegend: true,
+            name: 'Times Server Pinged',
+            showlegend: false,
           },
         ]}
         layout={{
@@ -43,9 +43,9 @@ const TrafficChart = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
@@ -55,7 +55,11 @@ const TrafficChart = React.memo(() => {
             x: 0.5,
             y: 5,
           },
-          yaxis: { rangemode: 'nonnegative' },
+          yaxis: { 
+            rangemode: 'nonnegative',
+            title: 'Times Server Pinged',
+            showline: true,
+          },
         }}
       />
     </div>

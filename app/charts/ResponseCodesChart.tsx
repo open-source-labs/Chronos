@@ -51,7 +51,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
           {
             values: Object.values(responseCodes),
             labels: [
-              'Informational (100-199',
+              'Informational (100-199)',
               'Success (200-299)',
               'Redirects (300-399)',
               'Client errors (400-499)',
@@ -61,7 +61,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
             textposition: 'inside',
             domain: { y: [0, 2] },
             marker: {
-              colors: ['#fa1a58', '#f3f5fe', '#00eda0', '#00fff2', '#73605b'],
+              colors: ['#fc4039', '#4b54ea', '#3788fc', '#32b44f', '#9c27b0'],
             },
           },
         ]}
@@ -75,9 +75,9 @@ const ResponseCodesChart: React.FC = React.memo(() => {
           height: 300,
           width: 300,
           font: {
-            color: 'black',
+            color: '#444d56',
             size: 11.5,
-            family: 'Open Sans',
+            family: 'Roboto',
           },
           paper_bgcolor: 'white',
           legend: {
@@ -85,7 +85,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
             xanchor: 'center',
             x: 0.5,
             font: {
-              size: 6,
+              size: 7,
             }
           },
         }}

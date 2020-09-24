@@ -7,12 +7,13 @@
   justify-content: space-between;
   align-items: center;
   margin-left: 50px;
+  color: $background;
 }
 
 .header {
   margin-top: $logoPositionTop - 18px;
   font-size: $headerFontSize;
-  color: $header;
+  color: $background;
 }
 
 #leftHeader {
@@ -37,22 +38,26 @@
   font-size: 42px;
   margin: 10px;
   padding: 5px;
+  background-color: transparent;
+  color: $background;
+  box-shadow: $boxshadow2;
 
   &:hover{
     cursor: pointer;
-    box-shadow: $boxshadow3;
     color: $gblue;
   }
 }
 
 #dashboard {
+  color: $background;
   position: absolute;
   top: 43px;
   left: 300px;
   margin-left: $logoPositionLeft - 34px;
+  font-weight: 400;
   &:hover {
     color: $gblue;
-    font-weight: 500;
+    font-weight: 800;
     cursor: pointer;
   }
 }
@@ -61,10 +66,10 @@
   vertical-align: middle;
   text-align: center;
   color: $icon;
-  background-color: $background;
+  background-color: transparent;
   box-sizing: content-box;
   border-radius: 50%;
-  box-shadow: $boxshadow1;
+  box-shadow: $boxshadow2;
   line-height: 1.5;
   white-space: nowrap;
   display: inline-flex;
@@ -80,8 +85,9 @@
   font-size: 34px;
   vertical-align: middle;
   text-align: center;
-  color: $icon;
+  color: $background;
   background-color: transparent;
+  box-shadow: $boxshadow2;
   box-sizing: content-box;
   border-radius: 50%;
   line-height: 1.5;
@@ -99,17 +105,18 @@
 }
 
 #searchIcon {
-  background-color: $background;
+  color: $background;
+  background-color: transparent;
   font-size: 26px;
   font-weight: 400px;
   padding: 8px;
   margin: 0px;
   margin-left: 15px;
   margin-right: 15px;
-  
+  box-shadow: $boxshadow2;
+
   &:hover {
     cursor: pointer;
-    box-shadow: $boxshadow3;
     color: $gblue;
   }
 }
@@ -122,9 +129,6 @@
 
   &:hover {
     cursor: pointer;
-    box-shadow: $boxshadow3;
-    // background-color: rgba(255, 255, 255, 0.3);
-    background-color: $background;
     color: $ggreen;
   }
 }
@@ -141,12 +145,14 @@
 .dashboardIconArea .dashboardTooltip {
     visibility: hidden;
     width: 80px;
-    background-color: $background;
-    color: $ggreen;
+    background-color: transparent;
+    color: lighten($ggreen, 15%);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
     font-size: 12px;
+    box-shadow: $boxshadow2;
+    font-weight: 600;
 
     /* Position the tooltip */
     position: absolute;
@@ -162,7 +168,8 @@
    left: 35px;
    border-width: 5px;
    border-style: solid;
-   border-color: transparent transparent $background transparent;
+   border-color: transparent transparent transparent transparent;
+   box-shadow: $boxshadow2;
 }
 
 // Notification Icon
@@ -172,9 +179,8 @@
   padding: 8px;
   &:hover {
     cursor: pointer;
-    box-shadow: $boxshadow3;
-    // background-color: rgba(255, 255, 255, 0.3);
-    background-color: $background;
+    box-shadow: $boxshadow2;
+    background-color: transparent;
     color: $gred;
   }
 }
@@ -191,12 +197,14 @@
 .notificationsIconArea .notificationsTooltip {
     visibility: hidden;
     width: 80px;
-    background-color: $background;
-    color: $gred;
+    background-color: transparent;
+    color: lighten($gred, 15%);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
     font-size: 12px;
+    box-shadow: $boxshadow2;
+    font-weight: 600;
 
     /* Position the tooltip */
     position: absolute;
@@ -212,7 +220,7 @@
    left: 35px;
    border-width: 5px;
    border-style: solid;
-   border-color: transparent transparent $background transparent;
+   border-color: transparent transparent transparent transparent;
 }
 
 // Person Icon
@@ -223,9 +231,9 @@
   padding: 8px;
   &:hover {
     cursor: pointer;
-    box-shadow: $boxshadow3;
+    box-shadow: $boxshadow2;
     // background-color: rgba(255, 255, 255, 0.3);
-    background-color: $background;
+    background-color: transparent;
     color: $gyellow;
   }
 }
@@ -242,12 +250,14 @@
 .personIconArea .personTooltip {
     visibility: hidden;
     width: 80px;
-    background-color: $background;
-    color: $gyellow;
+    background-color: transparent;
+    color: lighten($gyellow, 15%);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
     font-size: 12px;
+    box-shadow: $boxshadow2;
+    font-weight: 600;
 
     /* Position the tooltip */
     position: absolute;
@@ -263,7 +273,7 @@
    left: 35px;
    border-width: 5px;
    border-style: solid;
-   border-color: transparent transparent $background transparent;
+   border-color: transparent transparent transparent transparent;
 }
 
 
@@ -300,7 +310,7 @@ button {
   height: 30px;
   font-weight: 100;
   font-size: inherit;
-  color: inherit;
+  color: $background;
   display: flex;
   text-align: center;
   vertical-align: middle;
@@ -315,6 +325,7 @@ button {
 }
 
 #textInput {
+  color: $background; 
   background-color: transparent;
   font-family: 'Roboto';
   font-size: 16px;
@@ -394,9 +405,6 @@ select:-webkit-autofill:focus {
 .card {
   &:hover .databaseIconHeader {
     visibility: hidden;
-    // background-color: $gblue;
-    // opacity: 0.7;
-    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
   }
 
   &:hover p {
@@ -428,9 +436,6 @@ select:-webkit-autofill:focus {
 #card-1 {
   &:hover .databaseIconHeader {
     visibility: hidden;
-    // background-color: $gblue;
-    // opacity: 0.7;
-    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
   }
 
   .databaseIconContainer {
@@ -440,7 +445,7 @@ select:-webkit-autofill:focus {
 
   .databaseIconHeader {
     position: absolute;
-    background-color: $ggreen;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -451,7 +456,7 @@ select:-webkit-autofill:focus {
     top: -20px;
     left: 180px;
     border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(0, 255, 42, 0.4);
+    box-shadow: $boxshadow2;
     
     .databaseIcon {
       width: 55px;
@@ -463,9 +468,6 @@ select:-webkit-autofill:focus {
 #card-0 {
   &:hover .databaseIconHeader {
     visibility: hidden;
-    // background-color: $gblue;
-    // opacity: 0.7;
-    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
   }
 
   .databaseIconContainer {
@@ -475,7 +477,7 @@ select:-webkit-autofill:focus {
 
   .databaseIconHeader {
     position: absolute;
-    background-color: $gyellow;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -486,8 +488,8 @@ select:-webkit-autofill:focus {
     top: -20px;
     left: 180px;
     border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 152, 0,.4);
-    background-image: url('../assets/postgres-icon-white.png');
+    box-shadow: $boxshadow2;
+    background-image: url('../assets/postgres-icon-yellow-light.png');
     background-size: cover;
     .databaseIcon {
       width: 55px;
@@ -504,7 +506,7 @@ select:-webkit-autofill:focus {
 
   .databaseIconHeader {
     position: absolute;
-    background-color: $ggreen;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -515,7 +517,7 @@ select:-webkit-autofill:focus {
     top: -20px;
     left: 180px;
     border-radius: 3px;
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(0, 255, 42, 0.4);
+    box-shadow: $boxshadow2;
     
     .databaseIcon {
       width: 55px;
@@ -524,7 +526,7 @@ select:-webkit-autofill:focus {
   }
 
 .cardLine {
-  background-color: $grey;
+  background-color: $background;
   width: 85%;
   border: none;
   height: 1px;
@@ -541,14 +543,14 @@ select:-webkit-autofill:focus {
 }
 
 #cardFooterText {
-  color: $icon;
+  color: $background;
   font-size: 11px;
   margin: 0;
   margin-left: 10px;
 }
 
 .cardFooterIcon {
-  color: $icon;
+  color: $background;
   font-size: 14px;
   margin: 0;
 }
@@ -556,6 +558,6 @@ select:-webkit-autofill:focus {
 #databaseName {
   margin-top: 40px;
   margin-bottom: 0;
-  color: $header;
+  color: $background;
   font-size: 11px;
 }

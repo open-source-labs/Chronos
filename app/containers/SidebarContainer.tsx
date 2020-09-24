@@ -6,6 +6,7 @@ import ListIcon from '@material-ui/icons/List';
 import InfoIcon from '@material-ui/icons/Info';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../stylesheets/SidebarContainer.scss';
 
 const iconStyles = {
@@ -82,6 +83,15 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
             height: '35px',
           }} />
           &emsp;Settings
+        </Link>
+        <Link className="sidebar-link" to="/" id="logout">
+            <ExitToAppIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
+          &emsp;Logout
         </Link>
       </div>
     </div>

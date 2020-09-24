@@ -13,7 +13,7 @@ const connectMongoose = async (i: number, URI: string) => {
       //   console.log('Connected to Mongo database!');
       // }
     );
-    console.log(`${__dirname}/mongo.ts/connectMongoose: connected!`);
+    // console.log(`${__dirname}/mongo.ts/connectMongoose: connected!`);
     return db;
   } catch(err) {
     console.log(`${__dirname}/mongo.ts/connectMongoose: ${err}`);
