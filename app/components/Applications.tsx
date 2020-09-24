@@ -46,12 +46,11 @@ const Applications: React.FC = React.memo((props) => {
   };
 
   const useStyles = makeStyles(theme => ({
-    // card: myPostgres, myMongo, ToddDB buttons
+    // cards: myPostgres, myMongo, ToddDB
     paper: {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: '#3788fc',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
       borderRadius: 3,
@@ -60,8 +59,11 @@ const Applications: React.FC = React.memo((props) => {
       '&:hover, &.Mui-focusVisible': {
         backgroundColor: `#3788fc`,
       },
+      '&:active': {
+        backgroundColor: `#3788fc`,
+      },
     },
-    hover: {
+    iconbutton: {
       position: 'relative',
       bottom: 20,
       right: 47,
@@ -70,10 +72,10 @@ const Applications: React.FC = React.memo((props) => {
       backgroundColor: 'transparent',
     },
     fontStyles: {
-      fontSize: '16px',
+      color: '#444d56',
+      fontSize: '22px',
       [theme.breakpoints.up('lg')]: {
-        fontSize: '18px',
-        // MAIN PAGE SQUARE BUTTON FONTS
+        fontSize: '22px',
         fontFamily: 'Roboto',
         fontWeight: 100,
       },
@@ -82,6 +84,8 @@ const Applications: React.FC = React.memo((props) => {
 
   const classes = useStyles();
 
+  console.log('Applications.tsx: applications', applications)
+  
   return (
     <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
@@ -97,7 +101,7 @@ const Applications: React.FC = React.memo((props) => {
                 avatar={
                   <IconButton
                     ref={element => (delRef.current[i] = element)}
-                    className={classes.hover}
+                    className={classes.iconbutton}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, app[0], i)}
                   >

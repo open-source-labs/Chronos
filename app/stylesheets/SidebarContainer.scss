@@ -18,6 +18,10 @@
   width: 300px;
 }
 
+.sidebar-container:hover #logout {
+  opacity: 1;
+}
+
 .sidebar-container:hover #home {
   opacity: 1;
 }
@@ -195,12 +199,14 @@
   display: flex;
   align-items: center;
   justify-content: left;
+  padding-left: 20px;
+  padding-right: 20px;
   background-color: transparent;
   height: 40px;
-  width: 50px;
+  width: 70px;
   border: 0.3px solid #ffffff;
   border: 0;
-  border-radius: 3px;
+  border-radius: 6px;
   font-size: 90%;
   color: whitesmoke;
   text-decoration: none;
