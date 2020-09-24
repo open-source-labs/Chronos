@@ -54,7 +54,7 @@ describe('React unit tests', () => {
       );
     });
 
-    it('should render', () => {
+    xit('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
