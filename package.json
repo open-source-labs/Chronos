@@ -28,12 +28,6 @@
       "@babel/preset-react"
     ],
     "plugins": [
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
       "@babel/plugin-proposal-class-properties"
     ]
   },
@@ -71,7 +65,6 @@
   "devDependencies": {
     "@babel/core": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-decorators": "^7.10.5",
     "@babel/preset-env": "^7.10.1",
     "@babel/preset-react": "^7.9.4",
     "@jest-runner/electron": "^2.0.3",
