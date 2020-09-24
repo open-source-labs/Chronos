@@ -41,7 +41,7 @@
   &:hover{
     cursor: pointer;
     box-shadow: $boxshadow3;
-    color: $lightblue;
+    color: $gblue;
   }
 }
 
@@ -51,7 +51,9 @@
   left: 300px;
   margin-left: $logoPositionLeft - 34px;
   &:hover {
-    color: $lightblue;
+    color: $gblue;
+    font-weight: 500;
+    cursor: pointer;
   }
 }
 

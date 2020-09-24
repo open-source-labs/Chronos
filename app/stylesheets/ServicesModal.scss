@@ -14,8 +14,8 @@
     text-align: center;
     margin-bottom: 30px;
     border-bottom: thin solid $grey;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 
     h2 {
       @include modalHeader();
@@ -37,7 +37,7 @@
       font-size: 90%;
       text-decoration: none;
       border: 2px solid white;
-      border-radius: 8px;
+      border-radius: 3px;
       margin: 10px;
       padding: 12px;
       margin: 0 auto;
@@ -48,7 +48,7 @@
       font-weight: 100;
       &:hover { 
         color: #fff;
-        background-color: $header;
+        background-color: $gblue;
       }
     }
   }
@@ -62,4 +62,5 @@
   font-size: 14px;
   font-weight: 100;
   color: #444d56;
+  border-radius: 3px;
 }

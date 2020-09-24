@@ -23,7 +23,7 @@ const SpeedChart = React.memo(() => {
             type: 'scatter',
             mode: 'lines+markers',
             marker: {
-              color: '#4b54ea'
+              color: '#3788fc'
             },
           },
         ]}

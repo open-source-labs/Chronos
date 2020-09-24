@@ -9,6 +9,12 @@ $hover: rgba(255,255,255, 0.1);
 $warningred: rgb(255, 0, 0); // #cc0000
 $lightblue: #b5d3e9;
 
+// Primary colors:
+$gblue: #3788fc;
+$gred: #fc4039;
+$gyellow: #febc2c;
+$ggreen: #32b44f;
+
 // Graph colors:
 $purple: #4b54ea;
 $lightpurple: #5e84fb;
@@ -65,6 +71,11 @@ $headerFontSize: 18px;
   font-weight: 700;
   font-size: 200%;
   color: $darkgrey;
+  &:hover {
+    color: $gblue;
+    font-weight: 500;
+    cursor: pointer;
+  }
 }
 
 @keyframes blink {

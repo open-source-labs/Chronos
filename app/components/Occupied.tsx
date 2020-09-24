@@ -75,24 +75,30 @@ const Occupied = React.memo(() => {
   };
 
   const useStyles = makeStyles<Theme, StyleProps>(theme => ({
+    // "+" Card Only
     paper: {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: '#888888',
+      color: '#3788fc',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
-      borderRadius: 8,
+      borderRadius: 3,
       border: '0',
       boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: `#b5d3e9`,
-        color: '#ffffff',
+        backgroundColor: `#3788fc`,
+        color: '#fff',
+        fontWeight: 300,
       },
     },
-    hover: {
+    iconbutton: {
       boxShadow: 'none',
-      color: 'transparent'
+      color: 'none',
+      '&:hover, &.Mui-focusVisible': {
+        backgroundColor: `#3788fc`,
+        color: '#fff',
+      }
     },
     btnStyle: {
       position: 'absolute',
@@ -101,7 +107,7 @@ const Occupied = React.memo(() => {
       margin: '0',
       color: '#eeeeee',
       borderRadius: '0',
-      backgroundColor: 'transparent',
+      backgroundColor: 'none',
       '&:hover' : {
         backgroundColor: 'none'
       }
@@ -164,7 +170,7 @@ const Occupied = React.memo(() => {
                   avatar={
                     <IconButton
                       ref={element => (delRef.current[i] = element)}
-                      className={classes.hover}
+                      className={classes.iconbutton}
                       aria-label="Delete"
                       onClick={event => confirmDelete(event, app[0], i)}
                     >

@@ -51,15 +51,14 @@ const Applications: React.FC = React.memo((props) => {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: 'rgba(33, 34, 41, 1.2)',
+      color: '#3788fc',
       whiteSpace: 'nowrap',
       backgroundColor: '#ffffff',
-      borderRadius: 8,
+      borderRadius: 3,
       border: '0',
       boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: `#ccd8e1`,
-        color: '#ffffff',
+        backgroundColor: `#3788fc`,
       },
     },
     hover: {
@@ -69,18 +68,6 @@ const Applications: React.FC = React.memo((props) => {
       boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
       backgroundColor: 'transparent',
-    },
-    btnStyle: {
-      position: 'relative',
-      top: 50,
-      margin: '0 auto',
-      color: '#eeeeee',
-      backgroundColor: '#ccd8e1',
-      opacity: 1,
-      '&:hover': {
-        color: '#ffffff',
-        backgroundColor: 'transparent'
-      }
     },
     fontStyles: {
       fontSize: '16px',

@@ -45,7 +45,7 @@ const RequestTypesChart: React.FC = React.memo(() => {
             type: 'pie',
             textposition: 'inside',
             marker: {
-              colors: ['#fa1a58', '#4a4eee', '#00eda0', '#00d3f2', '#9c27b0', '#ff9800'],
+              colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
             },
             
           },
