@@ -66,11 +66,6 @@ app.use((error, req, res, next) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
-//  open and listen to server on this port
-// app.listen(process.env.ORDERS_PORT, () => {
-//   console.log(`Orders server running on port ${process.env.ORDERS_PORT}...`);
-// });
-
 app.listen(7777, () => {
   console.log(`Orders server running on port 7777...`);
 });

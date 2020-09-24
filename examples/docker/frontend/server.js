@@ -47,13 +47,11 @@ app.all('/books/*', (req, res) => {
 
 app.all('/customers/*', (req, res) => {
   console.log('redirecting to customers');
-  // apiProxy.web(req, res, { target: customers });
   res.redirect(customers + req.originalUrl);
 });
 
 app.all('/orders/*', (req, res) => {
   console.log('redirecting to orders');
-  // apiProxy.web(req, res, { target: orders });
   res.redirect(orders + req.originalUrl);
 });
 
@@ -72,6 +70,5 @@ app.use((error, req, res, next) => {
 
 // Open and listen to server on specified port
 app.listen(3000, () => {
-  // console.log(`Frontend server running on port ${process.env.FRONTEND_PORT} ...`);
   console.log('Frontend server running on port 3000 ...');
 });

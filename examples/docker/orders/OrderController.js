@@ -51,7 +51,6 @@ OrderController.deleteorder = (req, res, next) => {
 
 //  Controller for retrieving customers info from the customer application
 OrderController.fetchcustomerdata = (req, res, next) => {
-  // fetch(`http://customers:${process.env.CUSTOMERS_PORT}/customers/getcustomers`, {
   fetch(`http://customers:5555/customers/getcustomers`, {
     method: 'GET',
     headers: {
@@ -59,12 +58,12 @@ OrderController.fetchcustomerdata = (req, res, next) => {
       Accept: 'application/json',
     },
   })
-    .then((response) => response.json())
-    .then((results) => {
+    .then(response => response.json())
+    .then(results => {
       res.locals.customerdata = results;
       return next();
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(`There was an error in getting customers data ${error}`);
     });
 };
