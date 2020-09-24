@@ -34,7 +34,7 @@ const RouteLocations = React.memo(() => {
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
           microservice: element.microservice,
-          time: element.time
+          time: element.time,
         });
       } else {
         // The value that corresp. to the correlationId key is an array of obj containing name and time data.
@@ -42,7 +42,7 @@ const RouteLocations = React.memo(() => {
         resObj[element.correlatingid] = [
           {
             microservice: element.microservice,
-            time: element.time
+            time: element.time,
           },
         ];
       }
@@ -53,7 +53,7 @@ const RouteLocations = React.memo(() => {
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
           microservice,
-          time
+          time,
         });
       } else {
         // The value that corresp. to the correlationId key is an array of obj containing name and time data.
@@ -61,13 +61,13 @@ const RouteLocations = React.memo(() => {
         resObj[element.correlatingid] = [
           {
             microservice,
-            time
+            time,
           },
         ];
       }
       // initializing the object with the first microservice
     }
-    console.log('B', resObj)
+    console.log('B', resObj);
   }
   console.log('+++RESOBJ+++');
   console.log(resObj);
@@ -94,16 +94,14 @@ const RouteLocations = React.memo(() => {
   }));
   const classes = useStyles({});
 
-
-
   // ======Graphs logic =======//
   const nodeListObj = {};
   const edgeList = [];
   for (let route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
-      const colors = ['#75b6d7', '#cc000', '#fce356', '#888888', '#ccd8e1']
+      const colors = ['#75b6d7', '#cc000', '#fce356', '#888888', '#ccd8e1'];
       // check if node exists if not then add node
-      let id = route[i].microservice
+      let id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
         nodeListObj[id] = { 
           id: id, 
@@ -113,18 +111,18 @@ const RouteLocations = React.memo(() => {
       // add edge from node 1 to node 2 (repeat til end)
       if (i !== 0) {
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
-        let edge = { from: route[i - 1].microservice, to: id, label: `${duration * 100} ms` }
-        edgeList.push(edge)
+        let edge = { from: route[i - 1].microservice, to: id, label: `${duration * 100} ms` };
+        edgeList.push(edge);
       }
     }
   }
   const nodeList = Object.values(nodeListObj);
-  console.log(edgeList);
-  console.log(nodeList);
+  console.log('edgeList', edgeList);
+  console.log('nodeList', nodeList);
 
   const graph = {
     nodes: nodeList,
-    edges: edgeList
+    edges: edgeList,
   };
   // const graph = {
   //   nodes: [
@@ -140,7 +138,7 @@ const RouteLocations = React.memo(() => {
     height: '300px',
     width: '300px',
     layout: {
-      hierarchical: false
+      hierarchical: false,
     },
     edges: {
       color: "#444d56",
@@ -178,13 +176,12 @@ const RouteLocations = React.memo(() => {
   const events = {
     select: function (event) {
       var { nodes, edges } = event;
-      console.log("Selected nodes:");
+      console.log('Selected nodes:');
       console.log(nodes);
-      console.log("Selected edges:");
+      console.log('Selected edges:');
       console.log(edges);
-    }
+    },
   };
-
 
   return (
     <div className='traceContainer'>

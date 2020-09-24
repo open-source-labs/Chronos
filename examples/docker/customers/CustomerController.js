@@ -55,7 +55,6 @@ CustomerController.getbooksinfo = (req, res, next) => {
   })
     .then((response) => response.json())
     .then((results) => {
-      //  const info = results.forEach((curr) => JSON.stringify((curr)));
       res.locals.booksinfo = results;
       return next();
     })

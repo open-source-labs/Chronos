@@ -431,13 +431,6 @@ select:-webkit-autofill:focus {
    &:hover #databaseName {
     color: $background;
   }
-
-  p {
-    &:hover {
-      color: $background;
-      font-weight: 400;
-    }
-  }
 }
 
 #card-1 {
