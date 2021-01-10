@@ -10,10 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chronos-tracker": "^4.0.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-proxy": "^1.18.0",
-    "nodemon": "^2.0.2",
-    "chronos-tracker": "^4.0.5"
+    "nodemon": "^2.0.2"
   }
 }
