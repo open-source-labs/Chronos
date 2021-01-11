@@ -1,3 +1,4 @@
+require('dotenv').config();
 const chronos = require('chronos-tracker');
 
 
@@ -7,7 +8,7 @@ chronos.use({
   // dockerized: true,
   database: {
     type: 'MongoDB',
-    URI: " < INSERT URI HERE > "
+    URI: process.env.CHRONOS_URI
   },
   notifications: [],
 });
