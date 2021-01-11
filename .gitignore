@@ -6,4 +6,4 @@ build
 coverage
 __tests__/**/__snapshots__
 release-builds
-!.env
+
