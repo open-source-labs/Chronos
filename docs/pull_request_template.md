@@ -1,4 +1,4 @@
-References issue #2. Please review this @teammember1, @teammember2.
+References issue #. Please review this @teammember1, @teammember2.
 
 # Types of changes
 - [ ]  Bugfix (change which fixes an issue)
