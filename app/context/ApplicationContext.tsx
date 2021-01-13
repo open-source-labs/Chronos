@@ -40,7 +40,7 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
     ipcRenderer.send('connect', index);
     // console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
     
-    // Response
+    // Response from data.ts 
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       // Parse JSON response
       const result = data;
