@@ -7,7 +7,7 @@ chronos.use({
   // dockerized: true,
   database: {
     type: 'MongoDB',
-    URI: process.env.CHRONOS_URI
+    URI: process.env.CHRONOS_URI,
   },
   notifications: [],
 });

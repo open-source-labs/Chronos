@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+service ProxyToBook {
+  rpc AddBook (Book) returns (Empty){}
+}
+
+service OrderToBook {
+  rpc GetBookInfo (BookID) returns (Book) {}
+}
+
+message Empty {}
+
+message Book {
+  string title = 1;
+  string author = 2;
+  int32 pageCount = 3;
+  string publisher = 4;
+}
+
+message BookID {
+  int32 bookID = 1;
+}

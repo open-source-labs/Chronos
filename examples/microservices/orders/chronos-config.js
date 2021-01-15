@@ -3,10 +3,10 @@ require('dotenv').config();
 chronos.use({
   microservice: 'orders',
   interval: 2000,
-  // dockerized: true,
+  // dockerized: true,ß
   database: {
     type: 'MongoDB',
-    URI: process.env.CHRONOS_URI
+    URI: process.env.CHRONOS_URI,
   },
   notifications: [],
 });
