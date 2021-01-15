@@ -48,15 +48,5 @@ const getOrders = () => {
   console.log('hello')
   fetch('http://localhost:3000/orders', {
     method: 'GET',
-  })
-    .then((data) => {
-      data.json()
-      .then((orders) => {
-          //add orders to the actual page perhaps
-        console.log('hello')
-      });
-  })
-    .catch((err) => {
-      console.log(err)
-    })
+  }).then((data) => console.log(data))
 }

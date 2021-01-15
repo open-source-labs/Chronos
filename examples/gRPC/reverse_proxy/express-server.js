@@ -5,7 +5,9 @@ const path = require('path');
 const app = express();
 const client = require('./client.js');
 
-app.use('/', (req, res, next) => {
+app.use(express.static(path.join(__dirname)));
+
+app.get('/', (req, res, next) => {
     res.sendFile(path.join(__dirname, './index.html'));
 });
 
@@ -21,6 +23,7 @@ app.post('/createOrder', (req, res, next) => {
 })
 
 app.get('/orders', (req, res, next) => {
+  console.log('hello')
     client.getOrders(null, (err, data) => {
             if (err !== null) {
                 console.log(err)
