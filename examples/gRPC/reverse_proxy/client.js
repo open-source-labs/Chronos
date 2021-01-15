@@ -9,7 +9,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     enums: String,
     arrays: true
 });
-
+console.log('Hi');
 const ProxyToOrderService = grpc.loadPackageDefinition(packageDefinition).ProxyToOrder;
 const client = new ProxyToOrderService(
     "localhost:30043",
