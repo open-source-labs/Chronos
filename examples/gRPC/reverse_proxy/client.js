@@ -20,19 +20,6 @@ const orderClient = new ProxyToOrderService(
     grpc.credentials.createInsecure()
 );
 
-/**
- * Proxy to Book
- */
-const ProxyToBookService = grpc.loadPackageDefinition(packageDefinition).ProxyToBook;
-const bookClient = new ProxyToBookService(
-    "localhost:30044",
-    grpc.credentials.createInsecure()
-);
-
-module.exports = {
-  orderClient,
-  bookClient,
-}
 
 orderClient.getOrders(null, (err, data) => {
   if (err !== null) {
@@ -42,23 +29,12 @@ orderClient.getOrders(null, (err, data) => {
   console.log('getOrders response: ', data);
 })
 
-const harryPotter = {
-  title: 'Harry',
-  author: 'JK',
-  pageCount: 561,
-  publisher: 'Matt and Vince',
-}
 
-bookClient.addBook(harryPotter, (err, data) => {
-  if (err !== null) {
-    console.log('err')
-    console.log(err)
-  }
-  console.log('addBook response: ', data);
-})
 
 //this book server.js
 // const bookSErver = require('this file')
-// bookServer.bookClient 
+bookServer.bookClient 
 module.exports = orderClient;
-// exports.orderClient = orderClient;
+exports.orderClient = orderClient;
+
+module.exports = orderClient;
