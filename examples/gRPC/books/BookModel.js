@@ -3,7 +3,7 @@ require('dotenv').config();
 const { Schema } = mongoose;
 
 // UNCOMMENT THE LINE BELOW AND REPLACE WITH AN ACTUAL MONGODB URI FOR YOUR "CUSTOMERS" DATABASE
-require('./chronos-config'); // Bring in config file
+// require('./chronos-config'); // Bring in config file
 const myURI = process.env.BOOK_URI;
 
 mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
