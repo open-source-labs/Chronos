@@ -20,9 +20,10 @@ server.addService(ordersProto.ProxyToOrder.service, {
     console.log(call);
     callback(null, {});
   },
+  //call.name // call.request.name
   getOrders: (call, callback) => {
     console.log(call)
-    callback(null, 'Hi Ho');
+    callback(null, { orders: 5, blah: 'djlasd' });
   },
 });
 console.log('yooo');
