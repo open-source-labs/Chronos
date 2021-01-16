@@ -33,14 +33,14 @@ server.addService(booksProto.ProxyToBook.service, {
     console.log(call.request);
 
     // get the properties from the gRPC client call
-    // const { title, author, pageCount, publisher } = call.request;
-    // // create a book in our book collection
-    // BookModel.create({
-    //   title,
-    //   author,
-    //   numberOfPages: pageCount,
-    //   publisher,
-    // })
+    const { title, author, pageCount, publisher } = call.request;
+    // create a book in our book collection
+    BookModel.create({
+      title,
+      author,
+      numberOfPages: pageCount,
+      publisher,
+    })
     // .then((response)=> {
     //   console.log('posted to mongoDB')
     // })
