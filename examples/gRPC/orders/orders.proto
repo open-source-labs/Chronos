@@ -12,7 +12,7 @@ service OrderToBook {
 message Empty {}
 
 message OrderList {
-  string orders = 1;
+  int32 orders = 1;
 }
 
 message Order {
