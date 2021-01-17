@@ -2,38 +2,64 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './app/index.js',
+  entry: './app/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     filename: 'index_bundle.js',
   },
+  devtool: 'eval-source-map',
   module: {
     rules: [
-      { test: /\.jsx?/, use: 'babel-loader' },
-      { test: /\.(css)$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.(png|jp(e*)g|svg)$/, use: 'url-loader' },
-      { test: /\.(jpg|jpeg|png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
       {
-        test: /\.ttf$/,
+        test: /\.(ts|tsx)$/,
+        loader: 'awesome-typescript-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'source-map-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.jsx?/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.s?css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(jpg|jpeg|png|ttf|svg)$/,
         use: [
+          'file-loader',
           {
-            loader: 'ttf-loader',
+            loader: 'image-webpack-loader',
             options: {
-              name: './font/[hash].[ext]',
+              mozjpeg: {
+                quality: 10,
+              },
             },
           },
         ],
+        exclude: /node_modules/,
       },
     ],
   },
   mode: 'development',
-  // devServer: {
-  //   proxy: {
-  //     '/': 'http://localhost:34343',
-  //   },},
+  devServer: {
+    hot: true,
+    historyApiFallback: true,
+    contentBase: path.resolve(process.cwd(), 'app'),
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.html',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
 };
