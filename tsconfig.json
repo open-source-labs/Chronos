@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "pretty": true,
+    "outDir": "./build",
+    "sourceMap": true,
+    "module": "commonjs",
+    "allowJs": true,
+    "target": "es5",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["./electron/**/*", "./src/**/*", "./electron/**/*.json"]
+}

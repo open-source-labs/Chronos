@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+service ProxyToBook {
+  rpc AddBook (Book) returns (Empty){}
+}
+
+service ProxyToOrder {
+  rpc AddOrder (Order) returns (Empty){}
+  rpc GetOrders (Empty) returns (OrderList){} 
+}
+
+message Empty {}
+
+message Book {
+  string title = 1;
+  string author = 2;
+  int32 bookID = 3;
+  int32 numberOfPages = 4;
+  string publisher = 5;
+}
+
+message OrderList {
+  repeated OrderWithInfo orderList = 1;
+}
+
+message OrderWithInfo {
+  int32 customerID = 1;
+  int32 bookID = 2;
+  string purchaseDate = 3;
+  string deliveryDate = 4;
+  string title = 5;
+  string author = 6;
+  int32 numberOfPages = 7;
+  string publisher = 8;
+}
+
+message Order {
+  int32 customerID = 1;
+  int32 bookID = 2;
+  string purchaseDate = 3;
+  string deliveryDate = 4;
+}
