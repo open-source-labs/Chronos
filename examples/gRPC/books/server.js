@@ -10,21 +10,13 @@ const BookModel = require('./BookModel');
 // load books proto
 const PROTO_PATH = './books.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    arrays: true
+  keepCase: true,
+  longs: String,
+  enums: String,
+  arrays: true
 });
 const booksProto = grpc.loadPackageDefinition(packageDefinition);
-
-// connect to mongodb
-// const uri = process.env.MONGO_URI;
-// mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true});
-// const connection = mongoose.connection;
-// connection.once('open', () => {
-//   console.log('MongoDB database connection established successfully');
-// })
-
+// const 
 // create gRPC server and add services
 const server = new grpc.Server();
 server.addService(booksProto.ProxyToBook.service, {
@@ -33,25 +25,29 @@ server.addService(booksProto.ProxyToBook.service, {
     console.log(call.request);
 
     // get the properties from the gRPC client call
-    const { title, author, pageCount, publisher } = call.request;
+    const { title, author, numberOfPages, publisher, bookID } = call.request;
     // create a book in our book collection
     BookModel.create({
       title,
       author,
-      numberOfPages: pageCount,
+      numberOfPages,
       publisher,
+      bookID,
     })
-    // .then((response)=> {
-    //   console.log('posted to mongoDB')
-    // })
-    // .catch((err)=> {
-    //   console.log(err)
-    // });
-
-    // send response back to client
     callback(null, {});
   },
 });
+
+server.addService(booksProto.OrderToBook.service, {
+  getBookInfo: (call, callback) => {
+    console.log(call.request.bookID);
+    BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
+      console.log(data)
+      //data needs to be formatted first
+      callback(null, data);
+    })
+    },
+})
 
 // start server
 server.bindAsync("127.0.0.1:30044", grpc.ServerCredentials.createInsecure(), () => {

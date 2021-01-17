@@ -3,7 +3,7 @@ require('dotenv').config();
 const { Schema } = mongoose;
 
 // UNCOMMENT THE LINE BELOW AND REPLACE WITH AN ACTUAL MONGODB URI FOR YOUR "ORDERS" DATABASE
-require('./chronos-config'); // Bring in config file
+// require('./chronos-config'); // Bring in config file
 const myURI = process.env.ORDER_URI;
 // const myURI = 'mongodb+srv://johndoe:johndoe@cluster0-abcdef.mongodb.net/';
 
@@ -13,22 +13,20 @@ mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const OrderSchema = new Schema({
   customerID: {
-    type: String,
+    type: Number,
     required: true,
   },
   bookID: {
-    type: String,
+    type: Number,
     required: true,
   },
   purchaseDate: {
-    type: Date,
+    type: String,
     required: true,
-    default: Date.now,
   },
   deliveryDate: {
-    type: Date,
+    type: String,
     required: true,
-    default: Date.now,
   },
 });
 

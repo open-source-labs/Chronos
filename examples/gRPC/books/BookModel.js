@@ -10,7 +10,7 @@ mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected!!!********* Books Database is live!!!'))
   .catch((err) => console.log('Connection Error ', err));
 
-const BooksSchema = new Schema({
+const BookSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -18,6 +18,11 @@ const BooksSchema = new Schema({
   author: {
     type: String,
     required: true,
+  },
+  bookID: {
+    type: Number,
+    required: true,
+    unique: true,
   },
   numberOfPages: {
     type: Number,
@@ -29,6 +34,6 @@ const BooksSchema = new Schema({
   },
 });
 
-const BookModel = mongoose.model('BookModel', BooksSchema);
+const BookModel = mongoose.model('BookModel', BookSchema);
 
 module.exports = BookModel;

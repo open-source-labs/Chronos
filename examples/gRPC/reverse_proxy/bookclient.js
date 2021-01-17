@@ -16,19 +16,5 @@ const bookClient = new ProxyToBookService(
     grpc.credentials.createInsecure()
 );
 
-const harryPotter = {
-  title: 'Harry Potter',
-  author: 'JK',
-  pageCount: 561,
-  publisher: 'Matt and Vince and Derek',
-}
-
-bookClient.addBook(harryPotter, (err, data) => {
-  if (err !== null) {
-    console.log('err')
-    console.log(err)
-  }
-  console.log('addBook response: ', data);
-})
 
 module.exports = bookClient;
