@@ -1,0 +1,19 @@
+{
+    "name": "books",
+    "version": "1.0.0",
+    "description": "",
+    "main": "client.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@grpc/grpc-js": "^1.2.3",
+        "@grpc/proto-loader": "^0.5.5",
+        "dotenv": "^8.2.0",
+        "mongoose": "^5.11.12"
+    }
+}
