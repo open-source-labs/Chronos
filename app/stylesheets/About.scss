@@ -1,0 +1,69 @@
+@import './constants.scss';
+
+.sprout {
+  margin: 0;
+}
+
+.mainTitle {
+  font-size: 36px;
+  color: $background;
+  text-align: left;
+  font-weight: 600;
+}
+
+.title {
+  font-size: 18px;
+  color: $background;
+  text-align: left;
+  font-weight: 600;
+}
+
+.text {
+  font-size: 18px;
+  color: $background;
+  text-align: left;
+  font-weight: 100;
+}
+
+.doya {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-self: flex-start;
+  align-content: flex-start;
+  vertical-align: top;
+}
+
+.blurb {
+  margin-left: 425px;
+  margin-right: 385px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  border-radius: 10px;
+  border: none;
+  box-shadow: $boxshadow2;
+  padding: 30px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+#sproutSpan {
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  margin-right: 10px;
+  height: $sproutSize;
+  width: $sproutSize;
+  background-color: transparent;
+  border-radius: 50%;
+  background-size: scale-down;
+  &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+}
