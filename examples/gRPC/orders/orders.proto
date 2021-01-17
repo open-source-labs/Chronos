@@ -12,9 +12,20 @@ service OrderToBook {
 message Empty {}
 
 message OrderList {
-  int32 orders = 1;
+  repeated OrderWithInfo orderList = 1;
 }
 
+message OrderWithInfo {
+  int32 customerID = 1;
+  int32 bookID = 2;
+  string purchaseDate = 3;
+  string deliveryDate = 4;
+  string title = 5;
+  string author = 6;
+  int32 numberOfPages = 7;
+  string publisher = 8;
+ 
+}
 message Order {
   int32 customerID = 1;
   int32 bookID = 2;
@@ -25,8 +36,9 @@ message Order {
 message Book {
   string title = 1;
   string author = 2;
-  int32 pageCount = 3;
-  string publisher = 4;
+  int32 bookID = 3;
+  int32 numberOfPages = 4;
+  string publisher = 5;
 }
 
 message BookID {

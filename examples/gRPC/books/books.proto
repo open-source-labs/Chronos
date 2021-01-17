@@ -13,8 +13,9 @@ message Empty {}
 message Book {
   string title = 1;
   string author = 2;
-  int32 pageCount = 3;
-  string publisher = 4;
+  int32 bookID = 3;
+  int32 numberOfPages = 4;
+  string publisher = 5;
 }
 
 message BookID {
