@@ -14,8 +14,6 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 
 const ordersProto = grpc.loadPackageDefinition(packageDefinition);
 
-// const { v4: uuidv4 } = require("uuid");
-//import a mongoose connection or a postgres
 const server = new grpc.Server();
 server.addService(ordersProto.ProxyToOrder.service, {
   addOrder: (call, callback) => {
@@ -25,40 +23,58 @@ server.addService(ordersProto.ProxyToOrder.service, {
       purchaseDate: call.request.purchaseDate,
       deliveryDate: call.request.deliveryDate,
     };
-    OrderModel.create(newOrder);
-  },
-  //call.name // call.request.name
-  getOrders: (call, callback) => {
-    
-    const ordersWithInfo = [];
-    OrderModel.find({}, (err, data) => {
-      for (let i = 0; i < data.length; i += 1) {
-        const tempObj = {
-          customerID: data[i].customerID,
-          bookID: data[i].bookID,
-          purchaseDate: data[i].purchaseDate,
-          deliveryDate: data[i].deliveryDate,
-       };
-        client.getBookInfo({bookID: data[i].bookID}, (err, bookInfo) => {
-          console.log(tempObj);
-          tempObj['title'] = bookInfo.title;
-          tempObj.author = bookInfo.author;
-          tempObj.bookID = bookInfo.bookID;
-          tempObj.numberOfPages = bookInfo.numberOfPages;
-          tempObj.publisher = bookInfo.publisher;
-          console.log(tempObj);
-          ordersWithInfo.push(tempObj);
-          console.log('orderList', ordersWithInfo);
-          if (i === data.length - 1) callback(null, { orderList: ordersWithInfo });
-        })
-          
+    client.getBookInfo({bookID: newOrder.bookID}, (err, bookInfo) => {
+      // make sure bookID exists
+      if (bookInfo === undefined) {
+        callback({
+          code: grpc.status.NOT_FOUND,
+          details: "BookID not found"
+        });
+      } else {
+        OrderModel.create(newOrder)
+          .then((data) => {
+            callback(null, {});
+          })
+          .catch((err) => console.log(err));
       }
-   
     })
+  },
+
+  getOrders: (call, callback) => {
+    const ordersWithInfo = [];
+    OrderModel.find({})
+      .then((data) => {
+        // if no orders in database
+        if (!data.length) return callback(null, { orderList: []});
+
+        // iterate through orders to get book info for each order
+        for (let i = 0; i < data.length; i += 1) {
+          const tempObj = {
+            customerID: data[i].customerID,
+            bookID: data[i].bookID,
+            purchaseDate: data[i].purchaseDate,
+            deliveryDate: data[i].deliveryDate,
+          };
+          // we must use tempObj because if you just use data[i], added properties do not appear when you console log data[i]. but the client stub still receives the added properties somehow 
+          client.getBookInfo({bookID: tempObj.bookID}, (err, bookInfo) => {
+            // console.log('before adding', tempObj);
+            tempObj.title = bookInfo.title;
+            tempObj.author = bookInfo.author;
+            tempObj.bookID = bookInfo.bookID;
+            tempObj.numberOfPages = bookInfo.numberOfPages;
+            tempObj.publisher = bookInfo.publisher;
+            // console.log('after adding', tempObj);
+            ordersWithInfo.push(tempObj);
+            // console.log('ordersWithInfo', ordersWithInfo);
+            // return callback on the last call
+            if (i === data.length - 1) callback(null, { orderList: ordersWithInfo });
+          });
+        }
+      })
+      .catch((err) => console.log(err));;
   },
 });
 
-console.log('yooo');
 // start server
 server.bindAsync("127.0.0.1:30043", grpc.ServerCredentials.createInsecure(), () => {
   server.start();

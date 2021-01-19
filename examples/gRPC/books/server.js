@@ -21,9 +21,6 @@ const booksProto = grpc.loadPackageDefinition(packageDefinition);
 const server = new grpc.Server();
 server.addService(booksProto.ProxyToBook.service, {
   addBook: (call, callback) => {
-    console.log('Book has been added');
-    console.log(call.request);
-
     // get the properties from the gRPC client call
     const { title, author, numberOfPages, publisher, bookID } = call.request;
     // create a book in our book collection
@@ -34,16 +31,23 @@ server.addService(booksProto.ProxyToBook.service, {
       publisher,
       bookID,
     })
-    callback(null, {});
+    .then((data) => {
+      callback(null, {});
+    })
+    .catch((err) => {
+      if (err.code === 11000) {
+        callback({
+          code: grpc.status.ALREADY_EXISTS,
+          details: "BookID already exists"
+        })
+      }
+    })
   },
 });
 
 server.addService(booksProto.OrderToBook.service, {
   getBookInfo: (call, callback) => {
-    console.log(call.request.bookID);
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
-      console.log(data)
-      //data needs to be formatted first
       callback(null, data);
     })
     },
