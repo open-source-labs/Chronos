@@ -36,6 +36,7 @@ const RouteChart = React.memo(() => {
         ];
       }
     }
+    //? What does this else block do?
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
       const element = communicationsData[i];
@@ -96,6 +97,7 @@ const RouteChart = React.memo(() => {
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
         // only want one edge per route with the average duration
         if (edgeListObj[edgeStr]) {
+          //? wrong math
           duration = (duration + edgeListObj[edgeStr]) / 2
         }
         edgeListObj[edgeStr] = duration
