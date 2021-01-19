@@ -149,6 +149,7 @@ const communicationsData = [
     "time": "2021-01-18T19:24:13.303Z",
     "__v": 0
   },
+  // REST communication data
   {
     "_id": "6005e05d1aaf4f7d2d4b4fb2",
     "microservice": "books",
@@ -161,7 +162,7 @@ const communicationsData = [
     "time": "2021-01-18T19:24:13.303Z",
     "__v": 0
   },
-  // gRPC object
+  // gRPC communication data
   {
     "_id": "6005e05d1aaf4f7d2d4b4fb3",
     "microservice": "books",
