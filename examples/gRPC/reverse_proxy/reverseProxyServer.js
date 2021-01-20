@@ -16,26 +16,25 @@ app.get('/', (req, res, next) => {
 });
 
 app.post('/addBook', (req, res, next) => {
-  const book = { 
+  const book = {
     title: req.body.title,
     author: req.body.author,
     numberOfPages: req.body.numberOfPages,
     publisher: req.body.publisher,
     bookID: req.body.bookID,
-  }
+  };
   bookClient.addBook(book, (err, data) => {
     if (err !== null) {
-      console.log('err')
-      console.log(err)
+      console.log(err);
+      // could not add book because duplicate ID
+      return res.sendStatus(409);
     }
     console.log('addBook response: ', data);
-    res.sendStatus(200);
-  })
-})
+    return res.sendStatus(200);
+  });
+});
 
-app.post('/createOrder', (req, res, next) => {
-  //generate order entry for gRPC call
-  console.log(req.body);
+app.post('/addOrder', (req, res, next) => {
   const order = {
     customerID: req.body.customerID,
     bookID: req.body.bookID,
@@ -43,22 +42,26 @@ app.post('/createOrder', (req, res, next) => {
     deliveryDate: req.body.deliveryDate,
   };
   orderClient.addOrder(order, (err, data) => {
-    res.sendStatus(200);
+    if (err !== null) {
+      console.log(err);
+      // could not add order because bookID does not exist
+      return res.sendStatus(404);
+    } else {
+      console.log('addOrder response: ', data);
+      return res.sendStatus(200);
+    }
   });
 });
 
-app.get('/orders', (req, res, next) => {
-  console.log('hello')
-
+app.get('/order', (req, res, next) => {
   orderClient.getOrders(null, (err, data) => {
     if (err !== null) {
-      console.log('err')
-      console.log(err)
+      console.log(err);
+    } else {
+      console.log('getOrders response: ', data);
+      return res.status(200).json(data);
     }
-    console.log(data)
-    // data = [{ customerID, bookID, purchaseDate, deliveryDate, title, author, numberOfPages, publisher }]
-    res.status(200).json(data); 
-  })
-})
+  });
+});
 
-app.listen(PORT, () => console.log('Listening on PORT ' + PORT))
+app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
