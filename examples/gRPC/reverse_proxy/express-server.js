@@ -26,9 +26,11 @@ app.post('/addBook', (req, res, next) => {
   bookClient.addBook(book, (err, data) => {
     if (err !== null) {
       console.log(err);
+      // could not add book because duplicate ID
+      return res.sendStatus(409);
     }
     console.log('addBook response: ', data);
-    res.sendStatus(200);
+    return res.sendStatus(200);
   });
 });
 
@@ -42,9 +44,11 @@ app.post('/addOrder', (req, res, next) => {
   orderClient.addOrder(order, (err, data) => {
     if (err !== null) {
       console.log(err);
+      // could not add order because bookID does not exist
+      return res.sendStatus(404);
     } else {
       console.log('addOrder response: ', data);
-      res.sendStatus(200);
+      return res.sendStatus(200);
     }
   });
 });
@@ -55,7 +59,7 @@ app.get('/orders', (req, res, next) => {
       console.log(err);
     } else {
       console.log('getOrders response: ', data);
-      res.status(200).json(data);
+      return res.status(200).json(data);
     }
   });
 });

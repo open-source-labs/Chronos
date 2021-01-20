@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('hello');
   const addBookBtn = document.getElementById('create1');
   addBookBtn.addEventListener('click', addBook);
   const addOrderBtn = document.getElementById('create3');
   addOrderBtn.addEventListener('click', addOrder);
   const getOrdersBtn = document.getElementById('orderInfo');
   getOrdersBtn.addEventListener('click', getOrders);
+  var display = document.querySelector('#display');
 });
+
 
 const addBook = () => {
   const title = document.getElementById('field_A1').value;
@@ -21,9 +22,24 @@ const addBook = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title, author, numberOfPages, publisher, bookID }),
-    }).catch(err => {
-      console.log(err);
-    });
+    })
+      .then((response) => {
+        if (response.status === 409) {
+          // remove currently displayed list items
+          while (display.firstChild) {
+            display.removeChild(display.firstChild);
+          }
+          
+          const listItem = document.createElement('li');
+          const listItemText = document.createTextNode('BookID must be unique.');
+          listItem.appendChild(listItemText);
+  
+          display.appendChild(listItem);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 
@@ -39,15 +55,28 @@ const addOrder = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ customerID, bookID, purchaseDate, deliveryDate }),
-    }).catch(err => {
-      console.log(err);
-    });
+    })
+    .then((response) => {
+      if (response.status === 404) {
+        // remove currently displayed list items
+        while (display.firstChild) {
+          display.removeChild(display.firstChild);
+        }
+        
+        const listItem = document.createElement('li');
+        const listItemText = document.createTextNode('BookID does not exist.');
+        listItem.appendChild(listItemText);
+
+        display.appendChild(listItem);
+      }
+    })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 
-const getOrders = () => {
-  const display = document.querySelector('#display');
-  
+const getOrders = () => {  
   // remove currently displayed list items
   while (display.firstChild) {
     display.removeChild(display.firstChild);
