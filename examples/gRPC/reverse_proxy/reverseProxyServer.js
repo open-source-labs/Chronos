@@ -53,7 +53,7 @@ app.post('/addOrder', (req, res, next) => {
   });
 });
 
-app.get('/orders', (req, res, next) => {
+app.get('/order', (req, res, next) => {
   orderClient.getOrders(null, (err, data) => {
     if (err !== null) {
       console.log(err);

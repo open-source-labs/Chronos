@@ -1,7 +1,7 @@
-const PROTO_PATH = './orders.proto';
+const PROTO_PATH = './order.proto';
 const grpc = require('@grpc/grpc-js');
-const client = require('./client.js');
-const OrderModel = require('./OrderModel.js')
+const client = require('./bookClient.js');
+const OrderModel = require('./orderModel.js')
 
 const protoLoader = require("@grpc/proto-loader");
 
@@ -12,10 +12,10 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   arrays: true
 });
 
-const ordersProto = grpc.loadPackageDefinition(packageDefinition);
+const orderProto = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
-server.addService(ordersProto.ProxyToOrder.service, {
+server.addService(orderProto.ProxyToOrder.service, {
   addOrder: (call, callback) => {
     const newOrder = {
       customerID: call.request.customerID,
@@ -66,7 +66,7 @@ server.addService(ordersProto.ProxyToOrder.service, {
             // console.log('after adding', tempObj);
             ordersWithInfo.push(tempObj);
             // console.log('ordersWithInfo', ordersWithInfo);
-            
+
             // return gRPC call when ordersWithInfo is completely built up
             if (ordersWithInfo.length === data.length) callback(null, { orderList: ordersWithInfo });
           });
