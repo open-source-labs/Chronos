@@ -65,6 +65,7 @@ const RequestTypesChart: React.FC = React.memo(() => {
             family: 'Roboto',
           },
           paper_bgcolor: 'white',
+          showlegend: false,
           legend: {
             orientation: 'h',
             xanchor: 'center',

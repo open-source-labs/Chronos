@@ -300,8 +300,8 @@ const RouteChart = React.memo(() => {
     edges: edgeList,
   };
   const options = {
-    height: '300px',
-    width: '300px',
+    height: '600px',
+    width: '600px',
     layout: {
       hierarchical: false,
     },
