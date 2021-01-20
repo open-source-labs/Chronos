@@ -24,18 +24,14 @@ const addBook = () => {
       body: JSON.stringify({ title, author, numberOfPages, publisher, bookID }),
     })
       .then((response) => {
-        if (response.status === 409) {
-          // remove currently displayed list items
-          while (display.firstChild) {
-            display.removeChild(display.firstChild);
-          }
-          
-          const listItem = document.createElement('li');
-          const listItemText = document.createTextNode('BookID must be unique.');
-          listItem.appendChild(listItemText);
-  
-          display.appendChild(listItem);
+        // remove currently displayed list items
+        while (display.firstChild) {
+          display.removeChild(display.firstChild);
         }
+        const listItem = document.createElement('li');
+        const listItemText = response.status === 409 ? 'BookID must be unique.' : 'Book added.';
+        listItem.appendChild(document.createTextNode(listItemText));
+        display.appendChild(listItem);
       })
       .catch(err => {
         console.log(err);
@@ -56,42 +52,36 @@ const addOrder = () => {
       },
       body: JSON.stringify({ customerID, bookID, purchaseDate, deliveryDate }),
     })
-    .then((response) => {
-      if (response.status === 404) {
+      .then((response) => {
         // remove currently displayed list items
         while (display.firstChild) {
           display.removeChild(display.firstChild);
         }
-        
         const listItem = document.createElement('li');
-        const listItemText = document.createTextNode('BookID does not exist.');
-        listItem.appendChild(listItemText);
-
+        const listItemText = response.status === 404 ? 'BookID does not exist.' : 'Order added.';
+        listItem.appendChild(document.createTextNode(listItemText));
         display.appendChild(listItem);
-      }
-    })
+      })
       .catch(err => {
         console.log(err);
       });
   }
 };
 
-const getOrders = () => {  
-  // remove currently displayed list items
-  while (display.firstChild) {
-    display.removeChild(display.firstChild);
-  }
-
-  fetch('http://localhost:3000/orders', {
+const getOrders = () => {
+  fetch('http://localhost:3000/order', {
     method: 'GET',
   })
     .then(response => response.json())
     .then(data => {
+      // remove currently displayed list items
+      while (display.firstChild) {
+        display.removeChild(display.firstChild);
+      }
       data.orderList.forEach(order => {
         const orderListItem = document.createElement('li');
         const orderListItemText = document.createTextNode(`CustomerID: ${order.customerID}. Purchase Date: ${order.purchaseDate}. Delivery Date: ${order.deliveryDate}. Book Info: ${order.title} by ${order.author}, ${order.publisher}, ${order.numberOfPages} pages.`);
         orderListItem.appendChild(orderListItemText);
-
         display.appendChild(orderListItem);
       });
     });
