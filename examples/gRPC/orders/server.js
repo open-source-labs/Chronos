@@ -66,8 +66,9 @@ server.addService(ordersProto.ProxyToOrder.service, {
             // console.log('after adding', tempObj);
             ordersWithInfo.push(tempObj);
             // console.log('ordersWithInfo', ordersWithInfo);
-            // return callback on the last call
-            if (i === data.length - 1) callback(null, { orderList: ordersWithInfo });
+            
+            // return gRPC call when ordersWithInfo is completely built up
+            if (ordersWithInfo.length === data.length) callback(null, { orderList: ordersWithInfo });
           });
         }
       })
