@@ -1,0 +1,19 @@
+{
+    "name": "horus",
+    "version": "1.0.0",
+    "description": "",
+    "main": "clientwrapper.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "mongoose": "^5.11.12",
+        "uuidv4": "^6.2.6",
+        "@grpc/grpc-js": "^1.2.3",
+        "@grpc/proto-loader": "^0.5.5",
+        "dotenv": "^8.2.0"
+    }
+}
