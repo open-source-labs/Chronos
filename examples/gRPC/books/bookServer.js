@@ -5,25 +5,22 @@ const protoLoader = require("@grpc/proto-loader");
 // mongodb imports and model imports
 // const mongoose = require('mongoose');
 require('dotenv').config(); // set up environment variables in .env
-const BookModel = require('./BookModel');
+const BookModel = require('./bookModel');
 
 // load books proto
-const PROTO_PATH = './books.proto';
+const PROTO_PATH = './book.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
   enums: String,
   arrays: true
 });
-const booksProto = grpc.loadPackageDefinition(packageDefinition);
+const bookProto = grpc.loadPackageDefinition(packageDefinition);
 // const 
 // create gRPC server and add services
 const server = new grpc.Server();
-server.addService(booksProto.ProxyToBook.service, {
+server.addService(bookProto.ProxyToBook.service, {
   addBook: (call, callback) => {
-    console.log('Book has been added');
-    console.log(call.request);
-
     // get the properties from the gRPC client call
     const { title, author, numberOfPages, publisher, bookID } = call.request;
     // create a book in our book collection
@@ -34,17 +31,29 @@ server.addService(booksProto.ProxyToBook.service, {
       publisher,
       bookID,
     })
-    callback(null, {});
+    .then((data) => {
+      callback(null, {});
+    })
+    .catch((err) => {
+      if (err.code === 11000) {
+        callback({
+          code: grpc.status.ALREADY_EXISTS,
+          details: "BookID already exists"
+        })
+      }
+    })
   },
 });
 
-server.addService(booksProto.OrderToBook.service, {
+server.addService(bookProto.OrderToBook.service, {
   getBookInfo: (call, callback) => {
-    console.log(call.request.bookID);
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
+<<<<<<< HEAD:examples/gRPC/books/server.js
       // console.log(data)
       console.log(call.metadata.get("key"));
       //data needs to be formatted first
+=======
+>>>>>>> dev:examples/gRPC/books/bookServer.js
       callback(null, data);
     })
     },
