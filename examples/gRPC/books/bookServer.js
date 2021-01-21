@@ -48,12 +48,6 @@ server.addService(bookProto.ProxyToBook.service, {
 server.addService(bookProto.OrderToBook.service, {
   getBookInfo: (call, callback) => {
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
-<<<<<<< HEAD:examples/gRPC/books/server.js
-      // console.log(data)
-      console.log(call.metadata.get("key"));
-      //data needs to be formatted first
-=======
->>>>>>> dev:examples/gRPC/books/bookServer.js
       callback(null, data);
     })
     },
