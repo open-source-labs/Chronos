@@ -21,5 +21,5 @@ const bookClient = new ProxyToBookService(
 const ClientWrapper = new HorusClientWrapper(bookClient, ProxyToBookService);
 
 // module.exports = bookClient;
-console.log('ClientWrapper:', ClientWrapper);
+// console.log('ClientWrapper:', ClientWrapper);
 module.exports = ClientWrapper;

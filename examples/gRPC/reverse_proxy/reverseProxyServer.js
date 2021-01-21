@@ -1,3 +1,5 @@
+const grpc = require('@grpc/grpc-js');
+
 const PORT = 3000;
 const express = require('express');
 const path = require('path');
@@ -23,6 +25,9 @@ app.post('/addBook', (req, res, next) => {
     publisher: req.body.publisher,
     bookID: req.body.bookID,
   };
+  // const meta = new grpc.Metadata();
+  // meta.add('key', 'whatupcouncil');
+  // console.log('meta:', meta);
   bookClient.AddBook(book, (err, data) => {
     if (err !== null) {
       console.log(err);
@@ -41,6 +46,8 @@ app.post('/addOrder', (req, res, next) => {
     purchaseDate: req.body.purchaseDate,
     deliveryDate: req.body.deliveryDate,
   };
+  // const meta = new grpc.Metadata();
+  // meta.add('key', 'whatupcouncil');
   orderClient.addOrder(order, (err, data) => {
     if (err !== null) {
       console.log(err);

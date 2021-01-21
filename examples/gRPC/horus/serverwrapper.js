@@ -9,7 +9,12 @@ function wrapMethods(metadata, methods) {
       // const id = call.metadata.id
       //request recieved mongo entry
       console.log('before server response');
+      // console.log('call received by server', call);
       methods[name](call, (error, response) => {
+        var myVals = call.metadata.get("key"); 
+        //My vals will be an array, so if you want to grab a single value:
+        var myVal = myVals[0];
+        console.log('metadata received by server', myVals);
         //getBookInfo
         // let meta = new grpc.Metadata();
         // call.sendMetadata(meta);
