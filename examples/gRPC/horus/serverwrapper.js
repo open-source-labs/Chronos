@@ -11,10 +11,10 @@ function wrapMethods(metadata, methods) {
       console.log('before server response');
       // console.log('call received by server', call);
       methods[name](call, (error, response) => {
-        var myVals = call.metadata.get("key"); 
-        //My vals will be an array, so if you want to grab a single value:
-        var myVal = myVals[0];
-        console.log('metadata received by server', myVals);
+        // var myVals = call.metadata.get("key"); 
+        // //My vals will be an array, so if you want to grab a single value:
+        // var myVal = myVals[0];
+        // console.log('metadata received by server', myVals);
         //getBookInfo
         // let meta = new grpc.Metadata();
         // call.sendMetadata(meta);

@@ -30,7 +30,7 @@ app.post('/addBook', (req, res, next) => {
   // console.log('meta:', meta);
   bookClient.AddBook(book, (err, data) => {
     if (err !== null) {
-      console.log(err);
+      console.log('addBook err:', err);
       // could not add book because duplicate ID
       return res.sendStatus(409);
     }

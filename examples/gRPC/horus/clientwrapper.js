@@ -15,17 +15,18 @@ function makeMethods(
       id: null,
       trace: {},
     };
+    
     clientWrapper[name] = function (message, callback, xCorrelatingId) {
       console.log('before client request');
       // if x-correlating-id exists, use it in client's request. if not, create one.
       // if (!xCorrelatingId) {
-      //   message.metadata.xCorrelatingId = 1234
-      // } else {
-      //   message.metadata.xCorrelatingId = xCorrelatingId;
-      // }
+        //   message.metadata.xCorrelatingId = 1234
+        // } else {
+          //   message.metadata.xCorrelatingId = xCorrelatingId;
+          // }
       const meta = new grpc.Metadata();
       meta.add('key', 'whatupcouncil');
-      console.log('meta:', meta);
+      console.log('metadata to add to client:', meta);
       client[name](message, meta, callback);
       // .on("metadata", (metadataFromServer) => {
       //   // metadata[name].id = JSON.parse(metadataFromServer.get('id')[0])
