@@ -23,6 +23,9 @@ server.addService(orderProto.ProxyToOrder.service, {
       purchaseDate: call.request.purchaseDate,
       deliveryDate: call.request.deliveryDate,
     };
+    // var myVals = call.metadata.get("key"); 
+    // var myVal = myVals[0];
+    // console.log('metadata received by orderServer', myVals);
     client.getBookInfo({bookID: newOrder.bookID}, (err, bookInfo) => {
       // make sure bookID exists
       if (bookInfo === undefined) {
@@ -81,3 +84,4 @@ server.bindAsync("127.0.0.1:30043", grpc.ServerCredentials.createInsecure(), () 
   server.start();
 });
 console.log("Server running at http://127.0.0.1:30043");
+console.log('client.service:', client.service);
