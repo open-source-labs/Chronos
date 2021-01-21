@@ -1,4 +1,4 @@
-const grpc = require('grpc');
+const grpc = require('@grpc/grpc-js');
 const { v4: uuidv4 } = require("uuid");
 function wrapMethods(metadata, methods) {
   const keys = Object.keys(methods);
@@ -27,11 +27,6 @@ class HorusServerWrapper {
     const wrappedMethods = wrapMethods(this.metadata, methods);
     server.addService(proto, wrappedMethods);
   }
-
-  acceptMetadata(metadataFromClient) {
-    this.metadata.id = metadataFromClient.id
-  }
-
 }
 
 module.exports = HorusServerWrapper;
