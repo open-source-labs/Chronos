@@ -1,7 +1,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const { ModuleResolutionKind } = require('typescript');
-const PROTO_PATH = './orders.proto';
+const PROTO_PATH = './order.proto';
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,

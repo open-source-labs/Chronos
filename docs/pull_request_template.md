@@ -4,7 +4,7 @@ References issue #. Please review this @teammember1, @teammember2.
 - [ ]  Bugfix (change which fixes an issue)
 - [ ]  New feature (change which adds functionality)
 - [ ]  Refactor (change which changes the codebase without affecting its external behavior)
-- [ ]  Non-breaking change (fix or feature that would causes existing functionality to work as expected)
+- [ ]  Non-breaking change (fix or feature that would cause existing functionality to work as expected)
 - [ ]  Breaking change (fix or feature that would cause existing functionality to not work as expected)
 # Purpose
 - Need to send either schema file or schema code to backend to generate new databases containing schema

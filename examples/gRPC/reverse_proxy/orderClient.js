@@ -2,7 +2,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const { ModuleResolutionKind } = require('typescript');
-const PROTO_PATH = './reverseproxy.proto';
+const PROTO_PATH = './reverseProxy.proto';
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
