@@ -5,7 +5,6 @@ function makeMethods(
   client,
   metadata,
   names,
-  severname,
 ) {
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
@@ -16,23 +15,18 @@ function makeMethods(
       trace: {},
     };
     clientWrapper[name] = function (message, callback) {
-      //start time
-      //before we send message
-      if (id !== undefined) message.metadata.id = id 
-      else {message.metadata.id = uuidv4()}
-      client[name](message, (error, response) => {
-        // if old metadataid exists, set metadata[name].id = old metadataid
-        callback(error, response);
-      }).on("metadata", (metadataFromServer) => {
-        metadata[name].id = JSON.parse(metadataFromServer.get('id')[0])
-        //write a mongo log here with time and id
-      });
+      console.log('before client request');
+      client[name](message, callback);
+      // .on("metadata", (metadataFromServer) => {
+      //   // metadata[name].id = JSON.parse(metadataFromServer.get('id')[0])
+      //   //write a mongo log here with time and id
+      // });
     };
   };
-
+}
 
 class HorusClientWrapper {
-  constructor(client, service, serviceName, severname) {
+  constructor(client, service) {
     this.metadata = {};
     const names = Object.keys(service.service);
     makeMethods(
@@ -40,11 +34,7 @@ class HorusClientWrapper {
       client,
       this.metadata,
       names,
-      serviceName,
     );
-  }
-  makeHandShakeWithServer(server, method, ) {
-    server.acceptMetadata(this.metadata[method]);
   }
 }
 

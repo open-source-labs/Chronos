@@ -1,18 +1,19 @@
-const grpc = require('grpc');
-const { v4: uuidv4 } = require("uuid");
+// const grpc = require('grpc');
+// const { v4: uuidv4 } = require("uuid");
 function wrapMethods(metadata, methods) {
   const keys = Object.keys(methods);
   const wrappedMethods = {};
   for (let i = 0; i < keys.length; i++) {
     const name = keys[i];
     wrappedMethods[name] = function (call, callback) {
-      const id = call.metadata.id
+      // const id = call.metadata.id
       //request recieved mongo entry
+      console.log('before server response');
       methods[name](call, (error, response) => {
         //getBookInfo
-        let meta = new grpc.Metadata();
-        call.sendMetadata(meta);
-        metadata.trace = "none";
+        // let meta = new grpc.Metadata();
+        // call.sendMetadata(meta);
+        // metadata.trace = "none";
         //reply sent mongo entry
         callback(error, response);
       });
