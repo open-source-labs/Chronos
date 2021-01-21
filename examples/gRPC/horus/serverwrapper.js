@@ -10,7 +10,10 @@ function wrapMethods(metadata, methods) {
       //request recieved mongo entry
       console.log('before server response');
       // console.log('call received by server', call);
-      methods[name](call, (error, response) => {
+      const idReceived = call.metadata.get('id')[0]; 
+      console.log('id received by serverwrapper: ', idReceived);
+
+      methods[name](call, idReceived, (error, response) => {
         // var myVals = call.metadata.get("key"); 
         // //My vals will be an array, so if you want to grab a single value:
         // var myVal = myVals[0];

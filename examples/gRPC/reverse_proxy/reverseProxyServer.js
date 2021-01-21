@@ -25,10 +25,10 @@ app.post('/addBook', (req, res, next) => {
     publisher: req.body.publisher,
     bookID: req.body.bookID,
   };
-  // const meta = new grpc.Metadata();
-  // meta.add('key', 'whatupcouncil');
-  // console.log('meta:', meta);
-  bookClient.AddBook(book, (err, data) => {
+  const id = new grpc.Metadata();
+  id.add('id', '1234');
+  console.log('id:', id);
+  bookClient.AddBook(book, id, (err, data) => {
     if (err !== null) {
       console.log('addBook err:', err);
       // could not add book because duplicate ID
