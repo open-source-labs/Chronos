@@ -23,7 +23,7 @@ app.post('/addBook', (req, res, next) => {
     publisher: req.body.publisher,
     bookID: req.body.bookID,
   };
-  bookClient.addBook(book, (err, data) => {
+  bookClient.AddBook(book, (err, data) => {
     if (err !== null) {
       console.log(err);
       // could not add book because duplicate ID

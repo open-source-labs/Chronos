@@ -1,3 +1,4 @@
+const HorusClientWrapper = require('../horus/clientwrapper');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const { ModuleResolutionKind } = require('typescript');
@@ -16,5 +17,9 @@ const bookClient = new ProxyToBookService(
     grpc.credentials.createInsecure()
 );
 
+// method names must match .proto file exactly
+const ClientWrapper = new HorusClientWrapper(bookClient, ProxyToBookService);
 
-module.exports = bookClient;
+// module.exports = bookClient;
+console.log('ClientWrapper:', ClientWrapper);
+module.exports = ClientWrapper;

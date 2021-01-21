@@ -42,5 +42,5 @@ const orderClient = new ProxyToOrderService(
 // }
 );
 
-
+console.log('orderClient: ', orderClient);
 module.exports = orderClient;
