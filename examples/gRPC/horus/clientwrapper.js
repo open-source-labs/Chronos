@@ -16,7 +16,7 @@ function makeMethods(
       trace: {},
     };
     
-    clientWrapper[name] = function (message, callback, xCorrelatingId) {
+    clientWrapper[name] = function (message, id, callback, xCorrelatingId) {
       console.log('before client request');
       // if x-correlating-id exists, use it in client's request. if not, create one.
       // if (!xCorrelatingId) {
@@ -24,10 +24,10 @@ function makeMethods(
         // } else {
           //   message.metadata.xCorrelatingId = xCorrelatingId;
           // }
-      const meta = new grpc.Metadata();
-      meta.add('key', 'whatupcouncil');
-      console.log('metadata to add to client:', meta);
-      client[name](message, meta, callback);
+      // const meta = new grpc.Metadata();
+      // meta.add('key', 'whatupcouncil');
+      // console.log('metadata to add to client:', meta);
+      client[name](message, id, callback);
       // .on("metadata", (metadataFromServer) => {
       //   // metadata[name].id = JSON.parse(metadataFromServer.get('id')[0])
       //   //write a mongo log here with time and id

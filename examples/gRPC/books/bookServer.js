@@ -24,10 +24,9 @@ const server = new grpc.Server();
  * SERVER WRAPPER
  */
 const proxyToBookServerWrapper = new HorusServerWrapper(server, bookProto.ProxyToBook.service, {
-  addBook: (call, callback) => {
-    const myVals = call.metadata.get('key'); 
-    const myVal = myVals[0];
-    console.log('metadata received by bookServer', myVals);
+  // server method should only take call, callback. but this seems to work. https://grpc.github.io/grpc/node/grpc.Server.html#~handleUnaryCall
+  addBook: (call, id, callback) => {
+    console.log('id in bookServer: ', id);
     // get the properties from the gRPC client call
     const { title, author, numberOfPages, publisher, bookID } = call.request;
     // create a book in our book collection

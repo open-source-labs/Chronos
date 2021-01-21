@@ -84,4 +84,3 @@ server.bindAsync("127.0.0.1:30043", grpc.ServerCredentials.createInsecure(), () 
   server.start();
 });
 console.log("Server running at http://127.0.0.1:30043");
-console.log('client.service:', client.service);

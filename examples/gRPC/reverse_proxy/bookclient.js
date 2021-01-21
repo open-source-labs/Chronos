@@ -18,8 +18,8 @@ const bookClient = new ProxyToBookService(
 );
 
 // method names must match .proto file exactly
-const ClientWrapper = new HorusClientWrapper(bookClient, ProxyToBookService);
+// const ClientWrapper = new HorusClientWrapper(bookClient, ProxyToBookService);
 
-// module.exports = bookClient;
+module.exports = bookClient;
 // console.log('ClientWrapper:', ClientWrapper);
-module.exports = ClientWrapper;
+// module.exports = ClientWrapper;
