@@ -42,7 +42,8 @@ server.addService(booksProto.OrderToBook.service, {
   getBookInfo: (call, callback) => {
     console.log(call.request.bookID);
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
-      console.log(data)
+      // console.log(data)
+      console.log(call.metadata.get("key"));
       //data needs to be formatted first
       callback(null, data);
     })
