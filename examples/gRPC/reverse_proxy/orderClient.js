@@ -1,4 +1,4 @@
-
+const HorusClientWrapper = require('../horus/clientwrapper');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 // const interceptors = require('@pionerlabs/grpc-interceptors');
@@ -43,5 +43,7 @@ const orderClient = new ProxyToOrderService(
 // }
 );
 
-// console.log('orderClient: ', orderClient);
-module.exports = orderClient;
+const ClientWrapper = new HorusClientWrapper(orderClient, ProxyToOrderService);
+
+// module.exports = orderClient;
+module.exports = ClientWrapper;

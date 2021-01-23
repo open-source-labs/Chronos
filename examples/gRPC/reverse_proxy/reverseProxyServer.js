@@ -2,6 +2,7 @@ const PORT = 3000;
 const express = require('express');
 const path = require('path');
 const grpc = require('@grpc/grpc-js');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const orderClient = require('./orderClient.js');
@@ -24,12 +25,12 @@ app.post('/addBook', (req, res, next) => {
     publisher: req.body.publisher,
     bookID: req.body.bookID,
   };
-  // maybe put this in app.use(*)?
+  // maybe put this in an app.use(*)?
   const meta = new grpc.Metadata();
-  meta.add('id', '10');
+  meta.add('id', uuidv4());
   console.log('metadata created in reverseProxy route: ', meta);
 
-  bookClient.AddBook(book, meta, (err, data) => {
+  bookClient.AddBook(book, (err, data) => {
     if (err !== null) {
       console.log('addBook err:', err);
       // could not add book because duplicate ID
@@ -47,9 +48,13 @@ app.post('/addOrder', (req, res, next) => {
     purchaseDate: req.body.purchaseDate,
     deliveryDate: req.body.deliveryDate,
   };
-  // const meta = new grpc.Metadata();
-  // meta.add('key', 'whatupcouncil');
-  orderClient.addOrder(order, (err, data) => {
+
+  // user has to create metadata and add it as a third argument to the method
+  const meta = new grpc.Metadata();
+  meta.add('id', uuidv4());
+  console.log('metadata created in reverseProxy route: ', meta);
+
+  orderClient.AddOrder(order, (err, data) => {
     if (err !== null) {
       console.log(err);
       // could not add order because bookID does not exist
@@ -58,18 +63,23 @@ app.post('/addOrder', (req, res, next) => {
       console.log('addOrder response: ', data);
       return res.sendStatus(200);
     }
-  });
+  }, meta);
 });
 
 app.get('/order', (req, res, next) => {
-  orderClient.getOrders(null, (err, data) => {
+  // create metadata with id
+  const meta = new grpc.Metadata();
+  meta.add('id', uuidv4());
+  console.log('metadata created in reverseProxy route: ', meta);
+
+  orderClient.GetOrders(null, (err, data) => {
     if (err !== null) {
       console.log(err);
     } else {
       console.log('getOrders response: ', data);
       return res.status(200).json(data);
     }
-  });
+  }, meta);
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
