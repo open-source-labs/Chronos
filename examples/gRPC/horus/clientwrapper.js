@@ -1,4 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
+const grpc = require('@grpc/grpc-js');
+
 
 function makeMethods(clientWrapper, client, metadata, names) {
   for (let i = 0; i < names.length; i++) {
@@ -9,14 +11,12 @@ function makeMethods(clientWrapper, client, metadata, names) {
       id: null,
       trace: {},
     };
+    const meta = new grpc.Metadata();
+    meta.add('id', '10');
+    console.log('metadata to be sent: ', meta.get('id'));
+
     clientWrapper[name] = function (message, callback) {
-      //start time
-      // before we send message
-      const meta = new grpc.Metadata();
-      meta.add('gRPC','is hard');
-      console.log(meta.get('gRPC'))
       client[name](message, meta, (error, response) => {
-        // if old metadataid exists, set metadata[name].id = old metadataid
         callback(error, response);
       });
     };
@@ -30,5 +30,9 @@ class HorusClientWrapper {
     makeMethods(this, client, this.metadata, names);
   }
 }
+
+HorusClientWrapper.prototype.link = function (server) {
+  this.currentMetaData = server.metadata;
+};
 
 module.exports = HorusClientWrapper;

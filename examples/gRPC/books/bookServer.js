@@ -40,14 +40,12 @@ const server = new grpc.Server();
 //   },
 // });
 const ServerWrapper = new HorusServerWrapper(server, booksProto.ProxyToBook.service, {
-  AddBook: async (call, callback) => {
-    console.log('Book has been added');
-    console.log(call.metadata.get('user-agent'));
-
+  AddBook: (call, callback) => {
+    // console.log(call.metadata)
     // get the properties from the gRPC client call
     const { title, author, numberOfPages, publisher, bookID } = call.request;
     // create a book in our book collection
-    await BookModel.create({
+    BookModel.create({
       title,
       author,
       numberOfPages,
