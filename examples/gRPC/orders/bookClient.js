@@ -30,12 +30,11 @@ const orderInterceptors = (options, nextCall) => {
 };
 
 const OrderToBookService = grpc.loadPackageDefinition(packageDefinition).OrderToBook;
-const orderClient = new OrderToBookService(
+const bookClient = new OrderToBookService(
   "localhost:30044",
   grpc.credentials.createInsecure()
 //   {
 //   interceptors: [orderInterceptors]
 // }
 );
-
-module.exports = orderClient;
+module.exports = bookClient;
