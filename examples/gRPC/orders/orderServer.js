@@ -45,6 +45,10 @@ server.addService(orderProto.ProxyToOrder.service, {
 
   getOrders: (call, callback) => {
     const ordersWithInfo = [];
+  // check call.metadata
+  //expect metadata send to book client
+    // eslint-disable-next-line no-console
+    console.log(call.metadata);
     OrderModel.find({})
       .then((data) => {
         // if no orders in database
@@ -84,3 +88,5 @@ server.bindAsync("127.0.0.1:30043", grpc.ServerCredentials.createInsecure(), () 
   server.start();
 });
 console.log("Server running at http://127.0.0.1:30043");
+
+

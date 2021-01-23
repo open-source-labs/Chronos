@@ -1,9 +1,7 @@
-
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const interceptors = require('@pionerlabs/grpc-interceptors');
 const { ModuleResolutionKind } = require('typescript');
-const PROTO_PATH = './reverseProxy.proto';
+const PROTO_PATH = './orders.proto';
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
@@ -11,19 +9,19 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   enums: String,
   arrays: true,
 });
-
-
 /**
- * Create Interceptors 
+ * gRPC Interceptors 
+ * @param {*} options 
+ * @param {*} nextCall 
  */
-
 // const orderInterceptors = (options, nextCall) => {
 //   return new grpc.InterceptingCall(nextCall(options), {
 //     start(metadata, listener, next) {
 //       metadata = new grpc.Metadata();
-//       metadata.add('key', JSON.stringify(420));
+//       // metadata.add('key', JSON.stringify(420));
 //       next(metadata, {
 //         onReceiveMetadata(metadata,next) {
+//           console.log(metadata.get('key'));
 //           next(metadata);
 //         }
 //       });
@@ -31,17 +29,13 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 //   });
 // };
 
-/**
- * Proxy to Order
- */
-const ProxyToOrderService = grpc.loadPackageDefinition(packageDefinition).ProxyToOrder;
-const orderClient = new ProxyToOrderService(
-'localhost:30043',
- grpc.credentials.createInsecure()
+const OrderToBookService = grpc.loadPackageDefinition(packageDefinition).OrderToBook;
+const orderClient = new OrderToBookService(
+  "localhost:30044",
+  grpc.credentials.createInsecure()
 //   {
 //   interceptors: [orderInterceptors]
 // }
 );
 
-// console.log('orderClient: ', orderClient);
 module.exports = orderClient;

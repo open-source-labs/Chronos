@@ -1,12 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const grpc = require('@grpc/grpc-js');
 
-function makeMethods(
-  clientWrapper,
-  client,
-  metadata,
-  names,
-) {
+
+function makeMethods(clientWrapper, client, metadata, names) {
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
     metadata[name] = {
@@ -15,38 +11,28 @@ function makeMethods(
       id: null,
       trace: {},
     };
-    
-    clientWrapper[name] = function (message, id, callback, xCorrelatingId) {
-      console.log('before client request');
-      // if x-correlating-id exists, use it in client's request. if not, create one.
-      // if (!xCorrelatingId) {
-        //   message.metadata.xCorrelatingId = 1234
-        // } else {
-          //   message.metadata.xCorrelatingId = xCorrelatingId;
-          // }
-      // const meta = new grpc.Metadata();
-      // meta.add('key', 'whatupcouncil');
-      // console.log('metadata to add to client:', meta);
-      client[name](message, id, callback);
-      // .on("metadata", (metadataFromServer) => {
-      //   // metadata[name].id = JSON.parse(metadataFromServer.get('id')[0])
-      //   //write a mongo log here with time and id
-      // });
+    const meta = new grpc.Metadata();
+    meta.add('id', '10');
+    console.log('metadata to be sent: ', meta.get('id'));
+
+    clientWrapper[name] = function (message, callback) {
+      client[name](message, meta, (error, response) => {
+        callback(error, response);
+      });
     };
-  };
+  }
 }
 
 class HorusClientWrapper {
   constructor(client, service) {
     this.metadata = {};
     const names = Object.keys(service.service);
-    makeMethods(
-      this,
-      client,
-      this.metadata,
-      names,
-    );
+    makeMethods(this, client, this.metadata, names);
   }
 }
+
+HorusClientWrapper.prototype.link = function (server) {
+  this.currentMetaData = server.metadata;
+};
 
 module.exports = HorusClientWrapper;

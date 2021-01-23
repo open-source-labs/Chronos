@@ -1,28 +1,13 @@
-// const grpc = require('grpc');
-// const { v4: uuidv4 } = require("uuid");
+const grpc = require('@grpc/grpc-js');
+const { v4: uuidv4 } = require("uuid");
 function wrapMethods(metadata, methods) {
   const keys = Object.keys(methods);
   const wrappedMethods = {};
   for (let i = 0; i < keys.length; i++) {
     const name = keys[i];
     wrappedMethods[name] = function (call, callback) {
-      // const id = call.metadata.id
-      //request recieved mongo entry
-      console.log('before server response');
-      // console.log('call received by server', call);
-      const idReceived = call.metadata.get('id')[0]; 
-      console.log('id received by serverwrapper: ', idReceived);
-
-      methods[name](call, idReceived, (error, response) => {
-        // var myVals = call.metadata.get("key"); 
-        // //My vals will be an array, so if you want to grab a single value:
-        // var myVal = myVals[0];
-        // console.log('metadata received by server', myVals);
-        //getBookInfo
-        // let meta = new grpc.Metadata();
-        // call.sendMetadata(meta);
-        // metadata.trace = "none";
-        //reply sent mongo entry
+      console.log('metadata received by serverwrapper: ', call.metadata);
+      methods[name](call, (error, response) => {
         callback(error, response);
       });
     };
@@ -36,11 +21,6 @@ class HorusServerWrapper {
     const wrappedMethods = wrapMethods(this.metadata, methods);
     server.addService(proto, wrappedMethods);
   }
-
-  acceptMetadata(metadataFromClient) {
-    this.metadata.id = metadataFromClient.id
-  }
-
 }
 
 module.exports = HorusServerWrapper;
