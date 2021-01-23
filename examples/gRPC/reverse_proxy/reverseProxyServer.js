@@ -1,5 +1,3 @@
-const grpc = require('@grpc/grpc-js');
-
 const PORT = 3000;
 const express = require('express');
 const path = require('path');
@@ -26,8 +24,12 @@ app.post('/addBook', (req, res, next) => {
     publisher: req.body.publisher,
     bookID: req.body.bookID,
   };
+  // maybe put this in app.use(*)?
+  const meta = new grpc.Metadata();
+  meta.add('id', '10');
+  console.log('metadata created in reverseProxy route: ', meta);
 
-  bookClient.AddBook(book, (err, data) => {
+  bookClient.AddBook(book, meta, (err, data) => {
     if (err !== null) {
       console.log('addBook err:', err);
       // could not add book because duplicate ID

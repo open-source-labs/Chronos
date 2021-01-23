@@ -1,7 +1,7 @@
 
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const interceptors = require('@pionerlabs/grpc-interceptors');
+// const interceptors = require('@pionerlabs/grpc-interceptors');
 const { ModuleResolutionKind } = require('typescript');
 const PROTO_PATH = './reverseProxy.proto';
 

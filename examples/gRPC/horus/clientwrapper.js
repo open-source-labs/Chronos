@@ -11,11 +11,11 @@ function makeMethods(clientWrapper, client, metadata, names) {
       id: null,
       trace: {},
     };
-    const meta = new grpc.Metadata();
-    meta.add('id', '10');
-    console.log('metadata to be sent: ', meta.get('id'));
-
-    clientWrapper[name] = function (message, callback) {
+    
+    clientWrapper[name] = function (message, meta, callback) {
+      // const meta = new grpc.Metadata();
+      // meta.add('id', '10');
+      // console.log('metadata created in clientwrapper: ', meta);
       client[name](message, meta, (error, response) => {
         callback(error, response);
       });
