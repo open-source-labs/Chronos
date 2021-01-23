@@ -39,7 +39,7 @@ const server = new grpc.Server();
 //     callback(null, {});
 //   },
 // });
-const ServerWrapper = new HorusServerWrapper(server, booksProto.ProxyToBook.service, {
+const ProxyToBookWrapper = new HorusServerWrapper(server, booksProto.ProxyToBook.service, {
   AddBook: (call, callback) => {
     // console.log(call.metadata)
     // get the properties from the gRPC client call
@@ -55,9 +55,10 @@ const ServerWrapper = new HorusServerWrapper(server, booksProto.ProxyToBook.serv
     callback(null, {});
   },
 });
-server.addService(booksProto.OrderToBook.service, {
+
+const OrderToBookWrapper = new HorusServerWrapper(server, booksProto.OrderToBook.service, {
   getBookInfo: (call, callback) => {
-    console.log(call.request.bookID);
+    console.log(call.metadata);
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
       // console.log(data)
       // console.log(call.metadata.get("key"));
@@ -66,6 +67,36 @@ server.addService(booksProto.OrderToBook.service, {
     });
   },
 });
+
+
+// server.addService(booksProto.booksProto.ProxyToBook.service, {
+//   addBook: (call, callback) => {
+//     // console.log(call.metadata)
+//     // get the properties from the gRPC client call
+//     const { title, author, numberOfPages, publisher, bookID } = call.request;
+//     // create a book in our book collection
+//     BookModel.create({
+//       title,
+//       author,
+//       numberOfPages,
+//       publisher,
+//       bookID,
+//     });
+//     callback(null, {});
+//   },
+// });
+
+// server.addService(booksProto.OrderToBook.service, {
+//   getBookInfo: (call, callback) => {
+//     console.log(call.request.bookID);
+//     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
+//       // console.log(data)
+//       // console.log(call.metadata.get("key"));
+//       //data needs to be formatted first
+//       callback(null, data);
+//     });
+//   },
+// });
 
 // start server
 server.bindAsync("127.0.0.1:30044", grpc.ServerCredentials.createInsecure(), () => {
