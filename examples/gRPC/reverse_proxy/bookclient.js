@@ -1,4 +1,3 @@
-const HorusClientWrapper = require('../horus/clientwrapper');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const { ModuleResolutionKind } = require('typescript');
