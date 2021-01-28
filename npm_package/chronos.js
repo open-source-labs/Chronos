@@ -3,6 +3,8 @@ const postgres = require('./controllers/postgres.js')
 const postgresGRPC = require('./controllers/postgresGRPC.js')
 const mongo = require('./controllers/mongo.js')
 const mongoGRPC = require('./controllers/mongoGRPC.js')
+const ClientWrapper = require('./wrappers/ClientWrapper.js')
+const ServerWrapper = require('./wrappers/ServerWrapper.js')
 const { validateInput, addNotifications } = require('./controllers/helpers');
 
 let userConfig = {};
@@ -106,5 +108,11 @@ chronos.track = () => {
     postgresGRPC.health(userConfig);
   }
 };
+chronos.ServerWrapper = (server, proto, methods) => {
+   return new ServerWrapper(server, proto, methods)
+}
+chronos.ClientWrapper = (client, service) => {
+  return new ClientWrapper(client, service)
+}
 
 module.exports = chronos;
