@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
 import HomeSharpIcon from '@material-ui/icons/HomeSharp';
@@ -8,6 +8,8 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../stylesheets/SidebarContainer.scss';
+
+import { DashboardContext } from '../context/DashboardContext';
 
 const iconStyles = {
   WebkitBoxSizing: 'border-box',
@@ -19,6 +21,8 @@ const iconStyles = {
 }
 
 const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Element {
+  const { mode, changeMode } = useContext(DashboardContext);
+  console.log(mode);
   return (
   <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
