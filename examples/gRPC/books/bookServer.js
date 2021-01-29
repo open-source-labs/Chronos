@@ -1,7 +1,7 @@
 // grpc imports
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require("@grpc/proto-loader");
-const HorusServerWrapper = require('../horus/serverwrapper');
+const chronos = require('chronos');
 
 // mongodb imports and model imports
 // const mongoose = require('mongoose');
@@ -21,25 +21,7 @@ const booksProto = grpc.loadPackageDefinition(packageDefinition);
 // create gRPC server and add services
 const server = new grpc.Server();
 
-// server.addService(booksProto.ProxyToBook.service, {
-//   addBook: (call, callback) => {
-//     console.log('Book has been added');
-//     console.log(call.request);
-
-//     // get the properties from the gRPC client call
-//     const { title, author, numberOfPages, publisher, bookID } = call.request;
-//     // create a book in our book collection
-//     BookModel.create({
-//       title,
-//       author,
-//       numberOfPages,
-//       publisher,
-//       bookID,
-//     })
-//     callback(null, {});
-//   },
-// });
-const ProxyToBookWrapper = new HorusServerWrapper(server, booksProto.ProxyToBook.service, {
+const ProxyToBookWrapper = chronos.ServerWrapper(server, booksProto.ProxyToBook.service, {
   AddBook: (call, callback) => {
     // console.log(call.metadata)
     // get the properties from the gRPC client call
@@ -56,47 +38,15 @@ const ProxyToBookWrapper = new HorusServerWrapper(server, booksProto.ProxyToBook
   },
 });
 
-const OrderToBookWrapper = new HorusServerWrapper(server, booksProto.OrderToBook.service, {
+const OrderToBookWrapper = chronos.ServerWrapper(server, booksProto.OrderToBook.service, {
   getBookInfo: (call, callback) => {
     console.log(call.metadata);
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
-      // console.log(data)
-      // console.log(call.metadata.get("key"));
       //data needs to be formatted first
       callback(null, data);
     });
   },
 });
-
-
-// server.addService(booksProto.booksProto.ProxyToBook.service, {
-//   addBook: (call, callback) => {
-//     // console.log(call.metadata)
-//     // get the properties from the gRPC client call
-//     const { title, author, numberOfPages, publisher, bookID } = call.request;
-//     // create a book in our book collection
-//     BookModel.create({
-//       title,
-//       author,
-//       numberOfPages,
-//       publisher,
-//       bookID,
-//     });
-//     callback(null, {});
-//   },
-// });
-
-// server.addService(booksProto.OrderToBook.service, {
-//   getBookInfo: (call, callback) => {
-//     console.log(call.request.bookID);
-//     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
-//       // console.log(data)
-//       // console.log(call.metadata.get("key"));
-//       //data needs to be formatted first
-//       callback(null, data);
-//     });
-//   },
-// });
 
 // start server
 server.bindAsync("127.0.0.1:30044", grpc.ServerCredentials.createInsecure(), () => {

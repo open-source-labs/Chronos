@@ -1,7 +1,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const PROTO_PATH = './reverseProxy.proto';
-const HorusClientWrapper = require('../horus/clientwrapper');
+const chronos = require('chronos');
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -14,7 +14,6 @@ const bookClient = new ProxyToBookService(
     "localhost:30044",
     grpc.credentials.createInsecure()
 );
-const ClientWrapper = new HorusClientWrapper(bookClient, ProxyToBookService);
+const ClientWrapper = chronos.ClientWrapper(bookClient, ProxyToBookService);
 
-// module.exports = bookClient;
 module.exports = ClientWrapper;
