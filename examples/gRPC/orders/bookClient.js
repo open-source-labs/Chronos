@@ -1,8 +1,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { ModuleResolutionKind } = require('typescript');
 const PROTO_PATH = './order.proto';
-const HorusClientWrapper = require('../horus/clientwrapper');
+const chronos = require('chronos');
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
@@ -36,7 +35,7 @@ const bookClient = new OrderToBookService(
   grpc.credentials.createInsecure()
 );
 
-const ClientWrapper = new HorusClientWrapper(bookClient, OrderToBookService);
+const ClientWrapper = chronos.ClientWrapper(bookClient, OrderToBookService);
 
 module.exports = ClientWrapper;
 // module.exports = bookClient;

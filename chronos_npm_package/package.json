@@ -1,6 +1,6 @@
 {
   "name": "chronos",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "chronos.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@grpc/grpc-js": "^1.2.5",
     "axios": "^0.21.1",
     "hpropagate": "0.0.7",
     "mongoose": "^5.11.13",

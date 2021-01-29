@@ -1,4 +1,4 @@
-const grpc = require('@grpc/grpc-js');
+
 const { v4: uuidv4 } = require("uuid");
 
 function wrapMethods(server, metadataHolder, methods) {
