@@ -11,6 +11,100 @@ import {
 
 import { CommsContext } from '../context/CommsContext';
 
+
+const commsData = [
+  {
+    "_id":{"$oid":"6004b4e1d3f0bbd0f6a4081b"},
+    "microservice":"reverse-proxy",
+    "endpoint":"/books/createbook",
+    "request":"POST",
+    "correlatingid":"700e36a8-334f-4ffb-babd-c0b3ec2a27f0",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921185595"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b4e18582d3dda5bb940f"},
+    "microservice":"books",
+    "endpoint":"/books/createbook",
+    "request":"POST",
+    "correlatingid":"700e36a8-334f-4ffb-babd-c0b3ec2a27f0",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921185582"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b507d3f0bbd0f6a4082f"},
+    "microservice":"reverse-proxy",
+    "endpoint":"/customers/createcustomer",
+    "request":"POST",
+    "correlatingid":"8d77bfc8-fce2-4279-ae6f-cccbb9277686",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921223980"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b507d3f0bbd0f6a4082f"},
+    "microservice":"reverse-proxy",
+    "endpoint":"/customers/createcustomer",
+    "request":"POST",
+    "correlatingid":"8d77bfc8-fce2-4279-ae6f-cccbb9277686",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921223980"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b52e4a699be366634bf2"},
+    "microservice":"customers",
+    "endpoint":"/customers/createcustomer",
+    "request":"POST",
+    "correlatingid":"1086e81d-01b6-4b52-aabb-ae47430fccaf",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921262603"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b52ed3f0bbd0f6a40843"},
+    "microservice":"reverse-proxy",
+    "endpoint":"/customers/createcustomer",
+    "request":"POST",
+    "correlatingid":"1086e81d-01b6-4b52-aabb-ae47430fccaf",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921262603"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b543d3f0bbd0f6a4084e"},
+    "microservice":"reverse-proxy",
+    "endpoint":"/orders/createorder",
+    "request":"POST",
+    "correlatingid":"43f0cc03-7e1d-49b0-84bd-740e82fa4326",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921283121"}},
+    "__v":{"$numberInt":"0"}
+  },
+  {
+    "_id":{"$oid":"6004b5433c9fc5eb9216873c"},
+    "microservice":"orders",
+    "endpoint":"/orders/createorder",
+    "request":"POST",
+    "correlatingid":"43f0cc03-7e1d-49b0-84bd-740e82fa4326",
+    "responsestatus":{"$numberInt":"200"},
+    "responsemessage":"OK",
+    "time":{"$date":{"$numberLong":"1610921283123"}},
+    "__v":{"$numberInt":"0"}
+  },
+]
+
+
+
 //Styling for the table
 const Styles = styled.div`
   padding: 1rem;
@@ -44,7 +138,10 @@ const Styles = styled.div`
 // const LogsTable = React.memo(() => {
 //   const communicationsData = useContext(CommsContext).commsData
 
-const Table = () => 
+const data = commsData;
+
+const Table = () => {
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -85,8 +182,8 @@ const Table = () =>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {firstPageRows.map((row, 1) => {
-            prepareRow(row)
+          {/* {firstPageRows.map((row, 0) => {
+            prepareRow(row) */}
             return (
               <tr {...row.getTowProps()}>
               {row.cells.map(cell => {
@@ -125,7 +222,8 @@ const Table = () =>
               })}
               </tr>
             );
-          })}
+          {/* })} */}
+
         </tbody>
       </table>
       <div>Showing the first {numberOfRows} of {row.length} rows</div>
@@ -168,11 +266,18 @@ const LogsTable = () => {
       accessor: 'responsemessage',
     }
   ], [])
+
+  return (
+    <Styles>
+      <Table columns={columns} data={data} />
+    </Styles>
+  )
 }
 
-const data = React.useMemo(() => {
-  const communicationsData = useContext(CommsContext).commsData;
-})
+
+// const data = React.useMemo(() => {
+//   const communicationsData = useContext(CommsContext).commsData;
+// })
 
 export default LogsTable;
 
