@@ -24,7 +24,7 @@ export const DashboardContext = createContext<any>(null);
  */
 const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
-
+  const [mode, setMode] = useState<string>('light mode');
   /**
    * Sends a request for all existing applications belonging to a user
    * and sets the applications state to the list of app names
@@ -57,9 +57,17 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
     const result = ipcRenderer.sendSync('deleteApp', index);
     setApplications(result);
   }, []);
+  
+  /**
+   * Sets Light and Dark mode for application from Settings
+   */
 
+  const changeMode = useCallback((currMode: string) => {
+    setMode(currMode);
+    // console.log('hello');
+  }, [])
   return (
-    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp }}>
+    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp, mode, changeMode }}>
       {children}
     </DashboardContext.Provider>
   );

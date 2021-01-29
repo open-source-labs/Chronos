@@ -24,7 +24,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
-
 // MODALS
 import AddModal from '../modals/AddModal';
 import ServicesModal from '../modals/ServicesModal';
@@ -32,6 +31,7 @@ import ServicesModal from '../modals/ServicesModal';
 // STYLESHEETS
 // import '../stylesheets/Occupied.scss';
 import '../stylesheets/Occupied.scss';
+
 
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
@@ -46,7 +46,7 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
-  const { applications, getApplications, deleteApp } = useContext(DashboardContext);
+  const { applications, getApplications, deleteApp, mode, changeMode } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
@@ -54,7 +54,9 @@ const Occupied = React.memo(() => {
   const [searchTerm, setSearchTerm] = useState<string>('Search...');
   // Dynamic refs
   const delRef = useRef<any>([]);
-
+  //check context from dashboard
+  console.log(mode);
+  
   useEffect(() => {
     setServicesData([]);
     getApplications();
@@ -75,8 +77,61 @@ const Occupied = React.memo(() => {
       setOpen(true);
     }
   };
-
-  const useStyles = makeStyles<Theme, StyleProps>(theme => ({
+  //Conditional Rendering of UI Modals for Light and Dark Mode
+  const useStylesDark = makeStyles<Theme, StyleProps>(theme => ({
+    // ALL CARDS
+    paper: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignContent: 'center',
+      alignItems: 'center',
+      position: 'relative',
+      overflow: 'visible',
+      height: 280,
+      width: 280,
+      textAlign: 'center',
+      color: '#ffffff', // dark mode
+      whiteSpace: 'nowrap',
+      backgroundColor: 'transparent', // dark mode
+      borderRadius: 3,
+      border: '0',
+      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', // dark mode
+      '&:hover, &.Mui-focusVisible': {
+        backgroundColor: 'rgba(255, 255, 255, 0.2)', // dark mode
+        color: '#ffffff',
+        fontWeight: 600,
+      },
+    },
+    iconbutton: {
+      boxShadow: 'none',
+      color: 'none',
+      visibility: 'hidden',
+    },
+    btnStyle: {
+      position: 'absolute',
+      top: -10,
+      left: -72,
+      margin: '0',
+      color: '#eeeeee',
+      borderRadius: '0',
+      backgroundColor: 'none',
+      visibility: 'visible',
+    },
+    icon: {
+      width: '75px',
+      height: '75px',
+      boxShadow: 'none',
+    },
+    // ALL CARDS: CONTENT
+    fontStyles: {
+      fontSize: '18px',
+      fontFamily: 'Roboto',
+      fontWeight: 300,
+      // color: '#444d56',
+      color: '#ffffff', // dark mode
+    }
+  }));
+  const useStylesLight = makeStyles<Theme, StyleProps>(theme => ({
     // ALL CARDS
     paper: {
       display: 'flex',
@@ -130,7 +185,7 @@ const Occupied = React.memo(() => {
     }
   }));
 
-  const classes = useStyles({} as StyleProps);
+  let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
 
   return (
     <div className="entireArea">
