@@ -68,7 +68,7 @@ chronos.track = () => {
    * - 'communications' collection will be created which creates a new document for every
    * endpoint that the user Request travels through (tracked with hpropograte)
    */
-  if (database.type === 'MongoDB' ** database.connection === 'REST') {
+  if (database.type === 'MongoDB' && database.connection === 'REST') {
     mongo.connect(userConfig);
     mongo.services(userConfig);
     mongo.docker(userConfig);
@@ -114,5 +114,7 @@ chronos.ServerWrapper = (server, proto, methods) => {
 chronos.ClientWrapper = (client, service) => {
   return new ClientWrapper(client, service)
 }
-
+chronos.link = (client, server) => {
+  client.metadata = server.metadataHolder
+}
 module.exports = chronos;

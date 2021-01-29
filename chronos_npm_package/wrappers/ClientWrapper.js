@@ -1,16 +1,11 @@
-const { v4: uuidv4 } = require("uuid");
+
 const grpc = require('@grpc/grpc-js');
 
 
 function makeMethods(clientWrapper, client, metadata, names) {
+  
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
-    metadata[name] = {
-      methodName: name,
-      responseTime: null,
-      id: null,
-      trace: {},
-    };
     
     clientWrapper[name] = function (message, callback, meta = null) {
       let currentMetadata;
@@ -18,7 +13,7 @@ function makeMethods(clientWrapper, client, metadata, names) {
         currentMetadata = meta;
       } else {
         //get metadata from link 
-        currentMetadata = this.link.metadata;
+        currentMetadata = this.metadata.metadata;
       }
       console.log('metadata in clientwrapper: ', currentMetadata);
       client[name](message, currentMetadata, (error, response) => {

@@ -38,7 +38,7 @@ app.post('/addBook', (req, res, next) => {
     }
     console.log('addBook response: ', data);
     return res.sendStatus(200);
-  });
+  }, meta);
 });
 
 app.post('/addOrder', (req, res, next) => {

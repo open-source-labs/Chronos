@@ -13,6 +13,7 @@
     "dependencies": {
         "@grpc/grpc-js": "^1.2.5",
         "@grpc/proto-loader": "^0.5.5",
+        "chronos": "file:../../../chronos_npm_package",
         "express": "^4.17.1"
     }
 }
