@@ -1,4 +1,5 @@
 const chronos = require('chronos');
+require('./chronos-config')
 
 const PROTO_PATH = './order.proto';
 const grpc = require('@grpc/grpc-js');

@@ -2,7 +2,6 @@
 const si = require('systeminformation');
 const { Client } = require('pg');
 const alert = require('./alert');
-// const mwSqlDocker = require('./mwSqlDocker.js');
 
 let client;
 
