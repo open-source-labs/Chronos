@@ -1,4 +1,4 @@
-const HorusServerWrapper = require('../horus/serverwrapper');
+const chronos = require('chronos');
 
 const PROTO_PATH = './order.proto';
 const grpc = require('@grpc/grpc-js');
@@ -20,7 +20,7 @@ const server = new grpc.Server();
 /**
  * WRAPPED
  */
-const ServerWrapper = new HorusServerWrapper(server, orderProto.ProxyToOrder.service, {
+const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.service, {
   AddOrder: (call, callback) => {
     const newOrder = {
       customerID: call.request.customerID,

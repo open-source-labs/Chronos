@@ -1,6 +1,5 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { ModuleResolutionKind } = require('typescript');
 const PROTO_PATH = './reverseProxy.proto';
 const HorusClientWrapper = require('../horus/clientwrapper');
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
