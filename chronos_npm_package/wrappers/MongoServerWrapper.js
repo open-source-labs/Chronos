@@ -1,6 +1,5 @@
 const grpc = require('@grpc/grpc-js');
 
-
 function wrapMethods(server, metadataHolder, methods) {
   const keys = Object.keys(methods);
   const wrappedMethods = {};

@@ -1,6 +1,6 @@
-
+const mongoose = require('mongoose');
+const gRPC_Model = require('../models/gRPC_CommunciationModel')
 const grpc = require('@grpc/grpc-js');
-
 
 function makeMethods(clientWrapper, client, metadata, names) {
   
@@ -16,6 +16,7 @@ function makeMethods(clientWrapper, client, metadata, names) {
         currentMetadata = this.metadata.metadata;
       }
       console.log('metadata in clientwrapper: ', currentMetadata);
+
       client[name](message, currentMetadata, (error, response) => {
         callback(error, response);
       });

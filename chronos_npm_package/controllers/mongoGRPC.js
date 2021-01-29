@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const si = require('systeminformation');
 const alert = require('./alert.js');
-const CommunicationModel = require('../models/CommunicationModel');
 const ServicesModel = require('../models/ServicesModel');
 const HealthModelFunc = require('../models/HealthModel');
 const ContainerInfoFunc = require('../models/ContainerInfo');

@@ -20,7 +20,7 @@ const helpers = {
       throw new Error('Invalid input "database URI": Please provide the URI to your database');
     }
     if (!database.connection || typeof database.connection !== 'string') {
-      throw new Error('Invalid input "database connection type: Please provide the type of conneection');
+      throw new Error('Invalid input "database connection type: Please provide the type of connection');
     }
 
     // Validate database type

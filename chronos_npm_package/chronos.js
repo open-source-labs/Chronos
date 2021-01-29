@@ -3,8 +3,10 @@ const postgres = require('./controllers/postgres.js')
 const postgresGRPC = require('./controllers/postgresGRPC.js')
 const mongo = require('./controllers/mongo.js')
 const mongoGRPC = require('./controllers/mongoGRPC.js')
-const ClientWrapper = require('./wrappers/ClientWrapper.js')
-const ServerWrapper = require('./wrappers/ServerWrapper.js')
+const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js')
+const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js')
+const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js')
+const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js')
 const { validateInput, addNotifications } = require('./controllers/helpers');
 
 let userConfig = {};
@@ -66,7 +68,7 @@ chronos.track = () => {
    * - Information is collected if the microservice is containerized
    *
    * - 'communications' collection will be created which creates a new document for every
-   * endpoint that the user Request travels through (tracked with hpropograte)
+   * endpoint that the user Request travels through (tracked with hpropograte) for express routes
    */
   if (database.type === 'MongoDB' && database.connection === 'REST') {
     mongo.connect(userConfig);
@@ -109,10 +111,14 @@ chronos.track = () => {
   }
 };
 chronos.ServerWrapper = (server, proto, methods) => {
-   return new ServerWrapper(server, proto, methods)
+  const { database } = userConfig;
+  if (database.type === 'MongoDB') return new MongoServerWrapper(server, proto, methods)
+  else if (database.type === 'PostgreSQL') return new PostgresServerWrapper(server, proto, methods)
 }
 chronos.ClientWrapper = (client, service) => {
-  return new ClientWrapper(client, service)
+  const { database } = userConfig;
+  if (database.type === 'MongoDB') new MongoClientWrapper(client, service)
+  else if (database.type === 'PostgreSQL') return new PostgresClientWrapper(client, service)
 }
 chronos.link = (client, server) => {
   client.metadata = server.metadataHolder
