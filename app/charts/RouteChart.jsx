@@ -5,7 +5,6 @@ import Graph from 'react-graph-vis';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
-
   // gather all communicationsData and sort them using matching correlatingid.
   // resObj { key = correlatingid : value = array of objects{ microservice , time} }
   const resObj = {};

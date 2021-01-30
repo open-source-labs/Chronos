@@ -6,8 +6,10 @@ import {
   useExpanded,
 } from 'react-table';
 
-// import { CommsContext } from '../context/CommsContext';
+import { CommsContext } from '../context/CommsContext';
 
+// const testData = useContext(CommsContext.commsData);
+// console.log(testData);
 
 const commsData = [
   {
@@ -192,7 +194,7 @@ const Table = ({ columns, data }) => {
                         : 'white',
                     }}
                   >
-                    {cell.isGroup ? (
+                    {cell.isGrouped ? (
                       // If it's a grouped cell, add an expander and row count
                       <>
                         <span {...row.getToggleRowExpandedProps()}>
@@ -254,16 +256,14 @@ const LogsTable = () => {
       accessor: 'responsemessage',
     }
   ], []);
-
-  const data = React.useMemo(() => [], []);
-
+  
+  const data = useContext(CommsContext).commsData;
+  
   return (
     <Styles>
       <Table columns={columns} data={data} />
     </Styles>
   );
 };
-
-
 
 export default LogsTable;
