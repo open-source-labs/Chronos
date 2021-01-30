@@ -2,7 +2,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require("@grpc/proto-loader");
 const chronos = require('chronos');
-
+require('./chronos-config')
 // mongodb imports and model imports
 // const mongoose = require('mongoose');
 require('dotenv').config(); // set up environment variables in .env

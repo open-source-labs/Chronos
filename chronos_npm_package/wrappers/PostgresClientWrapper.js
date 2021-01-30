@@ -1,11 +1,14 @@
+const mongoose = require('mongoose');
+const gRPC_Model = require('../models/gRPC_CommunicationModel')
 const grpc = require('@grpc/grpc-js');
 
 function makeMethods(clientWrapper, client, metadata, names) {
-  
+  connect(clientWrapper.URL)
+  console.log(clientWrapper.config)
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
-    
     clientWrapper[name] = function (message, callback, meta = null) {
+
       let currentMetadata;
       if (meta) {
         currentMetadata = meta;
@@ -13,7 +16,20 @@ function makeMethods(clientWrapper, client, metadata, names) {
         //get metadata from link 
         currentMetadata = this.metadata.metadata;
       }
-      console.log('metadata in clientwrapper: ', currentMetadata);
+      const id = currentMetadata.get('id')[0]
+      const newComms = {
+        microservice: clientWrapper.config.microservice,
+        request: name,
+        responsestatus: 200,
+        correlatingid: id
+      }
+      const communication = new gRPC_Model(newComms)
+      communication
+        .save()
+        .then(() => {
+          console.log('Request cycle saved');
+        })
+        .catch(err => console.log(`Error saving communications: `, err.message));
 
       client[name](message, currentMetadata, (error, response) => {
         callback(error, response);
@@ -21,9 +37,23 @@ function makeMethods(clientWrapper, client, metadata, names) {
     };
   }
 }
+async function connect(URI) {
+  console.log(URI)
+  console.log('Attemping to connect to database...');
+  try {
+    await mongoose.connect(`${URI}`);
+    // Print success message
+    console.log(`Chronos MongoDB is connected at ${URI.slice(0, 20)}...`);
+  } catch ({ message }) {
+    // Print error message
+    console.log('Error connecting to MongoDB:', message);
+  }
+}
 
 class ClientWrapper {
-  constructor(client, service) {
+  constructor(client, service, userConfig) {
+    this.URL = userConfig.database.URI
+    this.config = userConfig
     this.metadata = {};
     const names = Object.keys(service.service);
     makeMethods(this, client, this.metadata, names);
