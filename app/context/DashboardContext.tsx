@@ -21,17 +21,22 @@ export const DashboardContext = createContext<any>(null);
  * @method    getApplications
  * @method    addApp
  * @method    deleteApp
+ * @method    changeMode
  */
 const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
-  const [mode, setMode] = useState<string>('light mode');
+  const [mode, setMode] = useState<string>('');
   /**
    * Sends a request for all existing applications belonging to a user
    * and sets the applications state to the list of app names
+   * Also sends a request for the previously saved theme/mode 
+   * and sets the mode state to the retrieved settings
    */
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
-    setApplications(result);
+    console.log(result);
+    setApplications(result[0]);
+    setMode(result[1]);
   }, []);
 
   /**
@@ -59,15 +64,20 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   }, []);
   
   /**
-   * Sets Light and Dark mode for application from Settings
+   * Sends a synchronous request to change the current mode/theme using a provided
+   * string. The string is use to locate the desired mode info in settings.json in
+   * the backend. Updates mode/theme.
    */
 
   const changeMode = useCallback((currMode: string) => {
-    setMode(currMode);
-    // console.log('hello');
+  const result = ipcRenderer.sendSync(
+      'changeMode',
+      currMode
+    );
+    setMode(result);
   }, [])
   return (
-    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp, mode, changeMode }}>
+    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp, mode, getMode, changeMode}}>
       {children}
     </DashboardContext.Provider>
   );

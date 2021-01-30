@@ -46,7 +46,7 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
-  const { applications, getApplications, deleteApp, mode, changeMode } = useContext(DashboardContext);
+  const { applications, getApplications, deleteApp, mode, getMode } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
@@ -55,13 +55,12 @@ const Occupied = React.memo(() => {
   // Dynamic refs
   const delRef = useRef<any>([]);
   //check context from dashboard
-  console.log(mode);
-  
   useEffect(() => {
     setServicesData([]);
-    getApplications();
+    getApplications(); 
   }, []);
-
+  console.log(mode);
+  
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;

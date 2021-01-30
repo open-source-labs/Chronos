@@ -14,7 +14,7 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Settings: React.SFC = React.memo((props) => {
   //use context from Dash board regarding currentMode
-  let {mode, changeMode} = useContext(DashboardContext);
+  let { changeMode } = useContext(DashboardContext);
   const handleClick = (mode: string) => {
     changeMode(mode);
   }
