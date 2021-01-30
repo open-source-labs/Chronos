@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const gRPC_Model = require('../models/gRPC_CommunicationModel')
 const grpc = require('@grpc/grpc-js');
+const gRPC_Model = require('../models/gRPC_CommunicationModel')
 
 function makeMethods(clientWrapper, client, metadata, names) {
-  connect(clientWrapper.URL)
-  console.log(clientWrapper.config)
+  connect(clientWrapper.URI)
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
     clientWrapper[name] = function (message, callback, meta = null) {
@@ -32,14 +31,21 @@ function makeMethods(clientWrapper, client, metadata, names) {
         .catch(err => console.log(`Error saving communications: `, err.message));
 
       client[name](message, currentMetadata, (error, response) => {
+        //add status codes here
+        const responseCom = new gRPC_Model(newComms)
+        responseCom
+          .save()
+          .then(() => {
+            console.log('Request cycle saved');
+          })
+          .catch(err => console.log(`Error saving communications: `, err.message));
         callback(error, response);
       });
     };
   }
 }
+
 async function connect(URI) {
-  console.log(URI)
-  console.log('Attemping to connect to database...');
   try {
     await mongoose.connect(`${URI}`);
     // Print success message
@@ -52,7 +58,7 @@ async function connect(URI) {
 
 class ClientWrapper {
   constructor(client, service, userConfig) {
-    this.URL = userConfig.database.URI
+    this.URI = userConfig.database.URI
     this.config = userConfig
     this.metadata = {};
     const names = Object.keys(service.service);
