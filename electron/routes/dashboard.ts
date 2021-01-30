@@ -7,7 +7,9 @@ import fs from 'fs';
  * @desc    Adds an application to the user's list in the settings.json with the provided fields
  * @return  New list of applications
  */
+
 // Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
+
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   // Retrives file contents from settings.json
   const state = JSON.parse(
@@ -38,16 +40,19 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
  */
 // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
 ipcMain.on('getApps', message => {
-  // Retrives file contents from settings.json
+  // Retrives file contents from settings.json for current Apps
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
   );
-
+  // Retrieves files contents from setting.json for current Mode 
+  const temp = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+  );
   // Destructure list of services from state to be rendered on the dashboard
   const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 
-  // Sync event - return new applications list
-  message.returnValue = dashboardList;
+  // Sync event - return new applications list w/ Mode
+  message.returnValue = [dashboardList,temp["mode"]];
 });
 
 /**
@@ -72,5 +77,27 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   // Sync event - return new applications list
   message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 });
+
+//Modes
+// Loads existing setting JSON and update settings to include updated mode version
+ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
+  // Retrives file contents from settings.json
+  const state = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+  );
+
+  //Add new mode
+  const newMode = currMode;
+
+  // mode to settings 
+  state["mode"] = newMode;
+
+  // Update settings.json with new mode 
+  fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
+
+  // Sync event - return new mode
+  message.returnValue = state["mode"];
+});
+
 
 // module.exports = dashboard;

@@ -9,7 +9,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../stylesheets/SidebarContainer.scss';
 
-import { DashboardContext } from '../context/DashboardContext';
+// import { DashboardContext } from '../context/DashboardContext';
 
 const iconStyles = {
   WebkitBoxSizing: 'border-box',
@@ -21,8 +21,7 @@ const iconStyles = {
 }
 
 const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Element {
-  const { mode, changeMode } = useContext(DashboardContext);
-  console.log(mode);
+
   return (
   <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
