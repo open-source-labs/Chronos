@@ -132,15 +132,11 @@ const Styles = styled.div`
       }
     }
   }
-`
-
-// const LogsTable = React.memo(() => {
-//   const communicationsData = useContext(CommsContext).commsData
+`;
 
 const data = commsData;
 
 const Table = ({ columns, data }) => {
-  
   const {
     getTableProps,
     getTableBodyProps,
