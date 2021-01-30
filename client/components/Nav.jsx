@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import chronosbrand from '../assets/chronos-v4-pangolin.png';
+import C from '../assets/C.svg';
 
 import '../stylesheets/Nav.scss';
 
@@ -8,11 +8,10 @@ const Nav = () => {
   return (
     <nav>
       <div className="nav-left">
-        <img src={chronosbrand} alt="Chronos Brand" />
         <ul>
           <li>
             <Link className="link" to="/">
-              Home
+              <img src={C} alt="Chronos Brand" />
             </Link>
           </li>
           <li>

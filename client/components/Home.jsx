@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import pangolin from '../assets/chronos-v4-pangolin.png';
+import logo from '../assets/logo.svg';
 import '../stylesheets/Home.scss';
 
 const Home = () => {
@@ -15,8 +15,7 @@ const Home = () => {
     <div className="section-home">
       <div className="hero-container">
         <div className="hero-chronos">
-          <img src={pangolin} alt="Chronos logo" />
-          <h2>Chronos</h2>
+          <img src={logo} alt="Chronos logo"/>
         </div>
         <div className="hero-details">
           <p>
