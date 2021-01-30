@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const grpc = require('@grpc/grpc-js');
 const { v4: uuidv4 } = require('uuid');
+require('./chronos-config')
 
 const app = express();
 const orderClient = require('./orderClient.js');

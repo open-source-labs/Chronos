@@ -1,8 +1,6 @@
 const hpropagate = require('hpropagate');
 const postgres = require('./controllers/postgres.js')
-const postgresGRPC = require('./controllers/postgresGRPC.js')
 const mongo = require('./controllers/mongo.js')
-const mongoGRPC = require('./controllers/mongoGRPC.js')
 const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js')
 const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js')
 const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js')
@@ -70,18 +68,16 @@ chronos.track = () => {
    * - 'communications' collection will be created which creates a new document for every
    * endpoint that the user Request travels through (tracked with hpropograte) for express routes
    */
-  if (database.type === 'MongoDB' && database.connection === 'REST') {
+  if (database.type === 'MongoDB') {
     mongo.connect(userConfig);
     mongo.services(userConfig);
     mongo.docker(userConfig);
     mongo.health(userConfig);
-    return mongo.communications(userConfig)
-  }
-  if (database.type === 'MongoDB' && database.connection === 'gRPC') {
-    mongoGRPC.connect(userConfig);
-    mongoGRPC.services(userConfig);
-    mongoGRPC.docker(userConfig);
-    mongoGRPC.health(userConfig);
+    if (database.connection === 'REST') {
+      return mongo.communications(userConfig)
+    } else {
+      return
+    }
   }
 
   /**
@@ -96,31 +92,34 @@ chronos.track = () => {
    * - 'communications' table will be created which creates a new row entry for every
    * endpoint that the user Request travels through (tracked with hpropograte)
    */
-  if (database.type === 'PostgreSQL' && database.connect === 'REST') {
+  if (database.type === 'PostgreSQL') {
     postgres.connect(userConfig);
     postgres.services(userConfig);
     postgres.docker(userConfig);
     postgres.health(userConfig);
-    return postgres.communications(userConfig)
-  }
-  if (database.type === 'PostgreSQL' && database.connection === 'gRPC') {
-    postgresGRPC.connect(userConfig);
-    postgresGRPC.services(userConfig);
-    postgresGRPC.docker(userConfig);
-    postgresGRPC.health(userConfig);
+    if (database.connection === 'REST') {
+      return postgres.communications(userConfig)
+    } else {
+      return
+    }
   }
 };
+
 chronos.ServerWrapper = (server, proto, methods) => {
   const { database } = userConfig;
-  if (database.type === 'MongoDB') return new MongoServerWrapper(server, proto, methods)
-  else if (database.type === 'PostgreSQL') return new PostgresServerWrapper(server, proto, methods)
+  if (database.type === 'MongoDB') return new MongoServerWrapper(server, proto, methods, userConfig)
+  if (database.type === 'PostgreSQL') return new PostgresServerWrapper(server, proto, methods, userConfig)
 }
+
 chronos.ClientWrapper = (client, service) => {
   const { database } = userConfig;
-  if (database.type === 'MongoDB') new MongoClientWrapper(client, service)
-  else if (database.type === 'PostgreSQL') return new PostgresClientWrapper(client, service)
+  if (database.type === 'MongoDB') return new MongoClientWrapper(client, service, userConfig)
+  if (database.type === 'PostgreSQL') return new PostgresClientWrapper(client, service, userConfig)
+  
 }
+
 chronos.link = (client, server) => {
   client.metadata = server.metadataHolder
 }
+
 module.exports = chronos;
