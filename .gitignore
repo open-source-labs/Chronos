@@ -1,7 +1,6 @@
 # JS Project-Specific #
 #######################
 node_modules
-dist
 build
 release-builds
 coverage
