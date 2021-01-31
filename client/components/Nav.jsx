@@ -16,12 +16,12 @@ const Nav = () => {
           </li>
           <li>
             <Link className="link" to="/team">
-              Meet the Team
+              <p>Meet the Team</p>
             </Link>
           </li>
           <li>
             <Link className="link" to="/contact">
-              Contact Us
+              <p>Contact Us</p>
             </Link>
           </li>
         </ul>
@@ -33,10 +33,7 @@ const Nav = () => {
               href="https://github.com/open-source-labs/Chronos"
               target="_blank"
             >
-              <ion-icon
-                className="icon icon-github"
-                name="logo-octocat"
-              ></ion-icon>
+              <ion-icon name="logo-github"></ion-icon>
             </a>
           </li>
           <li>

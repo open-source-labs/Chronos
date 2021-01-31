@@ -1,17 +1,16 @@
 @import './constants.scss';
 
 .section-quotes {
-  background-color: #f4f4f4;
   padding: 50px 10%;
   @include centerWithFlex;
 
   .quote-container {
     @include centerWithFlex;
-    background-color: #fff;
-    box-shadow: $box-shadow;
+    background-color: $yellowwhite;
     border-radius: 3px;
     padding: 40px;
     max-width: 650px;
+    box-shadow: $box-shadow;
 
     img {
       border-radius: 50%;
@@ -22,6 +21,7 @@
       @include centerWithFlex($direction: column);
       p {
         font-size: 135%;
+        color: $black;
 
         &:last-of-type {
           align-self: flex-end;

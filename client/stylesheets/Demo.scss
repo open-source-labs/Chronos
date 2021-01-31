@@ -1,7 +1,6 @@
 @import './constants.scss';
 
 .section-demo {
-  background-color: darken($lightgray, 10%);
   padding: 50px 10%;
   @include centerWithFlex($justify: space-between);
 

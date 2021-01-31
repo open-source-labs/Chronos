@@ -1,3 +1,5 @@
+@import './constants.scss';
+
 .team-container {
   justify-content: center;
   width: 100%;
@@ -6,7 +8,6 @@
   margin: 0px 5px;
   display: flex;
   flex-wrap: wrap;
-  background-color: white;
 
   .bio-card {
     justify-content: center;
@@ -22,6 +23,7 @@
       width: 270px;
       border: 1px solid black;
       border-radius: 50%;
+      filter: grayscale(100%);
     }
     .name {
       font-size: 28px;
@@ -38,9 +40,10 @@
       position: absolute;
       bottom: 10px;
     }
-    .member-contact img {
-      height: 50px;
-      width: 50px;
+    .member-contact .icon {
+      color: $white;
+      height: 30px;
+      width: 30px;
       padding: 5px 5px;
     }
     .member-linkedin:hover {
@@ -49,8 +52,5 @@
     .member-github:hover {
       opacity: 0.5;
     }
-  }
-  .bio-card:hover {
-    background-color: #f0f0f5;
   }
 }

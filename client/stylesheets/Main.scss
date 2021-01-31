@@ -1,0 +1,17 @@
+@import './constants.scss';
+
+body {
+  background-image: linear-gradient($darkblue, $black);
+}
+
+h1, h2, h3, p {
+  color: $white;
+
+  a {
+    color: $lightblue;
+  }
+}
+
+ion-icon {
+  color: $white;
+}

@@ -1,3 +1,5 @@
+@import './constants.scss';
+
 .contact {
   // background-color: #f4f4f4;
   height: 90vh;
@@ -8,7 +10,7 @@
     width: 120vh;
     height: 20vh;
     // margin: 10vh 20vh;
-    background-color: rgb(245, 237, 237);
+    background-color: $black;
     border-radius: 10px;
     border: 1px solid black;
     z-index: 0;

@@ -1,7 +1,6 @@
 @import './constants.scss';
 
 .section-action {
-  background-color: #f4f4f4;
   padding: 50px 10% 80px;
   @include centerWithFlex;
 
@@ -12,7 +11,6 @@
       font-size: 400%;
       font-weight: 300;
       margin-bottom: 40px;
-      color: #555;
     }
 
     p {
@@ -28,9 +26,9 @@
         width: 140px;
         padding: 10px 15px;
         font-size: 125%;
-        border: 2px solid #333;
+        border: 2px solid $white;
         background: transparent;
-        color: #333;
+        color: $white;
         font-weight: 400;
         letter-spacing: 0px;
         transition: 0.1s;

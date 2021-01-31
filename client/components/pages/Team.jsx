@@ -176,15 +176,18 @@ const Team = () => (
             href={obj.contact.gitHub}
             target="__blank"
           >
-            <img src={Github} alt="loading..." />
+            <ion-icon class = "icon" name="logo-github"></ion-icon>
           </a>
-
+          
           <a
             className="member-linkedin"
             href={obj.contact.linkedIn}
             target="__blank"
           >
-            <img src={Linkedin} alt="loading.." />
+            <ion-icon
+                class ="icon"
+                name="logo-linkedin"
+              ></ion-icon>
           </a>
           <p className="member-location">
             Location:&nbsp;

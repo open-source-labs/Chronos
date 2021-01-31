@@ -12,7 +12,6 @@ const TeamMember = (props) => {
                 <div className="connectWithMe">
                     <a 
                     id="connectWithMeSocial" href={props.contactLinks.linkedIn} target="_blank">LinkedIn </a> 
-                    | 
                     <a 
                     id="connectWithMeSocial"
                     href={props.contactLinks.gitHub} target="_blank"> GitHub</a>

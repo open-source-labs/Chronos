@@ -6,7 +6,7 @@ nav {
   width: 100%;
   height: 85px;
   color: #fff;
-  background-image: $dark-gradient;
+  background: $black;
   z-index: 100;
 
   // Left half of nav
@@ -30,14 +30,16 @@ nav {
         font-size: 120%;
         letter-spacing: 1px;
         height: 25px;
-
-        &:hover {
-          border-bottom: 2px solid #f4f4f4;
+        
+        p {
+          &:hover {
+            color: darken($white, 20%)
+          }  
         }
 
         .link {
           height: 100%;
-          color: #f4f4f4;
+          color: $white;
         }
       }
     }
@@ -67,10 +69,9 @@ nav {
         a {
           ion-icon {
             font-size: 200%;
-            color: white;
 
             &:hover {
-              color: darken(white, 20%)
+              color: darken($white, 20%)
             }
           }
         }
