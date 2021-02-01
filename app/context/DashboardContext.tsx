@@ -77,7 +77,7 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
     setMode(result);
   }, [])
   return (
-    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp, mode, getMode, changeMode}}>
+    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp, mode, changeMode}}>
       {children}
     </DashboardContext.Provider>
   );
