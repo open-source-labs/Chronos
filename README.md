@@ -17,7 +17,7 @@
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos  to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
-
+- [New-Features](#new-feature)
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
@@ -34,7 +34,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
       - [Examples](#examples)
         - [Microservices](#microservices)
         - [Docker](#docker)
-    - [Middleware](#middleware-branch)
+    - [gRPC](#grpc-branch)
 - [Technologies](#technologies)
 - [License](#license)
 
@@ -42,7 +42,21 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ###### Return to [Top](#Chronos)
 <br>
 
-## Features 
+## <img src ="./app/assets/fire.png" height=22 > New-Features <img src ="./app/assets/fire.png" height=24>
+
+- New UI Features
+  - Dark and Light mode options now available across user sessions.
+  - Updated charts to now also support gRPC calls
+  - Integrated log to provide users with relational data on request & response cycle
+
+- Bug Fixes
+  - Fixed bug where users could only connect to one MongoDB databsae adn would see its microservices listed even when uesrs clicked on apllications using other MongoDb databases
+
+- Chronos now support monitoring for gRPC!
+  - Distributed tracing across network request
+  - Currently chronos gRPC tracing for Mongodb and PostgresQL
+
+## Ver 5.0 Features 
 
 - Distributed tracing enabled across microservices applications
 - Supports <a href="#"><img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /></a> protocol, with <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /></a> _coming soon_
@@ -266,9 +280,9 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 <br>
 
-### Middleware Branch
+### gRPC Branch 
+The **'gRPC'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 
-The **'middleware'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 <br>
 
 #
