@@ -23,7 +23,7 @@ describe('<DashboardContext />', () => {
     };
     // Mock component that has access to Dashboard Context
     const TestComponent = () => {
-      const { applications, getApplications, addApp, deleteApp } = useContext(DashboardContext);
+      const { applications, getApplications, addApp, deleteApp, mode, changeMode } = useContext(DashboardContext);
 
       return (
         <>
@@ -36,6 +36,9 @@ describe('<DashboardContext />', () => {
           </button>
           <button id="getApplications" onClick={() => getApplications()}>
             Test getApplications
+          </button>
+          <button id="changeMode" onClick={() => changeMode('light mode')}>
+            Test changeMode
           </button>
         </>
       );
@@ -73,5 +76,11 @@ describe('<DashboardContext />', () => {
     const button = wrapper.find('#getApplications');
     button.simulate('click');
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('getApps');
+  });
+
+  it("should emit the 'changeMode' event when invoking changeMode", () => {
+    const button = wrapper.find('#changeMode');
+    button.simulate('click');
+    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('changeMode', 'light mode');
   });
 });

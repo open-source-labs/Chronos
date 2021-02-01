@@ -34,7 +34,6 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
    */
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
-    console.log(result);
     setApplications(result[0]);
     setMode(result[1]);
   }, []);
