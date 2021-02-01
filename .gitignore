@@ -1,11 +1,11 @@
+# JS Project-Specific #
+#######################
 node_modules
-.eslintrc.js
-.DS_Store
 dist
 build
+release-builds
 coverage
 __tests__/**/__snapshots__
-release-builds
 .env
 
 # Compiled source #
@@ -45,7 +45,4 @@ release-builds
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# others #
-##########
 
