@@ -6,18 +6,7 @@
   display: flex;
   justify-content: flex-start;
   padding: 25% 25%;
-
-  h1, h2, h3, p {
-    color: $black;
-  
-    a {
-      color: $lightblue;
-    }
-  }
-  
-  ion-icon {
-    color: $black;
-  }
+  @include background-theme('dark');
 
   .contact-border {
     width: 120vh;
@@ -31,6 +20,7 @@
     flex-direction: row;
     padding-top: 50px;
     justify-content: center;
+    @include background-theme('light');
     // padding-left: 10px;
     .contact-container {
       width: 60%;

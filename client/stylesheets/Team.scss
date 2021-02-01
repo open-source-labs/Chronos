@@ -5,9 +5,9 @@
   width: 100%;
   padding: 3px 12px;
   padding-top: 110px;
-  margin: 0px 5px;
   display: flex;
   flex-wrap: wrap;
+  @include background-theme('dark');
 
   .bio-card {
     justify-content: center;

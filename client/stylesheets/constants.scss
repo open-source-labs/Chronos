@@ -5,14 +5,14 @@ $dark-gradient: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 $npm: #cc3534;
 $linkedin: #0072b1;
 $facebook: #4267b2;
-$darkblue: #021e3b;
+$darkblue: #011325;
 $white: #ffffff;
 $black: #000000;
 $lightblue: #4267b2;
 $yellowwhite: #ffffe5;
 $gray: #c2c2c2;
 
-@mixin centerWithFlex($align: center, $justify: center, $direction: row) {
+@mixin center-with-flex($align: center, $justify: center, $direction: row) {
   display: flex;
   align-items: $align;
   justify-content: $justify;
@@ -50,6 +50,30 @@ $gray: #c2c2c2;
     ion-icon {
       color: $white;
     }
+  }
+}
+
+@mixin section-header {
+  width: 50%;
+  text-align: center;
+  margin-bottom: 100px;
+  font-size: 135%;
+
+  h1 {
+    font-weight: 300;
+    font-size: 300%;
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    font-weight: 300;
+    font-size: 225%;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 110%;
+    line-height: 135%;
   }
 }
 
