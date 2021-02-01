@@ -3,6 +3,7 @@
 .section-action {
   padding: 50px 10% 80px;
   @include centerWithFlex;
+  @include background-theme('light');
 
   .action {
     text-align: center;
@@ -26,9 +27,9 @@
         width: 140px;
         padding: 10px 15px;
         font-size: 125%;
-        border: 2px solid $white;
+        border: 2px solid $black;
         background: transparent;
-        color: $white;
+        color: $black;
         font-weight: 400;
         letter-spacing: 0px;
         transition: 0.1s;

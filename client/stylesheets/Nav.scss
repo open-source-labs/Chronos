@@ -5,7 +5,7 @@ nav {
   position: fixed;
   width: 100%;
   height: 85px;
-  color: #fff;
+  @include background-theme('dark');
   background: $black;
   z-index: 100;
 

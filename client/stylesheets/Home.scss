@@ -4,6 +4,7 @@
   width: 100vw;
   height: 70vh;
   min-height: 700px;
+  @include background-theme('dark');
 
   .hero-container {
     width: 50%;

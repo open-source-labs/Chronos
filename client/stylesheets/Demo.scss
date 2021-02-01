@@ -2,19 +2,24 @@
 
 .section-demo {
   padding: 50px 10%;
-  @include centerWithFlex($justify: space-between);
+  @include centerWithFlex($direction: column);
+  @include background-theme('dark');
 
-  div {
-    width: 33%;
-    padding: 15px 0px;
-    text-align: center;
-    height: 400px;
-    @include centerWithFlex($direction: column, $justify: space-around);
+  .demo-content {
+    @include centerWithFlex;
 
-    figure {
-      img {
-        width: 400px;
-        border-radius: 4px;
+    div {
+      width: 33%;
+      padding: 15px 0px;
+      text-align: center;
+      height: 400px;
+      @include centerWithFlex($direction: column, $justify: space-around);
+      
+      figure {
+        img {
+          width: 400px;
+          border-radius: 4px;
+        }
       }
     }
   }

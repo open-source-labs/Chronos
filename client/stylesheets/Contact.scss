@@ -6,11 +6,24 @@
   display: flex;
   justify-content: flex-start;
   padding: 25% 25%;
+
+  h1, h2, h3, p {
+    color: $black;
+  
+    a {
+      color: $lightblue;
+    }
+  }
+  
+  ion-icon {
+    color: $black;
+  }
+
   .contact-border {
     width: 120vh;
     height: 20vh;
     // margin: 10vh 20vh;
-    background-color: $black;
+    background-color: $gray;
     border-radius: 10px;
     border: 1px solid black;
     z-index: 0;

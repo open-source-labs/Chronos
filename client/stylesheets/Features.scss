@@ -4,6 +4,7 @@
   padding: 140px 10%;
   @include centerWithFlex($direction: column, $justify: flex-start);
   height: 70vh;
+  @include background-theme('light');
 
   .features-header {
     width: 50%;

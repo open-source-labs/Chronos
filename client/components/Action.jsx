@@ -7,7 +7,7 @@ const Action = () => {
     <div className="section-action">
       <div className="action">
         <h2>Ready to Begin?</h2>
-        <p>Download chronos as an electron app</p>
+        <p>Download Chronos as an Electron app</p>
         <div className="download-btns">
           <button>
             macOS
