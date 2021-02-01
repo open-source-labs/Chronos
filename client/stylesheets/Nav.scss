@@ -1,7 +1,7 @@
 @import './constants.scss';
 
 nav {
-  @include centerWithFlex;
+  @include center-with-flex;
   position: fixed;
   width: 100%;
   height: 85px;
@@ -15,7 +15,7 @@ nav {
     position: absolute;
     width: 50%;
     left: 0;
-    @include centerWithFlex;
+    @include center-with-flex;
 
     img {
       width: 25px;
@@ -23,7 +23,7 @@ nav {
     }
 
     ul {
-      @include centerWithFlex;
+      @include center-with-flex;
 
       li {
         margin-right: 30px;
@@ -51,10 +51,10 @@ nav {
     position: absolute;
     width: 50%;
     right: 0;
-    @include centerWithFlex;
+    @include center-with-flex;
 
     ul {
-      @include centerWithFlex;
+      @include center-with-flex;
       padding-bottom: 12px;
 
       li {

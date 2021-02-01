@@ -1,18 +1,16 @@
 @import './constants.scss';
 
 .section-action {
-  padding: 50px 10% 80px;
-  @include centerWithFlex;
+  padding: 140px 10%;
+  @include center-with-flex($direction: column);
   @include background-theme('light');
+
+  #action-header {
+    @include section-header;
+  }
 
   .action {
     text-align: center;
-
-    h2 {
-      font-size: 400%;
-      font-weight: 300;
-      margin-bottom: 40px;
-    }
 
     p {
       font-size: 110%;
@@ -37,7 +35,6 @@
 
         &:hover {
           background-color: lighten(#555, 10%);
-          color: white;
         }
       }
     }

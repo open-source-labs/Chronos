@@ -13,11 +13,11 @@
     left: 50%;
     top: 400px;
     transform: translate(-50%, -50%);
-    @include centerWithFlex($direction: column);
+    @include center-with-flex($direction: column);
     animation: appear linear 1s forwards;
 
     .hero-chronos {
-      @include centerWithFlex;
+      @include center-with-flex;
       margin-bottom: 20px;
 
       img {

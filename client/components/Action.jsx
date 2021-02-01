@@ -5,9 +5,11 @@ import '../stylesheets/Action.scss';
 const Action = () => {
   return (
     <div className="section-action">
-      <div className="action">
-        <h2>Ready to Begin?</h2>
+      <div id="action-header">
+        <h1>Ready to Begin?</h1>
         <p>Download Chronos as an Electron app</p>
+      </div>
+      <div className="action">
         <div className="download-btns">
           <button>
             macOS
