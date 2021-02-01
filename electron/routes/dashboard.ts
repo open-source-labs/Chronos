@@ -35,10 +35,11 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 
 /**
  * @event   getApps
- * @desc    Retrieves the existing list of applications belonging to the user
+ * @desc    Retrieves the existing list of applications belonging to the user and current user setting for mode of preference 
  * @return  Returns the list of applications
  */
 // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
+
 ipcMain.on('getApps', message => {
   // Retrives file contents from settings.json for current Apps
   const state = JSON.parse(
@@ -51,7 +52,7 @@ ipcMain.on('getApps', message => {
   // Destructure list of services from state to be rendered on the dashboard
   const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 
-  // Sync event - return new applications list w/ Mode
+  // Sync event - return new applications list w/ user settings: Mode
   message.returnValue = [dashboardList,temp["mode"]];
 });
 
@@ -78,7 +79,11 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
 });
 
-//Modes
+/**
+  * @event changeMode 
+  * @desc Changes user's mode/theme preference fron settings.json
+  * @return Returns the newly update setting preference of the app to the renderer end
+*/
 // Loads existing setting JSON and update settings to include updated mode version
 ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   // Retrives file contents from settings.json
