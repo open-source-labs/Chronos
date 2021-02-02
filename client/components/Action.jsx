@@ -10,14 +10,17 @@ const Action = () => {
         <p>Download Chronos as an Electron app</p>
       </div>
       <div className="action">
+
         <div className="download-btns">
-          <button>
-            macOS
-            <br />
-            v4.0
-            <br />
-            <ion-icon name="download-outline"></ion-icon>
-          </button>
+          <a href="https://chronoslany.com/0af77b7f833d00399ec781432f669856.dmg">
+            <button>
+              macOS
+              <br />
+              v4.0
+              <br />
+              <ion-icon name="download-outline"></ion-icon>
+            </button>
+          </a>
           <button>
             Linux
             <br />
