@@ -9,7 +9,7 @@ async function connect(URI) {
     // Print success message
     console.log(`Connected to database at ${URI.slice(0, 24)}...`);
     SQLclient.query(
-      `CREATE TABLE IF NOT EXISTS communications(
+      `CREATE TABLE IF NOT EXISTS grpc_communications(
       _id serial PRIMARY KEY,
       microservice VARCHAR(248) NOT NULL,
       request varchar(32) NOT NULL,
@@ -44,12 +44,12 @@ function makeMethods(clientWrapper, client, metadata, names, SQL) {
       client[name](message, currentMetadata, (error, response) => {
         // add status codes here
         const queryString = `
-          INSERT INTO communications (microservice, request, responsestatus, correlatingId)
+          INSERT INTO grpc_communications (microservice, request, responsestatus, correlatingId)
           VALUES ($1, $2, $3, $4);`;
-        const correlatingId = currentMetadata.get('id')[0];
         const { microservice } = clientWrapper.config.microservice;
         const request = name;
         let responsestatus = 0;
+        const correlatingId = currentMetadata.get('id')[0];
         if (error) {
           responsestatus = error.code;
         }
