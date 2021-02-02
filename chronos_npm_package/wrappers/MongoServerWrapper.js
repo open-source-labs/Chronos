@@ -17,7 +17,6 @@ function wrapMethods(server, metadataHolder, methods, userConfig) {
         const newComms = {
           microservice: userConfig.microservice,
           request: name,
-          responsestatus: 200,
           correlatingid: id
         }
         const communication = new gRPC_Model(newComms)

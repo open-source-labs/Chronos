@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname)));
-chronos.track();
 
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, './index.html'));
@@ -28,10 +27,6 @@ app.post('/addBook', (req, res, next) => {
     publisher: req.body.publisher,
     bookID: req.body.bookID,
   };
-  // maybe put this in an app.use(*)?
-  const meta = new grpc.Metadata();
-  meta.add('id', uuidv4());
-  console.log('metadata created in reverseProxy route: ', meta);
 
   bookClient.AddBook(book, (err, data) => {
     if (err !== null) {
@@ -41,7 +36,7 @@ app.post('/addBook', (req, res, next) => {
     }
     console.log('addBook response: ', data);
     return res.sendStatus(200);
-  }, meta);
+  }, chronos.meta());
 });
 
 app.post('/addOrder', (req, res, next) => {
@@ -52,11 +47,6 @@ app.post('/addOrder', (req, res, next) => {
     deliveryDate: req.body.deliveryDate,
   };
 
-  // user has to create metadata and add it as a third argument to the method
-  const meta = new grpc.Metadata();
-  meta.add('id', uuidv4());
-  console.log('metadata created in reverseProxy route: ', meta);
-
   orderClient.AddOrder(order, (err, data) => {
     if (err !== null) {
       console.log(err);
@@ -66,14 +56,16 @@ app.post('/addOrder', (req, res, next) => {
       console.log('addOrder response: ', data);
       return res.sendStatus(200);
     }
-  }, meta);
+  }, chronos.meta());
 });
 
 app.get('/order', (req, res, next) => {
   // create metadata with id
-  const meta = new grpc.Metadata();
-  meta.add('id', uuidv4());
-  console.log('metadata created in reverseProxy route: ', meta);
+
+  let metadata = new grpc.Metadata();
+  metadata.add('id', uuidv4());
+  
+  // console.log('metadata created in reverseProxy route: ', meta);
 
   orderClient.GetOrders(null, (err, data) => {
     if (err !== null) {
@@ -82,7 +74,7 @@ app.get('/order', (req, res, next) => {
       console.log('getOrders response: ', data);
       return res.status(200).json(data);
     }
-  }, meta);
+  }, metadata);
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

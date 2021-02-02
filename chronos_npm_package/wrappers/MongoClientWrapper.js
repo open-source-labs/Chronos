@@ -16,30 +16,33 @@ function makeMethods(clientWrapper, client, metadata, names) {
         currentMetadata = this.metadata.metadata;
       }
       const id = currentMetadata.get('id')[0]
-      const newComms = {
+      const newComm = {
         microservice: clientWrapper.config.microservice,
         request: name,
-        responsestatus: 200,
-        correlatingid: id
+        correlatingid: id,
+        responsestatus: 0,
       }
-      const communication = new gRPC_Model(newComms)
-      communication
-        .save()
-        .then(() => {
-          console.log('Request cycle saved');
-        })
-        .catch(err => console.log(`Error saving communications: `, err.message));
 
       client[name](message, currentMetadata, (error, response) => {
-        //add status codes here
-        const responseCom = new gRPC_Model(newComms)
+        let responseCom;
+        if (error) {
+          const newCommRes = {
+            microservice: clientWrapper.config.microservice,
+            request: name,
+            responsestatus: error.code,
+            correlatingid: id
+          }
+          responseCom = new gRPC_Model(newCommRes)
+        } else {
+          responseCom = new gRPC_Model(newComm)
+        }
         responseCom
-          .save()
-          .then(() => {
-            console.log('Request cycle saved');
-          })
-          .catch(err => console.log(`Error saving communications: `, err.message));
-        callback(error, response);
+            .save()
+            .then(() => {
+              console.log('Request cycle saved');
+            })
+            .catch(err => console.log(`Error saving communications: `, err.message));
+          callback(error, response);
       });
     };
   }
