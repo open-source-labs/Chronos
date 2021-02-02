@@ -11,10 +11,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 
 const OrderToBookService = grpc.loadPackageDefinition(packageDefinition).OrderToBook;
-const bookClient = new OrderToBookService(
-  "localhost:30044",
-  grpc.credentials.createInsecure()
-);
+const bookClient = new OrderToBookService('localhost:30044', grpc.credentials.createInsecure());
 
 const ClientWrapper = chronos.ClientWrapper(bookClient, OrderToBookService);
 

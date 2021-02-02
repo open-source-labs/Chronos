@@ -15,14 +15,13 @@ function makeMethods(clientWrapper, client, metadata, names) {
         //get metadata from link 
         currentMetadata = this.metadata.metadata;
       }
-      const id = currentMetadata.get('id')[0]
+      const id = currentMetadata.get('id')[0];
       const newComm = {
         microservice: clientWrapper.config.microservice,
         request: name,
         correlatingid: id,
         responsestatus: 0,
-      }
-
+      };
       client[name](message, currentMetadata, (error, response) => {
         let responseCom;
         if (error) {
@@ -30,19 +29,19 @@ function makeMethods(clientWrapper, client, metadata, names) {
             microservice: clientWrapper.config.microservice,
             request: name,
             responsestatus: error.code,
-            correlatingid: id
-          }
-          responseCom = new gRPC_Model(newCommRes)
+            correlatingid: id,
+          };
+          responseCom = new gRPC_Model(newCommRes);
         } else {
-          responseCom = new gRPC_Model(newComm)
+          responseCom = new gRPC_Model(newComm);
         }
         responseCom
-            .save()
-            .then(() => {
-              console.log('Request cycle saved');
-            })
-            .catch(err => console.log(`Error saving communications: `, err.message));
-          callback(error, response);
+          .save()
+          .then(() => {
+            console.log('Request cycle saved');
+          })
+          .catch(err => console.log(`Error saving communications: `, err.message));
+        callback(error, response);
       });
     };
   }
@@ -61,8 +60,8 @@ async function connect(URI) {
 
 class ClientWrapper {
   constructor(client, service, userConfig) {
-    this.URI = userConfig.database.URI
-    this.config = userConfig
+    this.URI = userConfig.database.URI;
+    this.config = userConfig;
     this.metadata = {};
     const names = Object.keys(service.service);
     makeMethods(this, client, this.metadata, names);
