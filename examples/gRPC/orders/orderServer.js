@@ -14,7 +14,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   enums: String,
   arrays: true
 });
-chronos.track();
+// chronos.track();
 const orderProto = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
@@ -81,6 +81,7 @@ const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.serv
       })
       .catch((err) => console.log(err));;
   }
+
 });
 
 console.log('ServerWrapper: ', ServerWrapper);

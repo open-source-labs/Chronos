@@ -13,7 +13,6 @@ const gRPC_CommunicationsSchema = new Schema({
   },
   responsestatus: {
     type: Number,
-    required: true,
   },
   time: {
     type: Date,

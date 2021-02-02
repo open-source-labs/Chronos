@@ -15,7 +15,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
   enums: String,
-  arrays: true
+  arrays: true,
 });
 const booksProto = grpc.loadPackageDefinition(packageDefinition);
 // const 

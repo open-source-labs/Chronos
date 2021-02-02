@@ -1,6 +1,8 @@
 const hpropagate = require('hpropagate');
 const postgres = require('./controllers/postgres.js')
 const mongo = require('./controllers/mongo.js')
+const grpc = require('@grpc/grpc-js');
+const { v4: uuidv4 } = require('uuid');
 const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js')
 const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js')
 const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js')
@@ -121,5 +123,11 @@ chronos.ClientWrapper = (client, service) => {
 chronos.link = (client, server) => {
   client.metadata = server.metadataHolder
 }
+const createMeta = () => {
+  let meta = new grpc.Metadata();
+  meta.add('id', uuidv4())
+  return meta
+}
+chronos.meta = createMeta;
 
 module.exports = chronos;
