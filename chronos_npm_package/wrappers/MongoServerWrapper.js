@@ -17,9 +17,9 @@ function wrapMethods(server, metadataHolder, methods, userConfig) {
         const newComms = {
           microservice: userConfig.microservice,
           request: name,
-          correlatingid: id
-        }
-        const communication = new gRPC_Model(newComms)
+          correlatingid: id,
+        };
+        const communication = new gRPC_Model(newComms);
         communication
           .save()
           .then(() => {

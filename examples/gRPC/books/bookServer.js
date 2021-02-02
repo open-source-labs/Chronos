@@ -2,9 +2,8 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require("@grpc/proto-loader");
 const chronos = require('chronos');
-require('./chronos-config')
-// mongodb imports and model imports
-// const mongoose = require('mongoose');
+require('./chronos-config');
+const mongoose = require('mongoose');
 require('dotenv').config(); // set up environment variables in .env
 const BookModel = require('./BookModel');
 
@@ -18,7 +17,6 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   arrays: true,
 });
 const booksProto = grpc.loadPackageDefinition(packageDefinition);
-// const 
 // create gRPC server and add services
 const server = new grpc.Server();
 
@@ -43,7 +41,6 @@ const OrderToBookWrapper = chronos.ServerWrapper(server, booksProto.OrderToBook.
   getBookInfo: (call, callback) => {
     console.log(call.metadata);
     BookModel.findOne({ bookID: call.request.bookID }, (err, data) => {
-      //data needs to be formatted first
       callback(null, data);
     });
   },
