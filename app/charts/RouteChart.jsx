@@ -237,7 +237,7 @@ const RouteChart = React.memo(() => {
       resObj[element.correlatingid].push({
         microservice: element.microservice,
         time: element.time,
-        functionname: element.functionname,
+        functionname: element.request, //here
       });
     }
     //? What does this else block do?
@@ -297,7 +297,7 @@ const RouteChart = React.memo(() => {
       if (i !== 0) {
         let from = route[i - 1].microservice;
         let to = id;
-        let functionname = route[i - 1].request;
+        let functionname = route[i - 1].request; //here
         let edgeStr = JSON.stringify({ from, to, functionname })
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
         // only want one edge per route with the average duration
@@ -315,7 +315,7 @@ const RouteChart = React.memo(() => {
   const edgeList = []
   for (let [edgeStr, duration] of Object.entries(edgeListObj)) {
     const edge = JSON.parse(edgeStr);
-    edge.label = edge.functionname ? `${edge.functionname} - ${(duration * 10).toFixed(0)} ms` : `${(duration * 10).toFixed(0)} ms` 
+    edge.label = edge.request ? `${edge.request} - ${(duration * 10).toFixed(0)} ms` : `${(duration * 10).toFixed(0)} ms` 
     edgeList.push(edge)
   }
 

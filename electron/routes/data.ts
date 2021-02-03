@@ -93,7 +93,7 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents
-      result = await GRPCCommunicationsModel.find().exec();
+      result = await CommunicationModel.find().exec();
     }
 
     // SQL Database
