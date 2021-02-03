@@ -50,6 +50,8 @@ const ResponseCodesChart: React.FC = React.memo(() => {
     // Record each status code frequencies
     commsData.forEach((obj: IObj) => {
       const status = obj.responsestatus;
+      console.log(status);
+      // if(status === 200) responseCodes['200-299'] += 1;
       if (status >= 500) {
         responseCodes['500-599'] += 1;
       } else if (status >= 400) {
@@ -61,7 +63,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       } else if (status >= 100) {
         responseCodes['100-199'] += 1;
       } else {
-        responseCodes[JSON.stringify(obj.responsestatus)] += 1;
+        responseCodes[status] += 1;
       }
     });
 

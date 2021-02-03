@@ -44,6 +44,7 @@
         "@grpc/proto-loader": "^0.5.5",
         "@material-ui/core": "^4.11.0",
         "@material-ui/icons": "^4.9.1",
+        "@types/react-table": "^7.0.28",
         "chai": "^4.2.0",
         "chart.js": "^2.8.0",
         "chronos-tracker": "^5.1.0",
@@ -62,6 +63,8 @@
         "react-graph-vis": "^1.0.5",
         "react-plotly.js": "^2.4.0",
         "react-router-dom": "^5.2.0",
+        "react-table": "^7.6.3",
+        "styled-components": "^5.2.1",
         "webdriverio": "^6.1.25"
     },
     "devDependencies": {

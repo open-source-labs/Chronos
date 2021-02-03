@@ -15,6 +15,8 @@ import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
+import GRPCLogsTable from '../charts/GRPCLogsTable';
+import LogsTable from '../charts/LogsTable';
 import '../stylesheets/GraphsContainer.scss';
 import GRPCStatusCodesChart from '../charts/GRPCStatusCodesChart';
 
@@ -73,9 +75,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
           <div className="graphs">
             <RequestTypesChart />
             <ResponseCodesChart />
-            <GRPCStatusCodesChart />
             <TrafficChart />
             <RouteChart />
+            <GRPCLogsTable />
           </div>
         ) : (
             <div className="graphs">
