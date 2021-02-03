@@ -1,12 +1,10 @@
 const hpropagate = require('hpropagate');
-const postgres = require('./controllers/postgres.js')
-const mongo = require('./controllers/mongo.js')
-const grpc = require('@grpc/grpc-js');
-const { v4: uuidv4 } = require('uuid');
-const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js')
-const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js')
-const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js')
-const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js')
+const postgres = require('./controllers/postgres.js');
+const mongo = require('./controllers/mongo.js');
+const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js');
+const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js');
+const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js');
+const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js');
 const { validateInput, addNotifications } = require('./controllers/helpers');
 
 let userConfig = {};
@@ -76,9 +74,7 @@ chronos.track = () => {
     mongo.docker(userConfig);
     mongo.health(userConfig);
     if (database.connection === 'REST') {
-      return mongo.communications(userConfig)
-    } else {
-      return
+      return mongo.communications(userConfig);
     }
   }
 
@@ -100,34 +96,36 @@ chronos.track = () => {
     postgres.docker(userConfig);
     postgres.health(userConfig);
     if (database.connection === 'REST') {
-      return postgres.communications(userConfig)
-    } else {
-      return
+      return postgres.communications(userConfig);
     }
   }
+  return null;
 };
 
 chronos.ServerWrapper = (server, proto, methods) => {
   const { database } = userConfig;
-  if (database.type === 'MongoDB') return new MongoServerWrapper(server, proto, methods, userConfig)
-  if (database.type === 'PostgreSQL') return new PostgresServerWrapper(server, proto, methods, userConfig)
-}
+  if (database.type === 'MongoDB') {
+    return new MongoServerWrapper(server, proto, methods, userConfig);
+  }
+  if (database.type === 'PostgreSQL') {
+    return new PostgresServerWrapper(server, proto, methods, userConfig);
+  }
+  return null;
+};
 
 chronos.ClientWrapper = (client, service) => {
   const { database } = userConfig;
-  if (database.type === 'MongoDB') return new MongoClientWrapper(client, service, userConfig)
-  if (database.type === 'PostgreSQL') return new PostgresClientWrapper(client, service, userConfig)
-  
-}
+  if (database.type === 'MongoDB') {
+    return new MongoClientWrapper(client, service, userConfig);
+  }
+  if (database.type === 'PostgreSQL') {
+    return new PostgresClientWrapper(client, service, userConfig);
+  }
+  return null;
+};
 
 chronos.link = (client, server) => {
-  client.metadata = server.metadataHolder
-}
-const createMeta = () => {
-  let meta = new grpc.Metadata();
-  meta.add('id', uuidv4())
-  return meta
-}
-chronos.meta = createMeta;
+  client.metadata = server.metadataHolder;
+};
 
 module.exports = chronos;

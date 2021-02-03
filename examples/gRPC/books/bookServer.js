@@ -1,9 +1,8 @@
 // grpc imports
 const grpc = require('@grpc/grpc-js');
-const protoLoader = require("@grpc/proto-loader");
+const protoLoader = require('@grpc/proto-loader');
 const chronos = require('chronos');
 require('./chronos-config');
-const mongoose = require('mongoose');
 require('dotenv').config(); // set up environment variables in .env
 const BookModel = require('./BookModel');
 
@@ -47,7 +46,7 @@ const OrderToBookWrapper = chronos.ServerWrapper(server, booksProto.OrderToBook.
 });
 
 // start server
-server.bindAsync("127.0.0.1:30044", grpc.ServerCredentials.createInsecure(), () => {
+server.bindAsync('127.0.0.1:30044', grpc.ServerCredentials.createInsecure(), () => {
   server.start();
-  console.log("Server running at http://127.0.0.1:30044");
+  console.log('Server running at http://127.0.0.1:30044');
 });

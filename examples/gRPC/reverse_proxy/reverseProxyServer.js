@@ -73,7 +73,6 @@ app.post('/addOrder', (req, res, next) => {
 });
 
 app.get('/order', (req, res, next) => {
-  const metadata = createMeta();
   orderClient.GetOrders(
     null,
     (err, data) => {

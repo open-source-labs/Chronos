@@ -31,7 +31,7 @@ async function connect(URI) {
 }
 
 function wrapMethods(server, metadataHolder, methods, userConfig, SQL) {
-  connect(userConfig.database.URI)
+  connect(userConfig.database.URI);
   const keys = Object.keys(methods);
   const wrappedMethods = {};
   for (let i = 0; i < keys.length; i++) {
