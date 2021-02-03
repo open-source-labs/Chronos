@@ -1,25 +1,38 @@
 const grpc = require('@grpc/grpc-js');
 const mongoose = require('mongoose');
-const gRPC_Model = require('../models/gRPC_CommunicationModel')
+const ComModel = require('../models/CommunicationModel');
+
+async function connect(URI) {
+  try {
+    await mongoose.connect(`${URI}`);
+    // Print success message
+    console.log(`Chronos MongoDB is connected at ${URI.slice(0, 20)}...`);
+  } catch ({ message }) {
+    // Print error message
+    console.log('Error connecting to MongoDB:', message);
+  }
+}
 
 function wrapMethods(server, metadataHolder, methods, userConfig) {
-  connect(userConfig.database.URI)
+  connect(userConfig.database.URI);
   const keys = Object.keys(methods);
   const wrappedMethods = {};
   for (let i = 0; i < keys.length; i++) {
     const name = keys[i];
     wrappedMethods[name] = function (call, callback) {
-
       metadataHolder.metadata = call.metadata;
       const id = metadataHolder.metadata.get('id')[0];
       methods[name](call, (error, response) => {
         // after server's response has been sent
         const newComms = {
           microservice: userConfig.microservice,
+          endpoint: ' ',
           request: name,
+          responsestatus: 0,
+          responsemessage: ' ',
           correlatingid: id,
         };
-        const communication = new gRPC_Model(newComms);
+        const communication = new ComModel(newComms);
         communication
           .save()
           .then(() => {
@@ -31,17 +44,6 @@ function wrapMethods(server, metadataHolder, methods, userConfig) {
     };
   }
   return wrappedMethods;
-}
-
-async function connect(URI) {
-  try {
-    await mongoose.connect(`${URI}`);
-    // Print success message
-    console.log(`Chronos MongoDB is connected at ${URI.slice(0, 20)}...`);
-  } catch ({ message }) {
-    // Print error message
-    console.log('Error connecting to MongoDB:', message);
-  }
 }
 
 class ServerWrapper {

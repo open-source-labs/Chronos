@@ -45,7 +45,7 @@ app.post('/addBook', (req, res, next) => {
       console.log('addBook response: ', data);
       return res.sendStatus(200);
     },
-    chronos.meta()
+    createMeta()
   );
 });
 
@@ -68,11 +68,13 @@ app.post('/addOrder', (req, res, next) => {
       console.log('addOrder response: ', data);
       return res.sendStatus(200);
     },
-    chronos.meta()
+    createMeta()
   );
 });
 
 app.get('/order', (req, res, next) => {
+  const meta = new grpc.Metadata();
+  meta.add('id', uuidv4());
   orderClient.GetOrders(
     null,
     (err, data) => {
@@ -82,7 +84,7 @@ app.get('/order', (req, res, next) => {
       console.log('getOrders response: ', data);
       return res.status(200).json(data);
     },
-    createMeta()
+    meta
   );
 });
 
