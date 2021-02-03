@@ -1,52 +1,58 @@
-const PROTO_PATH = './order.proto';
+const chronos = require('chronos');
+require('./chronos-config');
+const protoLoader = require('@grpc/proto-loader');
 const grpc = require('@grpc/grpc-js');
-const client = require('./bookClient.js');
-const OrderModel = require('./OrderModel.js')
 
-const protoLoader = require("@grpc/proto-loader");
+const PROTO_PATH = './order.proto';
+const client = require('./bookClient.js');
+const OrderModel = require('./orderModel.js');
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
   enums: String,
-  arrays: true
+  arrays: true.valueOf,
 });
-
+// chronos.track();
 const orderProto = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
-server.addService(orderProto.ProxyToOrder.service, {
-  addOrder: (call, callback) => {
+// Wrap the server here
+const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.service, {
+  AddOrder: (call, callback) => {
     const newOrder = {
       customerID: call.request.customerID,
       bookID: call.request.bookID,
       purchaseDate: call.request.purchaseDate,
       deliveryDate: call.request.deliveryDate,
     };
-    client.getBookInfo({bookID: newOrder.bookID}, (err, bookInfo) => {
+    console.log('client.link in server method: ', client.link);
+    client.GetBookInfo({ bookID: newOrder.bookID }, (err, bookInfo) => {
       // make sure bookID exists
       if (bookInfo === undefined) {
         callback({
           code: grpc.status.NOT_FOUND,
-          details: "BookID not found"
+          details: 'BookID not found',
         });
       } else {
         OrderModel.create(newOrder)
-          .then((data) => {
+          .then(data => {
             callback(null, {});
           })
-          .catch((err) => console.log(err));
+          .catch(error => console.log(error));
       }
-    })
+    });
   },
 
-  getOrders: (call, callback) => {
+  GetOrders: (call, callback) => {
     const ordersWithInfo = [];
+    // check call.metadata
+    // expect metadata send to book client
+    console.log(call.metadata);
     OrderModel.find({})
-      .then((data) => {
+      .then(data => {
         // if no orders in database
-        if (!data.length) return callback(null, { orderList: []});
-
+        if (!data.length) return callback(null, { orderList: [] });
         // iterate through orders to get book info for each order
         for (let i = 0; i < data.length; i += 1) {
           const tempObj = {
@@ -55,8 +61,8 @@ server.addService(orderProto.ProxyToOrder.service, {
             purchaseDate: data[i].purchaseDate,
             deliveryDate: data[i].deliveryDate,
           };
-          // we must use tempObj because if you just use data[i], added properties do not appear when you console log data[i]. but the client stub still receives the added properties somehow 
-          client.getBookInfo({bookID: tempObj.bookID}, (err, bookInfo) => {
+          // we must use tempObj because if you just use data[i], added properties do not appear when you console log data[i]. but the client stub still receives the added properties somehow
+          client.GetBookInfo({ bookID: tempObj.bookID }, (err, bookInfo) => {
             // console.log('before adding', tempObj);
             tempObj.title = bookInfo.title;
             tempObj.author = bookInfo.author;
@@ -68,16 +74,21 @@ server.addService(orderProto.ProxyToOrder.service, {
             // console.log('ordersWithInfo', ordersWithInfo);
 
             // return gRPC call when ordersWithInfo is completely built up
-            if (ordersWithInfo.length === data.length) callback(null, { orderList: ordersWithInfo });
+            if (ordersWithInfo.length === data.length) {
+              callback(null, { orderList: ordersWithInfo });
+            }
           });
         }
       })
-      .catch((err) => console.log(err));;
+      .catch(err => console.log(err));
   },
 });
 
+console.log('ServerWrapper: ', ServerWrapper);
+chronos.link(client, ServerWrapper);
+
 // start server
-server.bindAsync("127.0.0.1:30043", grpc.ServerCredentials.createInsecure(), () => {
+server.bindAsync('127.0.0.1:30043', grpc.ServerCredentials.createInsecure(), () => {
   server.start();
 });
-console.log("Server running at http://127.0.0.1:30043");
+console.log('Server running at http://127.0.0.1:30043');
