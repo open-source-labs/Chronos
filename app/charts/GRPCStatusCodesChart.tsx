@@ -4,74 +4,127 @@ import { CommsContext } from '../context/CommsContext';
 
 interface IObj {
   correlatingid: string;
-  endpoint: string | null;
-  _id: string; //is it id or _id?
+  // endpoint: string | null;
+  _id: string;
   microservice: string;
   request: string | null;
-  responsemessage: string;
+  // responsemessage: string;
   responsestatus: number;
   time: string;
-  functionname: string;
 }
 
 type responseCodes = {
   [key: string]: number
 };
 
-const commsData = [
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb3",
-    "microservice": "books",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getBookInfo",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 16,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:11.100Z",
-    "__v": 0
-  },
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb3",
-    "microservice": "books",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getBookInfo",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 5,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:12.100Z",
-    "__v": 0
-  },
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb3",
-    "microservice": "books",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getBookInfo",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 0,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:13.100Z",
-    "__v": 0
-  },
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb4",
-    "microservice": "orders",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getOrders",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 0,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:13.200Z",
-    "__v": 0
-  },
-]
+// const commsData = [
+//   {
+//     "_id": "6019a1f57b3e601d3afa457e",
+//     "microservice": "books",
+//     "request": "getBookInfo",
+//     "responsestatus": 0,
+//     "correlatingid": "0500c04e-a005-4ccf-9a73-115c787263c9",
+//     "time": "2021-02-02T19:03:17.433+00:00",
+//     "__v": "0",
+//   },
+//   {
+//     "_id":"6019a1f54ed38d1d36c0401d",
+//     "microservice":"orders",
+//     "request":"GetBookInfo",
+//     "responsestatus": 0,
+//     "correlatingid":"0500c04e-a005-4ccf-9a73-115c787263c9",
+//     "time":"2021-02-02T19:03:17.455+00:00",
+//     "__v":"0"
+//   },
+//   {
+//     "_id":"6019a1f53b36691d328a0300",
+//     "microservice":"reverse-proxy",
+//     "request":"GetOrders",
+//     "responsestatus": 0,
+//     "correlatingid":"0500c04e-a005-4ccf-9a73-115c787263c9",
+//     "time":"2021-02-02T19:03:17.487+00:00",
+//     "__v":"0"
+//   },
+//   {
+//     "_id":"6019a1f57b3e601d3afa457f",
+//     "microservice":"books",
+//     "request":"getBookInfo",
+//     "responsestatus": 0,
+//     "correlatingid":"0500c04e-a005-4ccf-9a73-115c787263c9",
+//     "time":"2021-02-02T19:03:17.466+00:00",
+//     "__v":"0"
+//   },
+//   {
+//     "_id":"6019a1f54ed38d1d36c0401e",
+//     "microservice":"orders",
+//     "request":"GetBookInfo",
+//     "responsestatus": 0,
+//     "correlatingid":"0500c04e-a005-4ccf-9a73-115c787263c9",
+//     "time":"2021-02-02T19:03:17.471+00:00",
+//     "__v":"0"
+//   },
+//   {
+//     "_id":"6019a1f54ed38d1d36c0401f",
+//     "microservice":"orders",
+//     "request":"GetOrders",
+//     "responsestatus": 0,
+//     "correlatingid":"0500c04e-a005-4ccf-9a73-115c787263c9",
+//     "time":"2021-02-02T19:03:17.472+00:00",
+//     "__v":"0"
+//   },
+//   // {
+//   //   "_id": "6005e05d1aaf4f7d2d4b4fb3",
+//   //   "microservice": "books",
+//   //   "endpoint": null,
+//   //   "request": null,
+//   //   "functionname": "getBookInfo",
+//   //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//   //   "responsestatus": 0,
+//   //   "responsemessage": "OK",
+//   //   "time": "2021-01-18T19:24:13.100Z",
+//   //   "__v": 0
+//   // },
+//   // {
+//   //   "_id": "6005e05d1aaf4f7d2d4b4fb4",
+//   //   "microservice": "orders",
+//   //   "endpoint": null,
+//   //   "request": null,
+//   //   "functionname": "getOrders",
+//   //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//   //   "responsestatus": 0,
+//   //   "responsemessage": "OK",
+//   //   "time": "2021-01-18T19:24:13.200Z",
+//   //   "__v": 0
+//   // },
+//   // {
+//   //   "_id": "6005e05d1aaf4f7d2d4b4fb3",
+//   //   "microservice": "books",
+//   //   "endpoint": null,
+//   //   "request": null,
+//   //   "functionname": "getBookInfo",
+//   //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//   //   "responsestatus": 0,
+//   //   "responsemessage": "OK",
+//   //   "time": "2021-01-18T19:24:13.100Z",
+//   //   "__v": 0
+//   // },
+//   // {
+//   //   "_id": "6005e05d1aaf4f7d2d4b4fb4",
+//   //   "microservice": "orders",
+//   //   "endpoint": null,
+//   //   "request": null,
+//   //   "functionname": "getOrders",
+//   //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//   //   "responsestatus": 0,
+//   //   "responsemessage": "OK",
+//   //   "time": "2021-01-18T19:24:13.200Z",
+//   //   "__v": 0
+//   // },
+// ];
 
 const GRPCStatusCodesChart: React.FC = React.memo(() => {
-  // const { commsData } = useContext(CommsContext);
-
+  const { commsData } = useContext(CommsContext);
+  console.log(commsData)
   const createChart = () => {
     // Counter for request types
     const responseCodes: responseCodes = {
@@ -92,16 +145,13 @@ const GRPCStatusCodesChart: React.FC = React.memo(() => {
       '14': 0,
       '15': 0,
       '16': 0,
-      NULL: 0, //do we need this?
+      NULL: 0,
     };
 
     //Record each status code frequencies
     commsData.forEach((obj: IObj) => {
-      // const status = obj.responsestatus; //number
+      console.log(obj)
       responseCodes[obj.responsestatus] += 1;
-      // if (status === 0) {
-      //   responseCodes[status] += 1
-      // }
     });
 
     return (
