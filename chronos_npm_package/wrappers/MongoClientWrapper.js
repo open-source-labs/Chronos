@@ -1,18 +1,27 @@
 const mongoose = require('mongoose');
 const grpc = require('@grpc/grpc-js');
-const gRPC_Model = require('../models/gRPC_CommunicationModel')
+const gRPC_Model = require('../models/gRPC_CommunicationModel');
+
+async function connect(URI) {
+  try {
+    await mongoose.connect(`${URI}`);
+    // Print success message
+    console.log(`Chronos MongoDB is connected at ${URI.slice(0, 20)}...`);
+  } catch ({ message }) {
+    // Print error message
+    console.log('Error connecting to MongoDB:', message);
+  }
+}
 
 function makeMethods(clientWrapper, client, metadata, names) {
-  connect(clientWrapper.URI)
+  connect(clientWrapper.URI);
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
-    clientWrapper[name] = function (message, callback, meta = null) {
-
+    clientWrapper[name] = (message, callback, meta = null) => {
       let currentMetadata;
       if (meta) {
         currentMetadata = meta;
       } else {
-        //get metadata from link 
         currentMetadata = this.metadata.metadata;
       }
       const id = currentMetadata.get('id')[0];
@@ -44,17 +53,6 @@ function makeMethods(clientWrapper, client, metadata, names) {
         callback(error, response);
       });
     };
-  }
-}
-
-async function connect(URI) {
-  try {
-    await mongoose.connect(`${URI}`);
-    // Print success message
-    console.log(`Chronos MongoDB is connected at ${URI.slice(0, 20)}...`);
-  } catch ({ message }) {
-    // Print error message
-    console.log('Error connecting to MongoDB:', message);
   }
 }
 

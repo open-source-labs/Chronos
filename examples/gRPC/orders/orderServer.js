@@ -1,6 +1,6 @@
 const chronos = require('chronos');
 require('./chronos-config');
-const protoLoader = require("@grpc/proto-loader");
+const protoLoader = require('@grpc/proto-loader');
 const grpc = require('@grpc/grpc-js');
 
 const PROTO_PATH = './order.proto';
@@ -32,14 +32,14 @@ const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.serv
       if (bookInfo === undefined) {
         callback({
           code: grpc.status.NOT_FOUND,
-          details: "BookID not found",
+          details: 'BookID not found',
         });
       } else {
         OrderModel.create(newOrder)
-          .then((data) => {
+          .then(data => {
             callback(null, {});
           })
-          .catch((err) => console.log(err));
+          .catch(error => console.log(error));
       }
     });
   },
@@ -52,7 +52,7 @@ const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.serv
     OrderModel.find({})
       .then(data => {
         // if no orders in database
-        if (!data.length) return callback(null, { orderList: []});
+        if (!data.length) return callback(null, { orderList: [] });
         // iterate through orders to get book info for each order
         for (let i = 0; i < data.length; i += 1) {
           const tempObj = {
@@ -61,7 +61,7 @@ const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.serv
             purchaseDate: data[i].purchaseDate,
             deliveryDate: data[i].deliveryDate,
           };
-          // we must use tempObj because if you just use data[i], added properties do not appear when you console log data[i]. but the client stub still receives the added properties somehow 
+          // we must use tempObj because if you just use data[i], added properties do not appear when you console log data[i]. but the client stub still receives the added properties somehow
           client.GetBookInfo({ bookID: tempObj.bookID }, (err, bookInfo) => {
             // console.log('before adding', tempObj);
             tempObj.title = bookInfo.title;
@@ -88,7 +88,7 @@ console.log('ServerWrapper: ', ServerWrapper);
 chronos.link(client, ServerWrapper);
 
 // start server
-server.bindAsync("127.0.0.1:30043", grpc.ServerCredentials.createInsecure(), () => {
+server.bindAsync('127.0.0.1:30043', grpc.ServerCredentials.createInsecure(), () => {
   server.start();
 });
-console.log("Server running at http://127.0.0.1:30043");
+console.log('Server running at http://127.0.0.1:30043');
