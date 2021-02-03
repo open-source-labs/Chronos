@@ -101,7 +101,7 @@ To use Chronos in your existing application, download and install the following 
 npm install chronos-tracker
 ```
 
-### Configure Chronos
+### Configure Chronos for REST
 
 Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
@@ -115,6 +115,7 @@ chronos.use({
   interval: 2000,
   dockerized: true,
   database: {
+    connection: 'REST',
     type: 'MongoDB',
     URI: process.env.MONGO_URI,
   },
@@ -129,6 +130,7 @@ The `interval` property is optional and takes in an integer. This controls the C
 The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
 
 The `database` property is required and takes in the following:
+- `connection` which should be a string and only supports 'REST' and 'gRPC'
 - `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
 - `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
 
@@ -140,7 +142,7 @@ The `notifications` property is optional. Jump to the section below, [Notificati
 <br>
 <br>
 
-### Initialize Chronos
+### Initialize Chronos for REST
 
 Wherever you create an instance of your server (see example below),
 
@@ -164,6 +166,8 @@ app.use('/', chronos.track());
 
 You should be good to go! The last step, **Docker Configuration**, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
 <br>
+
+### Initialize Chronos for gRPC
 
 ### Docker Configuration
 
