@@ -24,5 +24,11 @@ export const lightAndDark = {
     minHeight: "100vh",
     flexDirection: "column" as "column",
     paddingLeft: "140px",
+  },
+  lightModeText: {
+    color: "black"
+  },
+  darkModeText: {
+    color: "white"
   }
 };

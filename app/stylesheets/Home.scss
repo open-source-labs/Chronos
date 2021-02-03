@@ -1,8 +1,7 @@
 @import './constants.scss';
 
 .home {
-  background-image: url('../assets/mountain_longer.png');
-  background-size: contain;
+  background: $darkblue;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -16,11 +15,11 @@
   width: 100vw;
   height: 100vh;
   opacity: 1;
-  animation: fadeIn ease 2s;
-  -webkit-animation: fadeIn ease 2s;
-  -moz-animation: fadeIn ease 2s;
-  -o-animation: fadeIn ease 2s;
-  -ms-animation: fadeIn ease 2s;
+  // animation: fadeIn ease 2s;
+  // -webkit-animation: fadeIn ease 2s;
+  // -moz-animation: fadeIn ease 2s;
+  // -o-animation: fadeIn ease 2s;
+  // -ms-animation: fadeIn ease 2s;
 
   .logo-container {
     height: auto;

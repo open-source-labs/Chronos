@@ -3,6 +3,7 @@ import '../stylesheets/Settings.scss';
 
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
+import { lightAndDark } from './Styling';
 
 // Need to add flag to turn off the splash at start
 // Need to add flag to turn off getting started page
@@ -14,10 +15,13 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Settings: React.SFC = React.memo((props) => {
   //use context from Dash board regarding currentMode
-  let { changeMode } = useContext(DashboardContext);
+  let { mode, changeMode } = useContext(DashboardContext);
   const handleClick = (mode: string) => {
     changeMode(mode);
   }
+  console.log(mode);
+  let currentMode = (mode === 'light mode')? lightAndDark.lightModeText : lightAndDark.darkModeText;
+
   return (
     <div className="settings">
       <button className="mode" id="lightMode" onClick={() => handleClick("light mode")}>
@@ -27,6 +31,9 @@ const Settings: React.SFC = React.memo((props) => {
       <button className="mode" id="darkMode" onClick={() => handleClick("dark mode")}>
         Dark
       </button>
+      <div className="copyright-container">
+        <p style={currentMode}>Copyright © Team Chronos 2021.</p>
+      </div>
     </div>
   );
 });
