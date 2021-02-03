@@ -1,8 +1,6 @@
 @import './constants.scss';
 
 .settings {
-  background-image: url('../assets/mountain_longer.png');
-  background-size: contain;
   display: flex;
   align-content: center;
   align-items: center;
@@ -29,27 +27,22 @@
   box-shadow: $boxshadow2;
   margin: 20px;
   font-weight: 100;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+    font-weight: 600;
+  }
 }
 
 #lightMode {
-  color: $darkgrey;
-  background-color: $grey;
+  color: $black;
+  background-color: $white;
   box-shadow: $boxshadow2;
-  opacity: 0.4;
-
-  &:hover {
-    opacity: 0.8;
-    font-weight: 600;
-  }
 }
 
 #darkMode {
-  color: $background;
-  background-color: transparent;
-  box-shadow: $boxshadow3;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    font-weight: 600;
-  }
+  color: $white;
+  background-color: $black;
+  box-shadow: $boxshadow2;
 }
