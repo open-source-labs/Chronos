@@ -2,10 +2,8 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IComms extends Document {
   microservice: string;
-  endpoint: string;
   request: string;
   responsestatus: number;
-  responsemessage: string;
   correlatingid: string;
   timestamps: Date;
 }
@@ -15,18 +13,12 @@ const CommunicationsSchema = new Schema({
     type: String,
     required: true,
   },
-  endpoint: {
-    type: String,
-  },
   request: {
     type: String,
     required: true,
   },
   responsestatus: {
     type: Number,
-  },
-  responsemessage: {
-    type: String,
   },
   time: {
     type: Date,
@@ -38,6 +30,6 @@ const CommunicationsSchema = new Schema({
   },
 });
 
-const CommunicationsModel = mongoose.model<IComms>('communications', CommunicationsSchema);
+const GRPCCommunicationsModel = mongoose.model<IComms>('grpc_communications', CommunicationsSchema);
 
-export default CommunicationsModel;
+export default GRPCCommunicationsModel;

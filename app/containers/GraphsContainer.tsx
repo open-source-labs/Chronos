@@ -18,6 +18,7 @@ import RouteChart from '../charts/RouteChart';
 import GRPCLogsTable from '../charts/GRPCLogsTable';
 import LogsTable from '../charts/LogsTable';
 import '../stylesheets/GraphsContainer.scss';
+import GRPCStatusCodesChart from '../charts/GRPCStatusCodesChart';
 
 export interface Params {
   app: any;
