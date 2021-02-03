@@ -13,7 +13,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   enums: String,
   arrays: true.valueOf,
 });
-// chronos.track();
+chronos.track();
 const orderProto = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();

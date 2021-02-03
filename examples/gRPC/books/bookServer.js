@@ -6,7 +6,7 @@ require('./chronos-config');
 require('dotenv').config(); // set up environment variables in .env
 const BookModel = require('./BookModel');
 
-// chronos.track();
+chronos.track();
 // load books proto
 const PROTO_PATH = './book.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
