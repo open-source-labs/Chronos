@@ -1,7 +1,7 @@
 const PROTO_PATH = './order.proto';
 const grpc = require('@grpc/grpc-js');
 const client = require('./bookClient.js');
-const OrderModel = require('./orderModel.js')
+const OrderModel = require('./OrderModel.js')
 
 const protoLoader = require("@grpc/proto-loader");
 
