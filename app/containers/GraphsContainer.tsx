@@ -73,7 +73,6 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
           <div className="graphs">
             <RequestTypesChart />
             <ResponseCodesChart />
-            <GRPCStatusCodesChart />
             <TrafficChart />
             <RouteChart />
           </div>
