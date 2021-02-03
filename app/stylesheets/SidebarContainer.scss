@@ -177,8 +177,7 @@
 }
 
 .sidebar {
-  background-image: url("../../app/assets/mountain.png");
-  background-size: cover;
+  background: $darkblue;
   width: 140px;
   height: 100%;
   position: fixed;
