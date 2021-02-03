@@ -13,23 +13,45 @@ interface IObj {
   time: string;
 }
 
+type responseCodes = {
+  [key: string]: number
+};
+
 const ResponseCodesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
     // Counter for request types
-    const responseCodes = {
+    const responseCodes: responseCodes = {
       '100-199': 0,
       '200-299': 0,
       '300-399': 0,
       '400-499': 0,
       '500-599': 0,
-      NULL: 0,
+      '0': 0,
+      '1': 0,
+      '2': 0,
+      '3': 0,
+      '4': 0,
+      '5': 0,
+      '6': 0,
+      '7': 0,
+      '8': 0,
+      '9': 0,
+      '10': 0,
+      '11': 0,
+      '12': 0,
+      '13': 0,
+      '14': 0,
+      '15': 0,
+      '16': 0,
     };
 
     // Record each status code frequencies
     commsData.forEach((obj: IObj) => {
       const status = obj.responsestatus;
+      console.log(status);
+      // if(status === 200) responseCodes['200-299'] += 1;
       if (status >= 500) {
         responseCodes['500-599'] += 1;
       } else if (status >= 400) {
@@ -41,7 +63,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       } else if (status >= 100) {
         responseCodes['100-199'] += 1;
       } else {
-        responseCodes.NULL += 1;
+        responseCodes[status] += 1;
       }
     });
 
@@ -51,6 +73,23 @@ const ResponseCodesChart: React.FC = React.memo(() => {
           {
             values: Object.values(responseCodes),
             labels: [
+              '0 - OK',
+              '1 - CANCELLED',
+              '2 - UNKNOWN',
+              '3 - INVALID_ARGUMENT',
+              '4 - DEADLINE_EXCEEDED',
+              '5 - NOT_FOUND',
+              '6 - ALREADY_EXISTS',
+              '7 - PERMISSION_DENIED',
+              '8 - RESOURCE_EXHAUSTED',
+              '9 - FAILED_PRECONDITION',
+              '10 - ABORTED',
+              '11 - OUT_OF_RANGE',
+              '12 - UNIMPLTEMENTED',
+              '13 - INTERNAL',
+              '14 - UNAVAILABLE',
+              '15 - DATA_LOSS',
+              '16 - UNAUTHENTICATED',
               'Informational (100-199)',
               'Success (200-299)',
               'Redirects (300-399)',
@@ -80,6 +119,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
             family: 'Roboto',
           },
           paper_bgcolor: 'white',
+          showlegend: false,
           legend: {
             orientation: 'h',
             xanchor: 'center',

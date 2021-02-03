@@ -15,6 +15,7 @@ import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
+import LogsTable from '../charts/LogsTable';
 import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
@@ -74,6 +75,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
             <ResponseCodesChart />
             <TrafficChart />
             <RouteChart />
+            <LogsTable />
           </div>
         ) : (
             <div className="graphs">

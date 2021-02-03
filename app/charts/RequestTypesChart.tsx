@@ -31,9 +31,14 @@ const RequestTypesChart: React.FC = React.memo(() => {
     let type;
     commsData.forEach((obj: IObject) => {
       type = obj.request;
+      console.log('L34:', type);
       if (type in requestTypes) {
         requestTypes[type] += 1;
+      } else {
+        requestTypes[type] = 0;
+        requestTypes[type]++;
       }
+      console.log(requestTypes)
     });
 
     return (
@@ -41,7 +46,8 @@ const RequestTypesChart: React.FC = React.memo(() => {
         data={[
           {
             values: Object.values(requestTypes),
-            labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
+            // labels: ['DELETE', 'GET', 'PATCH', 'POST', 'PUSH', 'PUT'],
+            labels: Object.keys(requestTypes),
             type: 'pie',
             textposition: 'inside',
             marker: {
@@ -65,6 +71,7 @@ const RequestTypesChart: React.FC = React.memo(() => {
             family: 'Roboto',
           },
           paper_bgcolor: 'white',
+          showlegend: false,
           legend: {
             orientation: 'h',
             xanchor: 'center',

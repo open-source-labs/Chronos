@@ -13,6 +13,7 @@
     "dependencies": {
         "@grpc/grpc-js": "^1.2.3",
         "@grpc/proto-loader": "^0.5.5",
+        "chronos": "file:../../../chronos_npm_package",
         "dotenv": "^8.2.0",
         "mongoose": "^5.11.12"
     }
