@@ -5,7 +5,7 @@ const protoLoader = require("@grpc/proto-loader");
 // mongodb imports and model imports
 // const mongoose = require('mongoose');
 require('dotenv').config(); // set up environment variables in .env
-const BookModel = require('./bookModel');
+const BookModel = require('./BookModel');
 
 // load books proto
 const PROTO_PATH = './book.proto';
