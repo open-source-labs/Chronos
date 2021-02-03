@@ -65,17 +65,14 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       }
     });
 
+    console.log(responseCodes);
+
     return (
       <Plot
         data={[
           {
             values: Object.values(responseCodes),
             labels: [
-              'Informational (100-199)',
-              'Success (200-299)',
-              'Redirects (300-399)',
-              'Client errors (400-499)',
-              'Server errors (500-599)',
               '0 - OK',
               '1 - CANCELLED',
               '2 - UNKNOWN',
@@ -93,6 +90,11 @@ const ResponseCodesChart: React.FC = React.memo(() => {
               '14 - UNAVAILABLE',
               '15 - DATA_LOSS',
               '16 - UNAUTHENTICATED',
+              'Informational (100-199)',
+              'Success (200-299)',
+              'Redirects (300-399)',
+              'Client errors (400-499)',
+              'Server errors (500-599)',
             ],
             type: 'pie',
             textposition: 'inside',
