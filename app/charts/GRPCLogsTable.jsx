@@ -8,102 +8,6 @@ import {
 
 import { CommsContext } from '../context/CommsContext';
 
-// const testData = useContext(CommsContext.commsData);
-// console.log(testData);
-
-const commsData = [
-  {
-    "_id":"6004b4e1d3f0bbd0f6a4081b",
-    "microservice":"reverse-proxy",
-    "endpoint":"/books/createbook",
-    "request":"POST",
-    "correlatingid":"700e36a8-334f-4ffb-babd-c0b3ec2a27f0",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time": "2021-01-17T22:06:25.595+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b4e18582d3dda5bb940f"},
-    "microservice":"books",
-    "endpoint":"/books/createbook",
-    "request":"POST",
-    "correlatingid":"700e36a8-334f-4ffb-babd-c0b3ec2a27f0",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time": "2021-01-17T22:06:25.582+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b507d3f0bbd0f6a4082f"},
-    "microservice":"reverse-proxy",
-    "endpoint":"/customers/createcustomer",
-    "request":"POST",
-    "correlatingid":"8d77bfc8-fce2-4279-ae6f-cccbb9277686",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time":"2021-01-17T22:07:03.980+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b507d3f0bbd0f6a4082f"},
-    "microservice":"reverse-proxy",
-    "endpoint":"/customers/createcustomer",
-    "request":"POST",
-    "correlatingid":"8d77bfc8-fce2-4279-ae6f-cccbb9277686",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time": "2021-01-17T22:07:03.989+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b52e4a699be366634bf2"},
-    "microservice":"customers",
-    "endpoint":"/customers/createcustomer",
-    "request":"POST",
-    "correlatingid":"1086e81d-01b6-4b52-aabb-ae47430fccaf",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time": "2021-01-17T22:07:42.603+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b52ed3f0bbd0f6a40843"},
-    "microservice":"reverse-proxy",
-    "endpoint":"/customers/createcustomer",
-    "request":"POST",
-    "correlatingid":"1086e81d-01b6-4b52-aabb-ae47430fccaf",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time":"2021-01-17T22:07:42.603+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b543d3f0bbd0f6a4084e"},
-    "microservice":"reverse-proxy",
-    "endpoint":"/orders/createorder",
-    "request":"POST",
-    "correlatingid":"43f0cc03-7e1d-49b0-84bd-740e82fa4326",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time":"2021-01-17T22:08:03.121+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-  {
-    "_id":{"$oid":"6004b5433c9fc5eb9216873c"},
-    "microservice":"orders",
-    "endpoint":"/orders/createorder",
-    "request":"POST",
-    "correlatingid":"43f0cc03-7e1d-49b0-84bd-740e82fa4326",
-    "responsestatus": "200",
-    "responsemessage":"OK",
-    "time":"2021-01-17T22:08:03.123+00:00",
-    "__v":{"$numberInt":"0"}
-  },
-]
-
-
-
 //Styling for the table
 const Styles = styled.div`
   padding: 1rem;
@@ -133,8 +37,6 @@ const Styles = styled.div`
     }
   }
 `;
-
-// const data = commsData;
 
 const Table = ({ columns, data }) => {
   const {
