@@ -75,6 +75,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
             <ResponseCodesChart />
             <TrafficChart />
             <RouteChart />
+            <LogsTable />
           </div>
         ) : (
             <div className="graphs">
