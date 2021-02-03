@@ -51,7 +51,7 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
           }} />
           &emsp;Dashboard
         </Link>
-        {/* <Link className="sidebar-link" to="/about" id="about">
+        <Link className="sidebar-link" to="/about" id="about">
           <InfoIcon style={{
             WebkitBoxSizing: 'content-box',
             boxShadow: 'none',
@@ -68,7 +68,7 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
             height: '35px',
           }} />
           &emsp;Contact
-        </Link> */}
+        </Link>
         <Link className="sidebar-link" to="/settings" id="settings">
           <SettingsIcon style={{
             WebkitBoxSizing: 'content-box',
