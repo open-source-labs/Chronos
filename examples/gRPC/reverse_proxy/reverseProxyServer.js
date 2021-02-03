@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname)));
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, './index.html'));
 });
-
+chronos.track();
 const createMeta = () => {
   const meta = new grpc.Metadata();
   meta.add('id', uuidv4());
