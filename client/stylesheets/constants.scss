@@ -1,8 +1,9 @@
-$box-shadow: 4px 4px 14px 3px;
+$box-shadow: 0px 3px 8px 3px;
 $dark-gradient: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 $darkblue: #011325;
 $white: #ffffff;
 $black: #000000;
+$blue: #224281;
 $lightblue: #4267b2;
 $yellowwhite: #ffffe5;
 $gray: #c2c2c2;
@@ -23,6 +24,10 @@ $gray: #c2c2c2;
       
       a {
         color: $lightblue;
+
+        &:hover {
+          color: $blue;
+        }
       }
     }
     
@@ -39,6 +44,10 @@ $gray: #c2c2c2;
       
       a {
         color: $lightblue;
+
+        &:hover {
+          color: $blue;
+        }
       }
     }
     
