@@ -124,7 +124,7 @@ type responseCodes = {
 
 const GRPCStatusCodesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
-  console.log(commsData)
+  // console.log(commsData)
   const createChart = () => {
     // Counter for request types
     const responseCodes: responseCodes = {
@@ -150,7 +150,7 @@ const GRPCStatusCodesChart: React.FC = React.memo(() => {
 
     //Record each status code frequencies
     commsData.forEach((obj: IObj) => {
-      console.log(obj)
+      // console.log(obj)
       responseCodes[obj.responsestatus] += 1;
     });
 
