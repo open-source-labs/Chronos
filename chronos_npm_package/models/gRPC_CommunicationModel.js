@@ -7,12 +7,20 @@ const gRPC_CommunicationsSchema = new Schema({
     type: String,
     required: true,
   },
+  endpoint: {
+    type: String,
+    required: true,
+  },
   request: {
     type: String,
     required: true,
   },
   responsestatus: {
     type: Number,
+  },
+  responsemessage: {
+    type: String,
+    required: true,
   },
   time: {
     type: Date,

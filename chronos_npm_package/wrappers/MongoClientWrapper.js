@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const grpc = require('@grpc/grpc-js');
-const gRPC_Model = require('../models/gRPC_CommunicationModel');
+const ComModel = require('../models/CommunicationModel');
 
 async function connect(URI) {
   try {
@@ -22,28 +22,22 @@ function makeMethods(clientWrapper, client, metadata, names) {
       if (meta) {
         currentMetadata = meta;
       } else {
-        currentMetadata = this.metadata.metadata;
+        currentMetadata = clientWrapper.metadata.metadata;
       }
       const id = currentMetadata.get('id')[0];
       const newComm = {
         microservice: clientWrapper.config.microservice,
+        endpoint: ' ',
         request: name,
-        correlatingid: id,
         responsestatus: 0,
+        responsemessage: ' ',
+        correlatingid: id,
       };
       client[name](message, currentMetadata, (error, response) => {
-        let responseCom;
         if (error) {
-          const newCommRes = {
-            microservice: clientWrapper.config.microservice,
-            request: name,
-            responsestatus: error.code,
-            correlatingid: id,
-          };
-          responseCom = new gRPC_Model(newCommRes);
-        } else {
-          responseCom = new gRPC_Model(newComm);
+          newComm.responsestatus = error.code;
         }
+        const responseCom = new ComModel(newComm);
         responseCom
           .save()
           .then(() => {

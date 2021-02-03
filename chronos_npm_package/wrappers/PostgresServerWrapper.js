@@ -42,7 +42,7 @@ function wrapMethods(server, metadataHolder, methods, userConfig, SQL) {
         const queryString = `
           INSERT INTO grpc_communications (microservice, request, correlatingId)
           VALUES ($1, $2, $3);`;
-        const { microservice } = userConfig.microservice;
+        const microservice  = userConfig.microservice;
         const request = name;
         const correlatingId = metadataHolder.metadata.get('id')[0];
         const values = [microservice, request, correlatingId];

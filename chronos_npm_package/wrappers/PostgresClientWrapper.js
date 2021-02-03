@@ -1,14 +1,14 @@
+/* eslint-disable no-loop-func */
 const { Client } = require('pg');
 const grpc = require('@grpc/grpc-js');
 
-let SQLclient;
-async function connect(URI) {
+
+async function connect(URI, client) {
   try {
-    SQLclient = new Client(URI);
-    await SQLclient.connect();
+    await client.connect();
     // Print success message
     console.log(`Connected to database at ${URI.slice(0, 24)}...`);
-    SQLclient.query(
+    client.query(
       `CREATE TABLE IF NOT EXISTS grpc_communications(
       _id serial PRIMARY KEY,
       microservice VARCHAR(248) NOT NULL,
@@ -29,8 +29,8 @@ async function connect(URI) {
   }
 }
 
-function makeMethods(clientWrapper, client, metadata, names, SQL) {
-  connect(clientWrapper.URI);
+function makeMethods(clientWrapper, client, metadata, names) {
+  connect(clientWrapper.URI, clientWrapper.SQLclient);
   for (let i = 0; i < names.length; i++) {
     const name = names[i];
     clientWrapper[name] = (message, callback, meta = null) => {
@@ -39,7 +39,7 @@ function makeMethods(clientWrapper, client, metadata, names, SQL) {
         currentMetadata = meta;
       } else {
         // get metadata from link
-        currentMetadata = this.metadata.metadata;
+        currentMetadata = clientWrapper.metadata.metadata;
       }
       client[name](message, currentMetadata, (error, response) => {
         // add status codes here
@@ -54,7 +54,7 @@ function makeMethods(clientWrapper, client, metadata, names, SQL) {
           responsestatus = error.code;
         }
         const values = [microservice, request, responsestatus, correlatingId];
-        SQL.query(queryString, values, (err, result) => {
+        clientWrapper.SQLclientSQLclient.query(queryString, values, (err, result) => {
           if (err) {
             throw err;
           }
@@ -71,8 +71,9 @@ class ClientWrapper {
     this.URI = userConfig.database.URI;
     this.config = userConfig;
     this.metadata = {};
+    this.SQLclient = new Client(this.URI);
     const names = Object.keys(service.service);
-    makeMethods(this, client, this.metadata, names, SQLclient);
+    makeMethods(this, client, this.metadata, names);
   }
 }
 
