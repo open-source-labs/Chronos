@@ -1,6 +1,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { ModuleResolutionKind } = require('typescript');
+const chronos = require('chronos');
+
 const PROTO_PATH = './order.proto';
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -11,9 +12,8 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 
 const OrderToBookService = grpc.loadPackageDefinition(packageDefinition).OrderToBook;
-const orderClient = new OrderToBookService(
-  "localhost:30044",
-  grpc.credentials.createInsecure(),
-);
+const bookClient = new OrderToBookService('localhost:30044', grpc.credentials.createInsecure());
 
-module.exports = orderClient;
+const ClientWrapper = chronos.ClientWrapper(bookClient, OrderToBookService);
+
+module.exports = ClientWrapper;

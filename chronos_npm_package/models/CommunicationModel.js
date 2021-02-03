@@ -1,14 +1,6 @@
-import mongoose, { Schema, Document } from 'mongoose';
+const mongoose = require('mongoose');
 
-export interface IComms extends Document {
-  microservice: string;
-  endpoint: string;
-  request: string;
-  responsestatus: number;
-  responsemessage: string;
-  correlatingid: string;
-  timestamps: Date;
-}
+const { Schema } = mongoose;
 
 const CommunicationsSchema = new Schema({
   microservice: {
@@ -17,6 +9,7 @@ const CommunicationsSchema = new Schema({
   },
   endpoint: {
     type: String,
+    required: true,
   },
   request: {
     type: String,
@@ -24,9 +17,11 @@ const CommunicationsSchema = new Schema({
   },
   responsestatus: {
     type: Number,
+    required: true,
   },
   responsemessage: {
     type: String,
+    required: true,
   },
   time: {
     type: Date,
@@ -38,6 +33,4 @@ const CommunicationsSchema = new Schema({
   },
 });
 
-const CommunicationsModel = mongoose.model<IComms>('communications', CommunicationsSchema);
-
-export default CommunicationsModel;
+module.exports = mongoose.model('communications', CommunicationsSchema);

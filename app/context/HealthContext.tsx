@@ -24,7 +24,7 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
         return o;
       }
     } catch (e) {
-      console.log({ error: e });
+      console.log(e);
     }
     return false;
   }
