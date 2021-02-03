@@ -19,24 +19,8 @@ const Home = () => {
         </div>
         <div className="hero-details">
           <p>
-            A network monitoring tool for servers, microservices, and
-            containerized applications.
+            All-in-one monitoring for Node.js
           </p>
-        </div>
-        <div className="hero-btns">
-          {/* <button onClick={scroll}>Get started</button>
-          <button>Download</button> */}
-        </div>
-        <div>
-          {/* <a
-            className="github-button"
-            href="https://github.com/open-source-labs/Chronos"
-            data-icon="octicon-star"
-            data-show-count="true"
-            aria-label="Star ntkme/github-buttons on GitHub"
-          >
-            Star
-          </a> */}
         </div>
       </div>
     </div>

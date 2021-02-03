@@ -4,9 +4,19 @@
   padding: 140px 10%;
   @include center-with-flex($direction: column);
   @include background-theme('light');
-
+  
   #action-header {
     @include section-header;
+    @include background-theme('dark');
+    box-shadow: $box-shadow;
+    border: 1px solid black;
+    padding: 1em;
+    border-radius: 15px;
+  }
+
+  p {
+    font-size: 150%;
+    line-height: 135%;
   }
 
   .action {
@@ -17,24 +27,24 @@
     }
 
     .download-btns {
-      display: flex;
-      justify-content: space-evenly;
+      @include center-with-flex($direction: row);
       margin-top: 25px;
 
       button {
         width: 140px;
         padding: 10px 15px;
         font-size: 125%;
-        border: 2px solid $black;
-        background: transparent;
+        @include background-theme('light');
         color: $black;
         font-weight: 400;
         letter-spacing: 0px;
         transition: 0.1s;
         border-radius: 3px;
+        margin: 5px;
 
         &:hover {
-          background-color: lighten(#555, 10%);
+          @include background-theme('dark');
+          color: $white;
         }
       }
     }

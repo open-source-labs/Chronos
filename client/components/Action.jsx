@@ -7,34 +7,43 @@ const Action = () => {
     <div className="section-action">
       <div id="action-header">
         <h1>Ready to Begin?</h1>
-        <p>Download Chronos as an Electron app</p>
       </div>
+        <p>Download Chronos as an Electron app, then follow our step-by-step instructions on <a href="https://github.com/open-source-labs/Chronos">Github.</a></p>
       <div className="action">
-
         <div className="download-btns">
-          <a href="https://chronoslany.com/0af77b7f833d00399ec781432f669856.dmg">
-            <button>
-              macOS
-              <br />
-              v4.0
-              <br />
-              <ion-icon name="download-outline"></ion-icon>
-            </button>
-          </a>
-          <button>
-            Linux
-            <br />
-            v4.0
-            <br />
-            <ion-icon name="download-outline"></ion-icon>
-          </button>
-          <button>
-            Windows
-            <br />
-            v4.0
-            <br />
-            <ion-icon name="download-outline"></ion-icon>
-          </button>
+          <div>
+            <a href="https://chronoslany.com/0af77b7f833d00399ec781432f669856.dmg">
+              <button>
+                MacOS
+                <br />
+                v6.0
+                <br />
+                <ion-icon name="download-outline"></ion-icon>
+              </button>
+            </a>
+          </div>
+          <div>
+            <a href="#">
+              <button>
+                Linux
+                <br />
+                v6.0
+                <br />
+                <ion-icon name="download-outline"></ion-icon>
+              </button>
+            </a>
+          </div>
+          <div>
+            <a href="#">
+              <button>
+                Windows
+                <br />
+                v6.0
+                <br />
+                <ion-icon name="download-outline"></ion-icon>
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     </div>

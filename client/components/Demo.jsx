@@ -18,10 +18,7 @@ const Demo = () => {
             <img src={code} alt="Config file" />
           </figure>
           <figcaption>
-            <p>
-              Install and configure Chronos in your Node.js server. For more information visit our{' '}
-              <a href="https://github.com/open-source-labs/Chronos">Github page</a>
-            </p>
+            <p>1. Initialize the Chronos Tracker in your server.</p>
           </figcaption>
         </div>
         <div className="example-2">
@@ -29,7 +26,7 @@ const Demo = () => {
             <img src={apps} alt="Application cards" />
           </figure>
           <figcaption>
-            <p>Upload your application to the Chronos Electron app</p>
+            <p>2. Connect your application in the desktop app.</p>
           </figcaption>
         </div>
         <div className="example-3">
@@ -37,7 +34,7 @@ const Demo = () => {
             <img src={health} alt="Graphs" />
           </figure>
           <figcaption>
-            <p>View server health, microservice route tracing, and container information</p>
+            <p>3. View server health metrics, microservice route tracing, and error logs.</p>
           </figcaption>
         </div>
         {/* <video src={demoVideo} controls={true} /> */}
