@@ -7,6 +7,7 @@ import CommunicationModel from '../models/CommunicationsModel';
 import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
+import GRPCCommunicationsModel from '../models/GRPCCommunicationsModel';
 
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -92,7 +93,7 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents
-      result = await CommunicationModel.find().exec();
+      result = await GRPCCommunicationsModel.find().exec();
     }
 
     // SQL Database

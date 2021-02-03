@@ -215,7 +215,7 @@ import Graph from 'react-graph-vis';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
-  // console.log(communicationsData);
+  console.log(communicationsData);
   // gather all communicationsData and sort them using matching correlatingid.
   // resObj { key = correlatingid : value = array of objects{ microservice , time} }
   // resObj { key = correlatingid : value = array of objects{ microservice , time, functionName} }
@@ -297,7 +297,7 @@ const RouteChart = React.memo(() => {
       if (i !== 0) {
         let from = route[i - 1].microservice;
         let to = id;
-        let functionname = route[i - 1].functionname;
+        let functionname = route[i - 1].request;
         let edgeStr = JSON.stringify({ from, to, functionname })
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
         // only want one edge per route with the average duration
