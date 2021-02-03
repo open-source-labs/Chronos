@@ -22,7 +22,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
 
   const createChart = () => {
     // Counter for request types
-    const responseCodes = {
+    const responseCodes: responseCodes = {
       '100-199': 0,
       '200-299': 0,
       '300-399': 0,
@@ -61,7 +61,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       } else if (status >= 100) {
         responseCodes['100-199'] += 1;
       } else {
-        responseCodes[obj.responsestatus] += 1;
+        responseCodes[JSON.stringify(obj.responsestatus)] += 1;
       }
     });
 
