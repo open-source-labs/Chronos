@@ -38,7 +38,6 @@ const Styles = styled.div`
   }
 `;
 
-const data = commsData;
 
 const Table = ({ columns, data }) => {
   const {
