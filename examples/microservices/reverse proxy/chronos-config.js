@@ -8,5 +8,5 @@ chronos.use({
   database: {
     type: 'MongoDB',
     URI: process.env.CHRONOS_URI,
-  }
+  },
 });
