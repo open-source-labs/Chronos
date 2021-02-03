@@ -89,9 +89,9 @@ const Occupied = React.memo(() => {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: '#ffffff', // dark mode
+      color: '#888888',
       whiteSpace: 'nowrap',
-      backgroundColor: 'transparent', // dark mode
+      backgroundColor: 'lightgray',
       borderRadius: 3,
       border: '0',
       boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', // dark mode
@@ -126,8 +126,8 @@ const Occupied = React.memo(() => {
       fontSize: '18px',
       fontFamily: 'Roboto',
       fontWeight: 300,
-      // color: '#444d56',
-      color: '#ffffff', // dark mode
+      color: '#444d56',
+      // color: '#ffffff', // dark mode
     }
   }));
   const useStylesLight = makeStyles<Theme, StyleProps>(theme => ({
