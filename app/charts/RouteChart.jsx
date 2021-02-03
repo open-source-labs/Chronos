@@ -4,7 +4,7 @@ import { CommsContext } from '../context/CommsContext';
 import Graph from 'react-graph-vis';
 
 
-const communicationsData = [
+// const communicationsData = [
   // {
   //   "_id": "60024826d6c7ffee730d38be",
   //   "microservice": "reverse-proxy",
@@ -163,59 +163,59 @@ const communicationsData = [
   //   "__v": 0
   // },
   // gRPC communication data
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb3",
-    "microservice": "books",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getBookInfo",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 0,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:13.100Z",
-    "__v": 0
-  },
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb4",
-    "microservice": "orders",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getOrders",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 0,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:13.200Z",
-    "__v": 0
-  },
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb3",
-    "microservice": "books",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getBookInfo",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 0,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:13.100Z",
-    "__v": 0
-  },
-  {
-    "_id": "6005e05d1aaf4f7d2d4b4fb4",
-    "microservice": "orders",
-    "endpoint": null,
-    "request": null,
-    "functionname": "getOrders",
-    "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-    "responsestatus": 0,
-    "responsemessage": "OK",
-    "time": "2021-01-18T19:24:13.200Z",
-    "__v": 0
-  }
-]
+//   {
+//     "_id": "6005e05d1aaf4f7d2d4b4fb3",
+//     "microservice": "books",
+//     "endpoint": null,
+//     "request": null,
+//     "functionname": "getBookInfo",
+//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//     "responsestatus": 0,
+//     "responsemessage": "OK",
+//     "time": "2021-01-18T19:24:13.100Z",
+//     "__v": 0
+//   },
+//   {
+//     "_id": "6005e05d1aaf4f7d2d4b4fb4",
+//     "microservice": "orders",
+//     "endpoint": null,
+//     "request": null,
+//     "functionname": "getOrders",
+//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//     "responsestatus": 0,
+//     "responsemessage": "OK",
+//     "time": "2021-01-18T19:24:13.200Z",
+//     "__v": 0
+//   },
+//   {
+//     "_id": "6005e05d1aaf4f7d2d4b4fb3",
+//     "microservice": "books",
+//     "endpoint": null,
+//     "request": null,
+//     "functionname": "getBookInfo",
+//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//     "responsestatus": 0,
+//     "responsemessage": "OK",
+//     "time": "2021-01-18T19:24:13.100Z",
+//     "__v": 0
+//   },
+//   {
+//     "_id": "6005e05d1aaf4f7d2d4b4fb4",
+//     "microservice": "orders",
+//     "endpoint": null,
+//     "request": null,
+//     "functionname": "getOrders",
+//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
+//     "responsestatus": 0,
+//     "responsemessage": "OK",
+//     "time": "2021-01-18T19:24:13.200Z",
+//     "__v": 0
+//   }
+// ]
 
 const RouteChart = React.memo(() => {
-  // const communicationsData = useContext(CommsContext).commsData;
-  console.log(communicationsData);
+  const communicationsData = useContext(CommsContext).commsData;
+  // console.log(communicationsData);
   // gather all communicationsData and sort them using matching correlatingid.
   // resObj { key = correlatingid : value = array of objects{ microservice , time} }
   // resObj { key = correlatingid : value = array of objects{ microservice , time, functionName} }
