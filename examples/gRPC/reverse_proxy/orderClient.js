@@ -1,7 +1,7 @@
-
+const chronos = require('chronos');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { ModuleResolutionKind } = require('typescript');
+
 const PROTO_PATH = './reverseProxy.proto';
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -15,11 +15,8 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
  * Proxy to Order
  */
 const ProxyToOrderService = grpc.loadPackageDefinition(packageDefinition).ProxyToOrder;
-const orderClient = new ProxyToOrderService(
-  "localhost:30043",
-  grpc.credentials.createInsecure()
-);
+const orderClient = new ProxyToOrderService('localhost:30043', grpc.credentials.createInsecure());
 
+const ClientWrapper = chronos.ClientWrapper(orderClient, ProxyToOrderService);
 
-
-module.exports = orderClient;
+module.exports = ClientWrapper;
