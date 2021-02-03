@@ -3,216 +3,6 @@ import React, { useContext } from 'react';
 import { CommsContext } from '../context/CommsContext';
 import Graph from 'react-graph-vis';
 
-
-// const communicationsData = [
-  // {
-  //   "_id": "60024826d6c7ffee730d38be",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "c70a3865-f582-4d79-86d7-d7a2b5efab02",
-  //   "responsestatus": 304,
-  //   "responsemessage": "Not Modified",
-  //   "time": "2021-01-16T01:57:58.925Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "60024826d6c7ffee730d38bf",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/index.js",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "fa79ec49-0d0c-4311-abf7-323e9d359502",
-  //   "responsestatus": 304,
-  //   "responsemessage": "Not Modified",
-  //   "time": "2021-01-16T01:57:58.948Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "60024848404367ee70545be1",
-  //   "microservice": "books",
-  //   "endpoint": "/books/createbook",
-  //   "request": "POST",
-  //   "functionname": null,
-  //   "correlatingid": "3ef918b7-c9df-473e-8dad-c1b4fc3f10c6",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-16T01:58:32.404Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "60024848d6c7ffee730d38d1",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/books/createbook",
-  //   "request": "POST",
-  //   "functionname": null,
-  //   "correlatingid": "3ef918b7-c9df-473e-8dad-c1b4fc3f10c6",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-16T01:58:32.405Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005dfd480cd7f7d2e003983",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "45b86d4e-d8b9-4bef-8eab-2112adce6a4f",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:21:56.035Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005dfd480cd7f7d2e003984",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/index.js",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "1b822a84-5ede-4d37-9595-545b9329c7c1",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:21:56.082Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005e0174fb7ac7d2fc76208",
-  //   "microservice": "customers",
-  //   "endpoint": "/customers/createcustomer",
-  //   "request": "POST",
-  //   "functionname": null,
-  //   "correlatingid": "374e4f4d-2bd2-4b20-a5e7-1d9e42c4e417",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:23:03.933Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005e01780cd7f7d2e0039a7",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/customers/createcustomer",
-  //   "request": "POST",
-  //   "functionname": null,
-  //   "correlatingid": "374e4f4d-2bd2-4b20-a5e7-1d9e42c4e417",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:23:03.934Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005e04180cd7f7d2e0039bd",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/orders/createorder",
-  //   "request": "POST",
-  //   "functionname": null,
-  //   "correlatingid": "06ff2f4e-ad57-49a8-baee-9eedea843a9b",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:23:45.816Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005e041cbe0867d3036a149",
-  //   "microservice": "orders",
-  //   "endpoint": "/orders/createorder",
-  //   "request": "POST",
-  //   "functionname": null,
-  //   "correlatingid": "06ff2f4e-ad57-49a8-baee-9eedea843a9b",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:23:45.816Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005e05dcbe0867d3036a157",
-  //   "microservice": "orders",
-  //   "endpoint": "/orders/getorders",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31bd",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:24:13.297Z",
-  //   "__v": 0
-  // },
-  // {
-  //   "_id": "6005e05d80cd7f7d2e0039cb",
-  //   "microservice": "reverse-proxy",
-  //   "endpoint": "/books/getordersinfo",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31bd",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:24:13.303Z",
-  //   "__v": 0
-  // },
-  // REST communication data
-  // {
-  //   "_id": "6005e05d1aaf4f7d2d4b4fb2",
-  //   "microservice": "books",
-  //   "endpoint": "/books/getordersinfo",
-  //   "request": "GET",
-  //   "functionname": null,
-  //   "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31bd",
-  //   "responsestatus": 200,
-  //   "responsemessage": "OK",
-  //   "time": "2021-01-18T19:24:13.303Z",
-  //   "__v": 0
-  // },
-  // gRPC communication data
-//   {
-//     "_id": "6005e05d1aaf4f7d2d4b4fb3",
-//     "microservice": "books",
-//     "endpoint": null,
-//     "request": null,
-//     "functionname": "getBookInfo",
-//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-//     "responsestatus": 0,
-//     "responsemessage": "OK",
-//     "time": "2021-01-18T19:24:13.100Z",
-//     "__v": 0
-//   },
-//   {
-//     "_id": "6005e05d1aaf4f7d2d4b4fb4",
-//     "microservice": "orders",
-//     "endpoint": null,
-//     "request": null,
-//     "functionname": "getOrders",
-//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-//     "responsestatus": 0,
-//     "responsemessage": "OK",
-//     "time": "2021-01-18T19:24:13.200Z",
-//     "__v": 0
-//   },
-//   {
-//     "_id": "6005e05d1aaf4f7d2d4b4fb3",
-//     "microservice": "books",
-//     "endpoint": null,
-//     "request": null,
-//     "functionname": "getBookInfo",
-//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-//     "responsestatus": 0,
-//     "responsemessage": "OK",
-//     "time": "2021-01-18T19:24:13.100Z",
-//     "__v": 0
-//   },
-//   {
-//     "_id": "6005e05d1aaf4f7d2d4b4fb4",
-//     "microservice": "orders",
-//     "endpoint": null,
-//     "request": null,
-//     "functionname": "getOrders",
-//     "correlatingid": "7c711d71-e6a3-4714-a027-a8716c2f31be",
-//     "responsestatus": 0,
-//     "responsemessage": "OK",
-//     "time": "2021-01-18T19:24:13.200Z",
-//     "__v": 0
-//   }
-// ]
-
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
   console.log(communicationsData);
@@ -237,7 +27,7 @@ const RouteChart = React.memo(() => {
       resObj[element.correlatingid].push({
         microservice: element.microservice,
         time: element.time,
-        functionname: element.request, //here
+        request: element.request, //here
       });
     }
     //? What does this else block do?
@@ -297,8 +87,8 @@ const RouteChart = React.memo(() => {
       if (i !== 0) {
         let from = route[i - 1].microservice;
         let to = id;
-        let functionname = route[i - 1].request; //here
-        let edgeStr = JSON.stringify({ from, to, functionname })
+        let request = route[i - 1].request; //here
+        let edgeStr = JSON.stringify({ from, to, request })
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
         // only want one edge per route with the average duration
         if (edgeListObj[edgeStr]) {
@@ -315,6 +105,7 @@ const RouteChart = React.memo(() => {
   const edgeList = [];
   for (let [edgeStr, duration] of Object.entries(edgeListObj)) {
     const edge = JSON.parse(edgeStr);
+    console.log(edge.request)
     edge.label = edge.request ? `${edge.request} - ${(duration * 10).toFixed(0)} ms` : `${(duration * 10).toFixed(0)} ms` 
     edgeList.push(edge);
   }
