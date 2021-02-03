@@ -5,9 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   addOrderBtn.addEventListener('click', addOrder);
   const getOrdersBtn = document.getElementById('orderInfo');
   getOrdersBtn.addEventListener('click', getOrders);
-  var display = document.querySelector('#display');
+  const display = document.querySelector('#display');
 });
-
 
 const addBook = () => {
   const title = document.getElementById('field_A1').value;
@@ -23,7 +22,7 @@ const addBook = () => {
       },
       body: JSON.stringify({ title, author, numberOfPages, publisher, bookID }),
     })
-      .then((response) => {
+      .then(response => {
         // remove currently displayed list items
         while (display.firstChild) {
           display.removeChild(display.firstChild);
@@ -52,7 +51,7 @@ const addOrder = () => {
       },
       body: JSON.stringify({ customerID, bookID, purchaseDate, deliveryDate }),
     })
-      .then((response) => {
+      .then(response => {
         // remove currently displayed list items
         while (display.firstChild) {
           display.removeChild(display.firstChild);
@@ -80,7 +79,9 @@ const getOrders = () => {
       }
       data.orderList.forEach(order => {
         const orderListItem = document.createElement('li');
-        const orderListItemText = document.createTextNode(`CustomerID: ${order.customerID}. Purchase Date: ${order.purchaseDate}. Delivery Date: ${order.deliveryDate}. Book Info: ${order.title} by ${order.author}, ${order.publisher}, ${order.numberOfPages} pages.`);
+        const orderListItemText = document.createTextNode(
+          `CustomerID: ${order.customerID}. Purchase Date: ${order.purchaseDate}. Delivery Date: ${order.deliveryDate}. Book Info: ${order.title} by ${order.author}, ${order.publisher}, ${order.numberOfPages} pages.`
+        );
         orderListItem.appendChild(orderListItemText);
         display.appendChild(orderListItem);
       });
