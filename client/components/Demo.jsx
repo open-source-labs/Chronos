@@ -10,7 +10,7 @@ const Demo = () => {
   return (
     <div className="section-demo">
       <div id="demo-header">
-        <h2>Easy to get started.</h2>
+        <h2>Easy to use.</h2>
       </div>
       <div id="demo-content">
         <div className="example-1">
