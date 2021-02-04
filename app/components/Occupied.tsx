@@ -54,12 +54,11 @@ const Occupied = React.memo(() => {
   const [searchTerm, setSearchTerm] = useState<string>('Search...');
   // Dynamic refs
   const delRef = useRef<any>([]);
-  //check context from dashboard
   useEffect(() => {
     setServicesData([]);
     getApplications(); 
   }, []);
-  console.log(mode);
+
   
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, app: string, i: number) => {
