@@ -2,10 +2,10 @@
 
 .section-quotes {
   padding: 50px 10%;
-  @include centerWithFlex;
+  @include center-with-flex;
 
   .quote-container {
-    @include centerWithFlex;
+    @include center-with-flex;
     background-color: $yellowwhite;
     border-radius: 3px;
     padding: 40px;
@@ -18,7 +18,7 @@
     }
 
     .quote-content {
-      @include centerWithFlex($direction: column);
+      @include center-with-flex($direction: column);
       p {
         font-size: 135%;
         color: $black;

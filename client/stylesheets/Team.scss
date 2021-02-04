@@ -5,9 +5,9 @@
   width: 100%;
   padding: 3px 12px;
   padding-top: 110px;
-  margin: 0px 5px;
   display: flex;
   flex-wrap: wrap;
+  @include background-theme('dark');
 
   .bio-card {
     justify-content: center;
@@ -18,6 +18,7 @@
     padding: 10px 10px;
     position: relative;
     border-radius: 5px;
+
     .bio-pic {
       height: 270px;
       width: 270px;
@@ -34,11 +35,6 @@
       line-height: 25px;
       padding: 10px 0;
       flex-grow: 1;
-    }
-    .member-contact {
-      margin-left: 140px;
-      position: absolute;
-      bottom: 10px;
     }
     .member-contact .icon {
       color: $white;

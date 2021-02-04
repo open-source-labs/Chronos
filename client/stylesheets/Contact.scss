@@ -6,11 +6,13 @@
   display: flex;
   justify-content: flex-start;
   padding: 25% 25%;
+  @include background-theme('dark');
+
   .contact-border {
     width: 120vh;
     height: 20vh;
     // margin: 10vh 20vh;
-    background-color: $black;
+    background-color: $gray;
     border-radius: 10px;
     border: 1px solid black;
     z-index: 0;
@@ -18,6 +20,7 @@
     flex-direction: row;
     padding-top: 50px;
     justify-content: center;
+    @include background-theme('light');
     // padding-left: 10px;
     .contact-container {
       width: 60%;

@@ -2,25 +2,26 @@
 
 .section-home {
   width: 100vw;
-  height: 70vh;
+  height: 100vh;
   min-height: 700px;
+  @include background-theme('dark');
 
   .hero-container {
     width: 50%;
     color: #fff;
     position: absolute;
     left: 50%;
-    top: 400px;
+    top: 50%;
     transform: translate(-50%, -50%);
-    @include centerWithFlex($direction: column);
-    animation: appear linear 1s forwards;
+    @include center-with-flex($direction: column);
+    animation: appear linear 2s forwards;
 
     .hero-chronos {
-      @include centerWithFlex;
-      margin-bottom: 20px;
+      @include center-with-flex;
+      margin-bottom: 60px;
 
       img {
-        width: 600px;
+        width: 800px;
       }
     }
 
@@ -30,43 +31,6 @@
     .hero-details {
       margin-bottom: 45px;
       text-align: center;
-    }
-
-    // Buttons
-    .hero-btns {
-      display: flex;
-      justify-content: space-between;
-      width: 300px;
-      margin-bottom: 25px;
-
-      button {
-        border: thin solid white;
-        border-radius: 3px;
-        color: white;
-        padding: 15px 20px;
-        font-size: 130%;
-        transition: 0.2s;
-
-        &:first-of-type {
-          &:hover {
-            background-color: white;
-            color: #333;
-          }
-        }
-
-        &:last-of-type {
-          border: thin solid $primary;
-          color: #333;
-          background-color: $primary;
-
-          &:hover {
-            background-color: darken($primary, 35%);
-          }
-        }
-
-        &:hover {
-        }
-      }
     }
   }
 }

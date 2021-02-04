@@ -14,10 +14,54 @@ import bioMichaelPic from '../../assets/Bio_picture_Michael.jpg';
 import bioRonellePic from '../../assets/Bio_picture_Ronelle.jpg';
 import bioToddPic from '../../assets/Bio_picture_Todd.jpg';
 import bioGregoryPic from '../../assets/Bio_picture_Gregory.jpg';
+import bioVincePic from '../../assets/Bio_picture_Vince.png';
+import bioMattPic from '../../assets/Bio_picture_Matt.jpg';
+import bioDerekPic from '../../assets/Bio_picture_Derek.jpg';
+import bioKitPic from '../../assets/Bio_picture_Kit.jpg';
 
 import '../../stylesheets/Team.scss';
 
 const bios = [
+  {
+    name: 'Vince Ho',
+    bioParagraph:
+      'Vince is a full-stack software engineer based in San Diego. Beyond software development, Vince\'s passion includes taking care of his plants and lifting heavy weight off the ground.',
+    picture: bioVincePic,
+    contact: {
+      gitHub: 'https://github.com/hodesza',
+      linkedIn: 'https://www.linkedin.com/in/vinceho022/',
+    },
+  },
+  {
+    name: 'Matt Jiang',
+    bioParagraph:
+      'Matt Jiang is a software engineer who loves building sleek and responsive UIs, constructing well-architected backends, and above all writing clean code. Outside of coding, you can find him playing ukulele at a park somewhere.',
+    picture: bioMattPic,
+    contact: {
+      gitHub: 'https://github.com/mattljiang',
+      linkedIn: 'https://www.linkedin.com/in/mattljiang/',
+    },
+  },
+  {
+    name: 'Derek Lam',
+    bioParagraph:
+      'Derek is a software engineer currently living in Los Angeles. Before COVID, he enjoyed going to trivia nights and backpacking in Central America, nowadays you can find him indoors waiting for a remake of Game of Thrones season 8.',
+    picture: bioDerekPic,
+    contact: {
+      gitHub: 'https://github.com/DerekQuoc',
+      linkedIn: 'https://www.linkedin.com/in/derekqlam/',
+    },
+  },
+  {
+    name: 'Kit Loong Yee',
+    bioParagraph:
+      'Kit is a full-stack software engineer who has a passion in building products to better peoples\' lives. He also enjoys classical music and spending time with his family.',
+    picture: bioKitPic,
+    contact: {
+      gitHub: 'https://github.com/kitloong1',
+      linkedIn: 'https://www.linkedin.com/in/kitloongyee/',
+    },
+  },
   {
     name: 'Michael Wang',
     bioParagraph:
@@ -27,7 +71,6 @@ const bios = [
       gitHub: 'https://github.com/wang3101',
       linkedIn: 'https://www.linkedin.com/in/michael--wang/',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Ronelle Caguioa',
@@ -38,7 +81,6 @@ const bios = [
       gitHub: 'https://github.com/ronellecaguioa',
       linkedIn: 'https://www.linkedin.com/in/ronellecaguioa/',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Todd Buckner',
@@ -49,7 +91,6 @@ const bios = [
       gitHub: 'https://github.com/RToddBuckner',
       linkedIn: 'TBD',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Gregory Palasciano',
@@ -60,7 +101,6 @@ const bios = [
       gitHub: 'https://github.com/gregpalace',
       linkedIn: 'https://www.linkedin.com/in/gregory-palasciano',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Brianna Sookhoo',
@@ -71,7 +111,6 @@ const bios = [
       gitHub: 'https://github.com/briannasookhoo',
       linkedIn: 'https://www.linkedin.com/in/brianna-sookhoo-b03502135/',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Brian Bui',
@@ -82,7 +121,6 @@ const bios = [
       gitHub: 'https://github.com/umius-brian/',
       linkedIn: 'https://www.linkedin.com/in/umius-brian/',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Alon Ofengart',
@@ -93,7 +131,6 @@ const bios = [
       gitHub: 'https://github.com/alon25',
       linkedIn: 'https://www.linkedin.com/in/alon-ofengart',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Alan Lee',
@@ -104,7 +141,6 @@ const bios = [
       gitHub: 'https://github.com/ajlee12',
       linkedIn: 'https://www.linkedin.com/in/alan-lee-1ba1aa93/',
     },
-    location: 'Los Angeles',
   },
   {
     name: 'Ousman Diallo',
@@ -115,7 +151,6 @@ const bios = [
       gitHub: 'https://github.com/Dialloousman',
       linkedIn: 'https://www.linkedin.com/in/ordiallo/',
     },
-    location: 'New York',
   },
   {
     name: 'Ben Mizel',
@@ -126,7 +161,6 @@ const bios = [
       gitHub: 'https://github.com/ben-mizel/',
       linkedIn: 'https://www.linkedin.com/in/ben-mizel/',
     },
-    location: 'New York',
   },
   {
     name: 'Chris Romano',
@@ -137,7 +171,6 @@ const bios = [
       gitHub: 'https://github.com/robicano22',
       linkedIn: 'https://www.linkedin.com/in/chris-p-romano/',
     },
-    location: 'New York',
   },
   {
     name: 'Jenae Pennie',
@@ -148,7 +181,6 @@ const bios = [
       gitHub: 'https://github.com/jenaepen',
       linkedIn: 'https://www.linkedin.com/in/jenae-pennie',
     },
-    location: 'New York',
   },
   {
     name: 'Tim Pagra',
@@ -159,7 +191,6 @@ const bios = [
       gitHub: 'https://github.com/timpagra',
       linkedIn: 'https://www.linkedin.com/in/timpagra/',
     },
-    location: 'New York',
   },
 ];
 
@@ -178,7 +209,6 @@ const Team = () => (
           >
             <ion-icon class = "icon" name="logo-github"></ion-icon>
           </a>
-          
           <a
             className="member-linkedin"
             href={obj.contact.linkedIn}
@@ -189,10 +219,6 @@ const Team = () => (
                 name="logo-linkedin"
               ></ion-icon>
           </a>
-          <p className="member-location">
-            Location:&nbsp;
-            {obj.location}
-          </p>
         </p>
       </div>
     ))}
