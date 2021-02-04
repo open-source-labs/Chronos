@@ -30,5 +30,5 @@ export const lightAndDark = {
   },
   darkModeText: {
     color: "white"
-  }
+  },
 };

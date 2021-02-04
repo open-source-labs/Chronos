@@ -33,15 +33,6 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
       <hr className="line" id="firstLine"></hr>
       
       <div className="thirdRow">
-        {/* <Link className="sidebar-link" to="/" id="home">
-          <HomeSharpIcon style={{ 
-            WebkitBoxSizing: 'content-box',
-            boxShadow: 'none', 
-            width: '35px', 
-            height: '35px', 
-            }} />
-          &emsp;Home
-        </Link> */}
         <Link className="sidebar-link" to="/applications" id="dash">
           <ListIcon style={{
             WebkitBoxSizing: 'content-box',
@@ -50,6 +41,15 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
             height: '35px',
           }} />
           &emsp;Dashboard
+        </Link>
+        <Link className="sidebar-link" to="/settings" id="settings">
+          <SettingsIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
+          &emsp;Settings
         </Link>
         <Link className="sidebar-link" to="/about" id="about">
           <InfoIcon style={{
@@ -69,24 +69,6 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
           }} />
           &emsp;Contact
         </Link>
-        <Link className="sidebar-link" to="/settings" id="settings">
-          <SettingsIcon style={{
-            WebkitBoxSizing: 'content-box',
-            boxShadow: 'none',
-            width: '35px',
-            height: '35px',
-          }} />
-          &emsp;Settings
-        </Link>
-        {/* <Link className="sidebar-link" to="/" id="logout">
-            <ExitToAppIcon style={{
-            WebkitBoxSizing: 'content-box',
-            boxShadow: 'none',
-            width: '35px',
-            height: '35px',
-          }} />
-          &emsp;Logout
-        </Link> */}
       </div>
     </div>
   </div>

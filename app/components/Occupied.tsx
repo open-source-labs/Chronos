@@ -144,7 +144,7 @@ const Occupied = React.memo(() => {
       textAlign: 'center',
       color: '#888888',
       whiteSpace: 'nowrap',
-      backgroundColor: '#ffffff',
+      backgroundColor: 'white',
       borderRadius: 3,
       border: '0',
       boxShadow:
