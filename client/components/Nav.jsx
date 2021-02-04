@@ -8,23 +8,25 @@ const Nav = () => {
   return (
     <nav>
       <div className="nav-left">
-        <div>
+        <div className="nav-left-section">
             <Link id="C" className="link" to="/">
               <img src={C} alt="Chronos Brand" />
             </Link>
         </div>
-        <ul>
-          <li>
-            <Link className="link" to="/team">
-              <p>Meet the Team</p>
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/contact">
-              <p>Contact Us</p>
-            </Link>
-          </li>
-        </ul>
+        <div className="nav-left-section">
+          <ul>
+            <li>
+              <Link className="link" to="/team">
+                <p>Meet the Team</p>
+              </Link>
+            </li>
+            <li>
+              <Link className="link" to="/contact">
+                <p>Contact Us</p>
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="nav-right">
         <ul>
