@@ -1,6 +1,6 @@
 {
     "name": "chronos",
-    "version": "5.1.1",
+    "version": "6.1.0",
     "description": "Chronos Microservice Debugger",
     "main": "./build/Main.js",
     "scripts": {

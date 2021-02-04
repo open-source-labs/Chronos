@@ -1,7 +1,7 @@
 import React from 'react';
 import { configure, shallow, render } from 'enzyme';
 
-import HomeSharpIcon from '@material-ui/icons/HomeSharp';
+// import HomeSharpIcon from '@material-ui/icons/HomeSharp';
 import ListIcon from '@material-ui/icons/List';
 import InfoIcon from '@material-ui/icons/Info';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
@@ -13,26 +13,6 @@ describe('<SidebarContainer />', () => {
   it('should render an <img> tag with the Chronos logo', () => {
     const wrapper = shallow(<SidebarContainer />);
     expect(wrapper.contains(<img alt="Chronos" id="logo" src="../assets/logo.svg" />)).toBe(true);
-  });
-
-  it("should render a <Link /> with the label as 'Home'", () => {
-    const wrapper = shallow(<SidebarContainer />);
-
-    expect(
-      wrapper.contains(
-        <Link className="sidebar-link" to="/" id="home">
-          <HomeSharpIcon
-            style={{
-              WebkitBoxSizing: 'content-box',
-              boxShadow: 'none',
-              width: '35px',
-              height: '35px',
-            }}
-          />
-          &emsp;Home
-        </Link>
-      )
-    ).toBe(true);
   });
 
   it("should render a <Link /> with the label as 'Dashboard'", () => {

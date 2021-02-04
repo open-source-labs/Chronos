@@ -17,13 +17,13 @@ describe('<Home />', () => {
     mount.cleanUp();
   });
 
-  it("should render an <p> tag that says 'Your all-in-one application monitoring tool'", () => {
+  xit("should render an <p> tag that says 'Your all-in-one application monitoring tool'", () => {
     const wrapper = shallow(<Home />);
     const pTag = wrapper.find('p');
     expect(pTag.text()).toMatch('Your all-in-one application monitoring tool');
   });
 
-  it("should render a <Link> tag that is labeled 'Get Started'", () => {
+  xit("should render a <Link> tag that is labeled 'Get Started'", () => {
     const wrapper = shallow(<Home />);
     const linkTag = wrapper.find('Link');
     expect(linkTag).toBeDefined();
