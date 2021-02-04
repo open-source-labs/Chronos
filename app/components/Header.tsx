@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import ListIcon from '@material-ui/icons/List';
 import { ApplicationContext } from '../context/ApplicationContext';
+import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
-
+import {lightAndDark} from '../components/Styling';
 export interface HeaderProps {
   app: string[];
   service: string;
@@ -15,9 +16,11 @@ const Header: React.FC<HeaderProps> = React.memo(function Header({ app, service,
   const history = useHistory();
 
   const { servicesData } = useContext(ApplicationContext);
+  const { mode } = useContext(DashboardContext);
 
+  let currentModeCSS = (mode === 'light mode')? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
   return (
-    <div className="microservice-header">
+    <div className="microservice-header" style={currentModeCSS}>
       <h1 className="microserviceTitle">{app}</h1>
       <select name="microservice" value={service} onChange={e => history.replace(e.target.value)}>
         {servicesData.map(({ _id, microservice }: any) => (

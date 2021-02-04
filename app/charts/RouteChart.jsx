@@ -5,9 +5,10 @@ import Graph from 'react-graph-vis';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
-
+  console.log(communicationsData);
   // gather all communicationsData and sort them using matching correlatingid.
   // resObj { key = correlatingid : value = array of objects{ microservice , time} }
+  // resObj { key = correlatingid : value = array of objects{ microservice , time, functionName} }
   const resObj = {};
 
   if (communicationsData.length > 0 && communicationsData[0]._id) {
@@ -22,20 +23,14 @@ const RouteChart = React.memo(() => {
     // Iterate over sorted array to build up resObj.
     for (let i = 0; i < communicationsData.length; i += 1) {
       const element = communicationsData[i];
-      if (resObj[element.correlatingid]) {
-        resObj[element.correlatingid].push({
-          microservice: element.microservice,
-          time: element.time,
-        });
-      } else {
-        resObj[element.correlatingid] = [
-          {
-            microservice: element.microservice,
-            time: element.time,
-          },
-        ];
-      }
+      if (!resObj[element.correlatingid]) resObj[element.correlatingid] = [];
+      resObj[element.correlatingid].push({
+        microservice: element.microservice,
+        time: element.time,
+        request: element.request, //here
+      });
     }
+    //? What does this else block do?
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
       const element = communicationsData[i];
@@ -90,26 +85,29 @@ const RouteChart = React.memo(() => {
       }
       // add edge from node to node (repeat til end)
       if (i !== 0) {
-        let from = route[i - 1].microservice
+        let from = route[i - 1].microservice;
         let to = id;
-        let edgeStr = JSON.stringify({ from, to })
+        let request = route[i - 1].request; //here
+        let edgeStr = JSON.stringify({ from, to, request })
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
         // only want one edge per route with the average duration
         if (edgeListObj[edgeStr]) {
-          duration = (duration + edgeListObj[edgeStr]) / 2
+          //? wrong math
+          duration = (duration + edgeListObj[edgeStr]) / 2;
         }
-        edgeListObj[edgeStr] = duration
+        edgeListObj[edgeStr] = duration;
       }
     }
   }
 
   // turn objects into valid arrays to input into graph
   const nodeList = Object.values(nodeListObj);
-  const edgeList = []
-  for (let [e, duration] of Object.entries(edgeListObj)) {
-    const edge = JSON.parse(e)
-    edge.label = `${(duration * 10).toFixed(0)} ms`
-    edgeList.push(edge)
+  const edgeList = [];
+  for (let [edgeStr, duration] of Object.entries(edgeListObj)) {
+    const edge = JSON.parse(edgeStr);
+    console.log(edge.request)
+    edge.label = edge.request ? `${edge.request} - ${(duration * 10).toFixed(0)} ms` : `${(duration * 10).toFixed(0)} ms` 
+    edgeList.push(edge);
   }
 
   const graph = {
@@ -117,8 +115,8 @@ const RouteChart = React.memo(() => {
     edges: edgeList,
   };
   const options = {
-    height: '300px',
-    width: '300px',
+    height: '600px',
+    width: '600px',
     layout: {
       hierarchical: false,
     },

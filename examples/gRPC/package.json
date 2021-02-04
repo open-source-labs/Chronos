@@ -1,0 +1,13 @@
+{
+  "name": "grpc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": " (cd books && npm install) & (cd orders && npm install) & (cd 'reverse_proxy' && npm install)",
+    "clean": " (cd books && npm run clean) & (cd orders && npm run clean) & (cd 'reverse_proxy' && npm run clean)",
+    "dev": " (cd books && npm start) & (cd orders && npm start) & (cd 'reverse_proxy' && npm start)"  },
+  "author": "",
+  "license": "ISC"
+}

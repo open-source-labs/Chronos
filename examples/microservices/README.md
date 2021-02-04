@@ -11,13 +11,53 @@ This sample microservices architecture allows developers to explore the function
 
 Each microservice has its own server, which receives requests from both the client and from other microservices. Books, Customers, and Orders also have their own databases, which they can query to respond to those requests.
 
-**You must replace the placeholder MongoDB Atlas URIs for the databases with your own _actual_ MongoDB Atlas URIs:**
+## Getting Started w/ gRPC Example Microservices 
+
+Follow **'main'** branch READ>ME steps: Pre-Installation, Install Dependencies before start. 
+
+On each microservice in example/microserivces, perform the following steps
+  - *Do this for microservices: books, orders, & reverse proxy
+  - Install dotenv `npm install dotenv`
+  - Create a .env file across each ,microservices and input your own Mongodb Atlast URI for both Microservice_URI and CHRONOS_URI
+    - ** Reverse Proxy .env file will only require CHRONOS_URI
 
 ```
-const myURI = 'mongodb+srv://johndoe:johndoe@cluster0-abcdef.mongodb.net/';
+BOOK_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
+
+CHRONOS_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
+```
+  - In each Microservice Mode.js file import and set the Microservice_URI
+
+```
+const myURI = process.env.BOOK_URI;
+
 ```
 
-In order to start the entire application, you will need to start each microservice's server. To do so, within each microservice directory, install all dependencies using the `npm install` command followed by the `npm start` command. You will then be able to interact with the application (as though you are a user) on a barebones frontend, which is being served by the Reverse Proxy server and can be found at localhost:3000.
+  - In each of the chronos-config.js files, import and set URI property in database to the Chronos_URI as shown
+
+```
+require('dotenv').config();
+const chronos = require('chronos-tracker');
+
+chronos.use({
+  microservice: 'name of microservice e.g books or orders',
+  interval: 2000,
+  database: {
+      type: 'MongoDB'
+      URI: process.env.CHRONOS_URI
+    },
+  notifications: [],
+})
+```
+  - **Note: The Initialize Chronos step is already taken care of for you. 
+  - Run `npm run start` in each folder directory
+    - To do so, within each microservice directory, install all dependencies using the `npm install`
+  - Head over to localhost:3000 to view reverse proxy acting as the frontend of this microservice example
+  - Start adding data!
+  - Run `npm run both` to start Electron app
+    - Add a new application in Chronos app dashboard.
+    - The URI should be your CHRONOS_URI
+
 
 **To test the functionality of Chronos using this sample microservices architecture, you must install the [Chronos node module](https://www.npmjs.com/package/chronos-microservice-debugger3) within each microservice. _It is not pre-installed._ Installation instructions for both the Chronos node module and the Chronos desktop visualizer are below:**
 
@@ -84,7 +124,7 @@ app.use('/', cmd.microCom(values)
 
 After installing the node module in each microservice, download the Electron desktop application from the public [Chronos](https://github.com/oslabs-beta/Chronos) repo.
 
-Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm start` command to start the Electron desktop application.
+Inside the downloaded directory, install all dependencies using the `npm install` command followed by the `npm run both` command to start the Electron desktop application.
 
 ## Contributing
 
@@ -92,6 +132,10 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## People
 
+[Vince Ho](https://github.com/hodesza)
+[Matt Jiang](https://github.com/mattljiang)
+[Derek Lam](https://github.com/DerekQuoc)
+[Kit Loong Yee](https://github.com/kitloong1)
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),
