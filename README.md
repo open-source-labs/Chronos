@@ -17,24 +17,25 @@
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos  to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
-- [New-Features](#new-feature)
+- [New Features](#new-features)
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
     - [Pre-Installation](#pre-installation)
     - [Install Dependencies](#install-dependencies)
-    - [Configure Chronos](#configure-chronos)
-    - [Initialize Chronos](#initialize-chronos)
+    - [Configure Chronos Tracker](#configure-chronos-tracker)
+    - [Initialize Chronos Tracker](#initialize-chronos-tracker)
     - [Docker Configuration](#docker-configuration)
+    - [Start Chronos](#start-chronos)
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
 - [Branches](#branches)
-    - [Master](#master-branch)
+    - [Master Branch](#master-branch)
       - [Examples](#examples)
         - [Microservices](#microservices)
         - [Docker](#docker)
-    - [gRPC](#grpc-branch)
+    - [gRPC Branch](#grpc-branch)
 - [Technologies](#technologies)
 - [License](#license)
 
@@ -42,7 +43,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ###### Return to [Top](#Chronos)
 <br>
 
-## <img src ="./app/assets/fire.png" height=22 > New-Features <img src ="./app/assets/fire.png" height=24>
+## <img src ="./app/assets/fire.png" height=22 > New Features <img src ="./app/assets/fire.png" height=24>
 
 - New UI Features
   - Dark and Light mode options now available across user sessions.
@@ -56,7 +57,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
   - Distributed tracing across network request
   - Currently chronos gRPC tracing for Mongodb and PostgresQL
 
-## Ver 6.0 Features 
+## Features 
 
 - Distributed tracing enabled across microservices applications
 - Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
@@ -100,7 +101,7 @@ To use Chronos in your existing application, download and install the following 
 npm install chronos-tracker
 ```
 
-### Configure Chronos for REST or gRPC
+### Configure Chronos Tracker
 
 Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
@@ -116,7 +117,7 @@ chronos.use({
   database: {
     connection: 'REST',
     type: 'MongoDB',
-    URI: process.env.MONGO_URI,
+    URI: process.env.URI,
   },
   notifications: [],
 });
@@ -141,7 +142,8 @@ The `notifications` property is optional. Jump to the section below, [Notificati
 <br>
 <br>
 
-### Initialize Chronos for REST
+### Initialize Chronos Tracker
+#### Initialize Chronos Tracker for REST
 
 Wherever you create an instance of your server (see example below),
 
@@ -169,7 +171,7 @@ You should be good to go! The last step, **Docker Configuration**, is **only app
 <br>
 
 
-### Initialize Chronos for gRPC
+#### Initialize Chronos Tracker for gRPC
 
 Wherever you create an instance of your server (see example below),
 
@@ -291,6 +293,11 @@ If you're using `docker-compose` to start up multiple containers, you can add a 
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
+
+### Start Chronos
+
+Once you have configured and intialized Chronos Tracker, it will be automatically recording monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning this repo, run `npm run both` to start Chronos. Alternatively, you can download an [executable for Mac](https://chronoslany.com/Chronos.dmg). Add your application in the Chronos app dashboard with the same URI you used in your Chronos Tracker configuration. Click on it and start monitoring!
+
 #
 ###### Return to [Top](#Chronos)
 <br>
