@@ -18,9 +18,9 @@ const Header: React.FC<HeaderProps> = React.memo(function Header({ app, service,
   const { servicesData } = useContext(ApplicationContext);
   const { mode } = useContext(DashboardContext);
 
-  let currentMode = (mode === 'light mode')? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
+  let currentModeCSS = (mode === 'light mode')? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
   return (
-    <div className="microservice-header" style={currentMode}>
+    <div className="microservice-header" style={currentModeCSS}>
       <h1 className="microserviceTitle">{app}</h1>
       <select name="microservice" value={service} onChange={e => history.replace(e.target.value)}>
         {servicesData.map(({ _id, microservice }: any) => (
