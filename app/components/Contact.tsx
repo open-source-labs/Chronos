@@ -1,18 +1,24 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../stylesheets/Contact.scss';
+import { DashboardContext } from '../context/DashboardContext';
+import { lightAndDark } from './Styling';
 
 const Contact = React.memo((props) => {
+  let { mode } = useContext(DashboardContext);
+
+  let currentMode = (mode === 'light mode')? lightAndDark.lightModeText : lightAndDark.darkModeText;
+
   return (
     <div className="contact">
       <div className="contact-border">
         <div className="contact-container">
           <div className="contact-blurb">
-            <h1>Contact Us</h1>
+            <h1 style={currentMode}>Contact Us</h1>
             <br />
-            <p>Please feel free to provide any feedback, concerns, or comments.</p>
-            <p>
+            <p style={currentMode}>Please feel free to provide any feedback, concerns, or comments.</p>
+            <p style={currentMode}>
               You can find issues the team is currently working on&nbsp;
-              <a id="issueLink" href="https://github.com/open-source-labs/Chronos/issues" target="_blank">
+              <a  style={currentMode} id="issueLink" href="https://github.com/open-source-labs/Chronos/issues" target="_blank">
                 here
               </a>
               .
@@ -21,28 +27,28 @@ const Contact = React.memo((props) => {
         </div>
         <div className="email-container">
           <form>
-            <label htmlFor="fname">First Name: &nbsp;</label>
+            <label style={currentMode} htmlFor="fname">First Name: &nbsp;</label>
             <input type="text" id="fname" name="firstname" placeholder="Your name.." />
             <br />
-            <label htmlFor="lname">Last Name: &nbsp;</label>
+            <label style={currentMode} htmlFor="lname">Last Name: &nbsp;</label>
             <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
             <br />
-            <label htmlFor="email">E-mail: &nbsp;</label>
+            <label style={currentMode} htmlFor="email">E-mail: &nbsp;</label>
             <input type="text" id="email" name="email" placeholder="Your e-mail address.." />
             <br />
-            <label htmlFor="subject">Subject: &nbsp;</label>
+            <label style={currentMode} htmlFor="subject">Subject: &nbsp;</label>
             <input type="text" id="subject" name="subject" placeholder="Subject" />
             <br />
-            <label id="messageLabel" htmlFor="message">Message: <span>
+            <label style={currentMode} id="messageLabel" htmlFor="message">Message: <span>
                 <textarea id="message" name="message" placeholder="Write something.."></textarea>
               </span>
             </label>
             
             <br />
-            <label htmlFor="myfile">Select a file: </label>
-            <input type="file" id="myfile" name="myfile" accept="image/*"></input>
+            <label style={currentMode} htmlFor="myfile">Select a file: </label>
+            <input style={currentMode} type="file" id="myfile" name="myfile" accept="image/*"></input>
             <br />
-            <input id="contact-submit" type="submit" value="Submit" />
+            <input style={currentMode} id="contact-submit" type="submit" value="Submit" />
           </form>
         </div>
       </div>

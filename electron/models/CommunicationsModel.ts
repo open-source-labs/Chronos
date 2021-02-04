@@ -17,7 +17,6 @@ const CommunicationsSchema = new Schema({
   },
   endpoint: {
     type: String,
-    required: true,
   },
   request: {
     type: String,
@@ -25,11 +24,9 @@ const CommunicationsSchema = new Schema({
   },
   responsestatus: {
     type: Number,
-    required: true,
   },
   responsemessage: {
     type: String,
-    required: true,
   },
   time: {
     type: Date,

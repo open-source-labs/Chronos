@@ -1,5 +1,10 @@
 @import './constants.scss';
 
+.about {
+  width: 50%;
+  margin: 25% 25%;
+}
+
 .sprout {
   margin: 0;
 }
@@ -25,18 +30,9 @@
   font-weight: 100;
 }
 
-.doya {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  align-self: flex-start;
-  align-content: flex-start;
-  vertical-align: top;
-}
-
 .blurb {
-  margin-left: 425px;
-  margin-right: 385px;
+  width: 100%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: left;
