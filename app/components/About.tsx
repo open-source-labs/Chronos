@@ -1,29 +1,33 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../stylesheets/About.scss';
+import { DashboardContext } from '../context/DashboardContext';
+import { lightAndDark } from './Styling';
 
 const About: React.FC = React.memo(() => {
+  let { mode } = useContext(DashboardContext);
+
+  let currentMode = (mode === 'light mode')? lightAndDark.lightModeText : lightAndDark.darkModeText;
+
   return (
-    <div className="home">
+    <div className="about">
       <div className="blurb">
-        <h3 className="mainTitle">About</h3>
-        <p className="text">
+        <h3 style={currentMode} className="mainTitle">About</h3>
+        <p style={currentMode} className="text">
           The Chronos Team has always had passion for Open Source endeavors that would greatly benefit
           the developer community. With many existing paid options being difficult to use and expensive to operate, Chronos was
           born. Chronos is an all-in-one network and health monitoring tool for your application or
           microservice, containerized or not!
         </p>
-        <div className="doya">
-          <h3 className="title">Team Doya</h3><span><img className="sprout" id="sproutSpan" src="../assets/clean-sprout.gif" alt="sprout"></img></span>
-          <br/>
-          <div>
-            <span className="text">Grace </span><br />
-            <span className="text">Jen </span><br />
-            <span className="text">Patty </span><br />
-            <span className="text">Stella </span><br /><br />
-          </div>
+        <h3 style={currentMode} className="title">Fantastic Four</h3>
+        <div>
+          <span style={currentMode} className="text">Vince</span><br />
+          <span style={currentMode} className="text">Matt</span><br />
+          <span style={currentMode} className="text">Derek</span><br />
+          <span style={currentMode} className="text">Kit</span><br />
+        <br />
         </div>
-        <h3 className="title">Contributors</h3>
-        <p className="text">Michael, Ronelle, Todd, Greg
+        <h3 style={currentMode} className="title">Contributors</h3>
+        <p style={currentMode} className="text">Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg
         Brianna, Brian, Alon, Alan
         Ousman, Ben, Chris, Jenae, Tim</p>
       </div>
