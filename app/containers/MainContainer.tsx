@@ -18,10 +18,10 @@ import ApplicationContextProvider from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 
 const MainContainer = React.memo(() => {
-  const { mode, getMode } = useContext(DashboardContext);
-   let currentMode = (mode === 'light mode')? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
+  const { mode } = useContext(DashboardContext);
+   let currentModeCSS = (mode === 'light mode')? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
   return (
-  <div className="main-container" style ={currentMode}>
+  <div className="main-container" style ={currentModeCSS}>
     <div className="main-routes">
       <Switch>
         <Route exact path="/" component={Home} />
@@ -32,9 +32,6 @@ const MainContainer = React.memo(() => {
         <Route exact path="/applications/:app/:service" component={GraphsContainer} />
         <Route path="*" render={() => <h1>Not found</h1>} />
       </Switch>
-    </div>
-    <div className="copyright-container">
-      <Copyright />
     </div>
   </div>
 )});

@@ -17,7 +17,7 @@
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos  to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
-
+- [New-Features](#new-feature)
 - [Features](#features)
 - [Demo](#demo)
 - [Installation](#installation)
@@ -34,7 +34,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
       - [Examples](#examples)
         - [Microservices](#microservices)
         - [Docker](#docker)
-    - [Middleware](#middleware-branch)
+    - [gRPC](#grpc-branch)
 - [Technologies](#technologies)
 - [License](#license)
 
@@ -42,10 +42,23 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ###### Return to [Top](#Chronos)
 <br>
 
-## Features 
+## <img src ="./app/assets/fire.png" height=22 > New-Features <img src ="./app/assets/fire.png" height=24>
+
+- New UI Features
+  - Dark and Light mode options now available across user sessions.
+  - Updated charts to now also support gRPC calls
+  - Integrated log to provide users with relational data on request & response cycle
+
+- Bug Fixes
+  - Fixed bug where users could only connect to one MongoDB databsae adn would see its microservices listed even when uesrs clicked on apllications using other MongoDb databases
+
+- Chronos now support monitoring for gRPC!
+  - Distributed tracing across network request
+  - Currently chronos gRPC tracing for Mongodb and PostgresQL
+
+## Ver 6.0 Features 
 
 - Distributed tracing enabled across microservices applications
-- Supports <a href="#"><img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="20" /></a> protocol, with <img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="20" /></a> _coming soon_
 - Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
 - Provides <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Supports <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
@@ -65,8 +78,8 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Installation
 This is for the latest Chronos version **5.1 release and later**.
 
-- Stable release: 5.1.0
-- LTS release: 5.0.1
+- Stable release: 6.1.0
+- LTS release: 6.1.0
 
 ### Pre-Installation
 Make sure you're running version 12.18.3 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
@@ -87,7 +100,7 @@ To use Chronos in your existing application, download and install the following 
 npm install chronos-tracker
 ```
 
-### Configure Chronos
+### Configure Chronos for REST or gRPC
 
 Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
@@ -101,6 +114,7 @@ chronos.use({
   interval: 2000,
   dockerized: true,
   database: {
+    connection: 'REST',
     type: 'MongoDB',
     URI: process.env.MONGO_URI,
   },
@@ -115,6 +129,7 @@ The `interval` property is optional and takes in an integer. This controls the C
 The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
 
 The `database` property is required and takes in the following:
+- `connection` which should be a string and only supports 'REST' and 'gRPC'
 - `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
 - `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
 
@@ -126,14 +141,15 @@ The `notifications` property is optional. Jump to the section below, [Notificati
 <br>
 <br>
 
-### Initialize Chronos
+### Initialize Chronos for REST
 
 Wherever you create an instance of your server (see example below),
 
 ```js
-// Example 
+// Example for REST
 const express = require('express');
 const app = express());
+
 ```
 
 you will also need to require in `chronos-tracker` and initialize Chronos, as well as the `./chronos-config` file. You will then need to invoke `chronos.propagate()` to initiate the route tracing, in addition to implementing `chronos.track()` for all endpoints.
@@ -149,7 +165,109 @@ app.use('/', chronos.track());
 ```
 
 You should be good to go! The last step, **Docker Configuration**, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
+
 <br>
+
+
+### Initialize Chronos for gRPC
+
+Wherever you create an instance of your server (see example below),
+
+
+```js
+  // Example of gRPC server
+  const server = new grpc.Server();
+
+  server.bindAsync("127.0.0.1:30044", grpc.   ServerCredentials.createInsecure(), () => {
+    server.start();
+    console.log("Server running at http://127.0.0.1:30044");
+});
+```
+you will also need to require Chronos-tracker, Chronos-config, and dotenv.config(if this is used). For health data simply use Chronos.track()
+
+
+
+```js
+//track health data
+const chronos = require('chronos-tracker');
+require('./chronos-config');
+require('dotenv').config(); // set up environment variables in .env
+const BookModel = require('./BookModel');
+
+chronos.track()
+```
+To trace requests, first wrap the gRPC client using Chronos
+```js
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
+const chronos = require('chronos');
+
+const PROTO_PATH = './order.proto';
+
+const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  arrays: true,
+});
+const OrderToBookService = grpc.loadPackageDefinition(packageDefinition).OrderToBook;
+const bookClient = new OrderToBookService('localhost:30044', grpc.credentials.createInsecure());
+
+const ClientWrapper = chronos.ClientWrapper(bookClient, OrderToBookService);
+```
+Next wrap the gRPC server  using Chronos 
+```js
+
+  const ServerWrapper = chronos.ServerWrapper(server,  Proto.protoname.service, {
+    AddBook: (call, callback) => {
+    // console.log(call.metadata)
+    // get the properties from the gRPC client call
+      const { title, author, numberOfPages, publisher, bookID } = call.request;
+    // create a book in our book collection
+      BookModel.create({
+        title,
+        author,
+        numberOfPages,
+        publisher,
+        bookID,
+      });
+      callback(null, {});
+    },
+  });
+})
+```
+For any request you wish to trace, require uuidv4 and write the following code where the initial gRPC request begins,
+```js
+const require { v4: uuidv4} = require('uuid')
+const createMeta = () => {
+  const meta = new grpc.Metadata();
+  meta.add('id', uuidvd());
+  return meta
+}
+```
+and then invoke createMeta as a third argument to any client method that is the beginning of the request path.
+
+```js
+orderClient.AddOrder(
+    order,
+    (err, data) => {
+      if (err !== null) {
+        console.log(err);
+        // could not add order because bookID does not exist
+        return res.sendStatus(404);
+      }
+      console.log('addOrder response: ', data);
+      return res.sendStatus(200);
+    },
+    createMeta()
+  );
+
+```
+Finally, on all servers that will be involved in the request path, invoke `chronos.link` with parameters of `client` and `ServerWrapper` in the server wrapper.
+
+```js
+chronos.link(client, ServerWrapper);
+```
 
 ### Docker Configuration
 
@@ -266,9 +384,9 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 <br>
 
-### Middleware Branch
+### gRPC Branch 
+The **'gRPC'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 
-The **'middleware'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 <br>
 
 #
@@ -286,7 +404,7 @@ The **'middleware'** branch is the current codebase for the <a href="#"><img src
 - <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/express-logo-color.png" alt="Express" title="Express" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="30" /></a>
-- <a href="#"><img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /></a> _coming soon_
+- <a href="#"><img src="./app/assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /></a> 
 - <a href="#"><img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="30" /></a>
