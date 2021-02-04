@@ -7,6 +7,7 @@ chronos.use({
   interval: 2000,
   // dockerized: true,
   database: {
+    connection: 'REST',
     type: 'MongoDB',
     URI: process.env.CHRONOS_URI,
   },

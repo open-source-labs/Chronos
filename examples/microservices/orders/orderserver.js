@@ -1,4 +1,4 @@
-const chronos = require('chronos');
+const chronos = require('chronos-tracker');
 require('./chronos-config'); // Bring in config file
 
 chronos.propagate();
