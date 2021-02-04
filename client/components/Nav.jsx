@@ -64,7 +64,7 @@ const Nav = () => {
             </a>
           </li>
           <li>
-            <a href="https://twitter.com/teamchronosla" target="_blank">
+            <a href="https://twitter.com/ChronosLANY" target="_blank">
               <ion-icon
                 className="icon icon-twitter"
                 name="logo-twitter"

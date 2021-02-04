@@ -18,7 +18,7 @@ const Demo = () => {
             <img src={code} alt="Config file" />
           </figure>
           <figcaption>
-            <p>1. Initialize the Chronos Tracker in your server.</p>
+            <p>1. Initialize the Chronos Tracker in your server(s).</p>
           </figcaption>
         </div>
         <div className="example-2">
