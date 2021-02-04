@@ -49,13 +49,11 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
   - Dark and Light mode options now available across user sessions.
   - Updated charts to now also support gRPC calls
   - Integrated log to provide users with relational data on request & response cycle
-
 - Bug Fixes
-  - Fixed bug where users could only connect to one MongoDB databsae adn would see its microservices listed even when uesrs clicked on apllications using other MongoDb databases
-
+  - Fixed bug where users could only connect to one MongoDB database and would see its microservices listed even when users clicked on applications using other MongoDB databases
 - Chronos now support monitoring for gRPC!
   - Distributed tracing across network request
-  - Currently chronos gRPC tracing for Mongodb and PostgresQL
+  - Currently chronos gRPC tracing for MongoDB and PostgresQL
 
 ## Features 
 
