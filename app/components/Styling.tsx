@@ -11,13 +11,10 @@ export const lightAndDark = {
     color: "#444d56",
   },
   darkModeHeader : {
-    // backgroundColor: "#transparent",
     backgroundColor: "#181818",
     color: "white",
   },
   darkModeMain : {
-    // backgroundImage: "url('../assets/mountain_longer.png')",
-    // backgroundColor: "#transparent",
     backgroundColor: "#181818",
     backgroundSize: 'contain',
     flex: "1",
