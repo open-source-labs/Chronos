@@ -296,7 +296,7 @@ volumes:
 
 ### Start Chronos
 
-Once you have configured and intialized Chronos Tracker, it will be automatically recording monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning this repo, run `npm run both` to start Chronos. Alternatively, you can download an [executable for Mac](https://chronoslany.com/Chronos.dmg). Add your application in the Chronos app dashboard with the same URI you used in your Chronos Tracker configuration. Click on it and start monitoring!
+Once you have configured and intialized Chronos Tracker, it will be automatically recording monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning our [GitHub repo](https://github.com/open-source-labs/Chronos), run `npm install` and `npm run both` to start Chronos. Alternatively, you can download an [executable for Mac](https://chronoslany.com/Chronos.dmg). Add your application in the Chronos app dashboard with the same URI you used in your Chronos Tracker configuration. Click on it and start monitoring!
 
 #
 ###### Return to [Top](#Chronos)
