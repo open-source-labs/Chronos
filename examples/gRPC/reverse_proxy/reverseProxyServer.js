@@ -3,9 +3,10 @@ const express = require('express');
 const path = require('path');
 const grpc = require('@grpc/grpc-js');
 const { v4: uuidv4 } = require('uuid');
-const chronos = require('chronos');
+const chronos = require('chronos-tracker');
 require('./chronos-config');
 
+chronos.track();
 const app = express();
 const orderClient = require('./orderClient.js');
 const bookClient = require('./bookClient.js');
