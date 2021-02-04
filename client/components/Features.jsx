@@ -9,8 +9,7 @@ const Features = () => {
       <div className="features-header">
         <h2>What is Chronos?</h2>
         <p>
-          Chronos is an Open Source network and health monitoring tool for your
-          system of services, containerized or not.
+          Chronos is a comprehensive open-source monitoring tool for your Node.js applications. Whether you have a monolithic or microservice architecture, use containers or not, and employ gRPC or REST, we've got you covered. 
         </p>
       </div>
       <div class="features-content">
@@ -35,7 +34,7 @@ const Features = () => {
           <h3>Open Source and Free to Use</h3>
           <p>
             Chronos is Open Source and free for the community. Contributions and
-            stars are welcome. Visit our GitHub!
+            stars are welcome. Visit our <a href="https://github.com/open-source-labs/Chronos">GitHub</a>!
           </p>
         </div>
       </div>

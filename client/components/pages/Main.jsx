@@ -12,7 +12,6 @@ const Main = () => {
       <Home />
       <Features />
       <Demo />
-      <Quotes />
       <Action />
     </>
   );

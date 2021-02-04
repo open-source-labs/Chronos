@@ -1,12 +1,13 @@
+@import './constants.scss';
+
 .team-container {
   justify-content: center;
   width: 100%;
   padding: 3px 12px;
   padding-top: 110px;
-  margin: 0px 5px;
   display: flex;
   flex-wrap: wrap;
-  background-color: white;
+  @include background-theme('dark');
 
   .bio-card {
     justify-content: center;
@@ -17,11 +18,13 @@
     padding: 10px 10px;
     position: relative;
     border-radius: 5px;
+
     .bio-pic {
       height: 270px;
       width: 270px;
       border: 1px solid black;
       border-radius: 50%;
+      filter: grayscale(100%);
     }
     .name {
       font-size: 28px;
@@ -33,14 +36,10 @@
       padding: 10px 0;
       flex-grow: 1;
     }
-    .member-contact {
-      margin-left: 140px;
-      position: absolute;
-      bottom: 10px;
-    }
-    .member-contact img {
-      height: 50px;
-      width: 50px;
+    .member-contact .icon {
+      color: $white;
+      height: 30px;
+      width: 30px;
       padding: 5px 5px;
     }
     .member-linkedin:hover {
@@ -49,8 +48,5 @@
     .member-github:hover {
       opacity: 0.5;
     }
-  }
-  .bio-card:hover {
-    background-color: #f0f0f5;
   }
 }

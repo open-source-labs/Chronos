@@ -1,12 +1,12 @@
 @import './constants.scss';
 
 nav {
-  @include centerWithFlex;
+  @include center-with-flex;
   position: fixed;
   width: 100%;
   height: 85px;
-  color: #fff;
-  background-image: $dark-gradient;
+  @include background-theme('dark');
+  background: $black;
   z-index: 100;
 
   // Left half of nav
@@ -15,29 +15,31 @@ nav {
     position: absolute;
     width: 50%;
     left: 0;
-    @include centerWithFlex;
+    @include center-with-flex;
 
     img {
-      height: 75px;
+      width: 25px;
       margin-right: 10px;
     }
 
     ul {
-      @include centerWithFlex;
+      @include center-with-flex;
 
       li {
         margin-right: 30px;
         font-size: 120%;
         letter-spacing: 1px;
         height: 25px;
-
-        &:hover {
-          border-bottom: 2px solid #f4f4f4;
+        
+        p {
+          &:hover {
+            color: darken($white, 20%)
+          }  
         }
 
         .link {
           height: 100%;
-          color: #f4f4f4;
+          color: $white;
         }
       }
     }
@@ -49,10 +51,10 @@ nav {
     position: absolute;
     width: 50%;
     right: 0;
-    @include centerWithFlex;
+    @include center-with-flex;
 
     ul {
-      @include centerWithFlex;
+      @include center-with-flex;
       padding-bottom: 12px;
 
       li {
@@ -67,10 +69,9 @@ nav {
         a {
           ion-icon {
             font-size: 200%;
-            color: white;
 
             &:hover {
-              color: darken(white, 20%)
+              color: darken($white, 20%)
             }
           }
         }

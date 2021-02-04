@@ -1,21 +1,28 @@
 @import './constants.scss';
 
 .section-demo {
-  background-color: darken($lightgray, 10%);
-  padding: 50px 10%;
-  @include centerWithFlex($justify: space-between);
+  padding: 140px 10%;
+  @include center-with-flex($direction: column);
+  @include background-theme('dark');
 
-  div {
-    width: 33%;
-    padding: 15px 0px;
-    text-align: center;
-    height: 400px;
-    @include centerWithFlex($direction: column, $justify: space-around);
+  #demo-header{
+    @include section-header;
+  }
+  #demo-content {
+    @include center-with-flex;
 
-    figure {
-      img {
-        width: 400px;
-        border-radius: 4px;
+    div {
+      width: 33%;
+      padding: 15px 0px;
+      text-align: center;
+      height: 400px;
+      @include center-with-flex($direction: column, $justify: space-around);
+      
+      figure {
+        img {
+          width: 400px;
+          border-radius: 4px;
+        }
       }
     }
   }
