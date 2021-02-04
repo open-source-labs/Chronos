@@ -3,7 +3,7 @@ import { configure, shallow, render } from 'enzyme';
 import { Route, Switch } from 'react-router-dom';
 import { createMount, createShallow } from '@material-ui/core/test-utils';
 
-import DashboardContextProvider { DashboardContext } from '../../../app/context/DashboardContext';
+import DashboardContextProvider  from '../../../app/context/DashboardContext';
 import MainContainer from '../../../app/containers/MainContainer';
 import Home from '../../../app/components/Home';
 import Copyright from '../../../app/components/Copyright';
