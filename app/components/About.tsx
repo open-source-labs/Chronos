@@ -30,7 +30,10 @@ const About: React.FC = React.memo(() => {
         <p style={currentMode} className="text">Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg
         Brianna, Brian, Alon, Alan
         Ousman, Ben, Chris, Jenae, Tim</p>
+        <br/>
+        <p style={currentMode}>Copyright © Team Chronos 2021.</p>
       </div>
+
     </div>
   );
 });
