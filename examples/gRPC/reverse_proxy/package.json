@@ -15,6 +15,7 @@
         "@grpc/proto-loader": "^0.5.5",
         "chronos-tracker": "^6.0.3",
         "dotenv": "^8.2.0",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "uuid": "^8.3.2"
     }
 }

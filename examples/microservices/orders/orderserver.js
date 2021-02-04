@@ -10,7 +10,7 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./OrderController.js');
- 
+
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 app.use('/', chronos.track());
 
@@ -34,8 +34,8 @@ app.delete('/orders/deleteorder:id?', controller.deleteorder, (req, res) => {
 
 // This route will retrieve all the customers from the customers database
 app.get('/orders/getcustomersinfo', controller.fetchcustomerdata, (req, res) => {
-  res.status(200).json((res.locals.customerdata));
-}); 
+  res.status(200).json(res.locals.customerdata);
+});
 
 //  This is the global error handler
 function errorHandler(error, req, res, next) {
