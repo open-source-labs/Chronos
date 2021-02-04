@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const chronos = require('chronos-tracker');
 require('./chronos-config');
 
+chronos.track();
 const app = express();
 const orderClient = require('./orderClient.js');
 const bookClient = require('./bookClient.js');
