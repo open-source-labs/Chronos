@@ -18,6 +18,7 @@ const Settings: React.SFC = React.memo((props) => {
   const handleClick = (mode: string) => {
     changeMode(mode);
   }
+
   return (
     <div className="settings">
       <button className="mode" id="lightMode" onClick={() => handleClick("light mode")}>

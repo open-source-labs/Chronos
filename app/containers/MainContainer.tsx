@@ -33,9 +33,6 @@ const MainContainer = React.memo(() => {
         <Route path="*" render={() => <h1>Not found</h1>} />
       </Switch>
     </div>
-    <div className="copyright-container">
-      <Copyright />
-    </div>
   </div>
 )});
 
