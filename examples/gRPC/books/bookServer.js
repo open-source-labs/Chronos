@@ -1,7 +1,7 @@
 // grpc imports
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const chronos = require('chronos');
+const chronos = require('chronos-tracker');
 require('./chronos-config');
 require('dotenv').config(); // set up environment variables in .env
 const BookModel = require('./BookModel');

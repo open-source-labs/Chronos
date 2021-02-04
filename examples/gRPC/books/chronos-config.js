@@ -1,5 +1,5 @@
 require('dotenv').config();
-const chronos = require('chronos');
+const chronos = require('chronos-tracker');
 
 chronos.use({
   microservice: 'books',

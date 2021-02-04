@@ -1,4 +1,4 @@
-const chronos = require('chronos');
+const chronos = require('chronos-tracker');
 require('./chronos-config');
 const protoLoader = require('@grpc/proto-loader');
 const grpc = require('@grpc/grpc-js');
@@ -26,7 +26,6 @@ const ServerWrapper = chronos.ServerWrapper(server, orderProto.ProxyToOrder.serv
       purchaseDate: call.request.purchaseDate,
       deliveryDate: call.request.deliveryDate,
     };
-    console.log('client.link in server method: ', client.link);
     client.GetBookInfo({ bookID: newOrder.bookID }, (err, bookInfo) => {
       // make sure bookID exists
       if (bookInfo === undefined) {

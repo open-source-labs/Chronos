@@ -2,7 +2,7 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
 const PROTO_PATH = './reverseProxy.proto';
-const chronos = require('chronos');
+const chronos = require('chronos-tracker');
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
