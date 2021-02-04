@@ -50,7 +50,7 @@
         "chart.js": "^2.8.0",
         "chronos-tracker": "^5.1.0",
         "d3": "^5.16.0",
-        "electron": "^6.1.12",
+        "electron": "^9.4.0",
         "enzyme-adapter-react-16": "^1.15.5",
         "express": "^4.17.1",
         "moment": "^2.27.0",
