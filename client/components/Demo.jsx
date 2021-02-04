@@ -10,7 +10,9 @@ const Demo = () => {
   return (
     <div className="section-demo">
       <div id="demo-header">
-        <h2>Easy to use.</h2>
+        <h2>Everything you need.</h2>
+        <p>Instrument, connect, and go.</p>
+        <p>View metrics, traces, and logs.</p>
       </div>
       <div id="demo-content">
         <div className="example-1">
@@ -18,7 +20,7 @@ const Demo = () => {
             <img src={code} alt="Config file" />
           </figure>
           <figcaption>
-            <p>1. Initialize the Chronos Tracker in your server(s).</p>
+            <p>1. Instrument your server(s) using Chronos Tracker.</p>
           </figcaption>
         </div>
         <div className="example-2">
@@ -26,7 +28,7 @@ const Demo = () => {
             <img src={addapp} alt="Application cards" />
           </figure>
           <figcaption>
-            <p>2. Connect your application in the desktop app.</p>
+            <p>2. Connect to your application in the desktop app.</p>
           </figcaption>
         </div>
         <div className="example-3">
@@ -34,7 +36,7 @@ const Demo = () => {
             <img src={health} alt="Graphs" />
           </figure>
           <figcaption>
-            <p>3. View server health metrics, microservice route tracing, and error logs.</p>
+            <p>3. Ready to go! View server health metrics, microservice route tracing, and error logs.</p>
           </figcaption>
         </div>
         {/* <video src={demoVideo} controls={true} /> */}
