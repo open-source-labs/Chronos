@@ -1,18 +1,22 @@
 @import './constants.scss';
 
 .section-home {
-  padding-top: 85px;
   width: 100vw;
   height: 100vh;
   min-height: 700px;
   @include background-theme('dark');
+  padding-top: 85px;
+  // when nav bar gets thick
+  @media (max-width: 900px) {
+    padding-top: 300px;
+  }
 
   .hero-container {
     width: 50%;
     color: #fff;
     position: absolute;
-    left: 50%;
-    top: 50%;
+    margin-left: 50%;
+    margin-top: 25%;
     transform: translate(-50%, -50%);
     @include center-with-flex($direction: column);
     animation: appear linear 2s forwards;
