@@ -14,21 +14,21 @@
     border-radius: 15px;
   }
 
-  p {
-    font-size: 150%;
-    line-height: 135%;
-  }
-
   .action {
     text-align: center;
 
     p {
-      font-size: 110%;
+      font-size: 150%;
+      line-height: 135%;
     }
 
     .download-btns {
       @include center-with-flex($direction: row);
       margin-top: 25px;
+
+      img {
+        margin: 10px;
+      }
 
       button {
         width: 140px;
