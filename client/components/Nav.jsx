@@ -8,12 +8,12 @@ const Nav = () => {
   return (
     <nav>
       <div className="nav-left">
-        <ul>
-          <li>
-            <Link className="link" to="/">
+        <div>
+            <Link id="C" className="link" to="/">
               <img src={C} alt="Chronos Brand" />
             </Link>
-          </li>
+        </div>
+        <ul>
           <li>
             <Link className="link" to="/team">
               <p>Meet the Team</p>
@@ -33,7 +33,7 @@ const Nav = () => {
               href="https://github.com/open-source-labs/Chronos"
               target="_blank"
             >
-              <ion-icon name="logo-github"></ion-icon>
+              <ion-icon className="icon icon-npm" name="logo-github"></ion-icon>
             </a>
           </li>
           <li>

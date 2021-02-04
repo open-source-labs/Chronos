@@ -21,8 +21,19 @@
       figure {
         img {
           width: 400px;
+          max-width: 100%;
+          height: auto;
           border-radius: 4px;
+
         }
+      }
+    }
+
+    @media (max-width: 1300px) {
+      @include center-with-flex($direction: column);
+
+      div {
+        width: 100%;
       }
     }
   }
