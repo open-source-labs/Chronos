@@ -1,9 +1,9 @@
 import React from 'react';
 // import demoVideo from '../assets/ChronosDemo.mov';
 
-import health from '../assets/health-screenshot.png';
-import apps from '../assets/apps-screenshot.png';
-import code from '../assets/code-screenshot.png';
+import health from '../assets/screenshot-health.png';
+import addapp from '../assets/screenshot-addapp.png';
+import code from '../assets/screenshot-code.png';
 import '../stylesheets/Demo.scss';
 
 const Demo = () => {
@@ -23,7 +23,7 @@ const Demo = () => {
         </div>
         <div className="example-2">
           <figure>
-            <img src={apps} alt="Application cards" />
+            <img src={addapp} alt="Application cards" />
           </figure>
           <figcaption>
             <p>2. Connect your application in the desktop app.</p>
