@@ -72,7 +72,7 @@ describe('<DashboardContext />', () => {
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('deleteApp', 7);
   });
 
-  it("should emit the 'getApps' event when invoking getApplications", () => {
+  xit("should emit the 'getApps' event when invoking getApplications", () => {
     const button = wrapper.find('#getApplications');
     button.simulate('click');
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('getApps');
