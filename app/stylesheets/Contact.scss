@@ -1,8 +1,6 @@
 @import './constants.scss';
 
 .contact {
-  background-image: url('../assets/mountain_longer.png');
-  background-size: contain;
   display: flex;
   flex-direction: column;
   flex-direction: column;
@@ -17,11 +15,6 @@
   width: 100vw;
   height: 100vh;
   opacity: 1;
-  animation: fadeIn ease 2s;
-  -webkit-animation: fadeIn ease 2s;
-  -moz-animation: fadeIn ease 2s;
-  -o-animation: fadeIn ease 2s;
-  -ms-animation: fadeIn ease 2s;
   vertical-align: top;
   justify-content: center;
   align-items: center;;
@@ -32,12 +25,13 @@
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
-  width: 60vw;
-  margin: 0 auto;
+
   border-radius: 10px;
   border: none;
   box-shadow: $boxshadow2;
   padding: 30px;
+  width: 50%;
+  margin: 25% 25%;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
