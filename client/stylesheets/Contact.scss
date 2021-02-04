@@ -1,78 +1,87 @@
 @import './constants.scss';
 
 .contact {
-  // background-color: #f4f4f4;
-  height: 90vh;
-  display: flex;
-  justify-content: flex-start;
-  padding: 25% 25%;
   @include background-theme('dark');
+  height: 90vh;
+  padding: 3px 12px;
+  // when nav bar gets thicker
+  @media (max-width: 900px) {
+    padding-top: 250px;
+  }
+
 
   .contact-border {
-    width: 120vh;
-    height: 20vh;
-    // margin: 10vh 20vh;
-    background-color: $gray;
-    border-radius: 10px;
-    border: 1px solid black;
-    z-index: 0;
-    display: flex;
-    flex-direction: row;
-    padding-top: 50px;
-    justify-content: center;
     @include background-theme('light');
-    // padding-left: 10px;
-    .contact-container {
-      width: 60%;
-      line-height: 2.5vh;
-      margin: 0 4vh;
-      .contact-blurb {
-        font-size: 20px;
-      }
-    }
-    .email-container {
-      flex-direction: row;
-      margin: 2vh 0;
-      // margin-left: 20vh;
-      width: 30vh;
-      min-width: 10vh;
-      line-height: 3vh;
-      font-size: 20px;
-      textarea {
-        font-size: 15px;
-        width: 80%;
-        height: 20vh;
-      }
-      input {
-        font-size: 15px;
-      }
-      input[type='text'] {
-        width: 11.5vh;
-      }
-      #email {
-        width: 14.5vh;
-      }
-      #subject {
-        width: 13.5vh;
-      }
-      #myfile {
-        font-size: 17px;
-      }
-      #contact-submit {
-        font-size: 16px;
-        width: 5vh;
-      }
-      #contact-submit:hover {
-        font-size: 16px;
-        background-color: cyan;
-        padding: 0 7px;
-        border-radius: 4px;
-        border-color: #313639;
-      }
-    }
-    img {
-      height: 200px;
-      width: auto;
-    }
+    margin: 25% 25%;
+    padding: 2em;
+    border-radius: 10px;
   }
+
+  // .contact-border {
+  //   // width: 120vh;
+  //   height: 20vh;
+  //   margin: 10vh 20vh;
+  //   background-color: $gray;
+  //   border-radius: 10px;
+  //   border: 1px solid black;
+  //   z-index: 0;
+  //   display: flex;
+  //   flex-direction: row;
+  //   padding-top: 50px;
+  //   justify-content: center;
+  //   @include background-theme('light');
+  //   // padding-left: 10px;
+  //   .contact-container {
+  //     width: 60%;
+  //     line-height: 2.5vh;
+  //     margin: 0 4vh;
+  //     .contact-blurb {
+  //       font-size: 20px;
+  //     }
+  //   }
+  //   .email-container {
+  //     flex-direction: row;
+  //     margin: 2vh 0;
+  //     // margin-left: 20vh;
+  //     width: 30vh;
+  //     min-width: 10vh;
+  //     line-height: 3vh;
+  //     font-size: 20px;
+  //     textarea {
+  //       font-size: 15px;
+  //       width: 80%;
+  //       height: 20vh;
+  //     }
+  //     input {
+  //       font-size: 15px;
+  //     }
+  //     input[type='text'] {
+  //       width: 11.5vh;
+  //     }
+  //     #email {
+  //       width: 14.5vh;
+  //     }
+  //     #subject {
+  //       width: 13.5vh;
+  //     }
+  //     #myfile {
+  //       font-size: 17px;
+  //     }
+  //     #contact-submit {
+  //       font-size: 16px;
+  //       width: 5vh;
+  //     }
+  //     #contact-submit:hover {
+  //       font-size: 16px;
+  //       background-color: cyan;
+  //       padding: 0 7px;
+  //       border-radius: 4px;
+  //       border-color: #313639;
+  //     }
+  //   }
+  //   img {
+  //     height: 200px;
+  //     width: auto;
+  //   }
+  // }
 }
