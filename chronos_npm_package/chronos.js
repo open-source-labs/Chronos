@@ -101,7 +101,14 @@ chronos.track = () => {
   }
   return null;
 };
-
+/** ServerWrapper
+ * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
+ * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
+ * Passes userConfig
+ * @param {*} server 
+ * @param {*} proto 
+ * @param {*} methods 
+ */
 chronos.ServerWrapper = (server, proto, methods) => {
   const { database } = userConfig;
   if (database.type === 'MongoDB') {
