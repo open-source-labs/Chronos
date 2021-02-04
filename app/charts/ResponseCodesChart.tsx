@@ -67,6 +67,8 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       }
     });
 
+    console.log(responseCodes);
+
     return (
       <Plot
         data={[

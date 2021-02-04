@@ -93,21 +93,21 @@ const RouteChart = React.memo(() => {
         // only want one edge per route with the average duration
         if (edgeListObj[edgeStr]) {
           //? wrong math
-          duration = (duration + edgeListObj[edgeStr]) / 2
+          duration = (duration + edgeListObj[edgeStr]) / 2;
         }
-        edgeListObj[edgeStr] = duration
+        edgeListObj[edgeStr] = duration;
       }
     }
   }
 
   // turn objects into valid arrays to input into graph
   const nodeList = Object.values(nodeListObj);
-  const edgeList = []
+  const edgeList = [];
   for (let [edgeStr, duration] of Object.entries(edgeListObj)) {
     const edge = JSON.parse(edgeStr);
     console.log(edge.request)
     edge.label = edge.request ? `${edge.request} - ${(duration * 10).toFixed(0)} ms` : `${(duration * 10).toFixed(0)} ms` 
-    edgeList.push(edge)
+    edgeList.push(edge);
   }
 
   const graph = {
