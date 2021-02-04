@@ -7,6 +7,8 @@ const SpeedChart = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const { time, cpuspeed } = healthData;
   const yAxis = cpuspeed;
+  console.log(time);
+  console.log(cpuspeed);
   const createChart = () => {
     let timeArr;
     if (time !== undefined) {
