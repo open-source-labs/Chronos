@@ -24,7 +24,7 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
         return o;
       }
     } catch (e) {
-      console.log({ error: e });
+      console.log(e);
     }
     return false;
   }
@@ -40,7 +40,6 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
       // if (result !== undefined) {
       //   if (result.length !== undefined) console.log('Number of data points (health):', result.length);
       // }
-      
       // Update context local state
       if (result && result.length) setHealthData(parseHealthData(result));
     });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
 import HomeSharpIcon from '@material-ui/icons/HomeSharp';
@@ -8,6 +8,8 @@ import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../stylesheets/SidebarContainer.scss';
+
+// import { DashboardContext } from '../context/DashboardContext';
 
 const iconStyles = {
   WebkitBoxSizing: 'border-box',
@@ -19,6 +21,7 @@ const iconStyles = {
 }
 
 const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Element {
+
   return (
   <div className="sidebar-container" id="mySidebar">
     <div className="sidebar">
@@ -29,25 +32,7 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
       
       <hr className="line" id="firstLine"></hr>
       
-      <div className="secondRow">
-        <span><img alt="Doya" className="sprout" id="sprout0" src={'../assets/clean-sprout.gif'}></img></span>
-        <span><img alt="Doya" className="sprout" id="sprout1" src={'../assets/growing-bean-1.gif'}></img></span>
-        <span><img alt="Doya" className="sprout" id="sprout2" src={'../assets/growing-bean-2.gif'}></img></span>
-        <span><img alt="Doya" className="sprout" id="sprout3" src={'../assets/growing-bean-3.gif'}></img></span>
-        <span><img alt="Doya" className="sprout" id="sprout4" src={'../assets/clean-sprout.gif'}></img></span>
-      </div>
-
-      <hr className="line" id="secondLine"></hr>
       <div className="thirdRow">
-        <Link className="sidebar-link" to="/" id="home">
-          <HomeSharpIcon style={{ 
-            WebkitBoxSizing: 'content-box',
-            boxShadow: 'none', 
-            width: '35px', 
-            height: '35px', 
-            }} />
-          &emsp;Home
-        </Link>
         <Link className="sidebar-link" to="/applications" id="dash">
           <ListIcon style={{
             WebkitBoxSizing: 'content-box',
@@ -56,6 +41,15 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
             height: '35px',
           }} />
           &emsp;Dashboard
+        </Link>
+        <Link className="sidebar-link" to="/settings" id="settings">
+          <SettingsIcon style={{
+            WebkitBoxSizing: 'content-box',
+            boxShadow: 'none',
+            width: '35px',
+            height: '35px',
+          }} />
+          &emsp;Settings
         </Link>
         <Link className="sidebar-link" to="/about" id="about">
           <InfoIcon style={{
@@ -74,24 +68,6 @@ const SidebarContainer = React.memo(function SidebarContainer(props): JSX.Elemen
             height: '35px',
           }} />
           &emsp;Contact
-        </Link>
-        <Link className="sidebar-link" to="/settings" id="settings">
-          <SettingsIcon style={{
-            WebkitBoxSizing: 'content-box',
-            boxShadow: 'none',
-            width: '35px',
-            height: '35px',
-          }} />
-          &emsp;Settings
-        </Link>
-        <Link className="sidebar-link" to="/" id="logout">
-            <ExitToAppIcon style={{
-            WebkitBoxSizing: 'content-box',
-            boxShadow: 'none',
-            width: '35px',
-            height: '35px',
-          }} />
-          &emsp;Logout
         </Link>
       </div>
     </div>
