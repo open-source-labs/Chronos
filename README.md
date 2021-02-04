@@ -78,8 +78,8 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Installation
 This is for the latest Chronos version **5.1 release and later**.
 
-- Stable release: 5.1.0
-- LTS release: 5.0.1
+- Stable release: 6.1.0
+- LTS release: 6.1.0
 
 ### Pre-Installation
 Make sure you're running version 12.18.3 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 

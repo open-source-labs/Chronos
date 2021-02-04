@@ -126,7 +126,6 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
       let num = await HealthModelFunc(service).countDocuments({});
-      console.log(num);
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 10);
       result = await HealthModelFunc(service)

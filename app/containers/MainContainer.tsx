@@ -18,10 +18,10 @@ import ApplicationContextProvider from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 
 const MainContainer = React.memo(() => {
-  const { mode, getMode } = useContext(DashboardContext);
-   let currentMode = (mode === 'light mode')? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
+  const { mode } = useContext(DashboardContext);
+   let currentModeCSS = (mode === 'light mode')? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
   return (
-  <div className="main-container" style ={currentMode}>
+  <div className="main-container" style ={currentModeCSS}>
     <div className="main-routes">
       <Switch>
         <Route exact path="/" component={Home} />
