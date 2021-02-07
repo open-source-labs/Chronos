@@ -18,8 +18,9 @@
     // margin-left: 50%;
     // margin-top: 25%;
     margin: calc(25% - 85px) 25% 25% 25%;
+    // margin: 25vw;
     @media (max-width: 900px) {
-      // margin: calc(25%) 25% 25% 25%;
+      margin-top: 25%;
     } 
     // transform: translate(-50%, -50%);
     @include center-with-flex($direction: column);
