@@ -33,14 +33,14 @@ body {
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   body {
-    font-size: 0.5rem;
+    font-size: max(0.5rem, 12px);
   }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   body {
-    font-size: 0.6rem;
+    font-size: max(0.6rem, 16px);
   }
 }
 

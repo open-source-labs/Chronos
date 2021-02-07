@@ -82,9 +82,14 @@ nav {
   }
 
   @media (max-width: 900px) {
+    position: absolute;
     @include center-with-flex($direction: column);
     .nav-left {
       @include center-with-flex($direction: column);
+      width: 100%;
+    }
+    .nav-right {
+      width: 100%;
     }
   }
 }
