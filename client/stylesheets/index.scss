@@ -17,16 +17,16 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
-@media screen and (max-width: 720px) {
-  body {
-    font-size: 0.5em;
-  }
-}
+// @media screen and (max-width: 720px) {
+//   body {
+//     font-size: 0.5em;
+//   }
+// }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {
-    font-size: 0.4rem;
+    font-size: max(0.4rem, 10px);
   }
 }
 

@@ -14,10 +14,14 @@
   .hero-container {
     width: 50%;
     color: #fff;
-    position: absolute;
-    margin-left: 50%;
-    margin-top: 25%;
-    transform: translate(-50%, -50%);
+    // position: absolute;
+    // margin-left: 50%;
+    // margin-top: 25%;
+    margin: calc(25% - 85px) 25% 25% 25%;
+    @media (max-width: 900px) {
+      // margin: calc(25%) 25% 25% 25%;
+    } 
+    // transform: translate(-50%, -50%);
     @include center-with-flex($direction: column);
     animation: appear linear 2s forwards;
 
@@ -33,7 +37,7 @@
     }
 
     p {
-      font-size: 1.5vw;
+      font-size: max(1.5vw, 16px);
     }
     .hero-details {
       margin-bottom: 45px;
