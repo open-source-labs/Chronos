@@ -1,0 +1,43 @@
+@import './constants.scss';
+
+.section-features {
+  padding: 140px 10%;
+  @include center-with-flex($direction: column);
+  height: 70vh;
+  @include background-theme('light');
+
+  .features-header {
+    @include section-header;
+  }
+
+  .features-content {
+    @include center-with-flex($align: flex-start, $justify: space-evenly);
+
+    div {
+      width: 33%;
+      text-align: center;
+      padding: 0 75px;
+      height: 100%;
+      transition: 0.1s;
+
+      &:nth-of-type(2) {
+        border-left: thin solid #333;
+        border-right: thin solid #333;
+      }
+
+      ion-icon {
+        font-size: 700%;
+        margin-bottom: 15px;
+      }
+
+      h3 {
+        font-size: 145%;
+        margin-bottom: 15px;
+      }
+
+      p {
+        line-height: 135%;
+      }
+    }
+  }
+}

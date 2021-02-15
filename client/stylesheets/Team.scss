@@ -1,0 +1,52 @@
+@import './constants.scss';
+
+.team-container {
+  justify-content: center;
+  width: 100%;
+  padding: 3px 12px;
+  padding-top: 110px;
+  display: flex;
+  flex-wrap: wrap;
+  @include background-theme('dark');
+
+  .bio-card {
+    justify-content: center;
+    text-align: center;
+    margin: 5px 5px;
+    width: 450px;
+    height: 580px;
+    padding: 10px 10px;
+    position: relative;
+    border-radius: 5px;
+
+    .bio-pic {
+      height: 270px;
+      width: 270px;
+      border: 1px solid black;
+      border-radius: 50%;
+      filter: grayscale(100%);
+    }
+    .name {
+      font-size: 28px;
+      margin: 5px 0;
+    }
+    .bio {
+      display: flex;
+      line-height: 25px;
+      padding: 10px 0;
+      flex-grow: 1;
+    }
+    .member-contact .icon {
+      color: $white;
+      height: 30px;
+      width: 30px;
+      padding: 5px 5px;
+    }
+    .member-linkedin:hover {
+      opacity: 0.5;
+    }
+    .member-github:hover {
+      opacity: 0.5;
+    }
+  }
+}

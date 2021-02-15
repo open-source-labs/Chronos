@@ -1,0 +1,29 @@
+@import './constants.scss';
+
+.section-demo {
+  padding: 140px 10%;
+  @include center-with-flex($direction: column);
+  @include background-theme('dark');
+
+  #demo-header{
+    @include section-header;
+  }
+  #demo-content {
+    @include center-with-flex;
+
+    div {
+      width: 33%;
+      padding: 15px 0px;
+      text-align: center;
+      height: 400px;
+      @include center-with-flex($direction: column, $justify: space-around);
+      
+      figure {
+        img {
+          width: 400px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}

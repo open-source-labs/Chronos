@@ -1,0 +1,36 @@
+@import './constants.scss';
+
+.section-home {
+  width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  @include background-theme('dark');
+
+  .hero-container {
+    width: 50%;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    @include center-with-flex($direction: column);
+    animation: appear linear 2s forwards;
+
+    .hero-chronos {
+      @include center-with-flex;
+      margin-bottom: 60px;
+
+      img {
+        width: 800px;
+      }
+    }
+
+    p {
+      font-size: 1.5vw;
+    }
+    .hero-details {
+      margin-bottom: 45px;
+      text-align: center;
+    }
+  }
+}

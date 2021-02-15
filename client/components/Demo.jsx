@@ -1,48 +1,48 @@
 import React from 'react';
-import { render } from 'react-dom';
-import demoVideo from '../assets/ChronosDemo.mov'
-import '../demo.css';
+// import demoVideo from '../assets/ChronosDemo.mov';
+
+import health from '../assets/screenshot-health.png';
+import addapp from '../assets/screenshot-addapp.png';
+import code from '../assets/screenshot-code.png';
+import '../stylesheets/Demo.scss';
 
 const Demo = () => {
-    return (
-        <div className="demoContainter">
-            <div id="lightDemoWrapper">
-            <div className="demoTitle1">
-                <h2>Install</h2>
-                    <p>
-                        npm install chronos-microservice-debugger4
-                    </p>
-            </div>
-            <div className="demoTitle1">
-                <h2>Prep</h2>
-                <p>
-                    insert chronos middleware within each server 
-                </p>
-            </div>
-            <div className="demoTitle1">
-                <h2>Connect</h2>
-                <p>
-                    link your database to our middleware and the chronos application 
-                </p>
-            </div>
-            <div className="demoTitle1">
-                <h2>Monitor</h2>
-                <p>
-                    open application to view microservices data 
-                </p>
-            </div>
-            </div>
-
-            <div className="space"></div>
-            <div className="demoTitle2">
-                <h2>Video Demonstration</h2>
-            <hr id="MainHr"/>
-            <div className="videoDemo">
-                <video src={demoVideo} controls={true}/>
-            </div>
-            </div>
+  return (
+    <div className="section-demo">
+      <div id="demo-header">
+        <h2>Everything you need.</h2>
+        <p>Instrument, connect, and go.</p>
+        <p>View metrics, traces, and logs.</p>
+      </div>
+      <div id="demo-content">
+        <div className="example-1">
+          <figure>
+            <img src={code} alt="Config file" />
+          </figure>
+          <figcaption>
+            <p>1. Instrument your server(s) using Chronos Tracker.</p>
+          </figcaption>
         </div>
-    )
+        <div className="example-2">
+          <figure>
+            <img src={addapp} alt="Application cards" />
+          </figure>
+          <figcaption>
+            <p>2. Connect to your application in the desktop app.</p>
+          </figcaption>
+        </div>
+        <div className="example-3">
+          <figure>
+            <img src={health} alt="Graphs" />
+          </figure>
+          <figcaption>
+            <p>3. Ready to go! View server health metrics, microservice route tracing, and error logs.</p>
+          </figcaption>
+        </div>
+        {/* <video src={demoVideo} controls={true} /> */}
+      </div>
+    </div>
+  );
 };
 
 export default Demo;

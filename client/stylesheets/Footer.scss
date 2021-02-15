@@ -1,0 +1,26 @@
+@import './constants.scss';
+
+footer {
+  background-color: black;
+  color: #fff;
+  height: 150px;
+  @include center-with-flex;
+
+  .footer-container {
+    @include center-with-flex;
+
+    img {
+      height: 50px;
+
+    }
+
+    ul {
+      @include center-with-flex;
+
+      li {
+        margin: 0 10px;
+      }
+    }
+  }
+}
+

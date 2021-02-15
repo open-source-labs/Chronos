@@ -1,0 +1,33 @@
+@import './constants.scss';
+
+.section-quotes {
+  padding: 50px 10%;
+  @include center-with-flex;
+
+  .quote-container {
+    @include center-with-flex;
+    background-color: $yellowwhite;
+    border-radius: 3px;
+    padding: 40px;
+    max-width: 650px;
+    box-shadow: $box-shadow;
+
+    img {
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+
+    .quote-content {
+      @include center-with-flex($direction: column);
+      p {
+        font-size: 135%;
+        color: $black;
+
+        &:last-of-type {
+          align-self: flex-end;
+          font-size: 115%;
+        }
+      }
+    }
+  }
+}
