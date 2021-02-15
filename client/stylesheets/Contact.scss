@@ -15,6 +15,10 @@
     margin: 25% 25%;
     padding: 2em;
     border-radius: 10px;
+
+    @media (max-width: 900px) {
+      margin: 10% 10% 10% 10%;
+    }
   }
 
   // .contact-border {
