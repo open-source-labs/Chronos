@@ -33,10 +33,6 @@
         font-size: 145%;
         margin-bottom: 15px;
       }
-
-      p {
-        line-height: 135%;
-      }
     }
 
     @media (max-width: 1300px) {
@@ -44,6 +40,7 @@
 
       div {
         width: 100%;
+        padding: 0px;
         
         &:nth-of-type(2) {
           border-left: none;
