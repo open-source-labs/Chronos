@@ -26,14 +26,14 @@ body {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {
-    font-size: calc(max(0.4rem, 10px));
+    font-size: calc(max(0.4rem, 14px));
   }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   body {
-    font-size: calc(max(0.5rem, 12px));
+    font-size: calc(max(0.5rem, 15px));
   }
 }
 
