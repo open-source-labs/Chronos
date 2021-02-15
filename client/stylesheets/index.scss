@@ -26,21 +26,21 @@ body {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {
-    font-size: max(0.4rem, 10px);
+    font-size: calc(max(0.4rem, 10px));
   }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   body {
-    font-size: max(0.5rem, 12px);
+    font-size: calc(max(0.5rem, 12px));
   }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   body {
-    font-size: max(0.6rem, 16px);
+    font-size: calc(max(0.6rem, 16px));
   }
 }
 
