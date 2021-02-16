@@ -1,3 +1,9 @@
+# adapted from https://gist.github.com/octocat/9257657
+dist/*.svg
+dist/*.png
+dist/*.jpg
+dist/*.js
+
 # JS Project-Specific #
 #######################
 node_modules

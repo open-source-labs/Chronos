@@ -17,30 +17,30 @@ body {
   font-family: 'Rubik', sans-serif;
 }
 
-@media screen and (max-width: 720px) {
-  body {
-    font-size: 0.5em;
-  }
-}
+// @media screen and (max-width: 720px) {
+//   body {
+//     font-size: 0.5em;
+//   }
+// }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   body {
-    font-size: 0.4rem;
+    font-size: calc(max(0.4rem, 14px));
   }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   body {
-    font-size: 0.5rem;
+    font-size: calc(max(0.5rem, 15px));
   }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   body {
-    font-size: 0.6rem;
+    font-size: calc(max(0.6rem, 16px));
   }
 }
 

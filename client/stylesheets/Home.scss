@@ -5,14 +5,24 @@
   height: 100vh;
   min-height: 700px;
   @include background-theme('dark');
+  padding-top: 85px;
+  // when nav bar gets thick
+  @media (max-width: 900px) {
+    padding-top: 300px;
+  }
 
   .hero-container {
     width: 50%;
     color: #fff;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    // position: absolute;
+    // margin-left: 50%;
+    // margin-top: 25%;
+    margin: calc(25% - 85px) 25% 25% 25%;
+    // margin: 25vw;
+    @media (max-width: 900px) {
+      margin-top: 25%;
+    } 
+    // transform: translate(-50%, -50%);
     @include center-with-flex($direction: column);
     animation: appear linear 2s forwards;
 
@@ -22,11 +32,14 @@
 
       img {
         width: 800px;
+        max-width: 100%;
+        height: auto;
       }
     }
 
     p {
-      font-size: 1.5vw;
+      font-size: calc(max(1.5vw, 16px));
+      // font-size: 1.5vw;
     }
     .hero-details {
       margin-bottom: 45px;

@@ -8,23 +8,25 @@ const Nav = () => {
   return (
     <nav>
       <div className="nav-left">
-        <ul>
-          <li>
-            <Link className="link" to="/">
+        <div className="nav-left-section">
+            <Link id="C" className="link" to="/">
               <img src={C} alt="Chronos Brand" />
             </Link>
-          </li>
-          <li>
-            <Link className="link" to="/team">
-              <p>Meet the Team</p>
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/contact">
-              <p>Contact Us</p>
-            </Link>
-          </li>
-        </ul>
+        </div>
+        <div className="nav-left-section">
+          <ul>
+            <li>
+              <Link className="link" to="/team">
+                <p>Meet the Team</p>
+              </Link>
+            </li>
+            <li>
+              <Link className="link" to="/contact">
+                <p>Contact Us</p>
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
       <div className="nav-right">
         <ul>
@@ -33,7 +35,7 @@ const Nav = () => {
               href="https://github.com/open-source-labs/Chronos"
               target="_blank"
             >
-              <ion-icon name="logo-github"></ion-icon>
+              <ion-icon className="icon icon-npm" name="logo-github"></ion-icon>
             </a>
           </li>
           <li>
