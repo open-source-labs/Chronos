@@ -5,7 +5,7 @@ const helpers = {
    * Sets the default interval to 5 seconds and dockerized to false
    */
   validateInput(config) {
-    let { microservice, database, interval, dockerized, connection } = config;
+    const { microservice, database, interval, dockerized, connection } = config;
 
     // Validate all required fields exist and are valid input types
     if (!microservice || typeof microservice !== 'string') {
@@ -20,7 +20,9 @@ const helpers = {
       throw new Error('Invalid input "database URI": Please provide the URI to your database');
     }
     if (!database.connection || typeof database.connection !== 'string') {
-      throw new Error('Invalid input "database connection type: Please provide the type of connection');
+      throw new Error(
+        'Invalid input "database connection type: Please provide the type of connection'
+      );
     }
 
     // Validate database type
@@ -32,7 +34,7 @@ const helpers = {
     if (database.connection !== 'REST' && database.connection !== 'gRPC') {
       throw new Error(
         `Invalid database connection "${database.connection}". Chronos only supports REST and gRPC.`
-      )
+      );
     }
 
     // Default interval to one minute
@@ -55,7 +57,7 @@ const helpers = {
 
       // Setup notifications for user
       notifications.forEach(obj => {
-        const type = obj.type;
+        const { type } = obj;
 
         // Throw errors on unsupported notification methods
         if (!features.includes(type)) {

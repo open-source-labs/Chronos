@@ -101,13 +101,15 @@ chronos.track = () => {
   }
   return null;
 };
-/** ServerWrapper
+/**
+ * Wraps the gRPC server object to automatically write logs to user configed DB
+ *
  * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
+ *
  * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
- * Passes userConfig
- * @param {*} server 
- * @param {*} proto 
- * @param {*} methods 
+ * @param {*} server
+ * @param {*} proto
+ * @param {*} methods
  */
 chronos.ServerWrapper = (server, proto, methods) => {
   const { database } = userConfig;
@@ -119,7 +121,16 @@ chronos.ServerWrapper = (server, proto, methods) => {
   }
   return null;
 };
-
+/**
+ * Wraps the gRPC client to automatically write logs to user configed DB
+ *
+ * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
+ *
+ * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
+ *
+ * @param {*} client
+ * @param {*} service
+ */
 chronos.ClientWrapper = (client, service) => {
   const { database } = userConfig;
   if (database.type === 'MongoDB') {
@@ -131,6 +142,12 @@ chronos.ClientWrapper = (client, service) => {
   return null;
 };
 
+/**
+ * Allows the passthrough of metadata from gRPC server to gRPC client
+ *
+ * @param {*} client
+ * @param {*} servere
+ */
 chronos.link = (client, server) => {
   client.metadata = server.metadataHolder;
 };
