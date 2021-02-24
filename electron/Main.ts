@@ -1,18 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-// import { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
-// const { default: installExtension } = require('electron-devtools-installer');
+
 import path from 'path';
 import './routes/dashboard';
 import './routes/data';
-// require('./routes/dashboard');
-// require('./routes/data');
 
-// Install React Dev Tools
-// app.whenReady().then(() => {
-//   installExtension(REACT_DEVELOPER_TOOLS)
-//     .then((name: string) => console.log(`Added Extension:  ${name}`))
-//     .catch((err: Error) => console.log('An error occurred: ', err));
-// });
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
