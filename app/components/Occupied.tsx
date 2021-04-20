@@ -51,7 +51,7 @@ const Occupied = React.memo(() => {
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('Search...');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   // Dynamic refs
   const delRef = useRef<any>([]);
   useEffect(() => {
@@ -75,6 +75,7 @@ const Occupied = React.memo(() => {
       setOpen(true);
     }
   };
+
   //Conditional Rendering of UI Modals for Light and Dark Mode
   const useStylesDark = makeStyles<Theme, StyleProps>(theme => ({
     // ALL CARDS
@@ -184,7 +185,7 @@ const Occupied = React.memo(() => {
   }));
 
   let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
-
+  console.log(applications)
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -198,9 +199,9 @@ const Occupied = React.memo(() => {
             </span>
           </section>
           <section className="header" id="rightHeader">
-            <form className="form">
+            <form className="form" onSubmit={e => e.preventDefault()}>
               <label className="inputContainer">
-                <input className="form" id="textInput" placeholder={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
+                <input className="form" id="textInput" placeholder={'Search...'} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
                 <hr />
               </label>
               <button className="form" id="submitBtn" type="submit">
@@ -230,7 +231,8 @@ const Occupied = React.memo(() => {
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
-          {applications.map((app: string[], i: number | any | string | undefined) => (
+          {applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+            .map((app: string[], i: number | any | string | undefined) => (
             <div className="card" key={`card-${i}`} id={`card-${i}`}>
               <Card
                 key={`card-${i}`}
