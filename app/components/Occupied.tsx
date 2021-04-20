@@ -233,7 +233,7 @@ const Occupied = React.memo(() => {
           </div>
           {applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
             .map((app: string[], i: number | any | string | undefined) => (
-            <div className="card" key={`card-${i}`} id={`card-${i}`}>
+            <div className="card" key={`card-${i}`} id={`card-${app[1]}`}>
               <Card
                 key={`card-${i}`}
                 className={classes.paper}
@@ -243,7 +243,11 @@ const Occupied = React.memo(() => {
 
                   <div className="databaseIconContainer">
                     <div className="databaseIconHeader">
-                      <img className="databaseIcon" src="../assets/mongo-icon-white.png" alt="MongoDB"></img>
+                      {
+                      app[1] === "SQL" ? 
+                      <img className="databaseIcon" alt="SQL"/> : 
+                      <img className="databaseIcon" alt="MongoDB"/>
+                      }
                     </div>
                   </div>
                   
@@ -273,7 +277,7 @@ const Occupied = React.memo(() => {
 
                 <div className="cardFooter">
                   <UpdateIcon className="cardFooterIcon"/>
-                  <em><p id="cardFooterText">Just updated</p></em>
+                  <em><p id="cardFooterText">{app[3]}</p></em>
                 </div>
               </Card>
             </div>

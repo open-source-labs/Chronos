@@ -17,7 +17,7 @@ export const DashboardContext = createContext<any>(null);
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {Array} applications List of all applications, their description and creation date
+ * @property  {Array} applications List of all applications, their description, database type and creation date
  * @method    getApplications
  * @method    addApp
  * @method    deleteApp
@@ -29,7 +29,7 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   /**
    * Sends a request for all existing applications belonging to a user
    * and sets the applications state to the list of app names
-   * Also sends a request for the previously saved theme/mode 
+   * Also sends a request for the previously saved theme/mode
    * and sets the mode state to the retrieved settings
    */
   const getApplications = useCallback(() => {
@@ -61,7 +61,7 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
     const result = ipcRenderer.sendSync('deleteApp', index);
     setApplications(result);
   }, []);
-  
+
   /**
    * Sends a synchronous request to change the current mode/theme using a provided
    * string. The string is use to locate the desired mode info in settings.json in
@@ -69,14 +69,13 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
    */
 
   const changeMode = useCallback((currMode: string) => {
-  const result = ipcRenderer.sendSync(
-      'changeMode',
-      currMode
-    );
+    const result = ipcRenderer.sendSync('changeMode', currMode);
     setMode(result);
-  }, [])
+  }, []);
   return (
-    <DashboardContext.Provider value={{ applications, getApplications, addApp, deleteApp, mode, changeMode}}>
+    <DashboardContext.Provider
+      value={{ applications, getApplications, addApp, deleteApp, mode, changeMode }}
+    >
       {children}
     </DashboardContext.Provider>
   );
