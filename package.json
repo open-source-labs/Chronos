@@ -41,7 +41,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/react-fontawesome": "^0.1.14",
-        "@grpc/proto-loader": "^0.5.5",
+        "@grpc/proto-loader": "^0.6.1",
         "@material-ui/core": "^4.11.3",
         "@material-ui/icons": "^4.11.2",
         "@pionerlabs/grpc-interceptors": "^0.2.5",
