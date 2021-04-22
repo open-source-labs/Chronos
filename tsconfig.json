@@ -12,7 +12,8 @@
     "target": "es5",
     "jsx": "react",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "include": ["./electron/**/*", "./src/**/*", "./electron/**/*.json"]
 }
