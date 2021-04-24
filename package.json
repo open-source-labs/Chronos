@@ -5,7 +5,7 @@
     "main": "./build/Main.js",
     "scripts": {
         "build": "webpack",
-        "start": "webpack-dev-server",
+        "start": "webpack serve",
         "nodemon": "nodemon server/server.js",
         "electron": "electron .",
         "test": "jest",
@@ -121,7 +121,7 @@
         "url-loader": "^4.1.1",
         "webpack": "^4.46.0",
         "webpack-bundle-analyzer": "^3.8.0",
-        "webpack-cli": "^3.3.11",
+        "webpack-cli": "^4.6.0",
         "webpack-dev-server": "^3.11.2"
     },
     "directories": {
