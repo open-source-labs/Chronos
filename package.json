@@ -49,7 +49,7 @@
         "chai": "^4.3.4",
         "chronos-tracker": "^6.0.3",
         "d3": "^6.7.0",
-        "electron": "^6.1.12",
+        "electron": "^12.0.5",
         "enzyme-adapter-react-16": "^1.15.6",
         "express": "^4.17.1",
         "moment": "^2.29.1",

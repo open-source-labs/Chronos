@@ -1,9 +1,8 @@
 import { app, BrowserWindow } from 'electron';
-
 import path from 'path';
+
 import './routes/dashboard';
 import './routes/data';
-
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
@@ -19,6 +18,7 @@ const createWindow = () => {
     // Node integration allows node.js to run
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
