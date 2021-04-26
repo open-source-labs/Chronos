@@ -63,7 +63,7 @@
         "react-graph-vis": "^1.0.7",
         "react-plotly.js": "^2.5.1",
         "react-router-dom": "^5.2.0",
-        "react-table": "^7.6.3",
+        "react-table": "^7.7.0",
         "styled-components": "^5.2.3",
         "webdriverio": "^6.12.1"
     },
