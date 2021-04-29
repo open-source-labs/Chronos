@@ -22,6 +22,7 @@ import ListIcon from '@material-ui/icons/List';
 import SearchIcon from '@material-ui/icons/Search';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 // MODALS
@@ -38,6 +39,8 @@ import { DashboardContext } from '../context/DashboardContext';
 
 import { ApplicationContext } from '../context/ApplicationContext';
 
+import { CommsContext } from '../context/CommsContext';
+
 // TYPESCRIPT
 interface StyleProps {
   root: BaseCSSProperties;
@@ -47,6 +50,7 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
   const { applications, getApplications, deleteApp, mode, getMode } = useContext(DashboardContext);
+  const { commsData, setCommsData, fetchCommsData } = useContext(CommsContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
@@ -56,9 +60,14 @@ const Occupied = React.memo(() => {
   const delRef = useRef<any>([]);
   useEffect(() => {
     setServicesData([]);
-    getApplications(); 
+    getApplications();
+    // update communication data from last visited database
+    for (const app of applications) {
+      const temp = commsData;
+      const newComm = fetchCommsData('', true);
+      setCommsData([...temp, newComm])
+    }
   }, []);
-
   
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, app: string, i: number) => {
@@ -185,7 +194,6 @@ const Occupied = React.memo(() => {
   }));
 
   let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
-  console.log(applications)
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -212,11 +220,14 @@ const Occupied = React.memo(() => {
               <span className="dashboardTooltip">You have {applications.length} active databases</span>
               <DashboardIcon className="navIcon" id="dashboardIcon" />
             </div>
+
             
-            <div className="notificationsIconArea">
-              <span className="notificationsTooltip">You have no new alerts</span>
-              < NotificationsIcon className="navIcon" id="notificationsIcon" />
-            </div>
+              <div className="notificationsIconArea">
+                <span className="notificationsTooltip">You have {commsData.length} new alerts</span>
+                    < NotificationsIcon className="navIcon" id="notificationsIcon" />
+                    <Badge badgeContent={commsData.length} color="secondary"/>
+              </div>
+            
 
             <div className="personIconArea">
               <span className="personTooltip">You are not logged in</span>
