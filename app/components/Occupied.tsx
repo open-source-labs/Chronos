@@ -61,14 +61,8 @@ const Occupied = React.memo(() => {
   useEffect(() => {
     setServicesData([]);
     getApplications();
-    // update communication data from last visited database
-    for (const app of applications) {
-      const temp = commsData;
-      const newComm = fetchCommsData('', true);
-      setCommsData([...temp, newComm])
-    }
   }, []);
-  
+
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
@@ -194,6 +188,10 @@ const Occupied = React.memo(() => {
   }));
 
   let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
+
+  // update notification count based on statuscode >= 400
+  const notification = commsData.filter((item: { responsestatus: number; }) => item.responsestatus >= 400)
+  
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -223,9 +221,9 @@ const Occupied = React.memo(() => {
 
             
               <div className="notificationsIconArea">
-                <span className="notificationsTooltip">You have {commsData.length} new alerts</span>
+                <span className="notificationsTooltip">You have {notification ? notification.length : 0} new alerts</span>
                     < NotificationsIcon className="navIcon" id="notificationsIcon" />
-                    <Badge badgeContent={commsData.length} color="secondary"/>
+                    <Badge badgeContent={notification ? notification.length : 0} color="secondary"/>
               </div>
             
 
