@@ -56,6 +56,8 @@ const Occupied = React.memo(() => {
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z'); // init at year 2000
+
   // Dynamic refs
   const delRef = useRef<any>([]);
   useEffect(() => {
@@ -191,7 +193,16 @@ const Occupied = React.memo(() => {
 
   // update notification count based on statuscode >= 400
   const notification = commsData.filter((item: { responsestatus: number; }) => item.responsestatus >= 400)
-  
+                                .filter((item: { time: string; }) => {
+                                  const d1 = new Date(item.time);
+                                  const d2 = new Date(clickedAt);
+                                  return d1 > d2;
+                                });
+
+  const updateNotification = () => {
+    const timestamp = new Date();
+    setClickedAt(timestamp.toISOString())
+  }
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -220,7 +231,7 @@ const Occupied = React.memo(() => {
             </div>
 
             
-              <div className="notificationsIconArea">
+              <div className="notificationsIconArea" onClick={updateNotification}>
                 <span className="notificationsTooltip">You have {notification ? notification.length : 0} new alerts</span>
                     < NotificationsIcon className="navIcon" id="notificationsIcon" />
                     <Badge badgeContent={notification ? notification.length : 0} color="secondary"/>
