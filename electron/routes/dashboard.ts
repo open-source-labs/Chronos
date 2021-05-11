@@ -30,12 +30,12 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
 
   // Sync event - return new applications list
-  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
+  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
 });
 
 /**
  * @event   getApps
- * @desc    Retrieves the existing list of applications belonging to the user and current user setting for mode of preference 
+ * @desc    Retrieves the existing list of applications belonging to the user and current user setting for mode of preference
  * @return  Returns the list of applications
  */
 // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
@@ -45,15 +45,15 @@ ipcMain.on('getApps', message => {
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
   );
-  // Retrieves files contents from setting.json for current Mode 
+  // Retrieves files contents from setting.json for current Mode
   const temp = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
   );
   // Destructure list of services from state to be rendered on the dashboard
-  const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
+  const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]); // .map((arr: string[]) => [...arr]);
 
   // Sync event - return new applications list w/ user settings: Mode
-  message.returnValue = [dashboardList,temp["mode"]];
+  message.returnValue = [dashboardList, temp.mode];
 });
 
 /**
@@ -76,14 +76,14 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   });
 
   // Sync event - return new applications list
-  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[3], arr[4]]);
+  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
 });
 
 /**
-  * @event changeMode 
-  * @desc Changes user's mode/theme preference fron settings.json
-  * @return Returns the newly update setting preference of the app to the renderer end
-*/
+ * @event changeMode
+ * @desc Changes user's mode/theme preference fron settings.json
+ * @return Returns the newly update setting preference of the app to the renderer end
+ */
 // Loads existing setting JSON and update settings to include updated mode version
 ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   // Retrives file contents from settings.json
@@ -91,18 +91,17 @@ ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
     fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
   );
 
-  //Add new mode
+  // Add new mode
   const newMode = currMode;
 
-  // mode to settings 
-  state["mode"] = newMode;
+  // mode to settings
+  state.mode = newMode;
 
-  // Update settings.json with new mode 
+  // Update settings.json with new mode
   fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
 
   // Sync event - return new mode
-  message.returnValue = state["mode"];
+  message.returnValue = state.mode;
 });
-
 
 // module.exports = dashboard;

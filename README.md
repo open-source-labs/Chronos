@@ -45,15 +45,12 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## <img src ="./app/assets/fire.png" height=22 > New Features <img src ="./app/assets/fire.png" height=24>
 
 - New UI Features
-  - Dark and Light mode options now available across user sessions.
-  - Updated charts to now also support gRPC calls
-  - Integrated log to provide users with relational data on request & response cycle
+  - Developed search bar functionality to filter displayed microservices
+  - Login system for user authentication
+  - Any errored connections will now show on the bell icon
+  - Notification bell will update in real time
 - Bug Fixes
-  - Fixed bug where users could only connect to one MongoDB database and would see its microservices listed even when users clicked on applications using other MongoDB databases
-- Chronos now support monitoring for gRPC!
-  - Distributed tracing across network request
-  - Currently chronos gRPC tracing for MongoDB and PostgresQL
-
+  - Fixed database icons to show the correct icon
 ## Features 
 
 - Distributed tracing enabled across microservices applications
@@ -80,15 +77,15 @@ This is for the latest Chronos version **5.1 release and later**.
 - LTS release: 6.1.0
 
 ### Pre-Installation
-Make sure you're running version 12.18.3 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
+Make sure you're running version 14.16.1 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
 
-If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a> 14.9.0, make sure to run 
+If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a> 16.1.0, make sure to run 
 ```npm rebuild```
 in the root directory.
 
 If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
 ```npm rebuild```
-in each microservices folder **after you roll back to version 12.18.3.**
+in each microservices folder **after you roll back to version 14.16.1.**
 <br>
 
 ### Install Dependencies
