@@ -16,6 +16,6 @@
     "mongoose": "^5.11.13",
     "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
-    "systeminformation": "^4.34.7"
+    "systeminformation": "^5.6.4"
   }
 }
