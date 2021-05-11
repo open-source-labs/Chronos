@@ -22,10 +22,12 @@ import ListIcon from '@material-ui/icons/List';
 import SearchIcon from '@material-ui/icons/Search';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 // MODALS
 import AddModal from '../modals/AddModal';
+import AddsModal from '../modals/AddsModal';
 import ServicesModal from '../modals/ServicesModal';
 
 // STYLESHEETS
@@ -38,6 +40,8 @@ import { DashboardContext } from '../context/DashboardContext';
 
 import { ApplicationContext } from '../context/ApplicationContext';
 
+import { CommsContext } from '../context/CommsContext';
+
 // TYPESCRIPT
 interface StyleProps {
   root: BaseCSSProperties;
@@ -47,19 +51,22 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
   const { applications, getApplications, deleteApp, mode, getMode } = useContext(DashboardContext);
+  const { commsData, setCommsData, fetchCommsData } = useContext(CommsContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
+  const [addsOpen, setAddsOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('Search...');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z'); // init at year 2000
+
   // Dynamic refs
   const delRef = useRef<any>([]);
   useEffect(() => {
     setServicesData([]);
-    getApplications(); 
+    getApplications();
   }, []);
 
-  
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
@@ -75,6 +82,7 @@ const Occupied = React.memo(() => {
       setOpen(true);
     }
   };
+
   //Conditional Rendering of UI Modals for Light and Dark Mode
   const useStylesDark = makeStyles<Theme, StyleProps>(theme => ({
     // ALL CARDS
@@ -185,6 +193,18 @@ const Occupied = React.memo(() => {
 
   let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
 
+  // update notification count based on statuscode >= 400
+  const notification = commsData.filter((item: { responsestatus: number; }) => item.responsestatus >= 400)
+                                .filter((item: { time: string; }) => {
+                                  const d1 = new Date(item.time);
+                                  const d2 = new Date(clickedAt);
+                                  return d1 > d2;
+                                });
+
+  const updateNotification = () => {
+    const timestamp = new Date();
+    setClickedAt(timestamp.toISOString())
+  }
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -198,9 +218,9 @@ const Occupied = React.memo(() => {
             </span>
           </section>
           <section className="header" id="rightHeader">
-            <form className="form">
+            <form className="form" onSubmit={e => e.preventDefault()}>
               <label className="inputContainer">
-                <input className="form" id="textInput" placeholder={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
+                <input className="form" id="textInput" placeholder={'Search...'} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
                 <hr />
               </label>
               <button className="form" id="submitBtn" type="submit">
@@ -211,16 +231,16 @@ const Occupied = React.memo(() => {
               <span className="dashboardTooltip">You have {applications.length} active databases</span>
               <DashboardIcon className="navIcon" id="dashboardIcon" />
             </div>
-            
-            <div className="notificationsIconArea">
-              <span className="notificationsTooltip">You have no new alerts</span>
-              < NotificationsIcon className="navIcon" id="notificationsIcon" />
-            </div>
 
-            <div className="personIconArea">
-              <span className="personTooltip">You are not logged in</span>
-              <PersonIcon className="navIcon" id="personIcon" />
-            </div>
+            
+              <div className="notificationsIconArea" onClick={updateNotification}>
+                <span className="notificationsTooltip">You have {notification ? notification.length : 0} new alerts</span>
+                    < NotificationsIcon className="navIcon" id="notificationsIcon" />
+                    <Badge badgeContent={notification ? notification.length : 0} color="secondary"/>
+              </div>
+              <Button className= "personTooltip" onClick={() => setAddsOpen(true)}>Logged In
+                <PersonIcon className="navIcon" id="personIcon" />
+              </Button>
           </section>
         </header>
 
@@ -230,8 +250,9 @@ const Occupied = React.memo(() => {
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
-          {applications.map((app: string[], i: number | any | string | undefined) => (
-            <div className="card" key={`card-${i}`} id={`card-${i}`}>
+          {applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+            .map((app: string[], i: number | any | string | undefined) => (
+            <div className="card" key={`card-${i}`} id={`card-${app[1]}`}>
               <Card
                 key={`card-${i}`}
                 className={classes.paper}
@@ -241,7 +262,11 @@ const Occupied = React.memo(() => {
 
                   <div className="databaseIconContainer">
                     <div className="databaseIconHeader">
-                      <img className="databaseIcon" src="../assets/mongo-icon-white.png" alt="MongoDB"></img>
+                      {
+                      app[1] === "SQL" ? 
+                      <img className="databaseIcon" alt="SQL"/> : 
+                      <img className="databaseIcon" alt="MongoDB"/>
+                      }
                     </div>
                   </div>
                   
@@ -271,7 +296,7 @@ const Occupied = React.memo(() => {
 
                 <div className="cardFooter">
                   <UpdateIcon className="cardFooterIcon"/>
-                  <em><p id="cardFooterText">Just updated</p></em>
+                  <em><p id="cardFooterText">{app[3]}</p></em>
                 </div>
               </Card>
             </div>
@@ -279,6 +304,11 @@ const Occupied = React.memo(() => {
           <Modal open={addOpen} onClose={() => setAddOpen(false)}>
             <AddModal setOpen={setAddOpen} />
           </Modal>
+
+          <Modal open={addsOpen} onClose={() => setAddsOpen(false)}>
+            <AddsModal setOpen={setAddsOpen} />
+          </Modal>
+
           <Modal open={open} onClose={() => setOpen(false)}>
             <ServicesModal key={`key-${index}`} i={index} app={app} />
           </Modal>

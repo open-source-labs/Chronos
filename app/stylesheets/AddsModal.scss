@@ -1,0 +1,138 @@
+@import './constants.scss';
+
+.add-container {
+  @include centerModal(30%, 500px);
+
+  /* Header */
+  .add-header {
+    width: 100%;
+    padding: 20px 30px;
+    text-align: center;
+    border-bottom: thin solid $grey;
+    background-color: $grey;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: $darkgrey;
+
+    h2 {
+      @include modalHeader();
+      font-size: 26px;
+      font-weight: 300;
+      color: $darkgrey;
+    }
+  }
+
+  /* Form */
+  form {
+    @include centerWithFlex($direction: column);
+    padding: 20px 30px;
+    width: 100%;
+    font-size: 12px;
+    font-family: 'Roboto';
+    color: $darkgrey;
+
+    p,
+    span {
+      color: rgb(211, 0, 0);
+    }
+
+    span {
+      font-weight: 300;
+      font-size: 90%;
+    }
+
+    p {
+      align-self: flex-start;
+    }
+    
+    div {
+      @include centerWithFlex();
+
+      // <select /> margins
+      &:first-of-type {
+        margin-top: 20px;
+      }
+
+      // <textarea>
+      &:last-of-type {
+        @include centerWithFlex($justify: flex-start, $align: flex-start);
+      }
+
+      @include centerWithFlex(space-between);
+      width: 100%;
+      margin: 15px 0;
+
+      select,
+      input,
+      textarea {
+        font-family: 'Roboto';
+        font-size: 14px;
+        padding: 5px;
+        border: thin solid $grey;
+        flex: 1;
+        border-radius: 3px;
+        color: $darkgrey;
+      }
+
+      // Select field
+      select {
+        cursor: pointer;
+        font-family: 'Roboto';
+        height: 30px;
+        margin: 0;
+        appearance: none;
+        transition: 0.2s;
+
+        &:hover {
+          background-color: darken(#fff, 5%);
+        }
+      }
+
+      // Text input
+      input {
+        height: 30px;
+        color: $darkgrey;
+      }
+
+      // Textarea
+      textarea {
+        resize: none;
+        height: 90px;
+      }
+
+      label {
+        width: 140px;
+        font-size: 135%;
+        font-weight: 400;
+      }
+    }
+
+    /* Submit button */
+    button {
+      font-family: 'Roboto';
+      font-size: 16px;
+      font-weight: 800;
+      height: 40px;
+      width: 50%;
+      color: #fff;
+      background-color: $header;
+      transition: 0.1s;
+      // originally was margin:20px 0;
+      margin: 0px 110px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      border: none;
+      padding: 4px;
+      text-transform: uppercase;
+      
+
+      &:hover {
+        background-color: $gblue;
+      }
+    }
+  }
+}
+
+::placeholder {
+  color: rgb(201, 201, 201);
+}
