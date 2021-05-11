@@ -1,3 +1,4 @@
+//this file is to be used for login capabilities, however it is not fully implemented
 import React, { useState, useCallback } from 'react';
 import Electron from 'electron';
 
@@ -78,3 +79,4 @@ return (
 });
 
 export default LoginContextProvider;
+//
