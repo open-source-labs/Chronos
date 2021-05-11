@@ -31,14 +31,14 @@ const RequestTypesChart: React.FC = React.memo(() => {
     let type;
     commsData.forEach((obj: IObject) => {
       type = obj.request;
-      console.log('L34:', type);
+      // console.log('L34:', type);
       if (type in requestTypes) {
         requestTypes[type] += 1;
       } else {
         requestTypes[type] = 0;
         requestTypes[type]++;
       }
-      console.log(requestTypes)
+      // console.log(requestTypes)
     });
 
     return (
@@ -53,7 +53,6 @@ const RequestTypesChart: React.FC = React.memo(() => {
             marker: {
               colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
             },
-            
           },
         ]}
         config={{
@@ -78,7 +77,7 @@ const RequestTypesChart: React.FC = React.memo(() => {
             x: 0.5,
             font: {
               size: 7,
-            }
+            },
           },
         }}
       />
