@@ -7,7 +7,7 @@
         "build": "webpack",
         "start": "webpack serve",
         "nodemon": "nodemon server/server.js",
-        "electron": "electron .",
+        "electron": "electron . --no-sandbox",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:electron": "jest --detectOpenHandles ./__tests__/electron/*",
