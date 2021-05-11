@@ -79,7 +79,7 @@ This is for the latest Chronos version **5.1 release and later**.
 ### Pre-Installation
 Make sure you're running version 14.16.1 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
 
-If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a> 15.8.0, make sure to run 
+If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a> 16.1.0, make sure to run 
 ```npm rebuild```
 in the root directory.
 
