@@ -27,6 +27,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 // MODALS
 import AddModal from '../modals/AddModal';
+import AddsModal from '../modals/AddsModal';
 import ServicesModal from '../modals/ServicesModal';
 
 // STYLESHEETS
@@ -53,6 +54,7 @@ const Occupied = React.memo(() => {
   const { commsData, setCommsData, fetchCommsData } = useContext(CommsContext);
   const [open, setOpen] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
+  const [addsOpen, setAddsOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -236,12 +238,9 @@ const Occupied = React.memo(() => {
                     < NotificationsIcon className="navIcon" id="notificationsIcon" />
                     <Badge badgeContent={notification ? notification.length : 0} color="secondary"/>
               </div>
-            
-
-            <div className="personIconArea">
-              <span className="personTooltip">You are not logged in</span>
-              <PersonIcon className="navIcon" id="personIcon" />
-            </div>
+              <Button className= "personTooltip" onClick={() => setAddsOpen(true)}>Logged In
+                <PersonIcon className="navIcon" id="personIcon" />
+              </Button>
           </section>
         </header>
 
@@ -305,6 +304,11 @@ const Occupied = React.memo(() => {
           <Modal open={addOpen} onClose={() => setAddOpen(false)}>
             <AddModal setOpen={setAddOpen} />
           </Modal>
+
+          <Modal open={addsOpen} onClose={() => setAddsOpen(false)}>
+            <AddsModal setOpen={setAddsOpen} />
+          </Modal>
+          
           <Modal open={open} onClose={() => setOpen(false)}>
             <ServicesModal key={`key-${index}`} i={index} app={app} />
           </Modal>
