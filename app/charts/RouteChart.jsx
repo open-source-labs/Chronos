@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
-import { CommsContext } from '../context/CommsContext';
 import Graph from 'react-graph-vis';
+import { CommsContext } from '../context/CommsContext';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
@@ -26,10 +26,10 @@ const RouteChart = React.memo(() => {
       resObj[element.correlatingid].push({
         microservice: element.microservice,
         time: element.time,
-        request: element.request, //here
+        request: element.request, // here
       });
     }
-    //? What does this else block do?
+    // ? What does this else block do?
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
       const element = communicationsData[i];
@@ -48,7 +48,6 @@ const RouteChart = React.memo(() => {
       }
     }
   }
-
 
   // Filter the array so that only subarrays w/ len > 1 are kept.
   // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
@@ -72,26 +71,26 @@ const RouteChart = React.memo(() => {
   // ======Graphs logic =======//
   const nodeListObj = {};
   const edgeListObj = {};
-  for (let route of tracePoints) {
+  for (const route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
       // check if node exists if not then add node
-      let id = route[i].microservice;
+      const id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
-        nodeListObj[id] = { 
-          id: id, 
-          label: id
-        }
+        nodeListObj[id] = {
+          id,
+          label: id,
+        };
       }
       // add edge from node to node (repeat til end)
       if (i !== 0) {
-        let from = route[i - 1].microservice;
-        let to = id;
-        let request = route[i - 1].request; //here
-        let edgeStr = JSON.stringify({ from, to, request })
+        const from = route[i - 1].microservice;
+        const to = id;
+        const { request } = route[i - 1]; // here
+        const edgeStr = JSON.stringify({ from, to, request });
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
         // only want one edge per route with the average duration
         if (edgeListObj[edgeStr]) {
-          //? wrong math
+          // ? wrong math
           duration = (duration + edgeListObj[edgeStr]) / 2;
         }
         edgeListObj[edgeStr] = duration;
@@ -102,10 +101,12 @@ const RouteChart = React.memo(() => {
   // turn objects into valid arrays to input into graph
   const nodeList = Object.values(nodeListObj);
   const edgeList = [];
-  for (let [edgeStr, duration] of Object.entries(edgeListObj)) {
+  for (const [edgeStr, duration] of Object.entries(edgeListObj)) {
     const edge = JSON.parse(edgeStr);
-    console.log(edge.request)
-    edge.label = edge.request ? `${edge.request} - ${(duration * 10).toFixed(0)} ms` : `${(duration * 10).toFixed(0)} ms` 
+    // console.log(edge.request)
+    edge.label = edge.request
+      ? `${edge.request} - ${(duration * 10).toFixed(0)} ms`
+      : `${(duration * 10).toFixed(0)} ms`;
     edgeList.push(edge);
   }
 
@@ -120,12 +121,12 @@ const RouteChart = React.memo(() => {
       hierarchical: false,
     },
     edges: {
-      color: "#444d56",
+      color: '#444d56',
       physics: true,
       smooth: {
-        type: "curvedCCW",
-        forceDirection: "none",
-        roundness: 0.3
+        type: 'curvedCCW',
+        forceDirection: 'none',
+        roundness: 0.3,
       },
       font: {
         color: '#444d56',
@@ -141,27 +142,38 @@ const RouteChart = React.memo(() => {
         },
         highlight: {
           background: '#fc4039',
-        }
+        },
       },
       shape: 'circle',
       font: {
         color: '#ffffff',
         size: 10,
-        face: 'roboto'
+        face: 'roboto',
       },
-    }
-  }
+    },
+  };
 
   const events = {
-    select: function (event) {
-      let { nodes, edges } = event;
+    select(event) {
+      const { nodes, edges } = event;
     },
   };
 
   return (
-    <div className='traceContainer'>
-      <span id='tracesTitle'>Route Traces</span>
-      <Graph className={classes.paper} graph={graph} options={options} events={events} style={{ fontFamily: 'Roboto', boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)', backgroundColor: 'white', borderRadius: '3px' }} />
+    <div className="traceContainer">
+      <span id="tracesTitle">Route Traces</span>
+      <Graph
+        className={classes.paper}
+        graph={graph}
+        options={options}
+        events={events}
+        style={{
+          fontFamily: 'Roboto',
+          boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)',
+          backgroundColor: 'white',
+          borderRadius: '3px',
+        }}
+      />
     </div>
   );
 });

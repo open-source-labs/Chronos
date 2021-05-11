@@ -56,19 +56,15 @@ const Occupied = React.memo(() => {
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z'); // init at year 2000
+
   // Dynamic refs
   const delRef = useRef<any>([]);
   useEffect(() => {
     setServicesData([]);
     getApplications();
-    // update communication data from last visited database
-    for (const app of applications) {
-      const temp = commsData;
-      const newComm = fetchCommsData('', true);
-      setCommsData([...temp, newComm])
-    }
   }, []);
-  
+
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, app: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
@@ -194,6 +190,19 @@ const Occupied = React.memo(() => {
   }));
 
   let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
+
+  // update notification count based on statuscode >= 400
+  const notification = commsData.filter((item: { responsestatus: number; }) => item.responsestatus >= 400)
+                                .filter((item: { time: string; }) => {
+                                  const d1 = new Date(item.time);
+                                  const d2 = new Date(clickedAt);
+                                  return d1 > d2;
+                                });
+
+  const updateNotification = () => {
+    const timestamp = new Date();
+    setClickedAt(timestamp.toISOString())
+  }
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -222,10 +231,10 @@ const Occupied = React.memo(() => {
             </div>
 
             
-              <div className="notificationsIconArea">
-                <span className="notificationsTooltip">You have {commsData.length} new alerts</span>
+              <div className="notificationsIconArea" onClick={updateNotification}>
+                <span className="notificationsTooltip">You have {notification ? notification.length : 0} new alerts</span>
                     < NotificationsIcon className="navIcon" id="notificationsIcon" />
-                    <Badge badgeContent={commsData.length} color="secondary"/>
+                    <Badge badgeContent={notification ? notification.length : 0} color="secondary"/>
               </div>
             
 
