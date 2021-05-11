@@ -308,7 +308,7 @@ const Occupied = React.memo(() => {
           <Modal open={addsOpen} onClose={() => setAddsOpen(false)}>
             <AddsModal setOpen={setAddsOpen} />
           </Modal>
-          
+
           <Modal open={open} onClose={() => setOpen(false)}>
             <ServicesModal key={`key-${index}`} i={index} app={app} />
           </Modal>

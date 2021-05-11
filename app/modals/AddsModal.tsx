@@ -51,7 +51,7 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
   function myFunction() {
     location.replace("/")
   }
-  
+
 //uncomment below to bring back database, description-TG
   // const { database, URI, name, description } = fields;
   const { URI, name } = fields;
