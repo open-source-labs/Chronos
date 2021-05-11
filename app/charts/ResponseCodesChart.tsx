@@ -14,7 +14,7 @@ interface IObj {
 }
 
 type responseCodes = {
-  [key: string]: number
+  [key: string]: number;
 };
 
 const ResponseCodesChart: React.FC = React.memo(() => {
@@ -65,7 +65,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       }
     });
 
-    console.log(responseCodes);
+    // console.log(responseCodes);
 
     return (
       <Plot
@@ -126,7 +126,7 @@ const ResponseCodesChart: React.FC = React.memo(() => {
             x: 0.5,
             font: {
               size: 7,
-            }
+            },
           },
         }}
       />
