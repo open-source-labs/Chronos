@@ -48,6 +48,10 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
       
     });
   };
+  function myFunction() {
+    location.replace("/")
+  }
+  
 //uncomment below to bring back database, description-TG
   // const { database, URI, name, description } = fields;
   const { URI, name } = fields;
@@ -59,42 +63,13 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
         
       </div>
       <form onSubmit={handleSubmit}>
-        {/* <p>Required*</p> */}
-        <div>
-          {/* <label htmlFor="db-type">
-            Type<span>*</span>
-          </label> */}
-          {/* <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
-            <option value="SQL">SQL</option>
-            <option value="MongoDB">MongoDB</option>
-          </select> */}
-        </div>
-        {/* <div>
-          <label htmlFor="db-uri">
-            EMAIL<span>*</span>
-          </label>
-          <input
-             id="db-uri"
-             name="URI"
-             value={Email}
-            onChange={e => handleChange(e)}
-            placeholder="EMAIL ADDRESS"
-            required
-          />
-        </div> */}
+       
       
         <div>
           <label htmlFor="db-uri">
             <span></span>
           </label>
-          {/* <input
-            id="db-uri"
-            name="URI"
-            value={URI}
-            onChange={e => handleChange(e)}
-            placeholder="ENTER EMAIL ADDDRESS"
-            required
-          /> */}
+       
         </div>
         <div>
         <label htmlFor="db-name">
@@ -102,62 +77,14 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
             <p><h4>ACCESS LEVEL: </h4></p>
           </label>
          
-          
-          {/* <label htmlFor="db-name">
-            PASSWORD<span>*</span>
-          </label> */}
-          {/* <input
-            id="db-name"
-            type="text"
-            name="name"
-            value={name}
-            onChange={e => handleChange(e)}
-            placeholder="ENTER PASSWORD"
-            required
-          /> */}
+        
         </div>
         <div>
-          {/* <label htmlFor="db-desc">Description</label>
-          <textarea
-            id="db-desc"
-            name="description"
-            value={description}
-            onChange={e => handleChange(e)}
-            placeholder="Add a short description"
-          /> */}
+      
         </div>
         <button>Cancel</button>
         <br></br>
-        <button onClick={e =>(alert('Are you sure you want to log out?'))}>Log Out</button>
-        {/* <!-- sign up with Google button --> */}
-    {/* <div className="col-lg-14"> */}
-      {/* <div className="card">
-         <div className="card-body"> */}
-          {/* href makes a request to the following path-->change as needed --> */}
-          {/* <button className= 'googleL'>
-          <a className="btn btn-block btn-social btn-google" href="/auth/google" role="button">
-            <i className="fab fa-google"></i>
-            Google Sign Up */}
-          {/* </a>
-          </button>
-        </div> */}
-       {/* </div>
-      </div> */}
-   
-    {/* <div className="col-sm-10">
-      <div className="card">
-        <div className="card-body"> 
-          <button className= 'googleS'>
-          {/* <!-- href makes a request to the following path-->change as needed --> */}
-          {/* <a className="btn btn-block btn-social btn-google" href="/auth/google" role="button">
-            <i className="fab fa-google"></i>
-            Google Sign In
-          </a>
-          </button>
-        </div>
-      </div>
-    // </div> */} 
-    
+        <button className="link" id="submitBtn" type="submit" onClick={myFunction}>Log Out</button>
     </form>
   </div>
   );
