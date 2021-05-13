@@ -45,7 +45,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## <img src ="./app/assets/fire.png" height=22 > New Features <img src ="./app/assets/fire.png" height=24>
 
 - New UI Features
-  - Developed search bar functionality to filter displayed microservices
+  - Developed search bar functionality to filter displayed databases
   - Login system for user authentication
   - Any errored connections will now show on the bell icon
   - Notification bell will update in real time
