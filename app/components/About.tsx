@@ -20,15 +20,15 @@ const About: React.FC = React.memo(() => {
         </p>
         <h3 style={currentMode} className="title">Fantastic Four</h3>
         <div>
-          <span style={currentMode} className="text">Vince</span><br />
-          <span style={currentMode} className="text">Matt</span><br />
-          <span style={currentMode} className="text">Derek</span><br />
-          <span style={currentMode} className="text">Kit</span><br />
+          <span style={currentMode} className="text">Nachiket</span><br />
+          <span style={currentMode} className="text">Tiffany</span><br />
+          <span style={currentMode} className="text">Bruno</span><br />
+          <span style={currentMode} className="text">Danny</span><br />
         <br />
         </div>
         <h3 style={currentMode} className="title">Contributors</h3>
-        <p style={currentMode} className="text">Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg
-        Brianna, Brian, Alon, Alan
+        <p style={currentMode} className="text">Vince, Matt, Derek, Kit, Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg,
+        Brianna, Brian, Alon, Alan,
         Ousman, Ben, Chris, Jenae, Tim</p>
         <br/>
         <p style={currentMode}>Copyright © Team Chronos 2021.</p>
