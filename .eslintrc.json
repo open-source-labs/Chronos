@@ -16,6 +16,7 @@
   },
   "extends": ["airbnb", "eslint:recommended", "plugin:react/recommended", "prettier"],
   "rules": {
+    "react/display-name": "off",
     "prettier/prettier": "error",
     "no-unused-vars": [
       "warn",

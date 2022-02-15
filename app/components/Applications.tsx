@@ -17,11 +17,12 @@ import '../stylesheets/Applications.scss';
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
-const Applications: React.FC = React.memo((props) => {
+// eslint-disable-next-line react/display-name
+const Applications: React.FC = React.memo(() => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [app, setApp] = useState<string>('');
+  const [setApp] = useState<string>('');
 
   // Dynamic refs
   const delRef = useRef<any>([]);
@@ -83,7 +84,6 @@ const Applications: React.FC = React.memo((props) => {
   }));
 
   const classes = useStyles();
-  
   return (
     <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
@@ -106,7 +106,7 @@ const Applications: React.FC = React.memo((props) => {
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
                 }
-              ></CardHeader>
+              />
               <CardContent>
                 <Typography className={classes.fontStyles}>{app[0]}</Typography>
               </CardContent>
