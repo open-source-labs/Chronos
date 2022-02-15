@@ -4,7 +4,7 @@ import ListIcon from '@material-ui/icons/List';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
-import {lightAndDark} from '../components/Styling';
+import { lightAndDark } from '../components/Styling';
 export interface HeaderProps {
   app: string[];
   service: string;
@@ -18,7 +18,8 @@ const Header: React.FC<HeaderProps> = React.memo(function Header({ app, service,
   const { servicesData } = useContext(ApplicationContext);
   const { mode } = useContext(DashboardContext);
 
-  let currentModeCSS = (mode === 'light mode')? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
+  let currentModeCSS =
+    mode === 'light mode' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
   return (
     <div className="microservice-header" style={currentModeCSS}>
       <h1 className="microserviceTitle">{app}</h1>
@@ -29,20 +30,18 @@ const Header: React.FC<HeaderProps> = React.memo(function Header({ app, service,
             {microservice}
           </option>
         ))}
-        <option defaultValue='Select service'>
-          communications
-        </option>
+        <option defaultValue="Select service">communications</option>
         {/* <option value="communications" selected={service === 'communications'}>
           communications
         </option> */}
       </select>
       <div className="header">
-        <Link className="link" id="return" to="/applications">
+        {/* <Link className="link" id="return" to="/applications">
           <span>
             <ListIcon className="icon" id="returnIcon" />
           </span>
           <p id="returnToDash">Dashboard</p>
-        </Link>
+        </Link> */}
         {/* <button id="returnButton" onClick={() => history.goBack()}><ListIcon className="icon" id="returnIcon" /></button> */}
         <button onClick={() => setLive(!live)}>
           {live ? (
