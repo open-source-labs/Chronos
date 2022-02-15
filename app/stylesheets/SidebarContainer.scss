@@ -1,0 +1,223 @@
+@import './constants.scss';
+
+.sidebar-container {
+  color: $background;
+  width: 10px;
+  position: absolute;
+  transition: 200ms;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.sidebar-container:hover .sidebar-link {
+  width: 150px;
+}
+
+.sidebar-container:hover .sidebar {
+  width: 300px;
+}
+
+.sidebar-container:hover #logout {
+  opacity: 1;
+}
+
+.sidebar-container:hover #home {
+  opacity: 1;
+}
+
+.sidebar-container:hover #dash {
+  opacity: 1;
+}
+
+.sidebar-container:hover #about {
+  opacity: 1;
+}
+
+.sidebar-container:hover #contact {
+  opacity: 1;
+}
+
+.sidebar-container:hover #settings {
+  opacity: 1;
+}
+
+.sidebar-container:hover #C {
+  opacity: 0;
+}
+
+.sidebar-container:hover #logo {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout0 {
+  opacity: 0;
+}
+
+.sidebar-container:hover #sprout1 {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout2 {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout3 {
+  opacity: 1;
+}
+
+.sidebar-container:hover #sprout4 {
+  opacity: 1;
+}
+
+#sprout1:active, #sprout2:active, #sprout3:active, #sprout4:active {
+  background-image: url('../assets/mountain.png');
+  background-size: contain;
+}
+
+.firstRow {
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
+}
+
+#C {
+  position: absolute;
+  left: $logoPositionLeft;
+  top: $logoPositionTop;
+  opacity: 1;
+  height: $logoSize;
+  transition: $logoTransition;
+}
+
+#logo {
+  position: absolute;
+  left: $logoPositionLeft - 3px;
+  top: $logoPositionTop;
+  height: $logoSize;
+  opacity: 0;
+  transition: $logoTransition;
+  z-index: 2;
+}
+
+.line {
+  color: white;
+  opacity: .65;
+  width: 78%;
+  margin-right: 5px;
+   &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+}
+
+#firstLine {
+  margin-top: 50px;
+}
+
+.sprout {
+  height: $sproutSize;
+  width: $sproutSize;
+  // background-color: $background;
+  background-color: transparent;
+  border-radius: 50%;
+  margin: 30px 0px;;
+  background-size: scale-down;
+  &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+}
+
+#sprout0 {
+  position: absolute;
+  left: $logoPositionLeft + $originalSproutLeftOffset;
+  top: $logoPositionTop + $sproutTopOffset;
+}
+
+#sprout1 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 0;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#sprout2 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 1;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#sprout3 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 2;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#sprout4 {
+  position: absolute;
+  left: $logoPositionLeft + $sproutLeftOffset + $sproutLeftOffsetIncrement * 3;
+  top: $logoPositionTop + $sproutTopOffset;
+  opacity: 0;
+  transition: $logoTransition;
+}
+
+#secondLine {
+  margin-top: 100px;
+}
+
+.sidebar {
+  background: $darkblue;
+  width: 140px;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  transition: 300ms;
+}
+
+.sidebar-link {
+  transition: 300ms;
+  overflow: hidden;
+  z-index: 1;
+  margin: 30px 15px;
+  padding: 30px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: transparent;
+  height: 40px;
+  width: 70px;
+  border: 0.3px solid #ffffff;
+  border: 0;
+  border-radius: 6px;
+  font-size: 90%;
+  color: whitesmoke;
+  text-decoration: none;
+  transition: 300ms;
+  // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+   &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+}
+
+

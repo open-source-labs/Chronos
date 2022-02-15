@@ -1,0 +1,120 @@
+// Chronos 6.0 colors
+$darkblue: #000314;
+$white: #ffffff;
+$black: #000000;
+$blue: #224281;
+$lightblue: #4267b2;
+$yellowwhite: #ffffe5;
+$gray: #c2c2c2;
+
+$yellow: #fce356;
+$navy: #040819;
+$background: #ffffff;
+$grey: #eeeeee;
+$icon: #999999;
+$header: #888888;
+$darkgrey: #444d56;
+$hover: rgba(255,255,255, 0.1);
+$warningred: rgb(255, 0, 0); // #cc0000
+// $lightblue: #b5d3e9;
+
+// Primary colors:
+$gblue: #3788fc;
+$gred: #fc4039;
+$gyellow: #febc2c;
+$ggreen: #32b44f;
+
+// Graph colors:
+$purple: #4b54ea;
+$lightpurple: #5e84fb;
+$bluishred: #f7215b; 
+$popgreen: #27eba2;
+$teal: #24d3f0;
+$lightteal: #2cfef1;
+
+// Material UI colors:
+$orange: #ff9800;
+$fire: #f44336;
+$grass: #4caf50;
+$aqua: #00bcd4;
+$deepaqua: #00acc1;
+$plum: #9c27b0;
+
+$boxshadow: 2px 2px 6px rgb(187, 187, 187);
+$boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+$boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+$logoPositionLeft: 55px;
+$cardColorHover: #b2b4b5;
+$logoPositionTop: 40px;
+$logoSize: 25px;
+$logoTransition: 100ms;
+$sproutSize: 50px;
+$originalSproutLeftOffset: -12px;
+$sproutLeftOffset: -26px;
+$sproutTopOffset: 67px;
+$sproutLeftOffsetIncrement: 64px;
+$headerFontSize: 18px;
+
+@mixin centerWithFlex($justify: center, $direction: row, $align: center) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+}
+
+@mixin centerModal($width: auto, $minwidth: 400px) {
+  @include centerWithFlex(center, column);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  width: $width;
+  min-width: $minwidth;
+  min-height: 100px;
+  background-color: $background;
+}
+
+@mixin modalHeader() {
+  font-weight: 700;
+  font-size: 200%;
+  color: $darkgrey;
+  &:hover {
+    color: $gblue;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+@keyframes blink {
+  0%,
+  65% {
+    background-color: $warningred;
+  }
+  66%,
+  100% {
+    background-color: $warningred;
+  }
+}
+
+@keyframes twirl {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: $navy;
+  }
+  66% {
+    background-color: lighten($navy, 35%);
+  }
+  100% {
+    background-color: $navy;
+  }
+}

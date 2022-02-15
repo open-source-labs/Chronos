@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Open+Sans&family=Inter:wght@100&family=Inter:wght@100&family=Lexend+Peta&family=Nunito+Sans:wght@300;400;600&family=Quicksand:wght@300&display=swap');
+@import './constants.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none
+  }
+}
+
+html, body {
+  background-color: $navy;
+  font-size: 16px;
+  font-family: 'Roboto';
+  font-weight: 100;
+  overflow-x: hidden;
+}
+
+button {
+  font-size: 90%;
+  padding: 6px;
+  border: thin solid #24262f;
+  border-radius: 3px;
+  background-color: #484e63;
+  color: #fff;
+  min-width: 105px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #24262f;
+}
