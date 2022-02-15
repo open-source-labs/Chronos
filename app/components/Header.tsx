@@ -4,7 +4,8 @@ import ListIcon from '@material-ui/icons/List';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
-import { lightAndDark } from '../components/Styling';
+import lightAndDark from './Styling';
+
 export interface HeaderProps {
   app: string[];
   service: string;
@@ -12,13 +13,12 @@ export interface HeaderProps {
   setLive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.FC<HeaderProps> = React.memo(function Header({ app, service, setLive, live }) {
+const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live }) => {
   const history = useHistory();
-
   const { servicesData } = useContext(ApplicationContext);
   const { mode } = useContext(DashboardContext);
 
-  let currentModeCSS =
+  const currentModeCSS =
     mode === 'light mode' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
   return (
     <div className="microservice-header" style={currentModeCSS}>
