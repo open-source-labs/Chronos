@@ -83,50 +83,6 @@ If you need to roll back from <a href="#"><img src="./app/assets/node-logo-color
 ```npm rebuild```
 in the root directory.
 
-If you're using a mac with an M1 Chip, rolling back with Node Version Manager (nvm) may cause looping.
-
-- Duplicate the terminal, and rename the copy.
-- Right-click on the copy terminal, select 'Get Info,' and check 'Open using Rosetta.'
-- In your code editor, add this copy terminal.
-- For example, in VS Code, access the Command Palette, run Open Settings (JSON). In settings.json, look for:
-``"terminal.integrated.profiles.osx": {
-        "bash": {
-        "path": "bash",
-        "args": ["-l"],
-        "icon": "terminal-bash"
-        },
-        "zsh": {
-        "path": "zsh",
-        "args": ["-l"]
-        },
-        "fish": {
-        "path": "fish",
-        "args": ["-l"]
-        },
-        "tmux": {
-        "path": "tmux",
-        "icon": "terminal-tmux"
-        },
-        "pwsh": {
-        "path": "pwsh",
-        "icon": "terminal-powershell"
-        },
-        "rosetta": {
-            "path": "arch",
-            "args": ["-x86_64", "zsh", "-l"],
-            "overrideName": true
-          }
-    }```
-- Add: 
-```"terminal.integrated.profiles.osx": {
-        ...,
-        "rosetta": {
-            "path": "arch",
-            "args": ["-x86_64", "zsh", "-l"],
-            "overrideName": true
-          }
-    }```
-
 If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
 ```npm rebuild```
 in each microservices folder **after you roll back to version 14.16.1.**
