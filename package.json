@@ -48,6 +48,7 @@
         "@material-ui/icons": "^4.11.2",
         "@pionerlabs/grpc-interceptors": "^0.2.5",
         "@types/react-table": "^7.0.29",
+        "caniuse-lite": "^1.0.30001312",
         "chai": "^4.3.4",
         "chronos-tracker": "^6.0.3",
         "d3": "^6.7.0",
