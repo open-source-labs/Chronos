@@ -19,7 +19,7 @@
 .graphs-container {
   width: 100%;
   padding: 0 5%;
-  
+
   .graphs {
     @include centerWithFlex();
     flex-wrap: wrap;
@@ -38,7 +38,7 @@
         border-radius: 3px;
         padding: 10px 20px;
         border-radius: 4px;
-        
+
         span {
           font-size: 12px;
           margin-left: 48px;
@@ -84,5 +84,19 @@
   .graphsGrid {
     grid-template-columns: repeat(3, 1fr);
     font-family: 'Roboto', sans-serif;
+  }
+}
+
+nav {
+  margin-top: 20px;
+  button {
+    color: white;
+    &.selected {
+      text-decoration: underline;
+      text-underline-offset: 7px;
+      color: red;
+    }
+    &:hover {
+    }
   }
 }
