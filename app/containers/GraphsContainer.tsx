@@ -32,7 +32,7 @@ export interface GraphsContainerProps {
   };
 }
 
-const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function GraphsContainer (props) {
+const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function GraphsContainer(props) {
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
@@ -40,6 +40,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
+  const [chart, setChart] = useState('all');
 
   useEffect(() => {
     if (live) {
@@ -67,6 +68,50 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
   // Conditionally render the communications or health graphs
   return (
     <>
+      <nav>
+        <button
+          className={chart === 'all' && 'selected'}
+          id="all-button"
+          onClick={() => setChart('all')}
+        >
+          All
+        </button>
+        <button
+          id="speed-button"
+          className={chart === 'speed' && 'selected'}
+          onClick={() => setChart('speed')}
+        >
+          Speed
+        </button>
+        <button
+          id="temp-button"
+          className={chart === 'temp' && 'selected'}
+          onClick={() => setChart('temp')}
+        >
+          Temperature
+        </button>
+        <button
+          id="latency-button"
+          className={chart === 'latency' && 'selected'}
+          onClick={() => setChart('latency')}
+        >
+          Latency
+        </button>
+        <button
+          id="memory-button"
+          className={chart === 'memory' && 'selected'}
+          onClick={() => setChart('memory')}
+        >
+          Memory
+        </button>
+        <button
+          id="process-button"
+          className={chart === 'process' && 'selected'}
+          onClick={() => setChart('process')}
+        >
+          Processes
+        </button>
+      </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
         {service === 'communications' ? (
@@ -78,15 +123,15 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
             <LogsTable />
           </div>
         ) : (
-            <div className="graphs">
-              <SpeedChart />
-              <TemperatureChart />
-              <LatencyChart />
-              <MemoryChart />
-              <ProcessesChart />
-              <DockerChart />
-            </div>
-          )}
+          <div className="graphs">
+            <SpeedChart />
+            <TemperatureChart />
+            <LatencyChart />
+            <MemoryChart />
+            <ProcessesChart />
+            <DockerChart />
+          </div>
+        )}
       </div>
     </>
   );
