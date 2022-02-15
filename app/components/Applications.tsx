@@ -99,7 +99,8 @@ const Applications: React.FC = React.memo(() => {
                 avatar={
                   <IconButton
                     ref={element => {
-                      (delRef.current[i] = element)}
+                      delRef.current[i] = element;
+                    }}
                     className={classes.iconbutton}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, app[0], i)}
