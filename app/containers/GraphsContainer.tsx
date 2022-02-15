@@ -40,7 +40,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
-  const [chart, setChart] = useState('all');
+  const [chart, setChart] = useState<string>('all');
 
   useEffect(() => {
     if (live) {
@@ -70,7 +70,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
     <>
       <nav>
         <button
-          className={chart === 'all' && 'selected'}
+          className={chart === 'all' ? 'selected' : undefined}
           id="all-button"
           onClick={() => setChart('all')}
         >
@@ -78,35 +78,35 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
         </button>
         <button
           id="speed-button"
-          className={chart === 'speed' && 'selected'}
+          className={chart === 'speed' ? 'selected' : undefined}
           onClick={() => setChart('speed')}
         >
           Speed
         </button>
         <button
           id="temp-button"
-          className={chart === 'temp' && 'selected'}
+          className={chart === 'temp' ? 'selected' : undefined}
           onClick={() => setChart('temp')}
         >
           Temperature
         </button>
         <button
           id="latency-button"
-          className={chart === 'latency' && 'selected'}
+          className={chart === 'latency' ? 'selected' : undefined}
           onClick={() => setChart('latency')}
         >
           Latency
         </button>
         <button
           id="memory-button"
-          className={chart === 'memory' && 'selected'}
+          className={chart === 'memory' ? 'selected' : undefined}
           onClick={() => setChart('memory')}
         >
           Memory
         </button>
         <button
           id="process-button"
-          className={chart === 'process' && 'selected'}
+          className={chart === 'process' ? 'selected' : undefined}
           onClick={() => setChart('process')}
         >
           Processes

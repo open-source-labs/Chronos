@@ -33,7 +33,7 @@ const Applications: React.FC = React.memo(() => {
 
   // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
-    const message = `The application '${app}' will be permanently deleted. Continue?`;
+    const message = `The application '${application}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
 
