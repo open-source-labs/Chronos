@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import '../stylesheets/Contact.scss';
 import { DashboardContext } from '../context/DashboardContext';
-import { lightAndDark } from './Styling';
+import lightAndDark from './Styling';
 
 const Contact = React.memo(() => {
-  let { mode } = useContext(DashboardContext);
+  const { mode } = useContext(DashboardContext);
 
-  const currentMode = (mode === 'light mode') ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentMode =
+    mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   return (
     <div className="contact">
@@ -36,16 +37,24 @@ const Contact = React.memo(() => {
         </div>
         <div className="email-container">
           <form>
-            <label style={currentMode} htmlFor="fname">First Name: &nbsp;</label>
+            <label style={currentMode} htmlFor="fname">
+              First Name: &nbsp;
+            </label>
             <input type="text" id="fname" name="firstname" placeholder="Your name.." />
             <br />
-            <label style={currentMode} htmlFor="lname">Last Name: &nbsp;</label>
+            <label style={currentMode} htmlFor="lname">
+              Last Name: &nbsp;
+            </label>
             <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
             <br />
-            <label style={currentMode} htmlFor="email">E-mail: &nbsp;</label>
+            <label style={currentMode} htmlFor="email">
+              E-mail: &nbsp;
+            </label>
             <input type="text" id="email" name="email" placeholder="Your e-mail address.." />
             <br />
-            <label style={currentMode} htmlFor="subject">Subject: &nbsp;</label>
+            <label style={currentMode} htmlFor="subject">
+              Subject: &nbsp;
+            </label>
             <input type="text" id="subject" name="subject" placeholder="Subject" />
             <br />
             <label style={currentMode} id="messageLabel" htmlFor="message">
@@ -56,7 +65,9 @@ const Contact = React.memo(() => {
             </label>
 
             <br />
-            <label style={currentMode} htmlFor="myfile">Select a file: </label>
+            <label style={currentMode} htmlFor="myfile">
+              Select a file:{' '}
+            </label>
             <input style={currentMode} type="file" id="myfile" name="myfile" accept="image/*" />
             <br />
             <input style={currentMode} id="contact-submit" type="submit" value="Submit" />
