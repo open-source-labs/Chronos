@@ -1,31 +1,33 @@
-export const lightAndDark = {
-  lightModeMain : {
-    backgroundColor: "#eeeeee",
-    flex: "1",
-    minHeight: "100vh",
-    flexDirection: "column" as "column",
-    paddingLeft: "140px",
-  }, 
-  lightModeHeader : {
-    backgroundColor: "#eeeeee",
-    color: "#444d56",
+const lightAndDark = {
+  lightModeMain: {
+    backgroundColor: '#eeeeee',
+    flex: '1',
+    minHeight: '100vh',
+    flexDirection: 'column',
+    paddingLeft: '140px',
   },
-  darkModeHeader : {
-    backgroundColor: "#181818",
-    color: "white",
+  lightModeHeader: {
+    backgroundColor: '#eeeeee',
+    color: '#444d56',
   },
-  darkModeMain : {
-    backgroundColor: "#181818",
+  darkModeHeader: {
+    backgroundColor: '#181818',
+    color: 'white',
+  },
+  darkModeMain: {
+    backgroundColor: '#181818',
     backgroundSize: 'contain',
-    flex: "1",
-    minHeight: "100vh",
-    flexDirection: "column" as "column",
-    paddingLeft: "140px",
+    flex: '1',
+    minHeight: '100vh',
+    flexDirection: 'column',
+    paddingLeft: '140px',
   },
   lightModeText: {
-    color: "black"
+    color: 'black',
   },
   darkModeText: {
-    color: "white"
+    color: 'white',
   },
 };
+
+export default lightAndDark;
