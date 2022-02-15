@@ -87,7 +87,7 @@ const Applications: React.FC = React.memo(() => {
   return (
     <>
       {applications.map((app: string[], i: number | any | string | undefined) => (
-        <Grid item lg={4} md={6} sm={12} key={i}>
+        <Grid item lg={4} md={6} sm={12} key={`${i}app`}>
           <div id="card-hover">
             <Card
               // key={`card-${i}`}
@@ -98,7 +98,8 @@ const Applications: React.FC = React.memo(() => {
               <CardHeader
                 avatar={
                   <IconButton
-                    ref={element => (delRef.current[i] = element)}
+                    ref={element => {
+                      (delRef.current[i] = element)}
                     className={classes.iconbutton}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, app[0], i)}
