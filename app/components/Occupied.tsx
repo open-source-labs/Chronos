@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import { Theme, makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
@@ -33,7 +33,6 @@ import ServicesModal from '../modals/ServicesModal';
 // STYLESHEETS
 // import '../stylesheets/Occupied.scss';
 import '../stylesheets/Occupied.scss';
-
 
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
@@ -135,7 +134,7 @@ const Occupied = React.memo(() => {
       fontWeight: 300,
       color: '#444d56',
       // color: '#ffffff', // dark mode
-    }
+    },
   }));
   const useStylesLight = makeStyles<Theme, StyleProps>(theme => ({
     // ALL CARDS
@@ -188,39 +187,40 @@ const Occupied = React.memo(() => {
       fontFamily: 'Roboto',
       fontWeight: 300,
       color: '#444d56',
-    }
+    },
   }));
 
-  let classes = (mode === 'light mode')? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps) ;
+  let classes =
+    mode === 'light mode' ? useStylesLight({} as StyleProps) : useStylesDark({} as StyleProps);
 
   // update notification count based on statuscode >= 400
-  const notification = commsData.filter((item: { responsestatus: number; }) => item.responsestatus >= 400)
-                                .filter((item: { time: string; }) => {
-                                  const d1 = new Date(item.time);
-                                  const d2 = new Date(clickedAt);
-                                  return d1 > d2;
-                                });
+  const notification = commsData
+    .filter((item: { responsestatus: number }) => item.responsestatus >= 400)
+    .filter((item: { time: string }) => {
+      const d1 = new Date(item.time);
+      const d2 = new Date(clickedAt);
+      return d1 > d2;
+    });
 
   const updateNotification = () => {
     const timestamp = new Date();
-    setClickedAt(timestamp.toISOString())
-  }
+    setClickedAt(timestamp.toISOString());
+  };
   return (
     <div className="entireArea">
       <div className="dashboardArea">
         <header className="mainHeader">
-          <section className="header" id="leftHeader">
-            <span>
-              <ListIcon className="icon" id="listIcon" />
-            </span>
-            <span>
-              <p id="dashboard">Dashboard</p>
-            </span>
-          </section>
           <section className="header" id="rightHeader">
             <form className="form" onSubmit={e => e.preventDefault()}>
               <label className="inputContainer">
-                <input className="form" id="textInput" placeholder={'Search...'} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
+                <input
+                  className="form"
+                  id="textInput"
+                  placeholder={'Search...'}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  type="text"
+                  name="search"
+                />
                 <hr />
               </label>
               <button className="form" id="submitBtn" type="submit">
@@ -228,19 +228,23 @@ const Occupied = React.memo(() => {
               </button>
             </form>
             <div className="dashboardIconArea">
-              <span className="dashboardTooltip">You have {applications.length} active databases</span>
+              <span className="dashboardTooltip">
+                You have {applications.length} active databases
+              </span>
               <DashboardIcon className="navIcon" id="dashboardIcon" />
             </div>
 
-            
-              <div className="notificationsIconArea" onClick={updateNotification}>
-                <span className="notificationsTooltip">You have {notification ? notification.length : 0} new alerts</span>
-                    < NotificationsIcon className="navIcon" id="notificationsIcon" />
-                    <Badge badgeContent={notification ? notification.length : 0} color="secondary"/>
-              </div>
-              <Button className= "personTooltip" onClick={() => setAddsOpen(true)}>Logged In
-                <PersonIcon className="navIcon" id="personIcon" />
-              </Button>
+            <div className="notificationsIconArea" onClick={updateNotification}>
+              <span className="notificationsTooltip">
+                You have {notification ? notification.length : 0} new alerts
+              </span>
+              <NotificationsIcon className="navIcon" id="notificationsIcon" />
+              <Badge badgeContent={notification ? notification.length : 0} color="secondary" />
+            </div>
+            <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
+              Logged In
+              <PersonIcon className="navIcon" id="personIcon" />
+            </Button>
           </section>
         </header>
 
@@ -250,26 +254,26 @@ const Occupied = React.memo(() => {
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
-          {applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+          {applications
+            .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
             .map((app: string[], i: number | any | string | undefined) => (
-            <div className="card" key={`card-${i}`} id={`card-${app[1]}`}>
-              <Card
-                key={`card-${i}`}
-                className={classes.paper}
-                variant="outlined"
-                onClick={event => handleClick(event, app[0], i)}
-              >
-
+              <div className="card" key={`card-${i}`} id={`card-${app[1]}`}>
+                <Card
+                  key={`card-${i}`}
+                  className={classes.paper}
+                  variant="outlined"
+                  onClick={event => handleClick(event, app[0], i)}
+                >
                   <div className="databaseIconContainer">
                     <div className="databaseIconHeader">
-                      {
-                      app[1] === "SQL" ? 
-                      <img className="databaseIcon" alt="SQL"/> : 
-                      <img className="databaseIcon" alt="MongoDB"/>
-                      }
+                      {app[1] === 'SQL' ? (
+                        <img className="databaseIcon" alt="SQL" />
+                      ) : (
+                        <img className="databaseIcon" alt="MongoDB" />
+                      )}
                     </div>
                   </div>
-                  
+
                   <CardHeader
                     avatar={
                       <IconButton
@@ -279,28 +283,29 @@ const Occupied = React.memo(() => {
                         aria-label="Delete"
                         onClick={event => confirmDelete(event, app[0], i)}
                       >
-                        <HighlightOffIcon 
-                        className={classes.btnStyle} 
-                        id="deleteIcon" 
-                        ref={element => (delRef.current[i] = element)} 
+                        <HighlightOffIcon
+                          className={classes.btnStyle}
+                          id="deleteIcon"
+                          ref={element => (delRef.current[i] = element)}
                         />
                       </IconButton>
                     }
-                  >
-                  </CardHeader>
-                <CardContent>
-                  <p id="databaseName">Database Name:</p>
-                  <Typography className={classes.fontStyles}>{app[0]}</Typography>
-                </CardContent>
-                <hr className="cardLine"/>
+                  ></CardHeader>
+                  <CardContent>
+                    <p id="databaseName">Database Name:</p>
+                    <Typography className={classes.fontStyles}>{app[0]}</Typography>
+                  </CardContent>
+                  <hr className="cardLine" />
 
-                <div className="cardFooter">
-                  <UpdateIcon className="cardFooterIcon"/>
-                  <em><p id="cardFooterText">{app[3]}</p></em>
-                </div>
-              </Card>
-            </div>
-          ))}
+                  <div className="cardFooter">
+                    <UpdateIcon className="cardFooterIcon" />
+                    <em>
+                      <p id="cardFooterText">{app[3]}</p>
+                    </em>
+                  </div>
+                </Card>
+              </div>
+            ))}
           <Modal open={addOpen} onClose={() => setAddOpen(false)}>
             <AddModal setOpen={setAddOpen} />
           </Modal>
