@@ -124,12 +124,23 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
           </div>
         ) : (
           <div className="graphs">
-            <SpeedChart />
-            <TemperatureChart />
-            <LatencyChart />
-            <MemoryChart />
-            <ProcessesChart />
-            <DockerChart />
+            {chart === 'speed' && <SpeedChart />}
+            {chart === 'temp' && <TemperatureChart />}
+            {chart === 'latency' && <LatencyChart />}
+            {chart === 'memory' && <MemoryChart />}
+            {chart === 'process' && <ProcessesChart />}
+            {chart === 'docker' && <DockerChart />}
+
+            {chart === 'all' && (
+              <>
+                <SpeedChart />
+                <TemperatureChart />
+                <LatencyChart />
+                <MemoryChart />
+                <ProcessesChart />
+                <DockerChart />
+              </>
+            )}
           </div>
         )}
       </div>
