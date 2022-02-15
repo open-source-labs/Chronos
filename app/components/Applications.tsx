@@ -22,7 +22,7 @@ const Applications: React.FC = React.memo(() => {
   const { applications, getApplications, deleteApp } = useContext(DashboardContext);
   const [open, setOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [setApp] = useState<string>('');
+  const [app, setApp] = useState<string>('');
 
   // Dynamic refs
   const delRef = useRef<any>([]);
@@ -32,7 +32,7 @@ const Applications: React.FC = React.memo(() => {
   }, []);
 
   // Ask user for deletetion confirmation
-  const confirmDelete = (event: ClickEvent, app: string, i: number) => {
+  const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
@@ -56,7 +56,8 @@ const Applications: React.FC = React.memo(() => {
       backgroundColor: '#ffffff',
       borderRadius: 3,
       border: '0',
-      boxShadow: '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
+      boxShadow:
+        '0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12)',
       '&:hover, &.Mui-focusVisible': {
         backgroundColor: `#3788fc`,
       },
@@ -86,14 +87,15 @@ const Applications: React.FC = React.memo(() => {
   const classes = useStyles();
   return (
     <>
-      {applications.map((app: string[], i: number | any | string | undefined) => (
-        <Grid item lg={4} md={6} sm={12} key={`${i}app`}>
+      {applications.map((application: string[], i: number | any | string | undefined) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Grid item lg={4} md={6} sm={12} key={`${i}application`}>
           <div id="card-hover">
             <Card
               // key={`card-${i}`}
               className={classes.paper}
               variant="outlined"
-              onClick={event => handleClick(event, app[0], i)}
+              onClick={event => handleClick(event, application[0], i)}
             >
               <CardHeader
                 avatar={
@@ -103,14 +105,14 @@ const Applications: React.FC = React.memo(() => {
                     }}
                     className={classes.iconbutton}
                     aria-label="Delete"
-                    onClick={event => confirmDelete(event, app[0], i)}
+                    onClick={event => confirmDelete(event, application[0], i)}
                   >
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
                 }
               />
               <CardContent>
-                <Typography className={classes.fontStyles}>{app[0]}</Typography>
+                <Typography className={classes.fontStyles}>{application[0]}</Typography>
               </CardContent>
             </Card>
           </div>

@@ -4,7 +4,7 @@ import ListIcon from '@material-ui/icons/List';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
-import { lightAndDark } from '../components/Styling';
+import lightAndDark from './Styling';
 
 export interface HeaderProps {
   app: string[];

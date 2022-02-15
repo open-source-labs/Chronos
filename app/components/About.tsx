@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 // import { useEffect, useState} from 'react';
 import '../stylesheets/About.scss';
 import * as DashboardContext from '../context/DashboardContext';
-import { lightAndDark } from './Styling';
+import lightAndDark from './Styling';
 
 const About: React.FC = React.memo(() => {
   const { mode } = useContext(DashboardContext.DashboardContext);
