@@ -1,0 +1,90 @@
+@import './constants.scss';
+
+.home {
+  background: $darkblue;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  position: absolute;
+  margin-left: 50px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+
+  .logo-container {
+    height: auto;
+    width: 40%;
+    max-width: 650px;
+
+    img {
+      width: 100%;
+      // animation: twirl 20s infinite linear;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        filter: brightness(0.7);
+      }
+    }
+  }
+
+  h1 {
+    font-size: 325%;
+    letter-spacing: 2px;
+  }
+
+  p {
+    margin: 15px 0;
+    color: white;
+  }
+
+  // Get Started Button
+  .link {
+    width: 175px;
+    font-size: 145%;
+    padding: 10px 15px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 30px;
+    background-color: $navy;
+    color: #fff;
+    @include centerWithFlex();
+    transition: 1s;
+    animation: glow linear 4s infinite;
+
+    &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+  }
+}
+
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}

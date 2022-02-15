@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body id="application" style="background-color: lightgrey">Dummy Microservices App
+    <script src="index.js"></script>
+    </br>
+    </br>
+    <div id="microservice1" style="background-color:grey">Books Microservice
+        </br>
+        <input id="field_A1" placeholder="Title" type="text"/>
+        </br>
+        <input id="field_B1" placeholder="Author" type="text"/>
+        </br>
+        <input id="field_C1" placeholder="Page Count" type="text"/>
+        </br>
+        <input id="field_D1" placeholder="Publisher" type="text"/>
+        </br>
+        <button id="create1">Create</button>
+        <button id="read1">Read</button>
+        <button id="ordersInfo">Get Orders Info</button>
+    </div>
+    </br>
+    <div id="microservice2" style="background-color:grey">Customers Microservice
+        </br>
+        <input id="field_A2" placeholder="Name" type="text"/>
+        </br>
+        <input id="field_B2" placeholder="Age" type="text"/>
+        </br>
+        <input id="field_C2" placeholder="Address" type="text"/>
+        </br>
+        <button id="create2">Create</button>
+        <button id="read2">Read</button>
+        <button id="booksInfo">Get Books Info</button>
+    </div>
+    </br>
+    <div id="microservice3" style="background-color:grey">Orders Microservice
+        </br>
+        <input id="field_A3" placeholder="Customer ID" type="text"/>
+        </br>
+        <input id="field_B3" placeholder="Book ID" type="text"/>
+        </br>
+        <input id="field_C3" placeholder="Purchase Date" type="text"/>
+        </br>
+        <input id="field_D3" placeholder="Delivery Date" type="text"/>
+        </br>
+        <button id="create3">Create</button>
+        <button id="read3">Read</button>
+        <button id="customersInfo">Get Customers Info</button>
+    </div>
+    </br>
+    <div id="container" style="background-color: white;">
+        <ul id="display">
+        </ul>
+    </div>
+</body>
+</html>

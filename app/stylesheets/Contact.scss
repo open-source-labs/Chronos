@@ -1,0 +1,159 @@
+@import './constants.scss';
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  position: absolute;
+  margin-left: 50px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+  vertical-align: top;
+  justify-content: center;
+  align-items: center;;
+  color: $background;
+}
+.contact-border {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 18px;
+
+  border-radius: 10px;
+  border: none;
+  box-shadow: $boxshadow2;
+  padding: 30px;
+  width: 50%;
+  margin: 25% 25%;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+.contact-container {
+  padding: 20px;
+  margin-right: 0;
+  justify-content: left;
+  min-width: 50%;
+}
+.contact-blurb {
+  min-width: 50%;
+  font-size: 18px;
+}
+.email-container {
+  line-height: 34px;
+  font-size: 18px;
+  text-align: start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  align-self: flex-start;
+  padding: 0px 20px;
+  margin: 0;
+  min-width: 50%;
+   
+  textarea {
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+    color: $header;
+  }
+
+  input[type='text'] {
+    width: 60%;
+    color: $header;
+  }
+
+  #subject {
+    width: 300px;
+  }
+
+  #email {
+    width: 300px;
+  }
+
+  #messageLabel {
+    vertical-align: top;
+  }
+
+  #message {
+    margin-top: 10px;
+    border-color: lightgray;
+    color: $header;
+  }
+}
+
+#myfile {
+  font-size: 16px;
+  color: $background;
+}
+
+
+#contact-submit {
+  border: none;
+  color: $background;
+
+  &:hover {
+    border: none;
+  }
+
+  &:focus {
+    border: none;
+  }
+
+  &:active {
+    border: none;
+  }
+}
+
+input[type='file'] {
+  border: none;
+  
+  &:hover {
+    border: none;
+  }
+
+  &:focus {
+    border: none;
+  }
+
+  &:active {
+    border: none;
+  }
+}
+
+#contact-submit {
+  font-size: 18px;
+  width: 90px;
+  height: 40px;
+  margin-top: 20px;
+  margin-left: -4px;
+  padding: 10px;
+  border: 1px dotted $background;
+  outline: none;
+  color: $background;
+  background-color: transparent;
+  border-radius: 8px;
+  &:hover {
+    background-color: $gblue;
+  }
+}
+
+#issueLink {
+  color: $header;
+  text-decoration: none;
+  &:hover {
+    color: $gblue;
+  }
+}
