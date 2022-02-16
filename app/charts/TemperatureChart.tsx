@@ -2,8 +2,13 @@ import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import moment from 'moment';
 import { HealthContext } from '../context/HealthContext';
+import { all, solo } from './sizeSwitch';
 
-const TemperatureChart = React.memo(() => {
+interface GraphsContainerProps {
+  sizing: string;
+}
+
+const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const { time, cputemp } = healthData;
 
@@ -15,6 +20,8 @@ const TemperatureChart = React.memo(() => {
       timeArr = time.map((el: string) => moment(el).format('hh:mm A'));
       month = moment(time[0]).format('MMM Do');
     }
+
+    const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
@@ -33,8 +40,7 @@ const TemperatureChart = React.memo(() => {
         config={{ responsive: true }}
         layout={{
           title: 'CPU Temperature',
-          height: 300,
-          width: 300,
+          ...sizeSwitch,
           font: {
             color: '#444d56',
             size: 11.5,
