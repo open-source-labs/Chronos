@@ -181,7 +181,7 @@
 
 .sidebar {
   background: $darkblue;
-  width: 140px;
+  width: $sidebarWidth;
   height: 100%;
   position: fixed;
   display: flex;
