@@ -1,5 +1,5 @@
 // this file is to be used for login capabilities, however it is not fully implemented
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Electron from 'electron';
 
 const { ipcRenderer } = window.require('electron');
@@ -19,9 +19,9 @@ const LoginContextProvider: React.FC = React.memo(({ children }) => {
       const o = JSON.parse(jsonString);
       // Handle non-exception-throwing cases:
       // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
-      // JSON.parse(null) returns null, and typeof null === "object", 
+      // JSON.parse(null) returns null, and typeof null === "object",
       // so we must check for that, too. Thankfully, null is falsey, so this suffices:
-      if (o && typeof o === "object") {
+      if (o && typeof o === 'object') {
         return o;
       }
     } catch (e) {
@@ -47,7 +47,7 @@ const LoginContextProvider: React.FC = React.memo(({ children }) => {
         // Store resulting data in local state
         if (tryParseJSON(data)) result = JSON.parse(data);
         // if (result.length) console.log('Number of data points (comms):', result.length);
-        console.log('successful login');
+        // console.log('successful login');
       });
     }
   }, []);
