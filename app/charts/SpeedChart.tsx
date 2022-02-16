@@ -29,8 +29,6 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
 
     const sizeSwitch = sizing === 'all' ? all : solo;
 
-    console.log(sizeSwitch);
-
     return (
       <Plot
         data={[

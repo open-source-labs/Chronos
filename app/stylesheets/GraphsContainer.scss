@@ -88,9 +88,15 @@
 }
 
 nav {
-  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  padding-right: 100%;
+  position: fixed;
+  background: $darkblue;
   button {
     color: white;
+    margin: 0 16px;
     &.selected {
       text-decoration: underline;
       text-underline-offset: 7px;
