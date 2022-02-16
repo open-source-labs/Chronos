@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
-import { all, solo } from './sizeSwitch';
+import { all, solo as soloStyle } from './sizeSwitch';
 
 interface GraphsContainerProps {
   sizing: string;
@@ -13,6 +13,14 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
     const runningProcesses: Array<number> = healthData.runningprocesses;
     const blockedProcesses: Array<number> = healthData.blockedprocesses;
     const sleepingProcesses: Array<number> = healthData.sleepingprocesses;
+
+    const [solo, setSolo] = useState(null);
+
+    setInterval(() => {
+      if (solo != soloStyle) {
+        setSolo(soloStyle);
+      }
+    }, 20);
 
     const sizeSwitch = sizing === 'all' ? all : solo;
 

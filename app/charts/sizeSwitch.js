@@ -1,10 +1,13 @@
 console.log(window.innerWidth);
 
-let soloWidth;
+let soloWidth = window.innerWidth > 800 ? 800 : window.innerWidth - 270;
 
 window.addEventListener('resize', () => {
-  soloWidth = window.innerWidth > 800 ? 800 : window.innerWidth;
-  console.log('innerWidth', soloWidth);
+  soloWidth = window.innerWidth > 800 ? 800 : window.innerWidth - 270;
+  solo = {
+    ...solo,
+    width: soloWidth,
+  };
 });
 
 export const all = {
@@ -12,7 +15,7 @@ export const all = {
   width: 300,
 };
 
-export const solo = {
+export let solo = {
   height: 600,
   width: soloWidth,
 };

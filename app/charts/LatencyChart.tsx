@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
-import { all, solo } from './sizeSwitch';
+import { all, solo as soloStyle } from './sizeSwitch';
 
 interface GraphsContainerProps {
   sizing: string;
@@ -9,6 +9,14 @@ interface GraphsContainerProps {
 
 const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
+
+  const [solo, setSolo] = useState(null);
+
+  setInterval(() => {
+    if (solo != soloStyle) {
+      setSolo(soloStyle);
+    }
+  }, 20);
 
   const createChart = () => {
     const yAxis: Array<number> = healthData.latency;
@@ -64,7 +72,7 @@ const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => 
     );
   };
 
-  return <div className="chart">{createChart()}</div>;
+  return <div className="chart">{solo && createChart()}</div>;
 });
 
 export default LatencyChart;
