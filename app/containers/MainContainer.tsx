@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // import GraphsContainer from './Archived';
+import TitleBarContainer from './TitleBarContainer';
+
 import Home from '../components/Home';
 import About from '../components/About';
 import Contact from '../components/Contact';
@@ -26,6 +28,7 @@ const MainContainer = React.memo(() => {
   return (
     <div className="main-container" style={currentModeCSS}>
       <div className="main-routes">
+        <TitleBarContainer />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
