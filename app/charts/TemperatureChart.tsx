@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import moment from 'moment';
 import { HealthContext } from '../context/HealthContext';
-import { all, solo } from './sizeSwitch';
+import { all, solo as soloStyle } from './sizeSwitch';
 
 interface GraphsContainerProps {
   sizing: string;
@@ -20,6 +20,14 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
       timeArr = time.map((el: string) => moment(el).format('hh:mm A'));
       month = moment(time[0]).format('MMM Do');
     }
+
+    const [solo, setSolo] = useState(null);
+
+    setInterval(() => {
+      if (solo != soloStyle) {
+        setSolo(soloStyle);
+      }
+    }, 20);
 
     const sizeSwitch = sizing === 'all' ? all : solo;
 
