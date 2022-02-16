@@ -1,8 +1,8 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useCallback } from 'react';
-import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/AddsModal.scss';
 import PersonIcon from '@material-ui/icons/Person';
-
+// import { DashboardContext } from '../context/DashboardContext';
+import '../stylesheets/AddsModal.scss';
 
 interface IFields {
   // database: string;
@@ -23,7 +23,7 @@ type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTM
 type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
-//   const { addApp }: IDashboard = useContext(DashboardContext);
+  // const { addApp }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
     // database: 'SQL',
@@ -45,48 +45,44 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
     setFields({
       ...fields,
       [name]: value,
-      
     });
   };
   function myFunction() {
-    location.replace("/")
+    location.replace('/');
   }
 
-//uncomment below to bring back database, description-TG
+  // uncomment below to bring back database, description-TG
   // const { database, URI, name, description } = fields;
   const { URI, name } = fields;
 
   return (
     <div className="add-container">
       <div className="add-header">
-        <div><h2>Welcome Back</h2>   <PersonIcon className="navIcon" id="personIcon" /></div>
-        
+        <div>
+          <h2>Welcome Back</h2> <PersonIcon className="navIcon" id="personIcon" />
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="db-uri">
+              <span />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="db-name">
+              <p>
+                <h4>ACCESS LEVEL: </h4>
+              </p>
+            </label>
+          </div>
+          <div />
+          <button>Cancel</button>
+          <br />
+          <button className="link" id="submitBtn" type="submit" onClick={myFunction}>
+            Log Out
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleSubmit}>
-       
-      
-        <div>
-          <label htmlFor="db-uri">
-            <span></span>
-          </label>
-       
-        </div>
-        <div>
-        <label htmlFor="db-name">
-           
-            <p><h4>ACCESS LEVEL: </h4></p>
-          </label>
-         
-        
-        </div>
-        <div>
-      
-        </div>
-        <button>Cancel</button>
-        <br></br>
-        <button className="link" id="submitBtn" type="submit" onClick={myFunction}>Log Out</button>
-    </form>
-  </div>
+    </div>
   );
 });
 
