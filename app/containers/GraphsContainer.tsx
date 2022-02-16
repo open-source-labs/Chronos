@@ -40,7 +40,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
-  const [chart, setChart] = useState<string>('all');
+  const [chart, setChart] = useState<string>('speed');
+  const [sizing, setSizing] = useState<string>('solo');
 
   useEffect(() => {
     if (live) {
@@ -111,6 +112,13 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
         >
           Processes
         </button>
+        <button
+          id="docker-button"
+          className={chart === 'docker' ? 'selected' : undefined}
+          onClick={() => setChart('docker')}
+        >
+          Docker
+        </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
@@ -124,21 +132,21 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'speed' && <SpeedChart />}
-            {chart === 'temp' && <TemperatureChart />}
-            {chart === 'latency' && <LatencyChart />}
-            {chart === 'memory' && <MemoryChart />}
-            {chart === 'process' && <ProcessesChart />}
-            {chart === 'docker' && <DockerChart />}
+            {chart === 'speed' && <SpeedChart sizing="solo" />}
+            {chart === 'temp' && <TemperatureChart sizing="solo" />}
+            {chart === 'latency' && <LatencyChart sizing="solo" />}
+            {chart === 'memory' && <MemoryChart sizing="solo" />}
+            {chart === 'process' && <ProcessesChart sizing="solo" />}
+            {chart === 'docker' && <DockerChart sizing="solo" />}
 
             {chart === 'all' && (
               <>
-                <SpeedChart />
-                <TemperatureChart />
-                <LatencyChart />
-                <MemoryChart />
-                <ProcessesChart />
-                <DockerChart />
+                <SpeedChart sizing="all" />
+                <TemperatureChart sizing="all" />
+                <LatencyChart sizing="all" />
+                <MemoryChart sizing="all" />
+                <ProcessesChart sizing="all" />
+                <DockerChart sizing="all" />
               </>
             )}
           </div>
