@@ -16,7 +16,7 @@ const Settings: React.SFC = React.memo(() => {
   const { changeMode } = useContext(DashboardContext);
   const handleClick = (mode: string) => {
     changeMode(mode);
-  }
+  };
 
   return (
     <div className="settings">

@@ -4,7 +4,7 @@
     flex: 1;
     min-height: 100vh;
     @include centerWithFlex(space-between);
-    flex-direction: column;
+    flex-direction: 'column';
     padding-left: 140px;
     .main-routes {
         width: 100%;
