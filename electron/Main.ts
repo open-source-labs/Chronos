@@ -3,7 +3,7 @@ import path from 'path';
 
 const ipc = ipcMain;
 
-import { test } from './utilites/titleBarLogic';
+// import { test } from './utilites/titleBarLogic';
 
 import './routes/dashboard';
 import './routes/data';
