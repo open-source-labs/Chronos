@@ -3,8 +3,6 @@ import path from 'path';
 
 const ipc = ipcMain;
 
-const remote = require('electron').remote;
-
 import { test } from './utilites/titleBarLogic';
 
 import './routes/dashboard';
@@ -35,14 +33,20 @@ const createWindow = () => {
   // win.loadFile('./dist/index.html');
   // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
 
-  win.webContents.on('did-finish-load', () => {
-    console.log('content loaded');
-    win.webContents.executeJavaScript(`console.log(${remote})`);
-  });
+  // win.webContents.on('did-finish-load', () => {
+  //   console.log('content loaded');
+  //   win.webContents.executeJavaScript(`console.log(${remote})`);
+  // });
 
-  ipc.on('maximizeApp', () => {
-    console.log('clicked on this button');
-    win.maximize();
+  ipc.on('max', () => {
+    if (!win.isMaximized()) win.maximize();
+    else win.unmaximize();
+  });
+  ipc.on('min', () => {
+    win.minimize();
+  });
+  ipc.on('close', () => {
+    win.close();
   });
 
   // Production
