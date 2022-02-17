@@ -26,12 +26,27 @@ export const DashboardContext = createContext<any>(null);
 const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
-  /**
+  const [landingPage, setLandingPage] = useState<string>('before');
+
+  /*
+   *  Sends a request for the existing landing page belonging to the
+   *  organization and sets landing page to it.
+   */
+  const getLandingPage = useCallback(() => {
+    console.log('36');
+    const result = ipcRenderer.sendSync('getLP');
+    console.log('38');
+    console.log(result);
+    setLandingPage(result[0]);
+  }, []);
+
+  /*
    * Sends a request for all existing applications belonging to a user
    * and sets the applications state to the list of app names
    * Also sends a request for the previously saved theme/mode
    * and sets the mode state to the retrieved settings
    */
+
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result[0]);
@@ -74,7 +89,16 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   }, []);
   return (
     <DashboardContext.Provider
-      value={{ applications, getApplications, addApp, deleteApp, mode, changeMode }}
+      value={{
+        landingPage,
+        getLandingPage,
+        applications,
+        getApplications,
+        addApp,
+        deleteApp,
+        mode,
+        changeMode,
+      }}
     >
       {children}
     </DashboardContext.Provider>

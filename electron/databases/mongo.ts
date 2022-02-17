@@ -16,7 +16,7 @@ const connectMongoose = async (i: number, URI: string) => {
     );
     // console.log(`${__dirname}/mongo.ts/connectMongoose: connected!`);
     return db;
-  } catch(err) {
+  } catch (err) {
     console.log(`${__dirname}/mongo.ts/connectMongoose: ${err}`);
   }
 };
