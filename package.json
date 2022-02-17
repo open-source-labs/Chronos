@@ -55,6 +55,7 @@
     "electron": "^12.2.3",
     "enzyme-adapter-react-16": "^1.15.6",
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.5",
