@@ -7,4 +7,9 @@
   background-color: $darkblue;
   color: white;
   width: calc(100% - #{$sidebarWidth});
+  -webkit-app-region: drag;
+  z-index: 2;
+  .button {
+    -webkit-app-region: no-drag;
+  }
 }
