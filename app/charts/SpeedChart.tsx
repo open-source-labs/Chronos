@@ -7,13 +7,17 @@ import { all, solo as soloStyle } from './sizeSwitch';
 interface GraphsContainerProps {
   sizing: string;
 }
+interface SoloStyles {
+  height: number;
+  width: number;
+}
 
 const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const { time, cpuspeed } = healthData;
   const yAxis = cpuspeed;
 
-  const [solo, setSolo] = useState(null);
+  const [solo, setSolo] = useState<SoloStyles | null>(null);
 
   setInterval(() => {
     if (solo != soloStyle) {

@@ -7,6 +7,11 @@ interface GraphsContainerProps {
   sizing: string;
 }
 
+interface SoloStyles {
+  height: number;
+  width: number;
+}
+
 const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
@@ -14,7 +19,7 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
     const used: number[] = healthData.usedmemory;
     const active: number[] = healthData.activememory;
 
-    const [solo, setSolo] = useState(null);
+    const [solo, setSolo] = useState<SoloStyles | null>(null);
 
     setInterval(() => {
       if (solo != soloStyle) {

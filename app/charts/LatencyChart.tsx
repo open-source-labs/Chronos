@@ -7,10 +7,15 @@ interface GraphsContainerProps {
   sizing: string;
 }
 
+interface SoloStyles {
+  height: number;
+  width: number;
+}
+
 const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
 
-  const [solo, setSolo] = useState(null);
+  const [solo, setSolo] = useState<SoloStyles | null>(null);
 
   setInterval(() => {
     if (solo != soloStyle) {
