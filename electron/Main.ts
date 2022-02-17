@@ -1,12 +1,11 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+import './routes/dashboard';
+import './routes/data';
 
 const ipc = ipcMain;
 
 // import { test } from './utilites/titleBarLogic';
-
-import './routes/dashboard';
-import './routes/data';
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
