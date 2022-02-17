@@ -33,7 +33,6 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
         <div className="loadingMessageModal">
           <h2 id="loadingMessage">Loading...</h2>
         </div>
-        
       ) : (
         <>
           <div className="services-header">
@@ -41,8 +40,12 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
             <p>Select a server to monitor</p>
           </div>
           <div className="services-links">
-            {servicesData.map((service: IService, i: number) => (
-              <Link key={i} className="link" to={`/applications/${app}/${service.microservice}`}>
+            {servicesData.map((service: IService, index: number) => (
+              <Link
+                key={index}
+                className="link"
+                to={`/applications/${app}/${service.microservice}`}
+              >
                 {service.microservice}
               </Link>
             ))}

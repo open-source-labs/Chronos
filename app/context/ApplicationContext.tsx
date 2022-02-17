@@ -15,43 +15,23 @@ export const ApplicationContext = React.createContext<any>(null);
 const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
-  
   function tryParseJSON(jsonString: any) {
     try {
       const o = JSON.parse(jsonString);
       // Handle non-exception-throwing cases:
       // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
-      // JSON.parse(null) returns null, and typeof null === "object", 
+      // JSON.parse(null) returns null, and typeof null === "object",
       // so we must check for that, too. Thankfully, null is falsey, so this suffices:
-      if (o && typeof o === "object") {
+      if (o && typeof o === 'object') {
         return o;
       }
+    } catch (e) {
+      console.log({ error: e });
     }
-    catch (e) {
-      console.log({ error: e })
-    };
     return false;
-  };
+  }
   /**
    * Connect to database provided by user at 'index'
-   */
-  const connectToDB = useCallback((index: number, application: string) => {
-    ipcRenderer.removeAllListeners('databaseConnected');
-    ipcRenderer.send('connect', index);
-    // console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
-    
-    // Response from data.ts 
-    ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
-      // Parse JSON response
-      const result = data;
-      // if (result) console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ${result}`);
-
-      fetchServicesNames(application);
-    });
-  }, []);
-
-  /**
-   * Fetch all microservices of a certain applications
    */
   const fetchServicesNames = useCallback((application: string) => {
     setApp(application);
@@ -70,6 +50,24 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
       ipcRenderer.removeAllListeners('servicesResponse');
     });
   }, []);
+
+  const connectToDB = useCallback((index: number, application: string) => {
+    ipcRenderer.removeAllListeners('databaseConnected');
+    ipcRenderer.send('connect', index);
+    // console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ** between connect & servicesRequest`);
+    // Response from data.ts
+    ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
+      // Parse JSON response
+      // const result = data;
+      // if (result) console.log(`${__dirname}/ApplicationContext.tsx/connectToDB: ${result}`);
+
+      fetchServicesNames(application);
+    });
+  }, []);
+
+  /**
+   * Fetch all microservices of a certain applications
+   */
 
   return (
     <ApplicationContext.Provider
