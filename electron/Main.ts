@@ -1,5 +1,11 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+
+const ipc = ipcMain;
+
+const remote = require('electron').remote;
+
+import { test } from './utilites/titleBarLogic';
 
 import './routes/dashboard';
 import './routes/data';
@@ -26,9 +32,20 @@ const createWindow = () => {
 
   // Development: load the application window to port 8080
   win.loadURL('http://localhost:8080/');
+  // win.loadFile('./dist/index.html');
+  // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
+
+  win.webContents.on('did-finish-load', () => {
+    console.log('content loaded');
+    win.webContents.executeJavaScript(`console.log(${remote})`);
+  });
+
+  ipc.on('maximizeApp', () => {
+    console.log('clicked on this button');
+    win.maximize();
+  });
 
   // Production
-  // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
 };
 
 // Invoke the createWindow function when Electron application loads
