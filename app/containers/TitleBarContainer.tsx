@@ -1,7 +1,7 @@
 import React from 'react';
 import Close from '@material-ui/icons/Close';
-import Minimize from '@material-ui/icons/Minimize';
 import Maximize from '@material-ui/icons/CheckBoxOutlineBlankSharp';
+import Minimize from '@material-ui/icons/RemoveSharp';
 
 const { ipcRenderer } = window.require('electron');
 
