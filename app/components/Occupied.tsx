@@ -11,6 +11,8 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
+import { spacing } from '@material-ui/system';
+
 import { Theme, makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
@@ -20,7 +22,7 @@ import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoT
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ListIcon from '@material-ui/icons/List';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@material-ui/icons/SearchSharp';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
@@ -30,6 +32,7 @@ import UpdateIcon from '@material-ui/icons/Update';
 import AddModal from '../modals/AddModal';
 import AddsModal from '../modals/AddsModal';
 import ServicesModal from '../modals/ServicesModal';
+import Search from '../components/icons/Search';
 
 // STYLESHEETS
 // import '../stylesheets/Occupied.scss';
@@ -222,30 +225,35 @@ const Occupied = React.memo(() => {
                   type="text"
                   name="search"
                 />
+                {/* <SearchIcon className="icon" id="searchIcon" /> */}
+                {/* <img src="../assets/search.svg" /> */}
+                <Search />
                 <hr />
               </label>
-              <button className="form" id="submitBtn" type="submit">
-                <SearchIcon className="icon" id="searchIcon" />
-              </button>
             </form>
-            <div className="dashboardIconArea">
-              <span className="dashboardTooltip">
-                You have {applications.length} active databases
-              </span>
-              <DashboardIcon className="navIcon" id="dashboardIcon" />
+
+            <div className="dashboardIconWrapper">
+              <div className="dashboardIconArea">
+                <span className="dashboardTooltip">
+                  You have {applications.length} active databases
+                </span>
+                <DashboardIcon className="navIcon" id="dashboardIcon" />
+              </div>
+              {/* onClick={updateNotification} */}
+              <div className="notificationsIconArea">
+                <span className="notificationsTooltip">
+                  You have {notification ? notification.length : 0} new alerts
+                </span>
+                <NotificationsIcon className="navIcon" id="notificationsIcon" />
+                <Badge badgeContent={notification ? notification.length : 0} color="secondary" />
+              </div>
+              <div className="personIconArea">
+                <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
+                  <PersonIcon className="navIcon" id="personIcon" />
+                  Logged In
+                </Button>
+              </div>
             </div>
-            {/* onClick={updateNotification} */}
-            <div className="notificationsIconArea">
-              <span className="notificationsTooltip">
-                You have {notification ? notification.length : 0} new alerts
-              </span>
-              <NotificationsIcon className="navIcon" id="notificationsIcon" />
-              <Badge badgeContent={notification ? notification.length : 0} color="secondary" />
-            </div>
-            <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
-              Logged In
-              <PersonIcon className="navIcon" id="personIcon" />
-            </Button>
           </section>
         </header>
 
