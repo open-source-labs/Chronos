@@ -21,7 +21,6 @@ let currentDatabaseType: string;
  */
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
-    
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
     const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
@@ -53,8 +52,6 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
  */
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
-   
-    
     let result: any;
 
     // Mongo Database
@@ -84,8 +81,6 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
   try {
-  
-    
     let result: any;
 
     // Mongo Database
@@ -117,7 +112,6 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
-    
     let result: any;
 
     // Mongo Database
@@ -159,14 +153,12 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
  */
 ipcMain.on('dockerRequest', async (message, service) => {
   try {
-    
     let result: any;
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
       let num = await DockerModelFunc(service).countDocuments();
-
-      //Get last 50 documents. If less than 50 documents, get all
+      // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
       result = await DockerModelFunc(service).find().skip(num - 50);
     }
