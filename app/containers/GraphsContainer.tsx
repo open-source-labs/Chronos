@@ -32,7 +32,7 @@ export interface GraphsContainerProps {
   };
 }
 
-const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function GraphsContainer (props) {
+const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
@@ -44,7 +44,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
   useEffect(() => {
     if (live) {
       setIntervalID(
-        setInterval(function () {
+        setInterval(() => {
           fetchCommsData(app, live);
           fetchHealthData(service);
           fetchDockerData(service);
@@ -78,15 +78,15 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
             <LogsTable />
           </div>
         ) : (
-            <div className="graphs">
-              <SpeedChart />
-              <TemperatureChart />
-              <LatencyChart />
-              <MemoryChart />
-              <ProcessesChart />
-              <DockerChart />
-            </div>
-          )}
+          <div className="graphs">
+            <SpeedChart />
+            <TemperatureChart />
+            <LatencyChart />
+            <MemoryChart />
+            <ProcessesChart />
+            <DockerChart />
+          </div>
+        )}
       </div>
     </>
   );

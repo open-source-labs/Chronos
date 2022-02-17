@@ -9,9 +9,12 @@ import fs from 'fs';
  */
 
 // Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
+ipcMain.on('getLP', message => {
+  message.returnValue = ['after'];
+});
 
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
-  // Retrives file contents from settings.json
+  // Retrieves file contents from settings.json
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
   );
@@ -41,7 +44,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
 
 ipcMain.on('getApps', message => {
-  // Retrives file contents from settings.json for current Apps
+  // Retrieves file contents from settings.json for current Apps
   const state = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
   );

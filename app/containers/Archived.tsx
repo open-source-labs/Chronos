@@ -81,7 +81,7 @@ const GraphsContainer = ({ match }: IMatch) => {
   useEffect(() => {
     if (live) {
       setIntervalID(
-        setInterval(function () {
+        setInterval(() => {
           fetchCommsData();
           fetchHealthData(service);
           fetchDockerData(service);
@@ -110,7 +110,8 @@ const GraphsContainer = ({ match }: IMatch) => {
         <button onClick={() => setLive(!live)}>
           {live ? (
             <div>
-              <span className="dot"></span>Live
+              <span className="dot" />
+              Live
             </div>
           ) : (
             <div>Gather Live Data</div>

@@ -1,4 +1,9 @@
 {
+  "globals": {
+    "NodeJS": true,
+    "JSX": true,
+    "Electron": true
+  },
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {

@@ -26,7 +26,7 @@ const adminUser = {
 };
 
 // removed props as it was not being used
-const Home = React.memo(() => {
+const SignUp = React.memo(() => {
   // const [open, setOpen] = useState<boolean>(false);
   const [loginInfo, setLoginInfo] = React.useState<PersonProps>({
     email: '',
@@ -59,7 +59,7 @@ const Home = React.memo(() => {
   return (
     <div className="home">
       <p className="welcomeMessage">
-        Welcome Back To Chronos! Your all-in-one application monitoring tool
+        Welcome back to Chronos! Your all-in-one application monitoring tool
       </p>
 
       <form className="form" onSubmit={submitLogin}>
@@ -98,4 +98,4 @@ const Home = React.memo(() => {
   );
 });
 
-export default Home;
+export default SignUp;
