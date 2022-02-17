@@ -137,7 +137,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
             {chart === 'latency' && <LatencyChart sizing="solo" />}
             {chart === 'memory' && <MemoryChart sizing="solo" />}
             {chart === 'process' && <ProcessesChart sizing="solo" />}
-            {chart === 'docker' && <DockerChart sizing="solo" />}
+            {chart === 'docker' && <DockerChart />}
 
             {chart === 'all' && (
               <>
@@ -146,7 +146,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(function Grap
                 <LatencyChart sizing="all" />
                 <MemoryChart sizing="all" />
                 <ProcessesChart sizing="all" />
-                <DockerChart sizing="all" />
+                <DockerChart />
               </>
             )}
           </div>

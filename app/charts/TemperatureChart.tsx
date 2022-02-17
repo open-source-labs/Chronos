@@ -8,6 +8,11 @@ interface GraphsContainerProps {
   sizing: string;
 }
 
+interface SoloStyles {
+  height: number;
+  width: number;
+}
+
 const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const { time, cputemp } = healthData;
@@ -21,7 +26,7 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
       month = moment(time[0]).format('MMM Do');
     }
 
-    const [solo, setSolo] = useState(null);
+    const [solo, setSolo] = useState<SoloStyles | null>(null);
 
     setInterval(() => {
       if (solo != soloStyle) {
