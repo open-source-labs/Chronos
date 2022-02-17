@@ -1,17 +1,37 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
 import moment from 'moment';
+import { all, solo as soloStyle } from './sizeSwitch';
 
-const SpeedChart = React.memo(() => {
+interface GraphsContainerProps {
+  sizing: string;
+}
+interface SoloStyles {
+  height: number;
+  width: number;
+}
+
+const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const { time, cpuspeed } = healthData;
   const yAxis = cpuspeed;
+
+  const [solo, setSolo] = useState<SoloStyles | null>(null);
+
+  setInterval(() => {
+    if (solo != soloStyle) {
+      setSolo(soloStyle);
+    }
+  }, 20);
+
   const createChart = () => {
     let timeArr;
     if (time !== undefined) {
       timeArr = time.map((el: any) => moment(el).format('hh:mm A'));
     }
+
+    const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
@@ -23,14 +43,13 @@ const SpeedChart = React.memo(() => {
             type: 'scatter',
             mode: 'lines+markers',
             marker: {
-              color: '#3788fc'
+              color: '#3788fc',
             },
           },
         ]}
         layout={{
           title: 'Speed Chart',
-          height: 300,
-          width: 300,
+          ...sizeSwitch,
           font: {
             color: '#444d56',
             size: 11.5,
@@ -66,7 +85,7 @@ const SpeedChart = React.memo(() => {
     );
   };
 
-  return <div className="chart">{createChart()}</div>;
+  return <div className="chart">{solo && createChart()}</div>;
 });
 
 export default SpeedChart;

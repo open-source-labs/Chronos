@@ -36,12 +36,12 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
         </option> */}
       </select>
       <div className="header">
-        <Link className="link" id="return" to="/applications">
+        {/* <Link className="link" id="return" to="/applications">
           <span>
             <ListIcon className="icon" id="returnIcon" />
           </span>
           <p id="returnToDash">Dashboard</p>
-        </Link>
+        </Link> */}
         {/* <button id="returnButton" onClick={() => history.goBack()}><ListIcon className="icon" id="returnIcon" /></button> */}
         <button onClick={() => setLive(!live)}>
           {live ? (
