@@ -3,6 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 
 // import GraphsContainer from './Archived';
 import LandingPageContainer from './LandingPageContainer';
+import TitleBarContainer from './TitleBarContainer';
+
+import Home from '../components/Home';
 import About from '../components/About';
 import Contact from '../components/Contact';
 import Settings from '../components/Settings';
@@ -18,15 +21,18 @@ import '../stylesheets/MainContainer.scss';
 import { DashboardContext } from '../context/DashboardContext';
 
 const MainContainer = React.memo(() => {
+  // console.log(lightAndDark);
+
   const { mode } = useContext(DashboardContext);
   const currentModeCSS =
     mode === 'light mode' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
-
   return (
     <div className="main-container" style={currentModeCSS}>
       <div className="main-routes">
+        <TitleBarContainer />
         <Switch>
           <Route exact path="/" component={LandingPageContainer} />
+          <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/settings" component={Settings} />

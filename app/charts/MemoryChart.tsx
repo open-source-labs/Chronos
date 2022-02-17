@@ -1,13 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
+import { all, solo as soloStyle } from './sizeSwitch';
 
-const MemoryChart = React.memo(() => {
+interface GraphsContainerProps {
+  sizing: string;
+}
+
+interface SoloStyles {
+  height: number;
+  width: number;
+}
+
+const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
     const free: number[] = healthData.freememory;
     const used: number[] = healthData.usedmemory;
     const active: number[] = healthData.activememory;
+
+    const [solo, setSolo] = useState<SoloStyles | null>(null);
+
+    setInterval(() => {
+      if (solo != soloStyle) {
+        setSolo(soloStyle);
+      }
+    }, 20);
+
+    const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
@@ -39,8 +59,7 @@ const MemoryChart = React.memo(() => {
         ]}
         layout={{
           title: 'Memory Traces',
-          height: 300,
-          width: 300,
+          ...sizeSwitch,
           font: {
             color: '#444d56',
             size: 11.5,
@@ -54,8 +73,8 @@ const MemoryChart = React.memo(() => {
             x: 0.5,
             y: -1.0,
             font: {
-              size: 9
-            }
+              size: 9,
+            },
           },
           xaxis: {
             tickmode: 'linear',
@@ -64,8 +83,8 @@ const MemoryChart = React.memo(() => {
             title: 'Time Elapsed (min)',
           },
           yaxis: {
-            title: 'Bytes'
-          }
+            title: 'Bytes',
+          },
         }}
       />
     );

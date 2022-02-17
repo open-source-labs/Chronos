@@ -40,6 +40,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
+  const [chart, setChart] = useState<string>('speed');
+  const [sizing, setSizing] = useState<string>('solo');
 
   useEffect(() => {
     if (live) {
@@ -67,6 +69,57 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   // Conditionally render the communications or health graphs
   return (
     <>
+      <nav>
+        <button
+          className={chart === 'all' ? 'selected' : undefined}
+          id="all-button"
+          onClick={() => setChart('all')}
+        >
+          All
+        </button>
+        <button
+          id="speed-button"
+          className={chart === 'speed' ? 'selected' : undefined}
+          onClick={() => setChart('speed')}
+        >
+          Speed
+        </button>
+        <button
+          id="temp-button"
+          className={chart === 'temp' ? 'selected' : undefined}
+          onClick={() => setChart('temp')}
+        >
+          Temperature
+        </button>
+        <button
+          id="latency-button"
+          className={chart === 'latency' ? 'selected' : undefined}
+          onClick={() => setChart('latency')}
+        >
+          Latency
+        </button>
+        <button
+          id="memory-button"
+          className={chart === 'memory' ? 'selected' : undefined}
+          onClick={() => setChart('memory')}
+        >
+          Memory
+        </button>
+        <button
+          id="process-button"
+          className={chart === 'process' ? 'selected' : undefined}
+          onClick={() => setChart('process')}
+        >
+          Processes
+        </button>
+        <button
+          id="docker-button"
+          className={chart === 'docker' ? 'selected' : undefined}
+          onClick={() => setChart('docker')}
+        >
+          Docker
+        </button>
+      </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
         {service === 'communications' ? (
@@ -79,12 +132,23 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            <SpeedChart />
-            <TemperatureChart />
-            <LatencyChart />
-            <MemoryChart />
-            <ProcessesChart />
-            <DockerChart />
+            {chart === 'speed' && <SpeedChart sizing="solo" />}
+            {chart === 'temp' && <TemperatureChart sizing="solo" />}
+            {chart === 'latency' && <LatencyChart sizing="solo" />}
+            {chart === 'memory' && <MemoryChart sizing="solo" />}
+            {chart === 'process' && <ProcessesChart sizing="solo" />}
+            {chart === 'docker' && <DockerChart />}
+
+            {chart === 'all' && (
+              <>
+                <SpeedChart sizing="all" />
+                <TemperatureChart sizing="all" />
+                <LatencyChart sizing="all" />
+                <MemoryChart sizing="all" />
+                <ProcessesChart sizing="all" />
+                <DockerChart />
+              </>
+            )}
           </div>
         )}
       </div>

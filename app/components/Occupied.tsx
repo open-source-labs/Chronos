@@ -207,19 +207,10 @@ const Occupied = React.memo(() => {
     const timestamp = new Date();
     setClickedAt(timestamp.toISOString());
   };
-
   return (
     <div className="entireArea">
       <div className="dashboardArea">
         <header className="mainHeader">
-          <section className="header" id="leftHeader">
-            <span>
-              <ListIcon className="icon" id="listIcon" />
-            </span>
-            <span>
-              <p id="dashboard">Dashboard</p>
-            </span>
-          </section>
           <section className="header" id="rightHeader">
             <form className="form" onSubmit={e => e.preventDefault()}>
               <label className="inputContainer">
