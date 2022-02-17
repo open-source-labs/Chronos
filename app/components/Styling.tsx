@@ -4,7 +4,6 @@ const lightAndDark = {
     flex: '1',
     minHeight: '100vh',
     FlexDirection: 'column',
-    paddingLeft: '140px',
   },
   lightModeHeader: {
     backgroundColor: '#eeeeee',
@@ -20,7 +19,6 @@ const lightAndDark = {
     flex: '1',
     minHeight: '100vh',
     FlexDirection: 'column',
-    paddingLeft: '140px',
   },
   lightModeText: {
     color: 'black',

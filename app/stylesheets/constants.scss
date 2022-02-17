@@ -14,7 +14,7 @@ $grey: #eeeeee;
 $icon: #999999;
 $header: #888888;
 $darkgrey: #444d56;
-$hover: rgba(255,255,255, 0.1);
+$hover: rgba(255, 255, 255, 0.1);
 $warningred: rgb(255, 0, 0); // #cc0000
 // $lightblue: #b5d3e9;
 
@@ -27,7 +27,7 @@ $ggreen: #32b44f;
 // Graph colors:
 $purple: #4b54ea;
 $lightpurple: #5e84fb;
-$bluishred: #f7215b; 
+$bluishred: #f7215b;
 $popgreen: #27eba2;
 $teal: #24d3f0;
 $lightteal: #2cfef1;
@@ -41,7 +41,8 @@ $deepaqua: #00acc1;
 $plum: #9c27b0;
 
 $boxshadow: 2px 2px 6px rgb(187, 187, 187);
-$boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+$boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2),
+  0 1px 5px 0 rgba(153, 153, 153, 0.12);
 $boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 $logoPositionLeft: 55px;
@@ -55,6 +56,8 @@ $sproutLeftOffset: -26px;
 $sproutTopOffset: 67px;
 $sproutLeftOffsetIncrement: 64px;
 $headerFontSize: 18px;
+
+$sidebarWidth: 140px;
 
 @mixin centerWithFlex($justify: center, $direction: row, $align: center) {
   display: flex;
