@@ -3,18 +3,16 @@ import Close from '@material-ui/icons/Close';
 import Minimize from '@material-ui/icons/Minimize';
 import Maximize from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 
-// import { remote } from 'electron';
-// const remote = require('electron');
+const { ipcRenderer } = window.require('electron');
 
 import '../stylesheets/TitleBarContainer.scss';
 
 export default function TitleBarContainer() {
   return (
     <div id="titleBar">
-      <button id="max-btn">test</button>
-      {/* <Minimize className="button" id="min-btn" /> */}
-      <Maximize className="button" id="max-btn" />
-      <Close className="button" id="close-btn" />
+      <Minimize className="button" id="min-btn" onClick={() => ipcRenderer.send('min')} />
+      <Maximize className="button" id="max-btn" onClick={() => ipcRenderer.send('max')} />
+      <Close className="button" id="close-btn" onClick={() => ipcRenderer.send('close')} />
     </div>
   );
 }
