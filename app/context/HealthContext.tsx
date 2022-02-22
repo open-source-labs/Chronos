@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import Electron from 'electron';
+
 const { ipcRenderer } = window.require('electron');
 
 export const HealthContext = React.createContext<any>(null);
@@ -28,6 +30,21 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     }
     return false;
   }
+
+  // Helper function to fetched data into individual arrays
+  const parseHealthData = useCallback((data: any) => {
+    const output: any = {};
+
+    for (const entry of data) {
+      for (const key in entry) {
+        if (!(key in output)) output[key] = [];
+        output[key].push(entry[key]);
+      }
+    }
+
+    return output;
+  }, []);
+
   // Fetches all data related to a particular app
   const fetchHealthData = useCallback((service: string) => {
     // ipcRenderer.removeAllListeners('healthResponse');
@@ -43,20 +60,6 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
       // Update context local state
       if (result && result.length) setHealthData(parseHealthData(result));
     });
-  }, []);
-
-  // Helper function to fetched data into individual arrays
-  const parseHealthData = useCallback((data: any) => {
-    const output: any = {};
-
-    for (let entry of data) {
-      for (const key in entry) {
-        if (!(key in output)) output[key] = [];
-        output[key].push(entry[key]);
-      }
-    }
-
-    return output;
   }, []);
 
   return (

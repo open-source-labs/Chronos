@@ -60,7 +60,7 @@ const Occupied = React.memo(() => {
   }, []);
 
   // Ask user for deletetion confirmation
-  const confirmDelete = (event: ClickEvent, app: string, i: number) => {
+  const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
@@ -75,7 +75,7 @@ const Occupied = React.memo(() => {
     }
   };
 
-  const useStyles = makeStyles<Theme, StyleProps>(theme => ({
+  const useStyles = makeStyles<StyleProps>(theme => ({
     // ALL CARDS
     paper: {
       display: 'flex',
@@ -129,15 +129,19 @@ const Occupied = React.memo(() => {
     }
   }));
 
-  const classes = useStyles({} as StyleProps);
+  const classes = useStyles({});
 
   return (
     <div className="entireArea">
       <div className="dashboardArea">
         <header className="mainHeader">
           <section className="header" id="leftHeader">
-            <span><ListIcon className="icon" id="listIcon" /></span>
-            <span><p id="dashboard">Dashboard</p></span>
+            <span>
+              <ListIcon className="icon" id="listIcon" />
+            </span>
+            <span>
+              <p id="dashboard">Dashboard</p>
+            </span>
           </section>
           <section className="header" id="rightHeader">
             <form className="form">
@@ -153,7 +157,6 @@ const Occupied = React.memo(() => {
               <span className="dashboardTooltip">You have {applications.length} active databases</span>
               <DashboardIcon className="navIcon" id="dashboardIcon" />
             </div>
-            
             <div className="notificationsIconArea">
               <span className="notificationsTooltip">You have no new alerts</span>
               < NotificationsIcon className="navIcon" id="notificationsIcon" />
@@ -167,12 +170,12 @@ const Occupied = React.memo(() => {
         </header>
 
         <div className="cardContainer">
-          <div className="card" id={`card-add`}>
+          <div className="card" id="card-add">
             <Button className={classes.paper} onClick={() => setAddOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
-          {applications.map((app: string[], i: number | any | string | undefined) => (
+          {applications.map((application: string[], i: number | any | string | undefined) => (
             <div className="card" key={`card-${i}`} id={`card-${i}`}>
               <Card
                 key={`card-${i}`}
@@ -180,41 +183,44 @@ const Occupied = React.memo(() => {
                 variant="outlined"
                 onClick={event => handleClick(event, app[0], i)}
               >
-
-                  <div className="databaseIconContainer">
-                    <div className="databaseIconHeader">
-                      {/** dark mode */}
-                      <img className="databaseIcon" src="../assets/mongo-icon-green-light.png" alt="MongoDB"></img>
-                    </div>
+                <div className="databaseIconContainer">
+                  <div className="databaseIconHeader">
+                    {/** dark mode */}
+                    <img className="databaseIcon" src="../assets/mongo-icon-green-light.png" alt="MongoDB"></img>
                   </div>
-                  
-                  <CardHeader
-                    avatar={
-                      <IconButton
-                        id="iconButton"
-                        ref={element => (delRef.current[i] = element)}
-                        className={classes.iconbutton}
-                        aria-label="Delete"
-                        onClick={event => confirmDelete(event, app[0], i)}
-                      >
-                        <HighlightOffIcon 
-                        className={classes.btnStyle} 
-                        id="deleteIcon" 
-                        ref={element => (delRef.current[i] = element)} 
-                        />
-                      </IconButton>
-                    }
-                  >
-                  </CardHeader>
+                </div>
+                <CardHeader
+                  avatar={
+                    <IconButton
+                      id="iconButton"
+                      ref={element => {
+                        delRef.current[i] = element
+                      }}
+                      className={classes.iconbutton}
+                      aria-label="Delete"
+                      onClick={event => confirmDelete(event, app[0], i)}
+                    >
+                      <HighlightOffIcon
+                        className={classes.btnStyle}
+                        id="deleteIcon"
+                        ref={element => {
+                          delRef.current[i] = element;
+                        }}
+                      />
+                    </IconButton>
+                  }
+                />
                 <CardContent>
                   <p id="databaseName">Database Name:</p>
                   <Typography className={classes.fontStyles}>{app[0]}</Typography>
                 </CardContent>
-                <hr className="cardLine"/>
+                <hr className="cardLine" />
 
                 <div className="cardFooter">
                   <UpdateIcon className="cardFooterIcon"/>
-                  <em><p id="cardFooterText">Just updated</p></em>
+                  <em>
+                    <p id="cardFooterText">Just updated</p>
+                  </em>
                 </div>
               </Card>
             </div>
