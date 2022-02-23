@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useEffect, useContext } from 'react';
-=======
 import React from 'react';
->>>>>>> 34d5b92b074c6324c6560538253e08b64f450e51
 import { BrowserRouter as Router } from 'react-router-dom';
 import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';

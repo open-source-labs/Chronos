@@ -1,4 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
+import { stdin } from 'process';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -33,11 +36,18 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
    *  organization and sets landing page to it.
    */
   const getLandingPage = useCallback(() => {
-    console.log('36');
     const result = ipcRenderer.sendSync('getLP');
-    console.log('38');
-    console.log(result);
-    setLandingPage(result[0]);
+    setLandingPage(result);
+  }, []);
+
+  const updateLandingPage = useCallback((newLP: string) => {
+    const result = ipcRenderer.sendSync('updateLP', newLP);
+    if (result === newLP) {
+      setLandingPage(result);
+      return result;
+    }
+    console.log('Error in updateLandingPage in DashboardContext.tsx');
+    return 'Error in updateLandingPage in DashboardContext.tsx';
   }, []);
 
   /*
@@ -92,6 +102,7 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
       value={{
         landingPage,
         getLandingPage,
+        updateLandingPage,
         applications,
         getApplications,
         addApp,
