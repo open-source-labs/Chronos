@@ -23,7 +23,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
+    const fileContents = fs.readFileSync(path.resolve(__dirname, '../../settings.json'), 'utf8');
 
     const userDatabase = JSON.parse(fileContents).services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
