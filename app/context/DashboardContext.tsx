@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
-import { stdin } from 'process';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -30,6 +29,8 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
   const [landingPage, setLandingPage] = useState<string>('before');
+  const [authStatus, setAuth] = useState<boolean>(false);
+  const [user, setUser] = useState<{}>({});
 
   /*
    *  Sends a request for the existing landing page belonging to the
@@ -100,9 +101,13 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   return (
     <DashboardContext.Provider
       value={{
+        user,
+        setUser,
         landingPage,
         getLandingPage,
         updateLandingPage,
+        authStatus,
+        setAuth,
         applications,
         getApplications,
         addApp,

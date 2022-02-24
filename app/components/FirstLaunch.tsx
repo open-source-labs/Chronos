@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
 
 const FirstLaunch = React.memo(() => {
@@ -9,22 +8,10 @@ const FirstLaunch = React.memo(() => {
     <div className="home">
       <p className="welcomeMessage">Welcome to Chronos! Whould you like to have a login?</p>
 
-      <button
-        className="link"
-        onClick={() => {
-          updateLandingPage('signUp');
-          return <Redirect to={{ pathname: '/' }} />;
-        }}
-      >
+      <button className="link" onClick={() => updateLandingPage('createAdmin')}>
         Enable Sign Up
       </button>
-      <button
-        className="link"
-        onClick={() => {
-          updateLandingPage('dashBoard');
-          return <Redirect to={{ pathname: '/' }} />;
-        }}
-      >
+      <button className="link" onClick={() => updateLandingPage('dashBoard')}>
         Disable Sign Up
       </button>
     </div>

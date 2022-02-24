@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
@@ -41,6 +42,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     currentDatabaseType = databaseType;
 
     message.sender.send('databaseConnected', 'connected!');
+    // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "connect" event', message);
   }
@@ -70,6 +72,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
+    // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "servicesRequest" event', message);
   }
@@ -160,7 +163,9 @@ ipcMain.on('dockerRequest', async (message, service) => {
       let num = await DockerModelFunc(service).countDocuments();
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
-      result = await DockerModelFunc(service).find().skip(num - 50);
+      result = await DockerModelFunc(service)
+        .find()
+        .skip(num - 50);
     }
 
     // SQL Database
