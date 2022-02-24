@@ -250,7 +250,6 @@ const Occupied = React.memo(() => {
               <div className="personIconArea">
                 <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
                   <PersonIcon className="navIcon" id="personIcon" />
-                  Logged In
                 </Button>
               </div>
             </div>
