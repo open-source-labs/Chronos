@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/Home.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-const SignUp = React.memo(() => {
+const Login = React.memo(() => {
   const history = useHistory();
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
 
@@ -13,38 +12,36 @@ const SignUp = React.memo(() => {
     e.preventDefault();
     const inputFields = e.currentTarget.querySelectorAll('input');
     const email = inputFields[0].value;
-    const username = inputFields[1].value;
-    const password = inputFields[2].value;
-
-    const validSignUp:
+    const password = inputFields[1].value;
+    const validLogin:
       | boolean
+      | string
       | {
           email: string;
           username: string;
           password: string;
           admin: boolean;
           awaitingApproval: boolean;
-        } = ipcRenderer.sendSync('addUser', { email, username, password });
-    if (typeof validSignUp === 'object') {
-      setUser(validSignUp);
+        } = ipcRenderer.sendSync('verifyUser', { email, password });
+    if (typeof validLogin === 'object') {
+      setUser(validLogin);
       setAuth(true);
       history.push('/applications');
-    } else if (validSignUp) history.push('/awaitingApproval');
-    else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
+    } else if (validLogin === 'awaitingApproval') history.push('/awaitingApproval');
+    else {
+      window.alert('Authentication failed please try again');
+      history.push('/');
+    }
   };
 
   return (
     <div className="home">
-      <p className="welcomeMessage">
-        Welcome back to Chronos! Your all-in-one application monitoring tool.
-      </p>
+      <p>Welcome to Chronos. Please enter your credentials to login</p>
 
       <form className="form" onSubmit={handleSubmit}>
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label className="login">
           <input type="email" name="email" id="email" placeholder="your@email.here" />
-          <br />
-          <input type="text" name="username" id="username" placeholder="enter username" />
           <br />
           <input type="password" name="password" id="password" placeholder="enter password" />
           <hr />
@@ -53,19 +50,17 @@ const SignUp = React.memo(() => {
         <br />
         <br />
         <button className="link" id="submitBtn" type="submit">
-          Sign Up
+          Login
         </button>
       </form>
 
       <br />
-      {/* <Link className="link" to="/applications">
-        Get Started
-      </Link> */}
-      <button className="link" onClick={() => updateLandingPage('login')}>
-        Already have an account?
+      <button className="link" onClick={() => updateLandingPage('signUp')}>
+        Need an account?
       </button>
     </div>
   );
 });
+// alert("Log In credentials are wrong!\n\n (\\__/) \n (='.'=) \n('')__('')");
 
-export default SignUp;
+export default Login;
