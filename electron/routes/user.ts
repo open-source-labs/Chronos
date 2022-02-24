@@ -28,7 +28,7 @@ ipcMain.on(
   'addUser',
   (message: IpcMainEvent, user: { email: string; username: string; password: string }) => {
     const { email, username, password } = user;
-    if (!path.resolve(__dirname, '../../users.json')) {
+    if (!fs.existsSync(path.resolve(__dirname, '../../users.json'))) {
       const firstUser: {
         [key: string]: {
           email: string;
@@ -73,4 +73,29 @@ ipcMain.on('verifyUser', (message: IpcMainEvent, user: { email: string; password
   if (email in users && currUser.password === password)
     message.returnValue = currUser.awaitingApproval ? 'awaitingApproval' : currUser;
   else message.returnValue = false;
+});
+
+ipcMain.on('getUsersAwaitingApproval', (message: IpcMainEvent) => {
+  const usersObj = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../../users.json')).toString('utf8')
+  );
+  const returnObj: { [key: string]: any } = {};
+  for (const user in usersObj) {
+    if (usersObj[user].awaitingApproval) {
+      const { email, username} = usersObj[user];
+      returnObj[email] = { email, username };
+    }
+  }
+  message.returnValue = returnObj;
+});
+
+ipcMain.on('approveAccount', (message: IpcMainEvent, userEmail: string) => {
+  const users = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../../users.json')).toString('utf8')
+  );
+  if (userEmail in users) {
+    users[userEmail].awaitingApproval = false;
+    fs.writeFileSync(path.resolve(__dirname, '../../users.json'), JSON.stringify(users));
+    message.returnValue = true;
+  } else message.returnValue = false;
 });

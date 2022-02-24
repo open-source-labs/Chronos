@@ -1,83 +1,73 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import PersonIcon from '@material-ui/icons/Person';
-// import { DashboardContext } from '../context/DashboardContext';
+import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AddsModal.scss';
 
-interface IFields {
-  // database: string;
-  URI: string;
-  name: string;
-  // description: string;
-}
-
-// interface IDashboard {
-//   addApp: (fields: IFields) => void;
-// }
+const { ipcRenderer } = window.require('electron');
 
 interface AddsModalProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
-type FormElement = React.FormEvent<HTMLFormElement>;
-
 const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
-  // const { addApp }: IDashboard = useContext(DashboardContext);
-
-  const [fields, setFields] = useState<IFields>({
-    // database: 'SQL',
-    URI: '',
-    name: '',
-    // description: '',
-  });
-
-  // Submit form data and save to database
-  const handleSubmit = (event: FormElement) => {
-    // event.preventDefault();
-    // addApp(fields);
-    setOpen(false); // Close modal on submit
-  };
+  const { user } = useContext(DashboardContext);
 
   // Handle form changes
-  const handleChange = (event: InputElement) => {
-    const { name, value } = event.target;
-    setFields({
-      ...fields,
-      [name]: value,
-    });
+  const getAccessLevel = () => {
+    if (user.admin) return 'ACCESS LEVEL: ADMIN';
+    return 'ACCESS LEVEL: OBSERVER';
   };
-  function myFunction() {
-    location.replace('/');
-  }
-
-  // uncomment below to bring back database, description-TG
-  // const { database, URI, name, description } = fields;
-  const { URI, name } = fields;
+  const approveAccount = (userEmail: string) => {
+    const success = ipcRenderer.sendSync('approveAccount', userEmail);
+    if (success) {
+      window.alert('success');
+      setOpen(false);
+      setOpen(true);
+    } else window.alert('Error in AddsModal approveAccount');
+  };
+  const accountsAwaitingApproval = () => {
+    if (!user.admin) return <></>;
+    if (!user.admin) return <br />;
+    const usersObj = ipcRenderer.sendSync('getUsersAwaitingApproval');
+    const listItems = [];
+    for (const pleb in usersObj) {
+      listItems.push(
+        <li>
+          Email: {usersObj[pleb].email} Username: {usersObj[pleb].username}
+          <button onClick={() => approveAccount(pleb)}>Approve</button>
+        </li>
+      );
+    }
+    return (
+      <>
+        <h3>ACCOUNTS AWAITING APPROVAL:</h3>
+        <ul>{listItems}</ul>
+      </>
+    )
+  };
 
   return (
     <div className="add-container">
       <div className="add-header">
         <div>
-          <h2>Welcome Back</h2> <PersonIcon className="navIcon" id="personIcon" />
+          <h2>Welcome Back {user.username}</h2> <PersonIcon className="navIcon" id="personIcon" />
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={e => e.preventDefault()}>
           <div>
             <label htmlFor="db-uri">
               <span />
             </label>
           </div>
-          <div>
-            <label htmlFor="db-name">
-              <p>
-                <h4>ACCESS LEVEL: </h4>
-              </p>
-            </label>
-          </div>
-          <div />
-          <button>Cancel</button>
+          <label htmlFor="db-name">
+            <h3>{getAccessLevel()}</h3>
+          </label>
           <br />
-          <button className="link" id="submitBtn" type="submit" onClick={myFunction}>
+          <label htmlFor="db-name">{accountsAwaitingApproval()}</label>
+          <div />
+          <button onClick={() => setOpen(false)}>Cancel</button>
+          <br />
+          <button className="link" onClick={() => location.replace('/')}>
             Log Out
           </button>
         </form>
