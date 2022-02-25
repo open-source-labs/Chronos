@@ -18,6 +18,7 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 1920,
     height: 1080,
+    backgroundColor: '#000314',
     // icon: path.join(__dirname, 'app/assets/icons/icon.png'),
     // Node integration allows node.js to run
     frame: false,

@@ -114,6 +114,8 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
+  console.log(service);
+
   try {
     let result: any;
 
@@ -124,7 +126,26 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 10);
       result = await HealthModelFunc(service)
-        .find({})
+        .find(
+          {},
+          {
+            cpuspeed: 1,
+            cputemp: 1,
+            cpuloadpercent: 1,
+            totalmemory: 1,
+            freememory: 1,
+            usedmemory: 1,
+            activememory: 1,
+            totalprocesses: 1,
+            runningprocesses: 1,
+            blockedprocesses: 1,
+            sleepingprocesses: 1,
+            latency: 1,
+            time: 1,
+            __v: 1,
+            service: service,
+          }
+        )
         .skip(num - 50);
     }
 
@@ -134,14 +155,20 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       const query = `
           SELECT * FROM ${service}
           ORDER BY _id DESC
-          LIMIT 50`;
+          LIMIT 50
+          ${service} AS service
+          JOIN table2 ON ${service}
+          `;
 
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();
     }
 
-    // Async event emitter - send response
+    // Async event emitter - send response'
+
+    // console.log(result[0], service);
+
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors

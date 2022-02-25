@@ -70,7 +70,7 @@ const Occupied = React.memo(() => {
     getApplications();
   }, []);
 
-  // Ask user for deletetion confirmation
+  // Ask user for deletion confirmation
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);

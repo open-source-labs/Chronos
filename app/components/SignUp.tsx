@@ -12,8 +12,8 @@ const SignUp = React.memo(() => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const inputFields = e.currentTarget.querySelectorAll('input');
-    const email = inputFields[0].value;
-    const username = inputFields[1].value;
+    const username = inputFields[0].value;
+    const email = inputFields[1].value;
     const password = inputFields[2].value;
 
     const validSignUp:
@@ -35,35 +35,34 @@ const SignUp = React.memo(() => {
 
   return (
     <div className="home">
-      <p className="welcomeMessage">
-        Welcome back to Chronos! Your all-in-one application monitoring tool.
-      </p>
+      <div className="welcome">
+        <h1 className="welcomeMessage">Welcome back to Chronos!</h1>
+        <h2>Your all-in-one application monitoring tool.</h2>
 
-      <form className="form" onSubmit={handleSubmit}>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label className="login">
-          <input type="email" name="email" id="email" placeholder="your@email.here" />
-          <br />
-          <input type="text" name="username" id="username" placeholder="enter username" />
-          <br />
-          <input type="password" name="password" id="password" placeholder="enter password" />
-          <hr />
-        </label>
-        <br />
-        <br />
-        <br />
-        <button className="link" id="submitBtn" type="submit">
-          Sign Up
-        </button>
-      </form>
+        <form className="form" onSubmit={handleSubmit}>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label className="username">
+            <input type="text" name="username" id="username" placeholder="enter username" />
+          </label>
+          <label className="email">
+            <input type="email" name="email" id="email" placeholder="your@email.here" />
+          </label>
+          <label className="password">
+            <input type="password" name="password" id="password" placeholder="enter password" />
+          </label>
 
-      <br />
+          <button className="link" id="submitBtn" type="submit">
+            Sign Up
+          </button>
+          <button className="link needAccount" onClick={() => updateLandingPage('login')}>
+            Already have an account?
+          </button>
+        </form>
+      </div>
+
       {/* <Link className="link" to="/applications">
         Get Started
       </Link> */}
-      <button className="link" onClick={() => updateLandingPage('login')}>
-        Already have an account?
-      </button>
     </div>
   );
 });
