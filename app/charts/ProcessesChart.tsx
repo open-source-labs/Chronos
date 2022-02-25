@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import React, { useContext, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { HealthContext } from '../context/HealthContext';
@@ -15,54 +16,122 @@ interface SoloStyles {
 const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
-    const runningProcesses: Array<number> = healthData.runningprocesses;
-    const blockedProcesses: Array<number> = healthData.blockedprocesses;
-    const sleepingProcesses: Array<number> = healthData.sleepingprocesses;
+    // const runningProcesses: Array<number> = healthData.runningprocesses;
+    // const blockedProcesses: Array<number> = healthData.blockedprocesses;
+    // const sleepingProcesses: Array<number> = healthData.sleepingprocesses;
 
     const [solo, setSolo] = useState<SoloStyles | null>(null);
 
+    const [data, setData] = useState<Array<Array<string | Array<string>>>>([]);
+
     setInterval(() => {
-      if (solo != soloStyle) {
+      if (solo !== soloStyle) {
         setSolo(soloStyle);
       }
     }, 20);
 
+    useEffect(() => {
+      if (healthData.length) {
+        // loop over each
+        healthData.forEach(
+          (service: {
+            service: string[];
+            runningprocesses: string[];
+            blockedprocesses: string[];
+            sleepingprocesses: string[];
+          }) => {
+            const temp: [string, string[], string[], string[]] = [
+              service.service[0],
+              service.runningprocesses,
+              service.blockedprocesses,
+              service.sleepingprocesses,
+            ];
+            setData(data.concat([temp]));
+          }
+        );
+        // temp = [ string, [], [], [] ]
+        // setTime(healthData[0].time); //push
+        // setCpuSpeed(healthData[0].cpuspeed); //push
+      }
+    }, [healthData]);
+
     const sizeSwitch = sizing === 'all' ? all : solo;
 
-    return (
-      <Plot
-        data={[
-          {
+    interface DataObject {
+      type: any;
+      y: any;
+      mode: any;
+      name: any;
+      marker: {
+        color: any;
+        size: any;
+      };
+    }
+    // interface DataObject {
+    //   type: string;
+    //   y: string | [];
+    //   mode: string;
+    //   name: string;
+    //   marker: {
+    //     color: string;
+    //     size: number;
+    //   };
+    // }
+
+    let plotlyData: DataObject[][] = [];
+
+    plotlyData = data.map(dataArr => {
+      // eslint-disable-next-line no-bitwise
+      const newLocal = 1 << 24;
+      const randomColor = '#' + `${(newLocal * Math.random() || 0).toString(16)}`;
+      const tempArr: DataObject[] = [];
+      for (let i = 1; i < dataArr.length; i++) {
+        // console.log(dataArr[i], i);
+        if (i === 1) {
+          const temp: DataObject = {
             type: 'scattergl',
-            y: runningProcesses,
+            y: dataArr[i],
             mode: 'markers',
             name: 'Running Processes',
             marker: {
-              color: '#3788fc',
+              color: randomColor,
               size: 3,
             },
-          },
-          {
+          };
+          tempArr.push(temp);
+        } else if (i === 2) {
+          const temp: DataObject = {
             type: 'scatter',
-            y: blockedProcesses,
+            y: dataArr[i],
             mode: 'markers',
             name: 'Blocked Processes',
             marker: {
-              color: '#fc4039',
+              color: randomColor,
               size: 3,
             },
-          },
-          {
+          };
+          tempArr.push(temp);
+        } else {
+          const temp: DataObject = {
             type: 'scatter',
-            y: sleepingProcesses,
+            y: dataArr[i],
             mode: 'markers',
             name: 'Sleeping Processes',
             marker: {
-              color: '#4b54ea',
+              color: randomColor,
               size: 3,
             },
-          },
-        ]}
+          };
+          tempArr.push(temp);
+        }
+      }
+
+      return tempArr;
+    });
+
+    return (
+      <Plot
+        data={[...plotlyData.flat()]}
         layout={{
           title: 'Process Overview',
           ...sizeSwitch,

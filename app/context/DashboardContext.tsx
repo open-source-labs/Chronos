@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
 
 const { ipcRenderer } = window.require('electron');
@@ -27,17 +29,26 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
   const [landingPage, setLandingPage] = useState<string>('before');
+  const [authStatus, setAuth] = useState<boolean>(false);
+  const [user, setUser] = useState<{}>({});
 
   /*
    *  Sends a request for the existing landing page belonging to the
    *  organization and sets landing page to it.
    */
   const getLandingPage = useCallback(() => {
-    console.log('36');
     const result = ipcRenderer.sendSync('getLP');
-    console.log('38');
-    console.log(result);
-    setLandingPage(result[0]);
+    setLandingPage(result);
+  }, []);
+
+  const updateLandingPage = useCallback((newLP: string) => {
+    const result = ipcRenderer.sendSync('updateLP', newLP);
+    if (result === newLP) {
+      setLandingPage(result);
+      return result;
+    }
+    console.log('Error in updateLandingPage in DashboardContext.tsx');
+    return 'Error in updateLandingPage in DashboardContext.tsx';
   }, []);
 
   /*
@@ -90,8 +101,13 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   return (
     <DashboardContext.Provider
       value={{
+        user,
+        setUser,
         landingPage,
         getLandingPage,
+        updateLandingPage,
+        authStatus,
+        setAuth,
         applications,
         getApplications,
         addApp,

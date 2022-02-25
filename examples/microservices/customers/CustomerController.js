@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const fetch = require('node-fetch');
 const CustomerModel = require('./CustomerModel');
 
@@ -49,12 +50,12 @@ CustomerController.getbooksinfo = (req, res, next) => {
       Accept: 'application/json',
     },
   })
-    .then((response) => response.json())
-    .then((results) => {
+    .then(response => response.json())
+    .then(results => {
       res.locals.booksinfo = results;
       return next();
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(`There was an error in getting customers data ${error}`);
     });
 };

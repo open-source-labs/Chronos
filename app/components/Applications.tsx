@@ -68,7 +68,7 @@ const Applications: React.FC = React.memo(() => {
     iconbutton: {
       position: 'relative',
       bottom: 20,
-      right: 47,
+      left: 20,
       boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
       backgroundColor: 'transparent',
