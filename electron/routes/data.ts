@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
@@ -23,7 +24,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
+    const fileContents = fs.readFileSync(path.resolve(__dirname, '../../settings.json'), 'utf8');
 
     const userDatabase = JSON.parse(fileContents).services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
@@ -41,6 +42,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     currentDatabaseType = databaseType;
 
     message.sender.send('databaseConnected', 'connected!');
+    // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "connect" event', message);
   }
@@ -70,6 +72,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
+    // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "servicesRequest" event', message);
   }
@@ -111,6 +114,8 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
+  console.log(service);
+
   try {
     let result: any;
 
@@ -121,7 +126,26 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 10);
       result = await HealthModelFunc(service)
-        .find({})
+        .find(
+          {},
+          {
+            cpuspeed: 1,
+            cputemp: 1,
+            cpuloadpercent: 1,
+            totalmemory: 1,
+            freememory: 1,
+            usedmemory: 1,
+            activememory: 1,
+            totalprocesses: 1,
+            runningprocesses: 1,
+            blockedprocesses: 1,
+            sleepingprocesses: 1,
+            latency: 1,
+            time: 1,
+            __v: 1,
+            service: service,
+          }
+        )
         .skip(num - 50);
     }
 
@@ -131,14 +155,20 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       const query = `
           SELECT * FROM ${service}
           ORDER BY _id DESC
-          LIMIT 50`;
+          LIMIT 50
+          ${service} AS service
+          JOIN table2 ON ${service}
+          `;
 
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();
     }
 
-    // Async event emitter - send response
+    // Async event emitter - send response'
+
+    // console.log(result[0], service);
+
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
@@ -160,7 +190,9 @@ ipcMain.on('dockerRequest', async (message, service) => {
       let num = await DockerModelFunc(service).countDocuments();
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
-      result = await DockerModelFunc(service).find().skip(num - 50);
+      result = await DockerModelFunc(service)
+        .find()
+        .skip(num - 50);
     }
 
     // SQL Database

@@ -1,70 +1,62 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/Home.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-const SignUp = React.memo(() => {
+const Login = React.memo(() => {
   const history = useHistory();
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
+  const [, setState] = useState<{}>();
 
+  const forceUpdate = useCallback(() => setState({}), []);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const inputFields = e.currentTarget.querySelectorAll('input');
-    const username = inputFields[0].value;
-    const email = inputFields[1].value;
-    const password = inputFields[2].value;
-
-    const validSignUp:
+    const email = inputFields[0].value;
+    const password = inputFields[1].value;
+    const validLogin:
       | boolean
+      | string
       | {
           email: string;
           username: string;
           password: string;
           admin: boolean;
           awaitingApproval: boolean;
-        } = ipcRenderer.sendSync('addUser', { email, username, password });
-    if (typeof validSignUp === 'object') {
-      setUser(validSignUp);
+        } = ipcRenderer.sendSync('verifyUser', { email, password });
+    if (typeof validLogin === 'object') {
+      setUser(validLogin);
       setAuth(true);
       history.push('/applications');
-    } else if (validSignUp) history.push('/awaitingApproval');
-    else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
+    } else if (validLogin === 'awaitingApproval') history.push('/awaitingApproval');
+    else forceUpdate();
   };
 
   return (
     <div className="home">
       <div className="welcome">
-        <h1 className="welcomeMessage">Welcome back to Chronos!</h1>
-        <h2>Your all-in-one application monitoring tool.</h2>
-
+        <h1>Welcome to Chronos!</h1>
+        <h2>Please enter your credentials to login.</h2>
         <form className="form" onSubmit={handleSubmit}>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label className="username">
-            <input type="text" name="username" id="username" placeholder="enter username" />
-          </label>
           <label className="email">
             <input type="email" name="email" id="email" placeholder="your@email.here" />
           </label>
           <label className="password">
             <input type="password" name="password" id="password" placeholder="enter password" />
           </label>
-
           <button className="link" id="submitBtn" type="submit">
-            Sign Up
+            Login
           </button>
-          <button className="link needAccount" onClick={() => updateLandingPage('login')}>
-            Already have an account?
+          <button className="link needAccount" onClick={() => updateLandingPage('signUp')}>
+            Need an account?
           </button>
         </form>
       </div>
-
-      {/* <Link className="link" to="/applications">
-        Get Started
-      </Link> */}
     </div>
   );
 });
+// alert("Log In credentials are wrong!\n\n (\\__/) \n (='.'=) \n('')__('')");
 
-export default SignUp;
+export default Login;

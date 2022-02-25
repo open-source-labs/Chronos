@@ -1,7 +1,7 @@
 @import './constants.scss';
 
 .entireArea {
-  height: 100vh;
+  height: 100%;
 }
 
 // HEADER
@@ -271,12 +271,18 @@
   margin-right: 37px;
 }
 
+.btns {
+  display: flex;
+  justify-content: space-around;
+}
+
 button {
   background-color: transparent;
   border: 0;
   outline: none;
-  margin: 0px;
-  padding: 0px;
+  white-space: nowrap;
+  margin: 10px 0;
+  // padding: 0px;
   color: transparent;
   &:hover {
     background-color: transparent;
