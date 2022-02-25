@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import PersonIcon from '@material-ui/icons/Person';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AddsModal.scss';
@@ -12,19 +12,18 @@ interface AddsModalProps {
 
 const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
   const { user } = useContext(DashboardContext);
+  const [, setState] = useState<{}>();
 
   // Handle form changes
+  const forceUpdate = useCallback(() => setState({}), []);
   const getAccessLevel = () => {
     if (user.admin) return 'ACCESS LEVEL: ADMIN';
     return 'ACCESS LEVEL: OBSERVER';
   };
   const approveAccount = (userEmail: string) => {
     const success = ipcRenderer.sendSync('approveAccount', userEmail);
-    if (success) {
-      window.alert('success');
-      setOpen(false);
-      setOpen(true);
-    } else window.alert('Error in AddsModal approveAccount');
+    if (success) forceUpdate();
+    else window.alert('Error in AddsModal approveAccount');
   };
   const accountsAwaitingApproval = () => {
     if (!user.admin) return <></>;
@@ -39,6 +38,7 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
         </li>
       );
     }
+    if (!listItems.length) listItems.push(<h3>NO CURRENT REQUESTS</h3>);
     return (
       <>
         <h3>ACCOUNTS AWAITING APPROVAL:</h3>

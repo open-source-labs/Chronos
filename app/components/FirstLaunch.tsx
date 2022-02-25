@@ -6,13 +6,13 @@ const FirstLaunch = React.memo(() => {
 
   return (
     <div className="home">
-      <p className="welcomeMessage">Welcome to Chronos! Whould you like to have a login?</p>
+      <p className="welcomeMessage">Welcome to Chronos! Would you like to have authentication?</p>
 
       <button className="link" onClick={() => updateLandingPage('createAdmin')}>
-        Enable Sign Up
+        Enable Authentication
       </button>
       <button className="link" onClick={() => updateLandingPage('dashBoard')}>
-        Disable Sign Up
+        Disable Authentication
       </button>
     </div>
   );
