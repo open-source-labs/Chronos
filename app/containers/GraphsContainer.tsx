@@ -32,6 +32,15 @@ export interface GraphsContainerProps {
   };
 }
 
+/**
+ * pathname: "/applications/ToddDB/chronos-mon"
+ * pathname: "/applications/ToddDB/chronos-mon+chronos-mon2"
+ * pathname: "/applications/ToddDB/service?server=chronos-mon+chronos-mon2"
+ *
+ *
+ *
+ */
+
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
@@ -44,19 +53,22 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const [sizing, setSizing] = useState<string>('solo');
 
   useEffect(() => {
+    // console.log(service);
+    const serviceArray = service.split(' ');
+
     if (live) {
       setIntervalID(
         setInterval(() => {
           fetchCommsData(app, live);
-          fetchHealthData(service);
-          fetchDockerData(service);
+          fetchHealthData(serviceArray);
+          // fetchDockerData(serviceArray);
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchCommsData(app, live);
-      fetchHealthData(service);
-      fetchDockerData(service);
+      fetchHealthData(serviceArray);
+      // fetchDockerData(serviceArray);
     }
     // On unmount: clear data and interval
     return () => {

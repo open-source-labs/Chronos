@@ -29,22 +29,29 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
     if (!user.admin) return <></>;
     if (!user.admin) return <br />;
     const usersObj = ipcRenderer.sendSync('getUsersAwaitingApproval');
-    const listItems = [];
+    const listItems: Array<JSX.Element> = [];
     for (const pleb in usersObj) {
       listItems.push(
         <li>
-          Email: {usersObj[pleb].email} Username: {usersObj[pleb].username}
+          <span>
+            <div>
+              <span className="label">Email:</span> {usersObj[pleb].email}{' '}
+            </div>
+            <div>
+              <span className="label">Username:</span> {usersObj[pleb].username}
+            </div>
+          </span>
           <button onClick={() => approveAccount(pleb)}>Approve</button>
         </li>
       );
     }
     if (!listItems.length) listItems.push(<h3>NO CURRENT REQUESTS</h3>);
     return (
-      <>
+      <div id="approvalList">
         <h3>ACCOUNTS AWAITING APPROVAL:</h3>
         <ul>{listItems}</ul>
-      </>
-    )
+      </div>
+    );
   };
 
   return (
