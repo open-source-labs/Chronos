@@ -49,7 +49,7 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
             setData(data.concat([temp]));
           }
         );
-        // temp = [ string, [], [], [] ]
+        // temp = [[ string, [], [], [] ]]
         // setTime(healthData[0].time); //push
         // setCpuSpeed(healthData[0].cpuspeed); //push
       }
