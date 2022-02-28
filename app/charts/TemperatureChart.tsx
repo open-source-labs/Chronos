@@ -45,11 +45,6 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
     }
   }, [healthData]);
 
-  
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
     setInterval(() => {
@@ -75,8 +70,7 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
     plotlyData = data.map(dataArr => {
       // eslint-disable-next-line no-bitwise
       const randomColor = `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
-      console.log(dataArr);
-      
+   
       return {
         name: dataArr[2],
         x: data[0][0],
@@ -88,8 +82,6 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
       };
     });
     
-
-
     const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (

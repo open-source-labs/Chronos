@@ -20,11 +20,14 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     []
   );
 
-  useEffect(() => {
-    console.log(healthData);
-  }, [healthData]);
+  // FOR CHECKING
+  // useEffect(() => {
+  //   console.log(healthData);
+  // }, [healthData]);
 
   function tryParseJSON(jsonString: any) {
+    console.log(jsonString);
+    
     try {
       const o = JSON.parse(jsonString);
       // Handle non-exception-throwing cases:
@@ -58,6 +61,7 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     // ipcRenderer.removeAllListeners('healthResponse');
 
     // setHealthData([]);
+    
 
     const temp: Array<Array<any>> = [];
 
@@ -68,6 +72,9 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
           ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
             let result: { [key: string]: string | number }[];
             // Parse result
+            console.log('event',event)
+            console.log(data);
+
             if (tryParseJSON(data)) {
               result = JSON.parse(data); // doesn't need to be parsed?
               // Update context local state

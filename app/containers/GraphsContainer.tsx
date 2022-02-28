@@ -50,7 +50,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { fetchHealthData, setHealthData, healthData } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
-  const [chart, setChart] = useState<string>('speed');
+  const [chart, setChart] = useState<string>('all');
   const [sizing, setSizing] = useState<string>('solo');
 
   useEffect(() => {
@@ -85,6 +85,14 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   //   }, 5000);
   // }, [healthData]);
 
+
+  const routing = route => {
+    if (location.href.includes('communications')) {
+             history.goBack()
+            setChart(route)
+          } else setChart(route)
+  }
+
   // Conditionally render the communications or health graphs
   return (
     <>
@@ -92,53 +100,57 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         <button
           className={chart === 'all' ? 'selected' : undefined}
           id="all-button"
-          onClick={() => setChart('all')}
+          onClick={() => routing('all')}
         >
           All
         </button>
         <button
           id="speed-button"
           className={chart === 'speed' ? 'selected' : undefined}
-          onClick={() => setChart('speed')}
+          onClick={() => routing('speed')}
         >
           Speed
         </button>
         <button
           id="temp-button"
           className={chart === 'temp' ? 'selected' : undefined}
-          onClick={() => setChart('temp')}
+          onClick={() => routing('temp')}
         >
           Temperature
         </button>
         <button
           id="latency-button"
           className={chart === 'latency' ? 'selected' : undefined}
-          onClick={() => setChart('latency')}
+          onClick={() => routing('latency')}
         >
           Latency
         </button>
         <button
           id="memory-button"
           className={chart === 'memory' ? 'selected' : undefined}
-          onClick={() => setChart('memory')}
+          onClick={() => routing('memory')}
         >
           Memory
         </button>
         <button
           id="process-button"
           className={chart === 'process' ? 'selected' : undefined}
-          onClick={() => setChart('process')}
+          onClick={() => routing('process')}
         >
           Processes
         </button>
         <button
           id="docker-button"
           className={chart === 'docker' ? 'selected' : undefined}
-          onClick={() => setChart('docker')}
+          onClick={() => routing('docker')}
         >
           Docker
         </button>
-        <button id="communication-button" onClick={() => history.replace('communications')}>
+        <button id="communication-button" 
+          onClick={() => {
+            if (!location.href.includes('communications'))
+            history.push('communications')
+          }}>
           Communication
         </button>
       </nav>
