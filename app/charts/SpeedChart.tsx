@@ -1,3 +1,7 @@
+/** FOR THE NEXT TEAM
+ * Currently, data for multiple servers overlap, as we wanted. However, if using the dummy MongoDB data, the lines technically do not overlap since it only records speeds for one server at a time. However, we expect that, when running on a proper app, speeds from all servers will be recorded.
+ */
+
 import React, { useContext, useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import moment from 'moment';
@@ -26,9 +30,6 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
           // perform this when we 'setTime'
           if (service.time !== undefined) {
             timeArr = service.time.map((el: any) => moment(el).format('hh:mm:ss A'));
-            service.time.forEach((el, i) => {
-              // console.log(el, timeArr[i]);
-            });
           }
 
           const temp: [string[], (string | number)[], string] = [
@@ -40,14 +41,12 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
         }
       );
       setData(tempArr);
-      // setTime(healthData[0].time); //push
-      // setCpuSpeed(healthData[0].cpuspeed); //push
     }
   }, [healthData]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
