@@ -29,7 +29,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
           let timeArr: string[] = [];
           // perform this when we 'setTime'
           if (service.time !== undefined) {
-            timeArr = service.time.map((el: any) => moment(el).format('hh:mm:ss A'));
+            timeArr = service.time.map((el: any) => moment(el).format('kk:mm:ss'));
           }
 
           const temp: [string[], (string | number)[], string] = [
