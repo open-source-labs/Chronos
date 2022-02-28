@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
@@ -42,11 +42,12 @@ export interface GraphsContainerProps {
  */
 
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
+  const history = useHistory();
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
-  const { fetchHealthData, setHealthData } = useContext(HealthContext);
+  const { fetchHealthData, setHealthData, healthData } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
   const [chart, setChart] = useState<string>('speed');
@@ -77,6 +78,12 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       setDockerData({});
     };
   }, [service, live]);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log('in GC', healthData);
+  //   }, 5000);
+  // }, [healthData]);
 
   // Conditionally render the communications or health graphs
   return (
@@ -130,6 +137,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           onClick={() => setChart('docker')}
         >
           Docker
+        </button>
+        <button id="communication-button" onClick={() => history.replace('communications')}>
+          Communication
         </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
