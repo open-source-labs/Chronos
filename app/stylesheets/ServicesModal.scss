@@ -50,9 +50,21 @@
         color: #fff;
         background-color: $gblue;
       }
+      &.selected {
+        color: #fff;
+        background-color: $gblue;
+      }
+      &.router {
+        &:hover {
+          border: 2px solid #0000004d;
+          background-color: #d3d3d3;
+          color: black;
+        }
+      }
     }
   }
 }
+
 
 .loadingMessage {
   max-width: 80px;
