@@ -293,7 +293,8 @@ button {
   background: none;
   border: 0;
   outline: none;
-  box-shadow: none;
+  box-shadow: none;  
+  transform: translateX(-40px);
   filter: none;
   &:hover {
     background: none;
