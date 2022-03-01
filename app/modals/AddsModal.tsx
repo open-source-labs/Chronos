@@ -32,7 +32,7 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
     const listItems: Array<JSX.Element> = [];
     for (const pleb in usersObj) {
       listItems.push(
-        <li>
+        <li key={pleb}>
           <span>
             <div>
               <span className="label">Email:</span> {usersObj[pleb].email}{' '}

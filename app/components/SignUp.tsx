@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Home.scss';
@@ -8,6 +9,7 @@ const { ipcRenderer } = window.require('electron');
 const SignUp = React.memo(() => {
   const history = useHistory();
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
+  const [failedSignUp, setFailedSignUp] = useState<JSX.Element>(<></>);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -15,6 +17,8 @@ const SignUp = React.memo(() => {
     const username = inputFields[0].value;
     const email = inputFields[1].value;
     const password = inputFields[2].value;
+    // eslint-disable-next-line no-return-assign
+    inputFields.forEach(input => (input.value = ''));
 
     const validSignUp:
       | boolean
@@ -30,7 +34,8 @@ const SignUp = React.memo(() => {
       setAuth(true);
       history.push('/applications');
     } else if (validSignUp) history.push('/awaitingApproval');
-    else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
+    else
+      setFailedSignUp(<p>Sorry your sign up failed. Please try a different email and password.</p>);
   };
 
   return (
@@ -50,7 +55,7 @@ const SignUp = React.memo(() => {
           <label className="password">
             <input type="password" name="password" id="password" placeholder="enter password" />
           </label>
-
+          {failedSignUp}
           <button className="link" id="submitBtn" type="submit">
             Sign Up
           </button>
