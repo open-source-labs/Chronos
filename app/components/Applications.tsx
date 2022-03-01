@@ -68,7 +68,6 @@ const Applications: React.FC = React.memo(() => {
     iconbutton: {
       position: 'relative',
       bottom: 20,
-      translate: 'transformX(-40px)',
       left: 20,
       boxShadow: 'none',
       '&:hover, &.Mui-focusVisible': { color: '#ffffff' },
@@ -104,8 +103,7 @@ const Applications: React.FC = React.memo(() => {
                     ref={element => {
                       delRef.current[i] = element;
                     }}
-                    className={classes.iconbutton}
-                    style={{translate: 'transformX(-40px)'}}
+                    className={classes.iconbutton + "deleteBtn"}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, application[0], i)}
                   >
