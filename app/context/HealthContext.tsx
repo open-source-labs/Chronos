@@ -20,16 +20,18 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     []
   );
 
+  const [services, setServices] = useState<Array<string>>([])
+
   // FOR CHECKING
   // useEffect(() => {
   //   console.log(healthData);
   // }, [healthData]);
 
   function tryParseJSON(jsonString: any) {
-    console.log(jsonString);
     
     try {
       const o = JSON.parse(jsonString);
+      console.log('o', o)
       // Handle non-exception-throwing cases:
       // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
       // JSON.parse(null) returns null, and typeof null === "object",
@@ -61,6 +63,8 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     // ipcRenderer.removeAllListeners('healthResponse');
 
     // setHealthData([]);
+
+    setServices(services)
     
 
     const temp: Array<Array<any>> = [];
@@ -72,8 +76,8 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
           ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
             let result: { [key: string]: string | number }[];
             // Parse result
-            console.log('event',event)
-            console.log(data);
+            // console.log('event',event)
+            // console.log(data);
 
             if (tryParseJSON(data)) {
               result = JSON.parse(data); // doesn't need to be parsed?
@@ -94,7 +98,7 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
   }, []);
 
   return (
-    <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData, parseHealthData }}>
+    <HealthContext.Provider value={{ healthData, setHealthData, fetchHealthData, parseHealthData, services }}>
       {children}
     </HealthContext.Provider>
   );

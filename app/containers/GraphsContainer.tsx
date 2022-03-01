@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { ApplicationContext } from '../context/ApplicationContext';
 
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
@@ -47,14 +48,18 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
-  const { fetchHealthData, setHealthData, healthData } = useContext(HealthContext);
+  const { servicesData } = useContext(ApplicationContext);
+
+  const { fetchHealthData, setHealthData, healthData, services } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
   const [chart, setChart] = useState<string>('all');
   const [sizing, setSizing] = useState<string>('solo');
 
+  const [prevRoute, setPrevRoute] = useState<string>('')
+
   useEffect(() => {
-    // console.log(service);
+    console.log('services', services);
     const serviceArray = service.split(' ');
 
     if (live) {
@@ -87,10 +92,14 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
 
   const routing = route => {
+    console.log(services);
+    
     if (location.href.includes('communications')) {
-             history.goBack()
-            setChart(route)
-          } else setChart(route)
+      // console.log('app', app);
+      if (prevRoute === '') history.replace(`${servicesData[0].microservice}`)
+      else history.replace(prevRoute);
+    }
+    setChart(route)
   }
 
   // Conditionally render the communications or health graphs
@@ -149,7 +158,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         <button id="communication-button" 
           onClick={() => {
             if (!location.href.includes('communications'))
-            history.push('communications')
+            setPrevRoute(services.join(" "));
+            history.push('communications');
           }}>
           Communication
         </button>
