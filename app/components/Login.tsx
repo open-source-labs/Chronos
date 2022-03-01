@@ -1,4 +1,5 @@
-import React, { useContext, useState, useCallback } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
 
@@ -7,14 +8,15 @@ const { ipcRenderer } = window.require('electron');
 const Login = React.memo(() => {
   const history = useHistory();
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
-  const [, setState] = useState<{}>();
+  const [failedAuth, setFailedAuthState] = useState<JSX.Element>(<></>);
 
-  const forceUpdate = useCallback(() => setState({}), []);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const inputFields = e.currentTarget.querySelectorAll('input');
     const email = inputFields[0].value;
     const password = inputFields[1].value;
+    // eslint-disable-next-line no-return-assign
+    inputFields.forEach(input => (input.value = ''));
     const validLogin:
       | boolean
       | string
@@ -30,7 +32,7 @@ const Login = React.memo(() => {
       setAuth(true);
       history.push('/applications');
     } else if (validLogin === 'awaitingApproval') history.push('/awaitingApproval');
-    else forceUpdate();
+    else setFailedAuthState(<p>Sorry your authentication failed please try again.</p>);
   };
 
   return (
@@ -39,13 +41,13 @@ const Login = React.memo(() => {
         <h1>Welcome to Chronos!</h1>
         <h2>Please enter your credentials to login.</h2>
         <form className="form" onSubmit={handleSubmit}>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="email">
             <input type="email" name="email" id="email" placeholder="your@email.here" />
           </label>
           <label className="password">
             <input type="password" name="password" id="password" placeholder="enter password" />
           </label>
+          {failedAuth}
           <button className="link" id="submitBtn" type="submit">
             Login
           </button>
