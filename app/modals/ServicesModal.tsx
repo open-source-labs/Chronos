@@ -26,11 +26,11 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
       }
       else {
         if(service !== 'communications' && services.includes('communications')){
-          services = []
+          services = [];
         }
-        setServices(services.concat(service))
-      }
-  }
+        setServices(services.concat(service));
+      };
+  };
 
   useEffect(() => {
     console.log(services)
