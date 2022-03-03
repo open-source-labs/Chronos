@@ -30,7 +30,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 // MODALS
 import AddModal from '../modals/AddModal';
-import AddsModal from '../modals/AddsModal';
+import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
 import Search from '../components/icons/Search';
 
@@ -324,7 +324,7 @@ const Occupied = React.memo(() => {
           </Modal>
 
           <Modal open={addsOpen} onClose={() => setAddsOpen(false)}>
-            <AddsModal setOpen={setAddsOpen} />
+            <ProfileContainer setOpen={setAddsOpen} />
           </Modal>
 
           <Modal open={open} onClose={() => setOpen(false)}>
