@@ -114,7 +114,8 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
-  console.log(service);
+
+  const serviceName = service.toString();
 
   try {
     let result: any;
@@ -149,6 +150,15 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
         .skip(num - 50);
     }
 
+    /**
+     * `
+          SELECT *, 'customers' as service FROM customers
+          ORDER BY _id DESC
+          LIMIT 50
+          `;
+     * 
+     */
+
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
@@ -156,18 +166,20 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
           SELECT * FROM ${service}
           ORDER BY _id DESC
           LIMIT 50
-          ${service} AS service
-          JOIN table2 ON ${service}
           `;
-
+          
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();
+      result = result.map(res => ({
+        ...res, service
+      }));
     }
 
     // Async event emitter - send response'
 
     // console.log(result[0], service);
+    // console.log(result, JSON.stringify(result));
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {

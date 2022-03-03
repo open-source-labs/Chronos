@@ -1,3 +1,8 @@
+/** FOR THE NEXT TEAM
+ * You should probably take a look and fix the legend for the graph.
+ * Can compare services, but hard to tell which points of data belong to which server. 
+*/
+
 /* eslint-disable no-useless-concat */
 import React, { useContext, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
@@ -32,6 +37,8 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
 
     useEffect(() => {
       if (healthData.length) {
+        const tempArr: [string, string[], string[], string[]][] = [];
+
         // loop over each
         healthData.forEach(
           (service: {
@@ -46,12 +53,12 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
               service.blockedprocesses,
               service.sleepingprocesses,
             ];
-            setData(data.concat([temp]));
+            tempArr.push(temp);
+
+            
           }
         );
-        // temp = [ string, [], [], [] ]
-        // setTime(healthData[0].time); //push
-        // setCpuSpeed(healthData[0].cpuspeed); //push
+        setData(tempArr);
       }
     }, [healthData]);
 
