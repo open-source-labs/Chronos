@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
@@ -21,10 +22,9 @@ let currentDatabaseType: string;
  */
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
-    
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(path.resolve(__dirname, '../user/settings.json'), 'utf8');
+    const fileContents = fs.readFileSync(path.resolve(__dirname, '../../settings.json'), 'utf8');
 
     const userDatabase = JSON.parse(fileContents).services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
@@ -42,6 +42,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     currentDatabaseType = databaseType;
 
     message.sender.send('databaseConnected', 'connected!');
+    // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "connect" event', message);
   }
@@ -53,8 +54,6 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
  */
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
-   
-    
     let result: any;
 
     // Mongo Database
@@ -73,6 +72,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
+    // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "servicesRequest" event', message);
   }
@@ -84,8 +84,6 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
   try {
-  
-    
     let result: any;
 
     // Mongo Database
@@ -116,8 +114,10 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
+
+  const serviceName = service.toString();
+
   try {
-    
     let result: any;
 
     // Mongo Database
@@ -127,9 +127,37 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 10);
       result = await HealthModelFunc(service)
-        .find({})
+        .find(
+          {},
+          {
+            cpuspeed: 1,
+            cputemp: 1,
+            cpuloadpercent: 1,
+            totalmemory: 1,
+            freememory: 1,
+            usedmemory: 1,
+            activememory: 1,
+            totalprocesses: 1,
+            runningprocesses: 1,
+            blockedprocesses: 1,
+            sleepingprocesses: 1,
+            latency: 1,
+            time: 1,
+            __v: 1,
+            service: service,
+          }
+        )
         .skip(num - 50);
     }
+
+    /**
+     * `
+          SELECT *, 'customers' as service FROM customers
+          ORDER BY _id DESC
+          LIMIT 50
+          `;
+     * 
+     */
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
@@ -137,14 +165,22 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       const query = `
           SELECT * FROM ${service}
           ORDER BY _id DESC
-          LIMIT 50`;
-
+          LIMIT 50
+          `;
+          
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();
+      result = result.map(res => ({
+        ...res, service
+      }));
     }
 
-    // Async event emitter - send response
+    // Async event emitter - send response'
+
+    // console.log(result[0], service);
+    // console.log(result, JSON.stringify(result));
+
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
@@ -159,16 +195,16 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
  */
 ipcMain.on('dockerRequest', async (message, service) => {
   try {
-    
     let result: any;
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
       let num = await DockerModelFunc(service).countDocuments();
-
-      //Get last 50 documents. If less than 50 documents, get all
+      // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
-      result = await DockerModelFunc(service).find().skip(num - 50);
+      result = await DockerModelFunc(service)
+        .find()
+        .skip(num - 50);
     }
 
     // SQL Database

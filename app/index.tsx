@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './stylesheets/index.scss';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/';
 import App from './App';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 const theme = createMuiTheme({
   typography: {

@@ -5,23 +5,24 @@ import '../stylesheets/Applications.scss';
 
 export interface CopyrightProps {}
 
-const Copyright: React.SFC = React.memo((props) => {
+const Copyright: React.SFC = React.memo(() => {
   const useStyles = makeStyles(theme => ({
     copyright: {
       fontFamily: 'Roboto',
       position: 'fixed',
-      color: "#ffffff"
-    }
-  }))
+      color: '#ffffff',
+    },
+  }));
   const classes = useStyles();
   return (
-  <Typography className={classes.copyright} variant="body2" align="center">
-    {'Copyright © '}
-    <Link color="inherit" href="https://chronoslany.com/" target="_blank">
-      Team Chronos
-    </Link>{' '}
-    {new Date().getFullYear()}
-    {'.'}
-  </Typography>
-)});
+    <Typography className={classes.copyright} variant="body2" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://chronoslany.com/" target="_blank">
+        Team Chronos
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+});
 export default Copyright;

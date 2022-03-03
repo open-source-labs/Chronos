@@ -9,11 +9,10 @@ import fs from 'fs';
  */
 
 // Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
-
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
-  // Retrives file contents from settings.json
+  // Retrieves file contents from settings.json
   const state = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
   );
 
   // Add new applicaiton to list
@@ -27,7 +26,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   state.services.push(newApp);
 
   // Update settings.json with new list
-  fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
+  fs.writeFileSync(path.resolve(__dirname, '../../settings.json'), JSON.stringify(state));
 
   // Sync event - return new applications list
   message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
@@ -41,13 +40,13 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
 
 ipcMain.on('getApps', message => {
-  // Retrives file contents from settings.json for current Apps
+  // Retrieves file contents from settings.json for current Apps
   const state = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
   );
   // Retrieves files contents from setting.json for current Mode
   const temp = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
   );
   // Destructure list of services from state to be rendered on the dashboard
   const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]); // .map((arr: string[]) => [...arr]);
@@ -64,14 +63,14 @@ ipcMain.on('getApps', message => {
 ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   // Retrives file contents from settings.json
   const state = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
   );
 
   // Remove application from settings.json
   state.services.splice(index, 1);
 
   // Update settings.json with new list
-  fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state), {
+  fs.writeFileSync(path.resolve(__dirname, '../../settings.json'), JSON.stringify(state), {
     encoding: 'utf8',
   });
 
@@ -88,7 +87,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
 ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   // Retrives file contents from settings.json
   const state = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../user/settings.json')).toString('utf8')
+    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
   );
 
   // Add new mode
@@ -98,7 +97,7 @@ ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   state.mode = newMode;
 
   // Update settings.json with new mode
-  fs.writeFileSync(path.resolve(__dirname, '../user/settings.json'), JSON.stringify(state));
+  fs.writeFileSync(path.resolve(__dirname, '../../settings.json'), JSON.stringify(state));
 
   // Sync event - return new mode
   message.returnValue = state.mode;
