@@ -15,6 +15,13 @@
     "test:electron": "jest --detectOpenHandles ./__tests__/electron/*",
     "test:app": "jest ./__tests__/app/*",
     "copyAssetsDist": "echo D | xcopy app\\assets dist\\assets",
+    "copyPackageJsonDist": "echo F | xcopy package.json dist\\package.json",
+    "copyBuildDist": "echo D | xcopy build dist\\build",
+    "copyBuildDBDist": "echo D | xcopy build\\databases dist\\build\\databases",
+    "copyBuildModelsDist": "echo D | xcopy build\\models dist\\build\\models",
+    "copyBuildRoutesDist": "echo D | xcopy build\\routes dist\\build\\routes",
+    "copyBuildUserDist": "echo D | xcopy build\\user dist\\build\\user",
+    "copyBuildUtilitiesDist": "echo D | xcopy build\\utilities dist\\build\\utilities",
     "both": "npm run start & sleep 5 && npm run electron",
     "both:wsl": "npm run start & sleep 5 && npm run electron:wsl",
     "both:tsc": "nodemon --watch ./app & npm run start & sleep 5 && npm run electron",
@@ -23,7 +30,7 @@
     "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
     "delete": "rm -rf dist & rm -rf build",
     "reinstall": "rm -rf node_modules && npm install",
-    "prepare": "tsc -v && tsc -p . && npm run build && npm run copyAssetsDist",
+    "prepare": "tsc -v && tsc -p . && npm run build && npm run copyAssetsDist && npm run copyPackageJsonDist && npm run copyBuildDist && npm run copyBuildDBDist && npm run copyBuildModelsDist && npm run copyBuildRoutesDist && npm run copyBuildUserDist && npm run copyBuildUtilitiesDist",
     "rebuild": "npm run delete && npm run prepare"
   },
   "babel": {
