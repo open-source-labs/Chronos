@@ -1,5 +1,6 @@
 {
   "name": "chronos",
+  "productName": "Chronos",
   "version": "6.1.0",
   "description": "Chronos Microservice Debugger",
   "main": "./build/Main.js",
@@ -13,6 +14,7 @@
     "test:watch": "jest --watch",
     "test:electron": "jest --detectOpenHandles ./__tests__/electron/*",
     "test:app": "jest ./__tests__/app/*",
+    "copyAssetsDist": "echo D | xcopy app\\assets dist\\assets",
     "both": "npm run start & sleep 5 && npm run electron",
     "both:wsl": "npm run start & sleep 5 && npm run electron:wsl",
     "both:tsc": "nodemon --watch ./app & npm run start & sleep 5 && npm run electron",
@@ -21,8 +23,7 @@
     "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
     "delete": "rm -rf dist & rm -rf build",
     "reinstall": "rm -rf node_modules && npm install",
-    "prepare": "tsc -v && tsc -p . && npm run build",
-    "prepare2": "tsc -v && tsc -p .",
+    "prepare": "tsc -v && tsc -p . && npm run build && npm run copyAssetsDist",
     "rebuild": "npm run delete && npm run prepare"
   },
   "babel": {
@@ -95,6 +96,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "concurrently": "^7.0.0",
     "css-loader": "^3.5.3",
     "electron-devtools-installer": "^3.2.0",
     "electron-installer-dmg": "^3.0.0",
