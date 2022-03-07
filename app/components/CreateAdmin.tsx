@@ -14,12 +14,8 @@ const CreateAdmin = React.memo(() => {
     const password = inputFields[2].value;
 
     const validSignUp = ipcRenderer.sendSync('addUser', { email, username, password });
-    if (validSignUp) {
-      window.alert(
-        'Your admin account has been created. Use this account to approve other accounts.'
-      );
-      updateLandingPage('login');
-    } else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
+    if (validSignUp) updateLandingPage('login');
+    else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
   };
 
   return (
