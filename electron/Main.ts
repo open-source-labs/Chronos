@@ -24,7 +24,7 @@ const createWindow = () => {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      preload: path.join(__dirname, './utilites/preload.js'),
+      preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -32,7 +32,7 @@ const createWindow = () => {
 
   // Development: load the application window to port 8080
   // win.loadURL('http://localhost:8080/');
-  win.loadFile('./dist/index.html');
+  win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
   // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
 
   // win.webContents.on('did-finish-load', () => {
