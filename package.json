@@ -8,7 +8,7 @@
     "start": "webpack serve",
     "nodemon": "nodemon server/server.js",
     "electron": "electron .",
-    "electronTest": "cross-env NODE_ENV=devleopment electron .",
+    "electronTest": "cross-env NODE_ENV=development electron .",
     "electron:wsl": "electron . --no-sandbox",
     "test": "jest ./__tests__2022/*",
     "test:watch": "jest --watch",

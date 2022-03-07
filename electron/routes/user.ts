@@ -1,8 +1,6 @@
 import { ipcMain, IpcMainEvent } from 'electron';
 import path from 'path';
 import fs from 'fs';
-
-require('dotenv').config();
 /**
  * @event   addApp
  * @desc    Adds an application to the user's list in the settings.json with the provided fields
@@ -13,8 +11,8 @@ let settingsLocation;
 let usersLocation;
 
 if (process.env.NODE_ENV === 'development') {
-  settingsLocation = path.resolve(__dirname, '../../test_settings.json');
-  usersLocation = path.resolve(__dirname, '../../test_users.json');
+  settingsLocation = path.resolve(__dirname, '../../__tests__2022/test_settings.json');
+  usersLocation = path.resolve(__dirname, '../../__tests__2022/test_users.json');
 } else {
   settingsLocation = path.resolve(__dirname, '../../settings.json');
   usersLocation = path.resolve(__dirname, '../../users.json');
