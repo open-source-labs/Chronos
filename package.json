@@ -28,6 +28,7 @@
     "both:tsc": "nodemon --watch ./app & npm run start & sleep 5 && npm run electron",
     "both:dev": "npm run start & nodemon --watch ./electron --exec 'npm run electron'",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-any": "electron-packager ./dist chronos --overwrite --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
     "delete": "rm -rf dist & rm -rf build",
     "installDep": "cd dist && npm i",
