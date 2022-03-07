@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
       <div className={selectModal ? 'dropdown active' : 'dropdown'}>
         <div
           className={selectModal ? 'select disabled' : 'select'}
-          onClick={() => !selectModal ? dropdownClickHandler : () => {}}
+          onClick={() => (!selectModal ? dropdownClickHandler() : () => {})}
         >
           {service}
         </div>
@@ -91,16 +91,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
                 />
               </label>
             ))}
-            <label htmlFor="communications" className="select">
-              communications
-              <input
-                type="checkbox"
-                value={'communications'}
-                id={'communications'}
-                name={'communications'}
-                onChange={() => history.replace('communications')}
-              />
-            </label>
+
             <button className="service-button" onClick={handleServices}>
               {selectedServices.length === 0 && 'Select Service'}
               {selectedServices.length === 1 && 'Display Single'}

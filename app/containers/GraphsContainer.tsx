@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { ApplicationContext } from '../context/ApplicationContext';
 
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
@@ -42,18 +43,23 @@ export interface GraphsContainerProps {
  */
 
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
+  const history = useHistory();
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
-  const { fetchHealthData, setHealthData } = useContext(HealthContext);
+  const { servicesData } = useContext(ApplicationContext);
+
+  const { fetchHealthData, setHealthData, healthData, services } = useContext(HealthContext);
   const { fetchDockerData, setDockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
-  const [chart, setChart] = useState<string>('speed');
+  const [chart, setChart] = useState<string>('all');
   const [sizing, setSizing] = useState<string>('solo');
 
+  const [prevRoute, setPrevRoute] = useState<string>('')
+
   useEffect(() => {
-    // console.log(service);
+    console.log('services', services);
     const serviceArray = service.split(' ');
 
     if (live) {
@@ -78,6 +84,24 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
     };
   }, [service, live]);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log('in GC', healthData);
+  //   }, 5000);
+  // }, [healthData]);
+
+
+  const routing = route => {
+    console.log(services);
+    
+    if (location.href.includes('communications')) {
+      // console.log('app', app);
+      if (prevRoute === '') history.replace(`${servicesData[0].microservice}`)
+      else history.replace(prevRoute);
+    }
+    setChart(route)
+  }
+
   // Conditionally render the communications or health graphs
   return (
     <>
@@ -85,51 +109,59 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         <button
           className={chart === 'all' ? 'selected' : undefined}
           id="all-button"
-          onClick={() => setChart('all')}
+          onClick={() => routing('all')}
         >
           All
         </button>
         <button
           id="speed-button"
           className={chart === 'speed' ? 'selected' : undefined}
-          onClick={() => setChart('speed')}
+          onClick={() => routing('speed')}
         >
           Speed
         </button>
         <button
           id="temp-button"
           className={chart === 'temp' ? 'selected' : undefined}
-          onClick={() => setChart('temp')}
+          onClick={() => routing('temp')}
         >
           Temperature
         </button>
         <button
           id="latency-button"
           className={chart === 'latency' ? 'selected' : undefined}
-          onClick={() => setChart('latency')}
+          onClick={() => routing('latency')}
         >
           Latency
         </button>
         <button
           id="memory-button"
           className={chart === 'memory' ? 'selected' : undefined}
-          onClick={() => setChart('memory')}
+          onClick={() => routing('memory')}
         >
           Memory
         </button>
         <button
           id="process-button"
           className={chart === 'process' ? 'selected' : undefined}
-          onClick={() => setChart('process')}
+          onClick={() => routing('process')}
         >
           Processes
         </button>
         <button
           id="docker-button"
           className={chart === 'docker' ? 'selected' : undefined}
-          onClick={() => setChart('docker')}
+          onClick={() => routing('docker')}
         >
           Docker
+        </button>
+        <button id="communication-button" 
+          onClick={() => {
+            if (!location.href.includes('communications'))
+            setPrevRoute(services.join(" "));
+            history.push('communications');
+          }}>
+          Communication
         </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
