@@ -9,6 +9,8 @@ import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 
+require('dotenv').config();
+
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -20,11 +22,15 @@ let currentDatabaseType: string;
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
+let settingsLocation;
+if (process.env.NODE_ENV === 'development')
+  settingsLocation = path.resolve(__dirname, '../../test_settings.json');
+else settingsLocation = path.resolve(__dirname, '../../settings.json');
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(path.resolve(__dirname, '../../settings.json'), 'utf8');
+    const fileContents = fs.readFileSync(settingsLocation, 'utf8');
 
     const userDatabase = JSON.parse(fileContents).services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
@@ -114,8 +120,6 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
-  console.log(service);
-
   try {
     let result: any;
 
@@ -143,11 +147,20 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
             latency: 1,
             time: 1,
             __v: 1,
-            service: service,
+            service,
           }
         )
         .skip(num - 50);
     }
+
+    /**
+     * `
+          SELECT *, 'customers' as service FROM customers
+          ORDER BY _id DESC
+          LIMIT 50
+          `;
+     * 
+     */
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
@@ -156,18 +169,21 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
           SELECT * FROM ${service}
           ORDER BY _id DESC
           LIMIT 50
-          ${service} AS service
-          JOIN table2 ON ${service}
           `;
 
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();
+      result = result.map(res => ({
+        ...res,
+        service,
+      }));
     }
 
     // Async event emitter - send response'
 
     // console.log(result[0], service);
+    // console.log(result, JSON.stringify(result));
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
