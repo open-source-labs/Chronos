@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import './routes/user';
 import './routes/dashboard';
 import './routes/data';
+import path from 'path';
 
 const ipc = ipcMain;
 
@@ -30,14 +31,10 @@ const createWindow = () => {
   });
 
   // Development: load the application window to port 8080
-  // win.loadURL('http://localhost:8080/');
-  win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
-  // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
+  win.loadURL('http://localhost:8080/');
 
-  // win.webContents.on('did-finish-load', () => {
-  //   console.log('content loaded');
-  //   win.webContents.executeJavaScript(`console.log(${remote})`);
-  // });
+  //Production
+  // win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
 
   ipc.on('max', () => {
     if (!win.isMaximized()) win.maximize();
