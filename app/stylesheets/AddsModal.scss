@@ -44,7 +44,7 @@
     p {
       align-self: flex-start;
     }
-    
+
     div {
       @include centerWithFlex();
 
@@ -124,7 +124,6 @@
       border: none;
       padding: 4px;
       text-transform: uppercase;
-      
 
       &:hover {
         background-color: $gblue;
@@ -135,4 +134,39 @@
 
 ::placeholder {
   color: rgb(201, 201, 201);
+}
+
+#approvalList {
+  // text-align: center;
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center;
+  align-items: center;
+
+  li {
+    display: flex;
+    margin: 10px 0;
+    align-items: center;
+    > span {
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px;
+    }
+    div {
+      margin: 0;
+      display: flex;
+      // justify-content: center;
+      height: 27px;
+      font-size: 16px;
+      color: black !important;
+    }
+    span.label {
+      color: black !important;
+      font-weight: bold;
+      padding-right: 5px;
+    }
+    button {
+      margin: 0;
+    }
+  }
 }

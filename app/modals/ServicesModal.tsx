@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ApplicationContext } from '../context/ApplicationContext';
@@ -18,6 +18,24 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
     ApplicationContext
   );
 
+  let [services, setServices ] = useState<Array<string>>([])
+
+  const toggleService = (service) => {
+      if(services.includes(service)) {
+        setServices(services.filter(el => el !== service))
+      }
+      else {
+        if(service !== 'communications' && services.includes('communications')){
+          services = [];
+        }
+        setServices(services.concat(service));
+      };
+  };
+
+  useEffect(() => {
+    console.log(services)
+  },[services])
+  
   useEffect(() => {
     connectToDB(i, app);
     // fetchServicesNames(app);
@@ -33,7 +51,6 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
         <div className="loadingMessageModal">
           <h2 id="loadingMessage">Loading...</h2>
         </div>
-        
       ) : (
         <>
           <div className="services-header">
@@ -41,13 +58,24 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
             <p>Select a server to monitor</p>
           </div>
           <div className="services-links">
-            {servicesData.map((service: IService, i: number) => (
-              <Link key={i} className="link" to={`/applications/${app}/${service.microservice}`}>
+            {servicesData.map((service: IService, index: number) => (
+              <div
+                key={index}
+                className={services.includes(service.microservice) ? "link selected" : "link"}
+                onClick={() => toggleService(service.microservice)}
+              >
                 {service.microservice}
-              </Link>
+              </div>
             ))}
-            <Link className="link" to={`/applications/${app}/communications`}>
+            <div 
+              className={services.includes('communications') ? "link selected" : "link"}
+              onClick={() => setServices(['communications'])}>
               communications
+            </div>
+            <Link className="router link" to={services.length > 0 ? `/applications/${app}/${services.join(" ")}` : "#"}>
+              {services.length === 0 && "Select Services"}
+              {services.length === 1 && "Display Service"}
+              {services.length > 1 && "Compare Services"}
             </Link>
           </div>
         </>

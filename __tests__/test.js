@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var MongoClient = require('mongodb').MongoClient;
 
-describe('middleware', () => {
+xdescribe('middleware', () => {
   var healthInfo, db;
 
   beforeAll(function (done) {

@@ -1,7 +1,7 @@
 @import './constants.scss';
 
 .entireArea {
-  height: 100vh;
+  height: 100%;
 }
 
 // HEADER
@@ -28,10 +28,11 @@
 
 #rightHeader {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
   align-items: center;
   margin: 0;
-  margin-top: 20px;
+  margin-top: 33px;
 }
 
 #listIcon {
@@ -64,7 +65,7 @@
   vertical-align: middle;
   text-align: center;
   color: $icon;
-  background-color: $background;
+  // background-color: $background;
   box-sizing: content-box;
   border-radius: 50%;
   box-shadow: $boxshadow1;
@@ -102,7 +103,7 @@
 }
 
 #searchIcon {
-  background-color: $background;
+  // background-color: $background;
   font-size: 26px;
   font-weight: 400px;
   padding: 8px;
@@ -118,6 +119,7 @@
 
 // Dashboard Icon
 #dashboardIcon {
+  margin-top: 4px;
   margin-left: -35px;
   font-size: 26px;
   padding: 8px;
@@ -146,12 +148,12 @@
   color: $ggreen;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  // padding: 5px 0;
   font-size: 12px;
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  top: 63px;
+  top: 30px;
   right: -14px;
 }
 
@@ -167,9 +169,10 @@
 
 // Notification Icon
 #notificationsIcon {
+  margin-top: 4px;
   margin-left: 2px;
   font-size: 26px;
-  padding: 8px;
+  // padding: 8px;
   &:hover {
     cursor: pointer;
     box-shadow: $boxshadow3;
@@ -216,10 +219,10 @@
 
 // Person Icon
 #personIcon {
-  margin-right: 30px;
+  margin-top: 4px;
   margin-left: 2px;
   font-size: 26px;
-  padding: 8px;
+  // padding: 8px;
   &:hover {
     cursor: pointer;
     box-shadow: $boxshadow3;
@@ -239,37 +242,47 @@
 }
 
 .personIconArea .personTooltip {
-  visibility: hidden;
-  width: 80px;
-  background-color: $background;
+  // visibility: hidden;
+  // width: 80px;
+  // background-color: $background;
   color: $gyellow;
   text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  font-size: 12px;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: 63px;
-  right: 10px;
+  // border-radius: 6px;
+  // padding: 5px 0 !important;
+  // font-size: 12px;
+  // /* Position the tooltip */
+  // position: absolute;
+  // z-index: 1;
+  // top: 63px;
+  // right: 10px;
 }
 
-.personIconArea .personTooltip::after {
-  content: '';
-  position: absolute;
-  bottom: 37px;
-  left: 35px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent $background transparent;
+// .personIconArea .personTooltip::after {
+//   content: '';
+//   position: absolute;
+//   bottom: 37px;
+//   left: 35px;
+//   border-width: 5px;
+//   border-style: solid;
+//   border-color: transparent transparent $background transparent;
+// }
+
+.dashboardIconWrapper {
+  margin-right: 37px;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-around;
 }
 
 button {
   background-color: transparent;
   border: 0;
   outline: none;
-  margin: 0px;
-  padding: 0px;
+  white-space: nowrap;
+  margin: 10px 0;
+  // padding: 0px;
   color: transparent;
   &:hover {
     background-color: transparent;
@@ -280,7 +293,8 @@ button {
   background: none;
   border: 0;
   outline: none;
-  box-shadow: none;
+  box-shadow: none;  
+  transform: translateX(-40px);
   filter: none;
   &:hover {
     background: none;
@@ -307,6 +321,11 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
+  .searchIconSvg {
+    transform: scale(0.1) translate(758.9px, -720px);
+    position: absolute;
+    fill: white;
+  }
 }
 
 #textInput {

@@ -9,7 +9,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SidebarContainer from '../../../app/containers/SidebarContainer';
 import { Link } from 'react-router-dom';
 
-describe('<SidebarContainer />', () => {
+xdescribe('<SidebarContainer />', () => {
   it('should render an <img> tag with the Chronos logo', () => {
     const wrapper = shallow(<SidebarContainer />);
     expect(wrapper.contains(<img alt="Chronos" id="logo" src="../assets/logo.svg" />)).toBe(true);
