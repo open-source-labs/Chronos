@@ -170,7 +170,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
           ORDER BY _id DESC
           LIMIT 50
           `;
-
+          
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();
