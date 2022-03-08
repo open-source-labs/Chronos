@@ -13,4 +13,11 @@ describe('Create Admin Page', () => {
     );
     element = screen.getByTestId('createAdmin');
   });
+
+  it('Should do stuff', () => {
+    /** KEK KEK KEK i'm still in here~! */
+    /** KEK? */
+    /** KEK KEK */
+    /** KEK KEK KEK!! */
+  });
 });
