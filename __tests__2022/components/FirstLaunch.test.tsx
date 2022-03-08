@@ -1,41 +1,39 @@
-import React, { useContext } from 'react';
-import { render, fireEvent, screen, cleanup } from '@testing-library/react';
-import DashboardContextProvider, { DashboardContext } from '../../app/context/DashboardContext';
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import DashboardContextProvider from '../../app/context/DashboardContext';
+import FirstLaunch from '../../app/components/FirstLaunch';
 
 const { ipcRenderer } = require('electron');
 
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
-xdescribe('FirstLaunch Page', () => {
-  const TestComponent = ({ onClick }) => {
-    const { updateLandingPage } = useContext(DashboardContext);
-    return (
-      <>
-        <button className="link" id="adminBtn" onClick={onClick}>
-          Admin
-        </button>
-        <button className="link" onClick={() => updateLandingPage('dashBoard')}>
-          Dashboard
-        </button>
-      </>
-    );
-  };
-
-  const updateLandingPage = ipcRenderer.sendSync('createAdmin');
-
-  afterEach(cleanup);
-
-  it('should render', () => {
-    expect(TestComponent).toBeTruthy();
-  });
-
-  it('should get Admin button', () => {
+describe('FirstLaunch Page', () => {
+  beforeEach(() => {
     render(
       <DashboardContextProvider>
-        <TestComponent onClick={updateLandingPage} />
+        <FirstLaunch />
       </DashboardContextProvider>
     );
-    fireEvent.click(screen.getByText(/admin/i));
-    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('createAdmin');
+  });
+
+  it('should render', () => {
+    expect(screen).toBeTruthy();
+  });
+
+  it('Should contain an h1, h2, and two buttons', () => {
+    const element = screen.getByTestId('FirstLaunch');
+    expect(element.querySelectorAll('h1').length).toBe(1);
+    expect(element.querySelectorAll('h2').length).toBe(1);
+    expect(element.querySelectorAll('button').length).toBe(2);
+  });
+
+  it('Disable Sign Up button should update landing page with dashboard', () => {
+    fireEvent.click(screen.getByText('Disable Sign Up'));
+    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('updateLP', 'dashBoard');
+  });
+
+  it('Enable Sign Up button should update landing page with createAdmin', () => {
+    fireEvent.click(screen.getByText('Enable Sign Up'));
+    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('updateLP', 'createAdmin');
   });
 });

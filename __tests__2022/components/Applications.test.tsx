@@ -10,7 +10,7 @@ jest.mock('electron', () => ({
   ipcMain: { on: jest.fn() },
 }));
 
-describe('Application', () => {
+xdescribe('Application', () => {
   // beforeEach(() => {
   //   let comp = render(<Applications />);
   // });
