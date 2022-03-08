@@ -6,21 +6,27 @@ import fs from 'fs';
  * @desc    Adds an application to the user's list in the settings.json with the provided fields
  * @return  New list of applications
  */
-
 // Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
+let settingsLocation;
+let usersLocation;
+
+if (process.env.NODE_ENV === 'development') {
+  settingsLocation = path.resolve(__dirname, '../../__tests__2022/test_settings.json');
+  usersLocation = path.resolve(__dirname, '../../__tests__2022/test_users.json');
+} else {
+  settingsLocation = path.resolve(__dirname, '../../settings.json');
+  usersLocation = path.resolve(__dirname, '../../users.json');
+}
+
 ipcMain.on('getLP', (message: IpcMainEvent) => {
-  const state = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
-  );
+  const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   message.returnValue = state.landingPage;
 });
 
 ipcMain.on('updateLP', (message: IpcMainEvent, newLP: string) => {
-  const state = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../../settings.json')).toString('utf8')
-  );
+  const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   state.landingPage = newLP;
-  fs.writeFileSync(path.resolve(__dirname, '../../settings.json'), JSON.stringify(state));
+  fs.writeFileSync(settingsLocation, JSON.stringify(state));
   message.returnValue = state.landingPage;
 });
 
@@ -28,7 +34,7 @@ ipcMain.on(
   'addUser',
   (message: IpcMainEvent, user: { email: string; username: string; password: string }) => {
     const { email, username, password } = user;
-    if (!fs.existsSync(path.resolve(__dirname, '../../users.json'))) {
+    if (!fs.existsSync(usersLocation)) {
       const firstUser: {
         [key: string]: {
           email: string;
@@ -39,7 +45,7 @@ ipcMain.on(
         };
       } = {};
       firstUser[email] = { email, username, password, admin: true, awaitingApproval: false };
-      fs.writeFileSync(path.resolve(__dirname, '../../users.json'), JSON.stringify(firstUser));
+      fs.writeFileSync(usersLocation, JSON.stringify(firstUser));
       message.returnValue = firstUser;
     } else {
       // eslint-disable-next-line no-use-before-define
@@ -47,12 +53,10 @@ ipcMain.on(
     }
 
     function ensureEmailIsUnique() {
-      const users = JSON.parse(
-        fs.readFileSync(path.resolve(__dirname, '../../users.json')).toString('utf8')
-      );
+      const users = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
       if (email in users) return false;
       users[email] = { email, username, password, admin: false, awaitingApproval: true };
-      fs.writeFileSync(path.resolve(__dirname, '../../users.json'), JSON.stringify(users));
+      fs.writeFileSync(usersLocation, JSON.stringify(users));
       return true;
     }
   }
@@ -60,9 +64,7 @@ ipcMain.on(
 
 ipcMain.on('verifyUser', (message: IpcMainEvent, user: { email: string; password: string }) => {
   const { email, password } = user;
-  const users = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../../users.json')).toString('utf8')
-  );
+  const users = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
   const currUser: {
     email: string;
     username: string;
@@ -76,13 +78,11 @@ ipcMain.on('verifyUser', (message: IpcMainEvent, user: { email: string; password
 });
 
 ipcMain.on('getUsersAwaitingApproval', (message: IpcMainEvent) => {
-  const usersObj = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../../users.json')).toString('utf8')
-  );
+  const usersObj = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
   const returnObj: { [key: string]: any } = {};
   for (const user in usersObj) {
     if (usersObj[user].awaitingApproval) {
-      const { email, username} = usersObj[user];
+      const { email, username } = usersObj[user];
       returnObj[email] = { email, username };
     }
   }
@@ -90,12 +90,10 @@ ipcMain.on('getUsersAwaitingApproval', (message: IpcMainEvent) => {
 });
 
 ipcMain.on('approveAccount', (message: IpcMainEvent, userEmail: string) => {
-  const users = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '../../users.json')).toString('utf8')
-  );
+  const users = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
   if (userEmail in users) {
     users[userEmail].awaitingApproval = false;
-    fs.writeFileSync(path.resolve(__dirname, '../../users.json'), JSON.stringify(users));
+    fs.writeFileSync(usersLocation, JSON.stringify(users));
     message.returnValue = true;
   } else message.returnValue = false;
 });

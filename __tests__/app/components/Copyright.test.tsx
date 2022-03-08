@@ -8,7 +8,7 @@ import Copyright from '../../../app/components/Copyright';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('React unit test', () => {
+xdescribe('React unit test', () => {
   describe('<Copyright/>', () => {
     let wrapper: any;
     let mount: any;

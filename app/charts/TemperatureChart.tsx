@@ -48,7 +48,7 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
     setInterval(() => {
-      if (solo != soloStyle) {
+      if (solo !== soloStyle) {
         setSolo(soloStyle);
       }
     }, 20);
