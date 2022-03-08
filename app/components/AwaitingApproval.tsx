@@ -1,20 +1,21 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const AwaitingApproval = React.memo(() => {
+function AwaitingApproval() {
   const history = useHistory();
+  const reroute = () => history.push('/');
   return (
     <div className="home">
-      <p className="welcomeMessage">
+      <p className="welcomeMessage" data-testid="awaitingApprovalMessage">
         Your account is awaiting approval. Please contact your administrator if you have any
         questions.
       </p>
       <br />
-      <button className="link" onClick={() => history.push('/')}>
+      <button className="link" onClick={reroute}>
         Return
       </button>
     </div>
   );
-});
+}
 
 export default AwaitingApproval;

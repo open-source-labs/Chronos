@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 
@@ -20,7 +21,7 @@ const CreateAdmin = React.memo(() => {
 
   return (
     <div className="home">
-      <div className="welcome">
+      <div className="welcome" data->
         <h1 className="welcomeMessage">Welcome to Chronos!</h1>
         <h2>Please create your admin account.</h2>
         <form className="form" onSubmit={handleSubmit}>
