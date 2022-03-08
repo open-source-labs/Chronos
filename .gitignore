@@ -6,7 +6,8 @@ build
 release-builds
 coverage
 __tests__/**/__snapshots__
-.env
+# .env
+users.json
 
 # Compiled source #
 ###################

@@ -9,7 +9,7 @@ jest.mock('electron', () => ({
   ipcRenderer: { on: jest.fn(), send: jest.fn(), removeAllListeners: jest.fn() },
 }));
 
-describe('<HealthContext />', () => {
+xdescribe('<HealthContext />', () => {
   let wrapper: any;
   beforeEach(() => {
     // Mock component that has access to HealthContext

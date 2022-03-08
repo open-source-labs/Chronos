@@ -9,6 +9,8 @@ import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 
+require('dotenv').config();
+
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -20,11 +22,15 @@ let currentDatabaseType: string;
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
+let settingsLocation;
+if (process.env.NODE_ENV === 'development')
+  settingsLocation = path.resolve(__dirname, '../../__tests__2022/test_settings.json');
+else settingsLocation = path.resolve(__dirname, '../../settings.json');
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(path.resolve(__dirname, '../../settings.json'), 'utf8');
+    const fileContents = fs.readFileSync(settingsLocation, 'utf8');
 
     const userDatabase = JSON.parse(fileContents).services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
@@ -114,9 +120,6 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
-
-  const serviceName = service.toString();
-
   try {
     let result: any;
 
@@ -144,7 +147,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
             latency: 1,
             time: 1,
             __v: 1,
-            service: service,
+            service,
           }
         )
         .skip(num - 50);
@@ -172,7 +175,8 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       result = await pool.query(query);
       result = result.rows.reverse();
       result = result.map(res => ({
-        ...res, service
+        ...res,
+        service,
       }));
     }
 

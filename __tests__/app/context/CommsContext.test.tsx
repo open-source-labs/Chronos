@@ -9,7 +9,7 @@ jest.mock('electron', () => ({
   ipcRenderer: { on: jest.fn(), send: jest.fn(), removeAllListeners: jest.fn() },
 }));
 
-describe('<CommsContext />', () => {
+xdescribe('<CommsContext />', () => {
   let wrapper: any;
   let shallow: any;
 
