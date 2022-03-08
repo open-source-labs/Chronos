@@ -9,7 +9,7 @@ jest.mock('electron', () => ({
   ipcRenderer: { on: jest.fn(), send: jest.fn(), removeAllListeners: jest.fn() },
 }));
 
-describe('React unit tests', () => {
+xdescribe('React unit tests', () => {
   describe('<DockerContext />', () => {
     let wrapper: any;
     let shallow: any;

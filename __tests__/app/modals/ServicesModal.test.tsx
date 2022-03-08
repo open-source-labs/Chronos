@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { ApplicationContext } from '../../../app/context/ApplicationContext';
 import ServicesModal from '../../../app/modals/ServicesModal';
 
-describe('<ServicesModal />', () => {
+xdescribe('<ServicesModal />', () => {
   const props = {
     app: 'myApp',
     i: 1,
@@ -18,7 +18,7 @@ describe('<ServicesModal />', () => {
     servicesData: [],
   };
 
-  describe('Before fetch request for services', () => {
+  xdescribe('Before fetch request for services', () => {
     let wrapper: any;
     beforeAll(() => {
       contextValues.servicesData = [];
@@ -35,7 +35,7 @@ describe('<ServicesModal />', () => {
     });
   });
 
-  describe('After completed fetch request for services', () => {
+  xdescribe('After completed fetch request for services', () => {
     let wrapper: any;
     beforeAll(() => {
       contextValues.servicesData = [

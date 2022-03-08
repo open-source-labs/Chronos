@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 
@@ -14,17 +15,13 @@ const CreateAdmin = React.memo(() => {
     const password = inputFields[2].value;
 
     const validSignUp = ipcRenderer.sendSync('addUser', { email, username, password });
-    if (validSignUp) {
-      window.alert(
-        'Your admin account has been created. Use this account to approve other accounts.'
-      );
-      updateLandingPage('login');
-    } else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
+    if (validSignUp) updateLandingPage('login');
+    else window.alert('Sorry your sign up cannot be completed at this time. Please try again.');
   };
 
   return (
     <div className="home">
-      <div className="welcome">
+      <div className="welcome" data->
         <h1 className="welcomeMessage">Welcome to Chronos!</h1>
         <h2>Please create your admin account.</h2>
         <form className="form" onSubmit={handleSubmit}>

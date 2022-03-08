@@ -12,7 +12,7 @@ const Contact = React.memo(() => {
 
   return (
     <div className="contact">
-      <div className="contact-border">
+      <div className="contact-border" data-testid="contactPage">
         <div className="contact-container">
           <div className="contact-blurb">
             <h1 style={currentMode}>Contact Us</h1>
