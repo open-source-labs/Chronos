@@ -9,7 +9,7 @@ import SidebarContainer from '../../../app/containers/SidebarContainer'
 import ApplicationContextProvider from '../../../app/context/ApplicationContext'
 // configure({ adapter: new Adapter() });
 
-describe('<DashboardContainer />', () => {
+xdescribe('<DashboardContainer />', () => {
   it(' renders component MainContainer ', () => {
     const wrapper = shallow(<DashboardContainer />);
 

@@ -12,7 +12,7 @@ const About: React.FC = React.memo(() => {
 
   return (
     <div className="about">
-      <div className="blurb">
+      <div className="blurb" data-testid="aboutPage">
         <h3 style={currentMode} className="mainTitle">
           About
         </h3>

@@ -12,7 +12,7 @@ interface IAppInfo {
 // Setup mock ipc processes
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
-describe('<DashboardContext />', () => {
+xdescribe('<DashboardContext />', () => {
   let wrapper: any;
   let mockAppInfo: IAppInfo;
   beforeEach(() => {
