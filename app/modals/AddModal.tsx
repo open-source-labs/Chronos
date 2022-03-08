@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useCallback } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AddModal.scss';

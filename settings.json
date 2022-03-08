@@ -16,6 +16,7 @@
       "Jul 3, 2020 7:12AM"
     ]
   ],
-  "mode":"light mode",
-  "splash": true
+  "mode": "light mode",
+  "splash": true,
+  "landingPage": "login"
 }

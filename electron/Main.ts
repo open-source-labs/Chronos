@@ -1,8 +1,12 @@
-import { app, BrowserWindow } from 'electron';
-import path from 'path';
-
+import { app, BrowserWindow, ipcMain } from 'electron';
+import './routes/user';
 import './routes/dashboard';
 import './routes/data';
+import path from 'path';
+
+const ipc = ipcMain;
+
+// import { test } from './utilites/titleBarLogic';
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
@@ -14,9 +18,13 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 1920,
     height: 1080,
-    icon: path.join(__dirname, 'app/assets/icons/icon.png'),
+    backgroundColor: '#000314',
+    // icon: path.join(__dirname, 'app/assets/icons/icon.png'),
     // Node integration allows node.js to run
+    frame: false,
+    titleBarStyle: 'hidden',
     webPreferences: {
+      preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -25,8 +33,21 @@ const createWindow = () => {
   // Development: load the application window to port 8080
   win.loadURL('http://localhost:8080/');
 
+  //Production
+  // win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
+
+  ipc.on('max', () => {
+    if (!win.isMaximized()) win.maximize();
+    else win.unmaximize();
+  });
+  ipc.on('min', () => {
+    win.minimize();
+  });
+  ipc.on('close', () => {
+    win.close();
+  });
+
   // Production
-  // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
 };
 
 // Invoke the createWindow function when Electron application loads
