@@ -4,6 +4,7 @@ import { DashboardContext } from '../context/DashboardContext';
 
 const { ipcRenderer } = window.require('electron');
 
+// { externalCall: { sendSync: Function } = ipcRenderer }
 const CreateAdmin = React.memo(() => {
   const { updateLandingPage } = useContext(DashboardContext);
 
