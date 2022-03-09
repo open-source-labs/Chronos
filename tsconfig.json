@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strict": false,
+    "pretty": true,
+    "outDir": "./build",
+    "sourceMap": true,
+    "module": "commonjs",
+    "allowJs": true,
+    "target": "es2019",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noEmitOnError": false
+  },
+  "include": ["./electron/**/*", "./src/**/*", "./electron/**/*.json"]
+}

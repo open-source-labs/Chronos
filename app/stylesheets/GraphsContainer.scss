@@ -1,0 +1,110 @@
+@import './constants.scss';
+
+.traceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 20px;
+
+  #tracesTitle {
+    position: absolute;
+    margin-top: 30px;
+    padding-top: 4px;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: $darkgrey;
+  }
+}
+
+.graphs-container {
+  width: 100%;
+  padding: 0 5%;
+
+  .graphs {
+    @include centerWithFlex();
+    flex-wrap: wrap;
+
+    .chart {
+      margin: 20px 20px;
+
+      &.docker-chart {
+        @include centerWithFlex($justify: flex-start, $direction: column);
+        align-items: flex-start;
+        width: 300px;
+        height: 300px;
+        background-color: #fff;
+        color: $darkgrey;
+        box-shadow: 2px 2px 6px #bbbbbb;
+        border-radius: 3px;
+        padding: 10px 20px;
+        border-radius: 4px;
+
+        span {
+          font-size: 12px;
+          margin-left: 48px;
+        }
+
+        h2 {
+          padding-top: 4px;
+          margin-bottom: 37px;
+          align-self: center;
+          font-size: 100%;
+          margin-top: 20px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  svg {
+    border-radius: 3px;
+    // border: thin solid rgb(155, 155, 155);
+    box-shadow: $boxshadow;
+  }
+}
+
+/* Tablet */
+@media screen and (min-width: 601px) and (max-width: 980px) {
+  .graphsGrid {
+    grid-template-columns: repeat(1, 1fr);
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+/* Normal */
+@media screen and (min-width: 1000px) and (max-width: 1500px) {
+  .graphsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+/* Lg Screen */
+@media screen and (min-width: 1600px) {
+  .graphsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  padding-right: 100%;
+  position: fixed;
+  top: 20px;
+  z-index: 2;
+  background: $darkblue;
+  button {
+    color: white;
+    margin: 0 16px;
+    &.selected {
+      text-decoration: underline;
+      text-underline-offset: 7px;
+      color: red;
+    }
+    &:hover {
+    }
+  }
+}

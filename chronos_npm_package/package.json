@@ -1,0 +1,21 @@
+{
+  "name": "chronos",
+  "version": "1.1.0",
+  "description": "",
+  "main": "chronos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.2.5",
+    "axios": "^0.21.1",
+    "hpropagate": "0.0.7",
+    "mongoose": "^5.11.13",
+    "nodemailer": "^6.4.17",
+    "pg": "^8.5.1",
+    "systeminformation": "^4.34.7"
+  }
+}

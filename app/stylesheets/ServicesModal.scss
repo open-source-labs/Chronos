@@ -1,0 +1,78 @@
+@import './constants.scss';
+
+.servicesContainer {
+  width: 100px;
+  @include centerModal(375px);
+  
+
+  // Header
+  .services-header {
+    color: #444d56;
+    background-color: $grey;
+    width: 100%;
+    padding: 0 0 15px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: thin solid $grey;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    h2 {
+      @include modalHeader();
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-size: 26px;
+      font-weight: 300;
+    }
+  }
+
+  // Buttons
+  .services-links {
+    padding: 0 0 30px;
+    width: 100%;
+
+    .link {
+      display: block;
+      width: 80%;
+      font-size: 90%;
+      text-decoration: none;
+      border: 2px solid white;
+      border-radius: 3px;
+      margin: 10px;
+      padding: 12px;
+      margin: 0 auto;
+      background-color: $grey;
+      color: rgb(31, 31, 31);
+      transition: 0.1s;
+      text-align: center;
+      font-weight: 100;
+      &:hover { 
+        color: #fff;
+        background-color: $gblue;
+      }
+      &.selected {
+        color: #fff;
+        background-color: $gblue;
+      }
+      &.router {
+        &:hover {
+          border: 2px solid #0000004d;
+          background-color: #d3d3d3;
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+
+.loadingMessage {
+  max-width: 80px;
+}
+
+#loadingMessage {
+  font-size: 14px;
+  font-weight: 100;
+  color: #444d56;
+  border-radius: 3px;
+}

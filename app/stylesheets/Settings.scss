@@ -1,0 +1,48 @@
+@import './constants.scss';
+
+.settings {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  position: absolute;
+  margin-left: 50px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+}
+
+.mode {
+  display: flex;
+  font-size: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 280px;
+  width: 280px;
+  text-align: center;
+  box-shadow: $boxshadow2;
+  margin: 20px;
+  font-weight: 100;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+    font-weight: 600;
+  }
+}
+
+#lightMode {
+  color: $black;
+  background-color: $white;
+  box-shadow: $boxshadow2;
+}
+
+#darkMode {
+  color: $white;
+  background-color: $black;
+  box-shadow: $boxshadow2;
+}
