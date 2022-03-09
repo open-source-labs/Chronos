@@ -1,8 +1,14 @@
 @import './constants.scss';
 
 .about {
-  width: 50%;
-  margin: 25% 25%;
+  min-width: 421px;
+  max-width: 600px;
+  margin: auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 100%;
 }
 
 .sprout {
@@ -58,8 +64,8 @@
   border-radius: 50%;
   background-size: scale-down;
   &:hover {
-      background-color: $hover;
-      opacity: 0.85;
-      animation: none;
-    }
+    background-color: $hover;
+    opacity: 0.85;
+    animation: none;
+  }
 }
