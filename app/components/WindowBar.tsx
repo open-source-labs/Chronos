@@ -5,9 +5,9 @@ import Minimize from '@material-ui/icons/RemoveSharp';
 
 const { ipcRenderer } = window.require('electron');
 
-import '../stylesheets/TitleBarContainer.scss';
+import '../stylesheets/WindowBar.scss';
 
-export default function TitleBarContainer() {
+export default function WindowBar() {
   return (
     <div id="titleBar">
       <Minimize className="button" id="min-btn" onClick={() => ipcRenderer.send('min')} />
