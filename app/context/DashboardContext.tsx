@@ -46,7 +46,6 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
       setLandingPage(result);
       return result;
     }
-    console.log('Error in updateLandingPage in DashboardContext.tsx');
     return 'Error in updateLandingPage in DashboardContext.tsx';
   }, []);
 
