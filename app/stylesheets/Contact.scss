@@ -8,16 +8,13 @@
   align-items: center;
   justify-content: center;
   justify-items: center;
-  position: absolute;
-  margin-left: 50px;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   opacity: 1;
   vertical-align: top;
   justify-content: center;
-  align-items: center;;
+  align-items: center;
   color: $background;
 }
 .contact-border {
@@ -30,8 +27,9 @@
   border: none;
   box-shadow: $boxshadow2;
   padding: 30px;
-  width: 50%;
-  margin: 25% 25%;
+  min-width: 421px;
+  max-width: 600px;
+  margin: 100px 20px;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
@@ -59,28 +57,34 @@
   align-self: flex-start;
   padding: 0px 20px;
   margin: 0;
-  min-width: 50%;
-   
-  textarea {
-    font-size: 16px;
-  }
-
-  input {
-    font-size: 16px;
-    color: $header;
-  }
-
-  input[type='text'] {
-    width: 60%;
-    color: $header;
-  }
-
-  #subject {
-    width: 300px;
-  }
-
-  #email {
-    width: 300px;
+  width: 100%;
+  form {
+    width: 100%;
+    label {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      input {
+        width: 100%;
+        color: $header;
+        font-size: 16px;
+        padding: 6px;
+        &[type='file'] {
+          width: 226px;
+          cursor: pointer;
+        }
+      }
+      textarea {
+        font-size: 16px;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        height: 150px;
+        min-height: 50px;
+        max-height: 300px;
+        padding: 6px;
+      }
+    }
   }
 
   #messageLabel {
@@ -98,7 +102,6 @@
   font-size: 16px;
   color: $background;
 }
-
 
 #contact-submit {
   border: none;
@@ -119,7 +122,7 @@
 
 input[type='file'] {
   border: none;
-  
+
   &:hover {
     border: none;
   }

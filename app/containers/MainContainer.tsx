@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import LandingPageContainer from './LandingPageContainer';
-import TitleBarContainer from './TitleBarContainer';
+import WindowBar from '../components/WindowBar';
 import About from '../components/About';
 import Contact from '../components/Contact';
 import Settings from '../components/Settings';
@@ -26,25 +26,27 @@ const MainContainer = React.memo(() => {
   }, []);
 
   return (
-    <div className="main-container" style={currentModeCSS}>
-      <div className="main-routes">
-        <TitleBarContainer />
-        <Switch>
-          <Route exact path="/" component={LandingPageContainer} />
-          <Route exact path="/awaitingApproval" component={AwaitingApproval} />
-          <Route exact path="/about" render={() => checkAuth(About)} />
-          <Route exact path="/contact" render={() => checkAuth(Contact)} />
-          <Route exact path="/settings" render={() => checkAuth(Settings)} />
-          <Route exact path="/applications" render={() => checkAuth(Occupied)} />
-          <Route
-            exact
-            path="/applications/:app/:service"
-            render={() => checkAuth(GraphsContainer)}
-          />
-          <Route path="*" render={() => <h1>Not found</h1>} />
-        </Switch>
+    <>
+      {/* <WindowBar /> */}
+      <div className="main-container" style={currentModeCSS}>
+        <div className="main-routes">
+          <Switch>
+            <Route exact path="/" component={LandingPageContainer} />
+            <Route exact path="/awaitingApproval" component={AwaitingApproval} />
+            <Route exact path="/about" render={() => checkAuth(About)} />
+            <Route exact path="/contact" render={() => checkAuth(Contact)} />
+            <Route exact path="/settings" render={() => checkAuth(Settings)} />
+            <Route exact path="/applications" render={() => checkAuth(Occupied)} />
+            <Route
+              exact
+              path="/applications/:app/:service"
+              render={() => checkAuth(GraphsContainer)}
+            />
+            <Route path="*" render={() => <h1>Not found</h1>} />
+          </Switch>
+        </div>
       </div>
-    </div>
+    </>
   );
 });
 
