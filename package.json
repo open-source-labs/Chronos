@@ -12,7 +12,7 @@
     "electronTest": "cross-env NODE_ENV=development electron .",
     "electron:wsl": "electron . --no-sandbox",
     "test": "jest",
-    "test:watch": "jest ./*",
+    "test:watch": "jest --watch",
     "test:electron": "jest --detectOpenHandles ./__tests__/electron/*",
     "test:app": "jest ./__tests__/app/*",
     "both": "npm run start & sleep 5 && npm run electronTest",
