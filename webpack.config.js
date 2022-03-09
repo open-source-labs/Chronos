@@ -32,7 +32,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(jpg|jpeg|png|ttf|svg)$/,
+        test: /\.(jpg|jpeg|png|ttf|svg|gif)$/,
         use: [
           'file-loader',
           {
@@ -60,6 +60,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.gif', '.png', '.svg'],
   },
 };

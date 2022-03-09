@@ -34,7 +34,7 @@ describe('Create Admin Page', () => {
     inputs[0].value = 'me';
     inputs[1].value = 'me@gmail.com';
     inputs[2].value = 'me123';
-    fireEvent.click(screen.getByText('Create Account'));
+    fireEvent.click(screen.getByText('Create Accp[ount'));
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
       email: 'me@gmail.com',
       username: 'me',

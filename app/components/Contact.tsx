@@ -21,13 +21,12 @@ const Contact = React.memo(() => {
               Please feel free to provide any feedback, concerns, or comments.
             </p>
             <p style={currentMode}>
-              You can find issues the team is currently working on&nbsp;
+              You can find issues the team is currently addressing &nbsp;
               <a
                 style={currentMode}
                 id="issueLink"
                 href="https://github.com/open-source-labs/Chronos/issues"
                 target="_blank"
-                // added rel="noreferrer", security risk if using target="_blank" without rel="noreferrer"
                 rel="noreferrer"
               >
                 here

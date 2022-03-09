@@ -3,9 +3,9 @@ import Close from '@material-ui/icons/Close';
 import Maximize from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 import Minimize from '@material-ui/icons/RemoveSharp';
 
-const { ipcRenderer } = window.require('electron');
-
 import '../stylesheets/TitleBarContainer.scss';
+
+const { ipcRenderer } = window.require('electron');
 
 export default function TitleBarContainer() {
   return (

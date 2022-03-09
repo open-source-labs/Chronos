@@ -20,11 +20,14 @@ export const DashboardContext = createContext<any>(null);
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
  * @property  {Array} applications List of all applications, their description, database type and creation date
- * @method    getApplications
- * @method    addApp
- * @method    deleteApp
- * @method    changeMode
+ * @method  getLandingPage  Sets landing page to organization's existing landing page
+ * @method  updateLandingPage Sets landing page
+ * @method  getApplications Sets theme/mode and user's list of apps
+ * @method  addApp  Adds new app to user's list. Returns and sets new list of apps
+ * @method  deleteApp Synchronous. Deletes app based on index. Returns new list of apps
+ * @method  changeMode Changes theme/mode in settings.json and updates.
  */
+
 const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
@@ -32,10 +35,6 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [authStatus, setAuth] = useState<boolean>(false);
   const [user, setUser] = useState<{}>({});
 
-  /*
-   *  Sends a request for the existing landing page belonging to the
-   *  organization and sets landing page to it.
-   */
   const getLandingPage = useCallback(() => {
     const result = ipcRenderer.sendSync('getLP');
     setLandingPage(result);
@@ -51,24 +50,12 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
     return 'Error in updateLandingPage in DashboardContext.tsx';
   }, []);
 
-  /*
-   * Sends a request for all existing applications belonging to a user
-   * and sets the applications state to the list of app names
-   * Also sends a request for the previously saved theme/mode
-   * and sets the mode state to the retrieved settings
-   */
-
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result[0]);
     setMode(result[1]);
   }, []);
 
-  /**
-   * Sends a synchronous request to add a new application to the user's
-   * list of applications with the provided fields. Returns the new list
-   * of applications
-   */
   const addApp = useCallback((fields: IFields) => {
     const { database, URI, name, description } = fields;
     const result = ipcRenderer.sendSync(
@@ -78,21 +65,10 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
     setApplications(result);
   }, []);
 
-  /**
-   * Sends a synchronous request to delete an application using a provided
-   * index. The index is used to locate the desired application info in the
-   * settings.json file in the backend. Returns the new list of applications
-   */
   const deleteApp = useCallback((index: number) => {
     const result = ipcRenderer.sendSync('deleteApp', index);
     setApplications(result);
   }, []);
-
-  /**
-   * Sends a synchronous request to change the current mode/theme using a provided
-   * string. The string is use to locate the desired mode info in settings.json in
-   * the backend. Updates mode/theme.
-   */
 
   const changeMode = useCallback((currMode: string) => {
     const result = ipcRenderer.sendSync('changeMode', currMode);
