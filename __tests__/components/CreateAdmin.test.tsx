@@ -28,13 +28,13 @@ describe('Create Admin Page', () => {
     expect(element.querySelectorAll('input').length).toBe(3);
   });
 
-  xit('Create Account button should submit email, username, and password to addUser', () => {
+  it('Create Account button should submit email, username, and password to addUser', () => {
     const element = screen.getByTestId('CreateAdmin');
     const inputs = element.querySelectorAll('input');
     inputs[0].value = 'me';
     inputs[1].value = 'me@gmail.com';
     inputs[2].value = 'me123';
-    fireEvent.click(screen.getByText('Create Accp[ount'));
+    fireEvent.click(screen.getByText('Create Account'));
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
       email: 'me@gmail.com',
       username: 'me',
