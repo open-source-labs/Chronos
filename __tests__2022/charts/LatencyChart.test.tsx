@@ -34,6 +34,9 @@ describe('Latency Chart', () => {
 
   it('Should render graph', () => {
     expect(screen.getByTestId('Latency Chart')).toBeTruthy();
-    expect(screen).toMatchSnapshot();
+  });
+
+  it('Should display data', () => {
+    expect(screen.getByTestId('Latency Chart').firstChild).toBeTruthy();
   });
 });

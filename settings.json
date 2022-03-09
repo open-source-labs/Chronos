@@ -17,6 +17,5 @@
     ]
   ],
   "mode": "light mode",
-  "splash": true,
-  "landingPage": "login"
+  "splash": true
 }

@@ -1,15 +1,14 @@
+/* eslint-disable no-use-before-define */
 import { ipcMain, IpcMainEvent } from 'electron';
 import path from 'path';
 import fs from 'fs';
-/**
- * @event   addApp
- * @desc    Adds an application to the user's list in the settings.json with the provided fields
- * @return  New list of applications
- */
-// Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
+
+const bcrypt = require('bcrypt');
+
+const saltRounds = 12;
+
 let settingsLocation;
 let usersLocation;
-
 if (process.env.NODE_ENV === 'development') {
   settingsLocation = path.resolve(__dirname, '../../__tests__2022/test_settings.json');
   usersLocation = path.resolve(__dirname, '../../__tests__2022/test_users.json');
@@ -44,13 +43,18 @@ ipcMain.on(
           awaitingApproval: boolean;
         };
       } = {};
-      firstUser[email] = { email, username, password, admin: true, awaitingApproval: false };
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(password, salt);
+      firstUser[email] = {
+        email,
+        username,
+        password: hash,
+        admin: true,
+        awaitingApproval: false,
+      };
       fs.writeFileSync(usersLocation, JSON.stringify(firstUser));
       message.returnValue = firstUser;
-    } else {
-      // eslint-disable-next-line no-use-before-define
-      message.returnValue = ensureEmailIsUnique();
-    }
+    } else message.returnValue = ensureEmailIsUnique();
 
     function ensureEmailIsUnique() {
       const users = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
@@ -72,7 +76,8 @@ ipcMain.on('verifyUser', (message: IpcMainEvent, user: { email: string; password
     admin: boolean;
     awaitingApproval: boolean;
   } = users[email];
-  if (email in users && currUser.password === password)
+  const checkPassword = bcrypt.compareSync(password, users[email]?.password);
+  if (email in users && checkPassword)
     message.returnValue = currUser.awaitingApproval ? 'awaitingApproval' : currUser;
   else message.returnValue = false;
 });
