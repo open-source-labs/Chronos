@@ -112,7 +112,11 @@ const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colou
     );
   };
 
-  return <div className="chart">{solo && createChart()}</div>;
+  return (
+    <div className="chart" data-testid="Latency Chart">
+      {createChart()}
+    </div>
+  );
 });
 
 export default LatencyChart;

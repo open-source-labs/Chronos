@@ -12,7 +12,6 @@ jest.mock('electron', () => ({
   },
 }));
 
-
 describe('Speed Chart', () => {
   const props = {
     healthData: mockData,
@@ -31,6 +30,10 @@ describe('Speed Chart', () => {
 
   it('Should render', () => {
     expect(screen).toBeTruthy();
+  });
+
+  it('Should render graph', () => {
+    expect(screen.getByTestId('Speed Chart').firstChild).toBeTruthy();
   });
 
   it('Should render graph', () => {
