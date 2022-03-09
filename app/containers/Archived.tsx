@@ -12,7 +12,6 @@ import ProcessesChart from '../charts/ProcessesChart';
 import TemperatureChart from '../charts/TemperatureChart';
 import LatencyChart from '../charts/LatencyChart';
 import MemoryChart from '../charts/MemoryChart';
-// import RouteTrace from '../charts/RouteTrace';
 import DockerChart from '../charts/DockerChart';
 
 interface IParams {
@@ -35,39 +34,6 @@ interface IMatch {
 const GraphsContainer = ({ match }: IMatch) => {
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-  //   const initialData = {
-  //   nodes: [{ id: 'reverse-proxy' }, { id: 'books' }, { id: 'customers' }, { id: 'orders' }],
-  //   links: [
-  //     { source: 'reverse-proxy', target: 'books' },
-  //     { source: 'reverse-proxy', target: 'customers' },
-  //     { source: 'reverse-proxy', target: 'orders' },
-  //     { source: 'books', target: 'orders' },
-  //     { source: 'customers', target: 'books' },
-  //     { source: 'orders', target: 'customers' },
-  //   ],
-  // };
-
-  // const [data, setData] = useState(null);
-  // const width = 400;
-  // const height = 400;
-  // const [active, setActive] = useState(null);
-  // const canvas = useRef(null);
-
-  // function fetchData() {
-  //   Promise.resolve().then(() => setData(Object.values(initialData)));
-  // }
-
-  // useEffect(() => {
-  //   if (data && data.length) {
-  //     const d3Props = {
-  //       data,
-  //       width,
-  //       height,
-  //       onClick: setActive,
-  //     };
-  //     new RouteTrace(canvas.current, d3Props);
-  //   }
-  // }, [data]);
 
   // Get current service name from params
   const { service } = match.params;
@@ -93,6 +59,7 @@ const GraphsContainer = ({ match }: IMatch) => {
       fetchHealthData(service);
       fetchDockerData(service);
     }
+
     // On unmount: clear data
     return () => {
       if (intervalID) clearInterval(intervalID);

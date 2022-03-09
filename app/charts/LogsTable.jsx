@@ -1,14 +1,18 @@
+/** From Version 5.2 Team:
+ * We didn't really touch this file; mostly just cleaned a little bit of linting errors...
+ * But we left all the 'Missing "key" props,' 'Prop spreading is forbidden,' and 'Do not nest ternary expressions.'
+ */
+
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import {
-  useTable,
-  useGroupBy,
-  useExpanded,
-} from 'react-table';
+import { useTable, useGroupBy, useExpanded } from 'react-table';
 
 import { CommsContext } from '../context/CommsContext';
 
-//Styling for the table
+/**
+ * Styling for the Logs Table
+ */
+
 const Styles = styled.div`
   padding: 1rem;
 
@@ -38,7 +42,6 @@ const Styles = styled.div`
   }
 `;
 
-
 const Table = ({ columns, data }) => {
   const {
     getTableProps,
@@ -49,13 +52,11 @@ const Table = ({ columns, data }) => {
     state: { groupBy, expanded },
   } = useTable({ columns, data }, useGroupBy, useExpanded)
 
-  // set the number of rows to render
   const numberOfRows = 20;
   const firstPageRows = rows.slice(0, numberOfRows);
 
   return (
     <div>
-      {/* <Legend />    */}
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -74,27 +75,25 @@ const Table = ({ columns, data }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {firstPageRows.map((row) => {
-            prepareRow(row)
+          {firstPageRows.map(row => {
+            prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return (
-                  <td 
-                    //Cell color depending on what type it is given from the useGroupBy hook
-                    {...cell.getCellProps()}
-                    style= {{
-                      background: cell.isGrouped
-                        ? '#0af0082'
-                        : cell.isAggregated
-                        ? '#ffa50078'
-                        : cell.isPlaceholder
-                        ? '#ff000042'
-                        : 'white',
-                    }}
-                  >
+                  return (
+                    <td 
+                      {...cell.getCellProps()}
+                      style={{
+                        background: cell.isGrouped
+                          ? '#0af0082'
+                          : cell.isAggregated
+                          ? '#ffa50078'
+                          : cell.isPlaceholder
+                          ? '#ff000042'
+                          : 'white',
+                      }}
+                    >
                     {cell.isGrouped ? (
-                      // If it's a grouped cell, add an expander and row count
                       <>
                         <span {...row.getToggleRowExpandedProps()}>
                           {row.isExpanded ? '⬇️' : '➡️'}
@@ -102,62 +101,64 @@ const Table = ({ columns, data }) => {
                         {cell.render('Cell')} ({row.subRows.length})
                       </>
                     ) : cell.isAggregated ? (
-                      // If the cell is aggregated, use the Aggregated renderer for cell
                       cell.render('Aggregated')  
-                    ) : cell.isPlaceholder ? null : ( // For cells with repeated values, render null
-                      // Otherwise, just render the regular cell
+                    ) : cell.isPlaceholder ? null : (
                       cell.render('Cell')
                     )}
                   </td>
                 )
               })}
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
-      <div>Showing the first {rows.length} of {rows.length} rows</div>
+      <div>
+        Showing the first {rows.length} of {rows.length} rows
+      </div>
     </div>
   );
 };
 
 const LogsTable = () => {
-  const columns = React.useMemo(() => [
-    {
-      Header: 'Time',
-      accessor: 'time',
-      //No aggregate
-    },
-    {
-      Header: 'CorrelatingID',
-      accessor: 'correlatingid',
-      aggregate: 'count',
-      Aggregated: ({ value }) => `${value} logs`,
-    },
-    {
-      Header: 'Microservice',
-      accessor: 'microservice',
-    },
-    {
-      Header: 'Endpoint',
-      accessor: 'endpoint',
-    },
-    {
-      Header: 'Request Method',
-      accessor: 'request',
-    },
-    {
-      Header: 'Response Status',
-      accessor: 'responsestatus',
-    },
-    {
-      Header: 'Response Message',
-      accessor: 'responsemessage',
-    }
-  ], []);
-  
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Time',
+        accessor: 'time',
+      },
+      {
+        Header: 'CorrelatingID',
+        accessor: 'correlatingid',
+        aggregate: 'count',
+        Aggregated: ({ value }) => `${value} logs`,
+      },
+      {
+        Header: 'Microservice',
+        accessor: 'microservice',
+      },
+      {
+        Header: 'Endpoint',
+        accessor: 'endpoint',
+      },
+      {
+        Header: 'Request Method',
+        accessor: 'request',
+      },
+      {
+        Header: 'Response Status',
+        accessor: 'responsestatus',
+      },
+      {
+        Header: 'Response Message',
+        accessor: 'responsemessage',
+      },
+    ],
+    []
+  );
+
   const data = useContext(CommsContext).commsData;
-  
+
   return (
     <Styles>
       <Table columns={columns} data={data} />

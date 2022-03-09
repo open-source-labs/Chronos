@@ -1,0 +1,65 @@
+{
+  "name": "chronos",
+  "productName": "Chronos",
+  "version": "6.1.0",
+  "description": "Chronos Microservice Debugger",
+  "main": "./build/Main.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack serve",
+    "nodemon": "nodemon server/server.js",
+    "electron": "electron .",
+    "electron:wsl": "electron . --no-sandbox"
+  },
+  "babel": {
+    "presets": ["@babel/preset-env", "@babel/preset-react"],
+    "plugins": ["@babel/plugin-proposal-class-properties"]
+  },
+  "keywords": ["distributed tracing", "tracing"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@grpc/proto-loader": "^0.6.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@pionerlabs/grpc-interceptors": "^0.2.5",
+    "@types/react-table": "^7.0.29",
+    "caniuse-lite": "^1.0.30001312",
+    "chai": "^4.3.4",
+    "chronos-tracker": "^6.0.3",
+    "d3": "^6.7.0",
+    "electron": "^12.2.3",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "express": "^4.17.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.5",
+    "oidc-client": "^1.11.5",
+    "pg": "^8.6.0",
+    "plotly.js": "^1.58.4",
+    "plotly.js-dist": "^1.58.4",
+    "react": "16.10.1",
+    "react-dom": "16.10.1",
+    "react-graph-vis": "^1.0.7",
+    "react-plotly.js": "^2.5.1",
+    "react-router-dom": "^5.2.0",
+    "react-table": "^7.7.0",
+    "styled-components": "^5.2.3",
+    "webdriverio": "^6.12.1"
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hodesza/Chronos.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hodesza/Chronos/issues"
+  },
+  "homepage": "https://github.com/hodesza/Chronos#readme"
+}

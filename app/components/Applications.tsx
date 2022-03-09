@@ -24,20 +24,17 @@ const Applications: React.FC = React.memo(() => {
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
 
-  // Dynamic refs
   const delRef = useRef<any>([]);
 
   useEffect(() => {
     getApplications();
   }, []);
 
-  // Ask user for deletetion confirmation
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${application}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
 
-  // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       setIndex(i);
@@ -47,7 +44,6 @@ const Applications: React.FC = React.memo(() => {
   };
 
   const useStyles = makeStyles(theme => ({
-    // cards: myPostgres, myMongo, ToddDB
     paper: {
       height: 280,
       width: 280,
@@ -92,7 +88,6 @@ const Applications: React.FC = React.memo(() => {
         <Grid item lg={4} md={6} sm={12} key={`${i}application`}>
           <div id="card-hover">
             <Card
-              // key={`card-${i}`}
               className={classes.paper}
               variant="outlined"
               onClick={event => handleClick(event, application[0], i)}
@@ -103,7 +98,7 @@ const Applications: React.FC = React.memo(() => {
                     ref={element => {
                       delRef.current[i] = element;
                     }}
-                    className={classes.iconbutton + "deleteBtn"}
+                    className={`${classes.iconbutton}deleteBtn`}
                     aria-label="Delete"
                     onClick={event => confirmDelete(event, application[0], i)}
                   >

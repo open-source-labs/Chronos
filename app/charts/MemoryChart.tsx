@@ -5,6 +5,7 @@ import { all, solo as soloStyle } from './sizeSwitch';
 
 interface GraphsContainerProps {
   sizing: string;
+  colourGenerator: Function;
 }
 
 interface SoloStyles {
@@ -12,13 +13,9 @@ interface SoloStyles {
   width: number;
 }
 
-const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
+const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colourGenerator }) => {
   const { healthData } = useContext(HealthContext);
   const createChart = () => {
-    // const free: number[] = healthData.freememory;
-    // const used: number[] = healthData.usedmemory;
-    // const active: number[] = healthData.activememory;
-
     const [solo, setSolo] = useState<SoloStyles | null>(null);
 
     const [data, setData] = useState<Array<Array<string> | string>>([]);
@@ -52,17 +49,11 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
 
     const sizeSwitch = sizing === 'all' ? all : solo;
 
-    // interface DataObject {
-    //   type: string;
-    //   mode: string;
-    //   y: string | [];
-    //   name: string;
-    //   marker: {
-    //     color: string;
-    //     size: number;
-    //     symbol: string;
-    //   }
-    // }
+    /** From Version 5.2 Team:
+     * The below @interface DataObject is the proper typing.
+     * The interface starting at Line 69-79 is in place because it works.
+     */
+
     interface DataObject {
       type: any;
       mode: any;
@@ -87,8 +78,7 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
     ];
 
     plotlyData = data.map((dataArr, index) => {
-      // eslint-disable-next-line no-bitwise
-      const randomColor = `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
+      const hashedColor = colourGenerator(dataArr[0]);
       const tempArr: DataObject[] = [];
       for (let i = 1; i < dataArr.length; i++) {
         if (i === 1) {
@@ -98,14 +88,10 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
             y: dataArr[i],
             name: `${dataArr[0]} - Free Memory`,
             marker: {
-              color: randomColor,
+              color: hashedColor,
               size: 5,
               symbol: serviceMarker[index],
             },
-            // legendgroup: `${dataArr[0]}`,
-            // legendgrouptitle: {
-            //   text: `${dataArr[0]}`,
-            // },
           };
           tempArr.push(temp);
         } else if (i === 2) {
@@ -115,14 +101,10 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
             y: dataArr[i],
             name: `${dataArr[0]} - Used Memory`,
             marker: {
-              color: randomColor,
+              color: hashedColor,
               size: 5,
               symbol: serviceMarker[index],
             },
-            // legendgroup: `${dataArr[0]}`,
-            // legendgrouptitle: {
-            //   text: `${dataArr[0]}`,
-            // },
           };
           tempArr.push(temp);
         } else {
@@ -132,14 +114,10 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
             y: dataArr[i],
             name: `${dataArr[0]} - Active Memory`,
             marker: {
-              color: randomColor,
+              color: hashedColor,
               size: 5,
               symbol: serviceMarker[index],
             },
-            // legendgroup: `${dataArr[0]}`,
-            // legendgrouptitle: {
-            //   text: `${dataArr[0]}`,
-            // },
           };
           tempArr.push(temp);
         }
@@ -188,28 +166,3 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
 });
 
 export default MemoryChart;
-
-// {
-//   type: 'scattergl',
-//   fill: 'tonexty',
-//   fillcolor: '#fc4039',
-//   mode: 'none',
-//   y: free,
-//   name: 'Free Memory',
-// },
-// {
-//   type: 'scatter',
-//   fill: 'tonexty',
-//   fillcolor: '#4b54ea',
-//   mode: 'none',
-//   y: used,
-//   name: 'Used Memory',
-// },
-// {
-//   type: 'scatter',
-//   fill: 'tonexty',
-//   fillcolor: randomColor,
-//   mode: 'none',
-//   y: active,
-//   name: 'Active Memory',
-// },

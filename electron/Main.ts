@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import './routes/user';
 import './routes/dashboard';
 import './routes/data';
+import path from 'path';
 
 const ipc = ipcMain;
 
@@ -23,6 +24,7 @@ const createWindow = () => {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
+      preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -30,13 +32,9 @@ const createWindow = () => {
 
   // Development: load the application window to port 8080
   win.loadURL('http://localhost:8080/');
-  // win.loadFile('./dist/index.html');
-  // win.loadURL(`file://${path.join(__dirname, './dist/index.html')}`);
 
-  // win.webContents.on('did-finish-load', () => {
-  //   console.log('content loaded');
-  //   win.webContents.executeJavaScript(`console.log(${remote})`);
-  // });
+  //Production
+  // win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
 
   ipc.on('max', () => {
     if (!win.isMaximized()) win.maximize();

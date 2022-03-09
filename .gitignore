@@ -8,6 +8,7 @@ coverage
 __tests__/**/__snapshots__
 # .env
 users.json
+test_users.json
 
 # Compiled source #
 ###################

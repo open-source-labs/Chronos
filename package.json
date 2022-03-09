@@ -1,5 +1,6 @@
 {
   "name": "chronos",
+  "productName": "Chronos",
   "version": "6.1.0",
   "description": "Chronos Microservice Debugger",
   "main": "./build/Main.js",
@@ -19,12 +20,24 @@
     "both:tsc": "nodemon --watch ./app & npm run start & sleep 5 && npm run electron",
     "both:dev": "npm run start & nodemon --watch ./electron --exec 'npm run electron'",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-any": "electron-packager ./dist chronos --overwrite --prune=true --out=release-builds",
     "create-installer-mac": "electron-installer-dmg ./release-builds/chronos-darwin-x64/chronos.app/ Chronos",
     "delete": "rm -rf dist & rm -rf build",
+    "installDep": "cd dist && npm i",
+    "deleteDist": "node nodeUtilities/deleteDist.js",
     "reinstall": "rm -rf node_modules && npm install",
     "prepare": "tsc -v && tsc -p . && npm run build",
-    "prepare2": "tsc -v && tsc -p .",
-    "rebuild": "npm run delete && npm run prepare"
+    "prepareDist": "npm run deleteDist && tsc -v && tsc -p . && npm run build && npm run copyAssetsDist && npm run copyPackageJsonDist && npm run copyBuildDist && npm run copyBuildDBDist && npm run copyBuildModelsDist && npm run copyBuildRoutesDist && npm run copyBuildUtilitiesDist && npm run copySettingsDist && npm run installDep",
+    "rebuild": "npm run delete && npm run prepare",
+    "copyAssetsDist": "echo D | xcopy app\\assets dist\\assets",
+    "copyPackageJsonDist": "echo F | xcopy dist.package.json dist\\package.json",
+    "copyBuildDist": "echo D | xcopy build dist\\build",
+    "copyBuildDBDist": "echo D | xcopy build\\databases dist\\build\\databases",
+    "copyBuildModelsDist": "echo D | xcopy build\\models dist\\build\\models",
+    "copyBuildRoutesDist": "echo D | xcopy build\\routes dist\\build\\routes",
+    "copyBuildUserDist": "echo D | xcopy build\\user dist\\build\\user",
+    "copyBuildUtilitiesDist": "echo D | xcopy build\\utilities dist\\build\\utilities",
+    "copySettingsDist": "echo F | xcopy settings.json dist\\settings.json"
   },
   "babel": {
     "presets": [
@@ -102,6 +115,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "concurrently": "^7.0.0",
     "css-loader": "^3.5.3",
     "electron-devtools-installer": "^3.2.0",
     "electron-installer-dmg": "^3.0.0",

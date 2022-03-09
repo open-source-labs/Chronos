@@ -1,5 +1,11 @@
+/** From Version 5.2 Team:
+ * We only fixed linting issues regarding Notifications.
+ * Otherwise, Notifications still does not function properly.
+ * Good luck!
+ */
+
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext, useEffect, useState, useRef, forwardRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 
 // MATERIAL UI METHODS
 import {
@@ -11,38 +17,31 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
-import { spacing } from '@material-ui/system';
 
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
 // MATERIAL UI ICONS
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import ListIcon from '@material-ui/icons/List';
-import SearchIcon from '@material-ui/icons/SearchSharp';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
+
 // MODALS
 import AddModal from '../modals/AddModal';
 import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
-import Search from '../components/icons/Search';
+import Search from './icons/Search';
 
 // STYLESHEETS
-// import '../stylesheets/Occupied.scss';
 import '../stylesheets/Occupied.scss';
 
-// DASHBOARD CONTEXT
+// CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
-
 import { ApplicationContext } from '../context/ApplicationContext';
-
 import { CommsContext } from '../context/CommsContext';
 
 // TYPESCRIPT
@@ -61,7 +60,7 @@ const Occupied = React.memo(() => {
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z'); // init at year 2000
+  const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
 
   // Dynamic refs
   const delRef = useRef<any>([]);
@@ -70,7 +69,7 @@ const Occupied = React.memo(() => {
     getApplications();
   }, []);
 
-  // Ask user for deletion confirmation
+  // Asks user to confirm deletion
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
@@ -102,12 +101,12 @@ const Occupied = React.memo(() => {
       textAlign: 'center',
       color: '#888888',
       whiteSpace: 'nowrap',
-      backgroundColor: 'lightgray', // dark mode
+      backgroundColor: 'lightgray',
       borderRadius: 3,
       border: '0',
-      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', // dark mode
+      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)', // dark mode
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         color: '#ffffff',
         fontWeight: 600,
       },
@@ -132,15 +131,16 @@ const Occupied = React.memo(() => {
       height: '75px',
       boxShadow: 'none',
     },
+
     // ALL CARDS: CONTENT
     fontStyles: {
       fontSize: '18px',
       fontFamily: 'Roboto',
       fontWeight: 300,
       color: '#444d56',
-      // color: '#ffffff', // dark mode
     },
   }));
+
   const useStylesLight = makeStyles<StyleProps>(theme => ({
     // ALL CARDS
     paper: {
@@ -195,7 +195,7 @@ const Occupied = React.memo(() => {
     },
   }));
 
-  const classes = mode === 'light mode' ? useStylesLight({}) : useStylesDark({}); // {} as StyleProps
+  const classes = mode === 'light mode' ? useStylesLight({}) : useStylesDark({});
 
   // update notification count based on statuscode >= 400
   const notification = commsData
@@ -225,8 +225,6 @@ const Occupied = React.memo(() => {
                   type="text"
                   name="search"
                 />
-                {/* <SearchIcon className="icon" id="searchIcon" /> */}
-                {/* <img src="../assets/search.svg" /> */}
                 <Search />
                 <hr />
               </label>
@@ -239,7 +237,6 @@ const Occupied = React.memo(() => {
                 </span>
                 <DashboardIcon className="navIcon" id="dashboardIcon" />
               </div>
-              {/* onClick={updateNotification} */}
               <div className="notificationsIconArea">
                 <span className="notificationsTooltip">
                   You have {notification ? notification.length : 0} new alerts

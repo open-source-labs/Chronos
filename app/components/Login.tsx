@@ -10,9 +10,14 @@ const Login = React.memo(() => {
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
   const [failedAuth, setFailedAuthState] = useState<JSX.Element>(<></>);
 
+  /** From Version 5.2 Team:
+   * Function that will be called when the form button is clicked
+   * It handles submitting the login information
+   */
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const inputFields = e.currentTarget.querySelectorAll('input');
+    const inputFields: HTMLInputElement[] = e.currentTarget.querySelectorAll('input');
     const email = inputFields[0].value;
     const password = inputFields[1].value;
     // eslint-disable-next-line no-return-assign
@@ -59,6 +64,5 @@ const Login = React.memo(() => {
     </div>
   );
 });
-// alert("Log In credentials are wrong!\n\n (\\__/) \n (='.'=) \n('')__('')");
 
 export default Login;
