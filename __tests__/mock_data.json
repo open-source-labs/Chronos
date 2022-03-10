@@ -2,9 +2,9 @@
   "activememory": [12, 13],
   "blockedprocesses": [98, 43],
   "cpuloadpercent": [12, 1],
-  "cpuspeed": [43, 32],
+  "cpuspeed": [43569, 32],
   "cputemp": [5, 32],
-  "freememory": [5, 76],
+  "freememory": [55648, 76],
   "id": [6, 8],
   "service": ["chronos-mock","chronos-mock"],
   "latency": [41, 51],
@@ -12,5 +12,5 @@
   "sleepingprocesses": [312, 33],
   "time": ["", ""],
   "totalmemory": [1, 4],
-  "usememory": [3, 6]
+  "usedmemory": [3, 6]
 }]

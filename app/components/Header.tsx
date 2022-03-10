@@ -60,7 +60,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
     mode === 'light mode' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
 
   return (
-    <div className="microservice-header" style={currentModeCSS}>
+    <div className="microservice-header" style={currentModeCSS} data-testid="Header">
       <h1 className="microserviceTitle">{app}</h1>
 
       {selectModal && <div className="filter" onClick={dropdownClickHandler}></div>}

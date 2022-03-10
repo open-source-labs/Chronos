@@ -10,8 +10,8 @@ const saltRounds = 12;
 let settingsLocation;
 let usersLocation;
 if (process.env.NODE_ENV === 'development') {
-  settingsLocation = path.resolve(__dirname, '../../__tests__2022/test_settings.json');
-  usersLocation = path.resolve(__dirname, '../../__tests__2022/test_users.json');
+  settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
+  usersLocation = path.resolve(__dirname, '../../__tests__/test_users.json');
 } else {
   settingsLocation = path.resolve(__dirname, '../../settings.json');
   usersLocation = path.resolve(__dirname, '../../users.json');

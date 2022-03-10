@@ -19,7 +19,7 @@ const TrafficChart = React.memo(() => {
   const yAxisHeadRoom: number = Math.max(...serverPings) + 10;
 
   return (
-    <div className="chart">
+    <div className="chart" data-testid="Traffic Chart">
       <Plot
         data={[
           {

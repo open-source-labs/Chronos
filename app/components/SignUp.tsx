@@ -40,7 +40,7 @@ const SignUp = React.memo(() => {
 
   return (
     <div className="home">
-      <div className="welcome">
+      <div className="welcome" data-testid="SignUp">
         <h1 className="welcomeMessage">Welcome back to Chronos!</h1>
         <h2>Your all-in-one application monitoring tool.</h2>
 

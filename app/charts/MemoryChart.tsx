@@ -162,7 +162,11 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colour
     );
   };
 
-  return <div className="chart">{createChart()}</div>;
+  return (
+    <div className="chart" data-testid="Memory Chart">
+      {createChart()}
+    </div>
+  );
 });
 
 export default MemoryChart;
