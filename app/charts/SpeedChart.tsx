@@ -74,7 +74,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
         x: data[0][0],
         y: dataArr[1],
         type: 'scatter',
-        mode: 'lines+markers',
+        mode: 'lines',
         marker: {
           color: randomColor,
         },
@@ -86,6 +86,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
     return (
       <Plot
         data={[...plotlyData]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Speed Chart',
           ...sizeSwitch,
@@ -96,7 +97,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
           },
           xaxis: {
             title: 'Time (EST)',
-            tickmode: 'linear',
+            tickmode: 'auto',
             dtick: 2,
             tickformat: '%H %M %p',
             // tickangle: 30,
@@ -116,7 +117,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
           showlegend: true,
           legend: {
             orientation: 'h',
-            xanchor: 'center',
+            xanchor: 'auto',
             x: 0.5,
             y: 5,
           },

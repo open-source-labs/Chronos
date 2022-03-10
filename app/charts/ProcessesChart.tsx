@@ -1,7 +1,7 @@
 /** FOR THE NEXT TEAM
  * You should probably take a look and fix the legend for the graph.
- * Can compare services, but hard to tell which points of data belong to which server. 
-*/
+ * Can compare services, but hard to tell which points of data belong to which server.
+ */
 
 /* eslint-disable no-useless-concat */
 import React, { useContext, useState, useEffect } from 'react';
@@ -54,8 +54,6 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
               service.sleepingprocesses,
             ];
             tempArr.push(temp);
-
-            
           }
         );
         setData(tempArr);
@@ -139,6 +137,7 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
     return (
       <Plot
         data={[...plotlyData.flat()]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Process Overview',
           ...sizeSwitch,
@@ -159,6 +158,7 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) =
             },
           },
           xaxis: {
+            tickmode: 'auto',
             dtick: 10,
             title: 'Time Elapsed (min)',
           },
