@@ -84,7 +84,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
     setChart(route);
   };
 
-  const stringToColour = (string: string) => {
+  const stringToColour = (string: string, recurses = 0) => {
+    if (recurses > 20) return string;
     function hashString(str: string) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
@@ -103,7 +104,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       const g = (num >>> 8) & 0xff;
       const b = num & 0xff;
       const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-      return yiq <= 50 ? stringToColour(color) : color;
+      return yiq <= 50 ? stringToColour(color, recurses + 1) : color;
     }
     for (let salt = 0; salt < 5; salt++) string = hashString(string);
     return contrastYiq(string);

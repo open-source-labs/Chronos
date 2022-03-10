@@ -162,7 +162,7 @@ const RouteChart = React.memo(() => {
   //   },
   // };
 
-  if (communicationsData.length) {
+  if (communicationsData[0].endpoint !== '/') {
     return (
       <div className="traceContainer">
         <span id="tracesTitle">Route Traces</span>
