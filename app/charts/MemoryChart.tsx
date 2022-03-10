@@ -129,6 +129,7 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colour
     return (
       <Plot
         data={[...plotlyData.flat()]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Memory Traces',
           ...sizeSwitch,
@@ -143,13 +144,13 @@ const MemoryChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colour
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
-            y: -1,
+            y: 0,
             font: {
               size: 9,
             },
           },
           xaxis: {
-            tickmode: 'linear',
+            tickmode: 'auto',
             tick0: 0,
             dtick: 10,
             title: 'Time Elapsed (min)',

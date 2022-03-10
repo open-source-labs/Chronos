@@ -136,6 +136,7 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, col
     return (
       <Plot
         data={[...plotlyData.flat()]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Process Overview',
           ...sizeSwitch,
@@ -156,6 +157,7 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, col
             },
           },
           xaxis: {
+            tickmode: 'auto',
             dtick: 10,
             title: 'Time Elapsed (min)',
           },
