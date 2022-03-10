@@ -30,12 +30,13 @@ const createWindow = () => {
     },
   });
 
-  // Development: load the application window to port 8080
-  win.loadURL('http://localhost:8080/');
-
-  //Production
-  // win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
-
+  if (process.env.NODE_ENV === 'development') {
+    // Development: load the application window to port 8080
+    win.loadURL('http://localhost:8080/');
+  } else {
+    // Production
+    win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
+  }
   ipc.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();

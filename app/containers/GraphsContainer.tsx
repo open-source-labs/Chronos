@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
@@ -5,7 +6,9 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
+
 import Header from '../components/Header';
+
 import SpeedChart from '../charts/SpeedChart';
 import TemperatureChart from '../charts/TemperatureChart';
 import LatencyChart from '../charts/LatencyChart';
@@ -16,7 +19,9 @@ import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
+
 import LogsTable from '../charts/LogsTable';
+
 import '../stylesheets/GraphsContainer.scss';
 
 export interface Params {
@@ -33,15 +38,6 @@ export interface GraphsContainerProps {
   };
 }
 
-/**
- * pathname: "/applications/ToddDB/chronos-mon"
- * pathname: "/applications/ToddDB/chronos-mon+chronos-mon2"
- * pathname: "/applications/ToddDB/service?server=chronos-mon+chronos-mon2"
- *
- *
- *
- */
-
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const history = useHistory();
   const { app, service } = useParams<any>();
@@ -50,16 +46,14 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   const { servicesData } = useContext(ApplicationContext);
 
-  const { fetchHealthData, setHealthData, healthData, services } = useContext(HealthContext);
-  const { fetchDockerData, setDockerData } = useContext(DockerContext);
+  const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
+  const { setDockerData, dockerData } = useContext(DockerContext);
   const { fetchCommsData } = useContext(CommsContext);
   const [chart, setChart] = useState<string>('all');
-  const [sizing, setSizing] = useState<string>('solo');
 
-  const [prevRoute, setPrevRoute] = useState<string>('')
+  const [prevRoute, setPrevRoute] = useState<string>('');
 
   useEffect(() => {
-    console.log('services', services);
     const serviceArray = service.split(' ');
 
     if (live) {
@@ -67,16 +61,14 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         setInterval(() => {
           fetchCommsData(app, live);
           fetchHealthData(serviceArray);
-          // fetchDockerData(serviceArray);
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchCommsData(app, live);
       fetchHealthData(serviceArray);
-      // fetchDockerData(serviceArray);
     }
-    // On unmount: clear data and interval
+
     return () => {
       if (intervalID) clearInterval(intervalID);
       setHealthData({});
@@ -84,25 +76,40 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
     };
   }, [service, live]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log('in GC', healthData);
-  //   }, 5000);
-  // }, [healthData]);
-
-
-  const routing = route => {
-    console.log(services);
-    
+  const routing = (route: string) => {
     if (location.href.includes('communications')) {
-      // console.log('app', app);
-      if (prevRoute === '') history.replace(`${servicesData[0].microservice}`)
+      if (prevRoute === '') history.replace(`${servicesData[0].microservice}`);
       else history.replace(prevRoute);
     }
-    setChart(route)
-  }
+    setChart(route);
+  };
 
-  // Conditionally render the communications or health graphs
+  const stringToColour = (string: string, recurses = 0) => {
+    if (recurses > 20) return string;
+    function hashString(str: string) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      let colour = '#';
+      for (let i = 0; i < 3; i++) {
+        const value = (hash >> (i * 8)) & 0xff;
+        colour += `00${value.toString(16)}`.substr(-2);
+      }
+      return colour;
+    }
+    function contrastYiq(color: string) {
+      const num = parseInt(color.slice(1), 16);
+      const r = (num >>> 16) & 0xff;
+      const g = (num >>> 8) & 0xff;
+      const b = num & 0xff;
+      const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+      return yiq <= 50 ? stringToColour(color, recurses + 1) : color;
+    }
+    for (let salt = 0; salt < 5; salt++) string = hashString(string);
+    return contrastYiq(string);
+  }; // This is a work of pure genius and also probably why the app is infinitely recursing
+
   return (
     <>
       <nav>
@@ -148,19 +155,24 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         >
           Processes
         </button>
+        {dockerData.containername && (
+          <button
+            id="docker-button"
+            className={chart === 'docker' ? 'selected' : undefined}
+            onClick={() => routing('docker')}
+          >
+            Docker
+          </button>
+        )}
         <button
-          id="docker-button"
-          className={chart === 'docker' ? 'selected' : undefined}
-          onClick={() => routing('docker')}
-        >
-          Docker
-        </button>
-        <button id="communication-button" 
+          id="communication-button"
+          className={chart === 'communications' ? 'selected' : undefined}
           onClick={() => {
-            if (!location.href.includes('communications'))
-            setPrevRoute(services.join(" "));
+            if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
+            setChart('communications');
             history.push('communications');
-          }}>
+          }}
+        >
           Communication
         </button>
       </nav>
@@ -176,20 +188,24 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'speed' && <SpeedChart sizing="solo" />}
-            {chart === 'temp' && <TemperatureChart sizing="solo" />}
-            {chart === 'latency' && <LatencyChart sizing="solo" />}
-            {chart === 'memory' && <MemoryChart sizing="solo" />}
-            {chart === 'process' && <ProcessesChart sizing="solo" />}
+            {chart === 'speed' && <SpeedChart colourGenerator={stringToColour} sizing="solo" />}
+            {chart === 'temp' && (
+              <TemperatureChart colourGenerator={stringToColour} sizing="solo" />
+            )}
+            {chart === 'latency' && <LatencyChart colourGenerator={stringToColour} sizing="solo" />}
+            {chart === 'memory' && <MemoryChart colourGenerator={stringToColour} sizing="solo" />}
+            {chart === 'process' && (
+              <ProcessesChart colourGenerator={stringToColour} sizing="solo" />
+            )}
             {chart === 'docker' && <DockerChart />}
 
             {chart === 'all' && (
               <>
-                <SpeedChart sizing="all" />
-                <TemperatureChart sizing="all" />
-                <LatencyChart sizing="all" />
-                <MemoryChart sizing="all" />
-                <ProcessesChart sizing="all" />
+                <SpeedChart colourGenerator={stringToColour} sizing="all" />
+                <TemperatureChart colourGenerator={stringToColour} sizing="all" />
+                <LatencyChart colourGenerator={stringToColour} sizing="all" />
+                <MemoryChart colourGenerator={stringToColour} sizing="all" />
+                <ProcessesChart colourGenerator={stringToColour} sizing="all" />
                 <DockerChart />
               </>
             )}

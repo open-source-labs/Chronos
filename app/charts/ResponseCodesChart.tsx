@@ -1,3 +1,8 @@
+/** From Version 5.2 Team:
+ * We only cleaned up the linting errors
+ * Did not change any functionality in this page
+ */
+
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
@@ -13,16 +18,11 @@ interface IObj {
   time: string;
 }
 
-type responseCodes = {
-  [key: string]: number;
-};
-
 const ResponseCodesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
 
   const createChart = () => {
-    // Counter for request types
-    const responseCodes: responseCodes = {
+    const responseCodes: { [key: string]: number } = {
       '100-199': 0,
       '200-299': 0,
       '300-399': 0,
@@ -47,7 +47,6 @@ const ResponseCodesChart: React.FC = React.memo(() => {
       '16': 0,
     };
 
-    // Record each status code frequencies
     commsData.forEach((obj: IObj) => {
       const status = obj.responsestatus;
       if (status >= 500) {
@@ -64,8 +63,6 @@ const ResponseCodesChart: React.FC = React.memo(() => {
         responseCodes[status] += 1;
       }
     });
-
-    // console.log(responseCodes);
 
     return (
       <Plot

@@ -4,15 +4,7 @@ import '../stylesheets/Settings.scss';
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
 
-// Need to add flag to turn off the splash at start
-// Need to add flag to turn off getting started page
-// Need to add flag to turn on/off live data (ideally persist on restart)
-
-//  Typescript
-// type ClickEvent = React.MouseEvent<HTMLElement>;
-
 const Settings: React.SFC = React.memo(() => {
-  //  use context from Dash board regarding currentMode
   const { changeMode } = useContext(DashboardContext);
   const handleClick = (mode: string) => {
     changeMode(mode);

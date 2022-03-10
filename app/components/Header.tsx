@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import ListIcon from '@material-ui/icons/List';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
@@ -18,7 +17,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
   const { servicesData } = useContext(ApplicationContext);
   const { mode } = useContext(DashboardContext);
   const [selectModal, setSelectModal] = useState(false);
-  let [selectedServices, setSelectedServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
 
   const handleCheckbox = (e: any) => {
     e.persist();
@@ -27,10 +26,9 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
       setSelectedServices(selectedServices.concat(e.target.value));
     } else {
       e.target.parentElement.classList.toggle('selected');
-      setSelectedServices(selectedServices.filter(service => service !== e.target.value));
+      setSelectedServices(selectedServices.filter(serv => serv !== e.target.value));
     }
   };
-  // console.log(selectedServices);
 
   const dropdownClickHandler = () => {
     if (selectModal === false) {
@@ -39,6 +37,11 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
         left: 0,
         behavior: 'smooth',
       });
+      
+      /** From Version 5.2 Team:
+       * Can't remove ! in Lines 45 and 49 as they are strictNullChecks
+       */
+
       document.querySelector('html')!.style.overflowY = 'hidden';
       setSelectModal(true);
       setSelectedServices([]);
@@ -49,22 +52,15 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
   };
 
   const handleServices = () => {
-    // e.preventDefault();
     const joinedServices = selectedServices.join(' ');
-    console.log(location.href, joinedServices);
-
     history.replace(joinedServices);
   };
 
   const currentModeCSS =
     mode === 'light mode' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
 
-  useEffect(() => {
-    console.log(selectedServices);
-  }, [selectedServices]);
-
   return (
-    <div className="microservice-header" style={currentModeCSS}>
+    <div className="microservice-header" style={currentModeCSS} data-testid="Header">
       <h1 className="microserviceTitle">{app}</h1>
 
       {selectModal && <div className="filter" onClick={dropdownClickHandler}></div>}
@@ -79,18 +75,19 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
 
         {selectModal && (
           <div className="services">
-            {servicesData.map(({ _id, microservice }: any) => (
-              <label htmlFor={microservice} className="select">
-                {microservice}
-                <input
-                  type="checkbox"
-                  value={`${microservice}`}
-                  id={`${microservice}`}
-                  name={`${microservice}`}
-                  onChange={handleCheckbox}
-                />
-              </label>
-            ))}
+            {servicesData.map(({ microservice }: any) => {
+              return (
+                <label htmlFor={microservice} className="select">
+                  {microservice}
+                  <input
+                    type="checkbox"
+                    value={`${microservice}`}
+                    id={`${microservice}`}
+                    name={`${microservice}`}
+                    onChange={handleCheckbox} />
+                </label>
+              );
+            })}
 
             <button className="service-button" onClick={handleServices}>
               {selectedServices.length === 0 && 'Select Service'}
@@ -101,27 +98,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
         )}
       </div>
 
-      {/* <select name="microservice" value={service} onChange={e => history.replace(e.target.value)}>
-        {servicesData.map(({ _id, microservice }: any) => (
-          // <option key={_id} value={`${microservice}`} selected={service === microservice}>
-          <option key={_id} value={`${microservice}`}>
-            {microservice}
-          </option>
-        ))}
-        <option defaultValue="Select service">communications</option>
-        {/* <option value="communications" selected={service === 'communications'}>
-            communications
-          </option> 
-      </select> */}
-
       <div className="header">
-        {/* <Link className="link" id="return" to="/applications">
-          <span>
-            <ListIcon className="icon" id="returnIcon" />
-          </span>
-          <p id="returnToDash">Dashboard</p>
-        </Link> */}
-        {/* <button id="returnButton" onClick={() => history.goBack()}><ListIcon className="icon" id="returnIcon" /></button> */}
         <button onClick={() => setLive(!live)}>
           {live ? (
             <div>

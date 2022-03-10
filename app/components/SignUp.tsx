@@ -40,20 +40,17 @@ const SignUp = React.memo(() => {
 
   return (
     <div className="home">
-      <div className="welcome">
+      <div className="welcome" data-testid="SignUp">
         <h1 className="welcomeMessage">Welcome back to Chronos!</h1>
         <h2>Your all-in-one application monitoring tool.</h2>
 
         <form className="form" onSubmit={handleSubmit}>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="username">
             <input type="text" name="username" id="username" placeholder="enter username" />
           </label>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="email">
             <input type="email" name="email" id="email" placeholder="your@email.here" />
           </label>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label className="password">
             <input type="password" name="password" id="password" placeholder="enter password" />
           </label>
@@ -66,10 +63,6 @@ const SignUp = React.memo(() => {
           </button>
         </form>
       </div>
-
-      {/* <Link className="link" to="/applications">
-        Get Started
-      </Link> */}
     </div>
   );
 });
