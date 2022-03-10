@@ -24,7 +24,7 @@ let currentDatabaseType: string;
  */
 let settingsLocation;
 if (process.env.NODE_ENV === 'development')
-  settingsLocation = path.resolve(__dirname, '../../__tests__2022/test_settings.json');
+  settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
 else settingsLocation = path.resolve(__dirname, '../../settings.json');
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
@@ -170,7 +170,6 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
           ORDER BY _id DESC
           LIMIT 50
           `;
-          
       // Execute query
       result = await pool.query(query);
       result = result.rows.reverse();

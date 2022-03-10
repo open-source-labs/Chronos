@@ -6,7 +6,6 @@ interface SplashProps {
 }
 
 const Splash: React.SFC<SplashProps> = React.memo(({ setFirstVisit }) => {
-  // Display splash for 3 seconds
   useEffect(() => {
     setTimeout(() => setFirstVisit(false), 3000);
   }, []);

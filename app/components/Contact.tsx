@@ -27,7 +27,6 @@ const Contact = React.memo(() => {
                 id="issueLink"
                 href="https://github.com/open-source-labs/Chronos/issues"
                 target="_blank"
-                // added rel="noreferrer", security risk if using target="_blank" without rel="noreferrer"
                 rel="noreferrer"
               >
                 here

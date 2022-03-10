@@ -7,7 +7,6 @@ import WindowBar from './components/WindowBar';
 
 const theme = createMuiTheme({
   typography: {
-    // Graph font when you shrink window
     fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
 });

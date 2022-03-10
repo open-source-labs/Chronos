@@ -21,7 +21,7 @@ const CreateAdmin = React.memo(() => {
 
   return (
     <div className="home">
-      <div className="welcome" data->
+      <div className="welcome" data-testid="CreateAdmin">
         <h1 className="welcomeMessage">Welcome to Chronos!</h1>
         <h2>Please create your admin account.</h2>
         <form className="form" onSubmit={handleSubmit}>

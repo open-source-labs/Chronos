@@ -1,3 +1,7 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -14,35 +18,20 @@ interface IService {
 }
 
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
-  const { fetchServicesNames, servicesData, setServicesData, connectToDB } = useContext(
-    ApplicationContext
-  );
+  const { servicesData, connectToDB } = useContext(ApplicationContext);
+  const [services, setServices] = useState<Array<string>>([]);
 
-  let [services, setServices ] = useState<Array<string>>([])
-
-  const toggleService = (service) => {
-      if(services.includes(service)) {
-        setServices(services.filter(el => el !== service))
-      }
-      else {
-        if(service !== 'communications' && services.includes('communications')){
-          services = [];
-        }
-        setServices(services.concat(service));
-      };
+  const toggleService = service => {
+    if (services.includes(service)) {
+      setServices(services.filter(el => el !== service));
+    } else {
+      if (service !== 'communications' && services.includes('communications')) setServices([]);
+      setServices(services.concat(service));
+    }
   };
 
   useEffect(() => {
-    console.log(services)
-  },[services])
-  
-  useEffect(() => {
     connectToDB(i, app);
-    // fetchServicesNames(app);
-
-    return () => {
-      // setServicesData([]);
-    };
   }, [i]);
 
   return (
@@ -60,22 +49,26 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
           <div className="services-links">
             {servicesData.map((service: IService, index: number) => (
               <div
-                key={index}
-                className={services.includes(service.microservice) ? "link selected" : "link"}
+                key={`${index}servicesData`}
+                className={services.includes(service.microservice) ? 'link selected' : 'link'}
                 onClick={() => toggleService(service.microservice)}
               >
                 {service.microservice}
               </div>
             ))}
-            <div 
-              className={services.includes('communications') ? "link selected" : "link"}
-              onClick={() => setServices(['communications'])}>
+            <div
+              className={services.includes('communications') ? 'link selected' : 'link'}
+              onClick={() => setServices(['communications'])}
+            >
               communications
             </div>
-            <Link className="router link" to={services.length > 0 ? `/applications/${app}/${services.join(" ")}` : "#"}>
-              {services.length === 0 && "Select Services"}
-              {services.length === 1 && "Display Service"}
-              {services.length > 1 && "Compare Services"}
+            <Link
+              className="router link"
+              to={services.length > 0 ? `/applications/${app}/${services.join(' ')}` : '#'}
+            >
+              {services.length === 0 && 'Select Services'}
+              {services.length === 1 && 'Display Service'}
+              {services.length > 1 && 'Compare Services'}
             </Link>
           </div>
         </>

@@ -1,3 +1,9 @@
+/** From Version 5.2 Team:
+ * This file does not seem to be showing any data.
+ * Hope a future team figures it out.
+ * Best of luck!
+ */
+
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import Graph from 'react-graph-vis';
@@ -5,52 +11,50 @@ import { CommsContext } from '../context/CommsContext';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
-  // gather all communicationsData and sort them using matching correlatingid.
-  // resObj { key = correlatingid : value = array of objects{ microservice , time} }
-  // resObj { key = correlatingid : value = array of objects{ microservice , time, functionName} }
-  const resObj = {};
 
-  if (communicationsData.length > 0 && communicationsData[0]._id) {
-    // Sort the communication array from OLDEST to NEWEST documents.
+  const resObj = {};
+  const dataId = '_id';
+
+  if (communicationsData.length > 0 && communicationsData[0][dataId]) {
+    /** From Version 5.2 Team:
+     * @communicationsData comes back as an array with data in descending order.
+     * The below sorts it back into ascending order.
+     */
+
     communicationsData.sort((a, b) => {
-      // Note that a newer date obj IS GREATER THAN an older date obj.
       if (new Date(a.time) > new Date(b.time)) return 1;
       if (new Date(a.time) < new Date(b.time)) return -1;
       return 0;
     });
 
-    // Iterate over sorted array to build up resObj.
     for (let i = 0; i < communicationsData.length; i += 1) {
       const element = communicationsData[i];
       if (!resObj[element.correlatingid]) resObj[element.correlatingid] = [];
       resObj[element.correlatingid].push({
         microservice: element.microservice,
         time: element.time,
-        request: element.request, // here
+        request: element.request,
       });
     }
-    // ? What does this else block do?
   } else {
     for (let i = communicationsData.length - 1; i >= 0; i--) {
       const element = communicationsData[i];
       if (resObj[element.correlatingid]) {
         resObj[element.correlatingid].push({
-          microservice,
-          time,
+          microservice: element.microservice,
+          time: element.time,
         });
       } else {
         resObj[element.correlatingid] = [
           {
-            microservice,
-            time,
+            microservice: element.microservice,
+            time: element.time,
           },
         ];
       }
     }
   }
 
-  // Filter the array so that only subarrays w/ len > 1 are kept.
-  // (len == 1 means there's only one point in the route. There's no meaningful data to be gained from those.)
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
 
   const useStyles = makeStyles(theme => ({
@@ -68,12 +72,14 @@ const RouteChart = React.memo(() => {
   }));
   const classes = useStyles({});
 
-  // ======Graphs logic =======//
+  /**
+   * Graph Logic Below
+   */
+
   const nodeListObj = {};
   const edgeListObj = {};
   for (const route of tracePoints) {
     for (let i = 0; i < route.length; i += 1) {
-      // check if node exists if not then add node
       const id = route[i].microservice;
       if (nodeListObj[id] === undefined) {
         nodeListObj[id] = {
@@ -81,16 +87,15 @@ const RouteChart = React.memo(() => {
           label: id,
         };
       }
-      // add edge from node to node (repeat til end)
+
       if (i !== 0) {
         const from = route[i - 1].microservice;
         const to = id;
-        const { request } = route[i - 1]; // here
+        const { request } = route[i - 1];
         const edgeStr = JSON.stringify({ from, to, request });
         let duration = new Date(route[i].time) - new Date(route[i - 1].time);
-        // only want one edge per route with the average duration
+
         if (edgeListObj[edgeStr]) {
-          // ? wrong math
           duration = (duration + edgeListObj[edgeStr]) / 2;
         }
         edgeListObj[edgeStr] = duration;
@@ -98,12 +103,10 @@ const RouteChart = React.memo(() => {
     }
   }
 
-  // turn objects into valid arrays to input into graph
   const nodeList = Object.values(nodeListObj);
   const edgeList = [];
   for (const [edgeStr, duration] of Object.entries(edgeListObj)) {
     const edge = JSON.parse(edgeStr);
-    // console.log(edge.request)
     edge.label = edge.request
       ? `${edge.request} - ${(duration * 10).toFixed(0)} ms`
       : `${(duration * 10).toFixed(0)} ms`;
@@ -153,29 +156,32 @@ const RouteChart = React.memo(() => {
     },
   };
 
-  const events = {
-    select(event) {
-      const { nodes, edges } = event;
-    },
-  };
+  // const events = {
+  //   select(event) {
+  //     const { nodes, edges } = event;
+  //   },
+  // };
 
-  return (
-    <div className="traceContainer">
-      <span id="tracesTitle">Route Traces</span>
-      <Graph
-        className={classes.paper}
-        graph={graph}
-        options={options}
-        events={events}
-        style={{
-          fontFamily: 'Roboto',
-          boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)',
-          backgroundColor: 'white',
-          borderRadius: '3px',
-        }}
-      />
-    </div>
-  );
+  if (communicationsData[0].endpoint !== '/') {
+    return (
+      <div className="traceContainer">
+        <span id="tracesTitle">Route Traces</span>
+        <Graph
+          className={classes.paper}
+          graph={graph}
+          options={options}
+          // events={events}
+          style={{
+            fontFamily: 'Roboto',
+            boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)',
+            backgroundColor: 'white',
+            borderRadius: '3px',
+          }}
+        />
+      </div>
+    );
+  }
+  return null;
 });
 
 export default RouteChart;
