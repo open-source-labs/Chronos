@@ -155,8 +155,9 @@ input[type='file'] {
 
 #issueLink {
   color: $header;
-  text-decoration: none;
+  cursor: pointer;
+  text-decoration: underline;
   &:hover {
-    color: $gblue;
+    color: blue !important;
   }
 }
