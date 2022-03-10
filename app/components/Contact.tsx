@@ -21,11 +21,7 @@ const Contact = React.memo(() => {
               Please feel free to provide any feedback, concerns, or comments.
             </p>
             <p style={currentMode}>
-<<<<<<< HEAD
-              You can find issues the team is currently addressing &nbsp;
-=======
               You can find issues the team is currently working on{' '}
->>>>>>> will/style_tweaks
               <a
                 style={currentMode}
                 id="issueLink"
