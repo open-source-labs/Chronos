@@ -1,3 +1,8 @@
+/** From Version 5.2 Team:
+ * We only cleaned up linting errors in this file.
+ * Good luck!
+ */
+
 import React, { useState, useCallback } from 'react';
 import Electron from 'electron';
 

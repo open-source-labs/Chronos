@@ -122,7 +122,11 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(
       );
     };
 
-    return <div className="chart">{createChart()}</div>;
+    return (
+      <div className="chart" data-testid="Temperature Chart">
+        {createChart()}
+      </div>
+    );
   }
 );
 

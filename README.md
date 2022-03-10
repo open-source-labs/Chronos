@@ -7,14 +7,14 @@
 ![Build Passing](https://img.shields.io/badge/build-passing-blue)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Release: 5.1](https://img.shields.io/badge/Release-5.1-orange)
+![Release: 5.2](https://img.shields.io/badge/Release-5.1-orange)
 
 
 # Chronos 
 
 ### :star: Star us on GitHub — it helps! :star:
 
-Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos  to see real-time data monitoring and receive automated notifications over Slack or email.
+Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
 - [Features](#features)
@@ -26,6 +26,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - [Initialize Chronos Tracker](#initialize-chronos-tracker)
     - [Docker Configuration](#docker-configuration)
     - [Start Chronos](#start-chronos)
+    - [Getting the Executable](#getting-the-chronos-executable)
 - [Notifications](#notifications)
     - [Slack](#slack)
     - [Email](#email)
@@ -35,31 +36,41 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
         - [Microservices](#microservices)
         - [Docker](#docker)
     - [gRPC Branch](#grpc-branch)
+    - [Splash Page](#chronoswebsite)
 - [Technologies](#technologies)
 - [License](#license)
 
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
-## <img src ="./app/assets/fire.png" height=22 > New Features <img src ="./app/assets/fire.png" height=24>
+## <img src ="./app/assets/fire.png" height=22 > What's New? <img src ="./app/assets/fire.png" height=24>
 
-- New UI Features
-  - Developed search bar functionality to filter displayed databases
-  - Login system for user authentication
-  - Any errored connections will now show on the bell icon
-  - Notification bell will update in real time
+- New Feature
+  - Chronos now comes in any OS .exe!
+- Overhauled Features
+  - Authentication Enabling with Bcrypt
+  - Stand-up times decreased
+  - Side-by-side Server Comparisons
+  - Color-hashing generates unique colors for each server connection
+  - Improved navigation bar and buttons
+  - Increased overall speed and responsiveness
+- Updated Features
+  - Added React Testing Library
+  - Removed Spectron and Enzyme
+  - Added testing suites for unit, integration, and end-to-end testing
+  - Refactored components for dependency injection
 - Bug Fixes
-  - Fixed database icons to show the correct icon
+  - Authentication now functioning properly
 ## Features 
 
 - Distributed tracing enabled across microservices applications
 - Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
-- Provides <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> container stats (e.g. ID, memory usage %, CPU usage %, running processes, etc.)
 - Supports <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 - Displays real-time temperature, speed, latency, and memory statistics
+- Display and compare multiple microservice metrics in a single graph
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 ## Demo
@@ -67,11 +78,11 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 <a href="#"><img src="./app/assets/Chronos-Demo.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
 
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 ## Installation
-This is for the latest Chronos version **5.1 release and later**.
+This is for the latest Chronos version **5.2 release and later**.
 
 - Stable release: 6.1.0
 - LTS release: 6.1.0
@@ -86,6 +97,22 @@ in the root directory.
 If you're installing Chronos into a microservices application, and you have different folders for each microservice, make sure you also run 
 ```npm rebuild```
 in each microservices folder **after you roll back to version 14.16.1.**
+
+**If you wish to launch the Electron Application in an WSL2 envirronment(Ubuntu) you may need the following commands for an Electron window to appear**
+
+- Install <a href='https://sourceforge.net/projects/vcxsrv/'>VcXsrv</a>
+
+- Run the following command in the terminal
+
+```
+sudo apt install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev
+```
+
+- After running your VcXsrv instance, run the following command in the terminal
+```
+export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
+```
+
 <br>
 
 ### Install Dependencies
@@ -106,7 +133,7 @@ const chronos = require('chronos-tracker');
 
 chronos.use({
   microservice: 'payments',
-  interval: 2000,
+  interval: 5000,
   dockerized: true,
   database: {
     connection: 'REST',
@@ -119,14 +146,16 @@ chronos.use({
 
 The `microservice` property takes in a string. This should be the name of your server or microservice. For **Docker** containers, the name of the microservice should be the same as the name of the corresponding Docker container.
 
-The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will defualt to recording server health every 2000 ms or 2 seconds.
+The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will default to recording server health every 60000 ms or 60 seconds.
 
 The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
 
 The `database` property is required and takes in the following:
-- `connection` which should be a string and only supports 'REST' and 'gRPC'
-- `type` which should be a string and only supports 'MongoDB' and 'PostgreSQL'.
-- `URI` which should be a connection string the database you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation to. A `.env` is recommended.
+- `connection` should be a string and only supports 'REST' and 'gRPC'
+- `type` should be a string and only supports 'MongoDB' and 'PostgreSQL'.
+- `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation.  
+
+_NOTE: A `.env` is recommended._
 
 <!-- - `isDockerized`: Is this microservice running in a Docker container? Enter `yes` or `no`. The current default setting is `no`.
   - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
@@ -179,7 +208,7 @@ Wherever you create an instance of your server (see example below),
     console.log("Server running at http://127.0.0.1:30044");
 });
 ```
-you will also need to require Chronos-tracker, Chronos-config, and dotenv.config(if this is used). For health data simply use Chronos.track()
+you will also need to require Chronos-tracker, Chronos-config, and dotenv.config(if this is used). For health data, simply use Chronos.track()
 
 
 
@@ -211,7 +240,7 @@ const bookClient = new OrderToBookService('localhost:30044', grpc.credentials.cr
 
 const ClientWrapper = chronos.ClientWrapper(bookClient, OrderToBookService);
 ```
-Next wrap the gRPC server  using Chronos 
+Next wrap the gRPC server using Chronos 
 ```js
 
   const ServerWrapper = chronos.ServerWrapper(server,  Proto.protoname.service, {
@@ -230,7 +259,7 @@ Next wrap the gRPC server  using Chronos
       callback(null, {});
     },
   });
-})
+
 ```
 For any request you wish to trace, require uuidv4 and write the following code where the initial gRPC request begins,
 ```js
@@ -241,7 +270,7 @@ const createMeta = () => {
   return meta
 }
 ```
-and then invoke createMeta as a third argument to any client method that is the beginning of the request path.
+and then, invoke createMeta as a third argument to any client method that is the beginning of the request path.
 
 ```js
 orderClient.AddOrder(
@@ -269,9 +298,9 @@ chronos.link(client, ServerWrapper);
 
 Again, this step is **only applicable** if you are currently using <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> containers for your microservices. 
 
-<a href="#"><img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Give your containers the same names you pass as arguments for microservice names.
+<a href="#"><img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Give your containers the same names you pass in as arguments for microservice names.
 
-<a href="#"><img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> In order to have container stats saved to your database, along with other health info, bind volumes to this path when starting up the containers:
+<a href="#"><img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> In order to have container statistics saved to your database along with other health info, bind volumes to this path when starting up the containers:
 ```
 /var/run/docker.sock
 ```
@@ -290,10 +319,13 @@ volumes:
 
 ### Start Chronos
 
-Once you have configured and intialized Chronos Tracker, it will be automatically recording monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning our [GitHub repo](https://github.com/open-source-labs/Chronos), run `npm install` and `npm run both` to start Chronos. Alternatively, you can download an [executable for Mac](https://chronoslany.com/Chronos.dmg). Add your application in the Chronos app dashboard with the same URI you used in your Chronos Tracker configuration. Click on it and start monitoring!
+Once you have configured and intialized Chronos Tracker, it will automatically record monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning our [GitHub repo](https://github.com/open-source-labs/Chronos), run `npm install` and `npm run both` to start Chronos.
+  
+### Getting the Chronos Executable  
+At the current moment, to get a copy of the executable that works on all OS, the steps are 1) clone the master branch, 2) run `npm i`, 3) run `npm run prepareDist`, 4) run `npm run package-any`, 5) navigate in your Chronos folder `./release-builds/resources` and click on `chronos.exe`. 6) optionally right click to create a shortcut.
 
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 ## Notifications
@@ -351,7 +383,7 @@ notifications: [
 // ...
 ```
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 ## Branches
@@ -388,10 +420,11 @@ Refer to the [README](link) in the `docker` folder for more details.
 ### gRPC Branch 
 The **'gRPC'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 
-<br>
+## chronosWebsite  
+This is the branch that holds the code base for the splash page. Edit the website by first running `git clone -b chronosWebsite https://github.com/open-source-labs/Chronos.git .` and then updating the aws S3 bucket with the changes.
 
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 ## Technologies
@@ -418,17 +451,17 @@ The **'gRPC'** branch is the current codebase for the <a href="#"><img src="./ap
 - <a href="#"><img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
  
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 
 ## Contributing
 
-Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving Chronos.
+Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bug fixes and improvements. Read below to learn how you can take part in improving Chronos.
 
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)
 <br>
 
 
@@ -436,4 +469,4 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 Chronos is <a href="#"><img src="./app/assets/mit-logo-color.png" alt="MIT" title="MIT" align="center" height="20" /></a> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
 #
-###### Return to [Top](#Chronos)
+###### Return to [Top](#chronos)

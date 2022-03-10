@@ -42,7 +42,7 @@ const Login = React.memo(() => {
 
   return (
     <div className="home">
-      <div className="welcome">
+      <div className="welcome" data-testid="Login">
         <h1>Welcome to Chronos!</h1>
         <h2>Please enter your credentials to login.</h2>
         <form className="form" onSubmit={handleSubmit}>

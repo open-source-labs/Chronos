@@ -167,7 +167,11 @@ const ProcessesChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, col
     );
   };
 
-  return <div className="chart">{createChart()}</div>;
+  return (
+    <div className="chart" data-testid="Process Chart">
+      {createChart()}
+    </div>
+  );
 });
 
 export default ProcessesChart;

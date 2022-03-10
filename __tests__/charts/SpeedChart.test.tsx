@@ -49,7 +49,23 @@ describe('Speed Chart', () => {
     expect(graph.scrollTop).toBe(0);
   });
 
-  it('Should render graph', () => {
-    console.log(graph.outerHTML);
+  it('Should have width 700, height 450, and white background', () => {
+    expect(graph.outerHTML.includes('width: 700px')).toBeTruthy();
+    expect(graph.outerHTML.includes('height: 450px')).toBeTruthy();
+    expect(graph.outerHTML.includes('style="background: white;"')).toBeTruthy();
+  });
+
+  it('Should have correct colors', () => {
+    expect(graph.outerHTML.includes('{fill: #3f4f75;}')).toBeTruthy();
+    expect(graph.outerHTML.includes('{fill: #80cfbe;}')).toBeTruthy();
+    expect(graph.outerHTML.includes('{fill: #fff;}')).toBeTruthy();
+  });
+
+  it('Should have correct data points based off mock data', () => {
+    expect(graph.calcdata[0][0].y).toBe(mockData[0].cpuspeed[0]);
+    expect(graph.calcdata[0][0].i).toBe(0);
+    expect(graph.calcdata[0][1].y).toBe(mockData[0].cpuspeed[1]);
+    expect(graph.calcdata[0][1].i).toBe(1);
+    expect(graph.calcdata[0][1].y).not.toEqual(6543213);
   });
 });
