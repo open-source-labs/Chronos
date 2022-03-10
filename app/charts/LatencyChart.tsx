@@ -76,6 +76,7 @@ const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colou
     return (
       <Plot
         data={[...plotlyData]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Latency',
           ...sizeSwitch,
@@ -95,7 +96,7 @@ const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colou
           },
           xaxis: {
             title: 'Time',
-            tickmode: 'linear',
+            tickmode: 'auto',
             tick0: 0,
             dtick: 10,
             rangemode: 'nonnegative',

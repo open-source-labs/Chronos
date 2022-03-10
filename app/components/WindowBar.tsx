@@ -3,11 +3,11 @@ import Close from '@material-ui/icons/Close';
 import Maximize from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 import Minimize from '@material-ui/icons/RemoveSharp';
 
-import '../stylesheets/TitleBarContainer.scss';
+import '../stylesheets/WindowBar.scss';
 
 const { ipcRenderer } = window.require('electron');
 
-export default function TitleBarContainer() {
+export default function WindowBar() {
   return (
     <div id="titleBar">
       <Minimize className="button" id="min-btn" onClick={() => ipcRenderer.send('min')} />

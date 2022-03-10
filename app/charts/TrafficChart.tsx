@@ -33,6 +33,7 @@ const TrafficChart = React.memo(() => {
             showlegend: false,
           },
         ]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Server Traffic',
           height: 300,

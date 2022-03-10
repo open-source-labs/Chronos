@@ -19,6 +19,6 @@ window.addEventListener('resize', () => {
 });
 
 export const all = {
-  height: 300,
-  width: 300,
+  height: 400,
+  width: 400,
 };
