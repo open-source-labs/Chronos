@@ -16,17 +16,13 @@ interface SoloStyles {
 const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
   const { healthData } = useContext(HealthContext);
   const [data, setData] = useState<Array<Array<string | (string | number)[]>>>([]);
-  
+
   useEffect(() => {
     if (healthData.length) {
       const tempArr: ((string | number)[] | string)[][] = [];
       // loop over each
       healthData.forEach(
-        (service: { 
-          time: string[]; 
-          cputemp: (string | number)[]; 
-          service: string[] 
-        }) => {
+        (service: { time: string[]; cputemp: (string | number)[]; service: string[] }) => {
           let timeArr: string[] = [];
           // perform this when we 'setTime'
           if (service.time !== undefined) {
@@ -47,16 +43,13 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
 
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
-    setInterval(() => {
-      if (solo !== soloStyle) {
-        setSolo(soloStyle);
-      }
-    }, 20);
-
+  setInterval(() => {
+    if (solo !== soloStyle) {
+      setSolo(soloStyle);
+    }
+  }, 20);
 
   const createChart = () => {
-
-    
     let plotlyData: {
       name: any;
       x: any;
@@ -66,11 +59,11 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
       mode: any;
       showlegend: any;
     }[] = [];
-    
+
     plotlyData = data.map(dataArr => {
       // eslint-disable-next-line no-bitwise
       const randomColor = `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
-   
+
       return {
         name: dataArr[2],
         x: data[0][0],
@@ -81,15 +74,13 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
         showlegend: true,
       };
     });
-    
+
     const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
-        data={[
-         ...plotlyData
-        ]}
-        config={{ responsive: true }}
+        data={[...plotlyData]}
+        config={{ responsive: true, displayModeBar: false }}
         layout={{
           title: 'CPU Temperature',
           ...sizeSwitch,
@@ -108,7 +99,7 @@ const TemperatureChart: React.FC<GraphsContainerProps> = React.memo(({ sizing })
           },
           xaxis: {
             title: 'Time (EST)',
-            tickmode: 'linear',
+            tickmode: 'auto',
             tickformat: '%H %M %p',
             mirror: false,
             ticks: 'outside',

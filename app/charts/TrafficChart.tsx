@@ -38,6 +38,7 @@ const TrafficChart = React.memo(() => {
             showlegend: false,
           },
         ]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Server Traffic',
           height: 300,
@@ -55,7 +56,7 @@ const TrafficChart = React.memo(() => {
             x: 0.5,
             y: 5,
           },
-          yaxis: { 
+          yaxis: {
             rangemode: 'nonnegative',
             title: 'Times Server Pinged',
             showline: true,

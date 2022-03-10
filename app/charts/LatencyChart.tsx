@@ -17,16 +17,12 @@ const LatencyChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => 
   const { healthData } = useContext(HealthContext);
   const [data, setData] = useState<Array<Array<string | (string | number)[]>>>([]);
 
-useEffect(() => {
+  useEffect(() => {
     if (healthData.length) {
       const tempArr: ((string | number)[] | string)[][] = [];
       // loop over each
       healthData.forEach(
-        (service: { 
-          time: string[]; 
-          latency: (string | number)[]; 
-          service: string[] 
-        }) => {
+        (service: { time: string[]; latency: (string | number)[]; service: string[] }) => {
           let timeArr: string[] = [];
           // perform this when we 'setTime'
           if (service.time !== undefined) {
@@ -69,28 +65,27 @@ useEffect(() => {
       mode: any;
       marker: { color: string };
     }[] = [];
-    
+
     plotlyData = data.map(dataArr => {
       // eslint-disable-next-line no-bitwise
       const randomColor = `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
-      
+
       return {
         name: dataArr[2],
         x: data[0][0],
         y: dataArr[1],
         type: 'scattergl',
         mode: 'lines',
-        marker: { color: randomColor }
+        marker: { color: randomColor },
       };
     });
 
-    
     const sizeSwitch = sizing === 'all' ? all : solo;
-
 
     return (
       <Plot
         data={[...plotlyData]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Latency',
           ...sizeSwitch,
@@ -110,7 +105,7 @@ useEffect(() => {
           },
           xaxis: {
             title: 'Time',
-            tickmode: 'linear',
+            tickmode: 'auto',
             tick0: 0,
             dtick: 10,
             rangemode: 'nonnegative',
