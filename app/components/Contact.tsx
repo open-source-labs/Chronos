@@ -21,13 +21,12 @@ const Contact = React.memo(() => {
               Please feel free to provide any feedback, concerns, or comments.
             </p>
             <p style={currentMode}>
-              You can find issues the team is currently working on&nbsp;
+              You can find issues the team is currently working on{' '}
               <a
                 style={currentMode}
                 id="issueLink"
                 href="https://github.com/open-source-labs/Chronos/issues"
                 target="_blank"
-                // added rel="noreferrer", security risk if using target="_blank" without rel="noreferrer"
                 rel="noreferrer"
               >
                 here
@@ -39,25 +38,21 @@ const Contact = React.memo(() => {
         <div className="email-container">
           <form>
             <label style={currentMode} htmlFor="fname">
-              First Name: &nbsp;
+              First Name:
+              <input type="text" id="fname" name="firstname" placeholder="Your name.." />
             </label>
-            <input type="text" id="fname" name="firstname" placeholder="Your name.." />
-            <br />
             <label style={currentMode} htmlFor="lname">
-              Last Name: &nbsp;
+              Last Name:{' '}
+              <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
             </label>
-            <input type="text" id="lname" name="lastname" placeholder="Your last name.." />
-            <br />
             <label style={currentMode} htmlFor="email">
-              E-mail: &nbsp;
+              E-mail:
+              <input type="text" id="email" name="email" placeholder="Your e-mail address.." />
             </label>
-            <input type="text" id="email" name="email" placeholder="Your e-mail address.." />
-            <br />
             <label style={currentMode} htmlFor="subject">
-              Subject: &nbsp;
+              Subject:
+              <input type="text" id="subject" name="subject" placeholder="Subject" />
             </label>
-            <input type="text" id="subject" name="subject" placeholder="Subject" />
-            <br />
             <label style={currentMode} id="messageLabel" htmlFor="message">
               Message:{' '}
               <span>
@@ -65,12 +60,10 @@ const Contact = React.memo(() => {
               </span>
             </label>
 
-            <br />
             <label style={currentMode} htmlFor="myfile">
               Select a file:{' '}
+              <input style={currentMode} type="file" id="myfile" name="myfile" accept="image/*" />
             </label>
-            <input style={currentMode} type="file" id="myfile" name="myfile" accept="image/*" />
-            <br />
             <input style={currentMode} id="contact-submit" type="submit" value="Submit" />
           </form>
         </div>

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState, useRef, forwardRef } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useContext, useEffect, useState, useRef } from 'react';
 
 // MATERIAL UI METHODS
 import {
@@ -8,15 +9,13 @@ import {
   CardHeader,
   CardContent,
   Button,
-  Typography
+  Typography,
 } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
 // MATERIAL UI ICONS
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ListIcon from '@material-ui/icons/List';
 import SearchIcon from '@material-ui/icons/Search';
@@ -39,8 +38,8 @@ import { ApplicationContext } from '../context/ApplicationContext';
 
 // TYPESCRIPT
 interface StyleProps {
-  root: BaseCSSProperties,
-};
+  root: BaseCSSProperties;
+}
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
@@ -59,7 +58,7 @@ const Occupied = React.memo(() => {
     getApplications();
   }, []);
 
-  // Ask user for deletetion confirmation
+  // Asks user to confirm deletion of application
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
@@ -87,14 +86,14 @@ const Occupied = React.memo(() => {
       height: 280,
       width: 280,
       textAlign: 'center',
-      color: '#ffffff', // dark mode
+      color: '#ffffff',
       whiteSpace: 'nowrap',
-      backgroundColor: 'transparent', // dark mode
+      backgroundColor: 'transparent',
       borderRadius: 3,
       border: '0',
-      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', // dark mode
+      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
       '&:hover, &.Mui-focusVisible': {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)', // dark mode
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         color: '#ffffff',
         fontWeight: 600,
       },
@@ -119,14 +118,15 @@ const Occupied = React.memo(() => {
       height: '75px',
       boxShadow: 'none',
     },
+
     // ALL CARDS: CONTENT
     fontStyles: {
       fontSize: '18px',
       fontFamily: 'Roboto',
       fontWeight: 300,
       // color: '#444d56',
-      color: '#ffffff', // dark mode
-    }
+      color: '#ffffff',
+    },
   }));
 
   const classes = useStyles({});
@@ -146,7 +146,14 @@ const Occupied = React.memo(() => {
           <section className="header" id="rightHeader">
             <form className="form">
               <label className="inputContainer">
-                <input className="form" id="textInput" placeholder={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search" />
+                <input
+                  className="form"
+                  id="textInput"
+                  placeholder={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  type="text"
+                  name="search"
+                />
                 <hr />
               </label>
               <button className="form" id="submitBtn" type="submit">
@@ -154,12 +161,14 @@ const Occupied = React.memo(() => {
               </button>
             </form>
             <div className="dashboardIconArea">
-              <span className="dashboardTooltip">You have {applications.length} active databases</span>
+              <span className="dashboardTooltip">
+                You have {applications.length} active databases
+              </span>
               <DashboardIcon className="navIcon" id="dashboardIcon" />
             </div>
             <div className="notificationsIconArea">
               <span className="notificationsTooltip">You have no new alerts</span>
-              < NotificationsIcon className="navIcon" id="notificationsIcon" />
+              <NotificationsIcon className="navIcon" id="notificationsIcon" />
             </div>
 
             <div className="personIconArea">
@@ -185,8 +194,11 @@ const Occupied = React.memo(() => {
               >
                 <div className="databaseIconContainer">
                   <div className="databaseIconHeader">
-                    {/** dark mode */}
-                    <img className="databaseIcon" src="../assets/mongo-icon-green-light.png" alt="MongoDB"></img>
+                    <img
+                      className="databaseIcon"
+                      src="../assets/mongo-icon-green-light.png"
+                      alt="MongoDB"
+                    />
                   </div>
                 </div>
                 <CardHeader
@@ -194,7 +206,7 @@ const Occupied = React.memo(() => {
                     <IconButton
                       id="iconButton"
                       ref={element => {
-                        delRef.current[i] = element
+                        delRef.current[i] = element;
                       }}
                       className={classes.iconbutton}
                       aria-label="Delete"
@@ -217,7 +229,7 @@ const Occupied = React.memo(() => {
                 <hr className="cardLine" />
 
                 <div className="cardFooter">
-                  <UpdateIcon className="cardFooterIcon"/>
+                  <UpdateIcon className="cardFooterIcon" />
                   <em>
                     <p id="cardFooterText">Just updated</p>
                   </em>
