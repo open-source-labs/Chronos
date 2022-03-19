@@ -20,11 +20,13 @@ const AddsModal: React.FC<AddsModalProps> = React.memo(({ setOpen }) => {
     if (user.admin) return 'ACCESS LEVEL: ADMIN';
     return 'ACCESS LEVEL: OBSERVER';
   };
+
   const approveAccount = (userEmail: string) => {
     const success = ipcRenderer.sendSync('approveAccount', userEmail);
     if (success) forceUpdate();
     else window.alert('Error in AddsModal approveAccount');
   };
+
   const accountsAwaitingApproval = () => {
     if (!user.admin) return <></>;
     if (!user.admin) return <br />;

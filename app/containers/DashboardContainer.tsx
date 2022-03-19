@@ -8,7 +8,6 @@ import ApplicationContextProvider from '../context/ApplicationContext';
 import DashboardContextProvider from '../context/DashboardContext';
 import DockerContextProvider from '../context/DockerContext';
 import '../stylesheets/Dashboard.scss';
-// import { DashboardContext } from '../context/DashboardContext';
 
 const DashboardContainer = React.memo(() => (
   <Router>

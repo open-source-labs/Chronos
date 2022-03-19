@@ -1,0 +1,18 @@
+@import './constants.scss';
+
+#titleBar {
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  background-color: $darkblue;
+  color: white;
+  width: calc(100% - #{$sidebarWidth});
+  -webkit-app-region: drag;
+  z-index: 3;
+  transform: translateX(140px);
+  height: 40px;
+  .button {
+    margin: 9px 7px 0px;
+    -webkit-app-region: no-drag;
+  }
+}

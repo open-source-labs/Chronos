@@ -1,1 +1,0 @@
-export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"

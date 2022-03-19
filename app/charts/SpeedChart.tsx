@@ -1,5 +1,7 @@
-/** FOR THE NEXT TEAM
- * Currently, data for multiple servers overlap, as we wanted. However, if using the dummy MongoDB data, the lines technically do not overlap since it only records speeds for one server at a time. However, we expect that, when running on a proper app, speeds from all servers will be recorded.
+/** From Version 5.2 Team:
+ * Currently, data for multiple servers overlap, as we wanted.
+ * However, if using the dummy MongoDB data, the lines technically do not overlap since it only records speeds for one server at a time.
+ * However, we expect that, when running on a proper app, speeds from all servers will be recorded.
  */
 
 import React, { useContext, useEffect, useState } from 'react';
@@ -10,24 +12,25 @@ import { all, solo as soloStyle } from './sizeSwitch';
 
 interface GraphsContainerProps {
   sizing: string;
+  colourGenerator: Function;
 }
 interface SoloStyles {
   height: number;
   width: number;
 }
 
-const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
+const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing, colourGenerator }) => {
   const { healthData } = useContext(HealthContext);
   const [data, setData] = useState<Array<Array<Array<string | number> | string>>>([]);
 
   useEffect(() => {
     if (healthData.length) {
       const tempArr: ((string | number)[] | string)[][] = [];
-      // loop over each
+
       healthData.forEach(
         (service: { time: string[]; cpuspeed: (string | number)[]; service: string[] }) => {
           let timeArr: string[] = [];
-          // perform this when we 'setTime'
+
           if (service.time !== undefined) {
             timeArr = service.time.map((el: any) => moment(el).format('kk:mm:ss'));
           }
@@ -43,10 +46,6 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
       setData(tempArr);
     }
   }, [healthData]);
-
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
 
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
@@ -67,16 +66,15 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
     }[] = [];
 
     plotlyData = data.map(dataArr => {
-      // eslint-disable-next-line no-bitwise
-      const randomColor = `#${(((1 << 24) * Math.random()) | 0).toString(16)}`;
+      const hashedColor = colourGenerator(dataArr[2]);
       return {
         name: dataArr[2],
         x: data[0][0],
         y: dataArr[1],
         type: 'scatter',
-        mode: 'lines+markers',
+        mode: 'lines',
         marker: {
-          color: randomColor,
+          color: hashedColor,
         },
       };
     });
@@ -86,6 +84,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
     return (
       <Plot
         data={[...plotlyData]}
+        config={{ displayModeBar: false }}
         layout={{
           title: 'Speed Chart',
           ...sizeSwitch,
@@ -96,11 +95,9 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
           },
           xaxis: {
             title: 'Time (EST)',
-            tickmode: 'linear',
+            tickmode: 'auto',
             dtick: 2,
             tickformat: '%H %M %p',
-            // tickangle: 30,
-            // range: [0, 5],
             rangemode: 'nonnegative',
             mirror: false,
             ticks: 'outside',
@@ -116,7 +113,7 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
           showlegend: true,
           legend: {
             orientation: 'h',
-            xanchor: 'center',
+            xanchor: 'auto',
             x: 0.5,
             y: 5,
           },
@@ -125,7 +122,11 @@ const SpeedChart: React.FC<GraphsContainerProps> = React.memo(({ sizing }) => {
     );
   };
 
-  return <div className="chart">{solo && createChart()}</div>;
+  return (
+    <div className="chart" data-testid="Speed Chart">
+      {createChart()}
+    </div>
+  );
 });
 
 export default SpeedChart;

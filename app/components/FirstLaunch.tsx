@@ -6,7 +6,7 @@ const FirstLaunch = React.memo(() => {
 
   return (
     <div className="home">
-      <div className="welcome">
+      <div className="welcome" data-testid="FirstLaunch">
         <h1 className="welcomeMessage">Welcome to Chronos!</h1>
         <h2>Would you like authentication?</h2>
         <div className="btns">

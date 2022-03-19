@@ -1,3 +1,8 @@
+/** From Version 5.2 Team:
+ * No functional changes; just fixed linting errors.
+ * Did not test or make use of any Docker data.
+ */
+
 import React, { useContext } from 'react';
 
 import moment from 'moment';
@@ -40,7 +45,6 @@ const DockerStatsChart = React.memo(() => {
     restartcount,
   }: IContainer = dockerData;
 
-  // Render the component if there is available data
   return containerid ? (
     <div className="chart docker-chart">
       <h2>Docker Container Stats</h2>
