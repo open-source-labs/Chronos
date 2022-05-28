@@ -220,6 +220,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
                 <MemoryChart colourGenerator={stringToColour} sizing="all" />
                 <ProcessesChart colourGenerator={stringToColour} sizing="all" />
                 <DockerChart />
+                <EventContainer colourGenerator={stringToColour} sizing="all" />
               </>
             )}
           </div>
