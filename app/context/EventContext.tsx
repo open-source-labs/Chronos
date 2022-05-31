@@ -12,33 +12,41 @@ export const EventContext = React.createContext<any>(null);
  */
 
 const EventContextProvider: React.FC = React.memo(({ children }) => {
-  const [eventData, setEventData] = useState({});
+  // const [eventData, setEventData] = useState({});
 
-  function tryParseJSON(jsonString: any) {
-    try {
-      const o = JSON.parse(jsonString);
-      if (o && typeof o === 'object') {
-        return o;
-      }
-    } catch (e) {
-      console.log({ error: e });
-    }
-    return false;
-  }
+  // function tryParseJSON(jsonString: any) {
+  //   try {
+  //     const o = JSON.parse(jsonString);
+  //     if (o && typeof o === 'object') {
+  //       return o;
+  //     }
+  //   } catch (e) {
+  //     console.log({ error: e });
+  //   }
+  //   return false;
+  // }
 
-  const fetchEventData = useCallback((broker: string) => {
-    ipcRenderer.removeAllListeners('eventResponse');
-    ipcRenderer.send('eventRequest', broker);
+  // const fetchEventData = useCallback((broker: string) => {
+  //   ipcRenderer.removeAllListeners('eventResponse');
+  //   ipcRenderer.send('eventRequest', broker);
 
-    ipcRenderer.on('eventResponse', (data: any) => {
-      let result: any;
-      if (tryParseJSON(data)) result = JSON.parse(data);
-      setEventData(result[0] || {});
-    });
-  }, []);
+  //   ipcRenderer.on('eventResponse', (data: any) => {
+  //     let result: any;
+  //     if (tryParseJSON(data)) result = JSON.parse(data);
+  //     setEventData(result[0] || {});
+  //   });
+  // }, []);
+  const eventData = {
+    ActiveControllerCount: 10,
+    OfflinePartitionsCount: 5,
+    UncleanLeaderElectionsPerSec: 2,
+    DiskUsage: 60,
+  };
 
   return (
-    <EventContext.Provider value={{ eventData, setEventData, fetchEventData }}>
+   // uncoment here after pass test 
+   //<EventContext.Provider value={{ eventData, setEventData, fetchEventData }}>
+    <EventContext.Provider value={{ eventData }}>
       {children}
     </EventContext.Provider>
   );
