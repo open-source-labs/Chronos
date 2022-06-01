@@ -1,5 +1,4 @@
 /*
-Require kafkajs
 
 create producer class
   kafka instance
@@ -16,14 +15,36 @@ start
 
 
 */
-
-const { Kafka } = require('kafkajs');
-
 class Producer {
-  constructor() {
-        
-  }
-  start(){
 
-  } 
-};
+  constructor(){
+    this.producer = kafka.producer();
+    this.id = id;
+    this.topic = id.toString();
+    this.count = 1;
+  }
+
+  createMessage() {
+    return {
+      key: this.id,
+      value: `This is message ${this.count++} from producer #${this.id}`,
+    };
+  }
+
+  sendMessage() {
+    return this.producer
+      .send({
+        topic: `Producer #${this.topic}`,
+        messages: [this.createMessage()],
+      })
+      .then(console.log(`Produced message #${this.count++} from producer #${this.id}`))
+      .catch(e => console.error(`[example/producer] ${e.message}`, e));
+  }
+
+  async start() {
+    await this.producer.connect();
+    setInterval(this.sendMessage(), 1000 * this.id);
+  }
+}
+
+module.exports.Producer = Producer;
