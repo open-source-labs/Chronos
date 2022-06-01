@@ -3,8 +3,8 @@ import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
 
 interface EventChartProps {
-  metric: string;
-  metricValue: number;
+  key: string;
+  eventDataObj:object;
   sizing: string;
   colourGenerator: Function;
 }
@@ -17,14 +17,16 @@ interface SoloStyles {
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const createChart = () => {
     const [solo, setSolo] = useState<SoloStyles | null>(null);
+  
     setInterval(() => {
       if (solo !== soloStyle) {
         setSolo(soloStyle);
       }
     }, 20);
 
+
     const sizeSwitch = props.sizing === 'all' ? all : solo;
-    const hashedColor = props.colourGenerator(props.metric);
+    const hashedColor = props.colourGenerator(props.eventDataObj['metric']);
     interface DataObject {
       type: any;
       mode: any;
@@ -40,8 +42,8 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
     const plotlyData: DataObject = {
       type: 'scattergl',
       mode: 'lines+markers',
-      y: props.metricValue,
-      name: `${props.metric}`,
+      y: props.eventDataObj['metricValue'],
+      name: `${props.eventDataObj['metric']}`,
       marker: {
         color: hashedColor,
         size: 5,
@@ -54,7 +56,7 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
         data={[plotlyData]}
         config={{ displayModeBar: false }}
         layout={{
-          title: 'Event Traces',
+          title: `${props.eventDataObj['metric']}`,
           ...sizeSwitch,
           font: {
             color: '#444d56',
@@ -79,16 +81,18 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
             title: 'Time Elapsed (min)',
           },
           yaxis: {
-            title: `${props.metric}`,
+            title: `${props.eventDataObj['metric']}`,
           },
         }}
       />
     );
   };
   return (
+    
     <div className="chart" data-testid="Event Chart">
-      {createChart}
+      {createChart()}
     </div>
+    
   );
 });
 
