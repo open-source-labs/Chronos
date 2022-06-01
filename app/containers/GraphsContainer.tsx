@@ -44,7 +44,7 @@ export interface GraphsContainerProps {
 
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const history = useHistory();
-  const { app, service } = useParams<any>();
+  const { app, service, broker } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
@@ -52,6 +52,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
+  const { fetchEventData, setEventData, eventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const [chart, setChart] = useState<string>('all');
 
@@ -65,18 +66,22 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         setInterval(() => {
           fetchCommsData(app, live);
           fetchHealthData(serviceArray);
+          fetchEventData(broker);
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchCommsData(app, live);
       fetchHealthData(serviceArray);
+      fetchEventData(broker)
     }
 
     return () => {
       if (intervalID) clearInterval(intervalID);
       setHealthData({});
       setDockerData({});
+      setEventData({});
+      
     };
   }, [service, live]);
 
