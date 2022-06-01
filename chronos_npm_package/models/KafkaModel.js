@@ -18,4 +18,4 @@ const KafkaSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('kafkaMetrics', KafkaSchema);
+module.exports = mongoose.model('kafkametrics', KafkaSchema);
