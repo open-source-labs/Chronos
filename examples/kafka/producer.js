@@ -17,7 +17,7 @@ start
 */
 class Producer {
 
-  constructor(){
+  constructor(kafka, id){
     this.producer = kafka.producer();
     this.id = id;
     this.topic = id.toString();
@@ -41,9 +41,12 @@ class Producer {
       .catch(e => console.error(`[example/producer] ${e.message}`, e));
   }
 
-  async start() {
-    await this.producer.connect();
-    setInterval(this.sendMessage(), 1000 * this.id);
+  start() {
+    this.producer.connect()
+      .then(() => {
+        setInterval(this.sendMessage(), 1000 * this.id);
+      })
+      .catch(err => console.log(err));    
   }
 }
 
