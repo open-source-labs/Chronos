@@ -12,7 +12,6 @@ class Consumer {
   constructor(kafka, producers) {
     this.consumer = kafka.consumer({ groupId: 'my-group' });
     this.producers = producers;
-    
   }
 
   start() {
@@ -41,19 +40,25 @@ class Consumer {
           })
         },
       }
-
+    console.log(`starting consumer for ${this.producers}`);
     this.consumer.connect()
      .then(() => {
+       console.log('starting subscriptions');
        const subPromises = [];
        for(const topic in this.producers){
          subPromises.push(this.consumer.subscribe({ topic, fromBeginning: true }))
        };
+       console.log('SUBSCRIPTION PROMISES: ', subPromises);
        return subPromises;
      })
      .then((array) => {
+       console.log('Promise all...');
        Promise.all(array)
+        .then(() => 
+          this.consumer.run(runParameter)
+        )
         .then(() => {
-          consumer.run(runParameter);
+          console.log(`Running consumer for ${this.producers}`);
         })
         .catch(err => console.log(err));
      })
