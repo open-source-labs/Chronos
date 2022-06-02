@@ -27,25 +27,27 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
   }
 
   const fetchEventData = useCallback(() => {
-    ipcRenderer.removeAllListeners('eventResponse');
-    ipcRenderer.send('eventRequest');
-
-    ipcRenderer.on('eventResponse', (data: any) => {
+    ipcRenderer.removeAllListeners('kafkaResponse');
+    ipcRenderer.send('kafkaRequest');
+    console.log("outside of the kafka repsone");
+    ipcRenderer.on('kafkaResponse',  (event, data) => {
       let result: any;
-      if (tryParseJSON(data)) result = JSON.parse(data); 
-      //data :[{  ActiveControllerCount: 10,
-      //     OfflinePartitionsCount: 5,
-      //     UncleanLeaderElectionsPerSec: 2,
-      //     DiskUsage: 60,}]
+      console.log("before parse");
+      console.log(data);
+      if (tryParseJSON(data)) result = JSON.parse(data);
+
+      console.log("after parse");
+      console.log(result);
+
       const newEventData = result[0] || {};
+    
       setEventData(newEventData);
     });
   }, []);
-  // const fetchEventData = useCallback((broker: string) => {
+  // const fetchEventData = useCallback(() => {
   //   setEventData({  ActiveControllerCount: 10,
   //     OfflinePartitionsCount: 5,
-  //     UncleanLeaderElectionsPerSec: 2,
-  //     DiskUsage: 60,})
+  //     UncleanLeaderElectionsPerSec: 2})
   // }, []);
 
   return (
