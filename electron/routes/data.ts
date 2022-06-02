@@ -8,6 +8,7 @@ import CommunicationModel from '../models/CommunicationsModel';
 import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
+import EventModelFunc from '../models/EventModel';
 
 require('dotenv').config();
 
@@ -231,3 +232,4 @@ ipcMain.on('dockerRequest', async (message, service) => {
     message.sender.send('dockerResponse', {});
   }
 });
+
