@@ -28,15 +28,13 @@ const kafka = new Kafka({
 
 const admin = kafka.admin();
 
-const topicOptions = (topics) => 
-
 function topicOptions(topics) {
-  return {
-  validateOnly: false,
-  waitForLeaders: false,
-  timeout: 5000,
-  topics
-}
+    return {
+    validateOnly: false,
+    waitForLeaders: false,
+    timeout: 5000,
+    topics
+  }
 }
 
 console.log('Kafka instance at: ', brokerAddress);
@@ -76,7 +74,7 @@ admin.connect()
   })
   .then( (newTopics) => {
     //console.log('NEW TOPICS ', newTopics);
-    if(newTopics.length > 0) admin.createTopics(topicOptions(newTopics))
+    if(newTopics.length > 0) admin.createTopics(topicOptions(newTopics));
   })
   .then(() => {
     for(const p of producers){
