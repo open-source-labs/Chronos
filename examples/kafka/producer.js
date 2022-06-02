@@ -23,7 +23,7 @@ class Producer {
     this.topic = `Producer-${id}`;
     this.count = 1;
     this.sendMessage = this.sendMessage.bind(this);
-    console.log('TOPIC: ', this.topic)
+    //console.log('TOPIC: ', this.topic)
   }
 
   createMessage() {

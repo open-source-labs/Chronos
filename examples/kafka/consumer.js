@@ -14,56 +14,62 @@ class Consumer {
     this.producers = producers;
   }
 
-  start() {
-    // await this.consumer.connect();
-    // for(const topic in this.producers){
-    //   await consumer.subscribe({ topic, fromBeginning: true });
-    // }
-    // await consumer.run({
-    //   eachMessage: async ({ topic, partition, message, heartbeat }) => {
-    //       console.log({
-    //           key: message.key.toString(),
-    //           value: message.value.toString(),
-    //           timestamp: message.timestamp.toString(),
-    //           headers: message.headers,
-    //       })
-    //     },
-    //   })
-    
-    const runParameter = {
+  async start() {
+    await this.consumer.connect();
+    console.log(`Consumer for ${this.producers} is connected`)
+    for(const topic of this.producers){
+      await this.consumer.subscribe({ topic: `Producer-${topic}`, fromBeginning: true });
+      console.log(`Subscribed to producer ${topic}`)
+    }
+    await this.consumer.run({
       eachMessage: async ({ topic, partition, message, heartbeat }) => {
-          console.log({
-              key: message.key.toString(),
-              value: message.value.toString(),
-              timestamp: message.timestamp.toString(),
-              headers: message.headers,
-          })
-        },
-      }
-    console.log(`starting consumer for ${this.producers}`);
-    this.consumer.connect()
-     .then(() => {
-       console.log('starting subscriptions');
-       const subPromises = [];
-       for(const topic in this.producers){
-         subPromises.push(this.consumer.subscribe({ topic, fromBeginning: true }))
-       };
-       console.log('SUBSCRIPTION PROMISES: ', subPromises);
-       return subPromises;
-     })
-     .then((array) => {
-       console.log('Promise all...');
-       Promise.all(array)
-        .then(() => 
-          this.consumer.run(runParameter)
-        )
-        .then(() => {
-          console.log(`Running consumer for ${this.producers}`);
+        console.log({
+          key: message.key.toString(),
+          value: message.value.toString(),
+          timestamp: message.timestamp.toString(),
+          headers: message.headers,
         })
-        .catch(err => console.log(err));
-     })
-     .catch(err => console.log(err));
+      },
+    })
+    console.log(`Consumer for ${this.producers} is now consuming.`)
   }
+  //   const runParameter = {
+  //     eachMessage:  ({ topic, partition, message }) => {
+  //         // console.log({
+  //         //     key: message.key.toString(),
+  //         //     value: message.value.toString(),
+  //         //     timestamp: message.timestamp.toString(),
+  //         //     headers: message.headers,
+  //         // })
+  //         console.log("HELLO");
+  //       },
+  //     }
+  //   console.log(`starting consumer for ${this.producers}`);
+  //   this.consumer.connect()
+  //    .then(() => {
+  //      console.log('starting subscriptions');
+  //      const subPromises = [];
+  //      for(const topic in this.producers){
+  //        subPromises.push(this.consumer.subscribe({ topic, fromBeginning: true }))
+  //      };
+  //      console.log('SUBSCRIPTION PROMISES: ', subPromises);
+  //      return subPromises;
+  //    })
+  //    .then((array) => {
+  //      console.log('Promise all...');
+  //      Promise.all(array)
+  //       .then(() => 
+  //         this.consumer.run(runParameter)
+  //           .then((something) => console.log('what is something?', runParameter))
+  //       )
+  //       .then((secret) => {
+  //         console.log('HERE IS THE SECRET:', secret);
+  //         console.log(`Running consumer for ${this.producers}`);
+  //       })
+  //       .catch(err => console.log(err));
+  //    })
+  //    .catch(err => console.log(err));
+  // }
 };
 
 

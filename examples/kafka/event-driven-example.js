@@ -63,7 +63,7 @@ admin.connect()
     admin.listTopics()
   )
   .then( (topics) => {
-    console.log('CURRENT TOPICS: ', topics);
+    //console.log('CURRENT TOPICS: ', topics);
     const newTopics = [];
     for(const p of producers){
       if(!topics.includes(p.topic)){
@@ -71,11 +71,11 @@ admin.connect()
         newTopics.push({topic: p.topic});
       }
     }
-    console.log('NEW TOPICS ', newTopics)
+    //console.log('NEW TOPICS ', newTopics)
     return newTopics;
   })
   .then( (newTopics) => {
-    console.log('NEW TOPICS ', newTopics);
+    //console.log('NEW TOPICS ', newTopics);
     if(newTopics.length > 0) admin.createTopics(topicOptions(newTopics))
   })
   .then(() => {
@@ -90,3 +90,4 @@ admin.connect()
       newConsumer.start();
     }
   })
+  .catch(err => console.log(err))
