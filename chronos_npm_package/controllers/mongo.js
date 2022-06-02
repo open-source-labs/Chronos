@@ -311,4 +311,17 @@ chronos.docker = ({ microservice, interval }) => {
 //     .catch(err => console.log('Error saving health data: ', err.message));
 // };
 
+// import data from JMX Exporter port
+// chronos.kafka = () => {
+//   // write fetch request to localhost:12345/metrics
+//   // then store metrics in database
+//   fetch('localhost:12345/metrics')
+//     .then(data => {
+//       console.log(data);
+//       const parsedData = parser.toTree(data);
+//       console.log(parsedData);
+//     })
+//     .catch(err => console.log(err));
+// };
+
 module.exports = chronos;
