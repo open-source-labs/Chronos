@@ -18,7 +18,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     try {
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {
-        return o;
+        return true;
       }
     } catch (e) {
       console.log({ error: e });
@@ -26,22 +26,30 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  // const fetchEventData = useCallback((broker: string) => {
-  //   ipcRenderer.removeAllListeners('eventResponse');
-  //   ipcRenderer.send('eventRequest', broker);
+  const fetchEventData = useCallback(() => {
+    ipcRenderer.removeAllListeners('kafkaResponse');
+    ipcRenderer.send('kafkaRequest');
+    console.log("outside of the kafka repsone");
+    ipcRenderer.on('kafkaResponse',  (event, data) => {
+      let result: any;
+      console.log("before parse");
+      console.log(data);
+      if (tryParseJSON(data)) result = JSON.parse(data);
+   
 
-  //   ipcRenderer.on('eventResponse', (data: any) => {
-  //     let result: any;
-  //     if (tryParseJSON(data)) result = JSON.parse(data);
-  //     setEventData(result[0] || {});
-  //   });
-  // }, []);
-  const fetchEventData = useCallback((broker: string) => {
-    setEventData({  ActiveControllerCount: 10,
-      OfflinePartitionsCount: 5,
-      UncleanLeaderElectionsPerSec: 2,
-      DiskUsage: 60,})
+      console.log("after parse");
+      console.log(result);
+
+      const newEventData = result[0] || {};
+    
+      setEventData(newEventData);
+    });
   }, []);
+  // const fetchEventData = useCallback(() => {
+  //   setEventData({  ActiveControllerCount: 10,
+  //     OfflinePartitionsCount: 5,
+  //     UncleanLeaderElectionsPerSec: 2})
+  // }, []);
 
   return (
    // uncoment here after pass test 
