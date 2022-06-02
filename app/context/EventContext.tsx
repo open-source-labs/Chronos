@@ -26,22 +26,27 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  // const fetchEventData = useCallback((broker: string) => {
-  //   ipcRenderer.removeAllListeners('eventResponse');
-  //   ipcRenderer.send('eventRequest', broker);
+  const fetchEventData = useCallback(() => {
+    ipcRenderer.removeAllListeners('eventResponse');
+    ipcRenderer.send('eventRequest');
 
-  //   ipcRenderer.on('eventResponse', (data: any) => {
-  //     let result: any;
-  //     if (tryParseJSON(data)) result = JSON.parse(data);
-  //     setEventData(result[0] || {});
-  //   });
-  // }, []);
-  const fetchEventData = useCallback((broker: string) => {
-    setEventData({  ActiveControllerCount: 10,
-      OfflinePartitionsCount: 5,
-      UncleanLeaderElectionsPerSec: 2,
-      DiskUsage: 60,})
+    ipcRenderer.on('eventResponse', (data: any) => {
+      let result: any;
+      if (tryParseJSON(data)) result = JSON.parse(data); 
+      //data :[{  ActiveControllerCount: 10,
+      //     OfflinePartitionsCount: 5,
+      //     UncleanLeaderElectionsPerSec: 2,
+      //     DiskUsage: 60,}]
+      const newEventData = result[0] || {};
+      setEventData(newEventData);
+    });
   }, []);
+  // const fetchEventData = useCallback((broker: string) => {
+  //   setEventData({  ActiveControllerCount: 10,
+  //     OfflinePartitionsCount: 5,
+  //     UncleanLeaderElectionsPerSec: 2,
+  //     DiskUsage: 60,})
+  // }, []);
 
   return (
    // uncoment here after pass test 
