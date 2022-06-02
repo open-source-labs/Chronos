@@ -9,11 +9,11 @@ import CommunicationModel from '../models/CommunicationsModel';
 import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
-// import KafkaModel from '../models/KafkaModel';
+import KafkaModel from '../models/KafkaModel';
 import extractWord from '../utilities/extractWord';
 
 require('dotenv').config();
-
+console.log('test console log work');
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -239,9 +239,11 @@ ipcMain.on('dockerRequest', async (message, service) => {
  * @event   eventRequest/EventResponse
  * @desc    
  */
-ipcMain.on('eventRequest', async (message) => {
+ipcMain.on('kafkaRequest', async (message) => {
+  //write to db
   try{
-  let result: any;
+    let result: any;
+ 
   // query metrics from mongo
   // const result = await KafkaModel.find().exec();
   // fetch('http://localhost:12345/metrics')
@@ -253,15 +255,12 @@ ipcMain.on('eventRequest', async (message) => {
   //     console.log(result);
   //   }) 
   //   .catch(err => console.log(err));
-  result = [{  ActiveControllerCount: 10,
-        OfflinePartitionsCount: 5,
-        UncleanLeaderElectionsPerSec: 2,
-        DiskUsage: 60}];
-
-  message.sender.send('eventResponse', JSON.stringify(result))
+  result = [{ActiveControllerCount: 10,OfflinePartitionsCount: 5, UncleanLeaderElectionsPerSec: 2}, 
+    {ActiveControllerCount: 8,OfflinePartitionsCount: 4, UncleanLeaderElectionsPerSec: 1}];
+  message.sender.send('kafkaResponse', JSON.stringify(result))
 } catch (error) {
   // Catch errors
   console.log(error);
-  message.sender.send('eventResponse', {});
+  message.sender.send('kafkaResponse', {});
 }
 });
