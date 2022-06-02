@@ -242,7 +242,19 @@ ipcMain.on('dockerRequest', async (message, service) => {
  */
 
 
-//start fetch
+// start fetch
+function extractWord(str) {
+  const res = [{}];
+  const arr = str.split('\n'); // `/\n/`
+  for(const element of arr){
+    if(element && element.length !==0 && element[0] !=='#' && element.substring(0,3) !== 'jmx' && element.substring(0,4) !== '\'jmx'){
+       const metric = element.split(' ')[0];
+       const metricValue = Number(element.split(' ')[1]);
+       res[0][metric] = metricValue;
+    }
+  }
+  return res;
+}
 
 ipcMain.on('kafkaRequest', async (message) => {
   try {
@@ -260,36 +272,10 @@ ipcMain.on('kafkaRequest', async (message) => {
     }, 2000);
   
 } catch (err){
-  console.log('error in async fetch block: ' + err);
+  console.log('error in async fetch block', err);
 }
 });
 
-// const fetchKafkaMetrics = () =>{
-//   fetch('http://localhost:12345/metrics')
-//   .then(data => data.text())
-//   .then(data => {
-//    //  console.log(typeof data);
-//  `   // console.log(data);
-//    //  console.log(data.split('\n'));
-//     let result = extractWord(data);
-//     console.log(result);
-    
-//   }) 
-//   .catch(err => console.log(err)); 
-// }
 
- function extractWord(str) {
-   const res = [{}];
-   const arr = str.split('\n'); // `/\n/`
-   for(let element of arr){
-     if(element && element.length !==0 && element[0] !=='#' && element.substring(0,3) !== 'jmx' && element.substring(0,4) !== '\'jmx'){
-        const metric = element.split(' ')[0];
-        const metricValue = Number(element.split(' ')[1]);
-        res[0][metric] = metricValue;
-     }
-   }
-   return res;
- 
-}
 
-//end fetch
+// end fetch
