@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
 import { ipcMain } from 'electron';
 import fs from 'fs';
@@ -8,7 +9,8 @@ import CommunicationModel from '../models/CommunicationsModel';
 import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
-import EventModelFunc from '../models/EventModel';
+// import KafkaModel from '../models/KafkaModel';
+import extractWord from '../utilities/extractWord';
 
 require('dotenv').config();
 
@@ -233,3 +235,18 @@ ipcMain.on('dockerRequest', async (message, service) => {
   }
 });
 
+ipcMain.on('eventRequest', async (message: Electron.IpcMainEvent) => {
+  let result;
+  // query metrics from mongo
+  // const result = await KafkaModel.find().exec();
+  fetch('localhost:12345/metrics')
+    .then(data => {
+      console.log(typeof data);
+      console.log(data);
+      result = extractWord(data, "# TYPE", "# HELP");
+      console.log(result);
+    }) 
+    .catch(err => console.log(err));
+
+  message.sender.send('eventResponse', JSON.stringify(result));
+});
