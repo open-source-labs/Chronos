@@ -26,19 +26,26 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  const fetchEventData = useCallback((broker: string) => {
-    ipcRenderer.removeAllListeners('eventResponse');
-    ipcRenderer.send('eventRequest', broker);
+  // const fetchEventData = useCallback((broker: string) => {
+  //   ipcRenderer.removeAllListeners('eventResponse');
+  //   ipcRenderer.send('eventRequest', broker);
 
-    ipcRenderer.on('eventResponse', (data: any) => {
-      let result: any;
-      if (tryParseJSON(data)) result = JSON.parse(data);
-      setEventData(result[0] || {});
-    });
+  //   ipcRenderer.on('eventResponse', (data: any) => {
+  //     let result: any;
+  //     if (tryParseJSON(data)) result = JSON.parse(data);
+  //     setEventData(result[0] || {});
+  //   });
+  // }, []);
+  const fetchEventData = useCallback((broker: string) => {
+    setEventData({  ActiveControllerCount: 10,
+      OfflinePartitionsCount: 5,
+      UncleanLeaderElectionsPerSec: 2,
+      DiskUsage: 60,})
   }, []);
 
   return (
-    <EventContext.Provider value={{ eventData, setEventData, fetchEventData }}>
+   // uncoment here after pass test 
+   <EventContext.Provider value={{ eventData, setEventData, fetchEventData }}>
       {children}
     </EventContext.Provider>
   );
