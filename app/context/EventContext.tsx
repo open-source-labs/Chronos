@@ -18,7 +18,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     try {
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {
-        return o;
+        return true;
       }
     } catch (e) {
       console.log({ error: e });
@@ -35,6 +35,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
       console.log("before parse");
       console.log(data);
       if (tryParseJSON(data)) result = JSON.parse(data);
+   
 
       console.log("after parse");
       console.log(result);
