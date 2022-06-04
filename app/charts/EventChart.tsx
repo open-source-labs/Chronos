@@ -17,7 +17,7 @@ interface SoloStyles {
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const createChart = () => {
     const [solo, setSolo] = useState<SoloStyles | null>(null);
-  
+
     setInterval(() => {
       if (solo !== soloStyle) {
         setSolo(soloStyle);
