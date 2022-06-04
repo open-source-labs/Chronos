@@ -246,34 +246,35 @@ ipcMain.on('dockerRequest', async (message, service) => {
 function extractWord(str) {
   const res = [{}];
   const arr = str.split('\n'); // `/\n/`
-  for(const element of arr){
-    if(element && element.length !==0 && element[0] !=='#' && element.substring(0,3) !== 'jmx' && element.substring(0,4) !== '\'jmx'){
-       const metric = element.split(' ')[0];
-       const metricValue = Number(element.split(' ')[1]);
-       res[0][metric] = metricValue;
+  for (const element of arr) {
+    if (element && element.length !== 0 && element[0] !== '#' && element.substring(0, 3) !== 'jmx' && element.substring(0, 4) !== '\'jmx') {
+      const metric = element.split(' ')[0];
+      const metricValue = Number(element.split(' ')[1]);
+      res[0][metric] = metricValue;
     }
   }
   return res;
 }
 
 ipcMain.on('kafkaRequest', async (message) => {
-  try {
-    let result: any;
-    setInterval(() => {
-      fetch('http://localhost:12345/metrics')
-      .then(data => data.text())
-      .then(data => {
-        result = extractWord(data);
-        console.log("in the data.ts kakfka fetchm12345");
-        console.log(result);
-        message.sender.send('kafkaResponse', JSON.stringify(result));
-      }) 
-      .catch(err => console.log(err)); 
-    }, 2000);
-  
-} catch (err){
-  console.log('error in async fetch block', err);
-}
+
+  let result: any;
+
+  fetch('http://localhost:12345/metrics')
+    .then(data => data.text())
+    .then(data => {
+      result = extractWord(data);
+      console.log("in the data.ts kakfka fetchm12345");
+      
+      //add result time
+      console.log(result[0]);
+      result[0].time = Date.now();
+      //end
+      console.log(result);
+      message.sender.send('kafkaResponse', JSON.stringify(result));
+    })
+    .catch(err => console.log(err));
+
 });
 
 
