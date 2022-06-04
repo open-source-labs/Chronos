@@ -1,0 +1,247 @@
+hostPort: 9000
+lowercaseOutputName: true
+rules:
+- pattern: kafka.server<type=ReplicaManager, name=UnderReplicatedPartitions><>Value
+  name: kafka_server_under_replicated_partitions
+  help: Number of under-replicated partitions (| ISR | < | all replicas |). Alert if value is greater than 0
+  type: GAUGE
+
+- pattern: kafka.controller<type=KafkaController, name=OfflinePartitionsCount><>Value
+  name: kafka_controller_offline_partitions_count
+  help: Number of partitions that do not have an active leader and are hence not writable or readable. Alert if value is greater than 0
+  type: GAUGE
+
+- pattern: kafka.controller<type=KafkaController, name=ActiveControllerCount><>Value
+  name: kafka_controller_active_controller_count
+  help: Number of active controllers in the cluster. Alert if the aggregated sum across all brokers in the cluster is anything other than 1 (there should be exactly one controller per cluster)
+  type: GAUGE
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=BytesInPerSec><>Count
+  name: kafka_server_total_bytes_in_per_sec
+  help: Aggregate incoming byte rate
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=BytesInPerSec, topic=(.+)><>Count
+  name: kafka_server_total_bytes_in_per_sec_per_topic
+  help: Aggregate incoming byte rate per topic
+  labels:
+    topic: "$1"
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=BytesOutPerSec><>Count
+  name: kafka_server_total_bytes_out_per_sec
+  help: Aggregate outgoing byte rate
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=BytesOutPerSec, topic=(.+)><>Count
+  name: kafka_server_total_bytes_out_per_sec_per_topic
+  help: Aggregate outgoing byte rate per topic
+  labels:
+    topic: "$1"
+  type: UNTYPED
+
+- pattern: kafka.network<type=RequestMetrics, name=RequestsPerSec, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_requests_per_sec
+  help: Request rate (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=TotalProduceRequestsPerSec><>Count
+  name: kafka_server_total_produce_requests_per_sec
+  help: Produce request rate
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=TotalProduceRequestsPerSec, topic=(.+)><>Count
+  name: kafka_server_total_produce_requests_per_sec_per_topic
+  help: Produce request rate per topic
+  labels:
+    topic: "$1"
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=TotalFetchRequestsPerSec><>Count
+  name: kafka_server_total_fetch_requests_per_sec
+  help: Fetch request rate
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=TotalFetchRequestsPerSec, topic=(.+)><>Count
+  name: kafka_server_total_fetch_requests_per_sec_per_topic
+  help: Fetch request rate per topic
+  labels:
+    topic: "$1"
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=FailedProduceRequestsPerSec><>Count
+  name: kafka_server_failed_produce_requests_per_sec
+  help: Produce request rate for requests that failed
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=FailedProduceRequestsPerSec, topic=(.*)><>Count
+  name: kafka_server_failed_produce_requests_per_sec_per_topic
+  help: Produce request rate for requests that failed per topic
+  labels:
+    topic: "$1"
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=FailedFetchRequestsPerSec><>Count
+  name: kafka_server_failed_fetch_requests_per_sec
+  help: Fetch request rate for requests that failed
+  type: UNTYPED
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=FailedFetchRequestsPerSec, topic=(.*)><>Count
+  name: kafka_server_failed_fetch_requests_per_sec_per_topic
+  help: Fetch request rate for requests that failed per topic
+  labels:
+    topic: "$1"
+  type: UNTYPED
+
+- pattern: kafka.controller<type=ControllerStats, name=LeaderElectionRateAndTimeMs><>Count
+  name: kafka_controller_leader_election_rate_time
+  help: Leader election rate and latency (rate in seconds, latency|time in ms)
+  type: UNTYPED
+  
+- pattern: kafka.controller<type=ControllerStats, name=UncleanLeaderElectionsPerSec><>Count
+  name: kafka_controller_unclean_leader_elections_per_sec
+  help: Unclean leader election rate
+  type: UNTYPED
+
+- pattern: kafka.server<type=ReplicaManager, name=PartitionCount><>Value
+  name: kafka_server_partition_count
+  help: Number of partitions on this broker (This should be mostly even across all brokers)
+  type: GAUGE
+
+- pattern: kafka.server<type=ReplicaManager, name=LeaderCount><>Value
+  name: kafka_server_leader_count
+  help: Number of leaders on this broker (This should be mostly even across all brokers)
+  type: GAUGE
+
+- pattern: kafka.server<type=ReplicaFetcherManager, name=MaxLag, clientId=Replica><>Value
+  name: kafka_server_max_lag_in_replica
+  help: Maximum lag in messages between the follower and leader replicas
+  type: GAUGE
+
+- pattern: kafka.server<type=KafkaRequestHandlerPool, name=RequestHandlerAvgIdlePercent><>Count
+  name: kafka_server_request_handler_avg_idle_precent
+  help: Average fraction of time the request handler threads are idle. Values are between 0 (all resources are used) and 1 (all resources are available)
+  type: GAUGE
+
+- pattern: kafka.network<type=SocketServer, name=NetworkProcessorAvgIdlePercent><>Value
+  name: kafka_network_network_processor_avg_idle_precent
+  help: Average fraction of time the network processor threads are idle. Values are between 0 (all resources are used) and 1 (all resources are available)
+  type: GAUGE
+
+- pattern: kafka.network<type=RequestChannel, name=RequestQueueSize><>Value
+  name: kafka_network_request_queue_size
+  help: Size of the request queue. A congested request queue will not be able to process incoming or outgoing requests
+  type: GAUGE
+
+- pattern: kafka.network<type=RequestMetrics, name=TotalTimeMs, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_total_time_ms
+  help: Total time in ms to serve the specified request (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: COUNTER
+
+- pattern: kafka.network<type=RequestMetrics, name=RequestQueueTimeMs, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_request_queue_time_ms
+  help: Time the request waits in the request queue (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: COUNTER
+
+- pattern: kafka.network<type=RequestMetrics, name=LocalTimeMs, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_local_time_ms
+  help: Time the request is processed at the leader (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: COUNTER
+
+- pattern: kafka.network<type=RequestMetrics, name=RemoteTimeMs, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_remote_time_ms
+  help: Time the request waits for the follower (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: COUNTER
+
+- pattern: kafka.network<type=RequestMetrics, name=ResponseQueueTimeMs, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_response_queue_time_ms
+  help: Time the request waits in the response queue (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: COUNTER
+
+- pattern: kafka.network<type=RequestMetrics, name=ResponseSendTimeMs, request=(Produce|FetchConsumer|FetchFollower)><>Count
+  name: kafka_network_response_send_time_ms
+  help: Time to send the response (Produce, FetchConsumer, FetchFollower)
+  labels:
+    request: "$1"
+  type: COUNTER
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=MessagesInPerSec><>Count
+  name: kafka_server_messages_in_per_sec
+  help: Aggregate incoming message rate
+  type: COUNTER
+
+- pattern: kafka.server<type=BrokerTopicMetrics, name=MessagesInPerSec, topic=(.+)><>Count
+  name: kafka_server_messages_in_per_sec_per_topic
+  help: Aggregate incoming message rate per_topic
+  labels:
+    topic: "$1"
+  type: COUNTER
+
+- pattern: kafka.log<type=LogFlushStats, name=LogFlushRateAndTimeMs><>Count
+  name: kafka_log_log_flush_rate_time
+  help: Log flush rate and time (rate in seconds, latency|time in ms)
+  type: UNTYPED
+  
+- pattern: kafka.server<type=ReplicaManager, name=IsrShrinksPerSec><>Count
+  name: kafka_server_isr_shrinks_per_sec
+  help: If a broker goes down, ISR for some of the partitions will shrink. When that broker is up again, ISR will be expanded once the replicas are fully caught up. Other than that, the expected value for both ISR shrink rate and expansion rate is 0
+  type: GAUGE
+  
+- pattern: kafka.server<type=ReplicaManager, name=IsrExpandsPerSec><>Count
+  name: kafka_server_isr_expands_per_sec
+  help: When a broker is brought up after a failure, it starts catching up by reading from the leader. Once it is caught up, it gets added back to the ISR.
+  type: GAUGE
+
+- pattern: kafka.server<type=DelayedOperationPurgatory, name=PurgatorySize, delayedOperation=(Produce|Fetch)><>Value
+  name: kafka_server_purgatory_size
+  help: Number of requests waiting in the producer purgatory. This should be non-zero when acks=all is used on the producer | Number of requests waiting in the fetch purgatory. This is high if consumers use a large value for fetch.wait.max.ms
+  labels:
+    delayed_operation: "$1"
+  type: GAUGE
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperDisconnectsPerSec><>Count
+  name: kafka_server_zookeeper_disconnects_per_sec
+  help: Zookeeper client is currently disconnected from the ensemble. The client lost its previous connection to a server and it is currently trying to reconnect. The session is not necessarily expired
+  type: UNTYPED
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperExpiresPerSec><>Count
+  name: kafka_server_zookeeper_expires_per_sec
+  help: The ZooKeeper session has expired. When a session expires, we can have leader changes and even a new controller. Alert if value of such events across a Kafka cluster and if the overall number is high
+  type: UNTYPED
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperSyncConnectsPerSec><>Count
+  name: kafka_server_zookeeper_sync_connects_per_sec
+  help: ZooKeeper client is connected to the ensemble and ready to execute operations
+  type: UNTYPED
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperAuthFailuresPerSec><>Count
+  name: kafka_server_zookeeper_auth_failure_per_sec
+  help: An attempt to connect to the ensemble failed because the client has not provided correct credentials
+  type: UNTYPED
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperReadOnlyConnectsPerSec><>Count
+  name: kafka_server_zookeeper_readonly_connects_per_sec
+  help: The server the client is connected to is currently LOOKING, which means that it is neither FOLLOWING nor LEADING. Consequently, the client can only read the ZooKeeper state, but not make any changes (create, delete, or set the data of znodes)
+  type: UNTYPED
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperSaslAuthenticationsPerSec><>Count
+  name: kafka_server_zookeeper_sasl_auth_per_sec
+  help: Client has successfully authenticated
+  type: UNTYPED
+
+- pattern: kafka.server<type=SessionExpireListener, name=ZooKeeperExpiredPerSec><>Count
+  name: kafka_server_zookeeper_expired_per_sec
+  help: The ZooKeeper session has expired. When a session expires, we can have leader changes and even a new controller. Alert if value of such events across a Kafka cluster and if the overall number is high
+  type: UNTYPED
