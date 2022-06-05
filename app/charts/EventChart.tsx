@@ -1,10 +1,14 @@
+import { time } from 'd3';
+import moment from 'moment';
 import React, { useContext, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
 
 interface EventChartProps {
   key: string;
-  eventDataObj:object;
+  metric: string;
+  timeList: any[];
+  valueList: any;
   sizing: string;
   colourGenerator: Function;
 }
@@ -15,48 +19,46 @@ interface SoloStyles {
 }
 
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
+  const { metric, timeList, valueList, sizing, colourGenerator } = props;
+//  console.log('in event chart:');
+ // console.log('metric:', metric);
+  // console.log(JSON.stringify(timeList), JSON.stringify(valueList));
+
+  const [solo, setSolo] = useState<SoloStyles | null>(null);
+
+  setInterval(() => {
+    if (solo !== soloStyle) {
+      setSolo(soloStyle);
+    }
+  }, 20);
+
   const createChart = () => {
-    const [solo, setSolo] = useState<SoloStyles | null>(null);
-
-    setInterval(() => {
-      if (solo !== soloStyle) {
-        setSolo(soloStyle);
-      }
-    }, 20);
-
-
-    const sizeSwitch = props.sizing === 'all' ? all : solo;
-    const hashedColor = props.colourGenerator(props.eventDataObj['metric']);
-    interface DataObject {
+    const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
+    const hashedColour = colourGenerator(metric);
+    let plotlyData: {
+      name: any;
+      x: any;
+      y: any;
       type: any;
       mode: any;
-      y: any;
-      name: any;
-      marker: {
-        color: any;
-        size: any;
-        symbol: any;
-      };
-    }
-
-    const plotlyData: DataObject = {
-      type: 'scattergl',
-      mode: 'lines+markers',
-      y: props.eventDataObj['metricValue'],
-      name: `${props.eventDataObj['metric']}`,
-      marker: {
-        color: hashedColor,
-        size: 5,
-        symbol: 'square-dot',
-      },
+      marker: { color: string };
     };
+    plotlyData = {
+      name: metric,
+      x: timeArr,
+      y: valueList,
+      type: 'scattergl',
+      mode: 'lines',
+      marker: { color: hashedColour },
+    };
+    const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
         data={[plotlyData]}
         config={{ displayModeBar: false }}
         layout={{
-          title: `${props.eventDataObj['metric']}`,
+          title: metric,
           ...sizeSwitch,
           font: {
             color: '#444d56',
@@ -65,34 +67,36 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
           },
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
+          showlegend: true,
           legend: {
             orientation: 'h',
             xanchor: 'center',
             x: 0.5,
-            y: 0,
-            font: {
-              size: 9,
-            },
+            y: 5,
           },
           xaxis: {
+            title: 'Time',
             tickmode: 'auto',
             tick0: 0,
             dtick: 10,
-            title: 'Time Elapsed (min)',
+            rangemode: 'nonnegative',
+            mirror: false,
+            ticks: 'outside',
+            showline: true,
           },
           yaxis: {
-            title: `${props.eventDataObj['metric']}`,
+            rangemode: 'nonnegative',
+            title: metric,
           },
         }}
       />
     );
   };
+
   return (
-    
     <div className="chart" data-testid="Event Chart">
       {createChart()}
     </div>
-    
   );
 });
 

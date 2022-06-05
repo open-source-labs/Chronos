@@ -10,7 +10,7 @@ import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
-import fetch from 'electron-fetch';
+import fetch, { FetchError } from 'electron-fetch';
 
 
 require('dotenv').config();
@@ -243,7 +243,7 @@ ipcMain.on('dockerRequest', async (message, service) => {
 
 
 // start fetch
-function extractWord(str) {
+function extractWord(str: string) {
   const res = [{}];
   const arr = str.split('\n'); // `/\n/`
   for (const element of arr) {
@@ -257,24 +257,28 @@ function extractWord(str) {
 }
 
 ipcMain.on('kafkaRequest', async (message) => {
-
+  let result50: any[] =[];
   let result: any;
-
-  fetch('http://localhost:12345/metrics')
+  //we do not need loop 50 (very slow) if we get the data from database and just extract 50 rows from db.
+  for (let i = 0; i < 50; i++){
+    await fetch('http://localhost:12345/metrics')
     .then(data => data.text())
     .then(data => {
       result = extractWord(data);
-      console.log("in the data.ts kakfka fetchm12345");
-      
-      //add result time
-      console.log(result[0]);
+      //add time here:
+  
       result[0].time = Date.now();
-      //end
-      console.log(result);
-      message.sender.send('kafkaResponse', JSON.stringify(result));
+
+      result50.push(result[0]);
+     
     })
     .catch(err => console.log(err));
+  }
+  console.log("kafka response: ");
+  console.log(JSON.stringify(result50));
+  message.sender.send('kafkaResponse', JSON.stringify(result50));
 
+  
 });
 
 
