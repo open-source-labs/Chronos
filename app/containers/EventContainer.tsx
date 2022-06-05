@@ -24,8 +24,9 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     if (eventData.length > 0) {
       // console.log("eventData in event container changes:")
       //console.log(JSON.stringify(eventData));
-      const dataList = transformEventData(eventData)[0]; //[{m1: [3,6,8...]}, {m2: [3,6,8...]}]
-      const timeList = transformEventData(eventData)[1]; //[1,2,3,4,...,50]
+      const returns : any[] = transformEventData(eventData);
+      const dataList = returns[0]; //[{m1: [3,6,8...]}, {m2: [3,6,8...]}]
+      const timeList = returns[1]; //[1,2,3,4,...,50]
       // console.log("datalist:", JSON.stringify(dataList));
       // console.log("timelist:", JSON.stringify(timeList));
       
