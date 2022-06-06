@@ -10,7 +10,7 @@ import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
-import fetch from 'electron-fetch';
+import fetch, { FetchError } from 'electron-fetch';
 
 
 require('dotenv').config();
@@ -243,37 +243,42 @@ ipcMain.on('dockerRequest', async (message, service) => {
 
 
 // start fetch
-function extractWord(str) {
+function extractWord(str: string) {
   const res = [{}];
   const arr = str.split('\n'); // `/\n/`
-  for(const element of arr){
-    if(element && element.length !==0 && element[0] !=='#' && element.substring(0,3) !== 'jmx' && element.substring(0,4) !== '\'jmx'){
-       const metric = element.split(' ')[0];
-       const metricValue = Number(element.split(' ')[1]);
-       res[0][metric] = metricValue;
+  for (const element of arr) {
+    if (element && element.length !== 0 && element[0] !== '#' && element.substring(0, 3) !== 'jmx' && element.substring(0, 4) !== '\'jmx') {
+      const metric = element.split(' ')[0];
+      const metricValue = Number(element.split(' ')[1]);
+      res[0][metric] = metricValue;
     }
   }
   return res;
 }
 
 ipcMain.on('kafkaRequest', async (message) => {
-  try {
-    let result: any;
-    setInterval(() => {
-      fetch('http://localhost:12345/metrics')
-      .then(data => data.text())
-      .then(data => {
-        result = extractWord(data);
-        console.log("in the data.ts kakfka fetchm12345");
-        console.log(result);
-        message.sender.send('kafkaResponse', JSON.stringify(result));
-      }) 
-      .catch(err => console.log(err)); 
-    }, 2000);
+  let result50: any[] =[];
+  let result: any;
+  //we do not need loop 50 (very slow) if we get the data from database and just extract 50 rows from db.
+  for (let i = 0; i < 50; i++){
+    await fetch('http://localhost:12345/metrics')
+    .then(data => data.text())
+    .then(data => {
+      result = extractWord(data);
+      //add time here:
   
-} catch (err){
-  console.log('error in async fetch block', err);
-}
+      result[0].time = Date.now();
+
+      result50.push(result[0]);
+     
+    })
+    .catch(err => console.log(err));
+  }
+  console.log("kafka response: ");
+  console.log(JSON.stringify(result50));
+  message.sender.send('kafkaResponse', JSON.stringify(result50));
+
+  
 });
 
 
