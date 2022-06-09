@@ -13,7 +13,6 @@ const QueryContextProvider: React.FC = React.memo(({ children }) => {
 
 
   return (
-   // uncoment here after pass test 
    <QueryContext.Provider value={{ selectedMetrics, setSelectedMetrics}}>
       {children}
     </QueryContext.Provider>
