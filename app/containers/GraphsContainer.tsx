@@ -25,6 +25,7 @@ import RouteChart from '../charts/RouteChart';
 import LogsTable from '../charts/LogsTable';
 //import EventContainer
 import EventContainer from './EventContainer';
+import QueryContainer from './QueryContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
@@ -127,7 +128,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           id="all-button"
           onClick={() => routing('all')}
         >
-          All
+          Select Metrics
         </button>
         <button
           id="speed-button"
@@ -218,15 +219,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             {/* add event container */}
             {chart === 'event' && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
             {chart === 'all' && (
-              <>
-                <SpeedChart colourGenerator={stringToColour} sizing="all" />
-                <TemperatureChart colourGenerator={stringToColour} sizing="all" />
-                <LatencyChart colourGenerator={stringToColour} sizing="all" />
-                <MemoryChart colourGenerator={stringToColour} sizing="all" />
-                <ProcessesChart colourGenerator={stringToColour} sizing="all" />
-                <DockerChart />
-                <EventContainer colourGenerator={stringToColour} sizing="all" />
-              </>
+              <QueryContainer/>
             )}
           </div>
         )}
