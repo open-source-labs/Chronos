@@ -7,14 +7,15 @@ const KafkaSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  activecontrollercount: {
+  metric: {
+    type: String,
+  },
+  value: {
     type: Number,
   },
-  offlinepartitionscount: {
-    type: Number,
-  },
-  uncleanleaderelectionspersec: {
-    type: Number,
+  category: {
+    type: String,
+    default: '',
   },
 });
 

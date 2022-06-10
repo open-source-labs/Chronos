@@ -5,6 +5,8 @@ const CommunicationModel = require('../models/CommunicationModel');
 const ServicesModel = require('../models/ServicesModel');
 const HealthModelFunc = require('../models/HealthModel');
 const ContainerInfoFunc = require('../models/ContainerInfo');
+const KafkaModel = require('../models/KafkaModel');
+const { kafkaFetch } = require('./kafkaHelpers.js');
 require('../models/ContainerInfo');
 
 // Handle deprecation warnings
@@ -209,6 +211,7 @@ chronos.health = ({ microservice, interval }) => {
       })
       .catch(err => console.log('Error saving health data: ', err.message));
   }, interval);
+  console.log('Interval set, recording health data');
 };
 
 /**
@@ -302,6 +305,29 @@ chronos.docker = ({ microservice, interval }) => {
     });
 };
 
+/*
+ This function takes as a parameter the promise returned from the kafkaFetch().
+It then takes the returned array of metrics, turns them into documents based on
+KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
+*/
+chronos.kafka = function (userConfig) {
+  // fetch the data from Kafka with kafkaFetch()
+  // then take turn each result in the returned array into a kafkaModel doc
+  // insertMany into the the KafkaModel
+  console.log('Starting Kafka Collection');
+  setInterval(() => {
+    kafkaFetch(userConfig)
+      .then(parsedArray => {
+        const documents = [];
+        for (const metric of parsedArray) {
+          documents.push(KafkaModel(metric));
+        }
+        return KafkaModel.insertMany(documents);
+      })
+      .catch(err => console.log('Error inserting kafka documents: ', err));
+  }, userConfig.interval);
+};
+
 // // grabs container data for multiple containers info - TBD
 // chronos.dockerInfo = ({ microservice, interval }) => {
 //   si.dockerInfo()
@@ -309,19 +335,6 @@ chronos.docker = ({ microservice, interval }) => {
 //       console.log('data from container info', data);
 //     })
 //     .catch(err => console.log('Error saving health data: ', err.message));
-// };
-
-// import data from JMX Exporter port
-// chronos.kafka = () => {
-//   // write fetch request to localhost:12345/metrics
-//   // then store metrics in database
-//   fetch('localhost:12345/metrics')
-//     .then(data => {
-//       console.log(data);
-//       const parsedData = parser.toTree(data);
-//       console.log(parsedData);
-//     })
-//     .catch(err => console.log(err));
 // };
 
 module.exports = chronos;
