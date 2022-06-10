@@ -1,15 +1,15 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 
 export const QueryContext = React.createContext<any>(null);
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {Object} selectedMetrics 
+ * @property  {Array} selectedMetrics 
  * @method    setSelectedMetrics
  */
 
-const QueryContextProvider: React.FC = React.memo(({ children }) => {
-  const [selectedMetrics, setSelectedMetrics] = useState([{}]);
+const QueryContextProvider: React.SFC = React.memo(({ children }) => {
+  const [selectedMetrics, setSelectedMetrics] = useState([]);
 
 
   return (
