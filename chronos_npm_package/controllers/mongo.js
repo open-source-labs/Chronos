@@ -317,16 +317,16 @@ chronos.kafka = function (userConfig) {
   console.log('Starting Kafka Collection');
   setInterval(() => {
     kafkaFetch(userConfig)
-    .then(parsedArray => {
-      const documents = [];
-      console.log('parsedArray: ', parsedArray);
-      for (const metric of parsedArray) {
-        documents.push(KafkaModel(metric));
-      }
-      console.log('inserting documents')
-      return KafkaModel.insertMany(documents);
-    })
-    .catch(err => console.log('Error inserting kafka documents: ', err));
+      .then(parsedArray => {
+        const documents = [];
+        console.log('parsedArray: ', parsedArray);
+        for (const metric of parsedArray) {
+          documents.push(KafkaModel(metric));
+        }
+        console.log('inserting documents')
+        return KafkaModel.insertMany(documents);
+      })
+      .catch(err => console.log('Error inserting kafka documents: ', err));
   }, userConfig.interval);
 };
 
