@@ -6,7 +6,6 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
-//import EventContext
 import { EventContext } from '../context/EventContext';
 
 import Header from '../components/Header';
@@ -23,8 +22,8 @@ import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 
 import LogsTable from '../charts/LogsTable';
-//import EventContainer
 import EventContainer from './EventContainer';
+import QueryContainer from './QueryContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
@@ -127,7 +126,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           id="all-button"
           onClick={() => routing('all')}
         >
-          All
+          Select Metrics
         </button>
         <button
           id="speed-button"
@@ -215,18 +214,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
               <ProcessesChart colourGenerator={stringToColour} sizing="solo" />
             )}
             {chart === 'docker' && <DockerChart />}
-            {/* add event container */}
             {chart === 'event' && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
             {chart === 'all' && (
-              <>
-                <SpeedChart colourGenerator={stringToColour} sizing="all" />
-                <TemperatureChart colourGenerator={stringToColour} sizing="all" />
-                <LatencyChart colourGenerator={stringToColour} sizing="all" />
-                <MemoryChart colourGenerator={stringToColour} sizing="all" />
-                <ProcessesChart colourGenerator={stringToColour} sizing="all" />
-                <DockerChart />
-                <EventContainer colourGenerator={stringToColour} sizing="all" />
-              </>
+              <QueryContainer/>
             )}
           </div>
         )}
