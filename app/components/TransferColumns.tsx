@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import 'antd/dist/antd.less';
-import { Switch, Table, Tag, Transfer } from 'antd';
+import { Switch, Table, Tag, Transfer, Button } from 'antd';
+import { PoweroffOutlined } from '@ant-design/icons';
 import difference from 'lodash/difference';
+import { QueryContext } from '../context/QueryContext';
+import { HealthContext } from '../context/HealthContext';
+import { EventContext } from '../context/EventContext';
+import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
 
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
@@ -56,65 +61,93 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   </Transfer>
 );
 
-const categories = ['CPU', 'Memory', 'Process / Services', 'Network', 'Event'];
-// const mockData = Array.from({
-//   length: 20,
-// }).map((_, i) => ({
-//   key: `content${i + 1}`,
-//   title: `content${i + 1}`,
-//   tag: categories[i % 3],
-// }));
-const mockData = [
-  {
-    key: 'CPU | Metric1',
-    title: 'CPU | Metric1',
-    tag: 'CPU',
-  },
-  {
-    key: 'CPU | Metric2',
-    title: 'CPU | Metric2',
-    tag: 'CPU',
-  },
-  {
-    key: 'Memory | Metric3',
-    title: 'Memory | Metric3',
-    tag: 'Memory', 
-  },
-  {
-    key: 'Memory | Metric4',
-    title: 'Memory | Metric4',
-    tag: 'Memory', 
-  },
-];
-// const originTargetKeys = mockData
-//   .filter((item) => Number(item.key) % 3 > 1)
-//   .map((item) => item.key);
-const originTargetKeys = [];
-const leftTableColumns = [
-  {
-    dataIndex: 'title',
-    title: 'Metric',
-  },
-  {
-    dataIndex: 'tag',
-    title: 'Category',
-    render: tag => <Tag>{tag}</Tag>,
-  },
-];
-const rightTableColumns = [
-  {
-    dataIndex: 'title',
-    title: 'Metric',
-  },
-];
-
 const TransferColumns = React.memo(() => {
-  const [targetKeys, setTargetKeys] = useState(originTargetKeys);
+  const [targetKeys, setTargetKeys] = useState([]);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
+  const { setSelectedMetrics } = useContext(QueryContext);
+  // const {category_service_datalist} = useContext(HealthContext);
+  //const { datalist } = useContext(EventContext);
+
+  const category_service_datalist = [
+    {
+      Memory: [
+        { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] },
+        { orders: [{ disk_usage: [5, 25] }, { clockSpeed: [7, 14] }] },
+      ],
+    },
+    {
+      CPU: [{ books: [{ cpu_temp: [100, 200] }] }, { orders: [{ cpu_temp: [150, 250] }] }],
+    },
+  ];
+  const datalist = [
+    {
+      Event: [
+        {
+          books: [
+            { broker_metric1: [10, 20] },
+            { broker_metric2: [8, 16] },
+            { broker_metric3: [8, 16] },
+          ],
+        },
+        {
+          orders: [
+            { broker_metric1: [5, 25] },
+            { broker_metric2: [7, 14] },
+            { broker_metric3: [8, 16] },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const appendMetrics = (datalist, metricsPool) => {
+    if (datalist) {
+      datalist.forEach(category => {
+        const tag: string = Object.keys(category)[0]; //Memory
+        const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
+        const valuesOfServiceObj: any[] = Object.values(serviceObj);
+        const metricsArr: any[] = valuesOfServiceObj[0]; //[{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }]
+        metricsArr.forEach(element => {
+          //{ disk_usage: [10, 20] }
+          const temp = {};
+          const metricName: string = Object.keys(element)[0];
+          const key = tag + ' | ' + metricName;
+          const title = key;
+          temp['key'] = key;
+          temp['title'] = title;
+          temp['tag'] = tag;
+          metricsPool.push(temp);
+        });
+      });
+    }
+    return metricsPool;
+  };
+  let metricsPool = [];
+  metricsPool = appendMetrics(category_service_datalist, metricsPool);
+  metricsPool = appendMetrics(datalist, metricsPool);
+
+  const leftTableColumns = [
+    {
+      dataIndex: 'title',
+      title: 'Metrics',
+    },
+    {
+      dataIndex: 'tag',
+      title: 'Category',
+      render: tag => <Tag>{tag}</Tag>,
+    },
+  ];
+  const rightTableColumns = [
+    {
+      dataIndex: 'title',
+      title: 'Selected Metrics',
+    },
+  ];
 
   const onChange = nextTargetKeys => {
     setTargetKeys(nextTargetKeys);
+    console.log('nextTargetKeys', nextTargetKeys);
   };
 
   const triggerDisable = checked => {
@@ -124,11 +157,51 @@ const TransferColumns = React.memo(() => {
   const triggerShowSearch = checked => {
     setShowSearch(checked);
   };
+  const handleClick = ()=>{
+    //setSelectedMetrics
+    const temp: any[] = [];
+    const categorySet = new Set();
+    for(let i = 0; i < targetKeys.length; i++){
+      let str : string = targetKeys[i];
+      const strArr : string[] = str.split(' | ');
+      const categoryName = strArr[0];
+      const metricName = strArr[1];
+      if(categorySet.has(categoryName)){
+        temp.forEach(element => {
+          if(Object.keys(element)[0] === categoryName){
+            const metricsList: any[] = element[categoryName];
+            metricsList.push(metricName);
+          }
+        });
+      }
+      else{
+        categorySet.add(categoryName);
+        const newCategory = {};
+        newCategory[categoryName] = [metricName];
+        temp.push(newCategory);
+      }
+    }
+    setSelectedMetrics(temp);
+  }
 
   return (
     <>
+      <Button
+        type="primary"
+        onClick={handleClick}
+        shape = 'round'
+        size = 'middle'
+        style={{
+          marginLeft: 16,
+          marginTop: 330,
+          float: 'right'
+         
+        }}
+      >
+        Get Charts
+      </Button>
       <TableTransfer
-        dataSource={mockData}
+        dataSource={metricsPool}
         targetKeys={targetKeys}
         disabled={disabled}
         showSearch={showSearch}
