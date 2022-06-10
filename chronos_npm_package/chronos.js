@@ -121,11 +121,12 @@ chronos.kafka = function () {
   initialFetch(jmxuri);
 
   if (database.type === 'MongoDB') {
-    // mongo.connect(userConfig);
+    mongo.connect(userConfig);
     mongo.kafka(userConfig);
   }
 
-  if (database.type === 'PostgresQL') {
+  if (database.type === 'PostgreSQL') {
+    postgres.connect(userConfig);
     postgres.kafka(userConfig);
   }
 };
