@@ -216,7 +216,6 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
               <ProcessesChart colourGenerator={stringToColour} sizing="solo" />
             )}
             {chart === 'docker' && <DockerChart />}
-            {/* add event container */}
             {chart === 'event' && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
             {chart === 'all' && (
               <QueryContainer/>
