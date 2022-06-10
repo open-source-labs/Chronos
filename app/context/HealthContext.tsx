@@ -43,6 +43,28 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     return output;
   }, []);
 
+  // parser for timelist data
+  function timelistParser(data) {
+    let currService;
+    let currMetrics;
+    const output = [];
+    for (const ele of data) {
+      for (const key in ele) {
+        currService = key;
+        currMetrics = ele[key];
+      }
+      for (const metric of currMetrics) {
+        const temp = {};
+        const serv = {};
+        temp[metric.category] = [];
+        serv[currService] = [];
+        serv[currService].push(metric.time);
+        temp[metric.category].push(serv);
+      }
+    }
+    return output;
+  }
+
   const fetchHealthData = useCallback(serv => {
     setServices(serv);
 
