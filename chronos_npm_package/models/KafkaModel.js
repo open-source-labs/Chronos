@@ -14,7 +14,7 @@ const KafkaSchema = new Schema({
     type: Number,
   },
   category: {
-    type: Number,
+    type: String,
     default: '',
   },
 });
