@@ -319,11 +319,9 @@ chronos.kafka = function (userConfig) {
     kafkaFetch(userConfig)
       .then(parsedArray => {
         const documents = [];
-        console.log('parsedArray: ', parsedArray);
         for (const metric of parsedArray) {
           documents.push(KafkaModel(metric));
         }
-        console.log('inserting documents')
         return KafkaModel.insertMany(documents);
       })
       .catch(err => console.log('Error inserting kafka documents: ', err));
@@ -337,19 +335,6 @@ chronos.kafka = function (userConfig) {
 //       console.log('data from container info', data);
 //     })
 //     .catch(err => console.log('Error saving health data: ', err.message));
-// };
-
-// import data from JMX Exporter port
-// chronos.kafka = () => {
-//   // write fetch request to localhost:12345/metrics
-//   // then store metrics in database
-//   fetch('localhost:12345/metrics')
-//     .then(data => {
-//       console.log(data);
-//       const parsedData = parser.toTree(data);
-//       console.log(parsedData);
-//     })
-//     .catch(err => console.log(err));
 // };
 
 module.exports = chronos;
