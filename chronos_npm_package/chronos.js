@@ -117,9 +117,7 @@ chronos.kafka = function () {
     return;
   }
 
-  // fetch from the jmxuri in the userconfig option
-  // confirm that valid data is being collected?
-  // setInterval to fetch at the specified interval
+  // Ensures that the provided URI returns correctly formatted data.
   initialFetch(jmxuri);
 
   if (database.type === 'MongoDB') {
@@ -128,7 +126,7 @@ chronos.kafka = function () {
   }
 
   if (database.type === 'PostgresQL') {
-    postgres.connect(userConfig);
+    postgres.kafka(userConfig);
   }
 };
 
