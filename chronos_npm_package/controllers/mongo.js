@@ -5,6 +5,8 @@ const CommunicationModel = require('../models/CommunicationModel');
 const ServicesModel = require('../models/ServicesModel');
 const HealthModelFunc = require('../models/HealthModel');
 const ContainerInfoFunc = require('../models/ContainerInfo');
+const KafkaModel = require('../models/KafkaModel');
+const { kafkaFetch } = require('./kafkaHelpers.js');
 require('../models/ContainerInfo');
 
 // Handle deprecation warnings
@@ -300,6 +302,28 @@ chronos.docker = ({ microservice, interval }) => {
     ['catch'](function (err) {
       throw err;
     });
+};
+
+/*
+ This function takes as a parameter the promise returned from the kafkaFetch().
+It then takes the returned array of metrics, turns them into documents based on
+KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
+*/
+chronos.kafka = function (userConfig) {
+  // fetch the data from Kafka with kafkaFetch()
+  // then take turn each result in the returned array into a kafkaModel doc
+  // insertMany into the the KafkaModel
+  setInterval(() => {
+    kafkaFetch(userConfig)
+    .then(parsedArray => {
+      const documents = [];
+      for (const metric of parsedArray) {
+        documents.push(KafkaModel(metric));
+      }
+      return KafkaModel.insertMany(documents);
+    })
+    .catch(err => console.log('Error inserting kafka documents: ', err));
+  }, userConfig.interval);
 };
 
 // // grabs container data for multiple containers info - TBD
