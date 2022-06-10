@@ -6,7 +6,7 @@ const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js');
 const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js');
 const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js');
 const { validateInput, addNotifications } = require('./controllers/helpers');
-const { initialFetch } = require('./controllers/helpers');
+const { initialFetch } = require('./controllers/kafkaHelpers');
 
 let userConfig = {};
 const chronos = {};
@@ -112,17 +112,22 @@ chronos.track = () => {
 
 chronos.kafka = function () {
   const { database, jmxuri } = userConfig;
-  if (jmxuri === undefined) return;
+  if (jmxuri === undefined){
+    console.log('No specified URI for a JMX Exporter');
+    return;
+  }
+
   // fetch from the jmxuri in the userconfig option
   // confirm that valid data is being collected?
   // setInterval to fetch at the specified interval
   initialFetch(jmxuri);
 
-  if (database.type === 'mongo') {
-    mongo.connect(userConfig);
+  if (database.type === 'MongoDB') {
+    // mongo.connect(userConfig);
+    mongo.kafka(userConfig);
   }
 
-  if (database.type === 'postgres') {
+  if (database.type === 'PostgresQL') {
     postgres.connect(userConfig);
   }
 };

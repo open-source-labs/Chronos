@@ -16,7 +16,7 @@ kafkaHelpers.extractWord = function (str) {
     ) {
       const metric = element.split(' ')[0];
       const value = Number(element.split(' ')[1]);
-      const time = new Date().now();
+      const time = Date.now();
       const category = 'Event';
       res.push({ metric, value, time, category });
     }
@@ -26,21 +26,27 @@ kafkaHelpers.extractWord = function (str) {
 
 // executes first to ensure that the provided jmxuri provides legitimate data.
 // if it doesnt then an error is thrown
-kafkaHelpers.initialFetch = function(jmxuri) {
+kafkaHelpers.initialFetch = function (jmxuri) {
   fetch(jmxuri)
   .then(response => {
     if (response.status !== 200) {
-        throw new Error(`Error: The provided URI for the JMX exporter is invalid`);
+      throw new Error(`Error: The provided URI for the JMX exporter is invalid`);
+    } else {
+      console.log('Initial fetch to JMX Exporter was successful.');
     }
+    return response.text();
+  })
+  .then(text => {
+    console.log('\nInitial Fetch Response Text:\n', text);
   });
-}
+};
 
 // fetches kafka metrics from the user-specified location of JMX prometheus and returns the processed result
-kafkaHelpers.kafkaFetch = function(config) {
+kafkaHelpers.kafkaFetch = function (config) {
   return fetch(config.jmxuri)
     .then(data => data.text())
-    .then(data => extractWord(data))
+    .then(data => kafkaHelpers.extractWord(data))
     .catch(err => console.log(err));
-}
+};
 
 module.exports = kafkaHelpers;

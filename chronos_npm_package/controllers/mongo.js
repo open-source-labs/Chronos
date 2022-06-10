@@ -211,6 +211,7 @@ chronos.health = ({ microservice, interval }) => {
       })
       .catch(err => console.log('Error saving health data: ', err.message));
   }, interval);
+  console.log('Interval set, recording health data');
 };
 
 /**
@@ -313,13 +314,16 @@ chronos.kafka = function (userConfig) {
   // fetch the data from Kafka with kafkaFetch()
   // then take turn each result in the returned array into a kafkaModel doc
   // insertMany into the the KafkaModel
+  console.log('Starting Kafka Collection');
   setInterval(() => {
     kafkaFetch(userConfig)
     .then(parsedArray => {
       const documents = [];
+      console.log('parsedArray: ', parsedArray);
       for (const metric of parsedArray) {
         documents.push(KafkaModel(metric));
       }
+      console.log('inserting documents')
       return KafkaModel.insertMany(documents);
     })
     .catch(err => console.log('Error inserting kafka documents: ', err));
