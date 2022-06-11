@@ -4,8 +4,25 @@ const helpers = {
    * Throws an error on input valid data types or on missing fields
    * Sets the default interval to 5 seconds and dockerized to false
    */
+
+  /*
+  User Config object:
+  {
+    microservice: string - Name of the microservice. Will be used as a table name in the chronos's db
+    interval: number - The number of milliseconds between every collection of data
+    dockerized: boolean - Should be set to true if the service is running inside of a container
+    NEW! -> jmxuri: string - (optional) The address exposed by the JMX Exporter for collecting Kafka metrics  <- NEW!
+    database: {
+      connection: should be a string and only supports 'REST' and 'gRPC'
+      type: should be a string and only supports 'MongoDB' and 'PostgreSQL'.
+      URI: should be a connection string to the database where you intend Chronos to record metrics
+    }
+    notifications: an array - optional for configuring slack or email notifications
+  }
+
+  */
   validateInput(config) {
-    const { microservice, database, interval, dockerized, connection } = config;
+    const { microservice, database, interval, dockerized, jmxuri } = config;
 
     // Validate all required fields exist and are valid input types
     if (!microservice || typeof microservice !== 'string') {
@@ -22,6 +39,13 @@ const helpers = {
     if (!database.connection || typeof database.connection !== 'string') {
       throw new Error(
         'Invalid input "database connection type: Please provide the type of connection'
+      );
+    }
+
+    // validate that the jmxuri is a string
+    if (jmxuri && typeof jmxuri !== 'string') {
+      throw new Error(
+        'Invalid input for "jmxuri" in chronos-config.js: Please provide the address of the JMX Exporter'
       );
     }
 

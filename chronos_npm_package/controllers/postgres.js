@@ -2,6 +2,7 @@
 const si = require('systeminformation');
 const { Client } = require('pg');
 const alert = require('./alert');
+const { kafkaFetch } = require('./kafkaHelpers');
 
 let client;
 
@@ -375,6 +376,65 @@ chronos.docker = function ({ microservice, interval }) {
     ['catch'](function (err) {
       throw err;
     });
+};
+
+// Constructs a parameterized query string for inserting multiple data points into
+// the kafkametrics db based on the number of data points;
+function createQueryString(numRows) {
+  let query = `
+    INSERT INTO
+      kafkametrics (metric, value, category, time)
+    VALUES
+  `;
+  for (let i = 0; i < numRows; i++) {
+    const newRow = `($${4 * i + 1}, $${4 * i + 2}, $${4 * i + 3}, TO_TIMESTAMP($${4 * i + 4}))`;
+    query = query.concat(newRow);
+    if (i !== numRows - 1) query = query.concat(',');
+  }
+  query = query.concat(';');
+  return query;
+}
+
+// Places the values being inserted into postgres into an array that will eventually
+// hydrate the parameterized query
+function createQueryArray(dataPointsArray) {
+  const queryArray = [];
+  for (const element of dataPointsArray) {
+    queryArray.push(element.metric);
+    queryArray.push(element.value);
+    queryArray.push(element.category);
+    queryArray.push(element.time / 1000); // Converts milliseconds to seconds to work with postgres
+  }
+  return queryArray;
+}
+
+chronos.kafka = function (userConfig) {
+  // create kafkametrics table if it does not exist
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS kafkametrics (
+      _id SERIAL PRIMARY KEY,
+      metric VARCHAR(200),
+      value FLOAT DEFAULT 0.0,
+      category VARCHAR(200) DEFAULT 'event',
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+  client
+    .query(createTableQuery)
+    .catch(err => console.log('Error creating kafkametrics table in PostgreSQL:\n', err));
+
+  setInterval(() => {
+    kafkaFetch(userConfig)
+      .then(parsedArray => {
+        const numDataPoints = parsedArray.length;
+        const queryString = createQueryString(numDataPoints);
+        const queryArray = createQueryArray(parsedArray);
+        //console.log('POSTGRES QUERY STRING: ', queryString);
+        //console.log('POSTGRES QUERY ARRAY', queryArray);
+        return client.query(queryString, queryArray);
+      })
+      .catch(err => console.log('Error inserting kafka metrics into PostgreSQL:\n', err));
+  }, userConfig.interval);
 };
 
 module.exports = chronos;
