@@ -62,7 +62,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
             >
               communications
             </div>
-            <Link
+            <Link id='selectLink'
               className="router link"
               to={services.length > 0 ? `/applications/${app}/${services.join(' ')}` : '#'}
             >
