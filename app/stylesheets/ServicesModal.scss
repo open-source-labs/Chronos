@@ -32,6 +32,7 @@
     width: 100%;
 
     .link {
+
       display: block;
       width: 80%;
       font-size: 90%;
@@ -46,6 +47,11 @@
       transition: 0.1s;
       text-align: center;
       font-weight: 100;
+
+      &#selectLink {
+        background-color: #fbdca3;
+      }
+      
       &:hover { 
         color: #fff;
         background-color: $gblue;
