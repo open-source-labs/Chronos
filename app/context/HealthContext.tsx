@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Electron from 'electron';
+import { transformData } from './helpers';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -7,18 +8,17 @@ export const HealthContext = React.createContext<any>(null);
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {Object} healthData At most, 50 points of health data
- * @method    fetchHealthData
- * @method    parseHealthData
- * @method    setHealthData
+ * @property  {Object} datalist At most, 50 points of health data
+ * @property  {Object} timelist Health data timestamps
+ * @method    setServices
+ * @method    setDataList
+ * @method    setTimeList
  */
 
 const HealthContextProvider: React.FC = React.memo(({ children }) => {
-  const [healthData, setHealthData] = useState<Array<Array<{ [key: string]: string | number }>>>(
-    []
-  );
-
   const [services, setServices] = useState<Array<string>>([]);
+  const [datalist, setDataList] = useState<Array<any>>([]);
+  const [timelist, setTimeList] = useState<Array<any>>([]);
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -30,39 +30,6 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
       console.log(e);
     }
     return false;
-  }
-
-  const parseHealthData = useCallback((data: any) => {
-    const output: any = {};
-    for (const entry of data) {
-      for (const key in entry) {
-        if (!(key in output)) output[key] = [];
-        output[key].push(entry[key]);
-      }
-    }
-    return output;
-  }, []);
-
-  // parser for timelist data
-  function timelistParser(data) {
-    let currService;
-    let currMetrics;
-    const output = [];
-    for (const ele of data) {
-      for (const key in ele) {
-        currService = key;
-        currMetrics = ele[key];
-      }
-      for (const metric of currMetrics) {
-        const temp = {};
-        const serv = {};
-        temp[metric.category] = [];
-        serv[currService] = [];
-        serv[currService].push(metric.time);
-        temp[metric.category].push(serv);
-      }
-    }
-    return output;
   }
 
   const fetchHealthData = useCallback(serv => {
@@ -80,14 +47,15 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
             if (tryParseJSON(data)) {
               result = JSON.parse(data);
               if (result && result.length && service === result[0].service) {
-                resolve({ ...parseHealthData(result) });
+                resolve({ ...transformData(result) });
               }
             }
           });
         }).then((data: any) => {
           temp.push(data);
           if (temp.length === serv.length) {
-            setHealthData(temp);
+            setDataList(temp[0][0]);
+            setTimeList(temp[0][1]);
           }
         })
       )
@@ -97,10 +65,11 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
   return (
     <HealthContext.Provider
       value={{
-        healthData,
-        setHealthData,
+        setDataList,
+        setTimeList,
         fetchHealthData,
-        parseHealthData,
+        datalist,
+        timelist,
         services,
       }}
     >
