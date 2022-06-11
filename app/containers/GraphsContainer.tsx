@@ -23,6 +23,7 @@ import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 
 import LogsTable from '../charts/LogsTable';
+import HealthContainer from './HealthContainer';
 import EventContainer from './EventContainer';
 import QueryContainer from './QueryContainer';
 
@@ -50,9 +51,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   const { servicesData } = useContext(ApplicationContext);
 
-  const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
+  const { fetchHealthData, setDataList, setTimeList, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
-  const { fetchEventData, setEventData } = useContext(EventContext);
+  const { fetchEventData, setEventDataList, setEventTimeList } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
 
@@ -80,9 +81,11 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
     return () => {
       if (intervalID) clearInterval(intervalID);
-      setHealthData({});
+      setDataList([]);
+      setTimeList([]);
       setDockerData({});
-      setEventData({});
+      setEventDataList([]);
+      setEventTimeList([]);
     };
   }, [service, live]);
 

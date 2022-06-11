@@ -6,6 +6,7 @@ import { getTime } from '../context/helpers';
 interface HealthContainerProps {
   sizing: string;
   colourGenerator: Function;
+  category: string;
 }
 
 const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
