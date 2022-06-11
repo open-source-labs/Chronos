@@ -1,15 +1,15 @@
 const si = require('systeminformation');
 
 const healthHelpers = {};
-// get the current time
-// For each Metric
-  // put data into an object
-  // push that object into an array
-  // return the array of data points
+
+/*
+This method returns an promise that resolves to an array of
+si data points.
+*/
 
 healthHelpers.collectHealthData = () => {
   // Create an array to hold the promises returned by si
-  let promises = [];
+  const promises = [];
   // for use with every object
   const time = Date.now();
   // Fill the array of promises
@@ -130,11 +130,8 @@ healthHelpers.collectHealthData = () => {
         }
       })
   );
-  // flatten the array before calling Promise.all()
-  console.log('PROMISES: ', promises);
-  promises = promises.flat();
-  console.log('FLAT PROMISES: ', promises);
-  return Promise.all(promises);
+  // Return an promise that resolves to an array of all of the data points unnested
+  return Promise.all(promises).then(array => array.flat());
 };
 
 module.exports = healthHelpers;
