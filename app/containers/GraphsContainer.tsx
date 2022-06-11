@@ -25,6 +25,7 @@ import RouteChart from '../charts/RouteChart';
 import LogsTable from '../charts/LogsTable';
 import EventContainer from './EventContainer';
 import QueryContainer from './QueryContainer';
+import HealthContainer from './HealthContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
@@ -55,6 +56,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { fetchEventData, setEventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
+  const { setTimeList, setDataList } = useContext(HealthContext);
 
   const [chart, setChart] = useState<string>('all');
 
@@ -83,6 +85,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       setHealthData({});
       setDockerData({});
       setEventData({});
+      setDataList({});
+      setTimeList({});
     };
   }, [service, live]);
 
@@ -121,29 +125,28 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   }; // This is a work of pure genius and also probably why the app is infinitely recursing
 
   const getHealthAndEventComponents = () => {
-  
-    const buttonList : JSX.Element[] = [];
-    if(selectedMetrics){
+    const buttonList: JSX.Element[] = [];
+    if (selectedMetrics) {
       selectedMetrics.forEach(element => {
         const categoryName = Object.keys(element)[0];
-        const prefix = categoryName === 'Event'? 'event_' : 'health_';
+        const prefix = categoryName === 'Event' ? 'event_' : 'health_';
         buttonList.push(
-        <button
-        id= {`${prefix}${categoryName}-button`}
-        className={chart === `${prefix}${categoryName}` ? 'selected' : undefined}
-        onClick={() => routing(`${prefix}${categoryName}`)}
-        >
-          {categoryName}
-        </button>
+          <button
+            id={`${prefix}${categoryName}-button`}
+            className={chart === `${prefix}${categoryName}` ? 'selected' : undefined}
+            onClick={() => routing(`${prefix}${categoryName}`)}
+          >
+            {categoryName}
+          </button>
         );
-       });
+      });
     }
 
-     return buttonList;
+    return buttonList;
   };
 
-  const HealthAndEventButtons : JSX.Element[] = getHealthAndEventComponents();
-          
+  const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
+
   return (
     <>
       <nav>
@@ -189,12 +192,16 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         ) : (
           <div className="graphs">
             {chart === 'all' && <QueryContainer />}
-            {chart.startsWith('health_') 
-            && (
-            <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
-            )
-            }
-            {chart.startsWith('event_') && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
+            {chart.startsWith('health_') && (
+              <HealthContainer
+                colourGenerator={stringToColour}
+                sizing="solo"
+                category={chart.substring(7)}
+              />
+            )}
+            {chart.startsWith('event_') && (
+              <EventContainer colourGenerator={stringToColour} sizing="solo" />
+            )}
             {chart === 'docker' && <DockerChart />}
           </div>
         )}
