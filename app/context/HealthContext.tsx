@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Electron from 'electron';
-import transformData from './helpers';
+import { transformData } from './helpers';
 
 const { ipcRenderer } = window.require('electron');
 
