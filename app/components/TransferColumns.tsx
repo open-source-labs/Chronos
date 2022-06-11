@@ -66,10 +66,10 @@ const TransferColumns = React.memo(() => {
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
-  // const {category_service_datalist} = useContext(HealthContext);
-  //const { datalist } = useContext(EventContext);
+  // const {datalist} = useContext(HealthContext);
+  const { eventDataList } = useContext(EventContext);
 
-  const category_service_datalist = [
+  const datalist = [
     {
       Memory: [
         { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] },
@@ -80,29 +80,9 @@ const TransferColumns = React.memo(() => {
       CPU: [{ books: [{ cpu_temp: [100, 200] }] }, { orders: [{ cpu_temp: [150, 250] }] }],
     },
   ];
-  const datalist = [
-    {
-      Event: [
-        {
-          books: [
-            { broker_metric1: [10, 20] },
-            { broker_metric2: [8, 16] },
-            { broker_metric3: [8, 16] },
-          ],
-        },
-        {
-          orders: [
-            { broker_metric1: [5, 25] },
-            { broker_metric2: [7, 14] },
-            { broker_metric3: [8, 16] },
-          ],
-        },
-      ],
-    },
-  ];
 
-  const appendMetrics = (datalist, metricsPool) => {
-    if (datalist) {
+  const appendMetrics = (type, datalist, metricsPool) => {
+    if(type === 'health' && datalist){
       datalist.forEach(category => {
         const tag: string = Object.keys(category)[0]; //Memory
         const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
@@ -113,19 +93,32 @@ const TransferColumns = React.memo(() => {
           const temp = {};
           const metricName: string = Object.keys(element)[0];
           const key = tag + ' | ' + metricName;
-          const title = key;
           temp['key'] = key;
-          temp['title'] = title;
+          temp['title'] = key;
           temp['tag'] = tag;
           metricsPool.push(temp);
         });
       });
     }
+    else if (type === 'event' && datalist){
+      datalist.forEach(metric => {
+        const temp = {};
+        const metricName : string = Object.keys(metric)[0];
+        const key = 'Event | ' + metricName;
+        temp['key'] = key;
+        temp['title'] = key;
+        temp['tag'] = 'Event'
+        metricsPool.push(temp);
+
+      });
+
+    }
+   
     return metricsPool;
   };
   let metricsPool = [];
-  metricsPool = appendMetrics(category_service_datalist, metricsPool);
-  metricsPool = appendMetrics(datalist, metricsPool);
+  metricsPool = appendMetrics('health', datalist, metricsPool);
+  metricsPool = appendMetrics('event', eventDataList, metricsPool);
 
   const leftTableColumns = [
     {
@@ -157,24 +150,23 @@ const TransferColumns = React.memo(() => {
   const triggerShowSearch = checked => {
     setShowSearch(checked);
   };
-  const handleClick = ()=>{
+  const handleClick = () => {
     //setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
-    for(let i = 0; i < targetKeys.length; i++){
-      let str : string = targetKeys[i];
-      const strArr : string[] = str.split(' | ');
+    for (let i = 0; i < targetKeys.length; i++) {
+      let str: string = targetKeys[i];
+      const strArr: string[] = str.split(' | ');
       const categoryName = strArr[0];
       const metricName = strArr[1];
-      if(categorySet.has(categoryName)){
+      if (categorySet.has(categoryName)) {
         temp.forEach(element => {
-          if(Object.keys(element)[0] === categoryName){
+          if (Object.keys(element)[0] === categoryName) {
             const metricsList: any[] = element[categoryName];
             metricsList.push(metricName);
           }
         });
-      }
-      else{
+      } else {
         categorySet.add(categoryName);
         const newCategory = {};
         newCategory[categoryName] = [metricName];
@@ -182,20 +174,19 @@ const TransferColumns = React.memo(() => {
       }
     }
     setSelectedMetrics(temp);
-  }
+  };
 
   return (
     <>
       <Button
         type="primary"
         onClick={handleClick}
-        shape = 'round'
-        size = 'middle'
+        shape="round"
+        size="middle"
         style={{
           marginLeft: 16,
           marginTop: 330,
-          float: 'right'
-         
+          float: 'right',
         }}
       >
         Get Charts
