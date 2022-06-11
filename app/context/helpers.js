@@ -1,6 +1,7 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable camelcase */
 
-function transformData(healthData) {
+export function transformData(healthData) {
   const categoryList = getCategory(healthData[0]); // ['Memory', 'CPU']
   const servicesList = getServices(healthData); // ['books', 'orders']
 
@@ -89,4 +90,21 @@ function getValueInNewRowObj(healthData, serviceName, categoryName) {
   return [lst_data, lst_time];
 }
 
-export default transformData;
+export function getTime(timeList, currService, metric, category) {
+  let timelist;
+  timeList.forEach(element => {
+    const categoryName = Object.keys(element)[0];
+    if (categoryName === category) {
+      const categoryObj = element[categoryName];
+      for (const metricObj of categoryObj) {
+        const serviceName = Object.keys(metricObj)[0];
+        if (serviceName === currService) {
+          for (const serviceMetric of Object.values(metricObj)[0]) {
+            if (serviceMetric[metric]) timelist = serviceMetric[metric];
+          }
+        }
+      }
+    }
+  });
+  return timelist;
+}
