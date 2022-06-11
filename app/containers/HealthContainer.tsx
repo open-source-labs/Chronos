@@ -6,6 +6,7 @@ import { getTime } from '../context/helpers';
 interface HealthContainerProps {
   sizing: string;
   colourGenerator: Function;
+  category: string;
 }
 
 const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
@@ -27,7 +28,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
             for (const serviceMetric of Object.values(metricObj)[0]) {
               const metric: string = Object.keys(serviceMetric)[0];
               const valueList = Object.values(serviceMetric)[0];
-              const timeList = getTime(timelist, serviceName, metric, categoryName);
+              const timeList: any = getTime(timelist, serviceName, metric, categoryName);
               const newHealthChart = (
                 <HealthChart
                   key={`Chart${counter}`}
