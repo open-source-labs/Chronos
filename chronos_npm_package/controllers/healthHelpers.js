@@ -74,7 +74,7 @@ healthHelpers.collectHealthData = () => {
           memMetrics.push({
             metric,
             value: data[metric],
-            catetory: 'Memory',
+            category: 'Memory',
             time,
           });
         }
@@ -102,7 +102,7 @@ healthHelpers.collectHealthData = () => {
           processMetrics.push({
             metric,
             value: data[metric],
-            catetory: 'Processes',
+            category: 'Processes',
             time,
           });
         }
