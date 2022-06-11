@@ -16,16 +16,16 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
 
   useEffect(() => {
     const temp: JSX.Element[] = [];
-    let counter;
+    let counter: number;
     if (datalist.length > 0) {
       datalist.forEach((element: {}) => {
-        const categoryName = Object.keys(element)[0];
+        const categoryName: string = Object.keys(element)[0];
         if (category === categoryName) {
           const categoryObj = element[categoryName];
           for (const metricObj of categoryObj) {
             const serviceName = Object.keys(metricObj)[0];
             for (const serviceMetric of Object.values(metricObj)[0]) {
-              const metric = Object.keys(serviceMetric)[0];
+              const metric: string = Object.keys(serviceMetric)[0];
               const valueList = Object.values(serviceMetric)[0];
               const timeList = getTime(timelist, serviceName, metric, categoryName);
               const newHealthChart = (
