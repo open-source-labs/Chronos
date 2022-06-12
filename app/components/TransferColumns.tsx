@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useIsMount } from '../context/helpers';
 import 'antd/dist/antd.less';
 import { Switch, Table, Tag, Transfer, Button } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
@@ -63,6 +64,8 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
 
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState([]);
+  const [metricsPool, setMetricsPool] = useState<any[]>([]);
+  const [listReady, setListReady] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
@@ -81,8 +84,9 @@ const TransferColumns = React.memo(() => {
     },
   ];
 
-  const appendMetrics = (type, datalist, metricsPool) => {
-    if(type === 'health' && datalist){
+  const appendMetrics = (eventDataList, datalist) => {
+    let pool: any[] = [];
+    if (datalist && datalist.length > 0) {
       datalist.forEach(category => {
         const tag: string = Object.keys(category)[0]; //Memory
         const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
@@ -96,29 +100,41 @@ const TransferColumns = React.memo(() => {
           temp['key'] = key;
           temp['title'] = key;
           temp['tag'] = tag;
-          metricsPool.push(temp);
+          pool.push(temp);
         });
       });
+
     }
-    else if (type === 'event' && datalist){
-      datalist.forEach(metric => {
+    if (eventDataList && eventDataList.length > 0) {
+      eventDataList.forEach(metric => {
         const temp = {};
-        const metricName : string = Object.keys(metric)[0];
+        const metricName: string = Object.keys(metric)[0];
         const key = 'Event | ' + metricName;
         temp['key'] = key;
         temp['title'] = key;
-        temp['tag'] = 'Event'
-        metricsPool.push(temp);
-
+        temp['tag'] = 'Event';
+        pool.push(temp);
       });
 
     }
-   
-    return metricsPool;
+
+    setMetricsPool(pool);
   };
-  let metricsPool = [];
-  metricsPool = appendMetrics('health', datalist, metricsPool);
-  metricsPool = appendMetrics('event', eventDataList, metricsPool);
+
+  useEffect(() => {
+    if (datalist && datalist.length >0  && eventDataList && eventDataList.length > 0) {
+      setListReady(true);
+    }
+  }, [datalist, eventDataList]);
+
+
+  const isMount = useIsMount();
+
+  useEffect(() => {
+    if (!isMount) {
+      appendMetrics(eventDataList, datalist);
+    }
+  }, [listReady]);
 
   const leftTableColumns = [
     {
@@ -140,7 +156,6 @@ const TransferColumns = React.memo(() => {
 
   const onChange = nextTargetKeys => {
     setTargetKeys(nextTargetKeys);
-    console.log('nextTargetKeys', nextTargetKeys);
   };
 
   const triggerDisable = checked => {

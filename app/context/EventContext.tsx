@@ -8,9 +8,11 @@ export const EventContext = React.createContext<any>(null);
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {Object} eventData
+ * @property  {Array} eventDataList
+ * @property  {Array} eventTimeList
  * @method    fetchEventData
- * @method    setEventData
+ * @method    setEventDataList
+ * @method    setEventTimeList
  */
 
 const EventContextProvider: React.FC = React.memo(({ children }) => {
@@ -37,8 +39,9 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
       if (tryParseJSON(data)) result = JSON.parse(data);
       // console.log("eventData in eventcontext");
       // console.log(JSON.stringify(result));
-      setEventDataList(transformData(result)[0] || []);
-      setEventTimeList(transformData(result)[1] || []);
+      // console.log("result in EventContext", JSON.stringify(result));
+      setEventDataList(transformData(result)[0]);
+      setEventTimeList(transformData(result)[1]);
     });
 
 
@@ -62,6 +65,8 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     const timeList: any[] = [];
     const metricSet = new Set();
     data.forEach(element => {
+      // console.log("Element in EventContext:");
+      // console.log(JSON.stringify(element));
       const metricName = element.metric;
       const time = element.time;
       const value = element.value;
@@ -86,6 +91,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
         });
       }
     });
+    // console.log("datalist in EventContext:", JSON.stringify(dataList));
     return [dataList, timeList];
   };
 

@@ -23,7 +23,7 @@ import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 
 import LogsTable from '../charts/LogsTable';
-import HealthContainer from './HealthContainer';
+//import HealthContainer from './HealthContainer';
 import EventContainer from './EventContainer';
 import QueryContainer from './QueryContainer';
 
@@ -193,9 +193,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           <div className="graphs">
             {chart === 'all' && <QueryContainer />}
             {chart.startsWith('health_') 
-            && (
-            <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
-            )
+            // && (
+            // <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
+            // )
             }
             {chart.startsWith('event_') && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
             {chart === 'docker' && <DockerChart />}
