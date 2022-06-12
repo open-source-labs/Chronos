@@ -7,7 +7,7 @@ import { all, solo as soloStyle } from './sizeSwitch';
 interface EventChartProps {
   key: string;
   metric: string;
-  timeList: any[];
+  timeList: any;
   valueList: any;
   sizing: string;
   colourGenerator: Function;
@@ -22,7 +22,8 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const { metric, timeList, valueList, sizing, colourGenerator } = props;
 //  console.log('in event chart:');
  // console.log('metric:', metric);
-  // console.log(JSON.stringify(timeList), JSON.stringify(valueList));
+  // console.log(JSON.stringify(timeList))
+  // console.log(JSON.stringify(valueList));
 
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
