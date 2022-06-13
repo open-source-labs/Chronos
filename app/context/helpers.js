@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable camelcase */
+import { useRef, useEffect } from 'react';
 
 export function transformData(healthData) {
   const categoryList = getCategory(healthData[0]); // ['Memory', 'CPU']
@@ -108,3 +109,10 @@ export function getTime(timeList, currService, metric, category) {
   });
   return timelist;
 }
+export const useIsMount = () => {
+  const isMountRef = useRef(true);
+  useEffect(() => {
+    isMountRef.current = false;
+  }, []);
+  return isMountRef.current;
+};

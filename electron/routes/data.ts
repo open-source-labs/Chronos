@@ -11,6 +11,7 @@ import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
+import { lightWhite } from 'material-ui/styles/colors';
 
 
 require('dotenv').config();
@@ -244,13 +245,15 @@ ipcMain.on('dockerRequest', async (message, service) => {
 
 // start fetch
 function extractWord(str: string) {
-  const res = [{}];
+  const res :any[] = [];
   const arr = str.split('\n'); // `/\n/`
   for (const element of arr) {
     if (element && element.length !== 0 && element[0] !== '#' && element.substring(0, 3) !== 'jmx' && element.substring(0, 4) !== '\'jmx') {
       const metric = element.split(' ')[0];
       const metricValue = Number(element.split(' ')[1]);
-      res[0][metric] = metricValue;
+      const time = Date.now();
+      const temp = {'metric': metric, 'category': 'Event', 'value': metricValue, 'time': time };
+      res.push(temp);
     }
   }
   return res;
@@ -265,11 +268,7 @@ ipcMain.on('kafkaRequest', async (message) => {
     .then(data => data.text())
     .then(data => {
       result = extractWord(data);
-      //add time here:
-  
-      result[0].time = Date.now();
-
-      result50.push(result[0]);
+      result50.push(...result);
      
     })
     .catch(err => console.log(err));
