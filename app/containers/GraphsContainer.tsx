@@ -193,25 +193,12 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         ) : (
           <div className="graphs">
             {chart === 'all' && <QueryContainer />}
-<<<<<<< HEAD
-            {chart.startsWith('health_') && (
-              <HealthContainer
-                colourGenerator={stringToColour}
-                sizing="solo"
-                category={chart.substring(7)}
-              />
-            )}
-            {chart.startsWith('event_') && (
-              <EventContainer colourGenerator={stringToColour} sizing="solo" />
-            )}
-=======
             {chart.startsWith('health_') 
             // && (
             // <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
             // )
             }
             {chart.startsWith('event_') && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
->>>>>>> dev
             {chart === 'docker' && <DockerChart />}
           </div>
         )}
