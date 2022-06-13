@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { useIsMount } from '../context/helpers';
 import 'antd/dist/antd.less';
 import { Switch, Table, Tag, Transfer, Button } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
@@ -63,13 +64,15 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
 
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState([]);
+  const [metricsPool, setMetricsPool] = useState<any[]>([]);
+  const [listReady, setListReady] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
-  // const {category_service_datalist} = useContext(HealthContext);
-  //const { datalist } = useContext(EventContext);
+  // const {datalist} = useContext(HealthContext);
+  const { eventDataList } = useContext(EventContext);
 
-  const category_service_datalist = [
+  const datalist = [
     {
       Memory: [
         { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] },
@@ -80,29 +83,10 @@ const TransferColumns = React.memo(() => {
       CPU: [{ books: [{ cpu_temp: [100, 200] }] }, { orders: [{ cpu_temp: [150, 250] }] }],
     },
   ];
-  const datalist = [
-    {
-      Event: [
-        {
-          books: [
-            { broker_metric1: [10, 20] },
-            { broker_metric2: [8, 16] },
-            { broker_metric3: [8, 16] },
-          ],
-        },
-        {
-          orders: [
-            { broker_metric1: [5, 25] },
-            { broker_metric2: [7, 14] },
-            { broker_metric3: [8, 16] },
-          ],
-        },
-      ],
-    },
-  ];
 
-  const appendMetrics = (datalist, metricsPool) => {
-    if (datalist) {
+  const appendMetrics = (eventDataList, datalist) => {
+    let pool: any[] = [];
+    if (datalist && datalist.length > 0) {
       datalist.forEach(category => {
         const tag: string = Object.keys(category)[0]; //Memory
         const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
@@ -113,19 +97,44 @@ const TransferColumns = React.memo(() => {
           const temp = {};
           const metricName: string = Object.keys(element)[0];
           const key = tag + ' | ' + metricName;
-          const title = key;
           temp['key'] = key;
-          temp['title'] = title;
+          temp['title'] = key;
           temp['tag'] = tag;
-          metricsPool.push(temp);
+          pool.push(temp);
         });
       });
+
     }
-    return metricsPool;
+    if (eventDataList && eventDataList.length > 0) {
+      eventDataList.forEach(metric => {
+        const temp = {};
+        const metricName: string = Object.keys(metric)[0];
+        const key = 'Event | ' + metricName;
+        temp['key'] = key;
+        temp['title'] = key;
+        temp['tag'] = 'Event';
+        pool.push(temp);
+      });
+
+    }
+
+    setMetricsPool(pool);
   };
-  let metricsPool = [];
-  metricsPool = appendMetrics(category_service_datalist, metricsPool);
-  metricsPool = appendMetrics(datalist, metricsPool);
+
+  useEffect(() => {
+    if (datalist && datalist.length >0  && eventDataList && eventDataList.length > 0) {
+      setListReady(true);
+    }
+  }, [datalist, eventDataList]);
+
+
+  const isMount = useIsMount();
+
+  useEffect(() => {
+    if (!isMount) {
+      appendMetrics(eventDataList, datalist);
+    }
+  }, [listReady]);
 
   const leftTableColumns = [
     {
@@ -147,7 +156,6 @@ const TransferColumns = React.memo(() => {
 
   const onChange = nextTargetKeys => {
     setTargetKeys(nextTargetKeys);
-    console.log('nextTargetKeys', nextTargetKeys);
   };
 
   const triggerDisable = checked => {
@@ -157,24 +165,23 @@ const TransferColumns = React.memo(() => {
   const triggerShowSearch = checked => {
     setShowSearch(checked);
   };
-  const handleClick = ()=>{
+  const handleClick = () => {
     //setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
-    for(let i = 0; i < targetKeys.length; i++){
-      let str : string = targetKeys[i];
-      const strArr : string[] = str.split(' | ');
+    for (let i = 0; i < targetKeys.length; i++) {
+      let str: string = targetKeys[i];
+      const strArr: string[] = str.split(' | ');
       const categoryName = strArr[0];
       const metricName = strArr[1];
-      if(categorySet.has(categoryName)){
+      if (categorySet.has(categoryName)) {
         temp.forEach(element => {
-          if(Object.keys(element)[0] === categoryName){
+          if (Object.keys(element)[0] === categoryName) {
             const metricsList: any[] = element[categoryName];
             metricsList.push(metricName);
           }
         });
-      }
-      else{
+      } else {
         categorySet.add(categoryName);
         const newCategory = {};
         newCategory[categoryName] = [metricName];
@@ -182,20 +189,19 @@ const TransferColumns = React.memo(() => {
       }
     }
     setSelectedMetrics(temp);
-  }
+  };
 
   return (
     <>
       <Button
         type="primary"
         onClick={handleClick}
-        shape = 'round'
-        size = 'middle'
+        shape="round"
+        size="middle"
         style={{
           marginLeft: 16,
           marginTop: 330,
-          float: 'right'
-         
+          float: 'right',
         }}
       >
         Get Charts

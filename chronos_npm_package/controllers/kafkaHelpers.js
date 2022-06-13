@@ -27,18 +27,14 @@ kafkaHelpers.extractWord = function (str) {
 // executes first to ensure that the provided jmxuri provides legitimate data.
 // if it doesnt then an error is thrown
 kafkaHelpers.initialFetch = function (jmxuri) {
-  fetch(jmxuri)
-    .then(response => {
-      if (response.status !== 200) {
-        throw new Error(`Error: The provided URI for the JMX exporter is invalid`);
-      } else {
-        console.log('Initial fetch to JMX Exporter was successful.');
-      }
-      return response.text();
-    })
-    .then(text => {
-      console.log('\nInitial Fetch Response Text:\n', text);
-    });
+  fetch(jmxuri).then(response => {
+    if (response.status !== 200) {
+      throw new Error(`Error: The provided URI for the JMX exporter is invalid`);
+    } else {
+      console.log('Initial fetch to JMX Exporter was successful.');
+    }
+    return response.text();
+  });
 };
 
 // fetches kafka metrics from the user-specified location of JMX prometheus and returns the processed result

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 //import EventContext, EventChart
 import { EventContext } from '../context/EventContext';
+import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import HealthContextProvider from '../context/HealthContext';
 import { transformFile } from '@babel/core';
@@ -14,62 +15,66 @@ interface EventContainerProps {
 const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   //get eventData from EventContext using react hook useContext
 
-  const { eventData } = useContext(EventContext); //eventData: [{time: xx, m1: xx, m2: xx}, {}, {}..]
+  const { eventDataList, eventTimeList } = useContext(EventContext); 
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
+  const { selectedMetrics } = useContext(QueryContext);
 
-  //everytime eventData change, create eventChartsArr based on current eventData
+
   useEffect(() => {
     const temp : JSX.Element[] = [];
-    let i = 0;
-    if (eventData.length > 0) {
-      // console.log("eventData in event container changes:")
-      //console.log(JSON.stringify(eventData));
-      const returns : any[] = transformEventData(eventData);
-      const dataList = returns[0]; //[{m1: [3,6,8...]}, {m2: [3,6,8...]}]
-      const timeList = returns[1]; //[1,2,3,4,...,50]
-      // console.log("datalist:", JSON.stringify(dataList));
-      // console.log("timelist:", JSON.stringify(timeList));
-      
-      dataList.forEach((element, id) => {
-        //element: {m1: [3,6,8...]}
+    if (eventDataList.length > 0) {
+      // console.log("eventDataList in EventContainer:");
+      // console.log(JSON.stringify(eventDataList));
+      // console.log("eventTimeList in EventContainer:");
+      // console.log(JSON.stringify(eventTimeList));
+      let selectedMetricsList : string[] = [];
+      selectedMetrics.forEach(element => {
+        if(Object.keys(element)[0]==='Event'){
+          selectedMetricsList = element['Event'];
+        }
+      });
+
+      eventDataList.forEach((element, id) => {
+      //[{metric1: [3,6,8...]}, {metric2: [3,6,8...]}]  
         const metric: string = Object.keys(element)[0];
         const valueList: any = Object.values(element)[0];
-        const newEventChart = (
-          <EventChart
-            key={`Chart${id}`}
-            metric={metric}
-            timeList={timeList}
-            valueList={valueList}
-            sizing={props.sizing}
-            colourGenerator={props.colourGenerator}
-          />
-        );
+        // console.log("metric in EventContainer:", metric);
+        // console.log("valueList in EventContainer:",valueList);
+        if(selectedMetricsList.includes(metric)){
+          const newEventChart = (
+            <EventChart
+              key={`Chart${id}`}
+              metric={metric}
+              timeList={getSingleTimeList(metric)}
+              valueList={valueList}
+              sizing={props.sizing}
+              colourGenerator={props.colourGenerator}
+            />
+          );
+          
+          temp.push(newEventChart);
+        }
         
-        temp.push(newEventChart);
-       
       }); 
       setEventChartsArr(temp);
     }
-  }, [eventData]);
+  }, [eventDataList, eventTimeList]);
 
-  const transformEventData = (eventData: any) => {
-    const dataList: any[] = [];
-    let timeList: any[] = [];
-    const sampleObj: {} = eventData[0];
-    for (let key in sampleObj) {
-      const keyValueList: {} = {}; //{time: [1,2,3,4,...,50]} //{m1: [3,6,8...]}
-      keyValueList[key] = [];
-      for (let i = 0; i < eventData.length; i++) {
-        const obj: {} = eventData[i];
-        keyValueList[key].push(obj[key]);
+  const getSingleTimeList = (metricName: string) => {
+    //[{metric1: [3,6,8...]}, {metric2: [3,6,8...]}]  
+    let lst = [];
+    for(let metric of eventTimeList){
+      if(Object.keys(metric)[0] === metricName){
+        lst = metric[metricName];
+        // console.log("timeList in EventContainer:", JSON.stringify(lst));
+        break;
+        
       }
-      if (key === 'time') {
-        timeList = keyValueList[key]; //[1,2,3,4,...,50]
-      } else {
-        dataList.push(keyValueList); //[{m1: [3,6,8...]}, {m2: [3,6,8...]}]
-      }
+
     }
-    return [dataList, timeList];
+
+    return lst;
+    
   };
 
   return <div>{eventChartsArr}</div>;
