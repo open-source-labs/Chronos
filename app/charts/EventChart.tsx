@@ -20,10 +20,10 @@ interface SoloStyles {
 
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const { metric, timeList, valueList, sizing, colourGenerator } = props;
-//  console.log('in event chart:');
- // console.log('metric:', metric);
-  // console.log(JSON.stringify(timeList))
-  // console.log(JSON.stringify(valueList));
+ console.log('in event chart:');
+ console.log('event chart metric:', metric);
+  console.log('event chart timelist',JSON.stringify(timeList))
+  console.log('event chart valuelist', JSON.stringify(valueList));
 
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 

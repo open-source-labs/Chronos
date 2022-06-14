@@ -3,48 +3,52 @@
 import { useRef, useEffect } from 'react';
 
 export function transformData(healthData) {
-  const categoryList = getCategory(healthData[0]); // ['Memory', 'CPU']
-  const servicesList = getServices(healthData); // ['books', 'orders']
-
-  const categoryObj_time = {};
-  const categoryObj_data = {};
-  categoryList.forEach(category => {
-    const value_time = []; // [{}, {}...]
+  const categoryList = getCategory(healthData[0]); //['Memory', 'CPU']
+  const serviceList = getServices(healthData);  //['books', 'orders']
+  const categoryList_time = [];
+  const categoryList_data = [];
+  categoryList.forEach((category) => {
+    const categoryObj_time = {};
+    const categoryObj_data = {};
+    const value_time = []; //[{}, {}...]
     const value_data = [];
-    servicesList.forEach(serviceName => {
+    serviceList.forEach(serviceName => {
       const newRowObj_time = {}; //  { books: [{ disk_usage: [1, 2] }, { clockSpeed: [1, 2] }] }
       const newRowObj_data = {}; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
-      const [valueInNewRowObj_data, valueInNewRowObj_time] = getValueInNewRowObj(
-        healthData,
-        serviceName,
-        category
-      );
+      const [valueInNewRowObj_data, valueInNewRowObj_time] = getValueInNewRowObj(healthData,serviceName,category);
       newRowObj_time[serviceName] = valueInNewRowObj_time;
       newRowObj_data[serviceName] = valueInNewRowObj_data;
       value_time.push(newRowObj_time);
       value_data.push(newRowObj_data);
+      
     });
+
 
     categoryObj_time[category] = value_time;
     categoryObj_data[category] = value_data;
+    categoryList_time.push(categoryObj_time)
+    categoryList_data.push(categoryObj_data);
   });
-
-  return [[categoryObj_data], [categoryObj_time]];
+  return {"healthDataList": categoryList_data, "healthTimeList": categoryList_time};
 }
+
 
 function getCategory(serviceObj) {
   const set = new Set();
-  const valueArr = Object.values(serviceObj)[0];
-  valueArr.forEach(row => {
+  const valueArr  = Object.values(serviceObj)[0];
+
+  for(let i = 0; i < valueArr.length; i++){
+    const row = valueArr[i];
     set.add(row.category);
-  });
+
+  }
   return [...set];
 }
 
-function getServices(healthData) {
+function getServices(healthData){
   const res = [];
   healthData.forEach(element => {
-    res.push(Object.keys(element)[0]);
+    res.push(Object.keys(element)[0])
   });
   return res;
 }
@@ -56,6 +60,7 @@ function getValueInNewRowObj(healthData, serviceName, categoryName) {
     if (Object.keys(serviceObj)[0] === serviceName) {
       const dbRows = Object.values(serviceObj)[0];
       const metricSet = new Set();
+
       dbRows.forEach(row => {
         const { metric } = row;
         const { category } = row;
@@ -92,7 +97,7 @@ function getValueInNewRowObj(healthData, serviceName, categoryName) {
 }
 
 export function getTime(timeList, currService, metric, category) {
-  let timelist;
+  let res = [];
   timeList.forEach(element => {
     const categoryName = Object.keys(element)[0];
     if (categoryName === category) {
@@ -101,13 +106,13 @@ export function getTime(timeList, currService, metric, category) {
         const serviceName = Object.keys(metricObj)[0];
         if (serviceName === currService) {
           for (const serviceMetric of Object.values(metricObj)[0]) {
-            if (serviceMetric[metric]) timelist = serviceMetric[metric];
+            if (serviceMetric[metric]) res = serviceMetric[metric];
           }
         }
       }
     }
   });
-  return timelist;
+  return res;
 }
 export const useIsMount = () => {
   const isMountRef = useRef(true);
