@@ -54,6 +54,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
   const handleServices = () => {
     const joinedServices = selectedServices.join(' ');
     history.replace(joinedServices);
+    setLive(false);
   };
 
   const currentModeCSS =

@@ -12,7 +12,11 @@ import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
 import { lightWhite } from 'material-ui/styles/colors';
-import { postgresFetch, mongoFetch }  from './dataHelpers';
+//import { postgresFetch, mongoFetch }  from './dataHelpers';
+import { fetchData } from './dataHelpers';
+
+const mongoFetch = fetchData.mongoFetch;
+const postgresFetch = fetchData.postgresFetch;
 
 require('dotenv').config();
 console.log('test console log work');
@@ -135,7 +139,8 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
-    result = await postgresFetch(service, pool);
+      result = await postgresFetch(service, pool);
+      console.log("result-health in data.ts:", JSON.stringify(result));
     }
 
     // Async event emitter - send response'
@@ -224,7 +229,7 @@ ipcMain.on('kafkaRequest', async (message) => {
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
-    result = postgresFetch('kafkametrics', pool);
+    result = await postgresFetch('kafkametrics', pool);
     }
 
     // Async event emitter - send response'
@@ -232,7 +237,7 @@ ipcMain.on('kafkaRequest', async (message) => {
     // console.log(result[0], service);
     // console.log(result, JSON.stringify(result));
 
-    message.sender.send('healthResponse', JSON.stringify(result));
+    message.sender.send('kafkaResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
     console.log('Error in "kakfaRequest" event', message);
