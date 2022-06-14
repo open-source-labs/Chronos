@@ -12,8 +12,7 @@ import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
 import { lightWhite } from 'material-ui/styles/colors';
-import { postgresFetch, mongoFetch } from './dataHelpers';
-
+import { postgresFetch, mongoFetch }  from './dataHelpers';
 
 require('dotenv').config();
 console.log('test console log work');
@@ -130,47 +129,13 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get document count
-      let num = await HealthModelFunc(service).countDocuments({});
-      // Get last 50 documents. If less than 50 documents, get all
-      num = Math.max(num, 10);
-      result = await HealthModelFunc(service)
-        .find(
-          {},
-          {
-            cpuspeed: 1,
-            cputemp: 1,
-            cpuloadpercent: 1,
-            totalmemory: 1,
-            freememory: 1,
-            usedmemory: 1,
-            activememory: 1,
-            totalprocesses: 1,
-            runningprocesses: 1,
-            blockedprocesses: 1,
-            sleepingprocesses: 1,
-            latency: 1,
-            time: 1,
-            __v: 1,
-            service,
-          }
-        )
-        .skip(num - 50);
+      result = await mongoFetch(service);
     }
-
-    /**
-     * `
-          SELECT *, 'customers' as service FROM customers
-          ORDER BY _id DESC
-          LIMIT 50
-          `;
-     * 
-     */
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
-    result = postgresFetch(service, pool);
+    result = await postgresFetch(service, pool);
     }
 
     // Async event emitter - send response'
