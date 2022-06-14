@@ -45,6 +45,7 @@ export interface GraphsContainerProps {
 }
 
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
+
   const history = useHistory();
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
@@ -57,7 +58,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { fetchEventData, setEventDataList, setEventTimeList } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
-  const { setTimeList, setDataList } = useContext(HealthContext);
+ 
 
   const [chart, setChart] = useState<string>('all');
 
@@ -83,11 +84,11 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
     return () => {
       if (intervalID) clearInterval(intervalID);
-      setDataList([]);
-      setTimeList([]);
-      setDockerData({});
-      setEventDataList([]);
-      setEventTimeList([]);
+    //   setDataList([]);
+    //   setTimeList([]);
+    //   setDockerData({});
+    //   setEventDataList([]);
+    //   setEventTimeList([]);
     };
   }, [service, live]);
 
@@ -128,7 +129,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const getHealthAndEventComponents = () => {
     const buttonList: JSX.Element[] = [];
     if (selectedMetrics) {
-      selectedMetrics.forEach(element => {
+      selectedMetrics.forEach((element,id) => {
         const categoryName = Object.keys(element)[0];
         const prefix = categoryName === 'Event' ? 'event_' : 'health_';
         buttonList.push(
@@ -136,6 +137,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             id={`${prefix}${categoryName}-button`}
             className={chart === `${prefix}${categoryName}` ? 'selected' : undefined}
             onClick={() => routing(`${prefix}${categoryName}`)}
+            key = {`1-${id}`}
           >
             {categoryName}
           </button>
@@ -155,6 +157,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           className={chart === 'all' ? 'selected' : undefined}
           id="all-button"
           onClick={() => routing('all')}
+          key = '0'
         >
           Metrics Query
         </button>
@@ -164,6 +167,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             id="docker-button"
             className={chart === 'docker' ? 'selected' : undefined}
             onClick={() => routing('docker')}
+            key = '2'
           >
             Docker
           </button>
@@ -176,6 +180,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             setChart('communications');
             history.push('communications');
           }}
+          key = '3'
         >
           Communication
         </button>
@@ -194,9 +199,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           <div className="graphs">
             {chart === 'all' && <QueryContainer />}
             {chart.startsWith('health_') 
-            // && (
-            // <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
-            // )
+            && (
+            <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
+            )
             }
             {chart.startsWith('event_') && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
             {chart === 'docker' && <DockerChart />}

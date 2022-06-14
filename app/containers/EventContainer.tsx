@@ -41,6 +41,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         // console.log("metric in EventContainer:", metric);
         // console.log("valueList in EventContainer:",valueList);
         if(selectedMetricsList.includes(metric)){
+          console.log("count in eventcontainer: ", id);
           const newEventChart = (
             <EventChart
               key={`Chart${id}`}

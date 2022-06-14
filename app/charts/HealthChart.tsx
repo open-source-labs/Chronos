@@ -21,6 +21,9 @@ interface SoloStyles {
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   const { service, metric, timeList, valueList, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
+  console.log("in the HealthChart");
+  console.log("healthchart valuelist:", JSON.stringify(valueList));
+  console.log("healthchart timelist:", JSON.stringify(timeList));
 
   setInterval(() => {
     if (solo !== soloStyle) {
