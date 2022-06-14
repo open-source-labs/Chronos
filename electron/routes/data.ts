@@ -129,6 +129,7 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
+
     let result: any;
 
     // Mongo Database
@@ -221,7 +222,7 @@ function extractWord(str: string) {
 ipcMain.on('kafkaRequest', async (message) => {
   try {
     let result: any;
-
+    console.log("in kafkaRequest electron!!")
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
 
