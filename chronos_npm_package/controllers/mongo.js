@@ -218,6 +218,14 @@ It then takes the returned array of metrics, turns them into documents based on
 KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
 */
 chronos.kafka = function (userConfig) {
+  // ensure that kafkametrics exists in the services table
+  const service = new ServicesModel({ service: 'kafkametrics', interval: userConfig.interval });
+
+  service
+    .save()
+    .then(() => console.log(`Adding "kafkametrics" to the services table`))
+    .catch(err => console.log(`Error saving "kafkametrics" to the services table: `, err.message));
+
   // fetch the data from Kafka with kafkaFetch()
   // then take turn each result in the returned array into a kafkaModel doc
   // insertMany into the the KafkaModel
