@@ -12,6 +12,7 @@ import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
 import { lightWhite } from 'material-ui/styles/colors';
+import { postgresFetch, mongoFetch } from './dataHelpers';
 
 
 require('dotenv').config();
@@ -46,7 +47,6 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     // Connect to the proper database
     if (databaseType === 'MongoDB') await connectMongo(index, URI);
     if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
-
     // console.log('electron/routes/data.ts, ipcMain.on(connect): 3 connected');
 
     // Currently set to a global variable
@@ -130,7 +130,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get document count
+      // // Get document count
       let num = await HealthModelFunc(service).countDocuments({});
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 10);
@@ -156,6 +156,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
           }
         )
         .skip(num - 50);
+
     }
 
     /**
@@ -170,18 +171,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
-      const query = `
-          SELECT * FROM ${service}
-          ORDER BY _id DESC
-          LIMIT 50
-          `;
-      // Execute query
-      result = await pool.query(query);
-      result = result.rows.reverse();
-      result = result.map(res => ({
-        ...res,
-        service,
-      }));
+    result = postgresFetch(service, pool);
     }
 
     // Async event emitter - send response'
@@ -260,22 +250,30 @@ function extractWord(str: string) {
 }
 
 ipcMain.on('kafkaRequest', async (message) => {
-  let result50: any[] =[];
-  let result: any;
-  //we do not need loop 50 (very slow) if we get the data from database and just extract 50 rows from db.
-  for (let i = 0; i < 50; i++){
-    await fetch('http://localhost:12345/metrics')
-    .then(data => data.text())
-    .then(data => {
-      result = extractWord(data);
-      result50.push(...result);
-     
-    })
-    .catch(err => console.log(err));
+  try {
+    let result: any;
+
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+
+    }
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get last 50 documents. If less than 50 get all
+    result = postgresFetch('kafkametrics', pool);
+    }
+
+    // Async event emitter - send response'
+
+    // console.log(result[0], service);
+    // console.log(result, JSON.stringify(result));
+
+    message.sender.send('healthResponse', JSON.stringify(result));
+  } catch (error) {
+    // Catch errors
+    console.log('Error in "kakfaRequest" event', message);
+    message.sender.send('kafkaResponse', {});
   }
-  console.log("kafka response: ");
-  console.log(JSON.stringify(result50));
-  message.sender.send('kafkaResponse', JSON.stringify(result50));
 
   
 });
