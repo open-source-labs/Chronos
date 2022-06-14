@@ -15,14 +15,17 @@ interface EventContainerProps {
 const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   //get eventData from EventContext using react hook useContext
 
-  const { eventDataList, eventTimeList } = useContext(EventContext); 
+  const { eventData, setEventData } = useContext(EventContext); 
+  // const { eventDataList, eventTimeList } = useContext(EventContext); 
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
   const { selectedMetrics } = useContext(QueryContext);
-
+  const eventDataList : any[] = eventData.eventDataList;
+  const eventTimeList : any[] = eventData.eventTimeList;
 
   useEffect(() => {
     const temp : JSX.Element[] = [];
-    if (eventDataList.length > 0) {
+
+    if (eventData && eventDataList.length > 0 && eventTimeList.length >0) {
       // console.log("eventDataList in EventContainer:");
       // console.log(JSON.stringify(eventDataList));
       // console.log("eventTimeList in EventContainer:");
@@ -41,6 +44,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         // console.log("metric in EventContainer:", metric);
         // console.log("valueList in EventContainer:",valueList);
         if(selectedMetricsList.includes(metric)){
+          console.log("count in eventcontainer: ", id);
           const newEventChart = (
             <EventChart
               key={`Chart${id}`}
@@ -58,7 +62,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       }); 
       setEventChartsArr(temp);
     }
-  }, [eventDataList, eventTimeList]);
+  }, [eventData]);
 
   const getSingleTimeList = (metricName: string) => {
     //[{metric1: [3,6,8...]}, {metric2: [3,6,8...]}]  
