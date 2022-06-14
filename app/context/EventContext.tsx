@@ -16,8 +16,9 @@ export const EventContext = React.createContext<any>(null);
  */
 
 const EventContextProvider: React.FC = React.memo(({ children }) => {
-  const [eventDataList, setEventDataList] = useState<any[]>([]);
-  const [eventTimeList, setEventTimeList] = useState<any[]>([]);
+  const [eventData, setEventData] = useState({"eventDataList":[], "eventTimeList": []});
+  // const [eventDataList, setEventDataList] = useState<any[]>([]);
+  // const [eventTimeList, setEventTimeList] = useState<any[]>([]);
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -40,9 +41,10 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
       // console.log("eventData in eventcontext");
       // console.log(JSON.stringify(result));
       // console.log("result in EventContext", JSON.stringify(result));
-      const transformedData =transformEventData(result);
-      setEventDataList(transformedData[0]);
-      setEventTimeList(transformedData[1]);
+      let transformedData : any = {};
+      transformedData = transformEventData(result);
+
+      setEventData(transformedData);
     });
     
   }, []);
@@ -81,13 +83,13 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
       }
     });
     // console.log("datalist in EventContext:", JSON.stringify(dataList));
-    return [dataList, timeList];
+    return {"eventDataList": dataList, "eventTimeList": timeList};
   };
 
   return (
     // uncoment here after pass test
     <EventContext.Provider
-      value={{ eventDataList, eventTimeList, setEventDataList, setEventTimeList, fetchEventData }}
+      value={{ eventData, setEventData, fetchEventData }}
     >
       {children}
     </EventContext.Provider>
