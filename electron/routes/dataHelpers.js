@@ -1,11 +1,34 @@
-// import KafkaModel from '../models/KafkaModel';
-// import HealthModelFunc from '../models/HealthModel';
+import KafkaModel from '../models/KafkaModel';
+import HealthModelFunc from '../models/HealthModel';
 
 const fetchData = {};
 
-// fetchData.mongoFetch = function(serviceName){
+const aggregator = [
+  {
+    $setWindowFields: {
+      partitionBy: '$metric',
+      sortBy: {
+        time: -1,
+      },
+      output: {
+        rowNumber: {
+          $documentNumber: {},
+          window: ['unbounded', 'current'],
+        },
+      },
+    },
+    $match: {
+      rowNumber: { $lte: 50 },
+    },
+  },
+];
 
-// };
+// TCreate a model based on the serviceName
+// Create an aggregator based on the aggregator variable
+// return the result
+fetchData.mongoFetch = function (serviceName) {
+  
+};
 
 fetchData.postgresFetch = async function (serviceName, pool) {
   const query = `
