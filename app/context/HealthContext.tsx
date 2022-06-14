@@ -9,11 +9,10 @@ export const HealthContext = React.createContext<any>(null);
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {Object} datalist At most, 50 points of health data
- * @property  {Object} timelist Health data timestamps
+ * @property  {Object} healthData
  * @method    setServices
- * @method    setDataList
- * @method    setTimeList
+ * @method    setHealthData
+
  */
 
 const HealthContextProvider: React.FC = React.memo(({ children }) => {
@@ -43,26 +42,14 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
     let temp: any[] = [];
 
     Promise.all(
-      serv.map((service: string) =>
-        new Promise((resolve, reject) => {
+      serv.map((service: string) =>{
+        // if(service !== 'kafkametrics'){
+          
+        return new Promise((resolve, reject) => {
           console.log('serv in healthcontext:', JSON.stringify(serv));
           ipcRenderer.send('healthRequest', service);
           ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
-    
-           
-            //second  query customers
-            // [
-            //   {
-            //     customers: [
-            //       { metric: "disk_usage", category: "Memory", time: 1, value: 10 },
-            //       { metric: "disk_usage", category: "Memory", time: 2, value: 20 },
-            //       { metric: "clockSpeed", category: "Memory", time: 1, value: 8 },
-            //       { metric: "clockSpeed", category: "Memory", time: 2, value: 16 },
-            //       { metric: "cpu_temp", category: "CPU", time: 1, value: 100 },
-            //       { metric: "cpu_temp", category: "CPU", time: 2, value: 200 },
-            //     ],
-            //   },
-            // ]
+
             let result: any[];
             if (tryParseJSON(data)) {
               console.log("data in HealthContext:", data);
@@ -76,33 +63,11 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
           });
           
         }).then((dt: any) => {
-          temp.push(dt);
-          console.log("temp is:", JSON.stringify(temp));
-          // temp = [
-          //   {
-          //     "chronos-mon": [
-          //       { metric: 'disk_usage', category: 'Memory', time: 1, value: 10 },
-          //       { metric: 'disk_usage', category: 'Memory', time: 2, value: 20 },
-          //       { metric: 'clockSpeed', category: 'Memory', time: 1, value: 8 },
-          //       { metric: 'clockSpeed', category: 'Memory', time: 2, value: 16 },
-          //       { metric: 'cpu_temp', category: 'CPU', time: 1, value: 100 },
-          //       { metric: 'cpu_temp', category: 'CPU', time: 2, value: 200 },
-          //     ],
-          //   },
-          //   {
-          //     "chronos-mon-2": [
-          //       { metric: 'disk_usage', category: 'Memory', time: 1, value: 10000 },
-          //       { metric: 'disk_usage', category: 'Memory', time: 2, value: 20000 },
-          //       { metric: 'clockSpeed', category: 'Memory', time: 1, value: 8000 },
-          //       { metric: 'clockSpeed', category: 'Memory', time: 2, value: 16000 },
-          //       { metric: 'cpu_temp', category: 'CPU', time: 1, value: 10000 },
-          //       { metric: 'cpu_temp', category: 'CPU', time: 2, value: 20000 },
-          //     ],
-          //   },
-          // ];
+          if(service !== 'kafkametrics'){
+            temp.push(dt);
+            console.log("temp is:", JSON.stringify(temp));
+          }
           if (checkServicesComplete(temp, serv)) {
-         
-          // if (temp.length === serv.length) {
             
             setServices(serv);
             let transformedData : any = {};
@@ -111,13 +76,11 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
             console.log("serv", serv);
             console.log('transformedData:', JSON.stringify(transformedData));
             setHealthData(transformedData);
-            // setTimeList(transformedData[1]);
-            // setDataList(transformedData[0]);
-
-            
 
           }
         })
+      }
+      // }     
       )
     );
   }, []);
@@ -132,8 +95,6 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
       arr1.push(Object.keys(temp[i])[0]);
      
     }
-    console.log("arr1",arr1.sort().toString());
-    console.log("serv:", serv);
     return arr1.sort().toString() === serv.sort().toString()
     
   };

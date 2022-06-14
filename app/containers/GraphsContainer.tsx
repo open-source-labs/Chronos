@@ -73,14 +73,14 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
         setInterval(() => {
           fetchCommsData(app, live);
           fetchHealthData(serviceArray);
-          fetchEventData();
+          fetchEventData(serviceArray[0]);
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchCommsData(app, live);
       fetchHealthData(serviceArray);
-      fetchEventData();
+      fetchEventData(serviceArray[0]);
     }
 
     return () => {

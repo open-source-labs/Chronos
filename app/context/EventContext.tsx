@@ -8,17 +8,14 @@ export const EventContext = React.createContext<any>(null);
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
- * @property  {Array} eventDataList
- * @property  {Array} eventTimeList
+ * @property  {Object} eventData
  * @method    fetchEventData
- * @method    setEventDataList
- * @method    setEventTimeList
+ * @method    setEventData
+
  */
 
 const EventContextProvider: React.FC = React.memo(({ children }) => {
   const [eventData, setEventData] = useState({"eventDataList":[], "eventTimeList": []});
-  // const [eventDataList, setEventDataList] = useState<any[]>([]);
-  // const [eventTimeList, setEventTimeList] = useState<any[]>([]);
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -32,20 +29,25 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  const fetchEventData = useCallback(() => {
-    ipcRenderer.removeAllListeners('kafkaResponse');
-    ipcRenderer.send('kafkaRequest');
-    ipcRenderer.on('kafkaResponse',  (event: Electron.Event, data: any) => {
-      let result: any;
-      if (tryParseJSON(data)) result = JSON.parse(data);
-      // console.log("eventData in eventcontext");
-      // console.log(JSON.stringify(result));
-      // console.log("result in EventContext", JSON.stringify(result));
-      let transformedData : any = {};
-      transformedData = transformEventData(result);
+  const fetchEventData = useCallback((serv) => {
+    if(serv === 'kafkametrics'){
+      console.log("in fetchEventData in EventContext!!");
+      ipcRenderer.removeAllListeners('kafkaResponse');
+      ipcRenderer.send('kafkaRequest');
+      ipcRenderer.on('kafkaResponse',  (event: Electron.Event, data: any) => {
+        let result: any;
+        if (tryParseJSON(data)) result = JSON.parse(data);
+        console.log("eventData in eventcontext");
+        console.log(JSON.stringify(result));
+        console.log("result in EventContext", JSON.stringify(result));
+        let transformedData : any = {};
+        transformedData = transformEventData(result[0]['kafkametrics']);
+  
+        setEventData(transformedData);
+      });
 
-      setEventData(transformedData);
-    });
+    }
+
     
   }, []);
 
@@ -82,7 +84,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
         });
       }
     });
-    // console.log("datalist in EventContext:", JSON.stringify(dataList));
+    console.log("datalist in EventContext:", JSON.stringify(dataList));
     return {"eventDataList": dataList, "eventTimeList": timeList};
   };
 
