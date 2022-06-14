@@ -298,6 +298,8 @@ chronos.docker = function ({ microservice, interval }) {
 };
 
 chronos.kafka = function (userConfig) {
+  // Ensure that kafkametrics are a part of the services table
+  chronos.services({ microservice: 'kafkametrics', interval: userConfig.interval });
   // create kafkametrics table if it does not exist
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS kafkametrics (
