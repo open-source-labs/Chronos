@@ -37,7 +37,7 @@ fetchData.postgresFetch = async function (serviceName, pool) {
     AS (
         SELECT
           metric, value, category, time,
-          row_number() OVER(PARTITION BY metric ORDER BY time) AS rowNumber
+          row_number() OVER(PARTITION BY metric ORDER BY time DESC) AS rowNumber
         FROM
           ${serviceName}
       )
@@ -50,9 +50,11 @@ fetchData.postgresFetch = async function (serviceName, pool) {
   ;`;
 
   let result = await pool.query(query);
+  console.log("result.rows in dataHelpers postgresFetch:", JSON.stringify(result.rows));
   result = result.rows;
   result = [{ [serviceName]: result }];
+  console.log("result with servicename in dataHelpers postgresFetch:", JSON.stringify(result));
   return result;
 };
 
-module.exports = fetchData;
+export {fetchData};
