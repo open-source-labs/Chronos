@@ -26,8 +26,11 @@ const aggregator = [
 // TCreate a model based on the serviceName
 // Create an aggregator based on the aggregator variable
 // return the result
-fetchData.mongoFetch = function (serviceName) {
-  
+fetchData.mongoFetch = async function (serviceName) {
+  const testModel = HealthModelFunc(serviceName);
+  let result = await testModel.aggregate(aggregator);
+  result = [{ [serviceName]: result }];
+  return result;
 };
 
 fetchData.postgresFetch = async function (serviceName, pool) {
@@ -55,4 +58,4 @@ fetchData.postgresFetch = async function (serviceName, pool) {
   return result;
 };
 
-module.exports = fetchData;
+export { fetchData };
