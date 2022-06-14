@@ -29,7 +29,7 @@ export function transformData(healthData) {
     categoryList_time.push(categoryObj_time)
     categoryList_data.push(categoryObj_data);
   });
-  return [categoryList_data, categoryList_time];
+  return {"healthDataList": categoryList_data, "healthTimeList": categoryList_time};
 }
 
 
@@ -97,7 +97,7 @@ function getValueInNewRowObj(healthData, serviceName, categoryName) {
 }
 
 export function getTime(timeList, currService, metric, category) {
-  let timelist;
+  let res = [];
   timeList.forEach(element => {
     const categoryName = Object.keys(element)[0];
     if (categoryName === category) {
@@ -106,13 +106,13 @@ export function getTime(timeList, currService, metric, category) {
         const serviceName = Object.keys(metricObj)[0];
         if (serviceName === currService) {
           for (const serviceMetric of Object.values(metricObj)[0]) {
-            if (serviceMetric[metric]) timelist = serviceMetric[metric];
+            if (serviceMetric[metric]) res = serviceMetric[metric];
           }
         }
       }
     }
   });
-  return timelist;
+  return res;
 }
 export const useIsMount = () => {
   const isMountRef = useRef(true);

@@ -130,32 +130,72 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get document count
-      let num = await HealthModelFunc(service).countDocuments({});
-      // Get last 50 documents. If less than 50 documents, get all
-      num = Math.max(num, 10);
-      result = await HealthModelFunc(service)
-        .find(
-          {},
+      // // Get document count
+      // let num = await HealthModelFunc(service).countDocuments({});
+      // // Get last 50 documents. If less than 50 documents, get all
+      // num = Math.max(num, 10);
+      // result = await HealthModelFunc(service)
+      //   .find(
+      //     {},
+      //     {
+      //       cpuspeed: 1,
+      //       cputemp: 1,
+      //       cpuloadpercent: 1,
+      //       totalmemory: 1,
+      //       freememory: 1,
+      //       usedmemory: 1,
+      //       activememory: 1,
+      //       totalprocesses: 1,
+      //       runningprocesses: 1,
+      //       blockedprocesses: 1,
+      //       sleepingprocesses: 1,
+      //       latency: 1,
+      //       time: 1,
+      //       __v: 1,
+      //       service,
+      //     }
+      //   )
+      //   .skip(num - 50);
+      if(service === 'chronos-mon'){
+        result = [{
+          "chronos-mon": [
+            { "metric": "disk_usage", "category": "Memory", "time": 1655162673100, "value": 2 },
+            { "metric": "disk_usage", "category": "Memory", "time": 1655162673200, "value": 10 },
+            { "metric": "disk_usage", "category": "Memory", "time": 1655162673300, "value": 8},
+            { "metric": "disk_usage", "category": "Memory", "time": 1655162673400, "value": 9 },
+            { "metric": "clockSpeed", "category": "Memory", "time": 1655162673100, "value": 10 },
+            { "metric": "clockSpeed", "category": "Memory", "time": 1655162673200, "value": 15 },
+            { "metric": "clockSpeed", "category": "Memory", "time": 1655162673300, "value": 10 },
+            { "metric": "clockSpeed", "category": "Memory", "time": 1655162673400, "value": 15 },
+            { "metric": "cpu_temp", "category": "CPU", "time": 1655162673100, "value": 20},
+            { "metric": "cpu_temp", "category": "CPU", "time": 1655162673200, "value": 30 },
+            { "metric": "cpu_temp", "category": "CPU", "time": 1655162673300, "value": 50},
+            { "metric": "cpu_temp", "category": "CPU", "time": 1655162673400, "value": 40 },
+          ],
+        },
+      ];
+      }
+      if(service === 'chronos-mon-2'){
+        console.log("in the chronos-mon-2 electron!!")
+        result = [
           {
-            cpuspeed: 1,
-            cputemp: 1,
-            cpuloadpercent: 1,
-            totalmemory: 1,
-            freememory: 1,
-            usedmemory: 1,
-            activememory: 1,
-            totalprocesses: 1,
-            runningprocesses: 1,
-            blockedprocesses: 1,
-            sleepingprocesses: 1,
-            latency: 1,
-            time: 1,
-            __v: 1,
-            service,
-          }
-        )
-        .skip(num - 50);
+            "chronos-mon-2": [
+              { "metric": "disk_usage", "category": "Memory", "time": 1655162673100, "value": 2000 },
+              { "metric": "disk_usage", "category": "Memory", "time": 1655162673200, "value": 10000 },
+              { "metric": "disk_usage", "category": "Memory", "time": 1655162673300, "value": 8000},
+              { "metric": "disk_usage", "category": "Memory", "time": 1655162673400, "value": 9000 },
+              { "metric": "clockSpeed", "category": "Memory", "time": 1655162673100, "value": 10000 },
+              { "metric": "clockSpeed", "category": "Memory", "time": 1655162673200, "value": 15000 },
+              { "metric": "clockSpeed", "category": "Memory", "time": 1655162673300, "value": 10000 },
+              { "metric": "clockSpeed", "category": "Memory", "time": 1655162673400, "value": 15000 },
+              { "metric": "cpu_temp", "category": "CPU", "time": 1655162673100, "value": 20000},
+              { "metric": "cpu_temp", "category": "CPU", "time": 1655162673200, "value": 30000 },
+              { "metric": "cpu_temp", "category": "CPU", "time": 1655162673300, "value": 50000},
+              { "metric": "cpu_temp", "category": "CPU", "time": 1655162673400, "value": 40000},
+            ],
+          },
+        ];
+      }
     }
 
     /**

@@ -53,9 +53,9 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   const { servicesData } = useContext(ApplicationContext);
 
-  const { fetchHealthData, setDataList, setTimeList, services } = useContext(HealthContext);
+  const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
-  const { fetchEventData, setEventDataList, setEventTimeList } = useContext(EventContext);
+  const { fetchEventData, setEventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
  
@@ -66,6 +66,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
+    console.log("serviceArray in GraphsContainer:", serviceArray);
 
     if (live) {
       setIntervalID(
@@ -84,11 +85,10 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
     return () => {
       if (intervalID) clearInterval(intervalID);
-    //   setDataList([]);
-    //   setTimeList([]);
-    //   setDockerData({});
-    //   setEventDataList([]);
-    //   setEventTimeList([]);
+      setHealthData({"healthDataList":[], "healthTimeList":[]});
+      setDockerData({});
+      setEventData({"eventDataList":[], "eventTimeList": []});
+  
     };
   }, [service, live]);
 
@@ -197,10 +197,10 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'all' && <QueryContainer />}
+            {chart === 'all' && <QueryContainer/>}
             {chart.startsWith('health_') 
             && (
-            <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)}/>
+            <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)} currentService ={service}/>
             )
             }
             {chart.startsWith('event_') && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
