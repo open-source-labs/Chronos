@@ -40,26 +40,15 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
       // console.log("eventData in eventcontext");
       // console.log(JSON.stringify(result));
       // console.log("result in EventContext", JSON.stringify(result));
-      setEventDataList(transformData(result)[0]);
-      setEventTimeList(transformData(result)[1]);
+      const transformedData =transformEventData(result);
+      setEventDataList(transformedData[0]);
+      setEventTimeList(transformedData[1]);
     });
-
-
-    // let result = [
-    //   { metric: 'metricname1', category: 'Event', time: 1, value: 10 },
-    //   { metric: 'metricname1', category: 'Event', time: 2, value: 9 },
-    //   { metric: 'metricname2', category: 'Event', time: 1, value: 20 },
-    //   { metric: 'metricname2', category: 'Event', time: 2, value: 18 },
-    //   { metric: 'metricname3', category: 'Event', time: 1, value: 8 },
-    //   { metric: 'metricname3', category: 'Event', time: 2, value: 7 },
-    // ];
-    // setEventDataList(transformData(result)[0] || []);
-    // setEventTimeList(transformData(result)[1] || []);
     
   }, []);
 
 
-  const transformData = (data: any[]) => {
+  const transformEventData = (data: any[]) => {
     //[{metric: xx, category: ‘event’, time:xx, value: xx},{},{}....]
     const dataList: any[] = [];
     const timeList: any[] = [];

@@ -69,20 +69,20 @@ const TransferColumns = React.memo(() => {
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
-  // const {datalist} = useContext(HealthContext);
+  const {datalist} = useContext(HealthContext);
   const { eventDataList } = useContext(EventContext);
 
-  const datalist = [
-    {
-      Memory: [
-        { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] },
-        { orders: [{ disk_usage: [5, 25] }, { clockSpeed: [7, 14] }] },
-      ],
-    },
-    {
-      CPU: [{ books: [{ cpu_temp: [100, 200] }] }, { orders: [{ cpu_temp: [150, 250] }] }],
-    },
-  ];
+  // const datalist = [
+  //   {
+  //     Memory: [
+  //       { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] },
+  //       { orders: [{ disk_usage: [5, 25] }, { clockSpeed: [7, 14] }] },
+  //     ],
+  //   },
+  //   {
+  //     CPU: [{ books: [{ cpu_temp: [100, 200] }] }, { orders: [{ cpu_temp: [150, 250] }] }],
+  //   },
+  // ];
 
   const appendMetrics = (eventDataList, datalist) => {
     let pool: any[] = [];
