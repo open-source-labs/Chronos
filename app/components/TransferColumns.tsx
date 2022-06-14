@@ -66,12 +66,14 @@ const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState([]);
   const [metricsPool, setMetricsPool] = useState<any[]>([]);
   const [listReady, setListReady] = useState(false);
+  const [isEvent, setIsEvent] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
   const {healthData} = useContext(HealthContext);
   const { eventData } = useContext(EventContext);
   const eventDataList = eventData.eventDataList;
+  const healthDataList = healthData.healthDataList;
 
   // const datalist = [
   //   {
@@ -88,6 +90,7 @@ const TransferColumns = React.memo(() => {
   const appendMetrics = (eventDataList, healthDatalist) => {
     let pool: any[] = [];
     if (healthDatalist && healthDatalist.length > 0) {
+      setIsEvent(false);
       healthDatalist.forEach(category => {
         const tag: string = Object.keys(category)[0]; //Memory
         const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
@@ -107,6 +110,7 @@ const TransferColumns = React.memo(() => {
 
     }
     if (eventDataList && eventDataList.length > 0) {
+      setIsEvent(true);
       eventDataList.forEach(metric => {
         const temp = {};
         const metricName: string = Object.keys(metric)[0];
@@ -122,20 +126,21 @@ const TransferColumns = React.memo(() => {
     setMetricsPool(pool);
   };
 
+  // useEffect(() => {
+  //   if ((healthDataList && healthDataList.length >0)  || (eventDataList && eventDataList.length > 0)) {
+  //     setListReady(true);
+  //   }
+  // }, [healthDataList, eventDataList]);
+
+
+  //const isMount = useIsMount();
+
   useEffect(() => {
-    if (healthData.healthDataList && healthData.healthDataList.length >0  && eventDataList && eventDataList.length > 0) {
-      setListReady(true);
-    }
-  }, [healthData.healthDataList, eventDataList]);
-
-
-  const isMount = useIsMount();
-
-  useEffect(() => {
-    if (!isMount) {
-      appendMetrics(eventDataList, healthData.healthDataList);
-    }
-  }, [listReady]);
+    // if (!isMount) {
+      appendMetrics(eventDataList, healthDataList);
+    // }
+  }, [isEvent, healthDataList, eventDataList]);
+  
 
   const leftTableColumns = [
     {
