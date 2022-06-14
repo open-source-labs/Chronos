@@ -126,20 +126,21 @@ const TransferColumns = React.memo(() => {
     setMetricsPool(pool);
   };
 
+  // useEffect(() => {
+  //   if ((healthDataList && healthDataList.length >0)  || (eventDataList && eventDataList.length > 0)) {
+  //     setListReady(true);
+  //   }
+  // }, [healthDataList, eventDataList]);
+
+
+  //const isMount = useIsMount();
+
   useEffect(() => {
-    if ((healthDataList && healthDataList.length >0)  || (eventDataList && eventDataList.length > 0)) {
-      setListReady(true);
-    }
-  }, [healthDataList, eventDataList]);
-
-
-  const isMount = useIsMount();
-
-  useEffect(() => {
-    if (!isMount) {
+    // if (!isMount) {
       appendMetrics(eventDataList, healthDataList);
-    }
-  }, [isEvent, listReady]);
+    // }
+  }, [isEvent, healthDataList, eventDataList]);
+  
 
   const leftTableColumns = [
     {
