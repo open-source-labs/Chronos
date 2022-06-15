@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { useIsMount } from '../context/helpers';
+import { useParams } from 'react-router-dom';
 import 'antd/dist/antd.less';
 import { Switch, Table, Tag, Transfer, Button } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
@@ -8,6 +8,7 @@ import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
+
 
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
@@ -65,33 +66,113 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState([]);
   const [metricsPool, setMetricsPool] = useState<any[]>([]);
-  const [listReady, setListReady] = useState(false);
-  const [isEvent, setIsEvent] = useState(false);
+  const [healthMetricsReady, setHealthMetricsReady] = useState(false);
+  const [healthMetrics, setHealthMetrics] = useState<any[]>([]);
+  const [eventMetricsReady, setEventMetricsReady] = useState(false);
+  const [eventMetrics, setEventMetrics] = useState<any[]>([]);
+
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
   const {healthData} = useContext(HealthContext);
   const { eventData } = useContext(EventContext);
+  const { service } = useParams<any>();
+
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
 
-  // const datalist = [
-  //   {
-  //     Memory: [
-  //       { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] },
-  //       { orders: [{ disk_usage: [5, 25] }, { clockSpeed: [7, 14] }] },
-  //     ],
-  //   },
-  //   {
-  //     CPU: [{ books: [{ cpu_temp: [100, 200] }] }, { orders: [{ cpu_temp: [150, 250] }] }],
-  //   },
-  // ];
 
-  const appendMetrics = (eventDataList, healthDatalist) => {
+  useEffect(()=>{
+    if(healthDataList && healthDataList.length >0){
+      setHealthMetricsReady(true);
+    }
+  },[healthDataList]);
+
+  useEffect(()=>{
+    if(eventDataList && eventDataList.length >0){
+      setEventMetricsReady(true);
+    }
+  },[eventDataList]);
+
+  useEffect(()=>{
+   // console.log("newhealthmetrics", JSON.stringify(getMetrics('health',healthDataList)))
+   //console.log("healthDataList:", JSON.stringify(healthDataList));
+    setHealthMetrics(getMetrics('health',healthDataList))
+
+  },[healthMetricsReady]);
+
+  useEffect(()=>{
+   // console.log("neweventhmetrics", JSON.stringify(getMetrics('event',eventDataList)))
+    setEventMetrics(getMetrics('event',eventDataList))
+    //console.log("eventDataList:", JSON.stringify(eventDataList));
+
+  },[eventMetricsReady]);
+
+  
+
+  useEffect(()=>{
+
+    console.log("current service:", service);
+    console.log("healthData in else:", healthDataList.length);
+    console.log("eventData in else:", eventDataList.length);
+    console.log("healthMetricsReady:", healthMetricsReady);
+    console.log("eventMetricsReady:", eventMetricsReady);
+    if(service === ''){
+      return;
+    }
+    else if(service === 'kafkametrics'){
+      // console.log("set event metrics:",  JSON.stringify(eventMetrics));
+      console.log("eventDataList:", JSON.stringify(eventDataList));
+      if(eventDataList && eventDataList.length >0){
+        setMetricsPool(getMetrics('event',eventDataList));
+      }
+      else if(eventMetricsReady){
+        setMetricsPool(eventMetrics);
+      }
+      
+    }
+    else if (!service.includes('kafkametrics')){//all health data
+      console.log("healthDataList in elseif:", JSON.stringify(healthDataList));
+      // console.log("set health metrics:",  JSON.stringify(healthMetrics));
+      if(healthDataList && healthDataList.length >0){
+        setMetricsPool(getMetrics('health',healthDataList));
+      }
+      else if(healthMetricsReady){
+        setMetricsPool(healthMetrics);
+      }
+      
+    }
+    else{
+
+      if(healthDataList && healthDataList.length >0 && eventDataList && eventDataList.length >0){
+        console.log("eventDataList:", eventDataList.length);
+        console.log("healthDataList", healthDataList.length);
+        setMetricsPool(getMetrics('event',eventDataList).concat(getMetrics('health',healthDataList)));
+      }
+      else if(healthMetricsReady && eventMetricsReady){
+        console.log("set concat metrics:", JSON.stringify(eventMetrics.concat(healthMetrics)));
+        setMetricsPool(eventMetrics.concat(healthMetrics));
+      }
+    }
+    
+  // },[service, healthMetricsReady, eventMetricsReady])
+},[service, eventData, healthData])
+
+  const getMetrics = (type, datalist) =>{
     let pool: any[] = [];
-    if (healthDatalist && healthDatalist.length > 0) {
-      setIsEvent(false);
-      healthDatalist.forEach(category => {
+    if(type === 'event'){
+      datalist.forEach(metric => {
+        const temp = {};
+        const metricName: string = Object.keys(metric)[0];
+        const key = 'Event | ' + metricName;
+        temp['key'] = key;
+        temp['title'] = key;
+        temp['tag'] = 'Event';
+        pool.push(temp);
+      });
+    }
+    else{
+      datalist.forEach(category => {
         const tag: string = Object.keys(category)[0]; //Memory
         const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
         const valuesOfServiceObj: any[] = Object.values(serviceObj);
@@ -109,38 +190,9 @@ const TransferColumns = React.memo(() => {
       });
 
     }
-    if (eventDataList && eventDataList.length > 0) {
-      setIsEvent(true);
-      eventDataList.forEach(metric => {
-        const temp = {};
-        const metricName: string = Object.keys(metric)[0];
-        const key = 'Event | ' + metricName;
-        temp['key'] = key;
-        temp['title'] = key;
-        temp['tag'] = 'Event';
-        pool.push(temp);
-      });
+    return pool;
+  }
 
-    }
-
-    setMetricsPool(pool);
-  };
-
-  // useEffect(() => {
-  //   if ((healthDataList && healthDataList.length >0)  || (eventDataList && eventDataList.length > 0)) {
-  //     setListReady(true);
-  //   }
-  // }, [healthDataList, eventDataList]);
-
-
-  //const isMount = useIsMount();
-
-  useEffect(() => {
-    // if (!isMount) {
-      appendMetrics(eventDataList, healthDataList);
-    // }
-  }, [isEvent, healthDataList, eventDataList]);
-  
 
   const leftTableColumns = [
     {
@@ -225,7 +277,7 @@ const TransferColumns = React.memo(() => {
         rightColumns={rightTableColumns}
         listStyle={{
           width: 700,
-          height: 700,
+          height: 1000,
         }}
       />
       <Switch

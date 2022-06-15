@@ -3,6 +3,7 @@ import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import HealthChart from '../charts/HealthChart';
 import { getTime } from '../context/helpers';
+import { useParams } from 'react-router-dom';
 
 interface HealthContainerProps {
   sizing: string;
@@ -18,7 +19,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   const {selectedMetrics} = useContext(QueryContext);
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
   const { category } = props;
-
+  const { service } = useParams<any>();
 
   // console.log("HC-healthData in HealthContainer:", JSON.stringify(healthData));
   // console.log("HC-datalist in HealthContainer:", JSON.stringify(healthData.healthDataList));
@@ -98,7 +99,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   
   }, [healthData, category]); //add category here
 
-  return <div>{healthChartsArr}</div>;
+  return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
 });
 
 export default HealthContainer;

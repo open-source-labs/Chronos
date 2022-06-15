@@ -19,6 +19,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
 
   function tryParseJSON(jsonString: any) {
     try {
+     console.log("jsonString at EventContext:", jsonString);
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {
         return true;
@@ -29,24 +30,26 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  const fetchEventData = useCallback((serv) => {
-    if(serv === 'kafkametrics'){
-      console.log("in fetchEventData in EventContext!!");
+  const fetchEventData = useCallback(() => {
+    // if(serv === 'kafkametrics'){
+     // console.log("in fetchEventData in EventContext!!");
       ipcRenderer.removeAllListeners('kafkaResponse');
       ipcRenderer.send('kafkaRequest');
       ipcRenderer.on('kafkaResponse',  (event: Electron.Event, data: any) => {
         let result: any;
         if (tryParseJSON(data)) result = JSON.parse(data);
-        console.log("eventData in eventcontext");
-        console.log(JSON.stringify(result));
-        console.log("result in EventContext", JSON.stringify(result));
+      //  console.log("eventData in eventcontext");
+      //  console.log(JSON.stringify(result));
+      //  console.log("result in EventContext", JSON.stringify(result));
         let transformedData : any = {};
-        transformedData = transformEventData(result[0]['kafkametrics']);
-  
-        setEventData(transformedData);
+        if(result && result.length > 0){
+          transformedData = transformEventData(result[0]['kafkametrics']);
+          setEventData(transformedData);
+        }
+
       });
 
-    }
+    // }
 
     
   }, []);
@@ -84,7 +87,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
         });
       }
     });
-    console.log("datalist in EventContext:", JSON.stringify(dataList));
+   // console.log("datalist in EventContext:", JSON.stringify(dataList));
     return {"eventDataList": dataList, "eventTimeList": timeList};
   };
 
