@@ -136,6 +136,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     if (currentDatabaseType === 'MongoDB') {
       result = await mongoFetch(service);
     }
+    
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
@@ -225,7 +226,7 @@ ipcMain.on('kafkaRequest', async (message) => {
     console.log("in kafkaRequest electron!!")
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-
+      result = await mongoFetch('kafkametrics');
     }
     // SQL Database
     if (currentDatabaseType === 'SQL') {

@@ -13,10 +13,12 @@ const aggregator = [
       output: {
         rowNumber: {
           $documentNumber: {},
-          window: ['unbounded', 'current'],
+          // window: ['unbounded', 'current'],
         },
       },
     },
+  },
+  {
     $match: {
       rowNumber: { $lte: 50 },
     },
@@ -27,10 +29,14 @@ const aggregator = [
 // Create an aggregator based on the aggregator variable
 // return the result
 fetchData.mongoFetch = async function (serviceName) {
-  const testModel = HealthModelFunc(serviceName);
-  let result = await testModel.aggregate(aggregator);
-  result = [{ [serviceName]: result }];
-  return result;
+  try {
+    const testModel = HealthModelFunc(serviceName);
+    let result = await testModel.aggregate(aggregator);
+    result = [{ [serviceName]: result }];
+    return result;
+  } catch (error) {
+    console.log('Aggregation error in mongoFetch(): ', error);
+  }
 };
 
 fetchData.postgresFetch = async function (serviceName, pool) {
@@ -53,12 +59,11 @@ fetchData.postgresFetch = async function (serviceName, pool) {
   ;`;
 
   let result = await pool.query(query);
-  console.log("result.rows in dataHelpers postgresFetch:", JSON.stringify(result.rows));
+  console.log('result.rows in dataHelpers postgresFetch:', JSON.stringify(result.rows));
   result = result.rows;
   result = [{ [serviceName]: result }];
-  console.log("result with servicename in dataHelpers postgresFetch:", JSON.stringify(result));
+  console.log('result with servicename in dataHelpers postgresFetch:', JSON.stringify(result));
   return result;
 };
 
 export { fetchData };
-
