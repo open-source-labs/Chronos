@@ -42,38 +42,34 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
 
     Promise.all(
       serv.map((service: string) =>{
-        // if(service !== 'kafkametrics'){
+
           
         return new Promise((resolve, reject) => {
-       //   console.log('serv in healthcontext:', JSON.stringify(serv));
+ 
           ipcRenderer.send('healthRequest', service);
           ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
-
+            console.log("data in healthcontext:", JSON.stringify(data));
             let result: any[];
-            if (tryParseJSON(data)) {
-        //      console.log("data in HealthContext:", data);
+            if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
               result = JSON.parse(data);
               if (result && result.length && service === Object.keys(result[0])[0]) {
-       //         console.log("in the resolve!!");
+
                 resolve(result[0]);
               }
             }
+           
           
           });
           
         }).then((dt: any) => {
         
             temp.push(dt);
-          //  console.log("temp is:", JSON.stringify(temp));
           
           if (checkServicesComplete(temp, serv)) {
             
             setServices(serv);
             let transformedData : any = {};
             transformedData = transformData(temp);
-          //  console.log("temp", temp);
-          //  console.log("serv", serv);
-          //  console.log('transformedData:', JSON.stringify(transformedData));
             setHealthData(transformedData);
 
           }
