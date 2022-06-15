@@ -113,4 +113,11 @@ export function getTime(timeList, currService, metric, category) {
     }
   });
   return res;
-}
+};
+export const useIsMount = () => {
+  const isMountRef = useRef(true);
+  useEffect(() => {
+    isMountRef.current = false;
+  }, []);
+  return isMountRef.current;
+};

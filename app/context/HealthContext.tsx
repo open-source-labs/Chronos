@@ -21,6 +21,7 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
 
   function tryParseJSON(jsonString: any) {
     try {
+      console.log("jsonString in HealthContext:", jsonString);
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {
         return o;
