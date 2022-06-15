@@ -66,7 +66,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    console.log("serviceArray in GraphsContainer:", serviceArray);
+
 
     if (live) {
       setIntervalID(
@@ -172,7 +172,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             Docker
           </button>
         )}
-        {/* <button
+        <button
           id="communication-button"
           className={chart === 'communications' ? 'selected' : undefined}
           onClick={() => {
@@ -183,7 +183,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           key = '3'
         >
           Communication
-        </button> */}
+        </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
