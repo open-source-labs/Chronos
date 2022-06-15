@@ -18,8 +18,6 @@ export const HealthContext = React.createContext<any>(null);
 const HealthContextProvider: React.FC = React.memo(({ children }) => {
   const [healthData, setHealthData] = useState<any>({"healthDataList":[], "healthTimeList":[]});
   const [services, setServices] = useState<Array<string>>([]);
-  // const [datalist, setDataList] = useState<Array<any>>([]);
-  // const [timelist, setTimeList] = useState<Array<any>>([]);
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -36,7 +34,7 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
   }
 
   const fetchHealthData = useCallback(serv => {
-    //setServices(serv);
+    
     ipcRenderer.removeAllListeners('healthResponse');
     
     let temp: any[] = [];
@@ -63,10 +61,10 @@ const HealthContextProvider: React.FC = React.memo(({ children }) => {
           });
           
         }).then((dt: any) => {
-          if(service !== 'kafkametrics'){
+        
             temp.push(dt);
           //  console.log("temp is:", JSON.stringify(temp));
-          }
+          
           if (checkServicesComplete(temp, serv)) {
             
             setServices(serv);

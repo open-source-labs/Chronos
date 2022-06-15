@@ -19,7 +19,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
 
   function tryParseJSON(jsonString: any) {
     try {
-     // console.log("jsonString at EventContext:", jsonString);
+     console.log("jsonString at EventContext:", jsonString);
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {
         return true;
@@ -30,8 +30,8 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  const fetchEventData = useCallback((serv) => {
-    if(serv === 'kafkametrics'){
+  const fetchEventData = useCallback(() => {
+    // if(serv === 'kafkametrics'){
      // console.log("in fetchEventData in EventContext!!");
       ipcRenderer.removeAllListeners('kafkaResponse');
       ipcRenderer.send('kafkaRequest');
@@ -49,7 +49,7 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
 
       });
 
-    }
+    // }
 
     
   }, []);

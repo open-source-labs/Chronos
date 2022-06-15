@@ -1,4 +1,4 @@
-hostPort: 9000
+hostPort: localhost:9000
 lowercaseOutputName: true
 rules:
 - pattern: kafka.server<type=ReplicaManager, name=UnderReplicatedPartitions><>Value

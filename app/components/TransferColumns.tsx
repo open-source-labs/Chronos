@@ -135,13 +135,18 @@ const TransferColumns = React.memo(() => {
       
     }
     else{
+      console.log("healthData in else:", healthDataList.length);
+      console.log("eventData in else:", eventDataList.length);
       if(healthDataList && healthDataList.length >0 && eventDataList && eventDataList.length >0){
+        console.log("eventDataList:", eventDataList.length);
+        console.log("healthDataList", healthDataList.length);
         setMetricsPool(getMetrics('event',eventDataList).concat(getMetrics('health',healthDataList)));
       }
-      else{
+      else if(healthMetricsReady && eventMetricsReady){
         console.log("set concat metrics:", JSON.stringify(eventMetrics.concat(healthMetrics)));
         setMetricsPool(eventMetrics.concat(healthMetrics));
       }
+      console.log("here");
       
      
     }
