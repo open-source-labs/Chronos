@@ -5,6 +5,9 @@ const CommunicationModel = require('../models/CommunicationModel');
 const ServicesModel = require('../models/ServicesModel');
 const HealthModelFunc = require('../models/HealthModel');
 const ContainerInfoFunc = require('../models/ContainerInfo');
+const KafkaModel = require('../models/KafkaModel');
+const { kafkaFetch } = require('./kafkaHelpers.js');
+const { collectHealthData } = require('./healthHelpers.js');
 require('../models/ContainerInfo');
 
 // Handle deprecation warnings
@@ -104,110 +107,17 @@ chronos.communications = ({ microservice, slack, email }) => {
  * @param {number} interval Interval for continuous data collection
  */
 chronos.health = ({ microservice, interval }) => {
-  let cpuspeed;
-  let cputemp;
-  let cpuloadpercent;
-  let totalmemory;
-  let freememory;
-  let usedmemory;
-  let activememory;
-  let latency;
-  let totalprocesses;
-  let blockedprocesses;
-  let runningprocesses;
-  let sleepingprocesses;
-
-  // Collect data at every interval
   setInterval(() => {
-    si.cpuCurrentspeed()
-      .then(data => {
-        cpuspeed = data.avg;
+    collectHealthData()
+      .then(healthMetrics => {
+        console.log('HEALTH METRICS: ', healthMetrics);
+        const HealthModel = HealthModelFunc(`${microservice}`);
+        return HealthModel.insertMany(healthMetrics);
       })
-      .catch(err => {
-        if (err) {
-          throw err;
-        }
-      });
-
-    si.cpuTemperature()
-      .then(data => {
-        cputemp = data.main;
-      })
-      .catch(err => {
-        if (err) {
-          throw err;
-        }
-      });
-
-    si.currentLoad()
-      .then(data => {
-        cpuloadpercent = data.currentload;
-      })
-      .catch(err => {
-        throw err;
-      });
-
-    si.mem()
-      .then(data => {
-        totalmemory = data.total;
-        freememory = data.free;
-        usedmemory = data.used;
-        activememory = data.active;
-      })
-      .catch(err => {
-        if (err) {
-          throw err;
-        }
-      });
-
-    si.processes()
-      .then(data => {
-        totalprocesses = data.all;
-        blockedprocesses = data.blocked;
-        runningprocesses = data.running;
-        sleepingprocesses = data.sleeping;
-      })
-      .catch(err => {
-        if (err) {
-          throw err;
-        }
-      });
-
-    si.inetLatency()
-      .then(data => {
-        latency = data;
-      })
-      .catch(err => {
-        if (err) {
-          throw err;
-        }
-      });
-
-    // Create collection using name of microservice
-    const HealthModel = HealthModelFunc(`${microservice}`);
-
-    // Save new health document
-    const health = new HealthModel({
-      cpuspeed,
-      cputemp,
-      cpuloadpercent,
-      totalmemory,
-      freememory,
-      usedmemory,
-      activememory,
-      totalprocesses,
-      runningprocesses,
-      blockedprocesses,
-      sleepingprocesses,
-      latency,
-    });
-
-    health
-      .save()
       .then(() => {
-        console.log('Health data recorded');
+        console.log('Health data recorded in MongoDB');
       })
-      .catch(err => console.log('Error saving health data: ', err.message));
+      .catch(err => console.log('Error inserting health documents: ', err));
   }, interval);
 };
 
@@ -302,13 +212,35 @@ chronos.docker = ({ microservice, interval }) => {
     });
 };
 
-// // grabs container data for multiple containers info - TBD
-// chronos.dockerInfo = ({ microservice, interval }) => {
-//   si.dockerInfo()
-//     .then(function (data) {
-//       console.log('data from container info', data);
-//     })
-//     .catch(err => console.log('Error saving health data: ', err.message));
-// };
+/*
+ This function takes as a parameter the promise returned from the kafkaFetch().
+It then takes the returned array of metrics, turns them into documents based on
+KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
+*/
+chronos.kafka = function (userConfig) {
+  // ensure that kafkametrics exists in the services table
+  const service = new ServicesModel({ service: 'kafkametrics', interval: userConfig.interval });
+
+  service
+    .save()
+    .then(() => console.log(`Adding "kafkametrics" to the services table`))
+    .catch(err => console.log(`Error saving "kafkametrics" to the services table: `, err.message));
+
+  // fetch the data from Kafka with kafkaFetch()
+  // then take turn each result in the returned array into a kafkaModel doc
+  // insertMany into the the KafkaModel
+  setInterval(() => {
+    kafkaFetch(userConfig)
+      .then(parsedArray => {
+        const documents = [];
+        for (const metric of parsedArray) {
+          documents.push(KafkaModel(metric));
+        }
+        return KafkaModel.insertMany(documents);
+      })
+      .then(() => console.log('Kafka metrics recorded in MongoDB'))
+      .catch(err => console.log('Error inserting kafka documents in MongoDB: ', err));
+  }, userConfig.interval);
+};
 
 module.exports = chronos;
