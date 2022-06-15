@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-//import EventContext, EventChart
+import { useParams } from 'react-router-dom';
 import { EventContext } from '../context/EventContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
@@ -21,10 +21,12 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const { selectedMetrics } = useContext(QueryContext);
   const eventDataList : any[] = eventData.eventDataList;
   const eventTimeList : any[] = eventData.eventTimeList;
+  const { service } = useParams<any>();
+
 
   useEffect(() => {
     const temp : JSX.Element[] = [];
-
+    console.log("service in event container", service);
     if (eventData && eventDataList.length > 0 && eventTimeList.length >0) {
       // console.log("eventDataList in EventContainer:");
       // console.log(JSON.stringify(eventDataList));
@@ -62,7 +64,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       }); 
       setEventChartsArr(temp);
     }
-  }, [eventData]);
+  }, [eventData, service]);
 
   const getSingleTimeList = (metricName: string) => {
     //[{metric1: [3,6,8...]}, {metric2: [3,6,8...]}]  
@@ -81,7 +83,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     
   };
 
-  return <div>{eventChartsArr}</div>;
+  return <div>{service.includes('kafkametrics')? eventChartsArr : []}</div>;
 });
 
 export default EventContainer;
