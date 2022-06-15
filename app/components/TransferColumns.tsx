@@ -8,7 +8,7 @@ import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
-import { useIsMount } from '../context/helpers';
+
 
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
@@ -80,7 +80,7 @@ const TransferColumns = React.memo(() => {
 
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
-  const isMount = useIsMount();
+
 
   useEffect(()=>{
     if(healthDataList && healthDataList.length >0){
@@ -111,9 +111,7 @@ const TransferColumns = React.memo(() => {
   
 
   useEffect(()=>{
-    // if(isMount){//skip first render
-    //   return;
-    // }
+
     console.log("current service:", service);
     console.log("healthData in else:", healthDataList.length);
     console.log("eventData in else:", eventDataList.length);
@@ -128,7 +126,7 @@ const TransferColumns = React.memo(() => {
       if(eventDataList && eventDataList.length >0){
         setMetricsPool(getMetrics('event',eventDataList));
       }
-      else{
+      else if(eventMetricsReady){
         setMetricsPool(eventMetrics);
       }
       
@@ -141,9 +139,6 @@ const TransferColumns = React.memo(() => {
       }
       else if(healthMetricsReady){
         setMetricsPool(healthMetrics);
-      }
-      else{
-        return;
       }
       
     }
@@ -158,13 +153,10 @@ const TransferColumns = React.memo(() => {
         console.log("set concat metrics:", JSON.stringify(eventMetrics.concat(healthMetrics)));
         setMetricsPool(eventMetrics.concat(healthMetrics));
       }
-      
-      console.log("here");
-      
-     
     }
     
-  },[service, healthMetricsReady, eventMetricsReady])
+  // },[service, healthMetricsReady, eventMetricsReady])
+},[service, eventData, healthData])
 
   const getMetrics = (type, datalist) =>{
     let pool: any[] = [];
@@ -285,7 +277,7 @@ const TransferColumns = React.memo(() => {
         rightColumns={rightTableColumns}
         listStyle={{
           width: 700,
-          height: 700,
+          height: 1000,
         }}
       />
       <Switch
