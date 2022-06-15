@@ -8,6 +8,7 @@ import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
+import { useIsMount } from '../context/helpers';
 
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
@@ -79,6 +80,7 @@ const TransferColumns = React.memo(() => {
 
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
+  const isMount = useIsMount();
 
   useEffect(()=>{
     if(healthDataList && healthDataList.length >0){
@@ -106,10 +108,19 @@ const TransferColumns = React.memo(() => {
 
   },[eventMetricsReady]);
 
+  
+
   useEffect(()=>{
-    console.log("current service:", service)
+    // if(isMount){//skip first render
+    //   return;
+    // }
+    console.log("current service:", service);
+    console.log("healthData in else:", healthDataList.length);
+    console.log("eventData in else:", eventDataList.length);
+    console.log("healthMetricsReady:", healthMetricsReady);
+    console.log("eventMetricsReady:", eventMetricsReady);
     if(service === ''){
-      //pass
+      return;
     }
     else if(service === 'kafkametrics'){
       // console.log("set event metrics:",  JSON.stringify(eventMetrics));
@@ -122,20 +133,22 @@ const TransferColumns = React.memo(() => {
       }
       
     }
-    else if (!service.includes('kafkametrics')){
-      console.log("healthDataList:", JSON.stringify(healthDataList));
+    else if (!service.includes('kafkametrics')){//all health data
+      console.log("healthDataList in elseif:", JSON.stringify(healthDataList));
       // console.log("set health metrics:",  JSON.stringify(healthMetrics));
       if(healthDataList && healthDataList.length >0){
         setMetricsPool(getMetrics('health',healthDataList));
       }
-      else{
+      else if(healthMetricsReady){
         setMetricsPool(healthMetrics);
+      }
+      else{
+        return;
       }
       
     }
     else{
-      console.log("healthData in else:", healthDataList.length);
-      console.log("eventData in else:", eventDataList.length);
+
       if(healthDataList && healthDataList.length >0 && eventDataList && eventDataList.length >0){
         console.log("eventDataList:", eventDataList.length);
         console.log("healthDataList", healthDataList.length);
@@ -145,6 +158,7 @@ const TransferColumns = React.memo(() => {
         console.log("set concat metrics:", JSON.stringify(eventMetrics.concat(healthMetrics)));
         setMetricsPool(eventMetrics.concat(healthMetrics));
       }
+      
       console.log("here");
       
      
