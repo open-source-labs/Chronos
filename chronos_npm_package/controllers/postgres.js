@@ -2,6 +2,8 @@
 const si = require('systeminformation');
 const { Client } = require('pg');
 const alert = require('./alert');
+const { kafkaFetch } = require('./kafkaHelpers');
+const { collectHealthData } = require('./healthHelpers');
 
 let client;
 
@@ -131,6 +133,36 @@ chronos.communications = ({ microservice, slack, email }) => {
   };
 };
 
+// Constructs a parameterized query string for inserting multiple data points into
+// the kafkametrics db based on the number of data points;
+function createQueryString(numRows, serviceName) {
+  let query = `
+    INSERT INTO
+      ${serviceName} (metric, value, category, time)
+    VALUES
+  `;
+  for (let i = 0; i < numRows; i++) {
+    const newRow = `($${4 * i + 1}, $${4 * i + 2}, $${4 * i + 3}, TO_TIMESTAMP($${4 * i + 4}))`;
+    query = query.concat(newRow);
+    if (i !== numRows - 1) query = query.concat(',');
+  }
+  query = query.concat(';');
+  return query;
+}
+
+// Places the values being inserted into postgres into an array that will eventually
+// hydrate the parameterized query
+function createQueryArray(dataPointsArray) {
+  const queryArray = [];
+  for (const element of dataPointsArray) {
+    queryArray.push(element.metric);
+    queryArray.push(element.value);
+    queryArray.push(element.category);
+    queryArray.push(element.time / 1000); // Converts milliseconds to seconds to work with postgres
+  }
+  return queryArray;
+}
+
 /**
  * Read and store microservice health information in postgres database at every interval
  * @param {string} microservice Microservice name
@@ -138,145 +170,33 @@ chronos.communications = ({ microservice, slack, email }) => {
  */
 chronos.health = ({ microservice, interval }) => {
   // Create table for the microservice if it doesn't exist yet
-  client.query(
-    `CREATE TABLE IF NOT EXISTS ${microservice} (
-      _id SERIAL PRIMARY KEY NOT NULL,
-      cpuspeed FLOAT DEFAULT 0.0,
-      cputemp FLOAT DEFAULT 0.0,
-      activememory REAL DEFAULT 0,
-      freememory REAL DEFAULT 0,
-      totalmemory REAL DEFAULT 0,
-      usedmemory REAL DEFAULT 0,
-      latency FLOAT DEFAULT 0,
-      blockedprocesses REAL DEFAULT 0,
-      sleepingprocesses REAL DEFAULT 0,
-      runningprocesses REAL DEFAULT 0,
-      totalprocesses REAL DEFAULT 0,
-      cpuloadpercent FLOAT DEFAULT 0.00,
+  // create kafkametrics table if it does not exist
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS ${microservice} (
+      _id SERIAL PRIMARY KEY,
+      metric VARCHAR(200),
+      value FLOAT DEFAULT 0.0,
+      category VARCHAR(200) DEFAULT 'event',
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )`,
-    (err, results) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
+    );`;
 
-  // Initialize variables for database storage
-  let cpuspeed,
-    cputemp,
-    cpuloadpercent,
-    totalMemory,
-    freeMemory,
-    usedMemory,
-    activeMemory,
-    latency,
-    totalprocesses,
-    blockedprocesses,
-    runningprocesses,
-    sleepingprocesses;
+  client
+    .query(createTableQuery)
+    .catch(err => console.log('Error creating kafkametrics table in PostgreSQL:\n', err));
 
   // Save data point at every interval (ms)
   setInterval(() => {
-    // Save cpu speed
-    si.cpuCurrentspeed()
+    collectHealthData()
       .then(data => {
-        cpuspeed = data.avg;
+        const numRows = data.length;
+        const queryString = createQueryString(numRows, microservice);
+        const queryArray = createQueryArray(data);
+        // console.log('POSTGRES QUERY STRING: ', queryString);
+        // console.log('POSTGRES QUERY ARRAY', queryArray);
+        return client.query(queryString, queryArray);
       })
-      .catch(err => {
-        throw err;
-      });
-
-    // Save cpu temp
-    si.cpuTemperature()
-      .then(data => {
-        cputemp = data.main;
-      })
-      .catch(err => {
-        throw err;
-      });
-
-    // Save cpu load percent
-    si.currentLoad()
-      .then(data => {
-        cpuloadpercent = data.currentload;
-      })
-      .catch(err => {
-        throw err;
-      });
-
-    // Save memory data
-    si.mem()
-      .then(data => {
-        totalMemory = data.total;
-        freeMemory = data.free;
-        usedMemory = data.used;
-        activeMemory = data.active;
-      })
-      .catch(err => {
-        throw err;
-      });
-
-    // Save process data
-    si.processes()
-      .then(data => {
-        totalprocesses = data.all;
-        blockedprocesses = data.blocked;
-        runningprocesses = data.running;
-        sleepingprocesses = data.sleeping;
-      })
-      .catch(err => {
-        throw err;
-      });
-
-    // Save latency
-    si.inetLatency()
-      .then(data => {
-        latency = data;
-      })
-      .catch(err => {
-        throw err;
-      });
-
-    const queryString = `INSERT INTO ${microservice}(
-      cpuspeed,
-      cputemp,
-      cpuloadpercent,
-      totalMemory,
-      freeMemory,
-      usedMemory,
-      activeMemory,
-      totalprocesses,
-      runningprocesses,
-      blockedprocesses,
-      sleepingprocesses,
-      latency) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
-
-    const values = [
-      cpuspeed,
-      cputemp,
-      cpuloadpercent,
-      totalMemory,
-      freeMemory,
-      usedMemory,
-      activeMemory,
-      totalprocesses,
-      runningprocesses,
-      blockedprocesses,
-      sleepingprocesses,
-      latency,
-    ];
-
-    // Only save entries if all values are not undefined
-    if (values.every(value => value !== undefined)) {
-      client.query(queryString, values, (err, results) => {
-        if (err) {
-          throw err;
-        }
-        console.log('Saved to PostgreSQL!');
-      });
-    }
+      .then(() => console.log('Health data recorded in PostgreSQL'))
+      .catch(err => console.log('Error inserting health data into PostgreSQL:\n', err));
   }, interval);
 };
 
@@ -375,6 +295,38 @@ chronos.docker = function ({ microservice, interval }) {
     ['catch'](function (err) {
       throw err;
     });
+};
+
+chronos.kafka = function (userConfig) {
+  // Ensure that kafkametrics are a part of the services table
+  chronos.services({ microservice: 'kafkametrics', interval: userConfig.interval });
+  // create kafkametrics table if it does not exist
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS kafkametrics (
+      _id SERIAL PRIMARY KEY,
+      metric VARCHAR(200),
+      value FLOAT DEFAULT 0.0,
+      category VARCHAR(200) DEFAULT 'event',
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+  client
+    .query(createTableQuery)
+    .catch(err => console.log('Error creating kafkametrics table in PostgreSQL:\n', err));
+
+  setInterval(() => {
+    kafkaFetch(userConfig)
+      .then(parsedArray => {
+        const numDataPoints = parsedArray.length;
+        const queryString = createQueryString(numDataPoints, 'kafkametrics');
+        const queryArray = createQueryArray(parsedArray);
+        // console.log('POSTGRES QUERY STRING: ', queryString);
+        // console.log('POSTGRES QUERY ARRAY', queryArray);
+        return client.query(queryString, queryArray);
+      })
+      .then(() => console.log('Kafka metrics recorded in PostgreSQL'))
+      .catch(err => console.log('Error inserting kafka metrics into PostgreSQL:\n', err));
+  }, userConfig.interval);
 };
 
 module.exports = chronos;
