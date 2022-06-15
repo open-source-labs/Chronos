@@ -66,21 +66,27 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    console.log("serviceArray in GraphsContainer:", serviceArray);
-
+    const healthServiceArray = serviceArray.filter((value : string) => value !== 'kafkametrics');
+    // console.log("service array:", JSON.stringify(serviceArray));
+    // console.log("health service array:", JSON.stringify(healthServiceArray));
     if (live) {
       setIntervalID(
         setInterval(() => {
           fetchCommsData(app, live);
-          fetchHealthData(serviceArray);
-          fetchEventData(serviceArray[0]);
+          fetchHealthData(healthServiceArray);
+          if(service.includes('kafkametrics')){
+            fetchEventData('kafkametrics');
+          }
+          
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchCommsData(app, live);
-      fetchHealthData(serviceArray);
-      fetchEventData(serviceArray[0]);
+      fetchHealthData(healthServiceArray);
+      if(service.includes('kafkametrics')){
+        fetchEventData();
+      }
     }
 
     return () => {
@@ -172,7 +178,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             Docker
           </button>
         )}
-        {/* <button
+        <button
           id="communication-button"
           className={chart === 'communications' ? 'selected' : undefined}
           onClick={() => {
@@ -183,7 +189,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           key = '3'
         >
           Communication
-        </button> */}
+        </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">

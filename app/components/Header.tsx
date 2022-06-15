@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
       <h1 className="microserviceTitle">{app}</h1>
 
       {selectModal && <div className="filter" onClick={dropdownClickHandler}></div>}
-
+      <div><span>select services to display</span></div>
       <div className={selectModal ? 'dropdown active' : 'dropdown'}>
         <div
           className={selectModal ? 'select disabled' : 'select'}
