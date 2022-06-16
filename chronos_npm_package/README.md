@@ -79,7 +79,7 @@ Signing Up
 Using the Query Tool
 <br>
 <br>
-<a href="#"><img src="./app/assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="500" /></a></a>
+<a href="#"><img src="./app/assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="475" /></a></a>
 
 #
 ###### Return to [Top](#chronos)
