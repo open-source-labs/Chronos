@@ -22,14 +22,14 @@ On each microservice in example/microserivces, perform the following steps
     - ** Reverse Proxy .env file will only require CHRONOS_URI
 
 ```
-Microservice_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
+<Microservice_URI> = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
 
 CHRONOS_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
 ```
   - In each Microservice Mode.js file import and set the Microservice_URI
 
 ```
-const myURI = process.env.Microservice_URI;
+const myURI = process.env.<Microservice_URI>;
 
 ```
 
@@ -55,7 +55,7 @@ chronos.use({
   - Head over to localhost:3000 to view reverse proxy acting as the frontend of this microservice example
   - Start adding data!
   - Run `npm install` in the Chronos root folder.
-  - Run `npm run both` to start Electron app
+  - Then, run `npm run both` in the Chronos root folder to start the Electron app
     - Add a new application in Chronos app dashboard.
     - The URI should be your CHRONOS_URI
 

@@ -79,7 +79,7 @@ Signing Up
 Using the Query Tool
 <br>
 <br>
-<a href="#"><img src="./app/assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="500" /></a></a>
+<a href="#"><img src="./app/assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="475" /></a></a>
 
 #
 ###### Return to [Top](#chronos)
@@ -89,7 +89,7 @@ Using the Query Tool
 This is for the latest Chronos version **5.2 release and later**.
 
 - Stable release: 7.0.0
-- LTS release: 6.1.0
+- LTS release: 7.0.0
 
 ### Pre-Installation
 Make sure you're running version 14.16.1 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 

@@ -15,9 +15,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./BookController.js');
 
-// UNCOMMENT THE LINE BELOW IF YOU HAVE A SPECIFIED 'jmxuri' PROPERTY IN
+// UNCOMMENT THE LINE BELOW IF YOU HAVE A SPECIFIED A 'jmxuri' PROPERTY IN
 // YOUR 'chronos-config.js' FILE
-// hronos.kafka();
+// chronos.kafka();
 
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 // app.use('/', cmd.microCom('books', 'mongo', process.env.BOOK_URI, 'yes'));
