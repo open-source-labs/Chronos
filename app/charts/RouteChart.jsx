@@ -11,7 +11,6 @@ import { CommsContext } from '../context/CommsContext';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
-
   const resObj = {};
   const dataId = '_id';
 
@@ -26,7 +25,6 @@ const RouteChart = React.memo(() => {
       if (new Date(a.time) < new Date(b.time)) return -1;
       return 0;
     });
-
     for (let i = 0; i < communicationsData.length; i += 1) {
       const element = communicationsData[i];
       if (!resObj[element.correlatingid]) resObj[element.correlatingid] = [];

@@ -1,6 +1,6 @@
 ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
 ## Microservices Architecture
-Microservices architecture for testing [Chronos](https://github.com/oslabs-beta/Chronos), a microservice communication and health visualizer.
+Microservices architecture for testing [Chronos](https://github.com/open-source-labs/Chronos), a microservice communication and health visualizer.
 
 ## Purpose and Design - with docker implemented to avoid having to run multiple services in multiple terminals
 This sample microservices architecture allows developers to explore the functionality of Chronos but with one docker compose command. This consists of four microservices, which are contained within the directories:

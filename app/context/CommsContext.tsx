@@ -33,13 +33,13 @@ const CommsContextProvider: React.SFC = React.memo(({ children }) => {
   }
 
   const fetchCommsData = useCallback((app: string, live: boolean) => {
+
     if (app !== currentApp || live) {
       ipcRenderer.removeAllListeners('commsResponse');
       setCurrentApp(app);
-      ipcRenderer.send('commsRequest', app);
+      ipcRenderer.send('commsRequest');
       ipcRenderer.on('commsResponse', (event: Electron.Event, data: any) => {
         let result: any;
-
         if (tryParseJSON(data)) result = JSON.parse(data);
         setCommsData(result);
       });

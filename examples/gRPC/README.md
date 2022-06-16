@@ -1,6 +1,6 @@
 ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
 ## Microservices Architecture
-Microservices architecture for testing [Chronos](https://github.com/oslabs-beta/Chronos), a microservice communication and health visualizer.
+Microservices architecture for testing [Chronos](https://github.com/open-source-labs/Chronos), a microservice communication and health visualizer.
 
 ## Purpose and Design
 This sample microservices architecture allows developers to explore the functionality of Chronos with gRPC calls. It consists of 3 microservices, which are contained within the directories:
@@ -36,7 +36,7 @@ const myURI = process.env.BOOK_URI;
 
 ```
 require('dotenv').config();
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 
 chronos.use({
   microservice: 'name of microservice e.g books or orders',

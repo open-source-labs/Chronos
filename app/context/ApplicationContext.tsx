@@ -37,7 +37,6 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       let result: any;
       if (tryParseJSON(data)) result = JSON.parse(data);
-
       setServicesData(result);
       ipcRenderer.removeAllListeners('servicesResponse');
     });

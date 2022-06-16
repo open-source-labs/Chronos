@@ -6,6 +6,7 @@ const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js');
 const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js');
 const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js');
 const { validateInput, addNotifications } = require('./controllers/helpers');
+const { initialFetch } = require('./controllers/kafkaHelpers');
 
 let userConfig = {};
 const chronos = {};
@@ -101,6 +102,35 @@ chronos.track = () => {
   }
   return null;
 };
+
+/**
+ * **********************************************
+ *              COLLECT KAFKA METRICS
+ * Only supports MongoDB and PostgreSQL for now!
+ * **********************************************
+ */
+
+chronos.kafka = function () {
+  const { database, jmxuri } = userConfig;
+  if (jmxuri === undefined) {
+    console.log('No specified URI for a JMX Exporter');
+    return;
+  }
+
+  // Ensures that the provided URI returns correctly formatted data.
+  initialFetch(jmxuri);
+
+  if (database.type === 'MongoDB') {
+    mongo.connect(userConfig);
+    mongo.kafka(userConfig);
+  }
+
+  if (database.type === 'PostgreSQL') {
+    postgres.connect(userConfig);
+    postgres.kafka(userConfig);
+  }
+};
+
 /**
  * Wraps the gRPC server object to automatically write logs to user configed DB
  *

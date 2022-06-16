@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const { Schema } = mongoose;
 
 const DockerSchema = new Schema({
@@ -52,7 +53,7 @@ const DockerSchema = new Schema({
   },
 });
 
-
-const DockerModelFunc = (serviceName: any) => mongoose.model<any>(`${serviceName}-containerinfos`, DockerSchema);
+const DockerModelFunc = (serviceName: any) =>
+  mongoose.model<any>(`${serviceName}-containerinfos`, DockerSchema);
 
 export default DockerModelFunc;
