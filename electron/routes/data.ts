@@ -19,7 +19,6 @@ const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
 
 require('dotenv').config();
-console.log('test console log work');
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -45,12 +44,9 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     // We get index from sidebar container: which is the mapplication (DEMO)
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-    // console.log('electron/routes/data.ts, ipcMain.on(connect): 2 pre-connect');
-
     // Connect to the proper database
     if (databaseType === 'MongoDB') await connectMongo(index, URI);
     if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
-    // console.log('electron/routes/data.ts, ipcMain.on(connect): 3 connected');
 
     // Currently set to a global variable
     currentDatabaseType = databaseType;
@@ -113,13 +109,13 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
       result = await pool.query(getCommunications);
       result = result.rows;
     }
-    console.log('result from database query in data.ts: ', result)
+
     // Async event emitter - send response
     message.sender.send('commsResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
     console.log('Error in "commsRequest" event: ', error);
-    // message.sender.send('commsResponse', {}); //comment back in later
+
   }
 });
 
@@ -142,13 +138,9 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
       result = await postgresFetch(service, pool);
-      console.log("result-health in data.ts:", JSON.stringify(result));
     }
 
     // Async event emitter - send response'
-
-    // console.log(result[0], service);
-    // console.log(result, JSON.stringify(result));
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
@@ -223,7 +215,6 @@ function extractWord(str: string) {
 ipcMain.on('kafkaRequest', async (message) => {
   try {
     let result: any;
-    console.log("in kafkaRequest electron!!")
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       result = await mongoFetch('kafkametrics');
@@ -233,11 +224,6 @@ ipcMain.on('kafkaRequest', async (message) => {
       // Get last 50 documents. If less than 50 get all
     result = await postgresFetch('kafkametrics', pool);
     }
-
-    // Async event emitter - send response'
-
-    // console.log(result[0], service);
-    // console.log(result, JSON.stringify(result));
 
     message.sender.send('kafkaResponse', JSON.stringify(result));
   } catch (error) {
