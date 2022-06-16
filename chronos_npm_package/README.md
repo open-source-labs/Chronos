@@ -200,8 +200,6 @@ Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent wit
 To start, add the property `jmxuri` to the object in `chronos-config.js`. Your file should look similar to this:
 
 ```js
-// A sample `chronos-config.js` file
-
 const chronos = require('chronos-tracker-7');
 
 chronos.use({
