@@ -7,6 +7,8 @@ import CommsContextProvider from '../context/CommsContext';
 import ApplicationContextProvider from '../context/ApplicationContext';
 import DashboardContextProvider from '../context/DashboardContext';
 import DockerContextProvider from '../context/DockerContext';
+import EventContextProvider from '../context/EventContext';
+import QueryContextProvider from '../context/QueryContext';
 import '../stylesheets/Dashboard.scss';
 
 const DashboardContainer = React.memo(() => (
@@ -17,8 +19,12 @@ const DashboardContainer = React.memo(() => (
           <CommsContextProvider>
             <DockerContextProvider>
               <HealthContextProvider>
-                <SidebarContainer />
-                <MainContainer />
+                <EventContextProvider>
+                  <QueryContextProvider>
+                    <SidebarContainer />
+                    <MainContainer />
+                  </QueryContextProvider>
+                </EventContextProvider>
               </HealthContextProvider>
             </DockerContextProvider>
           </CommsContextProvider>

@@ -1,6 +1,6 @@
 ![Chronos logo](https://raw.githubusercontent.com/Chronos2-0/Chronos/master/app/assets/logo2.png)
 ## Microservices Architecture
-Microservices architecture for testing [Chronos](https://github.com/oslabs-beta/Chronos), a microservice communication and health visualizer.
+Microservices architecture for testing [Chronos](https://github.com/open-source-labs/Chronos), a microservice communication and health visualizer.
 
 ## Purpose and Design
 This sample microservices architecture allows developers to explore the functionality of Chronos. It consists of four microservices, which are contained within the directories:
@@ -18,18 +18,18 @@ Follow **'main'** branch READ>ME steps: Pre-Installation, Install Dependencies b
 On each microservice in example/microserivces, perform the following steps
   - *Do this for microservices: books, orders, & reverse proxy
   - Install dotenv `npm install dotenv`
-  - Create a .env file across each ,microservices and input your own Mongodb Atlast URI for both Microservice_URI and CHRONOS_URI
+  - Create a .env file across each ,microservices and input your own Mongodb Atlast URI for both Microservice_URI and CHRONOS_URI (**NOTE:** The Microservice_URI should be BOOK_URI, CUSTOMER_URI, and ORDER_URI for the books, customers, and orders microservices respectively);
     - ** Reverse Proxy .env file will only require CHRONOS_URI
 
 ```
-BOOK_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
+<Microservice_URI> = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
 
 CHRONOS_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
 ```
   - In each Microservice Mode.js file import and set the Microservice_URI
 
 ```
-const myURI = process.env.BOOK_URI;
+const myURI = process.env.<Microservice_URI>;
 
 ```
 
@@ -37,7 +37,7 @@ const myURI = process.env.BOOK_URI;
 
 ```
 require('dotenv').config();
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 
 chronos.use({
   microservice: 'name of microservice e.g books or orders',
@@ -54,7 +54,8 @@ chronos.use({
     - To do so, within each microservice directory, install all dependencies using the `npm install`
   - Head over to localhost:3000 to view reverse proxy acting as the frontend of this microservice example
   - Start adding data!
-  - Run `npm run both` to start Electron app
+  - Run `npm install` in the Chronos root folder.
+  - Then, run `npm run both` in the Chronos root folder to start the Electron app
     - Add a new application in Chronos app dashboard.
     - The URI should be your CHRONOS_URI
 

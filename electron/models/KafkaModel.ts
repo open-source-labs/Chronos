@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const HealthSchema = new Schema({
+const KafkaSchema = new Schema({
   time: {
     type: Date,
     default: Date.now(),
@@ -19,6 +19,4 @@ const HealthSchema = new Schema({
   },
 });
 
-const HealthModelFunc = (serviceName: any) => mongoose.model<any>(serviceName, HealthSchema);
-
-export default HealthModelFunc;
+export default mongoose.model('kafkametrics', KafkaSchema);

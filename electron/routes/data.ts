@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
 import { ipcMain } from 'electron';
 import fs from 'fs';
@@ -8,9 +9,16 @@ import CommunicationModel from '../models/CommunicationsModel';
 import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
+import KafkaModel from '../models/KafkaModel';
+import fetch, { FetchError } from 'electron-fetch';
+import { lightWhite } from 'material-ui/styles/colors';
+//import { postgresFetch, mongoFetch }  from './dataHelpers';
+import { fetchData } from './dataHelpers';
+
+const mongoFetch = fetchData.mongoFetch;
+const postgresFetch = fetchData.postgresFetch;
 
 require('dotenv').config();
-
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -36,13 +44,9 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
     // We get index from sidebar container: which is the mapplication (DEMO)
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-    // console.log('electron/routes/data.ts, ipcMain.on(connect): 2 pre-connect');
-
     // Connect to the proper database
     if (databaseType === 'MongoDB') await connectMongo(index, URI);
     if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
-
-    // console.log('electron/routes/data.ts, ipcMain.on(connect): 3 connected');
 
     // Currently set to a global variable
     currentDatabaseType = databaseType;
@@ -110,8 +114,8 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
     message.sender.send('commsResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "commeRequest" event', message);
-    message.sender.send('commsResponse', {});
+    console.log('Error in "commsRequest" event: ', error);
+
   }
 });
 
@@ -121,68 +125,22 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
+
     let result: any;
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get document count
-      let num = await HealthModelFunc(service).countDocuments({});
-      // Get last 50 documents. If less than 50 documents, get all
-      num = Math.max(num, 10);
-      result = await HealthModelFunc(service)
-        .find(
-          {},
-          {
-            cpuspeed: 1,
-            cputemp: 1,
-            cpuloadpercent: 1,
-            totalmemory: 1,
-            freememory: 1,
-            usedmemory: 1,
-            activememory: 1,
-            totalprocesses: 1,
-            runningprocesses: 1,
-            blockedprocesses: 1,
-            sleepingprocesses: 1,
-            latency: 1,
-            time: 1,
-            __v: 1,
-            service,
-          }
-        )
-        .skip(num - 50);
+      result = await mongoFetch(service);
     }
-
-    /**
-     * `
-          SELECT *, 'customers' as service FROM customers
-          ORDER BY _id DESC
-          LIMIT 50
-          `;
-     * 
-     */
+    
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
-      const query = `
-          SELECT * FROM ${service}
-          ORDER BY _id DESC
-          LIMIT 50
-          `;
-      // Execute query
-      result = await pool.query(query);
-      result = result.rows.reverse();
-      result = result.map(res => ({
-        ...res,
-        service,
-      }));
+      result = await postgresFetch(service, pool);
     }
 
     // Async event emitter - send response'
-
-    // console.log(result[0], service);
-    // console.log(result, JSON.stringify(result));
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
@@ -231,3 +189,52 @@ ipcMain.on('dockerRequest', async (message, service) => {
     message.sender.send('dockerResponse', {});
   }
 });
+
+/**
+ * @event   eventRequest/EventResponse
+ * @desc    
+ */
+
+
+// start fetch
+function extractWord(str: string) {
+  const res :any[] = [];
+  const arr = str.split('\n'); // `/\n/`
+  for (const element of arr) {
+    if (element && element.length !== 0 && element[0] !== '#' && element.substring(0, 3) !== 'jmx' && element.substring(0, 4) !== '\'jmx') {
+      const metric = element.split(' ')[0];
+      const metricValue = Number(element.split(' ')[1]);
+      const time = Date.now();
+      const temp = {'metric': metric, 'category': 'Event', 'value': metricValue, 'time': time };
+      res.push(temp);
+    }
+  }
+  return res;
+}
+
+ipcMain.on('kafkaRequest', async (message) => {
+  try {
+    let result: any;
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      result = await mongoFetch('kafkametrics');
+    }
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get last 50 documents. If less than 50 get all
+    result = await postgresFetch('kafkametrics', pool);
+    }
+
+    message.sender.send('kafkaResponse', JSON.stringify(result));
+  } catch (error) {
+    // Catch errors
+    console.log('Error in "kakfaRequest" event', message);
+    message.sender.send('kafkaResponse', {});
+  }
+
+  
+});
+
+
+
+// end fetch

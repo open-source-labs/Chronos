@@ -1,6 +1,7 @@
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const ANTDCSSFILEPATH = path.resolve(__dirname, './node_modules/antd/dist/antd.less');
 module.exports = {
   entry: './app/index.tsx',
   output: {
@@ -22,14 +23,39 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.jsx?/,
-        use: 'babel-loader',
+        test: /\.js$|jsx/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: [['import', { libraryName: 'antd', style: 'css' }]],
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
         test: /\.s?css$/,
+        issuer: {
+          exclude: /\.less$/,
+        },
         use: ['style-loader', 'css-loader', 'sass-loader'],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.less$/i,
+        include: ANTDCSSFILEPATH,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            },
+          },
+        ],
       },
       {
         test: /\.(jpg|jpeg|png|ttf|svg|gif)$/,

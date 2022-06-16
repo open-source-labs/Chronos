@@ -1,12 +1,12 @@
 # JS Project-Specific #
 #######################
-node_modules
+# node_modules
 dist
 build
 release-builds
 coverage
 __tests__/**/__snapshots__
-# .env
+.env
 users.json
 test_users.json
 
@@ -47,3 +47,4 @@ test_users.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+node_modules
