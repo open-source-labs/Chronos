@@ -61,13 +61,25 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Supports <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
+- Monitor an <a href="#"><img src="./app/assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
+
 #
 ###### Return to [Top](#chronos)
 <br>
 
 ## Demo
-
+<br>
+<br>
+Signing Up
+<br>
+<br>
 <a href="#"><img src="./app/assets/enable_sign_up.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
+<br>
+<br>
+Using the Query Tool
+<br>
+<br>
+<a href="#"><img src="./app/assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="500" /></a></a>
 
 #
 ###### Return to [Top](#chronos)
@@ -76,7 +88,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Installation
 This is for the latest Chronos version **5.2 release and later**.
 
-- Stable release: 6.1.0
+- Stable release: 7.0.0
 - LTS release: 6.1.0
 
 ### Pre-Installation
@@ -126,7 +138,7 @@ const chronos = require('chronos-tracker-7');
 chronos.use({
   microservice: 'payments',
   interval: 5000,
-  dockerized: true,
+  dockerized: true, // <-- The 'dockerized' property is optional
   database: {
     connection: 'REST',
     type: 'MongoDB',
@@ -297,12 +309,12 @@ volumes:
 
 
 
-### Apache Monitoring (Via JMX to Prometheus Exporter)
+### Apache Kafka Monitoring (Via JMX to Prometheus Exporter)
 
 Chronos now offers the ability to monitor an Apache Kafka cluster via JMX to Prometheus Exporter. In order for this feature to work you must be running [JMX to Prometheus
 Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent with your cluster or as a standalone HTTP server. Then, use `chronos-config.js` to specifiy the port exposed for metrics scraping.
 
-To start, add the property `jmxuri` to the object in `chronos-config.js`. Your file should look similar to this:
+To start, add the property `jmxuri` to the object in `chronos-config.js`. Your file should look similar to below. Add this property to `chronos-config.js` in ***ONE AND ONLY ONE** of your microservices:
 
 ```js
 const chronos = require('chronos-tracker-7');
@@ -331,6 +343,8 @@ chronos.kafka()
 ```
 
 in your express server. When viewing your information in the Chronos Electron application the data will be available in the service "kafkametrics"
+
+**NOTE:** We provide a config.yaml file in the Chronos root folder for use with JMX prometheus that provides some useful baseline metrics to monitor.
 
 #
 ###### Return to [Top](#chronos)
@@ -465,7 +479,8 @@ This is the branch that holds the code base for the splash page. Edit the websit
 - <a href="#"><img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
- 
+- <a href="#"><img src="./app/assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/AntDesign.svg" alt="Ant Design" title="Ant Design" align="center" height="30" /></a>
 #
 ###### Return to [Top](#chronos)
 <br>
