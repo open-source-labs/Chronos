@@ -320,8 +320,6 @@ chronos.kafka = function (userConfig) {
         const numDataPoints = parsedArray.length;
         const queryString = createQueryString(numDataPoints, 'kafkametrics');
         const queryArray = createQueryArray(parsedArray);
-        // console.log('POSTGRES QUERY STRING: ', queryString);
-        // console.log('POSTGRES QUERY ARRAY', queryArray);
         return client.query(queryString, queryArray);
       })
       .then(() => console.log('Kafka metrics recorded in PostgreSQL'))

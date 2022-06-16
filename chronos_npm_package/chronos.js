@@ -103,7 +103,7 @@ chronos.track = () => {
   return null;
 };
 
-  /**
+/**
  * **********************************************
  *              COLLECT KAFKA METRICS
  * Only supports MongoDB and PostgreSQL for now!
@@ -112,7 +112,7 @@ chronos.track = () => {
 
 chronos.kafka = function () {
   const { database, jmxuri } = userConfig;
-  if (jmxuri === undefined){
+  if (jmxuri === undefined) {
     console.log('No specified URI for a JMX Exporter');
     return;
   }
