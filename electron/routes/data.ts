@@ -113,13 +113,13 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
       result = await pool.query(getCommunications);
       result = result.rows;
     }
-
+    console.log('result from database query in data.ts: ', result)
     // Async event emitter - send response
     message.sender.send('commsResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "commeRequest" event', message);
-    message.sender.send('commsResponse', {});
+    console.log('Error in "commsRequest" event: ', error);
+    // message.sender.send('commsResponse', {}); //comment back in later
   }
 });
 

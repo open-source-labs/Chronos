@@ -56,12 +56,6 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
                 {service.microservice}
               </div>
             ))}
-            <div
-              className={services.includes('communications') ? 'link selected' : 'link'}
-              onClick={() => setServices(['communications'])}
-            >
-              communications
-            </div>
             <Link id='selectLink'
               className="router link"
               to={services.length > 0 ? `/applications/${app}/${services.join(' ')}` : '#'}
