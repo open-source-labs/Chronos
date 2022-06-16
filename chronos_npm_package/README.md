@@ -3,12 +3,11 @@
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## <div height=22 > What's New? </div>
-- New Features
-  - The ability to monitor an Apache Kafka cluster via the JMX Prometheus Exporter
-  - Added 19 new system-level metrics for monitoring!
-- Overhauled Features
-  - Users can use the new query tool to select the specific metrics that they would 
-    like to monitor
+- Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
+- Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
+- Option to filter by category and individual metric, and flip between services and categories with ease
+- Apache Kafka monitoring capability, all you need to do is run Prometheus JMX exporter on the system your Chronos application is running on. A sample JMX config.yaml file is provided in the Chronos repository for a quick and easy setup, however you are free to configure however you like.
+- Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 ## Features     
 - Distributed tracing enabled across microservices applications
 - Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>

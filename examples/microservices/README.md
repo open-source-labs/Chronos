@@ -37,7 +37,7 @@ const myURI = process.env.BOOK_URI;
 
 ```
 require('dotenv').config();
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 
 chronos.use({
   microservice: 'name of microservice e.g books or orders',

@@ -47,22 +47,13 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## <img src ="./app/assets/fire.png" height=22 > What's New? <img src ="./app/assets/fire.png" height=24>
 
-- New Feature
-  - Chronos now comes in any OS .exe!
-- Overhauled Features
-  - Authentication Enabling with Bcrypt
-  - Stand-up times decreased
-  - Side-by-side Server Comparisons
-  - Color-hashing generates unique colors for each server connection
-  - Improved navigation bar and buttons
-  - Increased overall speed and responsiveness
-- Updated Features
-  - Added React Testing Library
-  - Removed Spectron and Enzyme
-  - Added testing suites for unit, integration, and end-to-end testing
-  - Refactored components for dependency injection
-- Bug Fixes
-  - Authentication now functioning properly
+
+- Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
+- Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
+- Option to filter by category and individual metric, and flip between services and categories with ease
+- Apache Kafka monitoring capability, all you need to do is run Prometheus JMX exporter on the system your Chronos application is running on. A sample JMX config.yaml file is provided in the Chronos repository for a quick and easy setup, however you are free to configure however you like.
+- Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
+
 ## Features 
 
 - Distributed tracing enabled across microservices applications
@@ -120,17 +111,17 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 
 To use Chronos in your existing application, download and install the following in the **root directory** of _each of your microservice applications_:
 ```
-npm install chronos-tracker
+npm install chronos-tracker-7
 ```
 
-### Configure Chronos Tracker
+### Configuring Chronos Tracker
 
 Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
 ```js
 // A sample `chronos-config.js` file
 
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 
 chronos.use({
   microservice: 'payments',
@@ -154,45 +145,31 @@ The `dockerized` property is optional and should be specified as `true` if the s
 The `database` property is required and takes in the following:
 - `connection` should be a string and only supports 'REST' and 'gRPC'
 - `type` should be a string and only supports 'MongoDB' and 'PostgreSQL'.
-- `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation.  
+- `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation.
+We reccommend using dotenv  
 
-_NOTE: A `.env` is recommended._
-
-<!-- - `isDockerized`: Is this microservice running in a Docker container? Enter `yes` or `no`. The current default setting is `no`.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Don't forget to bind mount to Docker socket. -->
-
-The `notifications` property is optional. Jump to the section below, [Notifications](#notifications) to configure <a href="#"><img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /></a> or email <a href="#"><img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /></a> notifications.
-<br>
-<br>
-
-### Initialize Chronos Tracker
-#### Initialize Chronos Tracker for REST
-
-Wherever you create an instance of your server (see example below),
+You will also need to add the following two lines of code to your express server:,
 
 ```js
 // Example for REST
 const express = require('express');
-const app = express());
+const app = express();
 
 ```
 
-you will also need to require in `chronos-tracker` and initialize Chronos, as well as the `./chronos-config` file. You will then need to invoke `chronos.propagate()` to initiate the route tracing, in addition to implementing `chronos.track()` for all endpoints.
+you will also need to require in `chronos-tracker-7` and initialize Chronos, as well as the `./chronos-config` file in addition to implementing `chronos.track()` for all endpoints.
 
 ```js
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 require('./chronos-config'); // Bring in config file
 
 // ...
 
-chronos.propagate();
 app.use('/', chronos.track());
 ```
 
-You should be good to go! The last step, **Docker Configuration**, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
+You should be good to go! The steps below for **Docker Configuration** and **Kafka Configuration**, are **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> or Kafka for your application. See the **Notifications** section below for information on how to uses the notifications propery in `chronos-config.js`.
 
-<br>
 
 
 #### Initialize Chronos Tracker for gRPC
@@ -215,7 +192,7 @@ you will also need to require Chronos-tracker, Chronos-config, and dotenv.config
 
 ```js
 //track health data
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 require('./chronos-config');
 require('dotenv').config(); // set up environment variables in .env
 const BookModel = require('./BookModel');
