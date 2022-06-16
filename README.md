@@ -25,6 +25,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - [Configure Chronos Tracker](#configure-chronos-tracker)
     - [Initialize Chronos Tracker](#initialize-chronos-tracker)
     - [Docker Configuration](#docker-configuration)
+    - [Kafka Configuration](#Apache-Monitoring-(Via-JMX-to-Prometheus-Exporter))
     - [Start Chronos](#start-chronos)
     - [Getting the Executable](#getting-the-chronos-executable)
 - [Notifications](#notifications)
@@ -317,6 +318,47 @@ volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
+
+
+### Apache Monitoring (Via JMX to Prometheus Exporter)
+
+Chronos now offers the ability to monitor an Apache Kafka cluster via JMX to Prometheus Exporter. In order for this feature to work you must be running [JMX to Prometheus
+Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent with your cluster or as a standalone HTTP server. Then, use `chronos-config.js` to specifiy the port exposed for metrics scraping.
+
+To start, add the property `jmxuri` to the object in `chronos-config.js`. Your file should look similar to this:
+
+```js
+const chronos = require('chronos-tracker-7');
+
+chronos.use({
+  microservice: 'payments',
+  interval: 5000,
+  dockerized: true,
+  jmxuri: // your URI here
+  database: {
+    connection: 'REST',
+    type: 'MongoDB',
+    URI: process.env.URI,
+  },
+  notifications: [],
+});
+```
+The `jmxuri` property should be a string whose value is the port specified for scraping when starting the exporter.
+
+Then, in ***ONE AND ONLY ONE** of your microservices, call
+
+```js
+
+chronos.kafka()
+
+```
+
+in your express server. When viewing your information in the Chronos Electron application the data will be available in the service "kafkametrics"
+
+#
+###### Return to [Top](#chronos)
+<br>
+
 ### Start Chronos
 
 Once you have configured and intialized Chronos Tracker, it will automatically record monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning our [GitHub repo](https://github.com/open-source-labs/Chronos), run `npm install` and `npm run both` to start Chronos.
@@ -416,9 +458,6 @@ The `docker` folder includes individual <a href="#"><img src="./app/assets/docke
 Refer to the [README](link) in the `docker` folder for more details.
 
 <br>
-
-### gRPC Branch 
-The **'gRPC'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
 
 ## chronosWebsite  
 This is the branch that holds the code base for the splash page. Edit the website by first running `git clone -b chronosWebsite https://github.com/open-source-labs/Chronos.git .` and then updating the aws S3 bucket with the changes.
