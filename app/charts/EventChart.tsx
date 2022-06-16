@@ -1,6 +1,5 @@
-import { time } from 'd3';
 import moment from 'moment';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
 
@@ -20,11 +19,6 @@ interface SoloStyles {
 
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const { metric, timeList, valueList, sizing, colourGenerator } = props;
-// console.log('in event chart:');
-// console.log('event chart metric:', metric);
- // console.log('event chart timelist',JSON.stringify(timeList))
-//  console.log('event chart valuelist', JSON.stringify(valueList));
-
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
   setInterval(() => {
