@@ -13,7 +13,6 @@ const aggregator = [
       output: {
         rowNumber: {
           $documentNumber: {},
-          // window: ['unbounded', 'current'],
         },
       },
     },

@@ -18,7 +18,6 @@ export const CommsContext = React.createContext<any>(null);
  */
 const CommsContextProvider: React.SFC = React.memo(({ children }) => {
   const [commsData, setCommsData] = useState([]);
-  const [currentApp, setCurrentApp] = useState('');
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -33,24 +32,14 @@ const CommsContextProvider: React.SFC = React.memo(({ children }) => {
   }
 
   const fetchCommsData = useCallback((app: string, live: boolean) => {
-    // console.log("CommsContext app is:", app);
-    console.log("in the fetchCommsData");
-    console.log("CommsContext live is: ", live);
-    console.log("CommsContext current app is: ",  currentApp);
-
-    // if (app !== currentApp || live) {
-      ipcRenderer.removeAllListeners('commsResponse');
-      console.log('current app in commscontext: ', app);
-      setCurrentApp(app);
-      //ipcRenderer.send('commsRequest', app);
-      ipcRenderer.send('commsRequest');
-      ipcRenderer.on('commsResponse', (event: Electron.Event, data: any) => {
-        let result: any;
-// 
-        if (tryParseJSON(data)) result = JSON.parse(data);
-        console.log('result in commscontext fetch: ', result);
-        setCommsData(result);
-      });
+    ipcRenderer.removeAllListeners('commsResponse');
+    setCurrentApp(app);
+    ipcRenderer.send('commsRequest');
+    ipcRenderer.on('commsResponse', (event: Electron.Event, data: any) => {
+      let result: any;
+      if (tryParseJSON(data)) result = JSON.parse(data);
+      setCommsData(result);
+    });
     // }
   }, []);
 
