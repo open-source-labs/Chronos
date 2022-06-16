@@ -8,13 +8,8 @@ const connectMongoose = async (i: number, URI: string) => {
     const db = await mongoose.connect(
       URI,
       { useNewUrlParser: true, useUnifiedTopology: true }
-      // ,
-      // (err: MongoError) => {
-      //   if (err) console.log(err);
-      //   console.log('Connected to Mongo database!');
-      // }
     );
-    // console.log(`${__dirname}/mongo.ts/connectMongoose: connected!`);
+
     return db;
   } catch (err) {
     console.log(`${__dirname}/mongo.ts/connectMongoose: ${err}`);

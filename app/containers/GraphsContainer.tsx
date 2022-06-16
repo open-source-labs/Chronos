@@ -2,28 +2,18 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
-
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
 import { EventContext } from '../context/EventContext';
 import { QueryContext } from '../context/QueryContext';
-
 import Header from '../components/Header';
-
-import SpeedChart from '../charts/SpeedChart';
-import TemperatureChart from '../charts/TemperatureChart';
-import LatencyChart from '../charts/LatencyChart';
-import ProcessesChart from '../charts/ProcessesChart';
-import MemoryChart from '../charts/MemoryChart';
 import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
 import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
-
 import LogsTable from '../charts/LogsTable';
-//import HealthContainer from './HealthContainer';
 import EventContainer from './EventContainer';
 import QueryContainer from './QueryContainer';
 import HealthContainer from './HealthContainer';
@@ -45,56 +35,46 @@ export interface GraphsContainerProps {
 }
 
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
-
   const history = useHistory();
   const { app, service } = useParams<any>();
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-
   const { servicesData } = useContext(ApplicationContext);
-
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
   const { fetchEventData, setEventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
- 
-
   const [chart, setChart] = useState<string>('all');
-
   const [prevRoute, setPrevRoute] = useState<string>('');
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    const healthServiceArray = serviceArray.filter((value : string) => value !== 'kafkametrics');
-    // console.log("service array:", JSON.stringify(serviceArray));
-    // console.log("health service array:", JSON.stringify(healthServiceArray));
+    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
     if (live) {
       setIntervalID(
         setInterval(() => {
           fetchCommsData(app, live);
           fetchHealthData(healthServiceArray);
-          if(service.includes('kafkametrics')){
+          if (service.includes('kafkametrics')) {
             fetchEventData('kafkametrics');
           }
-          
         }, 3000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchCommsData(app, live);
       fetchHealthData(healthServiceArray);
-      if(service.includes('kafkametrics')){
+      if (service.includes('kafkametrics')) {
         fetchEventData();
       }
     }
 
     return () => {
       if (intervalID) clearInterval(intervalID);
-      setHealthData({"healthDataList":[], "healthTimeList":[]});
+      setHealthData({ healthDataList: [], healthTimeList: [] });
       setDockerData({});
-      setEventData({"eventDataList":[], "eventTimeList": []});
-  
+      setEventData({ eventDataList: [], eventTimeList: [] });
     };
   }, [service, live]);
 
@@ -130,12 +110,12 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
     }
     for (let salt = 0; salt < 5; salt++) string = hashString(string);
     return contrastYiq(string);
-  }; // This is a work of pure genius and also probably why the app is infinitely recursing
+  };
 
   const getHealthAndEventComponents = () => {
     const buttonList: JSX.Element[] = [];
     if (selectedMetrics) {
-      selectedMetrics.forEach((element,id) => {
+      selectedMetrics.forEach((element, id) => {
         const categoryName = Object.keys(element)[0];
         const prefix = categoryName === 'Event' ? 'event_' : 'health_';
         buttonList.push(
@@ -143,7 +123,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             id={`${prefix}${categoryName}-button`}
             className={chart === `${prefix}${categoryName}` ? 'selected' : undefined}
             onClick={() => routing(`${prefix}${categoryName}`)}
-            key = {`1-${id}`}
+            key={`1-${id}`}
           >
             {categoryName}
           </button>
@@ -155,7 +135,6 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
-
   return (
     <>
       <nav>
@@ -163,7 +142,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           className={chart === 'all' ? 'selected' : undefined}
           id="all-button"
           onClick={() => routing('all')}
-          key = '0'
+          key="0"
         >
           Metrics Query
         </button>
@@ -173,7 +152,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             id="docker-button"
             className={chart === 'docker' ? 'selected' : undefined}
             onClick={() => routing('docker')}
-            key = '2'
+            key="2"
           >
             Docker
           </button>
@@ -186,7 +165,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
             setChart('communications');
             history.push('communications');
           }}
-          key = '3'
+          key="3"
         >
           Communication
         </button>
@@ -203,13 +182,18 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'all' && <QueryContainer/>}
-            {chart.startsWith('health_') 
-            && (
-            <HealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)} currentService ={service}/>
-            )
-            }
-            {chart.startsWith('event_') && <EventContainer colourGenerator={stringToColour} sizing="solo" />}
+            {chart === 'all' && <QueryContainer />}
+            {chart.startsWith('health_') && (
+              <HealthContainer
+                colourGenerator={stringToColour}
+                sizing="solo"
+                category={chart.substring(7)}
+                currentService={service}
+              />
+            )}
+            {chart.startsWith('event_') && (
+              <EventContainer colourGenerator={stringToColour} sizing="solo" />
+            )}
             {chart === 'docker' && <DockerChart />}
           </div>
         )}
