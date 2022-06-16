@@ -110,7 +110,7 @@ chronos.health = ({ microservice, interval }) => {
   setInterval(() => {
     collectHealthData()
       .then(healthMetrics => {
-        console.log('HEALTH METRICS: ', healthMetrics);
+        // console.log('HEALTH METRICS: ', healthMetrics);
         const HealthModel = HealthModelFunc(`${microservice}`);
         return HealthModel.insertMany(healthMetrics);
       })
@@ -219,7 +219,10 @@ KafkaModel.js, and inserts them into the db at the provided uri with insertMany(
 */
 chronos.kafka = function (userConfig) {
   // ensure that kafkametrics exists in the services table
-  const service = new ServicesModel({ service: 'kafkametrics', interval: userConfig.interval });
+  const service = new ServicesModel({
+    microservice: 'kafkametrics',
+    interval: userConfig.interval,
+  });
 
   service
     .save()
