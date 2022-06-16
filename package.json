@@ -74,7 +74,7 @@
     "cross-env": "^7.0.3",
     "d3": "^6.7.0",
     "dotenv": "^16.0.0",
-    "electron": "^12.2.3",
+    "electron": "^13.6.6",
     "electron-fetch": "^1.7.4",
     "enzyme-adapter-react-16": "^1.15.6",
     "express": "^4.17.1",
