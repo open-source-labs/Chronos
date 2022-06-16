@@ -1,9 +1,8 @@
-const cmd = require('chronos-microservice-debugger3');
-cmd.propagate();
 require('dotenv').config();
 
 // const chronos = require('chronos-tracker');
-const chronos = require('../../../chronos_npm_package/chronos');
+const myURI = process.env.BOOK_URI;
+const chronos = require('chronos7test');
 require('./chronos-config'); // Bring in config file
 
 chronos.propagate();
@@ -12,12 +11,15 @@ const PORT = 4545;
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+
 const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./BookController.js');
 
+chronos.kafka();
+
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
-app.use('/', cmd.microCom('books', 'mongo', process.env.BOOK_URI, 'yes'));
+// app.use('/', cmd.microCom('books', 'mongo', process.env.BOOK_URI, 'yes'));
 app.use('/', chronos.track());
 
 app.use(bodyParser.json());
@@ -54,8 +56,6 @@ function errorHandler(error, req, res, next) {
   console.log(`Here is the error object's response: ${errorObj.log}`);
   res.status(errorObj.status).json(errorObj.message);
 }
-
-
 
 // Open and listen to server on specified port
 app.listen(PORT, () => {

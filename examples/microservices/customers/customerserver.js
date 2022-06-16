@@ -1,4 +1,4 @@
-const chronos = require('chronos-tracker');
+const chronos = require('chronos7test');
 require('./chronos-config'); // Bring in config file
 
 chronos.propagate();
@@ -7,13 +7,13 @@ const PORT = 5555;
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+
 const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./CustomerController.js');
 
 // UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 app.use('/', chronos.track());
-
 
 app.use(bodyParser.json());
 app.use(cors());
