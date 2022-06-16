@@ -9,7 +9,6 @@ import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
 
-
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
     {({
@@ -70,97 +69,70 @@ const TransferColumns = React.memo(() => {
   const [healthMetrics, setHealthMetrics] = useState<any[]>([]);
   const [eventMetricsReady, setEventMetricsReady] = useState(false);
   const [eventMetrics, setEventMetrics] = useState<any[]>([]);
-
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   const { setSelectedMetrics } = useContext(QueryContext);
-  const {healthData} = useContext(HealthContext);
+  const { healthData } = useContext(HealthContext);
   const { eventData } = useContext(EventContext);
   const { service } = useParams<any>();
 
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
 
-
-  useEffect(()=>{
-    if(healthDataList && healthDataList.length >0){
+  useEffect(() => {
+    if (healthDataList && healthDataList.length > 0) {
       setHealthMetricsReady(true);
     }
-  },[healthDataList]);
+  }, [healthDataList]);
 
-  useEffect(()=>{
-    if(eventDataList && eventDataList.length >0){
+  useEffect(() => {
+    if (eventDataList && eventDataList.length > 0) {
       setEventMetricsReady(true);
     }
-  },[eventDataList]);
+  }, [eventDataList]);
 
-  useEffect(()=>{
-   // console.log("newhealthmetrics", JSON.stringify(getMetrics('health',healthDataList)))
-   //console.log("healthDataList:", JSON.stringify(healthDataList));
-    setHealthMetrics(getMetrics('health',healthDataList))
+  useEffect(() => {
+    setHealthMetrics(getMetrics('health', healthDataList));
+  }, [healthMetricsReady]);
 
-  },[healthMetricsReady]);
+  useEffect(() => {
+    setEventMetrics(getMetrics('event', eventDataList));
+  }, [eventMetricsReady]);
 
-  useEffect(()=>{
-   // console.log("neweventhmetrics", JSON.stringify(getMetrics('event',eventDataList)))
-    setEventMetrics(getMetrics('event',eventDataList))
-    //console.log("eventDataList:", JSON.stringify(eventDataList));
-
-  },[eventMetricsReady]);
-
-  
-
-  useEffect(()=>{
-
-    console.log("current service:", service);
-    console.log("healthData in else:", healthDataList.length);
-    console.log("eventData in else:", eventDataList.length);
-    console.log("healthMetricsReady:", healthMetricsReady);
-    console.log("eventMetricsReady:", eventMetricsReady);
-    if(service === ''){
+  useEffect(() => {
+    if (service === '') {
       return;
-    }
-    else if(service === 'kafkametrics'){
-      // console.log("set event metrics:",  JSON.stringify(eventMetrics));
-      console.log("eventDataList:", JSON.stringify(eventDataList));
-      if(eventDataList && eventDataList.length >0){
-        setMetricsPool(getMetrics('event',eventDataList));
-      }
-      else if(eventMetricsReady){
+    } else if (service === 'kafkametrics') {
+      if (eventDataList && eventDataList.length > 0) {
+        setMetricsPool(getMetrics('event', eventDataList));
+      } else if (eventMetricsReady) {
         setMetricsPool(eventMetrics);
       }
-      
-    }
-    else if (!service.includes('kafkametrics')){//all health data
-      console.log("healthDataList in elseif:", JSON.stringify(healthDataList));
-      // console.log("set health metrics:",  JSON.stringify(healthMetrics));
-      if(healthDataList && healthDataList.length >0){
-        setMetricsPool(getMetrics('health',healthDataList));
-      }
-      else if(healthMetricsReady){
+    } else if (!service.includes('kafkametrics')) {
+      if (healthDataList && healthDataList.length > 0) {
+        setMetricsPool(getMetrics('health', healthDataList));
+      } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
-      
-    }
-    else{
-
-      if(healthDataList && healthDataList.length >0 && eventDataList && eventDataList.length >0){
-        console.log("eventDataList:", eventDataList.length);
-        console.log("healthDataList", healthDataList.length);
-        setMetricsPool(getMetrics('event',eventDataList).concat(getMetrics('health',healthDataList)));
-      }
-      else if(healthMetricsReady && eventMetricsReady){
-        console.log("set concat metrics:", JSON.stringify(eventMetrics.concat(healthMetrics)));
+    } else {
+      if (
+        healthDataList &&
+        healthDataList.length > 0 &&
+        eventDataList &&
+        eventDataList.length > 0
+      ) {
+        setMetricsPool(
+          getMetrics('event', eventDataList).concat(getMetrics('health', healthDataList))
+        );
+      } else if (healthMetricsReady && eventMetricsReady) {
         setMetricsPool(eventMetrics.concat(healthMetrics));
       }
     }
-    
-  // },[service, healthMetricsReady, eventMetricsReady])
-},[service, eventData, healthData])
+  }, [service, eventData, healthData]);
 
-  const getMetrics = (type, datalist) =>{
+  const getMetrics = (type, datalist) => {
     let pool: any[] = [];
-    if(type === 'event'){
+    if (type === 'event') {
       datalist.forEach(metric => {
         const temp = {};
         const metricName: string = Object.keys(metric)[0];
@@ -170,15 +142,13 @@ const TransferColumns = React.memo(() => {
         temp['tag'] = 'Event';
         pool.push(temp);
       });
-    }
-    else{
+    } else {
       datalist.forEach(category => {
-        const tag: string = Object.keys(category)[0]; //Memory
-        const serviceObj: {} = category[tag][0]; // { books: [{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }] }
+        const tag: string = Object.keys(category)[0];
+        const serviceObj: {} = category[tag][0];
         const valuesOfServiceObj: any[] = Object.values(serviceObj);
-        const metricsArr: any[] = valuesOfServiceObj[0]; //[{ disk_usage: [10, 20] }, { clockSpeed: [8, 16] }]
+        const metricsArr: any[] = valuesOfServiceObj[0];
         metricsArr.forEach(element => {
-          //{ disk_usage: [10, 20] }
           const temp = {};
           const metricName: string = Object.keys(element)[0];
           const key = tag + ' | ' + metricName;
@@ -188,11 +158,9 @@ const TransferColumns = React.memo(() => {
           pool.push(temp);
         });
       });
-
     }
     return pool;
-  }
-
+  };
 
   const leftTableColumns = [
     {

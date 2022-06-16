@@ -6,7 +6,6 @@ import path from 'path';
 
 const ipc = ipcMain;
 
-// import { test } from './utilites/titleBarLogic';
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
@@ -19,8 +18,6 @@ const createWindow = () => {
     width: 1920,
     height: 1080,
     backgroundColor: '#000314',
-    // icon: path.join(__dirname, 'app/assets/icons/icon.png'),
-    // Node integration allows node.js to run
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
