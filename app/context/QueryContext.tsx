@@ -11,7 +11,6 @@ export const QueryContext = React.createContext<any>(null);
 const QueryContextProvider: React.SFC = React.memo(({ children }) => {
   const [selectedMetrics, setSelectedMetrics] = useState([]);
 
-
   return (
    <QueryContext.Provider value={{ selectedMetrics, setSelectedMetrics}}>
       {children}

@@ -1,8 +1,5 @@
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-
-import { useParams } from 'react-router-dom';
-
+import React, { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
 
@@ -22,13 +19,8 @@ interface SoloStyles {
 }
 
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
-  const { service } = useParams<any>();
   const { renderService, metric, timeList, valueList, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
-  //console.log('in the HealthChart');
-  //console.log('healthchart valuelist:', JSON.stringify(valueList));
-  //console.log('healthchart timelist:', JSON.stringify(timeList));
-
   setInterval(() => {
     if (solo !== soloStyle) {
       setSolo(soloStyle);
@@ -36,14 +28,6 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   }, 20);
 
   const createChart = () => {
-   
-    // if (service && renderService && service !== renderService ) {
-    //   console.log("current service is:", service, "render service is:", renderService);
-    //   return (<div><p>Loading...</p></div>)
-
-    // }
-    // else{
-      
       const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
       const hashedColour = colourGenerator(renderService);
       let plotlyData: {
@@ -101,10 +85,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
             },
           }}
         />
-      );
-
-    // }
-     
+      ); 
   };
 
   return (
