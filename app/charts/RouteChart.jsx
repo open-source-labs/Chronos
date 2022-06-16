@@ -11,6 +11,8 @@ import { CommsContext } from '../context/CommsContext';
 
 const RouteChart = React.memo(() => {
   const communicationsData = useContext(CommsContext).commsData;
+  
+  console.log('commdata before sort: ', communicationsData);
 
   const resObj = {};
   const dataId = '_id';
@@ -21,11 +23,14 @@ const RouteChart = React.memo(() => {
      * The below sorts it back into ascending order.
      */
 
+
     communicationsData.sort((a, b) => {
       if (new Date(a.time) > new Date(b.time)) return 1;
       if (new Date(a.time) < new Date(b.time)) return -1;
       return 0;
     });
+
+    console.log('commdata after sort: ', communicationsData[0], communicationsData[0].endpoint);
 
     for (let i = 0; i < communicationsData.length; i += 1) {
       const element = communicationsData[i];
@@ -56,6 +61,8 @@ const RouteChart = React.memo(() => {
   }
 
   const tracePoints = Object.values(resObj).filter(subArray => subArray.length > 1);
+
+  console.log('tracepoints: ', tracePoints);
 
   const useStyles = makeStyles(theme => ({
     paper: {
