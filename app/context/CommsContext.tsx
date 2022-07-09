@@ -16,11 +16,11 @@ export const CommsContext = React.createContext<any>(null);
  * @method    setCommsData
  * @method    fetchCommsData
  */
-const CommsContextProvider: React.SFC = React.memo(({ children }) => {
+const CommsContextProvider: React.FunctionComponent = React.memo(({ children }) => {
   const [commsData, setCommsData] = useState([]);
   const [currentApp, setCurrentApp] = useState('');
 
-  function tryParseJSON(jsonString: any) {
+  function tryParseJSON(jsonString: string) {
     try {
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {

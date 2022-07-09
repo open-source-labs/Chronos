@@ -9,10 +9,12 @@ import fs from 'fs';
  */
 
 // Loads existing settings JSON and update settings to include new services entered by the user on 'submit' request
-let settingsLocation;
+let settingsLocation: string;
+
 if (process.env.NODE_ENV === 'development')
   settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
 else settingsLocation = path.resolve(__dirname, '../../settings.json');
+
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   // Retrieves file contents from settings.json
   const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));

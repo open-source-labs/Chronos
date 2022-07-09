@@ -13,8 +13,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const { eventData } = useContext(EventContext);
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
   const { selectedMetrics } = useContext(QueryContext);
-  const eventDataList: any[] = eventData.eventDataList;
-  const eventTimeList: any[] = eventData.eventTimeList;
+  const { eventDataList } = eventData;
+  const { eventTimeList } = eventData;
   const { service } = useParams<any>();
 
   useEffect(() => {

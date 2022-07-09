@@ -3,12 +3,12 @@ import { ipcMain, IpcMainEvent } from 'electron';
 import path from 'path';
 import fs from 'fs';
 
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 const saltRounds = 12;
 
-let settingsLocation;
-let usersLocation;
+let settingsLocation: string;
+let usersLocation: string;
 if (process.env.NODE_ENV === 'development') {
   settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
   usersLocation = path.resolve(__dirname, '../../__tests__/test_users.json');
@@ -84,7 +84,7 @@ ipcMain.on('verifyUser', (message: IpcMainEvent, user: { email: string; password
 
 ipcMain.on('getUsersAwaitingApproval', (message: IpcMainEvent) => {
   const usersObj = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
-  const returnObj: { [key: string]: any } = {};
+  const returnObj: { [key: string]: {} } = {};
   for (const user in usersObj) {
     if (usersObj[user].awaitingApproval) {
       const { email, username } = usersObj[user];

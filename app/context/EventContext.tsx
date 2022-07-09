@@ -1,10 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import Electron from 'electron';
-import { transform } from 'd3';
 
 const { ipcRenderer } = window.require('electron');
 
 export const EventContext = React.createContext<any>(null);
+
+interface eventState {
+  eventDataList: (string | {})[];
+  eventTimeList: (string | {})[];
+}
 
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
@@ -15,9 +19,9 @@ export const EventContext = React.createContext<any>(null);
  */
 
 const EventContextProvider: React.FC = React.memo(({ children }) => {
-  const [eventData, setEventData] = useState({ eventDataList: [], eventTimeList: [] });
+  const [eventData, setEventData] = useState<eventState>({ eventDataList: [], eventTimeList: [] });
 
-  function tryParseJSON(jsonString: any) {
+  function tryParseJSON(jsonString: string) {
     try {
       const o = JSON.parse(jsonString);
       if (o && typeof o === 'object') {
@@ -29,36 +33,22 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  const fetchEventData = useCallback(() => {
-    ipcRenderer.removeAllListeners('kafkaResponse');
-    ipcRenderer.send('kafkaRequest');
-    ipcRenderer.on('kafkaResponse', (event: Electron.Event, data: any) => {
-      let result: any;
-      if (tryParseJSON(data)) result = JSON.parse(data);
-      let transformedData: any = {};
-      if (result && result.length > 0) {
-        transformedData = transformEventData(result[0]['kafkametrics']);
-        setEventData(transformedData);
-      }
-    });
-  }, []);
-
   const transformEventData = (data: any[]) => {
-    const dataList: any[] = [];
-    const timeList: any[] = [];
+    const dataList: (string | {})[] = [];
+    const timeList: (string | {})[] = [];
     const metricSet = new Set();
     data.forEach(element => {
       const metricName = element.metric;
-      const time = element.time;
-      const value = element.value;
+      const { time } = element;
+      const { value } = element;
       if (!metricSet.has(metricName)) {
         metricSet.add(metricName);
-        const metricObj_data: any = {};
-        const metricObj_time: any = {};
-        metricObj_data[metricName] = [value];
-        metricObj_time[metricName] = [time];
-        dataList.push(metricObj_data);
-        timeList.push(metricObj_time);
+        const metricObjData: {} = {};
+        const metricObjTime: {} = {};
+        metricObjData[metricName] = [value];
+        metricObjTime[metricName] = [time];
+        dataList.push(metricObjData);
+        timeList.push(metricObjTime);
       } else {
         dataList.forEach(element => {
           if (Object.keys(element)[0] === metricName) {
@@ -74,6 +64,19 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     });
     return { eventDataList: dataList, eventTimeList: timeList };
   };
+
+  const fetchEventData = useCallback(() => {
+    ipcRenderer.removeAllListeners('kafkaResponse');
+    ipcRenderer.send('kafkaRequest');
+    ipcRenderer.on('kafkaResponse', (event: Electron.Event, data: string) => {
+      let result: string | any[] = [];
+      if (tryParseJSON(data)) result = JSON.parse(data);
+      if (result && result.length > 0) {
+        const transformedData = transformEventData(result[0].kafkametrics);
+        setEventData(transformedData);
+      }
+    });
+  }, []);
 
   return (
     <EventContext.Provider value={{ eventData, setEventData, fetchEventData }}>

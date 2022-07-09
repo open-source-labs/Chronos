@@ -6,7 +6,6 @@ import path from 'path';
 
 const ipc = ipcMain;
 
-
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
 
@@ -44,8 +43,6 @@ const createWindow = () => {
   ipc.on('close', () => {
     win.close();
   });
-
-  // Production
 };
 
 // Invoke the createWindow function when Electron application loads

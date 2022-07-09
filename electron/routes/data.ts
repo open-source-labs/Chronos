@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
 import { ipcMain } from 'electron';
 import fs from 'fs';
@@ -6,17 +5,12 @@ import path from 'path';
 import connectPostgres from '../databases/postgres';
 import connectMongo from '../databases/mongo';
 import CommunicationModel from '../models/CommunicationsModel';
-import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
-import KafkaModel from '../models/KafkaModel';
-import fetch, { FetchError } from 'electron-fetch';
-import { lightWhite } from 'material-ui/styles/colors';
-//import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
 
-const mongoFetch = fetchData.mongoFetch;
-const postgresFetch = fetchData.postgresFetch;
+const { mongoFetch } = fetchData;
+const { postgresFetch } = fetchData;
 
 require('dotenv').config();
 // Initiate pool variable for SQL setup
@@ -30,10 +24,12 @@ let currentDatabaseType: string;
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-let settingsLocation;
+let settingsLocation: string;
+
 if (process.env.NODE_ENV === 'development')
   settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
 else settingsLocation = path.resolve(__dirname, '../../settings.json');
+
 ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
@@ -115,7 +111,6 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
   } catch (error) {
     // Catch errors
     console.log('Error in "commsRequest" event: ', error);
-
   }
 });
 
@@ -125,14 +120,12 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
-
     let result: any;
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       result = await mongoFetch(service);
     }
-    
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
@@ -141,11 +134,10 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     }
 
     // Async event emitter - send response'
-
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "healthRequest" event', message);
+    console.log('Error in "healthRequest" event', error);
     message.sender.send('healthResponse', {});
   }
 });
@@ -154,7 +146,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
  * @event   dockerRequest/DockerResponse
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
-ipcMain.on('dockerRequest', async (message, service) => {
+ipcMain.on('dockerRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
     let result: any;
     // Mongo Database
@@ -192,27 +184,10 @@ ipcMain.on('dockerRequest', async (message, service) => {
 
 /**
  * @event   eventRequest/EventResponse
- * @desc    
+ * @desc    fetch data for kafka cluster
  */
 
-
-// start fetch
-function extractWord(str: string) {
-  const res :any[] = [];
-  const arr = str.split('\n'); // `/\n/`
-  for (const element of arr) {
-    if (element && element.length !== 0 && element[0] !== '#' && element.substring(0, 3) !== 'jmx' && element.substring(0, 4) !== '\'jmx') {
-      const metric = element.split(' ')[0];
-      const metricValue = Number(element.split(' ')[1]);
-      const time = Date.now();
-      const temp = {'metric': metric, 'category': 'Event', 'value': metricValue, 'time': time };
-      res.push(temp);
-    }
-  }
-  return res;
-}
-
-ipcMain.on('kafkaRequest', async (message) => {
+ipcMain.on('kafkaRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
     // Mongo Database
@@ -222,7 +197,7 @@ ipcMain.on('kafkaRequest', async (message) => {
     // SQL Database
     if (currentDatabaseType === 'SQL') {
       // Get last 50 documents. If less than 50 get all
-    result = await postgresFetch('kafkametrics', pool);
+      result = await postgresFetch('kafkametrics', pool);
     }
 
     message.sender.send('kafkaResponse', JSON.stringify(result));
@@ -231,10 +206,4 @@ ipcMain.on('kafkaRequest', async (message) => {
     console.log('Error in "kakfaRequest" event', message);
     message.sender.send('kafkaResponse', {});
   }
-
-  
 });
-
-
-
-// end fetch

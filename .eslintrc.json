@@ -30,11 +30,12 @@
       }
     ],
     "react/prop-types": "off",
-    "no-console": "warn",
+    "no-console": "off",
     "react/jsx-filename-extension": "off",
     "no-alert": "off",
     "no-plusplus": "off",
     "no-new": "off",
+    "no-shadow": "off",
     "react/button-has-type": "off",
     "react/jsx-one-expression-per-line": "off",
     "no-restricted-globals": "off",
