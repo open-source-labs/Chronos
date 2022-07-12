@@ -1,4 +1,4 @@
-const chronos = require('chronos7test');
+const chronos = require('chronos-tracker-7');
 require('dotenv').config();
 
 chronos.use({

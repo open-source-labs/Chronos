@@ -156,8 +156,6 @@ healthHelpers.collectHealthData = () => {
       })
   );
 
-  
-
   promises.push(
     si
       .processes()

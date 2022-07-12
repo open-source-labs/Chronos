@@ -42,7 +42,7 @@ kafkaHelpers.kafkaFetch = function (config) {
   return fetch(config.jmxuri)
     .then(data => data.text())
     .then(data => kafkaHelpers.extractWord(data))
-    .catch(err => console.log(err));
+    .catch(err => console.log('Error Fetching Data from JMX Exporter: ', err));
 };
 
 module.exports = kafkaHelpers;

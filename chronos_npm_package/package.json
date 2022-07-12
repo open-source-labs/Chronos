@@ -1,6 +1,6 @@
 {
-  "name": "chronos7test",
-  "version": "1.1.0",
+  "name": "chronos-tracker-7",
+  "version": "1.1.1",
   "description": "",
   "main": "chronos.js",
   "scripts": {

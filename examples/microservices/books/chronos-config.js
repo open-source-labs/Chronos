@@ -1,12 +1,11 @@
 require('dotenv').config();
-// const chronos = require('chronos-tracker');
-const chronos = require('chronos7test');
+const chronos = require('chronos-tracker-7');
 
 chronos.use({
   microservice: 'books',
   interval: 2000,
-  jmxuri: 'http://localhost:12345/metrics',
   // dockerized: true,
+  // jmxuri: *Add your URI here*
   database: {
     connection: 'REST',
     type: 'MongoDB',

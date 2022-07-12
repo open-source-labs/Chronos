@@ -25,6 +25,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - [Configure Chronos Tracker](#configure-chronos-tracker)
     - [Initialize Chronos Tracker](#initialize-chronos-tracker)
     - [Docker Configuration](#docker-configuration)
+    - [Kafka Configuration](#Apache-Monitoring-(Via-JMX-to-Prometheus-Exporter))
     - [Start Chronos](#start-chronos)
     - [Getting the Executable](#getting-the-chronos-executable)
 - [Notifications](#notifications)
@@ -46,22 +47,13 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## <img src ="./app/assets/fire.png" height=22 > What's New? <img src ="./app/assets/fire.png" height=24>
 
-- New Feature
-  - Chronos now comes in any OS .exe!
-- Overhauled Features
-  - Authentication Enabling with Bcrypt
-  - Stand-up times decreased
-  - Side-by-side Server Comparisons
-  - Color-hashing generates unique colors for each server connection
-  - Improved navigation bar and buttons
-  - Increased overall speed and responsiveness
-- Updated Features
-  - Added React Testing Library
-  - Removed Spectron and Enzyme
-  - Added testing suites for unit, integration, and end-to-end testing
-  - Refactored components for dependency injection
-- Bug Fixes
-  - Authentication now functioning properly
+
+- Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
+- Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
+- Option to filter by category and individual metric, and flip between services and categories with ease
+- Apache Kafka monitoring capability, all you need to do is run Prometheus JMX exporter on the system your Chronos application is running on. A sample JMX config.yaml file is provided in the Chronos repository for a quick and easy setup, however you are free to configure however you like.
+- Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
+
 ## Features 
 
 - Distributed tracing enabled across microservices applications
@@ -69,13 +61,25 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Supports <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
+- Monitor an <a href="#"><img src="./app/assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
+
 #
 ###### Return to [Top](#chronos)
 <br>
 
 ## Demo
-
+<br>
+<br>
+Signing Up
+<br>
+<br>
 <a href="#"><img src="./app/assets/enable_sign_up.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
+<br>
+<br>
+Using the Query Tool
+<br>
+<br>
+<a href="#"><img src="./app/assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="475" /></a></a>
 
 #
 ###### Return to [Top](#chronos)
@@ -84,8 +88,8 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Installation
 This is for the latest Chronos version **5.2 release and later**.
 
-- Stable release: 6.1.0
-- LTS release: 6.1.0
+- Stable release: 7.0.0
+- LTS release: 7.0.0
 
 ### Pre-Installation
 Make sure you're running version 14.16.1 of <a href="#"><img src="./app/assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /></a></a>, which is the most recent LTS (long-term support) version. 
@@ -119,22 +123,22 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 
 To use Chronos in your existing application, download and install the following in the **root directory** of _each of your microservice applications_:
 ```
-npm install chronos-tracker
+npm install chronos-tracker-7
 ```
 
-### Configure Chronos Tracker
+### Configuring Chronos Tracker
 
 Similarly, in the **root directory** of _each of your microservice applications_, create a `chronos-config.js` file with properties listed below:
 
 ```js
 // A sample `chronos-config.js` file
 
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 
 chronos.use({
   microservice: 'payments',
   interval: 5000,
-  dockerized: true,
+  dockerized: true, // <-- The 'dockerized' property is optional
   database: {
     connection: 'REST',
     type: 'MongoDB',
@@ -153,45 +157,31 @@ The `dockerized` property is optional and should be specified as `true` if the s
 The `database` property is required and takes in the following:
 - `connection` should be a string and only supports 'REST' and 'gRPC'
 - `type` should be a string and only supports 'MongoDB' and 'PostgreSQL'.
-- `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation.  
+- `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation.
+We reccommend using dotenv  
 
-_NOTE: A `.env` is recommended._
-
-<!-- - `isDockerized`: Is this microservice running in a Docker container? Enter `yes` or `no`. The current default setting is `no`.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> When starting up the container, give it the same name that you used for the microservice, because the middleware finds the correct container ID of your container by matching the container name to the microservice name you input as 1st argument.
-  - <img src="./app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Don't forget to bind mount to Docker socket. -->
-
-The `notifications` property is optional. Jump to the section below, [Notifications](#notifications) to configure <a href="#"><img src="./app/assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /></a> or email <a href="#"><img src="./app/assets/email-icon-black.png" alt="Slack" title="Slack" align="center" height="20" /></a> notifications.
-<br>
-<br>
-
-### Initialize Chronos Tracker
-#### Initialize Chronos Tracker for REST
-
-Wherever you create an instance of your server (see example below),
+You will also need to add the following two lines of code to your express server:,
 
 ```js
 // Example for REST
 const express = require('express');
-const app = express());
+const app = express();
 
 ```
 
-you will also need to require in `chronos-tracker` and initialize Chronos, as well as the `./chronos-config` file. You will then need to invoke `chronos.propagate()` to initiate the route tracing, in addition to implementing `chronos.track()` for all endpoints.
+you will also need to require in `chronos-tracker-7` and initialize Chronos, as well as the `./chronos-config` file in addition to implementing `chronos.track()` for all endpoints.
 
 ```js
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 require('./chronos-config'); // Bring in config file
 
 // ...
 
-chronos.propagate();
 app.use('/', chronos.track());
 ```
 
-You should be good to go! The last step, **Docker Configuration**, is **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> for your application. 
+You should be good to go! The steps below for **Docker Configuration** and **Kafka Configuration**, are **only applicable** if you need to configure <a href="#"><img src="./app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> or Kafka for your application. See the **Notifications** section below for information on how to uses the notifications propery in `chronos-config.js`.
 
-<br>
 
 
 #### Initialize Chronos Tracker for gRPC
@@ -214,7 +204,7 @@ you will also need to require Chronos-tracker, Chronos-config, and dotenv.config
 
 ```js
 //track health data
-const chronos = require('chronos-tracker');
+const chronos = require('chronos-tracker-7');
 require('./chronos-config');
 require('dotenv').config(); // set up environment variables in .env
 const BookModel = require('./BookModel');
@@ -317,6 +307,49 @@ volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
+
+
+### Apache Kafka Monitoring (Via JMX to Prometheus Exporter)
+
+Chronos now offers the ability to monitor an Apache Kafka cluster via JMX to Prometheus Exporter. In order for this feature to work you must be running [JMX to Prometheus
+Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent with your cluster or as a standalone HTTP server. Then, use `chronos-config.js` to specifiy the port exposed for metrics scraping.
+
+To start, add the property `jmxuri` to the object in `chronos-config.js`. Your file should look similar to below. Add this property to `chronos-config.js` in ***ONE AND ONLY ONE** of your microservices:
+
+```js
+const chronos = require('chronos-tracker-7');
+
+chronos.use({
+  microservice: 'payments',
+  interval: 5000,
+  dockerized: true,
+  jmxuri: // your URI here
+  database: {
+    connection: 'REST',
+    type: 'MongoDB',
+    URI: process.env.URI,
+  },
+  notifications: [],
+});
+```
+The `jmxuri` property should be a string whose value is the port specified for scraping when starting the exporter.
+
+Then, in ***ONE AND ONLY ONE** of your microservices, call
+
+```js
+
+chronos.kafka()
+
+```
+
+in your express server. When viewing your information in the Chronos Electron application the data will be available in the service "kafkametrics"
+
+**NOTE:** We provide a config.yaml file in the Chronos root folder for use with JMX prometheus that provides some useful baseline metrics to monitor.
+
+#
+###### Return to [Top](#chronos)
+<br>
+
 ### Start Chronos
 
 Once you have configured and intialized Chronos Tracker, it will automatically record monitoring data when your servers are running. Finally, start the Chronos desktop app to view that data! After cloning our [GitHub repo](https://github.com/open-source-labs/Chronos), run `npm install` and `npm run both` to start Chronos.
@@ -417,9 +450,6 @@ Refer to the [README](link) in the `docker` folder for more details.
 
 <br>
 
-### gRPC Branch 
-The **'gRPC'** branch is the current codebase for the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package, which is what you will install in your own application in order to use Chronos. Download the <a href="#"><img src="./app/assets/npm-logo-color.png" alt="NPM" title="NPM" align="center" height="20" /></a> package [here](https://www.npmjs.com/package/chronos-tracker).
-
 ## chronosWebsite  
 This is the branch that holds the code base for the splash page. Edit the website by first running `git clone -b chronosWebsite https://github.com/open-source-labs/Chronos.git .` and then updating the aws S3 bucket with the changes.
 
@@ -449,7 +479,8 @@ This is the branch that holds the code base for the splash page. Edit the websit
 - <a href="#"><img src="./app/assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
 - <a href="#"><img src="./app/assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
- 
+- <a href="#"><img src="./app/assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
+- <a href="#"><img src="./app/assets/AntDesign.svg" alt="Ant Design" title="Ant Design" align="center" height="30" /></a>
 #
 ###### Return to [Top](#chronos)
 <br>
