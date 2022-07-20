@@ -33,7 +33,6 @@ const CommsContextProvider: React.FunctionComponent = React.memo(({ children }) 
   }
 
   const fetchCommsData = useCallback((app: string, live: boolean) => {
-
     if (app !== currentApp || live) {
       ipcRenderer.removeAllListeners('commsResponse');
       setCurrentApp(app);
