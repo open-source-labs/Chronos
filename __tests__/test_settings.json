@@ -1,9 +1,1 @@
-{
-  "setupRequired": false,
-  "services": [
-    
-  ],
-  "mode": "light mode",
-  "splash": true,
-  "landingPage": "dashBoard"
-}
+{"setupRequired":false,"services":[["chronosDB","MongoDB","mongodb+srv://jj289:Codesmith123@clusterchronos.vwtqgxp.mongodb.net/chronosDB?retryWrites=true&w=majority","","Dec 13, 2022 2:58 PM"],["test","MongoDB","mongodb+srv://troyprejusa:learning@learning.logqirh.mongodb.net/test?retryWrites=true&w=majority","","Dec 13, 2022 5:14 PM"]],"mode":"light mode","splash":true,"landingPage":"dashBoard"}

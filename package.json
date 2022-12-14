@@ -71,6 +71,7 @@
     "caniuse-lite": "^1.0.30001312",
     "chai": "^4.3.4",
     "chronos-tracker": "^6.0.3",
+    "chronos-tracker-7": "^1.1.1",
     "cross-env": "^7.0.3",
     "d3": "^6.7.0",
     "dotenv": "^16.0.0",
