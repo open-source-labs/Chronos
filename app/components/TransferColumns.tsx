@@ -102,13 +102,23 @@ const TransferColumns = React.memo(() => {
   useEffect(() => {
     if (service === '') {
       return;
-    } else if (service === 'kafkametrics') {
+    }
+    if (service === 'kafkametrics') {
       if (eventDataList && eventDataList.length > 0) {
         setMetricsPool(getMetrics('event', eventDataList));
       } else if (eventMetricsReady) {
         setMetricsPool(eventMetrics);
       }
-    } else if (!service.includes('kafkametrics')) {
+    } 
+    // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
+    // else if (service === 'kubernetesmetrics') {
+    //   if (eventDataList && eventDataList.length > 0) {
+    //     setMetricsPool(getMetrics('event', eventDataList));
+    //   } else if (eventMetricsReady) {
+    //     setMetricsPool(eventMetrics);
+    //   }
+    // }
+    else if (!service.includes('kafkametrics')) {
       if (healthDataList && healthDataList.length > 0) {
         setMetricsPool(getMetrics('health', healthDataList));
       } else if (healthMetricsReady) {

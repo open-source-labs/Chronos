@@ -48,8 +48,13 @@ ipcMain.on('getApps', message => {
   const temp = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   // Destructure list of services from state to be rendered on the dashboard
   const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]); // .map((arr: string[]) => [...arr]);
-
+  // ["chronosDB",
+  // "MongoDB",
+  // "mongodb+srv://jj289:Codesmith123@clusterchronos.vwtqgxp.mongodb.net/chronosDB?retryWrites=true&w=majority",
+  // "",
+  // "Dec 13, 2022 10:16 AM"]
   // Sync event - return new applications list w/ user settings: Mode
+  console.log(dashboardList);
   message.returnValue = [dashboardList, temp.mode];
 });
 

@@ -231,8 +231,28 @@ ipcMain.on('kafkaRequest', async (message) => {
     console.log('Error in "kakfaRequest" event', message);
     message.sender.send('kafkaResponse', {});
   }
+});
 
-  
+// JJ-ADDITION
+ipcMain.on('kubernetesRequest', async (message) => {
+  try {
+    let result: any;
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      result = await mongoFetch('kubernetesmetrics');
+    }
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get last 50 documents. If less than 50 get all
+    result = await postgresFetch('kubernetesmetrics', pool);
+    }
+
+    message.sender.send('kubernetesResponse', JSON.stringify(result));
+  } catch (error) {
+    // Catch errors
+    console.log('Error in "kubernetesRequest" event', message);
+    message.sender.send('kubernetesResponse', {});
+  }
 });
 
 

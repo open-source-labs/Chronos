@@ -59,8 +59,9 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     }
     return lst;
   };
-
-  return <div>{service.includes('kafkametrics') ? eventChartsArr : []}</div>;
+  // JJ-ADDITION
+  return <div>{service.includes('kafkametrics' || 'kubernetesmetrics') ? eventChartsArr : []}</div>;
+  // return <div>{service.includes('kafkametrics') ? eventChartsArr : []}</div>;
 });
 
 export default EventContainer;

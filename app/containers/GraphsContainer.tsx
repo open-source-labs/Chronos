@@ -43,6 +43,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
   const { fetchEventData, setEventData } = useContext(EventContext);
+  // const { fetchKafkaEventData, setKafkaEventData } = useContext(EventContext);
+  // const { fetchKubernetesEventData, setKubernetesEventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
   const [chart, setChart] = useState<string>('all');
@@ -50,7 +52,11 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
+    // const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
+    // JJ-ADDITION
+    const healthServiceArray = serviceArray.filter(
+      (value: string) => value !== 'kafkametrics' || 'kubernetesmetrics'
+    );
     if (live) {
       setIntervalID(
         setInterval(() => {
@@ -59,6 +65,10 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           if (service.includes('kafkametrics')) {
             fetchEventData('kafkametrics');
           }
+          // JJ-ADDITION
+          if (service.includes('kubernetesmetrics')) {
+            fetchEventData('kubernetesmetrics');
+          }
         }, 3000)
       );
     } else {
@@ -66,6 +76,10 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       fetchCommsData(app, live);
       fetchHealthData(healthServiceArray);
       if (service.includes('kafkametrics')) {
+        fetchEventData();
+      }
+      // JJ-ADDITION
+      if (service.includes('kubernetesmetrics')) {
         fetchEventData();
       }
     }
@@ -96,7 +110,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       let colour = '#';
       for (let i = 0; i < 3; i++) {
         const value = (hash >> (i * 8)) & 0xff;
-        colour += `00${value.toString(16)}`.substr(-2);
+        colour += `00${value.toString(16)}`.substring(-2);
       }
       return colour;
     }

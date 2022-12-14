@@ -69,6 +69,8 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   }, [healthData, category]);
 
   return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
+  // JJ-ADDITION
+  // return <div>{service.includes('kafkametrics' || 'kubernetesmetrics') ? eventChartsArr : []}</div>;
 });
 
 export default HealthContainer;
