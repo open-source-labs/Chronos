@@ -82,7 +82,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       }
       // JJ-ADDITION
       if (service.includes('kubernetesmetrics')) {
-        fetchEventData();
+        fetchEventData('kubernetesmetrics');
       }
     }
 
