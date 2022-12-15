@@ -54,7 +54,6 @@ ipcMain.on('getApps', message => {
   // "",
   // "Dec 13, 2022 10:16 AM"]
   // Sync event - return new applications list w/ user settings: Mode
-  console.log(dashboardList);
   message.returnValue = [dashboardList, temp.mode];
 });
 

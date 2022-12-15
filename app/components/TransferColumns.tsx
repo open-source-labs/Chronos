@@ -8,6 +8,7 @@ import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
+import CommunicationPhonelinkSetup from 'material-ui/svg-icons/communication/phonelink-setup';
 
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
@@ -111,13 +112,20 @@ const TransferColumns = React.memo(() => {
       }
     } 
     // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
+    else if (service === 'kubernetesmetrics') {
+      if (healthDataList && healthDataList.length > 0) {
+        setMetricsPool(getMetrics('health', healthDataList));
+      } else if (healthMetricsReady) {
+        setMetricsPool(healthMetrics);
+      }
+    }
     // else if (service === 'kubernetesmetrics') {
     //   if (eventDataList && eventDataList.length > 0) {
     //     setMetricsPool(getMetrics('event', eventDataList));
     //   } else if (eventMetricsReady) {
     //     setMetricsPool(eventMetrics);
     //   }
-    // }
+    // } 
     else if (!service.includes('kafkametrics')) {
       if (healthDataList && healthDataList.length > 0) {
         setMetricsPool(getMetrics('health', healthDataList));
@@ -202,11 +210,11 @@ const TransferColumns = React.memo(() => {
     setShowSearch(checked);
   };
   const handleClick = () => {
-    //setSelectedMetrics
+    // setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
     for (let i = 0; i < targetKeys.length; i++) {
-      let str: string = targetKeys[i];
+      const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
       const categoryName = strArr[0];
       const metricName = strArr[1];
