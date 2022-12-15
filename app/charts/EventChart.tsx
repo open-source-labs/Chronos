@@ -21,6 +21,18 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const { metric, timeList, valueList, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
+  // THIS IS WHERE WE LEFT OFF~~~~~~~~
+  // eslint-disable-next-line no-console
+  console.log('metric', metric);
+  // eslint-disable-next-line no-console
+  console.log('timeList', timeList);
+  // eslint-disable-next-line no-console
+  console.log('valueList', valueList);
+  // eslint-disable-next-line no-console
+  console.log('sizing', sizing);
+  // eslint-disable-next-line no-console
+  console.log('colourGenerator', colourGenerator);
+
   setInterval(() => {
     if (solo !== soloStyle) {
       setSolo(soloStyle);

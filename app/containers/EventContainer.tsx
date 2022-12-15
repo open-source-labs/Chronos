@@ -10,8 +10,6 @@ interface EventContainerProps {
 }
 
 const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
-  // eslint-disable-next-line no-console
-  console.log(`PROPS ${props}`);
   const { eventData } = useContext(EventContext);
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
   const { selectedMetrics } = useContext(QueryContext);
@@ -30,11 +28,11 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       });
 
       eventDataList.forEach((element, id) => {
-        // eslint-disable-next-line no-console
-        console.log(`EVENTDATALIST ELEMENT ${element}`);
         const metric: string = Object.keys(element)[0];
         const valueList: any = Object.values(element)[0];
         if (selectedMetricsList.includes(metric)) {
+          // eslint-disable-next-line no-console
+          console.log('SELECTEDMETRICLIST INCLUDES METRIC', metric);
           const newEventChart = (
             <EventChart
               key={`Chart${id}`}
@@ -63,9 +61,13 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     }
     return lst;
   };
-  // JJ-ADDITION
-  return <div>{service.includes('kafkametrics' || 'kubernetesmetrics') ? eventChartsArr : []}</div>;
-  // return <div>{service.includes('kafkametrics') ? eventChartsArr : []}</div>;
+  return (
+    <div>
+      {service.includes('kafkametrics') || service.includes('kubernetesmetrics')
+        ? eventChartsArr
+        : []}
+    </div>
+  );
 });
 
 export default EventContainer;
