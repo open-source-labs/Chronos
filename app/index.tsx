@@ -21,4 +21,4 @@ import { createRoot } from 'react-dom/client';
 // );
 
 const root = createRoot(document.getElementById('app')); // createRoot(container!) if you use TypeScript
-root.render(<h1 style={{color: 'white'}}>Hello Gang </h1>);
+root.render(<h1 style={{color: 'red'}}>Hello Gang </h1>);

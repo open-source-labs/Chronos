@@ -44,8 +44,6 @@ const createWindow = () => {
   ipc.on('close', () => {
     win.close();
   });
-
-  // Production
 };
 
 // Invoke the createWindow function when Electron application loads
