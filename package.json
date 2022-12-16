@@ -26,7 +26,6 @@
     "installDep": "cd dist && npm i",
     "deleteDist": "node nodeUtilities/deleteDist.js",
     "reinstall": "rm -rf node_modules && npm install",
-    "prepare": "tsc -v && tsc -p . && npm run build",
     "prepareDist": "npm run deleteDist && tsc -v && tsc -p . && npm run build && npm run copyAssetsDist && npm run copyPackageJsonDist && npm run copyBuildDist && npm run copyBuildDBDist && npm run copyBuildModelsDist && npm run copyBuildRoutesDist && npm run copyBuildUtilitiesDist && npm run copySettingsDist && npm run installDep",
     "rebuild": "npm run delete && npm run prepare",
     "copyAssetsDist": "echo D | xcopy app\\assets dist\\assets",

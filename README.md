@@ -160,16 +160,7 @@ The `database` property is required and takes in the following:
 - `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation.
 We reccommend using dotenv  
 
-You will also need to add the following two lines of code to your express server:,
-
-```js
-// Example for REST
-const express = require('express');
-const app = express();
-
-```
-
-you will also need to require in `chronos-tracker-7` and initialize Chronos, as well as the `./chronos-config` file in addition to implementing `chronos.track()` for all endpoints.
+You will also need to require in `chronos-tracker-7` and initialize Chronos, as well as the `./chronos-config` file in addition to implementing `chronos.track()` for all endpoints.
 
 ```js
 const chronos = require('chronos-tracker-7');
@@ -322,8 +313,8 @@ const chronos = require('chronos-tracker-7');
 chronos.use({
   microservice: 'payments',
   interval: 5000,
-  dockerized: true,
-  jmxuri: // your URI here
+  dockerized: false,
+  jmxuri: 'http://localhost:12345/metrics', // your URI here
   database: {
     connection: 'REST',
     type: 'MongoDB',
