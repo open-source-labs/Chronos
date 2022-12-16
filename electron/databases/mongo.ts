@@ -5,10 +5,7 @@ import { MongoError } from 'mongodb';
 const connectMongoose = async (i: number, URI: string) => {
   try {
     await mongoose.connection.close();
-    const db = await mongoose.connect(
-      URI,
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    );
+    const db = await mongoose.connect(URI);
 
     return db;
   } catch (err) {
