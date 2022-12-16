@@ -109,7 +109,6 @@ mongo.health = ({ microservice, interval }) => {
   setInterval(() => {
     collectHealthData()
       .then(healthMetrics => {
-        // console.log('HEALTH METRICS: ', healthMetrics);
         const HealthModel = HealthModelFunc(`${microservice}`);
         return HealthModel.insertMany(healthMetrics);
       })

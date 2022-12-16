@@ -32,8 +32,6 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
   }
 
   const fetchEventData = useCallback((arg: any) => {
-    // eslint-disable-next-line no-console
-    console.log('WE ARE IN FETCH DATA');
     if (arg === 'kafkametrics') {
       ipcRenderer.removeAllListeners('kafkaResponse');
       ipcRenderer.send('kafkaRequest');
@@ -47,13 +45,9 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
         }
       });
     } else if (arg === 'kubernetesmetrics') {
-      // eslint-disable-next-line no-console
-      console.log(`KUBES FETCH DATA`);
       ipcRenderer.removeAllListeners('kubernetesResponse');
       ipcRenderer.send('kubernetesRequest');
       ipcRenderer.on('kubernetesResponse', (event: Electron.Event, data: any) => {
-        // eslint-disable-next-line no-console
-        console.log(`DATA IS ${data}`)
         let result: any;
         if (tryParseJSON(data)) result = JSON.parse(data);
         let transformedData: any = {};

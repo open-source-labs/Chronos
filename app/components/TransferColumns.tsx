@@ -237,19 +237,11 @@ const TransferColumns = React.memo(() => {
 
   return (
     <>
-      <Button
-        type="primary"
-        onClick={handleClick}
-        shape="round"
-        size="middle"
-        style={{
-          marginLeft: 16,
-          marginTop: 330,
-          float: 'right',
-        }}
-      >
-        Get Charts
-      </Button>
+      <div id="getChartsContainer">
+        <Button id="getCharts" type="primary" onClick={handleClick} shape="round" size="middle">
+          Get Charts
+        </Button>
+      </div>
       <TableTransfer
         dataSource={metricsPool}
         targetKeys={targetKeys}
@@ -262,7 +254,7 @@ const TransferColumns = React.memo(() => {
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
         listStyle={{
-          width: 700,
+          width: '40%',
           height: 1000,
         }}
       />

@@ -31,8 +31,6 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         const metric: string = Object.keys(element)[0];
         const valueList: any = Object.values(element)[0];
         if (selectedMetricsList.includes(metric)) {
-          // eslint-disable-next-line no-console
-          console.log('SELECTEDMETRICLIST INCLUDES METRIC', metric);
           const newEventChart = (
             <EventChart
               key={`Chart${id}`}
