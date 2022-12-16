@@ -1,10 +1,11 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const chronos = require('chronos-tracker');
-require('./chronos-config');
 const controller = require('./CustomerController');
-require('dotenv').config();
+
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('chronos-tracker');
+const chronos = new Chronos(chronosConfig);
 
 // Places a unique header on every req in order to trace the path in the req's life cycle.
 chronos.propagate();

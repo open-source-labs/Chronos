@@ -12,13 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "chronos-tracker-7": "^1.1.1",
-    "chronos7test": "^1.1.0",
+    "chronos-tracker": "file:../../../chronos_npm_package",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.8.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.2",
     "path": "^0.12.7"
   }

@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
+const path = require('path');
 require('dotenv').config();
+
+const mongoose = require('mongoose');
 
 //  pull schema from the mongoose object
 const { Schema } = mongoose;
 
 // DB link for books data.
 // Search dotenv documentation for details
-const book_db_URI = `${process.env.BOOKS_DB}`;
+const book_db_URI = process.env.BOOK_URI;
 
 // const URI = process.env.MONGO_URI || myURI;
 

@@ -1,10 +1,10 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-const chronos = require('chronos-tracker');
-require('./chronos-config');
 
-require('dotenv').config();
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('chronos-tracker');
+const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();
 
