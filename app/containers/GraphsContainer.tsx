@@ -57,8 +57,6 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
     const healthServiceArray = serviceArray.filter(
       (value: string) => value !== 'kafkametrics' || 'kubernetesmetrics'
     );
-    // eslint-disable-next-line no-console
-    console.log(`HEALTH SERVICES ARRAY ${healthServiceArray}`);
     if (live) {
       setIntervalID(
         setInterval(() => {
@@ -99,8 +97,6 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       if (prevRoute === '') history.replace(`${servicesData[0].microservice}`);
       else history.replace(prevRoute);
     }
-    // eslint-disable-next-line no-console
-    console.log(`ROUTE ${route}`);
     setChart(route);
   };
 
@@ -136,8 +132,6 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
       selectedMetrics.forEach((element, id) => {
         const categoryName = Object.keys(element)[0];
         const prefix = categoryName === 'Event' ? 'event_' : 'health_';
-        // eslint-disable-next-line no-console
-        console.log(`PREFIX ${prefix} categoryName is ${categoryName}`);
         buttonList.push(
           <button
             id={`${prefix}${categoryName}-button`}
@@ -157,7 +151,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
   return (
     <>
-      <nav>
+      <nav id="navigationBar">
         <button
           className={chart === 'all' ? 'selected' : undefined}
           id="all-button"

@@ -28,8 +28,11 @@
 
   // Buttons
   .services-links {
+    display: flex;
+    flex-direction: column;
     padding: 0 0 30px;
     width: 100%;
+    gap: 1em;
 
     .link {
 
@@ -38,7 +41,7 @@
       font-size: 90%;
       text-decoration: none;
       border: 2px solid white;
-      border-radius: 3px;
+      border-radius: 5px;
       margin: 10px;
       padding: 12px;
       margin: 0 auto;
@@ -53,6 +56,8 @@
       }
       
       &:hover { 
+        cursor: pointer;
+        font-weight: 460;
         color: #fff;
         background-color: $gblue;
       }
@@ -80,5 +85,5 @@
   font-size: 14px;
   font-weight: 100;
   color: #444d56;
-  border-radius: 3px;
+  border-radius: 5px;
 }
