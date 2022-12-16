@@ -37,9 +37,6 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        issuer: {
-          exclude: /\.less$/,
-        },
         use: ['style-loader', 'css-loader', 'sass-loader'],
         exclude: /node_modules/,
       },
@@ -76,9 +73,10 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
+    port: 8080,
     hot: true,
     historyApiFallback: true,
-    contentBase: path.resolve(process.cwd(), 'app'),
+    static: './app'
   },
   plugins: [
     new HtmlWebpackPlugin({

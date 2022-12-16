@@ -16,5 +16,5 @@
     "skipLibCheck": true,
     "noEmitOnError": false
   },
-  "include": ["./electron/**/*", "./src/**/*", "./electron/**/*.json"]
+  "include": ["./electron/**/*", "./electron/**/*.json"]
 }

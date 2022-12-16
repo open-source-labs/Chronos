@@ -2,13 +2,12 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import 'antd/dist/antd.less';
 import { Switch, Table, Tag, Transfer, Button } from 'antd';
-import { PoweroffOutlined } from '@ant-design/icons';
 import difference from 'lodash/difference';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
-import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
-import CommunicationPhonelinkSetup from 'material-ui/svg-icons/communication/phonelink-setup';
+// import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
+// import CommunicationPhonelinkSetup from 'material-ui/svg-icons/communication/phonelink-setup';
 
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>

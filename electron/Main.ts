@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import './routes/user';
-import './routes/dashboard';
-import './routes/data';
+// import './routes/user';
+// import './routes/dashboard';
+// import './routes/data';
 import path from 'path';
 
 const ipc = ipcMain;
@@ -21,14 +21,14 @@ const createWindow = () => {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
+      // preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
 
   if (process.env.NODE_ENV === 'development') {
-    // Development: load the application window to port 8080
+    // Development: load the application window to the port in the webpack config
     win.loadURL('http://localhost:8080/');
   } else {
     // Production

@@ -11,7 +11,6 @@ import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
-import { lightWhite } from 'material-ui/styles/colors';
 //import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
 
