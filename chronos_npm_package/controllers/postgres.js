@@ -1,26 +1,26 @@
 // NPM package that gathers health information
-const si = require('systeminformation');
 const { Client } = require('pg');
 const alert = require('./alert');
-const { kafkaFetch } = require('./kafkaHelpers');
 const { collectHealthData } = require('./healthHelpers');
+const dockerHelper = require('./dockerHelper')
+const utilities = require('./utilities');
 
 let client;
 
-const chronos = {};
+const postgres = {};
 
 /**
  * Initializes connection to PostgreSQL database using provided URI
  * @param {Object} database Contains DB type and DB URI
  */
-chronos.connect = async ({ database }) => {
+postgres.connect = async ({ database }) => {
   try {
     // Connect to user's database
     client = new Client({ connectionString: database.URI });
     await client.connect();
 
     // Print success message
-    console.log('Connected to database at ', database.URI.slice(0, 24), '...');
+    console.log('PostgreSQL database connected at ', database.URI.slice(0, 24), '...');
   } catch ({ message }) {
     // Print error message
     console.log('Error connecting to PostgreSQL DB:', message);
@@ -32,7 +32,7 @@ chronos.connect = async ({ database }) => {
  * @param {string} microservice Microservice name
  * @param {number} interval Interval to collect data
  */
-chronos.services = ({ microservice, interval }) => {
+postgres.services = ({ microservice, interval }) => {
   // Create services table if does not exist
   client.query(
     `CREATE TABLE IF NOT EXISTS services (
@@ -71,7 +71,7 @@ chronos.services = ({ microservice, interval }) => {
  * @param {Object|undefined} slack Slack settings
  * @param {Object|undefined} email Email settings
  */
-chronos.communications = ({ microservice, slack, email }) => {
+postgres.communications = ({ microservice, slack, email }) => {
   // Create communications table if one does not exist
   client.query(
     `CREATE TABLE IF NOT EXISTS communications(
@@ -168,9 +168,8 @@ function createQueryArray(dataPointsArray) {
  * @param {string} microservice Microservice name
  * @param {number} interval Interval for continuous data collection
  */
-chronos.health = ({ microservice, interval }) => {
+postgres.health = ({ microservice, interval }) => {
   // Create table for the microservice if it doesn't exist yet
-  // create kafkametrics table if it does not exist
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS ${microservice} (
       _id SERIAL PRIMARY KEY,
@@ -182,7 +181,7 @@ chronos.health = ({ microservice, interval }) => {
 
   client
     .query(createTableQuery)
-    .catch(err => console.log('Error creating kafkametrics table in PostgreSQL:\n', err));
+    .catch(err => console.log('Error creating health table in PostgreSQL:\n', err));
 
   // Save data point at every interval (ms)
   setInterval(() => {
@@ -205,104 +204,101 @@ chronos.health = ({ microservice, interval }) => {
  * If dockerized is true, this function is invoked
  * Collects information on the container
  */
-chronos.docker = function ({ microservice, interval }) {
+postgres.docker = function ({ microservice, interval }) {
   // Create a table if it doesn't already exist.
   client.query(
-    'CREATE TABLE IF NOT EXISTS containerInfo(\n    _id serial PRIMARY KEY,\n    microservice varchar(500) NOT NULL,\n    containerName varchar(500) NOT NULL,\n    containerId varchar(500) NOT NULL,\n    containerPlatform varchar(500),\n    containerStartTime varchar(500),\n    containerMemUsage real DEFAULT 0,\n    containerMemLimit real DEFAULT 0,\n    containerMemPercent real DEFAULT 0,\n    containerCpuPercent real DEFAULT 0,\n    networkReceived real DEFAULT 0,\n    networkSent real DEFAULT 0,\n    containerProcessCount integer DEFAULT 0,\n    containerRestartCount integer DEFAULT 0\n    )',
+    `CREATE TABLE IF NOT EXISTS containerInfo( 
+      _id serial PRIMARY KEY,
+      microservice varchar(500) NOT NULL,
+      containerName varchar(500) NOT NULL,
+      containerId varchar(500) NOT NULL,
+      containerPlatform varchar(500),
+      containerStartTime varchar(500),
+      containerMemUsage real DEFAULT 0,
+      containerMemLimit real DEFAULT 0,
+      containerMemPercent real DEFAULT 0,
+      containerCpuPercent real DEFAULT 0,
+      networkReceived real DEFAULT 0,
+      networkSent real DEFAULT 0,
+      containerProcessCount integer DEFAULT 0, 
+      containerRestartCount integer DEFAULT 0
+      )`,
     function (err, results) {
       if (err) throw err;
     }
   );
-  // Declare vars that represent columns in postgres and will be reassigned with values retrieved by si.
-  var containerName;
-  var containerPlatform;
-  var containerStartTime;
-  var containerMemUsage;
-  var containerMemLimit;
-  var containerMemPercent;
-  var containerCpuPercent;
-  var networkReceived;
-  var networkSent;
-  var containerProcessCount;
-  var containerRestartCount;
-  // dockerContainers() return an arr of active containers (ea. container = an obj).
-  // Find the data pt with containerName that matches microservice name.
-  // Extract container ID, name, platform, and start time.
-  // Other stats will be retrieved by dockerContainerStats().
-  si.dockerContainers()
-    .then(function (data) {
-      var containerId = '';
 
-      for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-        var dataObj = data_1[_i];
-        if (dataObj.name === microservice) {
-          containerName = dataObj.name;
-          containerId = dataObj.id;
-          containerPlatform = dataObj.platform;
-          containerStartTime = dataObj.startedAt;
-          // End iterations as soon as the matching data pt is found.
-          break;
-        }
-      }
-      // When containerId has a value:
-      // Initiate periodic invoc. of si.dockerContainerStats to retrieve and log stats to DB.
-      // The desired data pt is the first obj in the result array.
-      if (containerId !== '') {
-        setInterval(function () {
-          si.dockerContainerStats(containerId)
-            .then(function (data) {
-              // console.log('data[0] of dockerContainerStats', data[0]);
-              // Reassign other vars to the values from retrieved data.
-              // Then save to DB.
-              containerMemUsage = data[0].mem_usage;
-              containerMemLimit = data[0].mem_limit;
-              containerMemPercent = data[0].mem_percent;
-              containerCpuPercent = data[0].cpu_percent;
-              networkReceived = data[0].netIO.rx;
-              networkSent = data[0].netIO.wx;
-              containerProcessCount = data[0].pids;
-              containerRestartCount = data[0].restartCount;
-              var queryString =
-                'INSERT INTO containerInfo(\n                microservice,\n                containerName,\n                containerId,\n                containerPlatform,\n                containerStartTime,\n                containerMemUsage,\n                containerMemLimit,\n                containerMemPercent,\n                containerCpuPercent,\n                networkReceived,\n                networkSent,\n                containerProcessCount,\n                containerRestartCount)\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13\n              )';
-              var values = [
-                microservice,
-                containerName,
-                containerId,
-                containerPlatform,
-                containerStartTime,
-                containerMemUsage,
-                containerMemLimit,
-                containerMemPercent,
-                containerCpuPercent,
-                networkReceived,
-                networkSent,
-                containerProcessCount,
-                containerRestartCount,
-              ];
-              client.query(queryString, values, function (err, results) {
-                if (err) throw err;
-                console.log('Saved to SQL!');
-              });
-            })
-            ['catch'](function (err) {
-              throw err;
-            });
-        }, interval);
-      } else {
-        throw new Error('Cannot find container data matching the microservice name.');
-      }
-    })
-    ['catch'](function (err) {
-      throw err;
-    });
-};
+  dockerHelper.getDockerContainer(microservice)
+  .then((containerData) => {
+    setInterval(() => {
+      dockerHelper.readDockerContainer(containerData)
+        .then((data) => {
+          let queryString =
+            `INSERT INTO containerInfo(
+            microservice,
+            containerName,
+            containerId,
+            containerPlatform,
+            containerStartTime,
+            containerMemUsage,
+            containerMemLimit,
+            containerMemPercent,
+            containerCpuPercent,
+            networkReceived,
+            networkSent,
+            containerProcessCount,
+            containerRestartCount)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+            )`;
 
-chronos.kafka = function (userConfig) {
-  // Ensure that kafkametrics are a part of the services table
-  chronos.services({ microservice: 'kafkametrics', interval: userConfig.interval });
+          let values = [
+            microservice,
+            data.containername,
+            data.containerid,
+            data.platform,
+            data.starttime,
+            data.memoryusage,
+            data.memorylimit,
+            data.memorypercent,
+            data.cpupercent,
+            data.networkreceived,
+            data.networksent,
+            data.processcount,
+            data.restartcount,
+          ];
+
+          client.query(queryString, values, function (err, results) {
+            if (err) throw err;
+            console.log(`Docker data recorded in SQL table containerInfo`);
+          });
+      })
+    }, interval)
+  })
+
+  .catch((error) => {
+    if (error.constructor.name === 'Error') throw error
+    else throw new Error(error);
+  })
+}
+
+
+postgres.serverQuery = (config) => {
+  postgres.saveService(config);
+  postgres.setQueryOnInterval(config);
+}
+
+
+postgres.saveService = (config) => {
+  let service;
+  if (config.mode === 'kakfa') service = 'kafkametrics';
+  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
+  else throw new Error('Unrecognized mode');
+
+  postgres.services({ microservice: service, interval: config.interval });
+
   // create kafkametrics table if it does not exist
   const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS kafkametrics (
+    CREATE TABLE IF NOT EXISTS ${service} (
       _id SERIAL PRIMARY KEY,
       metric VARCHAR(200),
       value FLOAT DEFAULT 0.0,
@@ -310,21 +306,28 @@ chronos.kafka = function (userConfig) {
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`;
 
-  client
-    .query(createTableQuery)
-    .catch(err => console.log('Error creating kafkametrics table in PostgreSQL:\n', err));
+  client.query(createTableQuery)
+    .catch(err => console.log(`Error creating ${service} table in PostgreSQL:\n`, err));
+}
+
+
+postgres.setQueryOnInterval = (config) => {
+  let service;
+  if (config.mode === 'kakfa') service = 'kafkametrics';
+  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
+  else throw new Error('Unrecognized mode');
 
   setInterval(() => {
-    kafkaFetch(userConfig)
+    utilities.getMetricsQuery(config)
       .then(parsedArray => {
         const numDataPoints = parsedArray.length;
-        const queryString = createQueryString(numDataPoints, 'kafkametrics');
+        const queryString = createQueryString(numDataPoints, service);
         const queryArray = createQueryArray(parsedArray);
         return client.query(queryString, queryArray);
       })
       .then(() => console.log('Kafka metrics recorded in PostgreSQL'))
       .catch(err => console.log('Error inserting kafka metrics into PostgreSQL:\n', err));
-  }, userConfig.interval);
-};
+  }, config.interval);
+}
 
-module.exports = chronos;
+module.exports = postgres;

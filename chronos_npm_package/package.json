@@ -1,6 +1,6 @@
 {
-  "name": "chronos-tracker-7",
-  "version": "1.1.1",
+  "name": "chronos-tracker",
+  "version": "7.1.1",
   "description": "",
   "main": "chronos.js",
   "scripts": {
@@ -10,13 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grpc/grpc-js": "^1.2.5",
-    "axios": "^0.21.1",
-    "hpropagate": "0.0.7",
-    "mongoose": "^5.11.13",
-    "node-fetch": "^2.6.7",
-    "nodemailer": "^6.4.17",
-    "pg": "^8.5.1",
-    "systeminformation": "^4.34.7"
+    "@grpc/grpc-js": "^1.8.0",
+    "axios": "^1.2.1",
+    "hpropagate": "1.0.1",
+    "mongoose": "^6.8.0",
+    "nodemailer": "^6.8.0",
+    "pg": "^8.8.0",
+    "systeminformation": "^5.16.1"
   }
 }
