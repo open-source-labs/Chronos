@@ -1,0 +1,42 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-backend
+spec:
+  selector:
+    matchLabels:
+      app: node-backend
+  # How many copies of the app do you want? 
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '9323'
+      labels:
+        app: node-backend
+    spec:
+      containers:
+      - name: node-backend
+        image: backend:1.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: LoadBalancer
+  selector:
+    app: node-backend
+  ports:
+  # 3000 is used here because app.js is listening on 3000
+  - port: 3000
+    # targetPort defaults to the above "port" if not specified
+    # targetPort: 3000

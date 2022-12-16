@@ -1,5 +1,6 @@
-const chronos = require('chronos-tracker-7');
-require('./chronos-config'); // Bring in config file
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('chronos-tracker');
+const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();
 
@@ -12,7 +13,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./OrderController.js');
 
-// UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
 app.use('/', chronos.track());
 
 app.use(bodyParser.json());
