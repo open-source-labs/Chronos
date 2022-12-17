@@ -17,18 +17,12 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.js$/,
-        enforce: 'pre',
-        loader: 'source-map-loader',
-        exclude: /node_modules/,
-      },
-      {
         test: /\.js$|jsx/,
         use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
+              presets: ['@babel/preset-env', "@babel/preset-react"],
               plugins: [['import', { libraryName: 'antd', style: 'css' }]],
             },
           },
@@ -58,14 +52,6 @@ module.exports = {
         test: /\.(jpg|jpeg|png|ttf|svg|gif)$/,
         use: [
           'file-loader',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                quality: 10,
-              },
-            },
-          },
         ],
         exclude: /node_modules/,
       },

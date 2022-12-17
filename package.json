@@ -33,6 +33,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "babel-loader": "^9.1.0",
+    "babel-plugin-import": "^1.13.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "file-loader": "^6.2.0",
@@ -52,7 +53,7 @@
     "both": "tsc && npm run start & sleep 5 && npm run electronTest",
     "build": "webpack",
     "electronTest": "cross-env NODE_ENV=development electron .",
-    "start": "webpack serve --open"
+    "start": "webpack serve"
   },
   "repository": {
     "type": "git",

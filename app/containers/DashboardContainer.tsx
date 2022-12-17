@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
 import HealthContextProvider from '../context/HealthContext';

@@ -11,7 +11,10 @@ function LandingPageContainer() {
 
   if (landingPage === 'signUp') return <SignUp />;
   if (landingPage === 'login') return <Login />;
-  if (landingPage === 'dashBoard') return redirect("/applications");
+  if (landingPage === 'dashBoard') {
+    return <h1 style={{color: 'red', fontSize: '400px'}}>Hello Landing Page</h1> 
+    // return redirect("/applications")
+  };
   if (landingPage === 'createAdmin') return <CreateAdmin />;
   return <FirstLaunch />;
 };
