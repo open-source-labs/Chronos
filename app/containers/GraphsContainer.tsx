@@ -20,14 +20,13 @@ import HealthContainer from './HealthContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
-export interface Params {
-  app: string | string[];
-  // service: string | null | undefined;
+interface Params {
+  app: any;
   service: string;
 
 }
 
-export interface GraphsContainerProps {
+interface GraphsContainerProps {
   match: {
     path: string;
     url: string;
@@ -38,9 +37,7 @@ export interface GraphsContainerProps {
 
 const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
   const navigate = useNavigate();
-  const { app, service } = useParams<any>();
-  if ( !service || !app ) return null;
-  if (app.length === 0) return null;
+  const { app, service } = useParams<keyof Params>() as Params;
 
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);

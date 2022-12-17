@@ -9,6 +9,11 @@ import { EventContext } from '../context/EventContext';
 // import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
 // import CommunicationPhonelinkSetup from 'material-ui/svg-icons/communication/phonelink-setup';
 
+
+interface Params {
+  service: string;
+}
+
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps}>
     {({
@@ -74,7 +79,7 @@ const TransferColumns = React.memo(() => {
   const { setSelectedMetrics } = useContext(QueryContext);
   const { healthData } = useContext(HealthContext);
   const { eventData } = useContext(EventContext);
-  const { service } = useParams<any>();
+  const { service } = useParams<keyof Params>() as Params;
 
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
