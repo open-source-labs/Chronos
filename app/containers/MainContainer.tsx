@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { redirect, Route, Routes } from 'react-router-dom';
-// import LandingPageContainer from './LandingPageContainer';
+import LandingPageContainer from './LandingPageContainer';
 import WindowBar from '../components/WindowBar';
 import About from '../components/About';
 import Contact from '../components/Contact';
@@ -16,10 +16,7 @@ const MainContainer = React.memo(() => {
   const { mode, landingPage, getLandingPage, authStatus } = useContext(DashboardContext);
   const currentModeCSS =
     mode === 'light mode' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
-  // const checkAuth = (Component: any) => {
-  //   if (landingPage === 'dashBoard' || authStatus) return <Component />;
-  //   return redirect('/');
-  // };
+
 
   /* <h1 style={{color: 'red', fontSize: '400px'}}>Hello world</h1> */
 
@@ -32,22 +29,25 @@ const MainContainer = React.memo(() => {
       <div className="main-container" style={currentModeCSS}>
         <div className="main-routes">
           <Routes>
-            <Route path="/" element={Occupied} />
-            {/* <Route path="/awaitingApproval" element={AwaitingApproval} />
-            <Route path="/about" element={() => checkAuth(About)} />
-            <Route path="/contact" element={() => checkAuth(Contact)} />
-            <Route path="/settings" element={() => checkAuth(Settings)} />
-            <Route path="/applications" element={() => checkAuth(Occupied)} /> */}
-            {/* <Route
+            <Route path="/" element={<Occupied />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route
               path="/applications/:app/:service"
-              element={() => checkAuth(GraphsContainer)}
+              element={<GraphsContainer />}
             />
-            <Route path="*" element={() => <h1>Not found</h1>} /> */}
+            <Route path="*" element={<h1 style={{color: 'red', fontSize: '200px'}}>Not Found</h1> } />
           </Routes>
         </div>
       </div>
     </>
   );
+
+  // const checkAuth = (Component: any) => {
+  //   if (landingPage === 'dashBoard' || authStatus) return <Component />;
+  //   return redirect('/');
+  // };
 
   // return (
   //   <>

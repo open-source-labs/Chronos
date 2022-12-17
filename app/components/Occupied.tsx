@@ -233,7 +233,7 @@ const Occupied = React.memo(() => {
             <div className="dashboardIconWrapper">
               <div className="dashboardIconArea">
                 <span className="dashboardTooltip">
-                  You have {applications.length} active databases
+                  You have {applications ? applications.length : 0} active databases
                 </span>
                 <DashboardIcon className="navIcon" id="dashboardIcon" />
               </div>
@@ -242,7 +242,7 @@ const Occupied = React.memo(() => {
                   You have {notification ? notification.length : 0} new alerts
                 </span>
                 <NotificationsIcon className="navIcon" id="notificationsIcon" />
-                <Badge badgeContent={notification ? notification.length : 0} color="secondary" />
+                <Badge overlap="rectangular" badgeContent={notification ? notification.length : 0} color="secondary" />
               </div>
               <div className="personIconArea">
                 <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
@@ -259,8 +259,8 @@ const Occupied = React.memo(() => {
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
-          {applications
-            .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+          {applications &&
+            applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
             .map((application: string[], i: number | any | string | undefined) => (
               <div className="card" key={`card-${i}`} id={`card-${application[1]}`}>
                 <Card
