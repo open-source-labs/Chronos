@@ -5,8 +5,6 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 
 const ipc = ipcMain;
-
-
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
 
