@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MongoError } from 'mongodb';
+// import { MongoError } from 'mongodb';
 
 // Mongoose connection wrapped in function that takes the index of the selected database as the parameter. This index is used to target the correct database for querying.
 const connectMongoose = async (i: number, URI: string) => {

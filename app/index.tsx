@@ -1,10 +1,13 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 
-// import './stylesheets/index.scss';
+// REACT 18 Syntax below
+// import { createRoot } from 'react-dom/client';
+
+import './stylesheets/index.scss';
 // import { createMuiTheme, ThemeProvider } from '@material-ui/core/';
-// import App from './App';
-// import WindowBar from './components/WindowBar';
+//  import App from './App';
+//  import WindowBar from './components/WindowBar';
 
 // const theme = createMuiTheme({
 //   typography: {
@@ -12,6 +15,8 @@ import { createRoot } from 'react-dom/client';
 //   },
 // });
 
+
+// React 17 Syntax below
 // ReactDOM.render(
 //   <ThemeProvider theme={theme}>
 //     <WindowBar />
@@ -20,5 +25,12 @@ import { createRoot } from 'react-dom/client';
 //   document.getElementById('app')
 // );
 
-const root = createRoot(document.getElementById('app')); // createRoot(container!) if you use TypeScript
-root.render(<h1 style={{color: 'red'}}>Hello Gang </h1>);
+ReactDOM.render(
+    <h1 style={{color: 'red'}}>Hi Gang</h1>,
+    document.getElementById('app')
+)
+
+
+// React 18 Syntax below
+// const root = createRoot(document.getElementById('app')); // createRoot(container!) if you use TypeScript
+// root.render(<h1 style={{color: 'red'}}>Hello Gang </h1>);
