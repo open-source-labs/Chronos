@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Home.scss';
 
 const { ipcRenderer } = window.require('electron');
 
 const SignUp = React.memo(() => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
   const [failedSignUp, setFailedSignUp] = useState<JSX.Element>(<></>);
 
@@ -32,8 +32,8 @@ const SignUp = React.memo(() => {
     if (typeof validSignUp === 'object') {
       setUser(validSignUp);
       setAuth(true);
-      history.push('/applications');
-    } else if (validSignUp) history.push('/awaitingApproval');
+      navigate('/applications');
+    } else if (validSignUp) navigate('/awaitingApproval');
     else
       setFailedSignUp(<p>Sorry your sign up failed. Please try a different email and password.</p>);
   };
