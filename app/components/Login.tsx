@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
 
 const { ipcRenderer } = window.require('electron');
 
 const Login = React.memo(() => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
   const [failedAuth, setFailedAuthState] = useState<JSX.Element>(<></>);
 
@@ -35,8 +35,8 @@ const Login = React.memo(() => {
     if (typeof validLogin === 'object') {
       setUser(validLogin);
       setAuth(true);
-      history.push('/applications');
-    } else if (validLogin === 'awaitingApproval') history.push('/awaitingApproval');
+      navigate('/applications');
+    } else if (validLogin === 'awaitingApproval') navigate('/awaitingApproval');
     else setFailedAuthState(<p>Sorry your authentication failed please try again.</p>);
   };
 

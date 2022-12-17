@@ -5,15 +5,15 @@ import ReactDOM from 'react-dom';
 // import { createRoot } from 'react-dom/client';
 
 import './stylesheets/index.scss';
-// import { createMuiTheme, ThemeProvider } from '@material-ui/core/';
-//  import App from './App';
-//  import WindowBar from './components/WindowBar';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/';
+import App from './App';
+import WindowBar from './components/WindowBar';
 
-// const theme = createMuiTheme({
-//   typography: {
-//     fontFamily: ['Roboto', 'sans-serif'].join(','),
-//   },
-// });
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ['Roboto', 'sans-serif'].join(','),
+  },
+});
 
 
 // React 17 Syntax below

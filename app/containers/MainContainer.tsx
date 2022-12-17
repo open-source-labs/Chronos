@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { redirect, Route, Routes } from 'react-router-dom';
 import LandingPageContainer from './LandingPageContainer';
 import WindowBar from '../components/WindowBar';
 import About from '../components/About';
@@ -18,7 +18,7 @@ const MainContainer = React.memo(() => {
     mode === 'light mode' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
   const checkAuth = (Component: any) => {
     if (landingPage === 'dashBoard' || authStatus) return <Component />;
-    return <Redirect to={{ pathname: '/' }} />;
+    return redirect('/');
   };
 
   useEffect(() => {
@@ -30,20 +30,19 @@ const MainContainer = React.memo(() => {
       {/* <WindowBar /> */}
       <div className="main-container" style={currentModeCSS}>
         <div className="main-routes">
-          <Switch>
-            <Route exact path="/" component={LandingPageContainer} />
-            <Route exact path="/awaitingApproval" component={AwaitingApproval} />
-            <Route exact path="/about" render={() => checkAuth(About)} />
-            <Route exact path="/contact" render={() => checkAuth(Contact)} />
-            <Route exact path="/settings" render={() => checkAuth(Settings)} />
-            <Route exact path="/applications" render={() => checkAuth(Occupied)} />
+          <Routes>
+            <Route path="/" element={LandingPageContainer} />
+            <Route path="/awaitingApproval" element={AwaitingApproval} />
+            <Route path="/about" element={() => checkAuth(About)} />
+            <Route path="/contact" element={() => checkAuth(Contact)} />
+            <Route path="/settings" element={() => checkAuth(Settings)} />
+            <Route path="/applications" element={() => checkAuth(Occupied)} />
             <Route
-              exact
               path="/applications/:app/:service"
-              render={() => checkAuth(GraphsContainer)}
+              element={() => checkAuth(GraphsContainer)}
             />
-            <Route path="*" render={() => <h1>Not found</h1>} />
-          </Switch>
+            <Route path="*" element={() => <h1>Not found</h1>} />
+          </Routes>
         </div>
       </div>
     </>
