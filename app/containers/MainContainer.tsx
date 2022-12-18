@@ -37,7 +37,7 @@ const MainContainer = React.memo(() => {
               path="/applications/:app/:service"
               element={<GraphsContainer />}
             />
-            <Route path="*" element={<h1 style={{color: 'red', fontSize: '200px'}}>Not Found</h1> } />
+            <Route path="*" element={<h1 style={{color: 'red', fontSize: '200px'}}>Not Found</h1>} />
           </Routes>
         </div>
       </div>
