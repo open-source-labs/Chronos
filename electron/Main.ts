@@ -1,10 +1,10 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-// import './routes/user';
-// import './routes/dashboard';
-// import './routes/data';
+
+import './routes/user';
+import './routes/dashboard';
+import './routes/data';
 import path from 'path';
 
-const ipc = ipcMain;
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
 
@@ -32,14 +32,14 @@ const createWindow = () => {
     // Production
     win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
   }
-  ipc.on('max', () => {
+  ipcMain.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();
   });
-  ipc.on('min', () => {
+  ipcMain.on('min', () => {
     win.minimize();
   });
-  ipc.on('close', () => {
+  ipcMain.on('close', () => {
     win.close();
   });
 };

@@ -19,6 +19,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
+
 import { makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
@@ -31,7 +32,8 @@ import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 
-// MODALS
+
+// // MODALS
 import AddModal from '../modals/AddModal';
 import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
@@ -40,16 +42,17 @@ import Search from './icons/Search';
 // STYLESHEETS
 import '../stylesheets/Occupied.scss';
 
-// CONTEXT
+// // CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { CommsContext } from '../context/CommsContext';
 
 // TYPESCRIPT
 interface StyleProps {
-  root: BaseCSSProperties;
-}
-type ClickEvent = React.MouseEvent<HTMLElement>;
+    root: BaseCSSProperties;
+  }
+  type ClickEvent = React.MouseEvent<HTMLElement>;
+  
 
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
@@ -62,20 +65,22 @@ const Occupied = React.memo(() => {
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
-
+    
+  
   // Dynamic refs
   const delRef = useRef<any>([]);
   useEffect(() => {
     setServicesData([]);
     getApplications();
   }, []);
-
+  
+  
   // Asks user to confirm deletion
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
-
+  
   // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
@@ -211,6 +216,7 @@ const Occupied = React.memo(() => {
     const timestamp = new Date();
     setClickedAt(timestamp.toISOString());
   };
+
   return (
     <div className="entireArea">
       <div className="dashboardArea">

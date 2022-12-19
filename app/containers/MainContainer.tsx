@@ -1,14 +1,12 @@
 import React, { useContext, useEffect } from 'react';
-import { redirect, Route, Routes } from 'react-router-dom';
-import LandingPageContainer from './LandingPageContainer';
-import WindowBar from '../components/WindowBar';
+import { Route, Routes } from 'react-router-dom';
 import About from '../components/About';
 import Contact from '../components/Contact';
 import Settings from '../components/Settings';
 import Occupied from '../components/Occupied';
 import lightAndDark from '../components/Styling';
 import GraphsContainer from './GraphsContainer';
-import AwaitingApproval from '../components/AwaitingApproval';
+
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/MainContainer.scss';
 
@@ -17,15 +15,8 @@ const MainContainer = React.memo(() => {
   const currentModeCSS =
     mode === 'light mode' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
 
-
-  /* <h1 style={{color: 'red', fontSize: '400px'}}>Hello world</h1> */
-
-  useEffect(() => {
-    getLandingPage();
-  }, []);
   return (
     <>
-      {/* <WindowBar /> */}
       <div className="main-container" style={currentModeCSS}>
         <div className="main-routes">
           <Routes>
@@ -43,10 +34,21 @@ const MainContainer = React.memo(() => {
       </div>
     </>
   );
+});
+
+export default MainContainer;
+
+
+// THE CODE BELOW IS HOW IT SHOULD WORK MORE OR LESS IF YOU WANT TO RE-IMPLEMENT SIGN-IN
+// import LandingPageContainer from './LandingPageContainer';
+// import AwaitingApproval from '../components/AwaitingApproval';
+  // useEffect(() => {
+  //   getLandingPage();
+  // }, []);
 
   // const checkAuth = (Component: any) => {
   //   if (landingPage === 'dashBoard' || authStatus) return <Component />;
-  //   return redirect('/');
+  //   return < Redirect to='/' />);
   // };
 
   // return (
@@ -71,6 +73,3 @@ const MainContainer = React.memo(() => {
   //     </div>
   //   </>
   // );
-});
-
-export default MainContainer;
