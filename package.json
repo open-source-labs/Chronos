@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
+    "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@material-ui/icons": "^4.11.3",
     "antd": "^5.0.7",
     "bcrypt": "^5.1.0",
