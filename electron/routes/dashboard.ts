@@ -28,7 +28,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   state.services.push(newApp);
 
   // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(state));
+  fs.writeFileSync(settingsLocation, JSON.stringify(state, null, '\t'));
 
   // Sync event - return new applications list
   message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
@@ -70,7 +70,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   state.services.splice(index, 1);
 
   // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(state), {
+  fs.writeFileSync(settingsLocation, JSON.stringify(state, null, '\t'), {
     encoding: 'utf8',
   });
 
@@ -95,7 +95,7 @@ ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   state.mode = newMode;
 
   // Update settings.json with new mode
-  fs.writeFileSync(settingsLocation, JSON.stringify(state));
+  fs.writeFileSync(settingsLocation, JSON.stringify(state, null, '\t'));
 
   // Sync event - return new mode
   message.returnValue = state.mode;

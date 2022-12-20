@@ -37,8 +37,6 @@ interface Params {
 
 const GraphsContainer: React.FC = React.memo(props => {
 
-  console.table(props);
-
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
 

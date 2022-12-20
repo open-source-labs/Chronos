@@ -31,23 +31,23 @@ export const DashboardContext = createContext<any>(null);
 const DashboardContextProvider = React.memo(({ children }: Props) => {
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
-  const [landingPage, setLandingPage] = useState<string>('before');
+  // const [landingPage, setLandingPage] = useState<string>('before');
   const [authStatus, setAuth] = useState<boolean>(false);
   const [user, setUser] = useState<{}>({});
 
-  const getLandingPage = useCallback(() => {
-    const result = ipcRenderer.sendSync('getLP');
-    setLandingPage(result);
-  }, []);
+  // const getLandingPage = useCallback(() => {
+  //   const result = ipcRenderer.sendSync('getLP');
+  //   setLandingPage(result);
+  // }, []);
 
-  const updateLandingPage = useCallback((newLP: string) => {
-    const result = ipcRenderer.sendSync('updateLP', newLP);
-    if (result === newLP) {
-      setLandingPage(result);
-      return result;
-    }
-    return 'Error in updateLandingPage in DashboardContext.tsx';
-  }, []);
+  // const updateLandingPage = useCallback((newLP: string) => {
+  //   const result = ipcRenderer.sendSync('updateLP', newLP);
+  //   if (result === newLP) {
+  //     setLandingPage(result);
+  //     return result;
+  //   }
+  //   return 'Error in updateLandingPage in DashboardContext.tsx';
+  // }, []);
 
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
@@ -78,9 +78,9 @@ const DashboardContextProvider = React.memo(({ children }: Props) => {
       value={{
         user,
         setUser,
-        landingPage,
-        getLandingPage,
-        updateLandingPage,
+        // landingPage,
+        // getLandingPage,
+        // updateLandingPage,
         authStatus,
         setAuth,
         applications,
