@@ -4,7 +4,7 @@ import '../stylesheets/Settings.scss';
 // DASHBOARD CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
 
-const Settings: React.SFC = React.memo(() => {
+const Settings: React.FC = React.memo(() => {
   const { changeMode } = useContext(DashboardContext);
   const handleClick = (mode: string) => {
     changeMode(mode);
