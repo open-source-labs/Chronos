@@ -1,74 +1,16 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import 'antd/dist/antd.less';
-import { Switch, Table, Tag, Transfer, Button } from 'antd';
-import difference from 'lodash/difference';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
-// import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
-// import CommunicationPhonelinkSetup from 'material-ui/svg-icons/communication/phonelink-setup';
-
+import { DataGrid } from '@material-ui/data-grid';
 
 interface Params {
   service: string;
 }
 
-const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
-  <Transfer {...restProps}>
-    {({
-      direction,
-      filteredItems,
-      onItemSelectAll,
-      onItemSelect,
-      selectedKeys: listSelectedKeys,
-      disabled: listDisabled,
-    }) => {
-      const columns = direction === 'left' ? leftColumns : rightColumns;
-      const rowSelection = {
-        getCheckboxProps: item => ({
-          disabled: listDisabled || item.disabled,
-        }),
-
-        onSelectAll(selected, selectedRows) {
-          const treeSelectedKeys = selectedRows
-            .filter(item => !item.disabled)
-            .map(({ key }) => key);
-          const diffKeys = selected
-            ? difference(treeSelectedKeys, listSelectedKeys)
-            : difference(listSelectedKeys, treeSelectedKeys);
-          onItemSelectAll(diffKeys, selected);
-        },
-
-        onSelect({ key }, selected) {
-          onItemSelect(key, selected);
-        },
-
-        selectedRowKeys: listSelectedKeys,
-      };
-      return (
-        <Table
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={filteredItems}
-          size="small"
-          style={{
-            pointerEvents: listDisabled ? 'none' : undefined,
-          }}
-          onRow={({ key, disabled: itemDisabled }) => ({
-            onClick: () => {
-              if (itemDisabled || listDisabled) return;
-              onItemSelect(key, !listSelectedKeys.includes(key));
-            },
-          })}
-        />
-      );
-    }}
-  </Transfer>
-);
-
 const TransferColumns = React.memo(() => {
-  const [targetKeys, setTargetKeys] = useState([]);
+  const [targetKeys, setTargetKeys] = useState<any[]>([]);
   const [metricsPool, setMetricsPool] = useState<any[]>([]);
   const [healthMetricsReady, setHealthMetricsReady] = useState(false);
   const [healthMetrics, setHealthMetrics] = useState<any[]>([]);
@@ -123,13 +65,6 @@ const TransferColumns = React.memo(() => {
         setMetricsPool(healthMetrics);
       }
     }
-    // else if (service === 'kubernetesmetrics') {
-    //   if (eventDataList && eventDataList.length > 0) {
-    //     setMetricsPool(getMetrics('event', eventDataList));
-    //   } else if (eventMetricsReady) {
-    //     setMetricsPool(eventMetrics);
-    //   }
-    // } 
     else if (!service.includes('kafkametrics')) {
       if (healthDataList && healthDataList.length > 0) {
         setMetricsPool(getMetrics('health', healthDataList));
@@ -184,39 +119,11 @@ const TransferColumns = React.memo(() => {
     return pool;
   };
 
-  const leftTableColumns = [
-    {
-      dataIndex: 'title',
-      title: 'Metrics',
-    },
-    {
-      dataIndex: 'tag',
-      title: 'Category',
-      render: tag => <Tag>{tag}</Tag>,
-    },
-  ];
-  const rightTableColumns = [
-    {
-      dataIndex: 'title',
-      title: 'Selected Metrics',
-    },
-  ];
-
-  const onChange = nextTargetKeys => {
-    setTargetKeys(nextTargetKeys);
-  };
-
-  const triggerDisable = checked => {
-    setDisabled(checked);
-  };
-
-  const triggerShowSearch = checked => {
-    setShowSearch(checked);
-  };
-  const handleClick = () => {
+  const getCharts = () => {
     // setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
+    console.log('targetKeys is: ', targetKeys)
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -236,55 +143,76 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
+    console.log('temp is: ', temp);
     setSelectedMetrics(temp);
   };
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 100},
+    {
+      field: 'tag',
+      headerName: 'Category',
+      flex: 1,
+      editable: true,
+    },
+    {
+      field: 'title',
+      headerName: 'Metric',
+      flex: 3,
+      editable: true,
+    },
+  ];
+  
+  const rows: any[] = [];
+
+  metricsPool.forEach((el, index) => {
+    const row = {};
+    row['id'] = index;
+    row['tag'] = el.tag;
+    row['title'] = el.title.split(' | ')[1];
+    rows.push(row);
+  });
+
+  const selectedRows: any[] = [];
+
+  targetKeys.forEach(el => {
+    selectedRows.push(<li style={{marginLeft: '30px', marginTop: '5px'}}>{el}</li>)
+  })
 
   return (
     <>
       <div id="getChartsContainer">
-        <Button id="getCharts" type="primary" onClick={handleClick} shape="round" size="middle">
+        {/* <Button id="getCharts" type="primary" onClick={getCharts} shape="round" size="middle">
           Get Charts
-        </Button>
+        </Button> */}
+        <button id="getCharts" onClick={getCharts} style={{"backgroundColor": "red"}}>
+          Get Charts
+        </button>
       </div>
-      <TableTransfer
-        dataSource={metricsPool}
-        targetKeys={targetKeys}
-        disabled={disabled}
-        showSearch={showSearch}
-        onChange={onChange}
-        filterOption={(inputValue, item) =>
-          item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
-        }
-        leftColumns={leftTableColumns}
-        rightColumns={rightTableColumns}
-        listStyle={{
-          width: '40%',
-          height: 1000,
-        }}
-      />
-      <Switch
-        unCheckedChildren="disabled"
-        checkedChildren="disabled"
-        checked={disabled}
-        onChange={triggerDisable}
-        style={{
-          marginTop: 16,
-        }}
-      />
-      <Switch
-        unCheckedChildren="showSearch"
-        checkedChildren="showSearch"
-        checked={showSearch}
-        onChange={triggerShowSearch}
-        style={{
-          marginTop: 16,
-        }}
-      />
+      <div id='transferTest'>
+        <div style={{ height: '500px', width: '100%' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={10}
+            checkboxSelection
+            disableSelectionOnClick
+            onSelectionModelChange={metricIndeces => {
+              const metrics: any[] = [];
+              metricIndeces.forEach(el => {
+                metrics.push(metricsPool[el].key);
+              })
+              setTargetKeys(metrics);
+            }}
+          />
+        </div>
+        {selectedRows.length > 0 && <h3 style={{marginTop: '20px'}}>Selected Rows:</h3>}
+        <ol id="selectedRows">
+          {selectedRows}
+        </ol>
+      </div>
     </>
   );
 });
 
-// function TransferColumns(props) {
-//   return <h1 style={{color: 'red', fontSize: '200px'}}>Hi Gahl</h1>
-// }
 export default TransferColumns;
