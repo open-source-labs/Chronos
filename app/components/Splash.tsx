@@ -5,7 +5,7 @@ interface SplashProps {
   setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Splash: React.SFC<SplashProps> = React.memo(({ setFirstVisit }) => {
+const Splash: React.FC<SplashProps> = React.memo(({ setFirstVisit }) => {
   useEffect(() => {
     setTimeout(() => setFirstVisit(false), 3000);
   }, []);
