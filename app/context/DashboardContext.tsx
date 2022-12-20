@@ -11,9 +11,9 @@ interface IFields {
   description: string;
 }
 
-interface Props {
-  children: React.ReactNode;
-}
+// interface Props {
+//   children: React.ReactNode;
+// }
 
 export const DashboardContext = createContext<any>(null);
 
@@ -28,7 +28,8 @@ export const DashboardContext = createContext<any>(null);
  * @method  changeMode Changes theme/mode in settings.json and updates.
  */
 
-const DashboardContextProvider = React.memo(({ children }: Props) => {
+const DashboardContextProvider = React.memo((props: any) => {
+  const children = props.children;
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
   const [landingPage, setLandingPage] = useState<string>('before');
