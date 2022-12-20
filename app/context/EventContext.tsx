@@ -14,7 +14,11 @@ export const EventContext = React.createContext<any>(null);
 
  */
 
-const EventContextProvider: React.FC = React.memo(({ children }) => {
+interface Props {
+  children: any
+}
+
+const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [eventData, setEventData] = useState({ eventDataList: [], eventTimeList: [] });
   // const [eventKafkaData, setEventKafkaData] = useState({ eventDataList: [], eventTimeList: [] });
   // const [eventKubernetesData, setEventKubernetesData] = useState({ eventDataList: [], eventTimeList: [] });
