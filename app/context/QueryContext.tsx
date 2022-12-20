@@ -8,7 +8,7 @@ export const QueryContext = React.createContext<any>(null);
  * @method    setSelectedMetrics
  */
 
-const QueryContextProvider: React.SFC = React.memo(({ children }) => {
+const QueryContextProvider: React.FC = React.memo(({ children }) => {
   const [selectedMetrics, setSelectedMetrics] = useState([]);
 
   return (
