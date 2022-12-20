@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import About from '../components/About';
 import Contact from '../components/Contact';
@@ -11,9 +11,9 @@ import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/MainContainer.scss';
 
 const MainContainer = React.memo(() => {
-  const { mode, landingPage, getLandingPage, authStatus } = useContext(DashboardContext);
+  const { mode } = useContext(DashboardContext);
   const currentModeCSS =
-    mode === 'light mode' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
+    mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
 
   return (
     <>
