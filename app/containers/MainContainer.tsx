@@ -6,8 +6,9 @@ import Settings from '../components/Settings';
 import Occupied from '../components/Occupied';
 import lightAndDark from '../components/Styling';
 import GraphsContainer from './GraphsContainer';
-
 import { DashboardContext } from '../context/DashboardContext';
+import SignUp from '../components/SignUp';
+import Login from '../components/Login';
 import '../stylesheets/MainContainer.scss';
 
 const MainContainer = React.memo(() => {
@@ -21,6 +22,8 @@ const MainContainer = React.memo(() => {
         <div className="main-routes">
           <Routes>
             <Route path="/" element={<Occupied />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/settings" element={<Settings />} />
