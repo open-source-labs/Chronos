@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../stylesheets/Splash.scss';
 
-interface SplashProps {
-  setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;
-}
+// interface SplashProps {
+//   setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;
+// }
 
-const Splash: React.FC<SplashProps> = React.memo(({ setFirstVisit }) => {
+const Splash: React.FC = React.memo((props) => {
+  const [visible, setVisible] = useState(true);
   useEffect(() => {
-    setTimeout(() => setFirstVisit(false), 3000);
+    setTimeout(() => setVisible(false), 4000);
   }, []);
 
   return (
-    <div id="splash">
-      <img id="splashLogo" src="../assets/logo.svg" alt="Chronos" />
-    </div>
+    <>
+      {visible &&
+          <div id="splash">
+          <img id="splashLogo" src="../assets/logo.svg" alt="Chronos" />
+        </div>
+      }
+    </>
   );
 });
 
