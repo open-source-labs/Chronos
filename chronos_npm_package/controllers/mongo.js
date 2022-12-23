@@ -7,6 +7,7 @@ const ContainerInfoFunc = require('../models/ContainerInfo');
 const KafkaModel = require('../models/KafkaModel');
 const KubernetesModel = require('../models/KubernetesModel.js');
 const { collectHealthData } = require('./healthHelpers.js');
+const MetricsModel = require('../models/MetricsModel');
 const dockerHelper = require('./dockerHelper');
 const utilities = require('./utilities');
 require('../models/ContainerInfo');
@@ -176,7 +177,7 @@ mongo.saveService = (config) => {
     .catch(err => console.log(`Error saving "${microservice}" to the services table: `, err.message));
 }
 
-mongo.setQueryOnInterval = (config) => {
+mongo.setQueryOnInterval = async (config) => {
   let model;
   if (config.mode === 'kafka') {
     model = KafkaModel;
@@ -185,10 +186,36 @@ mongo.setQueryOnInterval = (config) => {
   } else {
     throw new Error('Unrecognized mode');
   }
+  // When querying for currentMetrics, we should narrow down the result to only include metrics for the current service being used.
+  // This way, when we go to compare parsedArray to current Metrics, the length of the arrays should match up unless there are new metrics available to view
+  // The below code will not work because it is attempting to find any metrics model whose mode is the config mode, but metrics model does not include 'mode' right now
+  // We could compare current config mode to the "category" from parsedArray?
+
+  const URI = utilities.getMetricsURI(config);
+  let currentMetrics = await MetricsModel.find({mode: config.mode});
 
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
-    utilities.getMetricsQuery(config)
+    utilities.getMetricsQuery(config, URI)
+      // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
+      .then(async (parsedArray) => {
+        if (!currentMetrics.length && parsedArray.length) {
+          currentMetrics = parsedArray;
+          const met = [];
+          for (const m of parsedArray) {
+            const { metric, category } = m;
+            met.push(MetricsModel({ metric: metric, mode: config.mode }))
+          }
+          await MetricsModel.insertMany(met, (err) => {
+            if (err) console.error(err);
+          })
+        }
+        if (currentMetrics.length !== parsedArray.length) {
+          console.log('currentMetrics does not equal parsedArray length, new metrics available to track');
+          console.log('currentMetrics.length is: ', currentMetrics.length, ' and parsedArray.length is: ', parsedArray.length);
+        }
+        return parsedArray;
+      })
       .then(parsedArray => {
         const documents = [];
         for (const metric of parsedArray) {

@@ -25,7 +25,7 @@ const helpers = {
   */
   validateInput: (config) => {
     const out = config;
-    const { microservice, database, interval, dockerized, jmxuri, port } = config;
+    const { microservice, database, interval, dockerized, jmxuri, port, mode, promService, promPort} = config;
 
     // Validate all required fields exist and are valid input types
     if (!microservice || typeof microservice !== 'string') {
@@ -45,11 +45,23 @@ const helpers = {
       );
     }
 
+    const modeTypes = ['kafka', 'kubernetes', 'microservices']
+
+    if (!mode || !modeTypes.includes(mode)) {
+      throw new Error('You must input a mode into your chronos.config file. The mode may either be "kubernetes", "kafka", or "microservice"')
+    }
+
     // validate that the jmxuri is a string
-    if (jmxuri && typeof jmxuri !== 'string') {
+    if (mode === 'kafka' && jmxuri && typeof jmxuri !== 'string') {
       throw new Error(
         'Invalid input for "jmxuri" in chronos-config.js: Please provide the address of the JMX Exporter'
       );
+    }
+
+    if (mode === 'kubernetes') {
+      if (!promService || typeof promService !== 'string' || !promPort || typeof promPort !== 'number') {
+        throw new Error('Invalid input for promService or promPort. promPort must be number and promService must be a string')
+      }
     }
 
     // Validate database type
@@ -112,8 +124,7 @@ const helpers = {
       })
   },
 
-  getMetricsQuery: (config) => {
-    const URI = helpers.getMetricsURI(config);
+  getMetricsQuery: (config, URI) => {
     return axios.get(URI)
       .then((response) => helpers.extractWord(config.mode, response.data))
       .catch((err) => console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n',err))
