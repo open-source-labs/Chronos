@@ -1,8 +1,8 @@
 # JS Project-Specific #
 #######################
 # node_modules
-dist
-build
+/dist
+/build
 release-builds
 coverage
 __tests__/**/__snapshots__
