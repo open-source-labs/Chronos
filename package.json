@@ -12,7 +12,6 @@
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@material-ui/icons": "^4.11.3",
     "bcrypt": "^5.1.0",
-    "d3": "^7.7.0",
     "dotenv": "^16.0.3",
     "electron": "^22.0.0",
     "electron-fetch": "^1.9.1",

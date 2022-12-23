@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/Splash.scss';
 
-// interface SplashProps {
-//   setFirstVisit: React.Dispatch<React.SetStateAction<boolean>>;
-// }
-
 const Splash: React.FC = React.memo((props) => {
   const [visible, setVisible] = useState(true);
   useEffect(() => {

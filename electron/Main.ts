@@ -1,6 +1,4 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-
-import './routes/user';
 import './routes/dashboard';
 import './routes/data';
 import path from 'path';
