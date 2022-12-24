@@ -193,33 +193,38 @@ mongo.setQueryOnInterval = async (config) => {
 
   const URI = utilities.getMetricsURI(config);
   let currentMetrics = await MetricsModel.find({mode: config.mode});
+  let currentMetricsNames = {};
 
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     utilities.getMetricsQuery(config, URI)
       // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
       .then(async (parsedArray) => {
-        if (!currentMetrics.length && parsedArray.length) {
-          currentMetrics = parsedArray;
-          const met = [];
-          for (const m of parsedArray) {
-            const { metric, category } = m;
-            met.push(MetricsModel({ metric: metric, mode: config.mode }))
-          }
-          await MetricsModel.insertMany(met, (err) => {
-            if (err) console.error(err);
-          })
-        }
+        // This conditional would be used if new metrics are available to be tracked.
         if (currentMetrics.length !== parsedArray.length) {
           console.log('currentMetrics does not equal parsedArray length, new metrics available to track');
           console.log('currentMetrics.length is: ', currentMetrics.length, ' and parsedArray.length is: ', parsedArray.length);
+          const newMets = [];
+          parsedArray.forEach(el => {
+            if (!(el.metric in currentMetricsNames)) {
+              const { metric } = el;
+              newMets.push(MetricsModel({metric: metric, mode: config.mode}))
+              currentMetricsNames[el.metric] = true;
+            }
+          })
+          await MetricsModel.insertMany(newMets, (err) => {
+            if (err) console.error(err)
+          })
         }
         return parsedArray;
       })
       .then(parsedArray => {
         const documents = [];
         for (const metric of parsedArray) {
-          documents.push(model(metric));
+          // This will check if the current metric in the parsed array evaluates to true within the currentMetricNames object.
+          // The currentMetricNames object is updated by the user when they select/deselect metrics on the electron app, so only the
+          // requested metrics will actually be populated in the database, which helps to avoid overloading the db with unnecessary data.
+          if (currentMetricsNames[metric.metric]) documents.push(model(metric));
         }
         return model.insertMany(documents, (err) => {
           if (err) console.error(err);
