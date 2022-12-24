@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import './routes/dashboard';
+import { clearGuestSettings } from './routes/dashboard';
 import './routes/data';
 import path from 'path';
 
@@ -30,17 +31,26 @@ const createWindow = () => {
     // Production
     win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
   }
+  
   ipcMain.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();
   });
+
   ipcMain.on('min', () => {
     win.minimize();
   });
+
   ipcMain.on('close', () => {
     win.close();
   });
+
+  win.on('close', () => {
+    clearGuestSettings()
+  })
 };
+
+
 
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);

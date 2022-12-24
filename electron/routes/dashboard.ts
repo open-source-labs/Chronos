@@ -5,9 +5,43 @@ import fs from 'fs';
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
-class Settings {
+
+// GLOBAL VARIABLES
+let currentUser = 'guest';
+const guestPath = path.resolve(__dirname, '../../settings/', 'temp_settings.json');
+let settingsLocation = getSettingsName(currentUser);
+
+
+function getSettingsName(username) {
+  if (username === 'guest') {
+    return guestPath;
+  } else {
+    return path.resolve(__dirname, '../../settings/', 'settings.json');
+  }
+}
+
+
+class User {
+  username: string;
+  password: string;
+  email: string;
+
+  constructor(username: string, password: string, email: string) {
+    this.username = username;
+    this.password = this.hashPassword(password);
+    this.email = email;
+  }
+
+  hashPassword(password: string) {
+    const salt = bcrypt.genSaltSync(saltRounds);
+    return bcrypt.hashSync(password, salt);
+  }
+}
+
+
+class UserSettings {
   user: User | null;
-  services: string[];
+  services: string[][];
   mode: string;
 
   constructor(user: User) {
@@ -17,39 +51,22 @@ class Settings {
   }
 }
 
-class User {
-  username: string;
-  password: string;
-  email: string;
 
-  constructor(username: string, password: string, email: string) {
-    username: username;
-    password: password;
-    email: email;
+function getUserSettings(settings, username) {
+  for (const setting of settings) {
+    if (setting.user.username === username) {
+      return setting
+    };
   }
-}
-// DEFAULT VALUES
-let currentUser = 'guest';
-let settingsRoot;
-let userRoot;
-if (process.env.NODE_ENV === 'development') {
-  settingsRoot= path.resolve(__dirname, '../../__tests__/');
-  userRoot = path.resolve(__dirname, '../../__tests__/');
-} else {
-  settingsRoot = path.resolve(__dirname, '../../');
-  userRoot = path.resolve(__dirname, '../../');
+  throw new Error(`Unable to find settings for username ${username}`)
 }
 
-let settingsLocation;
-let usersLocation;
-function getLocations(username) {
-  if (username === 'guest') {
-    settingsLocation = path.resolve(settingsRoot, 'temp_settings.json');
-    usersLocation = path.resolve(settingsRoot, 'test_users.json');
-  } else {
-    settingsLocation = path.resolve(settingsRoot, 'settings.json');
-    usersLocation = path.resolve(settingsRoot, 'users.json');
-  }
+function clearGuestSettings() {
+  const guestSettings = JSON.parse(fs.readFileSync(guestPath).toString('utf8'));
+  // Guest Settings will be an array of length 1 with one object inside
+  guestSettings[0].services = [];
+  guestSettings.mode = 'light';
+  fs.writeFileSync(guestPath, JSON.stringify(guestSettings, null, '\t'));
 }
 
 /**
@@ -59,7 +76,8 @@ function getLocations(username) {
  */
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   // Retrieves file contents from settings.json
-  const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const services = getUserSettings(settings, currentUser).services;
 
   // Add new applicaiton to list
   const newApp = JSON.parse(application);
@@ -69,13 +87,13 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   newApp.push(createdOn);
 
   // Add app to list of applications
-  state.services.push(newApp);
+  services.push(newApp);
 
   // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(state, null, '\t'));
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
-  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
 });
 
 
@@ -85,20 +103,15 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
  * @return  Returns the list of applications
  */
 // Load settings.json and returns updated state back to the render process on ipc 'dashboard' request
-ipcMain.on('getApps', message => {
+ipcMain.on('getApps', (message: IpcMainEvent) => {
   // Retrieves file contents from settings.json for current Apps
-  const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  // Retrieves files contents from setting.json for current Mode
-  const temp = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  // Destructure list of services from state to be rendered on the dashboard
-  const dashboardList = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]); // .map((arr: string[]) => [...arr]);
-  // ["chronosDB",
-  // "MongoDB",
-  // "mongodb+srv://jj289:Codesmith123@clusterchronos.vwtqgxp.mongodb.net/chronosDB?retryWrites=true&w=majority",
-  // "",
-  // "Dec 13, 2022 10:16 AM"]
-  // Sync event - return new applications list w/ user settings: Mode
-  message.returnValue = [dashboardList, temp.mode];
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const userSettings = getUserSettings(settings, currentUser);
+  const services: string[][] = userSettings.services;
+
+  // Return an array of arrays that is a subset of the full services array
+  const dashboardList: string[][] = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  message.returnValue = dashboardList;
 });
 
 
@@ -109,19 +122,29 @@ ipcMain.on('getApps', message => {
  */
 ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   // Retrives file contents from settings.json
-  const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const userServices = getUserSettings(settings, currentUser).services;
 
   // Remove application from settings.json
-  state.services.splice(index, 1);
+  userServices.splice(index, 1);
 
   // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(state, null, '\t'), {
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'), {
     encoding: 'utf8',
   });
 
   // Sync event - return new applications list
-  message.returnValue = state.services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
 });
+
+
+ipcMain.on('getMode', (message: IpcMainEvent) => {
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const userSettings = getUserSettings(settings, currentUser);
+
+  // Sync event - return user's mode
+  message.returnValue = userSettings.mode;
+})
 
 
 /**
@@ -132,72 +155,62 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
 // Loads existing setting JSON and update settings to include updated mode version
 ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   // Retrives file contents from settings.json
-  const state = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const userSettings = getUserSettings(settings, currentUser);
+  userSettings.mode = currMode;
 
-  // Add new mode
-  const newMode = currMode;
-
-  // mode to settings
-  state.mode = newMode;
 
   // Update settings.json with new mode
-  fs.writeFileSync(settingsLocation, JSON.stringify(state, null, '\t'));
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new mode
-  message.returnValue = state.mode;
+  message.returnValue = currMode;
 });
 
 
-ipcMain.on(
-  'addUser',
-  (message: IpcMainEvent, user: { email: string; username: string; password: string }) => {
-    const { email, username, password } = user;
-    if (!fs.existsSync(usersLocation)) {
-      const firstUser: {
-        [key: string]: {
-          email: string;
-          username: string;
-          password: string;
-          admin: boolean;
-          awaitingApproval: boolean;
-        };
-      } = {};
-      const salt = bcrypt.genSaltSync(saltRounds);
-      const hash = bcrypt.hashSync(password, salt);
-      firstUser[email] = {
-        email,
-        username,
-        password: hash,
-        admin: true,
-        awaitingApproval: false,
-      };
-      fs.writeFileSync(usersLocation, JSON.stringify(firstUser, null, '\t'));
-      message.returnValue = firstUser;
-    } else message.returnValue = ensureEmailIsUnique();
+ipcMain.on('addUser', (message: IpcMainEvent, user: { username: string; password: string, email: string;  }) => {
+  const { username, password, email } = user;
 
-    function ensureEmailIsUnique() {
-      const users = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
-      if (email in users) return false;
-      users[email] = { email, username, password, admin: false, awaitingApproval: true };
-      fs.writeFileSync(usersLocation, JSON.stringify(users, null, '\t'));
-      return true;
+  // Verify that username and email have not been taken
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  for (const setting of settings) {
+    if (setting.user.username === username || setting.user.email === email) {
+      message.returnValue = false;
+      return;
     }
   }
-);
 
-
-ipcMain.on('verifyUser', (message: IpcMainEvent, user: { email: string; password: string }) => {
-  const { email, password } = user;
-  const users = JSON.parse(fs.readFileSync(usersLocation).toString('utf8'));
-  const currUser: {
-    email: string;
-    username: string;
-    password: string;
-    admin: boolean;
-    awaitingApproval: boolean;
-  } = users[email];
-  const checkPassword = bcrypt.compareSync(password, users[email]?.password);
-  if (email in users && checkPassword)
-    message.returnValue = currUser.awaitingApproval ? 'awaitingApproval' : currUser;
-  else message.returnValue = false;
+  // Add the new user to the local storage
+  const newUser = new User(username, password, email);
+  settings.push(new UserSettings(newUser));
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+  message.returnValue = true;
+  return;
 });
+
+
+ipcMain.on('verifyUser', (message: IpcMainEvent, user: { username: string; password: string }) => {
+  const { username, password } = user;
+  
+  // Load in the stored users
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  for (const setting of settings) {
+    // Verify that the username exists and the passwords match
+    if (setting.user.username === username && bcrypt.compareSync(password, setting.user.password)) {
+      message.returnValue = settings.user;
+      return;
+    }
+  }
+  message.returnValue = false;
+  return;
+});
+
+
+ipcMain.on('signOut', (message: IpcMainEvent) => {
+  currentUser = 'guest';
+  settingsLocation = guestPath;
+  message.returnValue = true;
+  return;
+})
+
+export { clearGuestSettings };

@@ -7,7 +7,7 @@ const { ipcRenderer } = window.require('electron');
 
 const Login = React.memo(() => {
   const navigate = useNavigate();
-  const { updateLandingPage, setAuth, setUser } = useContext(DashboardContext);
+  const { setUser } = useContext(DashboardContext);
   const [failedAuth, setFailedAuthState] = useState<JSX.Element>(<></>);
 
   /** From Version 5.2 Team:
@@ -34,10 +34,10 @@ const Login = React.memo(() => {
         } = ipcRenderer.sendSync('verifyUser', { email, password });
     if (typeof validLogin === 'object') {
       setUser(validLogin);
-      setAuth(true);
-      navigate('/applications');
-    } else if (validLogin === 'awaitingApproval') navigate('/awaitingApproval');
-    else setFailedAuthState(<p>Sorry your authentication failed please try again.</p>);
+      navigate('/');
+    } else {
+      setFailedAuthState(<p>Sorry your authentication failed please try again.</p>);
+    }
   };
 
   return (
@@ -56,7 +56,7 @@ const Login = React.memo(() => {
           <button className="link" id="submitBtn" type="submit">
             Login
           </button>
-          <button className="link needAccount" onClick={() => updateLandingPage('signUp')}>
+          <button className="link needAccount" onClick={() => navigate('/signup')}>
             Need an account?
           </button>
         </form>
