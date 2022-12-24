@@ -119,3 +119,5 @@ export const useIsMount = () => {
   }, []);
   return isMountRef.current;
 };
+
+export const guestUser = {username: "guest"}

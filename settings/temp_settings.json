@@ -1,0 +1,11 @@
+[
+	{
+		"user": {
+			"username": "guest",
+			"password": "",
+			"email": ""
+		},
+		"services": [],
+		"mode": "light"
+	}
+]

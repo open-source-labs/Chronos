@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
+import { guestUser } from './helpers';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -33,8 +34,8 @@ const DashboardContextProvider = React.memo((props: any) => {
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('');
   // const [landingPage, setLandingPage] = useState<string>('before');
-  const [authStatus, setAuth] = useState<boolean>(false);
-  const [user, setUser] = useState<{}>({});
+  // const [authStatus, setAuth] = useState<boolean>(false);
+  const [user, setUser] = useState<{}>(guestUser);
 
   // const getLandingPage = useCallback(() => {
   //   const result = ipcRenderer.sendSync('getLP');
@@ -52,8 +53,9 @@ const DashboardContextProvider = React.memo((props: any) => {
 
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
-    setApplications(result[0]);
-    setMode(result[1]);
+    setApplications(result);
+    const mode = ipcRenderer.sendSync('getMode');
+    setMode(mode);
   }, []);
 
   const addApp = useCallback((fields: IFields) => {
@@ -82,8 +84,8 @@ const DashboardContextProvider = React.memo((props: any) => {
         // landingPage,
         // getLandingPage,
         // updateLandingPage,
-        authStatus,
-        setAuth,
+        // authStatus,
+        // setAuth,
         applications,
         getApplications,
         addApp,

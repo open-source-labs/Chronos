@@ -40,39 +40,3 @@ const MainContainer = React.memo(() => {
 });
 
 export default MainContainer;
-
-
-// THE CODE BELOW IS HOW IT SHOULD WORK MORE OR LESS IF YOU WANT TO RE-IMPLEMENT SIGN-IN
-// import LandingPageContainer from './LandingPageContainer';
-// import AwaitingApproval from '../components/AwaitingApproval';
-  // useEffect(() => {
-  //   getLandingPage();
-  // }, []);
-
-  // const checkAuth = (Component: any) => {
-  //   if (landingPage === 'dashBoard' || authStatus) return <Component />;
-  //   return < Redirect to='/' />);
-  // };
-
-  // return (
-  //   <>
-  //     {/* <WindowBar /> */}
-  //     <div className="main-container" style={currentModeCSS}>
-  //       <div className="main-routes">
-  //         <Routes>
-  //           <Route path="/" element={LandingPageContainer} />
-  //           <Route path="/awaitingApproval" element={AwaitingApproval} />
-  //           <Route path="/about" element={() => checkAuth(About)} />
-  //           <Route path="/contact" element={() => checkAuth(Contact)} />
-  //           <Route path="/settings" element={() => checkAuth(Settings)} />
-  //           <Route path="/applications" element={() => checkAuth(Occupied)} />
-  //           <Route
-  //             path="/applications/:app/:service"
-  //             element={() => checkAuth(GraphsContainer)}
-  //           />
-  //           <Route path="*" element={() => <h1>Not found</h1>} />
-  //         </Routes>
-  //       </div>
-  //     </div>
-  //   </>
-  // );
