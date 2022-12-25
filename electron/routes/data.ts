@@ -13,6 +13,7 @@ import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
 //import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
+import MetricsModel from '../models/MetricsModel';
 
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
@@ -189,6 +190,35 @@ ipcMain.on('dockerRequest', async (message, service) => {
   }
 });
 
+// This event allows the user to change which metrics are saved by the database, so that their database doesn't get bloated with unnecessary data that they don't actually want.
+ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
+  try {
+    let result: any;
+
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      // Get all documents from the services collection
+      result = await MetricsModel.find().exec();
+    }
+
+    // SQL Database
+    // if (currentDatabaseType === 'SQL') {
+    //   // Get all rows from the services table
+    //   const query = `SELECT * FROM services`;
+    //   result = await pool.query(query);
+    //   result = result.rows;
+    // }
+
+    // Async event emitter - send response
+    message.sender.send('savedMetricsResponse', result);
+    // eslint-disable-next-line no-shadow
+  } catch ({ message }) {
+    console.log('Error in "metricsRequest" event :', message);
+  }
+});
+
+
+
 /**
  * @event   eventRequest/EventResponse
  * @desc    
@@ -245,7 +275,6 @@ ipcMain.on('kubernetesRequest', async (message) => {
       // Get last 50 documents. If less than 50 get all
     result = await postgresFetch('kubernetesmetrics', pool);
     }
-
     message.sender.send('kubernetesResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors

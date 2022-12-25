@@ -16,7 +16,7 @@ const QueryContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [selectedMetrics, setSelectedMetrics] = useState([]);
 
   return (
-   <QueryContext.Provider value={{ selectedMetrics, setSelectedMetrics}}>
+    <QueryContext.Provider value={{ selectedMetrics, setSelectedMetrics}}>
       {children}
     </QueryContext.Provider>
   );

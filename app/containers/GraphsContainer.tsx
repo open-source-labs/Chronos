@@ -17,13 +17,13 @@ import LogsTable from '../charts/LogsTable';
 import EventContainer from './EventContainer';
 import QueryContainer from './QueryContainer';
 import HealthContainer from './HealthContainer';
+import ModifyMetrics from './ModifyMetricsContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
 interface Params {
   app: any;
   service: string;
-
 }
 
 // interface GraphsContainerProps {
@@ -37,11 +37,8 @@ interface Params {
 
 const GraphsContainer: React.FC = React.memo(props => {
 
-  console.table(props);
-
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
-
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
   const { servicesData } = useContext(ApplicationContext);
@@ -154,6 +151,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
+
   return (
     <>
       <nav id="navigationBar">
@@ -188,6 +186,14 @@ const GraphsContainer: React.FC = React.memo(props => {
         >
           Communication
         </button>
+        <button
+          id="modify-metrics-button"
+          className={chart === 'modifyMetrics' ? 'selected' : undefined}
+          onClick={() => {routing('modifyMetrics')}}
+          key="4"
+        >
+          Modify Metrics
+        </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
@@ -214,6 +220,7 @@ const GraphsContainer: React.FC = React.memo(props => {
               <EventContainer colourGenerator={stringToColour} sizing="solo" />
             )}
             {chart === 'docker' && <DockerChart />}
+            {chart === 'modifyMetrics' && <ModifyMetrics />}
           </div>
         )}
       </div>

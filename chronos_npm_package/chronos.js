@@ -133,6 +133,7 @@ class Chronos {
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.serverQuery(this.config);
+      return mongo.modifyMetrics(this.config);
     }
   
     else if (this.config.database.type === 'PostgreSQL') {

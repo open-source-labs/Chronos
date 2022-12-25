@@ -21,6 +21,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo((props)
   const children = props.children;
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
+  const [savedMetrics, setSavedMetrics] = useState([]);
+
   function tryParseJSON(jsonString: any) {
     try {
       const o = JSON.parse(jsonString);
@@ -56,9 +58,17 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo((props)
     });
   }, []);
 
+  const getSavedMetrics = useCallback(() => {
+    ipcRenderer.send('savedMetricsRequest');
+
+    ipcRenderer.on('savedMetricsResponse', (event: Electron.Event, data: any) => {
+      setSavedMetrics(data);
+    });
+  }, []);
+
   return (
     <ApplicationContext.Provider
-      value={{ connectToDB, fetchServicesNames, setServicesData, servicesData, app }}
+      value={{ connectToDB, fetchServicesNames, setServicesData, servicesData, app, getSavedMetrics, savedMetrics }}
     >
       {children}
     </ApplicationContext.Provider>
