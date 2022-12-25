@@ -15,7 +15,7 @@ const book_db_URI = process.env.BOOK_URI;
 // connect the database, if error, log will be sent to the terminal
 mongoose
   .connect(book_db_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected!!!********* Books Database is live!!!'))
+  .then(() => console.log('Connected! Books Database is live!'))
   .catch((err) => console.log('Connection Error ', err));
 
 //  Schema for the database

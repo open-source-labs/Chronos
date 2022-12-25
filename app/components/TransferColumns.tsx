@@ -123,7 +123,6 @@ const TransferColumns = React.memo(() => {
     // setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
-    console.log('targetKeys is: ', targetKeys)
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -143,7 +142,6 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
-    console.log('temp is: ', temp);
     setSelectedMetrics(temp);
   };
 

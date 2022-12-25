@@ -10,11 +10,16 @@ const { collectHealthData } = require('./healthHelpers.js');
 const MetricsModel = require('../models/MetricsModel');
 const dockerHelper = require('./dockerHelper');
 const utilities = require('./utilities');
+const { config } = require('webpack');
 require('../models/ContainerInfo');
 
 mongoose.set('strictQuery', true);
 
 const mongo = {};
+
+const URI = utilities.getMetricsURI(config);
+const currentMetrics = await MetricsModel.find({mode: config.mode});
+const currentMetricsNames = {};
 
 /**
  * Initializes connection to MongoDB database using provided URI
@@ -191,10 +196,6 @@ mongo.setQueryOnInterval = async (config) => {
   // The below code will not work because it is attempting to find any metrics model whose mode is the config mode, but metrics model does not include 'mode' right now
   // We could compare current config mode to the "category" from parsedArray?
 
-  const URI = utilities.getMetricsURI(config);
-  let currentMetrics = await MetricsModel.find({mode: config.mode});
-  let currentMetricsNames = {};
-
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     utilities.getMetricsQuery(config, URI)
@@ -233,6 +234,18 @@ mongo.setQueryOnInterval = async (config) => {
       .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
   }, config.interval);
+}
+
+mongo.modifyMetrics = (config) => {
+  return function (req, res, next) {
+    res.on('finish', () => {
+      if (req.body.URI === URI && req.body.mode === config.mode) {
+        currentMetricsNames = req.body.metrics;
+      }
+      else return next({err: 'Modified metrics passed in to the modifyMetrics route cannot be added', log: 'It is possible that the URI is incorrect, or that you are attempting to add metrics for the incorrect mode type'})
+    });
+    return next();
+  };
 }
 
 
