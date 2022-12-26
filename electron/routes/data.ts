@@ -193,12 +193,12 @@ ipcMain.on('dockerRequest', async (message, service) => {
 // This event allows the user to change which metrics are saved by the database, so that their database doesn't get bloated with unnecessary data that they don't actually want.
 ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   try {
-    let result: any;
+    let result: Object[] = [];
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents from the services collection
-      result = await MetricsModel.find().exec();
+      result = await MetricsModel.find().lean();
     }
 
     // SQL Database

@@ -4,6 +4,8 @@ import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import { DataGrid } from '@material-ui/data-grid';
+import * as DashboardContext from '../context/DashboardContext';
+import lightAndDark from './Styling';
 
 interface Params {
   service: string;
@@ -22,9 +24,12 @@ const TransferColumns = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const { eventData } = useContext(EventContext);
   const { service } = useParams<keyof Params>() as Params;
+  const { mode } = useContext(DashboardContext.DashboardContext);
 
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
+
+  const currentMode = mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   useEffect(() => {
     if (healthDataList && healthDataList.length > 0) {
@@ -174,7 +179,7 @@ const TransferColumns = React.memo(() => {
   const selectedRows: any[] = [];
 
   targetKeys.forEach(el => {
-    selectedRows.push(<li style={{marginLeft: '30px', marginTop: '5px'}}>{el}</li>)
+    selectedRows.push(<li style={{marginLeft: '30px', marginTop: '5px', color: currentMode.color}}>{el}</li>)
   })
 
   return (
@@ -183,13 +188,14 @@ const TransferColumns = React.memo(() => {
         {/* <Button id="getCharts" type="primary" onClick={getCharts} shape="round" size="middle">
           Get Charts
         </Button> */}
-        <button id="getCharts" onClick={getCharts} style={{"backgroundColor": "red"}}>
-          Get Charts
+        <button id="getCharts" className="select" onClick={getCharts}>
+          Generate Charts
         </button>
       </div>
       <div id='transferTest'>
         <div style={{ height: '500px', width: '100%' }}>
           <DataGrid
+            style={currentMode}
             rows={rows}
             columns={columns}
             pageSize={10}
@@ -204,7 +210,7 @@ const TransferColumns = React.memo(() => {
             }}
           />
         </div>
-        {selectedRows.length > 0 && <h3 style={{marginTop: '20px'}}>Selected Rows:</h3>}
+        {selectedRows.length > 0 && <h3 style={{marginTop: '20px', color: currentMode.color}}>Selected Rows:</h3>}
         <ol id="selectedRows">
           {selectedRows}
         </ol>
