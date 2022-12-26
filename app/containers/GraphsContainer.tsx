@@ -15,9 +15,11 @@ import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 import LogsTable from '../charts/LogsTable';
 import EventContainer from './EventContainer';
-import QueryContainer from './QueryContainer';
+import TransferColumns from '../components/TransferColumns';
 import HealthContainer from './HealthContainer';
 import ModifyMetrics from './ModifyMetricsContainer';
+import * as DashboardContext from '../context/DashboardContext';
+import lightAndDark from '../components/Styling';
 
 import '../stylesheets/GraphsContainer.scss';
 
@@ -41,7 +43,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-  const { servicesData } = useContext(ApplicationContext);
+  const { servicesData, getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
   const { fetchEventData, setEventData } = useContext(EventContext);
@@ -51,6 +53,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   const { selectedMetrics } = useContext(QueryContext);
   const [chart, setChart] = useState<string>('all');
   const [prevRoute, setPrevRoute] = useState<string>('');
+  const { mode } = useContext(DashboardContext.DashboardContext);
 
   useEffect(() => {
     const serviceArray = service.split(' ');
@@ -84,6 +87,7 @@ const GraphsContainer: React.FC = React.memo(props => {
       if (service.includes('kubernetesmetrics')) {
         fetchEventData('kubernetesmetrics');
       }
+      getSavedMetrics();
     }
 
     return () => {
@@ -93,6 +97,9 @@ const GraphsContainer: React.FC = React.memo(props => {
       setEventData({ eventDataList: [], eventTimeList: [] });
     };
   }, [service, live]);
+
+  const currentMode =
+    mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const routing = (route: string) => {
     if (location.href.includes('communications')) {
@@ -207,7 +214,7 @@ const GraphsContainer: React.FC = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'all' && <QueryContainer />}
+            {chart === 'all' && <div className="transferColumns"><h2 style={currentMode}>Search Your Metrics to Display</h2><TransferColumns /></div>}
             {chart.startsWith('health_') && (
               <HealthContainer
                 colourGenerator={stringToColour}
