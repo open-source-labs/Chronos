@@ -5,27 +5,5 @@
 		"email": "",
 		"services": [],
 		"mode": "light"
-	},
-	"troy": {
-		"username": "troy",
-		"password": "$2b$12$EvVjKO85x6HzA1JMvU4K5edGhFqMaGlrRuqaYMOObJwlbJF652poa",
-		"email": "troy@troy",
-		"services": [
-			[
-				"troyDB",
-				"MongoDB",
-				"mongodb+srv://troyprejusa:learning@learning.logqirh.mongodb.net/test?retryWrites=true&w=majority",
-				"troyDB",
-				"Dec 27, 2022 2:53 PM"
-			],
-			[
-				"hi",
-				"SQL",
-				"postgres://uoohvhke:dlE9qTEqDVsGbCX_y84hFGqjlx2_1rcU@mahmud.db.elephantsql.com/uoohvhke",
-				"hi",
-				"Dec 27, 2022 3:01 PM"
-			]
-		],
-		"mode": "light"
 	}
 }
