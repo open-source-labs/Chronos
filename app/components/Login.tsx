@@ -18,22 +18,13 @@ const Login = React.memo(() => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const inputFields: HTMLInputElement[] = e.currentTarget.querySelectorAll('input');
-    const email = inputFields[0].value;
+    const username = inputFields[0].value;
     const password = inputFields[1].value;
     // eslint-disable-next-line no-return-assign
     inputFields.forEach(input => (input.value = ''));
-    const validLogin:
-      | boolean
-      | string
-      | {
-          email: string;
-          username: string;
-          password: string;
-          admin: boolean;
-          awaitingApproval: boolean;
-        } = ipcRenderer.sendSync('verifyUser', { email, password });
-    if (typeof validLogin === 'object') {
-      setUser(validLogin);
+    const validLogin: boolean = ipcRenderer.sendSync('login', { username, password });
+    if (validLogin) {
+      setUser(username);
       navigate('/');
     } else {
       setFailedAuthState(<p>Sorry your authentication failed please try again.</p>);
@@ -46,11 +37,11 @@ const Login = React.memo(() => {
         <h1>Welcome to Chronos!</h1>
         <h2>Please enter your credentials to login.</h2>
         <form className="form" onSubmit={handleSubmit}>
-          <label className="email">
-            <input type="email" name="email" id="email" placeholder="your@email.here" />
+          <label htmlFor='username'>
+            <input type="text" name="username" id="username" placeholder="username" />
           </label>
-          <label className="password">
-            <input type="password" name="password" id="password" placeholder="enter password" />
+          <label htmlFor='password'>
+            <input type="password" name="password" id="password" placeholder="password" />
           </label>
           {failedAuth}
           <button className="link" id="submitBtn" type="submit">

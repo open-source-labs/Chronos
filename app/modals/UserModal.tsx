@@ -14,7 +14,7 @@ interface UserModalProps {
 }
 
 const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
-  const { user, setUser } = useContext(DashboardContext);
+  const { user, setUser, setApplications, setMode } = useContext(DashboardContext);
 
   const navigate = useNavigate();
   
@@ -24,7 +24,7 @@ const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
         <div>
           <h2>Hello {user.username}</h2> <PersonIcon className="navIcon" id="personIcon" />
         </div>
-        {user.username === 'guest' ?
+        {user === 'guest' ?
         <>
           <Button variant="contained" onClick={() => navigate('/login')}>Log In</Button>
           <br></br><br></br>
@@ -44,7 +44,9 @@ const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
   );
 
   function handleSignout() {
-    setUser(guestUser);
+    setUser(guestUser.username);
+    setApplications(guestUser.services);
+    setMode(guestUser.mode);
     ipcRenderer.sendSync('signOut');
     setOpen(false);
   }
