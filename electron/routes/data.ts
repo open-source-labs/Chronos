@@ -193,7 +193,7 @@ ipcMain.on('dockerRequest', async (message, service) => {
 // This event allows the user to change which metrics are saved by the database, so that their database doesn't get bloated with unnecessary data that they don't actually want.
 ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   try {
-    let result: Object[] = [];
+    let result: Object = {};
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
@@ -212,8 +212,8 @@ ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
     // Async event emitter - send response
     message.sender.send('savedMetricsResponse', result);
     // eslint-disable-next-line no-shadow
-  } catch ({ message }) {
-    console.log('Error in "metricsRequest" event :', message);
+  } catch (err) {
+    if (err) console.log('Error in "metricsRequest" event :', err.message);
   }
 });
 
