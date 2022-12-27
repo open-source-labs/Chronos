@@ -7,8 +7,7 @@ release-builds
 coverage
 __tests__/**/__snapshots__
 .env
-users.json
-test_users.json
+databases.txt
 
 # Compiled source #
 ###################

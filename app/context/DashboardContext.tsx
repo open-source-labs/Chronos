@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
-import { guestUser } from './helpers';
-
 const { ipcRenderer } = window.require('electron');
 
 interface IFields {
@@ -31,31 +29,15 @@ export const DashboardContext = createContext<any>(null);
 
 const DashboardContextProvider = React.memo((props: any) => {
   const children = props.children;
+  
+  // Initial user will always be the guest
+  const [user, setUser] = useState('guest');  
   const [applications, setApplications] = useState<string[]>([]);
-  const [mode, setMode] = useState<string>('');
-  // const [landingPage, setLandingPage] = useState<string>('before');
-  // const [authStatus, setAuth] = useState<boolean>(false);
-  const [user, setUser] = useState<{}>(guestUser);
-
-  // const getLandingPage = useCallback(() => {
-  //   const result = ipcRenderer.sendSync('getLP');
-  //   setLandingPage(result);
-  // }, []);
-
-  // const updateLandingPage = useCallback((newLP: string) => {
-  //   const result = ipcRenderer.sendSync('updateLP', newLP);
-  //   if (result === newLP) {
-  //     setLandingPage(result);
-  //     return result;
-  //   }
-  //   return 'Error in updateLandingPage in DashboardContext.tsx';
-  // }, []);
+  const [mode, setMode] = useState<string>('light');
 
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
-    const mode = ipcRenderer.sendSync('getMode');
-    setMode(mode);
   }, []);
 
   const addApp = useCallback((fields: IFields) => {
@@ -76,21 +58,19 @@ const DashboardContextProvider = React.memo((props: any) => {
     const result = ipcRenderer.sendSync('changeMode', currMode);
     setMode(result);
   }, []);
+
   return (
     <DashboardContext.Provider
       value={{
         user,
         setUser,
-        // landingPage,
-        // getLandingPage,
-        // updateLandingPage,
-        // authStatus,
-        // setAuth,
         applications,
+        setApplications,
         getApplications,
         addApp,
         deleteApp,
         mode,
+        setMode,
         changeMode,
       }}
     >

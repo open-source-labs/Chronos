@@ -27,6 +27,9 @@ const SignUp = React.memo(() => {
           <label className="password">
             <input type="password" name="password" id="password" placeholder="enter password" />
           </label>
+          <label className="passwordConfirm">
+            <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="confirm password" />
+          </label>
           {failedSignUp}
           <button className="link" id="submitBtn" type="submit">
             Sign Up
@@ -45,24 +48,22 @@ const SignUp = React.memo(() => {
     const username = inputFields[0].value;
     const email = inputFields[1].value;
     const password = inputFields[2].value;
+    const confirmPassword = inputFields[3].value;
+
     // eslint-disable-next-line no-return-assign
     inputFields.forEach(input => (input.value = ''));
 
-    const validSignUp:
-      boolean
-      | {
-          email: string;
-          username: string;
-          password: string;
-          admin: boolean;
-          awaitingApproval: boolean;
-        } = ipcRenderer.sendSync('addUser', { email, username, password });
-    if (typeof validSignUp === 'object') {
-      setUser(validSignUp);
-      navigate('/applications');
-    } else if (validSignUp) navigate('/awaitingApproval');
-    else
-      setFailedSignUp(<p>Sorry your sign up failed. Please try a different email and password.</p>);
+    if (password !== confirmPassword) {
+      setFailedSignUp(<p>Entered passwords do not match</p>);
+      return;
+    }
+
+    const validSignUp: boolean = ipcRenderer.sendSync('addUser', { username, password, email });
+    if (validSignUp) {
+      setUser(username);
+      navigate('/');
+    } else
+      setFailedSignUp(<p>Sorry, your sign up failed. Please try a different username or email</p>);
   };
 
 });

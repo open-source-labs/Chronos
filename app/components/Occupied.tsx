@@ -56,7 +56,7 @@ interface StyleProps {
 
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
-  const { applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
+  const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
@@ -66,14 +66,14 @@ const Occupied = React.memo(() => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
     
-  
-  // Dynamic refs
-  const delRef = useRef<any>([]);
+  // Grab services and applications whenever the user changes
   useEffect(() => {
     setServicesData([]);
     getApplications();
-  }, []);
-  
+  }, [ user ]);
+
+  // Dynamic refs
+  const delRef = useRef<any>([]);
   
   // Asks user to confirm deletion
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
