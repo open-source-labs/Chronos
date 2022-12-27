@@ -47,3 +47,5 @@ databases.txt
 ehthumbs.db
 Thumbs.db
 node_modules
+
+out/
