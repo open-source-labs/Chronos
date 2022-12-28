@@ -1,21 +1,38 @@
 {
-  "setupRequired": false,
-  "services": [
-    [
-      "myPostgres",
-      "SQL",
-      "postgres://zwezmnqm:8onRNKC9MzktDeL3NpI_8Q62UfLLM3UK@ruby.db.elephantsql.com:5432/zwezmnqm",
-      "Online bookstore with that keeps track of orders and customers",
-      "Jun 28, 2020 4:58 PM"
-    ],
-    [
-      "ToddDB",
-      "MongoDB",
-      "mongodb+srv://tdwolf6:password16@cluster0-0xvd7.gcp.mongodb.net/Chronos?retryWrites=true&w=majority",
-      "Web app deployed on AWS",
-      "Jul 3, 2020 7:12AM"
-    ]
-  ],
-  "mode": "light mode",
-  "splash": true
+	"guest": {
+		"username": "guest",
+		"password": "",
+		"email": "",
+		"services": [],
+		"mode": "light"
+	},
+	"troy": {
+		"username": "troy",
+		"password": "$2b$12$EvVjKO85x6HzA1JMvU4K5edGhFqMaGlrRuqaYMOObJwlbJF652poa",
+		"email": "troy@troy",
+		"services": [
+			[
+				"troyDB",
+				"MongoDB",
+				"mongodb+srv://troyprejusa:learning@learning.logqirh.mongodb.net/test?retryWrites=true&w=majority",
+				"troyDB",
+				"Dec 27, 2022 2:53 PM"
+			],
+			[
+				"hi",
+				"SQL",
+				"postgres://uoohvhke:dlE9qTEqDVsGbCX_y84hFGqjlx2_1rcU@mahmud.db.elephantsql.com/uoohvhke",
+				"hi",
+				"Dec 27, 2022 3:01 PM"
+			],
+			[
+				"micros",
+				"MongoDB",
+				"mongodb+srv://troyprejusa:learning@learning.logqirh.mongodb.net/chronosmicro?retryWrites=true&w=majority",
+				"micros test",
+				"Dec 27, 2022 8:03 PM"
+			]
+		],
+		"mode": "light"
+	}
 }

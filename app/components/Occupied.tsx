@@ -11,12 +11,14 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import {
   IconButton,
   Modal,
+  // Dialog
   Card,
   CardHeader,
   CardContent,
   Button,
   Typography,
 } from '@material-ui/core';
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
@@ -30,7 +32,8 @@ import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 
-// MODALS
+
+// // MODALS
 import AddModal from '../modals/AddModal';
 import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
@@ -39,49 +42,52 @@ import Search from './icons/Search';
 // STYLESHEETS
 import '../stylesheets/Occupied.scss';
 
-// CONTEXT
+// // CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { CommsContext } from '../context/CommsContext';
 
 // TYPESCRIPT
 interface StyleProps {
-  root: BaseCSSProperties;
-}
-type ClickEvent = React.MouseEvent<HTMLElement>;
+    root: BaseCSSProperties;
+  }
+  type ClickEvent = React.MouseEvent<HTMLElement>;
+  
 
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
-  const { applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
+  const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
-  const [open, setOpen] = useState<boolean>(false);
-  const [addOpen, setAddOpen] = useState<boolean>(false);
-  const [addsOpen, setAddsOpen] = useState<boolean>(false);
+  const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
+  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
-
-  // Dynamic refs
-  const delRef = useRef<any>([]);
+    
+  // Grab services and applications whenever the user changes
   useEffect(() => {
     setServicesData([]);
     getApplications();
-  }, []);
+  }, [ user ]);
 
+  // Dynamic refs
+  const delRef = useRef<any>([]);
+  
   // Asks user to confirm deletion
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
-
+  
   // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       setIndex(i);
       setApp(selectedApp);
       setServicesData([]);
-      setOpen(true);
+      setServiceModalOpen(true);
     }
   };
 
@@ -195,7 +201,7 @@ const Occupied = React.memo(() => {
     },
   }));
 
-  const classes = mode === 'light mode' ? useStylesLight({}) : useStylesDark({});
+  const classes = mode === 'light' ? useStylesLight({}) : useStylesDark({});
 
   // update notification count based on statuscode >= 400
   const notification = commsData
@@ -210,6 +216,7 @@ const Occupied = React.memo(() => {
     const timestamp = new Date();
     setClickedAt(timestamp.toISOString());
   };
+
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -233,7 +240,7 @@ const Occupied = React.memo(() => {
             <div className="dashboardIconWrapper">
               <div className="dashboardIconArea">
                 <span className="dashboardTooltip">
-                  You have {applications.length} active databases
+                  You have {applications ? applications.length : 0} active databases
                 </span>
                 <DashboardIcon className="navIcon" id="dashboardIcon" />
               </div>
@@ -242,10 +249,10 @@ const Occupied = React.memo(() => {
                   You have {notification ? notification.length : 0} new alerts
                 </span>
                 <NotificationsIcon className="navIcon" id="notificationsIcon" />
-                <Badge badgeContent={notification ? notification.length : 0} color="secondary" />
+                <Badge overlap="rectangular" badgeContent={notification ? notification.length : 0} color="secondary" />
               </div>
               <div className="personIconArea">
-                <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
+                <Button className="personTooltip" onClick={() => setPersonModalOpen(true)}>
                   <PersonIcon className="navIcon" id="personIcon" />
                 </Button>
               </div>
@@ -255,12 +262,12 @@ const Occupied = React.memo(() => {
 
         <div className="cardContainer">
           <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => setAddOpen(true)}>
+            <Button className={classes.paper} onClick={() => setAddModalOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
-          {applications
-            .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+          {applications &&
+            applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
             .map((application: string[], i: number | any | string | undefined) => (
               <div className="card" key={`card-${i}`} id={`card-${application[1]}`}>
                 <Card
@@ -316,15 +323,15 @@ const Occupied = React.memo(() => {
               </div>
             ))}
 
-          <Modal open={addOpen} onClose={() => setAddOpen(false)}>
-            <AddModal setOpen={setAddOpen} />
+          <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
+            <AddModal setOpen={setAddModalOpen} />
           </Modal>
 
-          <Modal open={addsOpen} onClose={() => setAddsOpen(false)}>
-            <ProfileContainer setOpen={setAddsOpen} />
+          <Modal open={personModalOpen} onClose={() => setPersonModalOpen(false)}>
+            <ProfileContainer setOpen={setPersonModalOpen} />
           </Modal>
 
-          <Modal open={open} onClose={() => setOpen(false)}>
+          <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
             <ServicesModal key={`key-${index}`} i={index} app={app} />
           </Modal>
         </div>

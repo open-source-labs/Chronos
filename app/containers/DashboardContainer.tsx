@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { HashRouter as Router } from 'react-router-dom';
 import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
 import HealthContextProvider from '../context/HealthContext';
@@ -11,27 +11,37 @@ import EventContextProvider from '../context/EventContext';
 import QueryContextProvider from '../context/QueryContext';
 import '../stylesheets/Dashboard.scss';
 
-const DashboardContainer = React.memo(() => (
-  <Router>
-    <div className="dash">
-      <ApplicationContextProvider>
-        <DashboardContextProvider>
-          <CommsContextProvider>
-            <DockerContextProvider>
-              <HealthContextProvider>
-                <EventContextProvider>
-                  <QueryContextProvider>
-                    <SidebarContainer />
-                    <MainContainer />
-                  </QueryContextProvider>
-                </EventContextProvider>
-              </HealthContextProvider>
-            </DockerContextProvider>
-          </CommsContextProvider>
-        </DashboardContextProvider>
-      </ApplicationContextProvider>
-    </div>
-  </Router>
-));
+const DashboardContainer = React.memo(() => {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 4000);
+  }, []);
+
+  return (
+    <>
+      {visible &&
+        <Router>
+        <div className="dash">
+          <ApplicationContextProvider>
+            <DashboardContextProvider>
+              <CommsContextProvider>
+                <DockerContextProvider>
+                  <HealthContextProvider>
+                    <EventContextProvider>
+                      <QueryContextProvider>
+                        <SidebarContainer />
+                        <MainContainer />
+                      </QueryContextProvider>
+                    </EventContextProvider>
+                  </HealthContextProvider>
+                </DockerContextProvider>
+              </CommsContextProvider>
+            </DashboardContextProvider>
+          </ApplicationContextProvider>
+        </div>
+      </Router>
+      }
+    </>
+)});
 
 export default DashboardContainer;

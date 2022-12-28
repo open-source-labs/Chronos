@@ -11,7 +11,6 @@ import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
-import { lightWhite } from 'material-ui/styles/colors';
 //import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
 
@@ -25,22 +24,20 @@ let pool: any;
 // Stores database type: 1) MongoDB or 2) SQL
 let currentDatabaseType: string;
 
+// Provide location to settings.json
+const settingsLocation = path.resolve(__dirname, '../../settings.json');
+
 /**
  * @event   connect
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-let settingsLocation;
-if (process.env.NODE_ENV === 'development')
-  settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
-else settingsLocation = path.resolve(__dirname, '../../settings.json');
-ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
+ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(settingsLocation, 'utf8');
-
-    const userDatabase = JSON.parse(fileContents).services[index];
+    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+    const userDatabase = fileContents[username].services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
@@ -190,27 +187,6 @@ ipcMain.on('dockerRequest', async (message, service) => {
   }
 });
 
-/**
- * @event   eventRequest/EventResponse
- * @desc    
- */
-
-
-// start fetch
-function extractWord(str: string) {
-  const res :any[] = [];
-  const arr = str.split('\n'); // `/\n/`
-  for (const element of arr) {
-    if (element && element.length !== 0 && element[0] !== '#' && element.substring(0, 3) !== 'jmx' && element.substring(0, 4) !== '\'jmx') {
-      const metric = element.split(' ')[0];
-      const metricValue = Number(element.split(' ')[1]);
-      const time = Date.now();
-      const temp = {'metric': metric, 'category': 'Event', 'value': metricValue, 'time': time };
-      res.push(temp);
-    }
-  }
-  return res;
-}
 
 ipcMain.on('kafkaRequest', async (message) => {
   try {
