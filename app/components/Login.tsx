@@ -7,7 +7,7 @@ const { ipcRenderer } = window.require('electron');
 
 const Login = React.memo(() => {
   const navigate = useNavigate();
-  const { setUser } = useContext(DashboardContext);
+  const { setUser, setMode } = useContext(DashboardContext);
   const [failedAuth, setFailedAuthState] = useState<JSX.Element>(<></>);
 
   /** From Version 5.2 Team:
@@ -22,9 +22,10 @@ const Login = React.memo(() => {
     const password = inputFields[1].value;
     // eslint-disable-next-line no-return-assign
     inputFields.forEach(input => (input.value = ''));
-    const validLogin: boolean = ipcRenderer.sendSync('login', { username, password });
-    if (validLogin) {
+    const response: boolean | string = ipcRenderer.sendSync('login', { username, password });
+    if (typeof(response) === 'string') {
       setUser(username);
+      setMode(response);
       navigate('/');
     } else {
       setFailedAuthState(<p>Sorry your authentication failed please try again.</p>);
