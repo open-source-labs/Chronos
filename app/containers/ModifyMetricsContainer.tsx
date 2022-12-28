@@ -3,7 +3,8 @@ import { JsxElement } from 'typescript';
 import { ApplicationContext } from '../context/ApplicationContext';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from '../components/Styling';
-import '../stylesheets/ModifyMetrics.scss'
+import '../stylesheets/ModifyMetrics.scss';
+const { ipcRenderer } = window.require('electron');
 
 const MetricsContainer:React.FC = React.memo(props => {
   
@@ -24,16 +25,19 @@ const MetricsContainer:React.FC = React.memo(props => {
   }
 
   const updateMetrics = () => {
+    // Sets state for savedMetrics with metrics "selected" option updated based on checkbox selection
     const newMetrics = {...savedMetrics};
     for (let key in metricsToChange) {
       newMetrics[key] = metricsToChange[key];
     }
     setSavedMetrics(newMetrics);
-    // SEND PATCH REQUEST TO APPLICATION CONTEXT > DATA.TS AND HANDLE FROM THERE
+    // Sends patch request to db to update which metrics get saved to db
+    ipcRenderer.send('updateSavedMetrics', Object.values(metricsToChange));
+    // ipcRenderer.on('updateResponse')
   }
 
   Object.values(savedMetrics).forEach((el: any) => {
-    let jsxEl = (
+    const jsxEl = (
       <div key={el.metric} className="modifyMetric">
         <label style={currentMode}>
           <input type="checkbox" key={el.metric} id={el.metric} defaultChecked={el.selected} onClick={changeMetric}></input>
