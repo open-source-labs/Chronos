@@ -27,7 +27,7 @@ fse.copySync(sourceDir, destDir);
 
 // "copyPackageJsonDist": "echo F | xcopy dist.package.json dist\\package.json",
 fse.copyFileSync(
-  path.resolve(__dirname, '../dist.package.json'),
+  path.resolve(__dirname, '../package.json'),
   path.resolve(__dirname, '../dist/package.json')
 );
 
