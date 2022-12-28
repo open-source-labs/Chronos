@@ -61,7 +61,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo((props)
   const getSavedMetrics = useCallback(() => {
     ipcRenderer.send('savedMetricsRequest');
     ipcRenderer.on('savedMetricsResponse', (event: Electron.Event, data: any) => {
-      const store: object = {}
+      const store: object = {};
       data.forEach(el => {
         store[el.metric] = el;
       })

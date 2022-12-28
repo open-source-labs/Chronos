@@ -217,6 +217,29 @@ ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   }
 });
 
+ipcMain.on('updateSavedMetrics', async (message: Electron.IpcMainEvent, args: Object[]) => {
+  try {
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB' && args.length) {
+      // Update the 'selected' option for each metric
+      args.forEach(async (el: any) => {
+        await MetricsModel.updateOne({ metric: el.metric }, {
+          $set: {
+            selected: el.selected
+          }
+        })
+      })
+      // let result = await MetricsModel.update();
+    }
+  }
+
+  catch (err) {
+    if (err) console.error(err)
+  }
+})
+
+
+
 
 
 /**
