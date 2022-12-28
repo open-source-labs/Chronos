@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 import React, { useEffect, useState, useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
@@ -20,23 +20,26 @@ import HealthContainer from './HealthContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
-export interface Params {
+interface Params {
   app: any;
   service: string;
+
 }
 
-export interface GraphsContainerProps {
-  match: {
-    path: string;
-    url: string;
-    isExact: boolean;
-    params: Params;
-  };
-}
+// interface GraphsContainerProps {
+//   match: {
+//     path: string;
+//     url: string;
+//     isExact: boolean;
+//     params: Params;
+//   };
+// }
 
-const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
-  const history = useHistory();
-  const { app, service } = useParams<any>();
+const GraphsContainer: React.FC = React.memo(props => {
+
+  const navigate = useNavigate();
+  const { app, service } = useParams<keyof Params>() as Params;
+
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
   const { servicesData } = useContext(ApplicationContext);
@@ -94,8 +97,8 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
 
   const routing = (route: string) => {
     if (location.href.includes('communications')) {
-      if (prevRoute === '') history.replace(`${servicesData[0].microservice}`);
-      else history.replace(prevRoute);
+      if (prevRoute === '') navigate(`${servicesData[0].microservice}`);
+      else navigate(prevRoute);
     }
     setChart(route);
   };
@@ -177,7 +180,7 @@ const GraphsContainer: React.FC<GraphsContainerProps> = React.memo(props => {
           onClick={() => {
             if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
             setChart('communications');
-            history.push('communications');
+            navigate('communications');
           }}
           key="3"
         >

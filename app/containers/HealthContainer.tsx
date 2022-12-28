@@ -12,12 +12,16 @@ interface HealthContainerProps {
   currentService: string;
 }
 
+interface Params {
+  service: string;
+}
+
 const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   const { healthData } = useContext(HealthContext);
   const { selectedMetrics } = useContext(QueryContext);
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
   const { category } = props;
-  const { service } = useParams<any>();
+  const { service } = useParams<keyof Params>() as Params;
   useEffect(() => {
     const temp: JSX.Element[] = [];
     let counter: number = 0;

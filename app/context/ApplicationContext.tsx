@@ -11,9 +11,14 @@ const { ipcRenderer } = window.require('electron');
  * @method    connectToDB
  */
 
+interface AppContextProps {
+  children: any;
+}
+
 export const ApplicationContext = React.createContext<any>(null);
 
-const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
+const ApplicationContextProvider: React.FC<AppContextProps> = React.memo((props) => {
+  const children = props.children;
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
   function tryParseJSON(jsonString: any) {
@@ -42,9 +47,9 @@ const ApplicationContextProvider: React.FC = React.memo(({ children }) => {
     });
   }, []);
 
-  const connectToDB = useCallback((index: number, application: string) => {
+  const connectToDB = useCallback((username: string, index: number, application: string) => {
     ipcRenderer.removeAllListeners('databaseConnected');
-    ipcRenderer.send('connect', index);
+    ipcRenderer.send('connect', username, index);
 
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       fetchServicesNames(application);

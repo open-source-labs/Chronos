@@ -9,8 +9,10 @@ npm run copyBuildUtilitiesDist &&
 npm run copySettingsDist && 
 npm run installDep",
 */
-const fs = require('fs-extra');
+const fse = require('fs-extra');
 const path = require('path');
+
+console.log('Copying files from /app and /build to /dist')
 
 let sourceDir;
 let destDir;
@@ -18,14 +20,14 @@ let destDir;
 // "copyAssetsDist": "echo D | xcopy app\\assets dist\\assets",
 sourceDir = path.resolve(__dirname, '../app/assets');
 destDir = path.resolve(__dirname, '../dist/assets');
-if (!fs.existsSync(destDir)) {
-  fs.mkdirSync(destDir);
+if (!fse.existsSync(destDir)) {
+  fse.mkdirSync(destDir);
 }
-fs.copySync(sourceDir, destDir);
+fse.copySync(sourceDir, destDir);
 
 // "copyPackageJsonDist": "echo F | xcopy dist.package.json dist\\package.json",
-fs.copyFileSync(
-  path.resolve(__dirname, '../dist.package.json'),
+fse.copyFileSync(
+  path.resolve(__dirname, '../package.json'),
   path.resolve(__dirname, '../dist/package.json')
 );
 
@@ -37,13 +39,13 @@ fs.copyFileSync(
 // "copyBuildUtilitiesDist": "echo D | xcopy build\\utilities dist\\build\\utilities",
 sourceDir = path.resolve(__dirname, '../build');
 destDir = path.resolve(__dirname, '../dist/build');
-if (!fs.existsSync(destDir)) {
-  fs.mkdirSync(destDir);
+if (!fse.existsSync(destDir)) {
+  fse.mkdirSync(destDir);
 }
-fs.copySync(sourceDir, destDir);
+fse.copySync(sourceDir, destDir);
 
 // "copySettingsDist": "echo F | xcopy settings.json dist\\settings.json"
-fs.copyFileSync(
+fse.copyFileSync(
   path.resolve(__dirname, '../settings.json'),
   path.resolve(__dirname, '../dist/settings.json')
 );
