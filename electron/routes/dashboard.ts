@@ -156,7 +156,7 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   if (username in settings && bcrypt.compareSync(password, settings[username].password)) {
     currentUser = username;
-    message.returnValue = true;
+    message.returnValue = settings[username].mode;
     return;
   } else {
     message.returnValue = false;
