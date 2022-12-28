@@ -30,16 +30,12 @@
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
-    "@electron-forge/cli": "^6.0.4",
-    "@electron-forge/maker-deb": "^6.0.4",
-    "@electron-forge/maker-rpm": "^6.0.4",
-    "@electron-forge/maker-squirrel": "^6.0.4",
-    "@electron-forge/maker-zip": "^6.0.4",
     "babel-loader": "^9.1.0",
     "babel-plugin-import": "^1.13.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "electron": "^22.0.0",
+    "electron-packager": "^17.1.1",
     "file-loader": "^6.2.0",
     "fs-extra": "^11.1.0",
     "html-webpack-plugin": "^5.5.0",
@@ -56,13 +52,10 @@
   },
   "scripts": {
     "build": "node utilities/deleteDist.js && webpack && tsc && node utilities/copyDist.js && cd dist && npm i",
-    "build:app": "webpack", 
+    "build:app": "webpack",
     "dev:app": "webpack serve",
     "dev:electron": "tsc && cross-env NODE_ENV=development electron .",
-    "electron": "tsc && electron .",
-    "forge:start": "electron-forge start",
-    "forge:package": "electron-forge package",
-    "forge:make": "electron-forge make"
+    "package": "electron-packager ./dist chronos --overwrite --prune=true --out=release-builds"
   },
   "repository": {
     "type": "git",
