@@ -18,20 +18,6 @@ app.use('/', chronos.track());
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
-// eslint-disable-next-line max-len
-// CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD:${req.method},
-    PATH: ${req.url},
-    BODY: ${JSON.stringify(req.body)},
-    ID: ${req.query.id}
-    ***************************************************************************************`
-  );
-  next();
-});
-
 // Create a new customer
 app.post('/customers/createcustomer', controller.createcustomer, (req, res) => {
   res.status(200).json(res.locals.createcustomer);

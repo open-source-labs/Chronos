@@ -18,19 +18,6 @@ app.use('/', chronos.track());
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
-// CHAOS FLOW - SIMPLY A TEST FOR THE EXPRESS SERVER
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD:${req.method},
-    PATH: ${req.url},
-    BODY: ${JSON.stringify(req.body)},
-    ID: ${req.query.id}
-    ***************************************************************************************`
-  );
-  next();
-});
-
 //  This route will create a new book!
 app.post('/books/createbook', controller.createBook, (req, res) => {
   res.status(200).json(res.locals.createBook);
