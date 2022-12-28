@@ -55,10 +55,11 @@
     "webpack-dev-server": "^4.11.1"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "node utilities/deleteDist.js && webpack && tsc && node utilities/copyDist.js && cd dist && npm i",
+    "build:app": "webpack", 
     "dev:app": "webpack serve",
     "dev:electron": "tsc && cross-env NODE_ENV=development electron .",
-    "electron": "electron .",
+    "electron": "tsc && electron .",
     "forge:start": "electron-forge start",
     "forge:package": "electron-forge package",
     "forge:make": "electron-forge make"

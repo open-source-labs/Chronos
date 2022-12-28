@@ -18,7 +18,6 @@ const createWindow = () => {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      // preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -29,7 +28,7 @@ const createWindow = () => {
     win.loadURL('http://localhost:8080/');
   } else {
     // Production
-    win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
+    win.loadFile(path.resolve('./resources/app/index.html'));
   }
   
   ipcMain.on('max', () => {
