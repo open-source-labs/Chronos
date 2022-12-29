@@ -10,16 +10,23 @@ const { collectHealthData } = require('./healthHelpers.js');
 const MetricsModel = require('../models/MetricsModel');
 const dockerHelper = require('./dockerHelper');
 const utilities = require('./utilities');
-const { config } = require('webpack');
 require('../models/ContainerInfo');
 
 mongoose.set('strictQuery', true);
 
 const mongo = {};
 
-const URI = utilities.getMetricsURI(config);
-const currentMetrics = await MetricsModel.find({mode: config.mode});
-const currentMetricsNames = {};
+// This object is used to determine if metrics that are received from setInterval queries should be saved to the db or not.
+const currentMetricNames = {};
+
+let currentMetrics;
+
+mongo.metricsInit = async () => {
+  currentMetrics.forEach(el => {
+    const { metric, selected } = el;
+    currentMetricNames[metric] = selected;
+  })
+};
 
 /**
  * Initializes connection to MongoDB database using provided URI
@@ -195,7 +202,9 @@ mongo.setQueryOnInterval = async (config) => {
   // This way, when we go to compare parsedArray to current Metrics, the length of the arrays should match up unless there are new metrics available to view
   // The below code will not work because it is attempting to find any metrics model whose mode is the config mode, but metrics model does not include 'mode' right now
   // We could compare current config mode to the "category" from parsedArray?
-
+  const URI = utilities.getMetricsURI(config);
+  currentMetrics = await MetricsModel.find({mode: config.mode});
+  mongo.metricsInit();
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     utilities.getMetricsQuery(config, URI)
@@ -207,10 +216,10 @@ mongo.setQueryOnInterval = async (config) => {
           console.log('currentMetrics.length is: ', currentMetrics.length, ' and parsedArray.length is: ', parsedArray.length);
           const newMets = [];
           parsedArray.forEach(el => {
-            if (!(el.metric in currentMetricsNames)) {
+            if (!(el.metric in currentMetricNames)) {
               const { metric } = el;
               newMets.push(MetricsModel({metric: metric, mode: config.mode}))
-              currentMetricsNames[el.metric] = true;
+              currentMetricNames[el.metric] = true;
             }
           })
           await MetricsModel.insertMany(newMets, (err) => {
@@ -225,7 +234,7 @@ mongo.setQueryOnInterval = async (config) => {
           // This will check if the current metric in the parsed array evaluates to true within the currentMetricNames object.
           // The currentMetricNames object is updated by the user when they select/deselect metrics on the electron app, so only the
           // requested metrics will actually be populated in the database, which helps to avoid overloading the db with unnecessary data.
-          if (currentMetricsNames[metric.metric]) documents.push(model(metric));
+          if (currentMetricNames[metric.metric]) documents.push(model(metric));
         }
         return model.insertMany(documents, (err) => {
           if (err) console.error(err);
@@ -236,17 +245,20 @@ mongo.setQueryOnInterval = async (config) => {
   }, config.interval);
 }
 
-mongo.modifyMetrics = (config) => {
-  return function (req, res, next) {
-    res.on('finish', () => {
-      if (req.body.URI === URI && req.body.mode === config.mode) {
-        currentMetricsNames = req.body.metrics;
-      }
-      else return next({err: 'Modified metrics passed in to the modifyMetrics route cannot be added', log: 'It is possible that the URI is incorrect, or that you are attempting to add metrics for the incorrect mode type'})
-    });
-    return next();
-  };
-}
+
+// This middleware could be used if the user would like to update their chronos data, but they would have to expose a URL/port to be queried for the Electron front end.
+//
+// mongo.modifyMetrics = (config) => {
+//   return function (req, res, next) {
+//     res.on('finish', () => {
+//       if (req.body.URI === URI && req.body.mode === config.mode) {
+//         currentMetricNames = req.body.metrics;
+//       }
+//       else return next({err: 'Modified metrics passed in to the modifyMetrics route cannot be added', log: 'It is possible that the URI is incorrect, or that you are attempting to add metrics for the incorrect mode type'})
+//     });
+//     return next();
+//   };
+// }
 
 
 module.exports = mongo;
