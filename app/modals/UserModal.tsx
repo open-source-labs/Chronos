@@ -22,23 +22,23 @@ const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
     <div className="add-container">
       <div className="add-header">
         <div>
-          <h2>Hello {user.username}</h2> <PersonIcon className="navIcon" id="personIcon" />
+          <h2>Hello {user}</h2> <PersonIcon className="navIcon" id="personIcon" />
         </div>
         {user === 'guest' ?
         <>
-          <Button variant="contained" onClick={() => navigate('/login')}>Log In</Button>
+          <Button variant='contained' color='primary' onClick={() => navigate('/login')}>Log In</Button>
           <br></br><br></br>
-          <Button variant="contained" onClick={() => navigate('/signup')}>Sign Up</Button>
+          <Button variant="outlined" color='primary' onClick={() => navigate('/signup')}>Sign Up</Button>
           <br></br><br></br>
         </>
         :
         <>
-          <Button variant="contained" onClick={handleSignout}>Log Out</Button>
+          <Button variant='outlined' color='primary' onClick={handleSignout}>Log Out</Button>
           <br></br><br></br>
         </>
 
         }
-        <Button variant="contained" onClick={() => setOpen(false)}>Exit</Button>
+        <Button variant='outlined' onClick={() => setOpen(false)}>Close</Button>
       </div>
     </div>
   );
