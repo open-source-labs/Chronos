@@ -127,6 +127,7 @@ const helpers = {
 
   kafkaMetricsQuery: (config) => {
     const URI = helpers.getMetricsURI(config);
+    // Returns a promise...
     return axios.get(URI)
       .then((response) => helpers.extractWord(config.mode, response.data))
       .catch((err) => console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n',err))
@@ -160,8 +161,9 @@ const helpers = {
     // query for all of the available metrics
     const URI = helpers.getMetricsURI(config)
     const query =  URI + 'query?query=' + encodeURIComponent('{__name__=~".+",container=""}');
-    axios.get(query)
-    .then((response) => helpers.parseProm(response.data))
+    // Return a promise...
+    return axios.get(query)
+    .then((response) => helpers.parseProm(response.data.data.result))
     .catch((err) => console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n',err))
   },
 
@@ -186,6 +188,7 @@ const helpers = {
         // Save the value in the value key
         let value = info.value;
         if (value.constructor.name === 'Array') value = info.value[1];
+        if (isNaN(value) || value === 'NaN') continue;
       
         // Push an object to the output array
         res.push({
