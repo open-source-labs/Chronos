@@ -313,12 +313,19 @@ postgres.saveService = (config) => {
 
 postgres.setQueryOnInterval = (config) => {
   let service;
-  if (config.mode === 'kakfa') service = 'kafkametrics';
-  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
-  else throw new Error('Unrecognized mode');
+  let metricsQuery;
+  if (config.mode === 'kakfa') {
+    service = 'kafkametrics'
+    metricsQuery = utilities.kafkaMetricsQuery;
+  } else if (config.mode === 'kubernetes') {
+    service = 'kubernetesmetrics';
+    metricsQuery = utilities.promMetricsQuery;
+  } else {
+    throw new Error('Unrecognized mode')
+  };
 
   setInterval(() => {
-    utilities.getMetricsQuery(config)
+    metricsQuery(config)
       .then(parsedArray => {
         const numDataPoints = parsedArray.length;
         const queryString = createQueryString(numDataPoints, service);

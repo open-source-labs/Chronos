@@ -178,17 +178,20 @@ mongo.saveService = (config) => {
 
 mongo.setQueryOnInterval = (config) => {
   let model;
+  let metricsQuery;
   if (config.mode === 'kafka') {
     model = KafkaModel;
+    metricsQuery = utilities.kafkaMetricsQuery;
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
+    metricsQuery = utilities.promMetricsQuery;
   } else {
     throw new Error('Unrecognized mode');
   }
 
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
-    utilities.getMetricsQuery(config)
+    metricsQuery(config)
       .then(parsedArray => {
         const documents = [];
         for (const metric of parsedArray) {
