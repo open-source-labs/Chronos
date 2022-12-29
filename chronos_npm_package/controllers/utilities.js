@@ -180,10 +180,11 @@ const helpers = {
         // Set the base name using the job, IP, and metric __name__
         let name = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
         // Tack on the remaining key's values from the remaining metric descriptors
-        for (let field in info.metric) {
-            if ((field in usedCategories)) continue
-            name += '/' + info.metric[field];
-        }
+        // This might result in an overly-long metric name though, so commented for now
+        // for (let field in info.metric) {
+        //     if ((field in usedCategories)) continue
+        //     name += '/' + info.metric[field];
+        // }
         
         // Save the value in the value key
         let value = info.value;

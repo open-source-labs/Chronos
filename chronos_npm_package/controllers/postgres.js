@@ -332,8 +332,8 @@ postgres.setQueryOnInterval = (config) => {
         const queryArray = createQueryArray(parsedArray);
         return client.query(queryString, queryArray);
       })
-      .then(() => console.log('Kafka metrics recorded in PostgreSQL'))
-      .catch(err => console.log('Error inserting kafka metrics into PostgreSQL:\n', err));
+      .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
+      .catch(err => console.log(`Error inserting ${config.mode} metrics into PostgreSQL:`, '\n', err));
   }, config.interval);
 }
 
