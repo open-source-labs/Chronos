@@ -58,7 +58,7 @@ const GraphsContainer: React.FC = React.memo(props => {
     // const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
     // JJ-ADDITION
     const healthServiceArray = serviceArray.filter(
-      (value: string) => value !== 'kafkametrics' || 'kubernetesmetrics'
+      (value: string) => (value !== 'kafkametrics' && value !== 'kubernetesmetrics')
     );
     if (live) {
       setIntervalID(
