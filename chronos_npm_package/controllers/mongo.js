@@ -193,13 +193,10 @@ mongo.setQueryOnInterval = (config) => {
   setInterval(() => {
     metricsQuery(config)
       .then(parsedArray => {
-        const documents = [];
-        for (const metric of parsedArray) {
-          documents.push(model(metric));
-        }
-        return model.insertMany(documents, (err) => {
+        model.insertMany(parsedArray, (err) => {
           if (err) console.error(err);
         });
+        return;
       })
       .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
