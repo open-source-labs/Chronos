@@ -8,9 +8,7 @@ const chronosConfig = require('./chronos-config.js');
 const Chronos = require('chronos-tracker');
 const chronos = new Chronos(chronosConfig);
 
-
-app.post('/chronosMetrics', chronos.kubernetes(),
-    (req, res) => res.status(200).send('Modified metrics'))
+chronos.kubernetes();
 
 app.get('/random', (req, res) => res.json({
     number:Math.floor(Math.random() * Math.floor(100))
