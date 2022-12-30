@@ -1,7 +1,7 @@
 {
-  "name": "Chronos",
-  "version": "1.0.0",
-  "description": "<a href=\"https://chronoslany.com/\">     <img src=\"./app/assets/animated_logo.gif\" alt=\"Chronos\" title=\"Chronos\" align=\"center\" height=\"500\" /> </a>",
+  "name": "chronos",
+  "version": "7.1.1",
+  "description": "Chronos Microservice Debugger",
   "main": "./build/Main.js",
   "directories": {
     "doc": "docs",
@@ -52,7 +52,6 @@
   },
   "scripts": {
     "build": "node utilities/deleteDist.js && webpack && tsc && node utilities/copyDist.js && cd dist && npm i",
-    "build:app": "webpack",
     "dev:app": "webpack serve",
     "dev:electron": "tsc && cross-env NODE_ENV=development electron .",
     "package": "electron-packager ./dist chronos --overwrite --prune=true --out=release-builds"

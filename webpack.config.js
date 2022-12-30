@@ -5,6 +5,7 @@ module.exports = {
   entry: './app/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
   module: {
