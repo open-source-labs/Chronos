@@ -28,7 +28,7 @@ const createWindow = () => {
     win.loadURL('http://localhost:8080/');
   } else {
     // Production
-    win.loadFile(path.resolve('./Resources/app/index.html'));
+    win.loadFile(path.resolve(__dirname, '../index.html'));
   }
   
   ipcMain.on('max', () => {

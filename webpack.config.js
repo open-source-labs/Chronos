@@ -5,6 +5,7 @@ module.exports = {
   entry: './app/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
   module: {
@@ -33,9 +34,7 @@ module.exports = {
       },
       {
         test: /\.(jpg|jpeg|png|ttf|svg|gif)$/,
-        use: [
-          'file-loader',
-        ],
+        type: 'asset/resource',
         exclude: /node_modules/,
       },
     ],
