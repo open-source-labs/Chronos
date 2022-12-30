@@ -36,7 +36,6 @@
     "css-loader": "^6.7.3",
     "electron": "^22.0.0",
     "electron-packager": "^17.1.1",
-    "file-loader": "^6.2.0",
     "fs-extra": "^11.1.0",
     "html-webpack-plugin": "^5.5.0",
     "less-loader": "^11.1.0",
