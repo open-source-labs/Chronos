@@ -57,10 +57,9 @@ const GraphsContainer: React.FC = React.memo(props => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    // const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
-    // JJ-ADDITION
-    const healthServiceArray = serviceArray.filter(
-      (value: string) => value !== 'kafkametrics' || 'kubernetesmetrics'
+    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it
+    // not work correctly, so it has been omitted
+    const healthServiceArray = serviceArray.filter((value: string) => (value !== 'kafkametrics')
     );
     if (live) {
       setIntervalID(
@@ -81,7 +80,7 @@ const GraphsContainer: React.FC = React.memo(props => {
       fetchCommsData(app, live);
       fetchHealthData(healthServiceArray);
       if (service.includes('kafkametrics')) {
-        fetchEventData();
+        fetchEventData('kafkametrics');
       }
       // JJ-ADDITION
       if (service.includes('kubernetesmetrics')) {

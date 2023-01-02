@@ -107,9 +107,9 @@ class Chronos {
   }
 
 
-  kafka() {
+  async kafka() {
     // Test metrics server connection
-    utilities.testMetricsQuery(this.config);
+    await utilities.testMetricsQuery(this.config);
   
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);
@@ -126,9 +126,9 @@ class Chronos {
     }
   }
 
-  kubernetes() {
+  async kubernetes() {
     // Test metrics server connection
-    utilities.testMetricsQuery(this.config);
+    await utilities.testMetricsQuery(this.config);
   
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);

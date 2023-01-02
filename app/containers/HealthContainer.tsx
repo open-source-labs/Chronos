@@ -74,9 +74,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   // return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
   // JJ-ADDITION
   return (
-    <div>
-      {!service.includes('kafkametrics' || 'kubernetesmetrics') ? healthChartsArr : []}
-    </div>
+    <div>{(service !== 'kafkametrics' && service !== 'kubernetesmetrics') ? healthChartsArr : []}</div>
   );
 });
 

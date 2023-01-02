@@ -24,13 +24,3 @@ ReactDOM.render(
   </ThemeProvider>,
   document.getElementById('app')
 );
-
-// ReactDOM.render(
-//     <h1 style={{color: 'red'}}>Hi Gang</h1>,
-//     document.getElementById('app')
-// )
-
-
-// React 18 Syntax below
-// const root = createRoot(document.getElementById('app')); // createRoot(container!) if you use TypeScript
-// root.render(<h1 style={{color: 'red'}}>Hello Gang </h1>);

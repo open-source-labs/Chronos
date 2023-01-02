@@ -6,6 +6,7 @@ import { EventContext } from '../context/EventContext';
 import { DataGrid } from '@material-ui/data-grid';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
+import { Button } from '@material-ui/core';
 
 interface Params {
   service: string;
@@ -185,12 +186,9 @@ const TransferColumns = React.memo(() => {
   return (
     <>
       <div id="getChartsContainer">
-        {/* <Button id="getCharts" type="primary" onClick={getCharts} shape="round" size="middle">
+        <Button id="getCharts" onClick={getCharts} variant='contained' color='primary'>
           Get Charts
-        </Button> */}
-        <button id="getCharts" className="select" onClick={getCharts}>
-          Generate Charts
-        </button>
+        </Button>
       </div>
       <div id='transferTest'>
         <div style={{ height: '500px', width: '100%' }}>
