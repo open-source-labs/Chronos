@@ -30,7 +30,7 @@ const TransferColumns = React.memo(() => {
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
 
-  const currentMode = mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   useEffect(() => {
     if (healthDataList && healthDataList.length > 0) {
