@@ -186,11 +186,19 @@ const helpers = {
     const category = 'Event';
     const usedCategories = {'job': true, 'instance': true, '__name__': true};
 
+    // Opportunity for improvement: Prometheus may query metrics that have the same job + instance + metric, which means they end up having the same name (see name variable). 
+    // When this happens, it means that the parsedArray returned from this function will always have a different length than the metricNames length. To avoid this, Chronos currently 
+    // only saves the first occurence of any particular ${name}. This can be improved in the future by distinguishing between each ${name}, but be aware that if the ${name} is too long, it will be rejected by the database.
+
+    const names = new Set();
+
     // Iterate through the metrics to create an object of the expected shape
     for (const info of data) {
         if (!info.metric.job) continue;
         // Set the base name using the job, IP, and metric __name__
         let name = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+        if (names.has(name)) continue;
+        else names.add(name);
         // Tack on the remaining key's values from the remaining metric descriptors
         // This might result in an overly-long metric name though, so commented for now
         // for (let field in info.metric) {
