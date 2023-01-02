@@ -1,7 +1,7 @@
 {
-  "name": "chronos",
-  "version": "7.1.1",
-  "description": "Chronos Microservice Debugger",
+  "name": "@chronos/display",
+  "version": "8.0.1",
+  "description": "Chronos microservice metrics display",
   "main": "./build/Main.js",
   "directories": {
     "doc": "docs",
@@ -14,7 +14,6 @@
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "electron-fetch": "^1.9.1",
-    "electron-squirrel-startup": "^1.0.0",
     "moment": "^2.29.4",
     "mongoose": "^6.8.0",
     "pg": "^8.8.0",
