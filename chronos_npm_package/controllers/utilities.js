@@ -184,7 +184,7 @@ const helpers = {
     const res = [];
     const time = Date.now();
     const category = 'Event';
-    const usedCategories = {'job': true, 'instance': true, '__name__': true};
+    // const usedCategories = {'job': true, 'instance': true, '__name__': true};
 
     // Opportunity for improvement: Prometheus may query metrics that have the same job + instance + metric, which means they end up having the same name (see name variable). 
     // When this happens, it means that the parsedArray returned from this function will always have a different length than the metricNames length. To avoid this, Chronos currently 

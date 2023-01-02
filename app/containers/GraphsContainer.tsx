@@ -186,7 +186,6 @@ const GraphsContainer: React.FC = React.memo(props => {
           onClick={() => {
             if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
             setChart('communications');
-            navigate('communications');
           }}
           key="3"
         >
@@ -203,7 +202,7 @@ const GraphsContainer: React.FC = React.memo(props => {
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
-        {service === 'communications' ? (
+        {chart === 'communications' ? (
           <div className="graphs">
             <RequestTypesChart />
             <ResponseCodesChart />

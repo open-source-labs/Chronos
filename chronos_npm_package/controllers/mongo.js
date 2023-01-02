@@ -151,8 +151,8 @@ mongo.docker = ({ microservice, interval }) => {
 
 /*
  This function takes as a parameter the promise returned from the kafkaFetch().
-It then takes the returned array of metrics, turns them into documents based on
-KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
+ It then takes the returned array of metrics, turns them into documents based on
+ KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
 */
 mongo.serverQuery = (config) => {
   mongo.saveService(config);
@@ -213,7 +213,7 @@ mongo.setQueryOnInterval = async (config) => {
       .then(async (parsedArray) => {
         // This conditional would be used if new metrics are available to be tracked.
         if (l !== parsedArray.length) {
-          console.log('currentMetricNames does not equal parsedArray length, new metrics available to track');
+          console.log('currentMetricNames is less than parsedArray length, new metrics available to track');
           console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
           const newMets = [];
           parsedArray.forEach(el => {
@@ -226,7 +226,7 @@ mongo.setQueryOnInterval = async (config) => {
           await MetricsModel.insertMany(newMets, (err) => {
             if (err) console.error(err)
           })
-          l = Object.keys(currentMetricNames).length;
+          l = parsedArray.length;
         }
         return parsedArray;
       })
