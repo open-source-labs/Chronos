@@ -126,7 +126,7 @@ const helpers = {
     if (config.mode === 'kubernetes') {
       URI += 'query?query=up'
     }
-    axios.get(URI)
+    return axios.get(URI)
       .then((response) => {
         if (response.status !== 200) console.error('Invalid response from metrics server:', URI);
         else if (response.status === 200) console.log('Successful initial response from metrics server:', URI);
