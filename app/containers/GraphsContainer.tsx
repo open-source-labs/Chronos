@@ -98,7 +98,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   }, [service, live]);
 
   const currentMode =
-    mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+    mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const routing = (route: string) => {
     if (location.href.includes('communications')) {

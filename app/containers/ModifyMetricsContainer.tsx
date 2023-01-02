@@ -14,7 +14,7 @@ const MetricsContainer:React.FC = React.memo(props => {
   const healthMetrics: any[] = [];
   const { mode } = useContext(DashboardContext.DashboardContext);
 
-  const currentMode = mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const metricsToChange = {};
 
