@@ -17,16 +17,6 @@ mongoose.set('strictQuery', true);
 const mongo = {};
 
 // This object is used to determine if metrics that are received from setInterval queries should be saved to the db or not.
-const currentMetricNames = {};
-
-let currentMetrics;
-
-mongo.metricsInit = async () => {
-  currentMetrics.forEach(el => {
-    const { metric, selected } = el;
-    currentMetricNames[metric] = selected;
-  })
-};
 
 /**
  * Initializes connection to MongoDB database using provided URI
@@ -192,6 +182,10 @@ mongo.saveService = (config) => {
 mongo.setQueryOnInterval = async (config) => {
   let model;
   let metricsQuery;
+  let currentMetrics;
+  let l = 0;
+  const currentMetricNames = {};
+
   if (config.mode === 'kafka') {
     model = KafkaModel;
     metricsQuery = utilities.kafkaMetricsQuery;
@@ -201,22 +195,26 @@ mongo.setQueryOnInterval = async (config) => {
   } else {
     throw new Error('Unrecognized mode');
   }
-  // When querying for currentMetrics, we should narrow down the result to only include metrics for the current service being used.
-  // This way, when we go to compare parsedArray to current Metrics, the length of the arrays should match up unless there are new metrics available to view
-  // The below code will not work because it is attempting to find any metrics model whose mode is the config mode, but metrics model does not include 'mode' right now
-  // We could compare current config mode to the "category" from parsedArray?
-  const URI = utilities.getMetricsURI(config);
+  // When querying for currentMetrics, we narrow down the result to only include metrics for the current service being used.
+  // This way, when we go to compare parsedArray to currentMetricNames, the length of the arrays should match up unless there are new metrics available to view
+
   currentMetrics = await MetricsModel.find({mode: config.mode});
-  mongo.metricsInit();
+  if (currentMetrics.length > 0) {
+    currentMetrics.forEach(el => {
+    const { metric, selected } = el;
+    currentMetricNames[metric] = selected;
+    l = currentMetrics.length;
+    })
+  }
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     metricsQuery(config)
       // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
       .then(async (parsedArray) => {
         // This conditional would be used if new metrics are available to be tracked.
-        if (currentMetrics.length !== parsedArray.length) {
-          console.log('currentMetrics does not equal parsedArray length, new metrics available to track');
-          console.log('currentMetrics.length is: ', currentMetrics.length, ' and parsedArray.length is: ', parsedArray.length);
+        if (l !== parsedArray.length) {
+          console.log('currentMetricNames does not equal parsedArray length, new metrics available to track');
+          console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
           const newMets = [];
           parsedArray.forEach(el => {
             if (!(el.metric in currentMetricNames)) {
@@ -228,6 +226,7 @@ mongo.setQueryOnInterval = async (config) => {
           await MetricsModel.insertMany(newMets, (err) => {
             if (err) console.error(err)
           })
+          l = Object.keys(currentMetricNames).length;
         }
         return parsedArray;
       })
