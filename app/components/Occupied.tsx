@@ -56,24 +56,24 @@ interface StyleProps {
 
 const Occupied = React.memo(() => {
   const { setServicesData } = useContext(ApplicationContext);
-  const { applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
+  const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
-  const [open, setOpen] = useState<boolean>(false);
-  const [addOpen, setAddOpen] = useState<boolean>(false);
-  const [addsOpen, setAddsOpen] = useState<boolean>(false);
+  const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
+  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
     
-  
-  // Dynamic refs
-  const delRef = useRef<any>([]);
+  // Grab services and applications whenever the user changes
   useEffect(() => {
     setServicesData([]);
     getApplications();
-  }, []);
-  
+  }, [ user ]);
+
+  // Dynamic refs
+  const delRef = useRef<any>([]);
   
   // Asks user to confirm deletion
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
@@ -87,7 +87,7 @@ const Occupied = React.memo(() => {
       setIndex(i);
       setApp(selectedApp);
       setServicesData([]);
-      setOpen(true);
+      setServiceModalOpen(true);
     }
   };
 
@@ -201,7 +201,7 @@ const Occupied = React.memo(() => {
     },
   }));
 
-  const classes = mode === 'light mode' ? useStylesLight({}) : useStylesDark({});
+  const classes = mode === 'light' ? useStylesLight({}) : useStylesDark({});
 
   // update notification count based on statuscode >= 400
   const notification = commsData
@@ -252,7 +252,7 @@ const Occupied = React.memo(() => {
                 <Badge overlap="rectangular" badgeContent={notification ? notification.length : 0} color="secondary" />
               </div>
               <div className="personIconArea">
-                <Button className="personTooltip" onClick={() => setAddsOpen(true)}>
+                <Button className="personTooltip" onClick={() => setPersonModalOpen(true)}>
                   <PersonIcon className="navIcon" id="personIcon" />
                 </Button>
               </div>
@@ -262,7 +262,7 @@ const Occupied = React.memo(() => {
 
         <div className="cardContainer">
           <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => setAddOpen(true)}>
+            <Button className={classes.paper} onClick={() => setAddModalOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
@@ -323,15 +323,15 @@ const Occupied = React.memo(() => {
               </div>
             ))}
 
-          <Modal open={addOpen} onClose={() => setAddOpen(false)}>
-            <AddModal setOpen={setAddOpen} />
+          <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
+            <AddModal setOpen={setAddModalOpen} />
           </Modal>
 
-          <Modal open={addsOpen} onClose={() => setAddsOpen(false)}>
-            <ProfileContainer setOpen={setAddsOpen} />
+          <Modal open={personModalOpen} onClose={() => setPersonModalOpen(false)}>
+            <ProfileContainer setOpen={setPersonModalOpen} />
           </Modal>
 
-          <Modal open={open} onClose={() => setOpen(false)}>
+          <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
             <ServicesModal key={`key-${index}`} i={index} app={app} />
           </Modal>
         </div>

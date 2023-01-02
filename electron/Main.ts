@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-
-import './routes/user';
 import './routes/dashboard';
+import { clearGuestSettings } from './routes/dashboard';
 import './routes/data';
 import path from 'path';
 
@@ -19,7 +18,6 @@ const createWindow = () => {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      // preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -30,19 +28,28 @@ const createWindow = () => {
     win.loadURL('http://localhost:8080/');
   } else {
     // Production
-    win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
+    win.loadFile(path.resolve(__dirname, '../index.html'));
   }
+  
   ipcMain.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();
   });
+
   ipcMain.on('min', () => {
     win.minimize();
   });
+
   ipcMain.on('close', () => {
     win.close();
   });
+
+  win.on('close', () => {
+    clearGuestSettings()
+  })
 };
+
+
 
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);

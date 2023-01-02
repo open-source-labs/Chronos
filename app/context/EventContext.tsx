@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import Electron from 'electron';
-import { transform } from 'd3';
 
 const { ipcRenderer } = window.require('electron');
 

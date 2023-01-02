@@ -16,19 +16,6 @@ app.use('/', chronos.track());
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 
-// CHAOS FLOW
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD: ${req.method},
-    PATH: ${req.url},
-    BODY: ${JSON.stringify(req.body)},
-    ID: ${req.query.id}
-    ***************************************************************************************`
-  );
-  next();
-});
-
 // Create an Order through this endpoint
 app.post('/orders/createorder', controller.createorder, (req, res) => {
   res.status(200).json(res.locals.createorder);

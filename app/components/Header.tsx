@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
   };
 
   const currentModeCSS =
-    mode === 'light mode' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
+    mode === 'light' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
 
   return (
     <div className="microservice-header" style={currentModeCSS} data-testid="Header">

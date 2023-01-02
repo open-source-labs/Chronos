@@ -12,11 +12,11 @@ const Settings: React.FC = React.memo(() => {
 
   return (
     <div className="settings">
-      <button className="mode" id="lightMode" onClick={() => handleClick('light mode')}>
+      <button className="mode" id="lightMode" onClick={() => handleClick('light')}>
         Light
       </button>
 
-      <button className="mode" id="darkMode" onClick={() => handleClick('dark mode')}>
+      <button className="mode" id="darkMode" onClick={() => handleClick('dark')}>
         Dark
       </button>
     </div>

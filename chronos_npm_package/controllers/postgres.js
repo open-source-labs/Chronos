@@ -313,20 +313,27 @@ postgres.saveService = (config) => {
 
 postgres.setQueryOnInterval = (config) => {
   let service;
-  if (config.mode === 'kakfa') service = 'kafkametrics';
-  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
-  else throw new Error('Unrecognized mode');
+  let metricsQuery;
+  if (config.mode === 'kakfa') {
+    service = 'kafkametrics'
+    metricsQuery = utilities.kafkaMetricsQuery;
+  } else if (config.mode === 'kubernetes') {
+    service = 'kubernetesmetrics';
+    metricsQuery = utilities.promMetricsQuery;
+  } else {
+    throw new Error('Unrecognized mode')
+  };
 
   setInterval(() => {
-    utilities.getMetricsQuery(config)
+    metricsQuery(config)
       .then(parsedArray => {
         const numDataPoints = parsedArray.length;
         const queryString = createQueryString(numDataPoints, service);
         const queryArray = createQueryArray(parsedArray);
         return client.query(queryString, queryArray);
       })
-      .then(() => console.log('Kafka metrics recorded in PostgreSQL'))
-      .catch(err => console.log('Error inserting kafka metrics into PostgreSQL:\n', err));
+      .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
+      .catch(err => console.log(`Error inserting ${config.mode} metrics into PostgreSQL:`, '\n', err));
   }, config.interval);
 }
 

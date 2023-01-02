@@ -191,10 +191,13 @@ mongo.saveService = (config) => {
 
 mongo.setQueryOnInterval = async (config) => {
   let model;
+  let metricsQuery;
   if (config.mode === 'kafka') {
     model = KafkaModel;
+    metricsQuery = utilities.kafkaMetricsQuery;
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
+    metricsQuery = utilities.promMetricsQuery;
   } else {
     throw new Error('Unrecognized mode');
   }
@@ -207,7 +210,7 @@ mongo.setQueryOnInterval = async (config) => {
   mongo.metricsInit();
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
-    utilities.getMetricsQuery(config, URI)
+    metricsQuery(config)
       // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
       .then(async (parsedArray) => {
         // This conditional would be used if new metrics are available to be tracked.
@@ -238,7 +241,7 @@ mongo.setQueryOnInterval = async (config) => {
         }
         return model.insertMany(documents, (err) => {
           if (err) console.error(err);
-        });
+        })
       })
       .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));

@@ -25,20 +25,6 @@ app.use('/', chronos.track());
 
 app.use(cors());
 
-// CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- 
-    METHOD:${req.method},
-    PATH: ${req.url},
-    BODY: ${JSON.stringify(req.body)},
-    ID: ${req.query.id}
-    ***************************************************************************************`
-  );
-  next();
-});
-
 app.all('/books/*', (req, res) => {
   console.log('redirecting to books');
   // apiProxy.web(req, res, { target: books });
