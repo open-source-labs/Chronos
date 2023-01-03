@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chronos-tracker": "file:./chronos_npm_package",
+    "@chronos/tracker": "file:./chronos_npm_package",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
