@@ -1,7 +1,7 @@
 {
-  "name": "chronos-tracker",
-  "version": "7.1.1",
-  "description": "",
+  "name": "@chronos/tracker",
+  "version": "8.0.1",
+  "description": "Chronos microservice metrics tracker",
   "main": "chronos.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
