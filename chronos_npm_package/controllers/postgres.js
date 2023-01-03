@@ -38,8 +38,7 @@ postgres.services = ({ microservice, interval }) => {
     `CREATE TABLE IF NOT EXISTS services (
       _id SERIAL PRIMARY KEY NOT NULL,
       microservice VARCHAR(248) NOT NULL UNIQUE,
-      interval INTEGER NOT NULL
-      )`,
+      interval INTEGER NOT NULL)`,
     (err, results) => {
       if (err) {
         throw err;
@@ -52,9 +51,8 @@ postgres.services = ({ microservice, interval }) => {
       _id SERIAL PRIMARY KEY NOT NULL,
       metric TEXT NOT NULL UNIQUE,
       selected BOOLEAN,
-      mode TEXT NOT NULL
-    )`,
-    (err,results) => {
+      mode TEXT NOT NULL)`,
+    (err, results) => {
       if (err) {
         throw err;
       }
@@ -357,16 +355,31 @@ postgres.setQueryOnInterval = async (config) => {
 
   setInterval(() => {
     metricsQuery(config)
-      // .then(async (parsedArray) => {
-      //   if (l !== parsedArray.length) {
-          
-      //   }
-      //   return parsedArray;
-      // })
+      .then(async (parsedArray) => {
+        if (l !== parsedArray.length) {
+          console.log('currentMetricNames is less than parsedArray length, new metrics available to track');
+          console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
+          let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
+          parsedArray.forEach(el => {
+            if (!(el.metric in currentMetricNames)) {
+              currentMetricNames[el.metric] = true;
+              metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${config.mode}'), `);
+            }
+          })
+          metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
+          await client.query(metricsQueryString);
+          l = parsedArray.length;
+        }
+        return parsedArray;
+      })
       .then(parsedArray => {
-        const numDataPoints = parsedArray.length;
+        const documents = [];
+        for (const metric of parsedArray) {
+          if (currentMetricNames[metric.metric]) documents.push(metric)
+        }
+        const numDataPoints = documents.length;
         const queryString = createQueryString(numDataPoints, service);
-        const queryArray = createQueryArray(parsedArray);
+        const queryArray = createQueryArray(documents);
         return client.query(queryString, queryArray);
       })
       .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))

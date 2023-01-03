@@ -53,7 +53,7 @@ const MetricsContainer:React.FC = React.memo(props => {
     <div className="metricsSelector">
       <h2 style={currentMode}>Modify which metrics your Chronos app will track by selecting or deselecting from the list below.</h2>
       <p style={currentMode}>This can be helpful if you find that you and your team often only care to track a small handful of metrics, and don't want your database to be overwhelmed with thousands of datapoints that you don't necessarily need.</p>
-      <button className="select" onClick={updateMetrics}>Change Database Settings</button>
+      <button id="changeDatabaseSettingsButton" className="select" onClick={updateMetrics}>Change Database Settings</button>
       {!!kubernetesMetrics.length && <div className='metricsSublist'><h3 style={currentMode}>Kubernetes Metrics:</h3>{kubernetesMetrics}</div>}
       {!!kafkaMetrics.length && <div className='metricsSublist'><h3 style={currentMode}>Kafka Metrics:</h3>{kafkaMetrics}</div>}
       {!!healthMetrics.length && <div className='metricsSublist'><h3 style={currentMode}>Health Metrics:</h3>{healthMetrics}</div>}
