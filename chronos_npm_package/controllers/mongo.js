@@ -134,7 +134,8 @@ mongo.health = async ({ microservice, interval, mode }) => {
  * Runs instead of health if dockerized is true
  * Collects information on the docker container
  */
-mongo.docker = ({ microservice, interval }) => {
+mongo.docker = ({ microservice, interval, mode }) => {
+
   // Create collection using name of microservice
   const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
   dockerHelper.getDockerContainer(microservice)
