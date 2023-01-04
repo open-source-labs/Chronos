@@ -49,7 +49,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   const { fetchEventData, setEventData } = useContext(EventContext);
   // const { fetchKafkaEventData, setKafkaEventData } = useContext(EventContext);
   // const { fetchKubernetesEventData, setKubernetesEventData } = useContext(EventContext);
-  const { fetchCommsData } = useContext(CommsContext);
+  const { fetchCommsData, commsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
   const [chart, setChart] = useState<string>('all');
   const [prevRoute, setPrevRoute] = useState<string>('');
@@ -180,7 +180,7 @@ const GraphsContainer: React.FC = React.memo(props => {
             Docker
           </button>
         )}
-        <button
+        {commsData.length > 0 && <button
           id="communication-button"
           className={chart === 'communications' ? 'selected' : undefined}
           onClick={() => {
@@ -190,7 +190,7 @@ const GraphsContainer: React.FC = React.memo(props => {
           key="3"
         >
           Communication
-        </button>
+        </button>}
         <button
           id="modify-metrics-button"
           className={chart === 'modifyMetrics' ? 'selected' : undefined}
