@@ -111,7 +111,7 @@ module.exports = {
 }
 ```
 
-Then import the `chronos-config.js` file into your microservice application as follows:
+Then utilize the `chronos-config.js` file into your microservice application by importing it and using it as the Chronos class constructor argument:
 ```js
 const chronosConfig = require('./chronos-config.js');
 const Chronos = require('@chronos/tracker');
@@ -123,12 +123,14 @@ const chronos = new Chronos(chronosConfig);
 #### Chronos Configuration Parameters
 _See mode-specific configuration descriptions in the "Chronos Tracker for Microservices" section_
 
-The `microservice` property takes in a string. This should be a descriptive name for your microservice. For **Dockerized** microservices, this field **must** match the _container_name_ of the corresponding Docker container.
+The `microservice` property takes in a string. This should be a descriptive name for your microservice.
+
+- <img src="../app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> For **Dockerized** microservices, this field **must** match the _container_name_ of the corresponding Docker container.
 
 The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will default to recording server health every 60000 ms or 60 seconds.
 
 The `database` property is required and takes in the following:
-- `connection` should be a string and only supports 'REST' and 'gRPC'
+- `connection` is a string that should should be either 'REST' or 'gRPC'
 - `type` should be a string and only supports 'MongoDB' and 'PostgreSQL' at this time
 - `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation
 
@@ -170,6 +172,7 @@ notifications: [
 ]
 // ...
 ```
+
 Chronos provides the option to send  emails. The properties that should be provided are the following
 - `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
 - `emailHost` - The smtp host (string) of your email server
@@ -181,17 +184,28 @@ _NOTE: Email notification settings may require alternative security settings to 
 
 <br>
 
-### Chronos Tracker for Microservices
+### Chronos Tracker for "Microservices" Mode
+The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with <img src="../app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />. If omitted, Chronos will assume this server is not running in a container, i.e. _dockerized_ will default to _false_. 
 
-#### Non-Dockerized
+Setting the flag to _false_ will collect metrics from the host computer directly, while _true_ indicates for Chronos to pull metrics from the Docker daemon.
 
-#### Dockerized
-The `dockerized` property is optional and should be specified as `true` if the server is running inside of a Docker container. Otherwise, this should be `false`. If omitted, Chronos will assume this server is not running in a container.
-Again, this step is **only applicable** if you are currently using <a href="#"><img src="../app/assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> containers for your microservices. 
+```js
+// Excerpt from a chronos-config.js
 
-<a href="#"><img src="../app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> Give your containers the same names you pass in as arguments for microservice names.
+module.exports = {
+  // ...
 
-<a href="#"><img src="../app/assets/important.png" alt="Important" title="Important" align="center" height="20" /></a> In order to have container statistics saved to your database along with other health info, bind volumes to this path when starting up the containers:
+  mode: 'microservices',
+  dockerized: false,  // false or true
+
+  // ...
+}
+```
+
+#### Notes on Dockerized Microservices
+<img src="../app/assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you pass in as arguments for microservice names.
+
+In order to have container statistics saved to your database along with other health info, bind volumes to this path when starting up the containers:
 ```
 /var/run/docker.sock
 ```
@@ -207,39 +221,37 @@ If you're using `docker-compose` to start up multiple containers, you can add a 
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
+<br>
 
-### Chronos Tracker for Kubernetes
+### Chronos Tracker for "Kubernetes" Mode
 
-### Chronos Tracker for Apache Kafka
+
+### Chronos Tracker for "Kafka" Mode
 Chronos offers the ability to monitor an Apache Kafka cluster via JMX to Prometheus Exporter. In order for this feature to work you must be running [JMX to Prometheus
-Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent with your cluster or as a standalone HTTP server. Then, use `chronos-config.js` to specifiy the port exposed for metrics scraping.
+Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent with your cluster or as a standalone HTTP server. Then, use `chronos-config.js` to specifiy where to retrieve the metrics.
 
-To start, add the property `jmxuri` to the object in `chronos-config.js`. Your file should look similar to below. Add this property to `chronos-config.js` in ***ONE AND ONLY ONE** of your microservices:
+To start, set the `mode` to `kafka` and add the property `jmxuri` to the object in `chronos-config.js`. The `jmxuri` property should be a string whose value is the URL and port specified for scraping when starting the exporter.
 
 ```js
-const chronos = require('chronos-tracker-7');
+// Excerpt from a chronos-config.js
 
-chronos.use({
-  microservice: 'payments',
-  interval: 5000,
-  dockerized: true,
-  jmxuri: // your URI here
-  database: {
-    connection: 'REST',
-    type: 'MongoDB',
-    URI: process.env.URI,
-  },
-  notifications: [],
-});
+module.exports = {
+  // ...
+
+  mode: 'kafka',
+  jmxuri: 'http://localhost:12345/metrics',
+
+  // ...
+}
 ```
-The `jmxuri` property should be a string whose value is the port specified for scraping when starting the exporter.
 
-Then, in ***ONE AND ONLY ONE** of your microservices, call
 
+Then, in ***ONE AND ONLY ONE** of your microservices, call the 
 ```js
-
-chronos.kafka()
-
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('@chronos/tracker');
+const chronos = new Chronos(chronosConfig);
+chronos.kafka();
 ```
 
 in your express server. When viewing your information in the Chronos Electron application the data will be available in the service "kafkametrics"
