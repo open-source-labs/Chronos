@@ -4,7 +4,13 @@ import DashboardContainer from './containers/DashboardContainer';
 import './stylesheets/scrollBar.scss';
 
 const App: React.FC = React.memo(() => {
-  return <DashboardContainer />;
+  return (
+    <>
+      <Splash />
+      <DashboardContainer />
+    </>
+
+  )
 });
 
 export default App;

@@ -7,7 +7,7 @@ const About: React.FC = React.memo(() => {
   const { mode } = useContext(DashboardContext.DashboardContext);
 
   const currentMode =
-    mode === 'light mode' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+    mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   return (
     <div className="about">

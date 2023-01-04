@@ -16,7 +16,12 @@ export const CommsContext = React.createContext<any>(null);
  * @method    setCommsData
  * @method    fetchCommsData
  */
-const CommsContextProvider: React.SFC = React.memo(({ children }) => {
+
+interface Props {
+  children: any;
+}
+const CommsContextProvider: React.FC<Props> = React.memo((props) => {
+  const children = props.children;
   const [commsData, setCommsData] = useState([]);
   const [currentApp, setCurrentApp] = useState('');
 

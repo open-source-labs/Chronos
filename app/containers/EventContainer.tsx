@@ -9,13 +9,17 @@ interface EventContainerProps {
   colourGenerator: Function;
 }
 
+interface Params {
+  service: string;
+}
+
 const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const { eventData } = useContext(EventContext);
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
   const { selectedMetrics } = useContext(QueryContext);
   const eventDataList: any[] = eventData.eventDataList;
   const eventTimeList: any[] = eventData.eventTimeList;
-  const { service } = useParams<any>();
+  const { service } = useParams<keyof Params>() as Params;
 
   useEffect(() => {
     const temp: JSX.Element[] = [];
