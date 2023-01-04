@@ -1,9 +1,9 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function AwaitingApproval() {
-  const history = useHistory();
-  const reroute = () => history.push('/');
+  const navigate = useNavigate();
+  const reroute = () => navigate('/');
   return (
     <div className="home">
       <p className="welcomeMessage" data-testid="awaitingApprovalMessage">

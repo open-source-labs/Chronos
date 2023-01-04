@@ -11,9 +11,9 @@ import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import KafkaModel from '../models/KafkaModel';
 import fetch, { FetchError } from 'electron-fetch';
-import { lightWhite } from 'material-ui/styles/colors';
 //import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
+import MetricsModel from '../models/MetricsModel';
 
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
@@ -25,22 +25,20 @@ let pool: any;
 // Stores database type: 1) MongoDB or 2) SQL
 let currentDatabaseType: string;
 
+// Provide location to settings.json
+const settingsLocation = path.resolve(__dirname, '../../settings.json');
+
 /**
  * @event   connect
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-let settingsLocation;
-if (process.env.NODE_ENV === 'development')
-  settingsLocation = path.resolve(__dirname, '../../__tests__/test_settings.json');
-else settingsLocation = path.resolve(__dirname, '../../settings.json');
-ipcMain.on('connect', async (message: Electron.IpcMainEvent, index: number) => {
+ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = fs.readFileSync(settingsLocation, 'utf8');
-
-    const userDatabase = JSON.parse(fileContents).services[index];
+    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+    const userDatabase = fileContents[username].services[index];
     // We get index from sidebar container: which is the mapplication (DEMO)
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
@@ -190,6 +188,58 @@ ipcMain.on('dockerRequest', async (message, service) => {
   }
 });
 
+// This event allows the user to change which metrics are saved by the database, so that their database doesn't get bloated with unnecessary data that they don't actually want.
+ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
+  try {
+    let result: any = {};
+
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB') {
+      // Get all documents from the services collection
+      result = await MetricsModel.find().lean();
+    }
+
+    // SQL Database
+    if (currentDatabaseType === 'SQL') {
+      // Get all rows from the metrics table
+      const query = `SELECT * FROM metrics;`;
+      result = await pool.query(query);
+      result = result.rows;
+    }
+
+    // Async event emitter - send response
+    message.sender.send('savedMetricsResponse', result);
+    // eslint-disable-next-line no-shadow
+  } catch (err) {
+    if (err) console.log('Error in "metricsRequest" event :', err.message);
+  }
+});
+
+ipcMain.on('updateSavedMetrics', async (message: Electron.IpcMainEvent, args: Object[]) => {
+  try {
+    // Mongo Database
+    if (currentDatabaseType === 'MongoDB' && args.length) {
+      // Update the 'selected' option for each metric
+      args.forEach(async (el: any) => {
+        await MetricsModel.updateOne({ metric: el.metric }, {
+          $set: {
+            selected: el.selected
+          }
+        })
+      })
+      // let result = await MetricsModel.update();
+    }
+  }
+
+  catch (err) {
+    if (err) console.error(err)
+  }
+})
+
+
+
+
+
 /**
  * @event   eventRequest/EventResponse
  * @desc    
@@ -246,7 +296,6 @@ ipcMain.on('kubernetesRequest', async (message) => {
       // Get last 50 documents. If less than 50 get all
     result = await postgresFetch('kubernetesmetrics', pool);
     }
-
     message.sender.send('kubernetesResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
@@ -13,7 +13,7 @@ export interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { servicesData } = useContext(ApplicationContext);
   const { mode } = useContext(DashboardContext);
   const [selectModal, setSelectModal] = useState(false);
@@ -53,12 +53,12 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
 
   const handleServices = () => {
     const joinedServices = selectedServices.join(' ');
-    history.replace(joinedServices);
+    navigate(joinedServices);
     setLive(false);
   };
 
   const currentModeCSS =
-    mode === 'light mode' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
+    mode === 'light' ? lightAndDark.lightModeHeader : lightAndDark.darkModeHeader;
 
   return (
     <div className="microservice-header" style={currentModeCSS} data-testid="Header">

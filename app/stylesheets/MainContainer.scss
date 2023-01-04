@@ -6,8 +6,11 @@
   @include centerWithFlex(space-between);
   flex-direction: column;
   padding-left: $sidebarWidth;
+  max-width: 100%;
+
   .main-routes {
     width: 100%;
+    max-width: 100%;
     height: 100%;
     padding-bottom: 20px;
   }

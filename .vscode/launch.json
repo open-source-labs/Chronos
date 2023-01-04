@@ -4,6 +4,15 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "File",
+            "skipFiles": [
+                "<node_internals>/**",
+            ],
+            "program": "${file}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Electron: Main",
             "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
             "runtimeArgs": [
