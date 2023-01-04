@@ -46,6 +46,7 @@ async function readDockerContainer(input) {
       out.networksent = data[0].netIO.wx;
       out.processcount = data[0].pids;
       out.restartcount = data[0].restartCount;
+      out.time = Date.now();
       return out;
 
     } catch (e) {

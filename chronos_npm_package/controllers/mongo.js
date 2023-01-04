@@ -127,13 +127,13 @@ mongo.health = ({ microservice, interval }) => {
  * Collects information on the docker container
  */
 mongo.docker = ({ microservice, interval }) => {
+  // Create collection using name of microservice
+  const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
   dockerHelper.getDockerContainer(microservice)
     .then((containerData) => {
       setInterval(() => {
         dockerHelper.readDockerContainer(containerData)
           .then((data) => {
-            // Create collection using name of microservice
-            const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
             return containerInfo.create(data);
           })
           .then((_) => console.log(`Docker data recorded in MongoDB collection ${microservice}-containerinfo`))
