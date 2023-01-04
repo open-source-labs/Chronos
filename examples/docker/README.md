@@ -33,11 +33,15 @@ Peform the following steps in each of the _books_, _customers_, _frontend_, and 
 docker-compose -f docker-compose.yml up
 ```
 
+#
+
 You should now see the containers running in your terminal, each reporting "Docker data recorded in...". If this is being displayed for the books, customers, frontend, and orders microservices then the example is successfully saving health metrics to your database of choice!
 
 *If there is any error when running the applications and the underlying files for a microservice were changed, be sure to delete the previous image before calling `docker-compose -f docker-compose.yml up` again. If you do not, the docker compose command will not know to rebuild the image and the code changes meant to fix any issues will not be rolled into the existing Docker image!*
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
+
+#
 
 ## Contributing
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.

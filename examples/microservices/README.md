@@ -1,4 +1,5 @@
 # Chronos Non-Dockerized Microservices Example
+
 Microservices architecture for testing [Chronos](https://github.com/open-source-labs/Chronos), a microservice communication and health visualizer.
 
 ## Purpose and Design
@@ -25,9 +26,11 @@ Peform the following steps in each of the *books*, *customers*, *orders*, and *r
 3. Run `npm install`
 4. Run `npm run start`
 
+#
 Then open a web browser to `localhost:3000` and verify that the simple webpage application is operational.
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
+#
 
 ## Contributing
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
