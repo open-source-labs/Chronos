@@ -38,14 +38,25 @@ postgres.services = ({ microservice, interval }) => {
     `CREATE TABLE IF NOT EXISTS services (
       _id SERIAL PRIMARY KEY NOT NULL,
       microservice VARCHAR(248) NOT NULL UNIQUE,
-      interval INTEGER NOT NULL
-      )`,
+      interval INTEGER NOT NULL)`,
     (err, results) => {
       if (err) {
         throw err;
       }
     }
   );
+
+  client.query(`
+      CREATE TABLE IF NOT EXISTS metrics (
+      _id SERIAL PRIMARY KEY NOT NULL,
+      metric TEXT NOT NULL UNIQUE,
+      selected BOOLEAN,
+      mode TEXT NOT NULL)`,
+    (err, results) => {
+      if (err) {
+        throw err;
+      }
+    });
 
   // Insert microservice name and interval into services table
   const queryString = `
@@ -311,22 +322,68 @@ postgres.saveService = (config) => {
 }
 
 
-postgres.setQueryOnInterval = (config) => {
+postgres.setQueryOnInterval = async (config) => {
   let service;
-  if (config.mode === 'kakfa') service = 'kafkametrics';
-  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
-  else throw new Error('Unrecognized mode');
+  let metricsQuery;
+  let currentMetrics;
+  let l = 0;
+  const currentMetricNames = {};
+
+  if (config.mode === 'kakfa') {
+    service = 'kafkametrics'
+    metricsQuery = utilities.kafkaMetricsQuery;
+  } else if (config.mode === 'kubernetes') {
+    service = 'kubernetesmetrics';
+    metricsQuery = utilities.promMetricsQuery;
+  } else {
+    throw new Error('Unrecognized mode')
+  };
+
+  currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${config.mode}';`);
+  currentMetrics = currentMetrics.rows;
+  // currentMetrics is 
+  // [
+  //   { _id: 1, metric: 'testmetric', selected: true, mode: 'kubernetes' }
+  // ]
+  if (currentMetrics.length > 0) {
+    currentMetrics.forEach(el => {
+    const { metric, selected } = el;
+    currentMetricNames[metric] = selected;
+    l = currentMetrics.length;
+    })
+  }
 
   setInterval(() => {
-    utilities.getMetricsQuery(config)
+    metricsQuery(config)
+      .then(async (parsedArray) => {
+        if (l !== parsedArray.length) {
+          console.log('currentMetricNames is less than parsedArray length, new metrics available to track');
+          console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
+          let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
+          parsedArray.forEach(el => {
+            if (!(el.metric in currentMetricNames)) {
+              currentMetricNames[el.metric] = true;
+              metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${config.mode}'), `);
+            }
+          })
+          metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
+          await client.query(metricsQueryString);
+          l = parsedArray.length;
+        }
+        return parsedArray;
+      })
       .then(parsedArray => {
-        const numDataPoints = parsedArray.length;
+        const documents = [];
+        for (const metric of parsedArray) {
+          if (currentMetricNames[metric.metric]) documents.push(metric)
+        }
+        const numDataPoints = documents.length;
         const queryString = createQueryString(numDataPoints, service);
-        const queryArray = createQueryArray(parsedArray);
+        const queryArray = createQueryArray(documents);
         return client.query(queryString, queryArray);
       })
-      .then(() => console.log('Kafka metrics recorded in PostgreSQL'))
-      .catch(err => console.log('Error inserting kafka metrics into PostgreSQL:\n', err));
+      .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
+      .catch(err => console.log(`Error inserting ${config.mode} metrics into PostgreSQL:`, '\n', err));
   }, config.interval);
 }
 

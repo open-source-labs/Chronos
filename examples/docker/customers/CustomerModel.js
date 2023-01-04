@@ -15,7 +15,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('Connected!!!********* Customer Database is live!!!'))
+  .then(() => console.log('Connected! Customer Database is live!'))
   .catch((err) => console.log('Connection Error ', err));
 
 //  Schema for the database

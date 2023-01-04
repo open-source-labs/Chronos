@@ -13,7 +13,10 @@ export const HealthContext = React.createContext<any>(null);
  * @method    fetchHealthData
  */
 
-const HealthContextProvider: React.FC = React.memo(({ children }) => {
+interface Props {
+  children: any;
+}
+const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [healthData, setHealthData] = useState<any>({ healthDataList: [], healthTimeList: [] });
   const [services, setServices] = useState<Array<string>>([]);
 

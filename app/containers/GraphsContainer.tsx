@@ -15,15 +15,17 @@ import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 import LogsTable from '../charts/LogsTable';
 import EventContainer from './EventContainer';
-import QueryContainer from './QueryContainer';
+import TransferColumns from '../components/TransferColumns';
 import HealthContainer from './HealthContainer';
+import ModifyMetrics from './ModifyMetricsContainer';
+import * as DashboardContext from '../context/DashboardContext';
+import lightAndDark from '../components/Styling';
 
 import '../stylesheets/GraphsContainer.scss';
 
 interface Params {
   app: any;
   service: string;
-
 }
 
 // interface GraphsContainerProps {
@@ -37,30 +39,27 @@ interface Params {
 
 const GraphsContainer: React.FC = React.memo(props => {
 
-  console.table(props);
-
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
-
   const [live, setLive] = useState<boolean>(false);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-  const { servicesData } = useContext(ApplicationContext);
+  const { servicesData, getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
   const { fetchEventData, setEventData } = useContext(EventContext);
   // const { fetchKafkaEventData, setKafkaEventData } = useContext(EventContext);
   // const { fetchKubernetesEventData, setKubernetesEventData } = useContext(EventContext);
-  const { fetchCommsData } = useContext(CommsContext);
+  const { fetchCommsData, commsData } = useContext(CommsContext);
   const { selectedMetrics } = useContext(QueryContext);
   const [chart, setChart] = useState<string>('all');
   const [prevRoute, setPrevRoute] = useState<string>('');
+  const { mode } = useContext(DashboardContext.DashboardContext);
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    // const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
-    // JJ-ADDITION
-    const healthServiceArray = serviceArray.filter(
-      (value: string) => value !== 'kafkametrics' || 'kubernetesmetrics'
+    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it
+    // not work correctly, so it has been omitted
+    const healthServiceArray = serviceArray.filter((value: string) => (value !== 'kafkametrics')
     );
     if (live) {
       setIntervalID(
@@ -81,12 +80,13 @@ const GraphsContainer: React.FC = React.memo(props => {
       fetchCommsData(app, live);
       fetchHealthData(healthServiceArray);
       if (service.includes('kafkametrics')) {
-        fetchEventData();
+        fetchEventData('kafkametrics');
       }
       // JJ-ADDITION
       if (service.includes('kubernetesmetrics')) {
         fetchEventData('kubernetesmetrics');
       }
+      getSavedMetrics();
     }
 
     return () => {
@@ -96,6 +96,9 @@ const GraphsContainer: React.FC = React.memo(props => {
       setEventData({ eventDataList: [], eventTimeList: [] });
     };
   }, [service, live]);
+
+  const currentMode =
+    mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const routing = (route: string) => {
     if (location.href.includes('communications')) {
@@ -154,6 +157,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
+
   return (
     <>
       <nav id="navigationBar">
@@ -176,22 +180,29 @@ const GraphsContainer: React.FC = React.memo(props => {
             Docker
           </button>
         )}
-        <button
+        {commsData.length > 0 && <button
           id="communication-button"
           className={chart === 'communications' ? 'selected' : undefined}
           onClick={() => {
             if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
             setChart('communications');
-            navigate('communications');
           }}
           key="3"
         >
           Communication
+        </button>}
+        <button
+          id="modify-metrics-button"
+          className={chart === 'modifyMetrics' ? 'selected' : undefined}
+          onClick={() => {routing('modifyMetrics')}}
+          key="4"
+        >
+          Modify Metrics
         </button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
       <div className="graphs-container">
-        {service === 'communications' ? (
+        {chart === 'communications' ? (
           <div className="graphs">
             <RequestTypesChart />
             <ResponseCodesChart />
@@ -201,7 +212,7 @@ const GraphsContainer: React.FC = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'all' && <QueryContainer />}
+            {chart === 'all' && <div className="transferColumns"><h2 style={currentMode}>Search Your Metrics to Display</h2><TransferColumns /></div>}
             {chart.startsWith('health_') && (
               <HealthContainer
                 colourGenerator={stringToColour}
@@ -214,6 +225,7 @@ const GraphsContainer: React.FC = React.memo(props => {
               <EventContainer colourGenerator={stringToColour} sizing="solo" />
             )}
             {chart === 'docker' && <DockerChart />}
+            {chart === 'modifyMetrics' && <ModifyMetrics />}
           </div>
         )}
       </div>

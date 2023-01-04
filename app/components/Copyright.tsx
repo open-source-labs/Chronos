@@ -5,7 +5,7 @@ import '../stylesheets/Applications.scss';
 
 export interface CopyrightProps {}
 
-const Copyright: React.SFC = React.memo(() => {
+const Copyright: React.FC = React.memo(() => {
   const useStyles = makeStyles(theme => ({
     copyright: {
       fontFamily: 'Roboto',

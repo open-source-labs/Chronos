@@ -119,3 +119,10 @@ export const useIsMount = () => {
   }, []);
   return isMountRef.current;
 };
+
+// Keep this in sync with the format in the users.json file for guests
+export const guestUser = {
+  "username": "guest",
+  "services":[],
+  "mode": "light"
+};

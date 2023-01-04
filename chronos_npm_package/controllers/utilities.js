@@ -25,7 +25,7 @@ const helpers = {
   */
   validateInput: (config) => {
     const out = config;
-    const { microservice, database, interval, dockerized, jmxuri, port } = config;
+    const { microservice, database, interval, dockerized, jmxuri, port, mode, promService, promPort} = config;
 
     // Validate all required fields exist and are valid input types
     if (!microservice || typeof microservice !== 'string') {
@@ -45,11 +45,23 @@ const helpers = {
       );
     }
 
+    const modeTypes = ['kafka', 'kubernetes', 'microservices']
+
+    if (!mode || !modeTypes.includes(mode)) {
+      throw new Error('You must input a mode into your chronos.config file. The mode may either be "kubernetes", "kafka", or "microservice"')
+    }
+
     // validate that the jmxuri is a string
-    if (jmxuri && typeof jmxuri !== 'string') {
+    if (mode === 'kafka' && jmxuri && typeof jmxuri !== 'string') {
       throw new Error(
         'Invalid input for "jmxuri" in chronos-config.js: Please provide the address of the JMX Exporter'
       );
+    }
+
+    if (mode === 'kubernetes') {
+      if (!promService || typeof promService !== 'string' || !promPort || typeof promPort !== 'number') {
+        throw new Error('Invalid input for promService or promPort. promPort must be number and promService must be a string')
+      }
     }
 
     // Validate database type
@@ -99,9 +111,22 @@ const helpers = {
     return config;
   },
 
+  getMetricsURI: (config) => {
+    if (config.mode === 'kafka') {
+      return config.jmxuri;
+    } else if (config.mode === 'kubernetes') {
+      return `http://${config.promService}:${config.promPort}/api/v1/`;
+    } else {
+      throw new Error('Unrecognized mode')
+    }
+  },
+
   testMetricsQuery: (config) => {
-    const URI = helpers.getMetricsURI(config);
-    axios.get(URI)
+    let URI = helpers.getMetricsURI(config);
+    if (config.mode === 'kubernetes') {
+      URI += 'query?query=up'
+    }
+    return axios.get(URI)
       .then((response) => {
         if (response.status !== 200) console.error('Invalid response from metrics server:', URI);
         else if (response.status === 200) console.log('Successful initial response from metrics server:', URI);
@@ -112,26 +137,19 @@ const helpers = {
       })
   },
 
-  getMetricsQuery: (config) => {
+  kafkaMetricsQuery: (config) => {
     const URI = helpers.getMetricsURI(config);
+    // Returns a promise...
     return axios.get(URI)
       .then((response) => helpers.extractWord(config.mode, response.data))
       .catch((err) => console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n',err))
   },
 
-  getMetricsURI: (config) => {
-    if (config.mode === 'kafka') {
-      return config.jmxuri;
-    } else if (config.mode === 'kubernetes') {
-      return `http://${config.promService}:${config.promPort}/metrics`;
-    } else {
-      throw new Error('Unrecognized mode')
-    }
-  },
-
   extractWord: (mode, text) => {
       const res = [];
       const arr = text.split('\n');
+      const time = Date.now();
+      const category = 'Event';
 
       for (const element of arr) {
         // Handle comments and edge cases
@@ -142,8 +160,6 @@ const helpers = {
         const metric = element.slice(0, lastSpace);
         const value = Number(element.slice(lastSpace + 1));
         if (!isNaN(value)) {
-          const time = Date.now();
-          const category = 'Event';
           res.push({ metric, value, time, category });
         } else {
           console.error('The following metric is invalid and was not saved to the database:\n', element);
@@ -151,6 +167,60 @@ const helpers = {
       }
       // console.log('Parsed Array length is: ', res.length);
       return res;
+  },
+
+  promMetricsQuery: (config) => {
+    // query for all of the available metrics
+    const URI = helpers.getMetricsURI(config)
+    const query =  URI + 'query?query=' + encodeURIComponent('{__name__=~".+",container=""}');
+    // Return a promise...
+    return axios.get(query)
+    .then((response) => helpers.parseProm(response.data.data.result))
+    .catch((err) => console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n',err))
+  },
+
+  parseProm: (data) => {
+    // metric, value, time, category
+    const res = [];
+    const time = Date.now();
+    const category = 'Event';
+    // const usedCategories = {'job': true, 'instance': true, '__name__': true};
+
+    // Opportunity for improvement: Prometheus may query metrics that have the same job + instance + metric, which means they end up having the same name (see name variable). 
+    // When this happens, it means that the parsedArray returned from this function will always have a different length than the metricNames length. To avoid this, Chronos currently 
+    // only saves the first occurence of any particular ${name}. This can be improved in the future by distinguishing between each ${name}, but be aware that if the ${name} is too long, it will be rejected by the database.
+
+    const names = new Set();
+
+    // Iterate through the metrics to create an object of the expected shape
+    for (const info of data) {
+        if (!info.metric.job) continue;
+        // Set the base name using the job, IP, and metric __name__
+        let name = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+        if (names.has(name)) continue;
+        else names.add(name);
+        // Tack on the remaining key's values from the remaining metric descriptors
+        // This might result in an overly-long metric name though, so commented for now
+        // for (let field in info.metric) {
+        //     if ((field in usedCategories)) continue
+        //     name += '/' + info.metric[field];
+        // }
+        
+        // Save the value in the value key
+        let value = info.value;
+        if (value.constructor.name === 'Array') value = info.value[1];
+        if (isNaN(value) || value === 'NaN') continue;
+      
+        // Push an object to the output array
+        res.push({
+            metric: name,
+            value: value,
+            time: time,
+            category: category,
+        })
+    }
+
+    return res;
   }
 
 };
