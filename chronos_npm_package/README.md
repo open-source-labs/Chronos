@@ -1,36 +1,24 @@
-<a href="https://chronoslany.com/">
-    <img src="assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="500" />
-</a>
-<br>
-<br>
-
-
 # Chronos 
-![Build Passing](https://img.shields.io/badge/build-passing-blue)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Release: 8.0.1](https://img.shields.io/badge/Release-8.0.1-orange)
-
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
 #
 
 ## What's New?
+- Bug Fixes
 - Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
 - Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
 - Option to filter by category and individual metric, and flip between services and categories with ease
 - Kubernetes monitoring via Prometheus server
 - Apache Kafka monitoring capability, all you need to do is run Prometheus JMX exporter on the system your Chronos application is running on. A sample JMX config.yaml file is provided in the Chronos repository for a quick and easy setup, however you are free to configure however you like.
-- Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 
 #
 
 ## Features 
 - Distributed tracing enabled across microservice applications
-- Supports <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
+- Supports PostgreSQL and MongoDB databases
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
-- Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
+- Monitor an Apache Kafka cluster via the JMX Prometheus Exporter
 - Monitor a Kubernetes cluster via a Prometheus monitoring server
 
 #
@@ -127,7 +115,7 @@ notifications: [
 ]
 // ...
 ```
-Chronos uses the <a href="#"><img src="assets/slack-logo-color.png" alt="Slack" title="Slack" align="center" height="20" /></a> API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
+Chronos uses the Slack API to send messages to a Slack channel and only requires the **webhook url**. Learn how to set up [Slack webhooks](https://api.slack.com/messaging/webhooks) for your team.
 
 **Email**
 ```js
@@ -159,7 +147,7 @@ _NOTE: Email notification settings may require alternative security settings to 
 <br>
 
 ### Chronos Tracker for "Microservices" Mode
-The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with <img src="assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" />. If omitted, Chronos will assume this server is not running in a container, i.e. `dockerized` will default to _false_. 
+The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with Docker. If omitted, Chronos will assume this server is not running in a container, i.e. `dockerized` will default to _false_. 
 
 Setting the flag to _false_ will collect metrics from the host computer directly, while _true_ indicates for Chronos to pull metrics from the Docker daemon.
 
@@ -203,7 +191,7 @@ app.use('/', trackingMiddleware);
 ```
 
 #### Special Notes on Dockerized Microservices
-<img src="assets/important.png" alt="Important" title="Important" align="center" height="20" /> Give your containers the same names you pass in as arguments for microservice names.
+**IMPORTANT:** Give your containers the same names you pass in as arguments for microservice names.
 
 In order to have container statistics saved to your database along with other health info, bind volumes to this path when starting up the containers:
 ```
@@ -410,56 +398,42 @@ chronos.link(client, ServerWrapper);
 ### Viewing Chronos Data
 Once you have configured and intialized Chronos Tracker, it will automatically record monitoring data when your servers are running. The data will be saved into your database of choice, and then start the Chronos desktop app to view by cloning our [GitHub repo](https://github.com/open-source-labs/Chronos). Folow the ReadMe in that repo to setup the Chronos desktop app. 
 
-#
+<br>
 
-### _Examples_
+## Examples
 
 We provide working example microservice applications in Chronos desktop app repo in the *examples* folder.
 [GitHub repo](https://github.com/open-source-labs/Chronos)
 
-
-###### Return to [Top](#chronos)
-
-<br>
+#
 
 ## Technologies
-
-- <a href="#"><img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="30" /></a>
-- <a href="#"><img src="assets/react-logo-color.png" alt="React" title="React" align="center" height="30" /></a>
-- <a href="#"><img src="assets/js-logo-color.png" alt="JavaScript" title="JavaScript" align="center" height="30" /></a>
-- <a href="#"><img src="assets/ts-logo-long-blue.png" alt="TypeScript" title="TypeScript" align="center" height="30" /></a>
-- <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="30" /></a>
-- <a href="#"><img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="30" /></a>
-- <a href="#"><img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="30" /></a>
-- <a href="#"><img src="assets/express-logo-color.png" alt="Express" title="Express" align="center" height="30" /></a>
-- <a href="#"><img src="assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="30" /></a>
-- <a href="#"><img src="assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /></a> 
-- <a href="#"><img src="assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="30" /></a>
-- <a href="#"><img src="assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="30" /></a>
-- <a href="#"><img src="assets/jest-logo-color.png" alt="Jest" title="Jest" align="center" height="30" /></a>
-- <a href="#"><img src="assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="30" /></a>
-- <a href="#"><img src="assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="30" /></a>
-- <a href="#"><img src="assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
-- <a href="#"><img src="assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
-- <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
+- Electron
+- JavaScript
+- TypeScript
+- PostgreSQL
+- MongoDB
+- Node
+- Express
+- HTTP
+- RPC
+- Docker
+- Apache Kafka
+- Docker
+- Kubernetes
 
 #
-###### Return to [Top](#chronos)
-<br>
-
 
 ## Contributing
 
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bug fixes and improvements. Read below to learn how you can take part in improving Chronos.
 
 - [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
-#
-###### Return to [Top](#chronos)
-<br>
 
+#
 
 ## License
 
-Chronos is <a href="#"><img src="assets/mit-logo-color.png" alt="MIT" title="MIT" align="center" height="20" /></a> [licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md) 
+Chronos is MIT licenced 
 #
 ###### Return to [Top](#chronos)
