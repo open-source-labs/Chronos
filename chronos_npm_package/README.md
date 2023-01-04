@@ -13,39 +13,13 @@
 
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
-<br>
-
-## Table of Contents
-- [What's New?](#what's-new)
-- [Features](#features)
-- [Using Chronos](#install-chronos)
-    - [Pre-Installation](#pre-installation)
-    - [Install Dependencies](#install-chronos)
-    - [Configure Chronos Tracker](#configure-chronos-tracker)
-    - [Initialize Chronos Tracker](#initialize-chronos-tracker)
-    - [Docker Configuration](#docker-configuration)
-    - [Kafka Configuration](#Apache-Monitoring-(Via-JMX-to-Prometheus-Exporter))
-    - [Start Chronos](#start-chronos)
-    - [Getting the Executable](#getting-the-chronos-executable)
-- [Notifications](#notifications)
-    - [Slack](#slack)
-    - [Email](#email)
-- [Branches](#branches)
-    - [Master Branch](#master-branch)
-      - [Examples](#examples)
-        - [Microservices](#microservices)
-        - [Docker](#docker)
-    - [gRPC Branch](#grpc-branch)
-    - [Splash Page](#chronoswebsite)
-- [Technologies](#technologies)
-- [License](#license)
-
 #
 
 ## What's New?
 - Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
 - Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
 - Option to filter by category and individual metric, and flip between services and categories with ease
+- Kubernetes monitoring via Prometheus server
 - Apache Kafka monitoring capability, all you need to do is run Prometheus JMX exporter on the system your Chronos application is running on. A sample JMX config.yaml file is provided in the Chronos repository for a quick and easy setup, however you are free to configure however you like.
 - Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 
@@ -57,6 +31,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
 - Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
+- Monitor a Kubernetes cluster via a Prometheus monitoring server
 
 #
 
