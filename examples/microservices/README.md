@@ -22,7 +22,7 @@ Each microservice has its own server, which receives requests from both the clie
 
 Peform the following steps in each of the *books*, *customers*, *orders*, and *reverse proxy* directories
 1. `cd` into the folder
-2. Look at `package.json` to note where `@chronos/tracker` is being imported from. Verify that it is coming from the desired location (whether the published remote from npm or from local directory).
+2. Look at `package.json` to note where `@chronosmicro/tracker` is being imported from. Verify that it is coming from the desired location (whether the published remote from npm or from local directory).
 3. Run `npm install`
 4. Run `npm run start`
 

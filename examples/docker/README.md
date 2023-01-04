@@ -20,11 +20,11 @@ Peform the following steps in each of the _books_, _customers_, _frontend_, and 
 - `CUSTOMER_URI`: A **MongoDB** URI for the customerserver microservice to use
 - `ORDER_URI`:  A **MongoDB** URI for the orderserver microservice to use
 
-2.  Verify that @chronos/tracker is a dependency in each of the /books, /customers, /frontend, and /orders folders (see the `package.json` in each folder).
+2.  Verify that @chronosmicro/tracker is a dependency in each of the /books, /customers, /frontend, and /orders folders (see the `package.json` in each folder).
 
-- If the @chronos/tracker dependency is listed as a remote npm package (i.e. `"@chronos/tracker": "^8.0.1"`), no further work is needed.
+- If the @chronosmicro/tracker dependency is listed as a remote npm package (i.e. `"@chronosmicro/tracker": "^8.0.1"`), no further work is needed.
 
-- If the @chronos/tracker dependency is listed as a local npm package (i.e. `"@chronos/tracker": "file:./chronos_npm_package"`), the Docker build will require that the the Chronos code is in this folder. Either copy the _chronos_npm_package_ folder in manually, or see next bullet to automate this process **if you are a Mac user**. If the folder is copied in manually for this example, we recommend deleting the copied in folder from each directory when the example is complete.
+- If the @chronosmicro/tracker dependency is listed as a local npm package (i.e. `"@chronosmicro/tracker": "file:./chronos_npm_package"`), the Docker build will require that the the Chronos code is in this folder. Either copy the _chronos_npm_package_ folder in manually, or see next bullet to automate this process **if you are a Mac user**. If the folder is copied in manually for this example, we recommend deleting the copied in folder from each directory when the example is complete.
 
 - **Mac users only:** `cd` into the _scripts_ folder and run the `buildDockerExample.sh` script. This will automatically copy the _chronos_npm_package_ folder into all 4 folders, and then runs the requried `docker-compose` command. If you run this script this, the example should be up and running and no further steps are needed. To delete the copied in folders if they were not automatically deleted by `buildDockerExample.sh`, run the script `cleanupDockerExample.sh`.
 

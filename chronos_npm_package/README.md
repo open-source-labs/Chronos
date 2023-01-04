@@ -68,7 +68,7 @@ The following steps should be performed in each microservice you want to track u
 Install the package as a dependency in each of the microservices you want to track:
 
 ```
-npm install @chronos/tracker
+npm install @chronosmicro/tracker
 ```
 
 <br>
@@ -114,7 +114,7 @@ module.exports = {
 Then utilize the `chronos-config.js` file into your microservice application by importing it and using it as the Chronos class constructor argument:
 ```js
 const chronosConfig = require('./chronos-config.js');
-const Chronos = require('@chronos/tracker');
+const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 ```
 
@@ -249,7 +249,7 @@ module.exports = {
 Then, in ***ONE AND ONLY ONE** of your microservices, call the 
 ```js
 const chronosConfig = require('./chronos-config.js');
-const Chronos = require('@chronos/tracker');
+const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 chronos.kafka();
 ```
