@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const chronosConfig = require('./chronos-config.js');
-const Chronos = require('chronos-tracker');
+const Chronos = require('@chronos/tracker');
 const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();
@@ -24,20 +24,6 @@ const orders = `http://localhost:7777`;
 app.use('/', chronos.track());
 
 app.use(cors());
-
-// CHAOS FLOW - SIMPLY A TEST FOR THE EXPESS SERVER
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- 
-    METHOD:${req.method},
-    PATH: ${req.url},
-    BODY: ${JSON.stringify(req.body)},
-    ID: ${req.query.id}
-    ***************************************************************************************`
-  );
-  next();
-});
 
 app.all('/books/*', (req, res) => {
   console.log('redirecting to books');

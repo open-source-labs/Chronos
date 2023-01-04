@@ -1,5 +1,5 @@
 require('dotenv').config();
-const chronos = require('chronos-tracker');
+const chronos = require('@chronos/tracker');
 
 chronos.use({
   microservice: 'reverse-proxy',

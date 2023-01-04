@@ -42,6 +42,10 @@ const ContainerSchema = new Schema({
   restartcount: {
     type: Number, // count
   },
+  time: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
 module.exports = ContainerName => mongoose.model(ContainerName, ContainerSchema);

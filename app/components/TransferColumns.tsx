@@ -1,72 +1,16 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import 'antd/dist/antd.less';
-import { Switch, Table, Tag, Transfer, Button } from 'antd';
-// import difference from 'lodash/difference';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
 import { DataGrid } from '@material-ui/data-grid';
-// import AvQueuePlayNext from 'material-ui/svg-icons/av/queue-play-next';
-// import CommunicationPhonelinkSetup from 'material-ui/svg-icons/communication/phonelink-setup';
-
+import * as DashboardContext from '../context/DashboardContext';
+import lightAndDark from './Styling';
+import { Button } from '@material-ui/core';
 
 interface Params {
   service: string;
 }
-
-// const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
-//   <Transfer {...restProps}>
-//     {({
-//       direction,
-//       filteredItems,
-//       onItemSelectAll,
-//       onItemSelect,
-//       selectedKeys: listSelectedKeys,
-//       disabled: listDisabled,
-//     }) => {
-//       const columns = direction === 'left' ? leftColumns : rightColumns;
-//       const rowSelection = {
-//         getCheckboxProps: item => ({
-//           disabled: listDisabled || item.disabled,
-//         }),
-
-//         onSelectAll(selected, selectedRows) {
-//           const treeSelectedKeys = selectedRows
-//             .filter(item => !item.disabled)
-//             .map(({ key }) => key);
-//           const diffKeys = selected
-//             ? difference(treeSelectedKeys, listSelectedKeys)
-//             : difference(listSelectedKeys, treeSelectedKeys);
-//           onItemSelectAll(diffKeys, selected);
-//         },
-
-//         onSelect({ key }, selected) {
-//           onItemSelect(key, selected);
-//         },
-
-//         selectedRowKeys: listSelectedKeys,
-//       };
-//       return (
-//         <Table
-//           rowSelection={rowSelection}
-//           columns={columns}
-//           dataSource={filteredItems}
-//           size="small"
-//           style={{
-//             pointerEvents: listDisabled ? 'none' : undefined,
-//           }}
-//           onRow={({ key, disabled: itemDisabled }) => ({
-//             onClick: () => {
-//               if (itemDisabled || listDisabled) return;
-//               onItemSelect(key, !listSelectedKeys.includes(key));
-//             },
-//           })}
-//         />
-//       );
-//     }}
-//   </Transfer>
-// );
 
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState<any[]>([]);
@@ -81,9 +25,12 @@ const TransferColumns = React.memo(() => {
   const { healthData } = useContext(HealthContext);
   const { eventData } = useContext(EventContext);
   const { service } = useParams<keyof Params>() as Params;
+  const { mode } = useContext(DashboardContext.DashboardContext);
 
   const eventDataList = eventData.eventDataList;
   const healthDataList = healthData.healthDataList;
+
+  const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   useEffect(() => {
     if (healthDataList && healthDataList.length > 0) {
@@ -124,13 +71,6 @@ const TransferColumns = React.memo(() => {
         setMetricsPool(healthMetrics);
       }
     }
-    // else if (service === 'kubernetesmetrics') {
-    //   if (eventDataList && eventDataList.length > 0) {
-    //     setMetricsPool(getMetrics('event', eventDataList));
-    //   } else if (eventMetricsReady) {
-    //     setMetricsPool(eventMetrics);
-    //   }
-    // } 
     else if (!service.includes('kafkametrics')) {
       if (healthDataList && healthDataList.length > 0) {
         setMetricsPool(getMetrics('health', healthDataList));
@@ -185,36 +125,6 @@ const TransferColumns = React.memo(() => {
     return pool;
   };
 
-  const leftTableColumns = [
-    {
-      dataIndex: 'title',
-      title: 'Metrics',
-    },
-    {
-      dataIndex: 'tag',
-      title: 'Category',
-      render: tag => <Tag>{tag}</Tag>,
-    },
-  ];
-  const rightTableColumns = [
-    {
-      dataIndex: 'title',
-      title: 'Selected Metrics',
-    },
-  ];
-
-  const onChange = nextTargetKeys => {
-    console.log('nextTargetKeys is: ', nextTargetKeys)
-    setTargetKeys(nextTargetKeys);
-  };
-
-  const triggerDisable = checked => {
-    setDisabled(checked);
-  };
-
-  const triggerShowSearch = checked => {
-    setShowSearch(checked);
-  };
   const getCharts = () => {
     // setSelectedMetrics
     const temp: any[] = [];
@@ -272,19 +182,20 @@ const TransferColumns = React.memo(() => {
   const selectedRows: any[] = [];
 
   targetKeys.forEach(el => {
-    selectedRows.push(<li style={{marginLeft: '30px', marginTop: '5px'}}>{el}</li>)
+    selectedRows.push(<li style={{marginLeft: '30px', marginTop: '5px', color: currentMode.color}}>{el}</li>)
   })
 
   return (
     <>
       <div id="getChartsContainer">
-        <Button id="getCharts" type="primary" onClick={getCharts} shape="round" size="middle">
+        <Button id="getCharts" onClick={getCharts} variant='contained' color='primary'>
           Get Charts
         </Button>
       </div>
       <div id='transferTest'>
         <div style={{ height: '500px', width: '100%' }}>
           <DataGrid
+            style={currentMode}
             rows={rows}
             columns={columns}
             pageSize={10}
@@ -299,7 +210,7 @@ const TransferColumns = React.memo(() => {
             }}
           />
         </div>
-        {selectedRows.length > 0 && <h3 style={{marginTop: '20px'}}>Selected Rows:</h3>}
+        {selectedRows.length > 0 && <h3 style={{marginTop: '20px', color: currentMode.color}}>Selected Rows:</h3>}
         <ol id="selectedRows">
           {selectedRows}
         </ol>

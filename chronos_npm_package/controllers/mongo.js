@@ -7,6 +7,7 @@ const ContainerInfoFunc = require('../models/ContainerInfo');
 const KafkaModel = require('../models/KafkaModel');
 const KubernetesModel = require('../models/KubernetesModel.js');
 const { collectHealthData } = require('./healthHelpers.js');
+const MetricsModel = require('../models/MetricsModel');
 const dockerHelper = require('./dockerHelper');
 const utilities = require('./utilities');
 require('../models/ContainerInfo');
@@ -14,6 +15,8 @@ require('../models/ContainerInfo');
 mongoose.set('strictQuery', true);
 
 const mongo = {};
+
+// This object is used to determine if metrics that are received from setInterval queries should be saved to the db or not.
 
 /**
  * Initializes connection to MongoDB database using provided URI
@@ -124,13 +127,13 @@ mongo.health = ({ microservice, interval }) => {
  * Collects information on the docker container
  */
 mongo.docker = ({ microservice, interval }) => {
+  // Create collection using name of microservice
+  const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
   dockerHelper.getDockerContainer(microservice)
     .then((containerData) => {
       setInterval(() => {
         dockerHelper.readDockerContainer(containerData)
           .then((data) => {
-            // Create collection using name of microservice
-            const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
             return containerInfo.create(data);
           })
           .then((_) => console.log(`Docker data recorded in MongoDB collection ${microservice}-containerinfo`))
@@ -148,8 +151,8 @@ mongo.docker = ({ microservice, interval }) => {
 
 /*
  This function takes as a parameter the promise returned from the kafkaFetch().
-It then takes the returned array of metrics, turns them into documents based on
-KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
+ It then takes the returned array of metrics, turns them into documents based on
+ KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
 */
 mongo.serverQuery = (config) => {
   mongo.saveService(config);
@@ -176,32 +179,88 @@ mongo.saveService = (config) => {
     .catch(err => console.log(`Error saving "${microservice}" to the services table: `, err.message));
 }
 
-mongo.setQueryOnInterval = (config) => {
+mongo.setQueryOnInterval = async (config) => {
   let model;
+  let metricsQuery;
+  let currentMetrics;
+  let l = 0;
+  const currentMetricNames = {};
+
   if (config.mode === 'kafka') {
     model = KafkaModel;
+    metricsQuery = utilities.kafkaMetricsQuery;
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
+    metricsQuery = utilities.promMetricsQuery;
   } else {
     throw new Error('Unrecognized mode');
   }
+  // When querying for currentMetrics, we narrow down the result to only include metrics for the current service being used.
+  // This way, when we go to compare parsedArray to currentMetricNames, the length of the arrays should match up unless there are new metrics available to view
 
+  currentMetrics = await MetricsModel.find({mode: config.mode});
+  if (currentMetrics.length > 0) {
+    currentMetrics.forEach(el => {
+    const { metric, selected } = el;
+    currentMetricNames[metric] = selected;
+    l = currentMetrics.length;
+    })
+  }
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
-    utilities.getMetricsQuery(config)
+    metricsQuery(config)
+      // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
+      .then(async (parsedArray) => {
+        // This conditional would be used if new metrics are available to be tracked.
+        if (l !== parsedArray.length) {
+          console.log('currentMetricNames is less than parsedArray length, new metrics available to track');
+          console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
+          const newMets = [];
+          parsedArray.forEach(el => {
+            if (!(el.metric in currentMetricNames)) {
+              const { metric } = el;
+              newMets.push(MetricsModel({metric: metric, mode: config.mode}))
+              currentMetricNames[el.metric] = true;
+            }
+          })
+          await MetricsModel.insertMany(newMets, (err) => {
+            if (err) console.error(err)
+          })
+          l = parsedArray.length;
+        }
+        return parsedArray;
+      })
       .then(parsedArray => {
         const documents = [];
         for (const metric of parsedArray) {
-          documents.push(model(metric));
+          // This will check if the current metric in the parsed array evaluates to true within the currentMetricNames object.
+          // The currentMetricNames object is updated by the user when they select/deselect metrics on the electron app, so only the
+          // requested metrics will actually be populated in the database, which helps to avoid overloading the db with unnecessary data.
+          if (currentMetricNames[metric.metric]) documents.push(model(metric));
         }
         return model.insertMany(documents, (err) => {
           if (err) console.error(err);
-        });
+        })
       })
       .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
   }, config.interval);
 }
+
+
+// This middleware could be used if the user would like to update their chronos data, but they would have to expose a URL/port to be queried for the Electron front end.
+//
+// mongo.modifyMetrics = (config) => {
+//   return function (req, res, next) {
+//     res.on('finish', () => {
+//       if (req.body.URI === URI && req.body.mode === config.mode) {
+//         currentMetricNames = req.body.metrics;
+//       }
+//       else return next({err: 'Modified metrics passed in to the modifyMetrics route cannot be added', log: 'It is possible that the URI is incorrect, or that you are attempting to add metrics for the incorrect mode type'})
+//     });
+//     return next();
+//   };
+// }
 
 
 module.exports = mongo;

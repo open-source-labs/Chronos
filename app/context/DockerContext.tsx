@@ -11,7 +11,12 @@ export const DockerContext = React.createContext<any>(null);
  * @method    setDockerData
  */
 
-const DockerContextProvider: React.FC = React.memo(({ children }) => {
+interface Props {
+  children: any
+}
+
+const DockerContextProvider: React.FC<Props> = React.memo((props) => {
+  const children = props.children;
   const [dockerData, setDockerData] = useState({});
 
   function tryParseJSON(jsonString: any) {

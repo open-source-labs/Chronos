@@ -48,7 +48,6 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
               const metric: string = Object.keys(serviceMetric)[0];
               const valueList = Object.values(serviceMetric)[0];
               const newTimeList: any = getTime(timelist, serviceName, metric, categoryName);
-
               if (selectedMetricsList.includes(metric)) {
                 const newHealthChart = (
                   <HealthChart
@@ -75,7 +74,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   // return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
   // JJ-ADDITION
   return (
-    <div>{service.includes('kafkametrics' || 'kubernetesmetrics') ? healthChartsArr : []}</div>
+    <div>{(service !== 'kafkametrics' && service !== 'kubernetesmetrics') ? healthChartsArr : []}</div>
   );
 });
 
