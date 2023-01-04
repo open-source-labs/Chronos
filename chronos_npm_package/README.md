@@ -416,7 +416,7 @@ We provide working example microservice applications in Chronos desktop app repo
 - Node
 - Express
 - HTTP
-- RPC
+- gRPC
 - Docker
 - Apache Kafka
 - Docker
@@ -428,7 +428,7 @@ We provide working example microservice applications in Chronos desktop app repo
 
 Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bug fixes and improvements. Read below to learn how you can take part in improving Chronos.
 
-- [Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
+[Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
 
 #
 
