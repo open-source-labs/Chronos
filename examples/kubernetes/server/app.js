@@ -5,7 +5,7 @@ const port = 3000;
 app.use(cors());
 
 const chronosConfig = require('./chronos-config.js');
-const Chronos = require('@chronos/tracker');
+const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 
 chronos.kubernetes();

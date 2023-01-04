@@ -24,18 +24,18 @@ First, add a `.env` file to the *server* folder that contains the following key/
 - `CHRONOS_DB`: `MongoDB` or `PostgreSQL`
 - `CHRONOS_URI`: The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
 
-Then look at the `package.json` file in the server folder and note how `@chronos/tracker` is included as a dependency:
+Then look at the `package.json` file in the server folder and note how `@chronosmicro/tracker` is included as a dependency:
 
-- If the @chronos/tracker dependency is listed as a remote npm package (i.e. `"@chronos/tracker": "^8.0.1"`), no further work is needed.
+- If the @chronosmicro/tracker dependency is listed as a remote npm package (i.e. `"@chronosmicro/tracker": "^8.0.1"`), no further work is needed.
 
-- If the @chronos/tracker dependency is listed as a local npm package (i.e. `"@chronos/tracker": "file:./chronos_npm_package"`), the Docker build will require that the the Chronos code is in this folder. Either copy the _chronos_npm_package_ folder in manually, or see note below to automate this process **if you are a Mac user**.
+- If the @chronosmicro/tracker dependency is listed as a local npm package (i.e. `"@chronosmicro/tracker": "file:./chronos_npm_package"`), the Docker build will require that the the Chronos code is in this folder. Either copy the _chronos_npm_package_ folder in manually, or see note below to automate this process **if you are a Mac user**.
 
 `cd` into the *server* folder and run the following command:
 ```
 docker build -t backend:1.0 .
 ```
 
-**Mac Users:** If @chronos/tracker is included as a local npm package, the process of copying in the *chronos_npm_package* folder, performing the Docker build, and then removing the copied in folder is automated by `cd` into the *scripts* folder and running the `buildServer.sh` script.
+**Mac Users:** If @chronosmicro/tracker is included as a local npm package, the process of copying in the *chronos_npm_package* folder, performing the Docker build, and then removing the copied in folder is automated by `cd` into the *scripts* folder and running the `buildServer.sh` script.
 
 <br>
 
