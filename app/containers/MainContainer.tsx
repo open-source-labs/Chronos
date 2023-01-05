@@ -1,49 +1,38 @@
-import React, { useContext, useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import LandingPageContainer from './LandingPageContainer';
-import WindowBar from '../components/WindowBar';
+import React, { useContext } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import About from '../components/About';
 import Contact from '../components/Contact';
 import Settings from '../components/Settings';
 import Occupied from '../components/Occupied';
 import lightAndDark from '../components/Styling';
 import GraphsContainer from './GraphsContainer';
-import AwaitingApproval from '../components/AwaitingApproval';
 import { DashboardContext } from '../context/DashboardContext';
+import SignUp from '../components/SignUp';
+import Login from '../components/Login';
 import '../stylesheets/MainContainer.scss';
 
 const MainContainer = React.memo(() => {
-  const { mode, landingPage, getLandingPage, authStatus } = useContext(DashboardContext);
+  const { mode } = useContext(DashboardContext);
   const currentModeCSS =
-    mode === 'light mode' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
-  const checkAuth = (Component: any) => {
-    if (landingPage === 'dashBoard' || authStatus) return <Component />;
-    return <Redirect to={{ pathname: '/' }} />;
-  };
-
-  useEffect(() => {
-    getLandingPage();
-  }, []);
+    mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
 
   return (
     <>
-      {/* <WindowBar /> */}
       <div className="main-container" style={currentModeCSS}>
         <div className="main-routes">
-          <Switch>
-            <Route exact path="/" component={LandingPageContainer} />
-            <Route exact path="/awaitingApproval" component={AwaitingApproval} />
-            <Route exact path="/about" render={() => checkAuth(About)} />
-            <Route exact path="/contact" render={() => checkAuth(Contact)} />
-            <Route exact path="/settings" render={() => checkAuth(Settings)} />
-            <Route exact path="/applications" render={() => checkAuth(Occupied)} />
+          <Routes>
+            <Route path="/" element={<Occupied />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/settings" element={<Settings />} />
             <Route
-              exact
               path="/applications/:app/:service"
-              render={() => checkAuth(GraphsContainer)}
+              element={<GraphsContainer />}
             />
-            <Route path="*" render={() => <h1>Not found</h1>} />
-          </Switch>
+            <Route path="*" element={<h1 style={{color: 'red', fontSize: '200px'}}>Not Found</h1>} />
+          </Routes>
         </div>
       </div>
     </>

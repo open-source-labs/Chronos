@@ -14,8 +14,8 @@ services:
     container_name: 'frontend'
 
     # Bind container and host machine to exposed port, 3000.
-    # ports:
-    #   - '3000:3000'
+    ports:
+      - '3000:3000'
 
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
