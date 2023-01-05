@@ -4,7 +4,7 @@ const cors = require('cors');
 const controller = require('./CustomerController');
 
 const chronosConfig = require('./chronos-config.js');
-const Chronos = require('@chronos/tracker');
+const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 
 // Places a unique header on every req in order to trace the path in the req's life cycle.

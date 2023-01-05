@@ -13,7 +13,7 @@
     "dependencies": {
         "@grpc/grpc-js": "^1.2.3",
         "@grpc/proto-loader": "^0.5.5",
-        "@chronos/tracker": "^6.0.3",
+        "@chronosmicro/tracker": "^6.0.3",
         "dotenv": "^8.2.0",
         "mongoose": "^5.11.12"
     }
