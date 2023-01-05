@@ -13,6 +13,8 @@
 # Chronos 
 
 ### Star us on GitHub — it helps!
+Visit our splash page at [chronoslany.com](https://chronoslany.com/)
+
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
 #
