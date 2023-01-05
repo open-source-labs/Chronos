@@ -5,7 +5,7 @@ require('dotenv').config({
 
 module.exports = {
   // General configuration
-  microservice: 'reverse-proxy',
+  microservice: 'reverseproxy',
   interval: 5000,
 
   // Mode Specific
