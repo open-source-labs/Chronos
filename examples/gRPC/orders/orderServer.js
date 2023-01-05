@@ -1,4 +1,4 @@
-const chronos = require('@chronos/tracker');
+const chronos = require('@chronosmicro/tracker');
 require('./chronos-config');
 const protoLoader = require('@grpc/proto-loader');
 const grpc = require('@grpc/grpc-js');
