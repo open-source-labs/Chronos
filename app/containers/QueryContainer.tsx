@@ -3,7 +3,7 @@ import React from 'react';
 
 const QueryContainer = React.memo(props => {
   return (
-    <div>
+    <div className="transferColumns">
       <h2>Search Your Metrics to Display</h2>
       <TransferColumns />
     </div>

@@ -1,12 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ANTDCSSFILEPATH = path.resolve(__dirname, './node_modules/antd/dist/antd.less');
 module.exports = {
   entry: './app/index.tsx',
   output: {
-    path: path.resolve(process.cwd(), 'dist'),
-    filename: 'index_bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
   module: {
@@ -17,19 +16,12 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.js$/,
-        enforce: 'pre',
-        loader: 'source-map-loader',
-        exclude: /node_modules/,
-      },
-      {
         test: /\.js$|jsx/,
         use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
-              plugins: [['import', { libraryName: 'antd', style: 'css' }]],
+              presets: ['@babel/preset-env', "@babel/preset-react"],
             },
           },
         ],
@@ -37,48 +29,22 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        issuer: {
-          exclude: /\.less$/,
-        },
         use: ['style-loader', 'css-loader', 'sass-loader'],
         exclude: /node_modules/,
       },
       {
-        test: /\.less$/i,
-        include: ANTDCSSFILEPATH,
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
-            },
-          },
-        ],
-      },
-      {
         test: /\.(jpg|jpeg|png|ttf|svg|gif)$/,
-        use: [
-          'file-loader',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              mozjpeg: {
-                quality: 10,
-              },
-            },
-          },
-        ],
+        type: 'asset/resource',
         exclude: /node_modules/,
       },
     ],
   },
   mode: 'development',
   devServer: {
+    port: 8080,
     hot: true,
     historyApiFallback: true,
-    contentBase: path.resolve(process.cwd(), 'app'),
+    static: './app'
   },
   plugins: [
     new HtmlWebpackPlugin({

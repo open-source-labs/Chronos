@@ -1,14 +1,13 @@
 # JS Project-Specific #
 #######################
 # node_modules
-dist
-build
+/dist
+/build
 release-builds
 coverage
 __tests__/**/__snapshots__
 .env
-users.json
-test_users.json
+databases.txt
 
 # Compiled source #
 ###################
@@ -48,3 +47,5 @@ test_users.json
 ehthumbs.db
 Thumbs.db
 node_modules
+
+out/

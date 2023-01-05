@@ -1,12 +1,20 @@
-const chronos = require('chronos-tracker');
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, './.env')});
 
-chronos.use({
+module.exports = {
+  // General configuration
   microservice: 'books',
-  interval: 2000,
+  interval: 5000,
+
+  // Mode Specific
+  mode: 'microservices',
   dockerized: true,
+
   database: {
-    type: 'MongoDB',
-    URI: ' < INSERT MONGODB URL HERE > ',
+    connection: 'REST',
+    type: process.env.CHRONOS_DB,
+    URI: process.env.CHRONOS_URI,
   },
+
   notifications: [],
-});
+}

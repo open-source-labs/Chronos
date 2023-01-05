@@ -1,0 +1,45 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-frontend
+spec:
+  selector:
+    matchLabels:
+      app: nginx-frontend
+  # How many copies of the container do you want?    
+  replicas: 2
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '9323'
+      labels:
+        app: nginx-frontend
+    spec:
+      containers:
+      - name: nginx-frontend
+        # What docker image goes into this?
+        image: frontend:1.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 9323
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-frontend
+  ports:
+  # 80 is used here because nginx is listening on port 80 by default
+  - port: 80
+    # targetPort defaults to the above "port" if not specified
+    # targetPort: 80

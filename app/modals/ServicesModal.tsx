@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { DashboardContext } from '../context/DashboardContext'
 import { ApplicationContext } from '../context/ApplicationContext';
 import '../stylesheets/ServicesModal.scss';
 
@@ -18,6 +18,7 @@ interface IService {
 }
 
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
+  const { user } = useContext(DashboardContext)
   const { servicesData, connectToDB } = useContext(ApplicationContext);
   const [services, setServices] = useState<Array<string>>([]);
 
@@ -31,7 +32,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   };
 
   useEffect(() => {
-    connectToDB(i, app);
+    connectToDB(user, i, app);
   }, [i]);
 
   return (
