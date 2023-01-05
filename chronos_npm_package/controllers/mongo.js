@@ -108,10 +108,18 @@ mongo.communications = ({ microservice, slack, email }) => {
  * @param {string} microservice Microservice name
  * @param {number} interval Interval for continuous data collection
  */
-mongo.health = ({ microservice, interval }) => {
+mongo.health = async ({ microservice, interval, mode }) => {
+  let l = 0;
+  const currentMetricNames = {};
+
+  l = await mongo.getSavedMetricsLength(mode, currentMetricNames);
+
   setInterval(() => {
     collectHealthData()
-      .then(healthMetrics => {
+      .then(async (healthMetrics) => {
+        if (l !== healthMetrics.length) {
+          l = await mongo.addMetrics(healthMetrics, mode, currentMetricNames);
+        }
         const HealthModel = HealthModelFunc(`${microservice}`);
         return HealthModel.insertMany(healthMetrics);
       })
@@ -126,7 +134,8 @@ mongo.health = ({ microservice, interval }) => {
  * Runs instead of health if dockerized is true
  * Collects information on the docker container
  */
-mongo.docker = ({ microservice, interval }) => {
+mongo.docker = ({ microservice, interval, mode }) => {
+
   // Create collection using name of microservice
   const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
   dockerHelper.getDockerContainer(microservice)
@@ -182,7 +191,7 @@ mongo.saveService = (config) => {
 mongo.setQueryOnInterval = async (config) => {
   let model;
   let metricsQuery;
-  let currentMetrics;
+
   let l = 0;
   const currentMetricNames = {};
 
@@ -198,14 +207,9 @@ mongo.setQueryOnInterval = async (config) => {
   // When querying for currentMetrics, we narrow down the result to only include metrics for the current service being used.
   // This way, when we go to compare parsedArray to currentMetricNames, the length of the arrays should match up unless there are new metrics available to view
 
-  currentMetrics = await MetricsModel.find({mode: config.mode});
-  if (currentMetrics.length > 0) {
-    currentMetrics.forEach(el => {
-    const { metric, selected } = el;
-    currentMetricNames[metric] = selected;
-    l = currentMetrics.length;
-    })
-  }
+  l = await mongo.getSavedMetricsLength(config.mode, currentMetricNames);
+
+  console.log('currentMetricNames is: ', Object.keys(currentMetricNames).length)
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     metricsQuery(config)
@@ -213,24 +217,8 @@ mongo.setQueryOnInterval = async (config) => {
       .then(async (parsedArray) => {
         // This conditional would be used if new metrics are available to be tracked.
         if (l !== parsedArray.length) {
-          console.log('currentMetricNames is less than parsedArray length, new metrics available to track');
-          console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
-          const newMets = [];
-          parsedArray.forEach(el => {
-            if (!(el.metric in currentMetricNames)) {
-              const { metric } = el;
-              newMets.push(MetricsModel({metric: metric, mode: config.mode}))
-              currentMetricNames[el.metric] = true;
-            }
-          })
-          await MetricsModel.insertMany(newMets, (err) => {
-            if (err) console.error(err)
-          })
-          l = parsedArray.length;
+          l = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames);
         }
-        return parsedArray;
-      })
-      .then(parsedArray => {
         const documents = [];
         for (const metric of parsedArray) {
           // This will check if the current metric in the parsed array evaluates to true within the currentMetricNames object.
@@ -247,8 +235,33 @@ mongo.setQueryOnInterval = async (config) => {
   }, config.interval);
 }
 
+mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
+  let currentMetrics = await MetricsModel.find({mode: mode});
+  if (currentMetrics.length > 0) {
+    currentMetrics.forEach(el => {
+    const { metric, selected } = el;
+    currentMetricNames[metric] = selected;
+    })
+  }
+  return currentMetrics.length ? currentMetrics.length : 0;
+}
 
-// This middleware could be used if the user would like to update their chronos data, but they would have to expose a URL/port to be queried for the Electron front end.
+mongo.addMetrics = async (arr, mode, obj) => {
+    const newMets = [];
+    arr.forEach(el => {
+      if (!(el.metric in obj)) {
+        const { metric } = el;
+        newMets.push({metric: metric, mode: mode})
+        obj[el.metric] = true;
+      }
+    })
+    await MetricsModel.insertMany(newMets, (err) => {
+      if (err) console.error(err)
+    })
+    return arr.length;
+}
+
+// This middleware could be used if the user would like to update their chronos data in real time (immediately after updating saved metrics on the Chronos desktop app), but they would have to expose a URL/port to be queried for the Electron front end.
 //
 // mongo.modifyMetrics = (config) => {
 //   return function (req, res, next) {
@@ -261,6 +274,5 @@ mongo.setQueryOnInterval = async (config) => {
 //     return next();
 //   };
 // }
-
 
 module.exports = mongo;
