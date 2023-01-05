@@ -46,7 +46,7 @@ healthHelpers.collectHealthData = () => {
   );
   promises.push(
     si
-      .cpuCurrentspeed()
+      .cpuCurrentSpeed()
       .then(data => ({
         average_CPU_speed_in_GHz: data.avg,
         minimum_CPU_speed_in_GHz: data.min,
@@ -199,8 +199,14 @@ healthHelpers.collectHealthData = () => {
         }
       })
   );
-  // Return an promise that resolves to an array of all of the data points unnested
-  return Promise.all(promises).then(array => array.flat());
+  // Return a promise that resolves to an array of all of the data points unnested
+  return Promise.all(promises)
+    .then(array => array.flat())
+    // Remove any empty strings, NaN, or "NaN" from values prevent database errors
+    .then((array) => array.filter((a) => {
+      if (isNaN(a.value) || a.value === 'NaN' || a.value === '') return false;
+      else return true;
+    }));
 };
 
 module.exports = healthHelpers;

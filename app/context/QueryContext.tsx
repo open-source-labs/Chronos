@@ -8,11 +8,15 @@ export const QueryContext = React.createContext<any>(null);
  * @method    setSelectedMetrics
  */
 
-const QueryContextProvider: React.SFC = React.memo(({ children }) => {
+interface Props {
+  children: any
+}
+
+const QueryContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [selectedMetrics, setSelectedMetrics] = useState([]);
 
   return (
-   <QueryContext.Provider value={{ selectedMetrics, setSelectedMetrics}}>
+    <QueryContext.Provider value={{ selectedMetrics, setSelectedMetrics}}>
       {children}
     </QueryContext.Provider>
   );

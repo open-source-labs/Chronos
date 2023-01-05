@@ -21,10 +21,10 @@ const lightAndDark = {
     FlexDirection: 'column',
   },
   lightModeText: {
-    color: 'black',
+    color: '#36454F',
   },
   darkModeText: {
-    color: 'white',
+    color: 'gainsboro',
   },
 };
 
