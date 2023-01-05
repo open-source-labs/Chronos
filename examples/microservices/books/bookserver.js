@@ -1,8 +1,6 @@
-require('dotenv').config();
-
-const myURI = process.env.BOOK_URI;
-const chronos = require('chronos-tracker-7');
-require('./chronos-config'); // Bring in config file
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();
 
@@ -15,12 +13,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const controller = require('./BookController.js');
 
-// UNCOMMENT THE LINE BELOW IF YOU HAVE A SPECIFIED A 'jmxuri' PROPERTY IN
-// YOUR 'chronos-config.js' FILE
-// chronos.kafka();
-
-// UNCOMMENT THE LINE BELOW AND PASS IN YOUR CHOSEN ARGUMENTS
-// app.use('/', cmd.microCom('books', 'mongo', process.env.BOOK_URI, 'yes'));
 app.use('/', chronos.track());
 
 app.use(bodyParser.json());

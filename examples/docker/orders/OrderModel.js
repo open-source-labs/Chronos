@@ -1,10 +1,12 @@
-const mongoose = require('mongoose');
+const path = require('path');
 require('dotenv').config();
+
+const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
 // DB link for orders data.
-const orders_db_uri = `${process.env.ORDERS_DB}`;
+const orders_db_uri = process.env.ORDER_URI;
 
 // const URI = process.env.MONGO_URI || myURI;
 

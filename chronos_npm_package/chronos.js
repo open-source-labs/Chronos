@@ -5,11 +5,7 @@ const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js');
 const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js');
 const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js');
 const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js');
-const { validateInput, addNotifications } = require('./controllers/helpers');
-const { initialFetch } = require('./controllers/kafkaHelpers');
-
-let userConfig = {};
-const chronos = {};
+const utilities = require('./controllers/utilities');
 
 /**
  * **********************************
@@ -31,155 +27,180 @@ const chronos = {};
  *    Varies per notification method
  * **********************************
  */
-chronos.use = config => {
-  // Validate all input fields exist and setup notifications
-  validateInput(config);
-  addNotifications(config);
 
-  // Save config globally
-  userConfig = config;
-};
+class Chronos {
+  constructor(config) {
+    if (config === undefined) {
+      throw new Error('Chronos config is undefined');
+    }
 
-/**
- * Places an unique x-correlating-id into the headers of each request/response.
- * This is used for tracking the life cycle of the request until the response
- */
-chronos.propagate = () => {
-  hpropagate({ propagateInResponses: true });
-};
+    // Validate all input fields exist and setup notifications
+    config = utilities.validateInput(config);
+    config = utilities.addNotifications(config);
+    this.config = config;
+  }
 
-/**
- * **********************************************
- *              MAIN CONTROLLER
- * Only supports MongoDB and PostgreSQL for now!
- * **********************************************
- */
-chronos.track = () => {
-  const { database, dockerized } = userConfig;
 
-  /**
-   * If the provided database is Mongo
-   * - Connection is made to MongoDB via the provided URI by the user.
-   *
-   * - 'services' collection will be created if not already and stores every microservice
-   * that is apart of the application.
-   *
-   * - Information is collected if the microservice is containerized
-   *
-   * - 'communications' collection will be created which creates a new document for every
-   * endpoint that the user Request travels through (tracked with hpropograte) for express routes
-   */
-  if (database.type === 'MongoDB') {
-    mongo.connect(userConfig);
-    mongo.services(userConfig);
-    mongo.docker(userConfig);
-    mongo.health(userConfig);
-    if (database.connection === 'REST') {
-      return mongo.communications(userConfig);
+  propagate() {
+    /**
+     * Places an unique x-correlating-id into the headers of each request/response.
+     * This is used for tracking the life cycle of the request until the response
+     */
+    hpropagate({ propagateInResponses: true });
+  }
+
+
+  track() {
+    /**
+     * **********************************************
+     *              MAIN CONTROLLER
+     * Only supports MongoDB and PostgreSQL for now!
+     * **********************************************
+     */
+    const { database, dockerized } = this.config;
+
+    /**
+     * If the provided database is Mongo
+     * - Connection is made to MongoDB via the provided URI by the user.
+     *
+     * - 'services' collection will be created if not already and stores every microservice
+     * that is apart of the application.
+     *
+     * - Information is collected if the microservice is containerized
+     *
+     * - 'communications' collection will be created which creates a new document for every
+     * endpoint that the user Request travels through (tracked with hpropograte) for express routes
+     */
+    if (database.type === 'MongoDB') {
+      mongo.connect(this.config);
+      mongo.services(this.config);
+      dockerized ? mongo.docker(this.config) : mongo.health(this.config);
+      if (database.connection === 'REST') {
+        return mongo.communications(this.config);
+      }
+    }
+
+    /**
+     * If the provided database is PostgreSQL
+     * - Connection is made to the postgres client via the provided URI by the user.
+     *
+     * - 'services' table will be created if not already and stores every microservice
+     * that is apart of the application.
+     *
+     * - Information is collected if the microservice is containerized
+     *
+     * - 'communications' table will be created which creates a new row entry for every
+     * endpoint that the user Request travels through (tracked with hpropograte)
+     */
+    else if (database.type === 'PostgreSQL') {
+      postgres.connect(this.config);
+      postgres.services(this.config);
+      dockerized ? postgres.docker(this.config) : postgres.health(this.config)
+      if (database.connection === 'REST') {
+        return postgres.communications(this.config);
+      }
+    }
+
+    else {
+      throw new Error('The only allowed database types are MongoDB and PostgreSQL');
     }
   }
 
-  /**
-   * If the provided database is PostgreSQL
-   * - Connection is made to the postgres client via the provided URI by the user.
-   *
-   * - 'services' table will be created if not already and stores every microservice
-   * that is apart of the application.
-   *
-   * - Information is collected if the microservice is containerized
-   *
-   * - 'communications' table will be created which creates a new row entry for every
-   * endpoint that the user Request travels through (tracked with hpropograte)
-   */
-  if (database.type === 'PostgreSQL') {
-    postgres.connect(userConfig);
-    postgres.services(userConfig);
-    postgres.docker(userConfig);
-    postgres.health(userConfig);
-    if (database.connection === 'REST') {
-      return postgres.communications(userConfig);
+
+  async kafka() {
+    // Test metrics server connection
+    await utilities.testMetricsQuery(this.config);
+  
+    if (this.config.database.type === 'MongoDB') {
+      mongo.connect(this.config);
+      mongo.serverQuery(this.config);
+    }
+  
+    else if (this.config.database.type === 'PostgreSQL') {
+      postgres.connect(this.config);
+      postgres.serverQuery(this.config);
+    }
+
+    else {
+      throw new Error('The only allowed database types are MongoDB and PostgreSQL');
     }
   }
-  return null;
-};
 
-/**
- * **********************************************
- *              COLLECT KAFKA METRICS
- * Only supports MongoDB and PostgreSQL for now!
- * **********************************************
- */
+  async kubernetes() {
+    // Test metrics server connection
+    await utilities.testMetricsQuery(this.config);
+  
+    if (this.config.database.type === 'MongoDB') {
+      mongo.connect(this.config);
+      mongo.serverQuery(this.config);
+      // return mongo.modifyMetrics(this.config);
+    }
+  
+    else if (this.config.database.type === 'PostgreSQL') {
+      postgres.connect(this.config);
+      postgres.serverQuery(this.config);
+    }
 
-chronos.kafka = function () {
-  const { database, jmxuri } = userConfig;
-  if (jmxuri === undefined) {
-    console.log('No specified URI for a JMX Exporter');
-    return;
+    else {
+      throw new Error('The only allowed database types are MongoDB and PostgreSQL');
+    }
   }
 
-  // Ensures that the provided URI returns correctly formatted data.
-  initialFetch(jmxuri);
 
-  if (database.type === 'MongoDB') {
-    mongo.connect(userConfig);
-    mongo.kafka(userConfig);
+  ServerWrapper(server, proto, methods) {
+    /**
+     * Wraps the gRPC server object to automatically write logs to user configed DB
+     *
+     * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
+     *
+     * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
+     * @param {*} server
+     * @param {*} proto
+     * @param {*} methods
+     */
+    const { database } = this.config;
+    if (database.type === 'MongoDB') {
+      return new MongoServerWrapper(server, proto, methods, this.config);
+    }
+    if (database.type === 'PostgreSQL') {
+      return new PostgresServerWrapper(server, proto, methods, this.config);
+    }
+    return null;
   }
 
-  if (database.type === 'PostgreSQL') {
-    postgres.connect(userConfig);
-    postgres.kafka(userConfig);
-  }
-};
 
-/**
- * Wraps the gRPC server object to automatically write logs to user configed DB
- *
- * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
- *
- * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
- * @param {*} server
- * @param {*} proto
- * @param {*} methods
- */
-chronos.ServerWrapper = (server, proto, methods) => {
-  const { database } = userConfig;
-  if (database.type === 'MongoDB') {
-    return new MongoServerWrapper(server, proto, methods, userConfig);
+  ClientWrapper(client, service) {
+    /**
+     * Wraps the gRPC client to automatically write logs to user configed DB
+     *
+     * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
+     *
+     * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
+     *
+     * @param {*} client
+     * @param {*} service
+     */
+    const { database } = this.config;
+    if (database.type === 'MongoDB') {
+      return new MongoClientWrapper(client, service, this.config);
+    }
+    if (database.type === 'PostgreSQL') {
+      return new PostgresClientWrapper(client, service, this.config);
+    }
+    return null;
   }
-  if (database.type === 'PostgreSQL') {
-    return new PostgresServerWrapper(server, proto, methods, userConfig);
-  }
-  return null;
-};
-/**
- * Wraps the gRPC client to automatically write logs to user configed DB
- *
- * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
- *
- * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
- *
- * @param {*} client
- * @param {*} service
- */
-chronos.ClientWrapper = (client, service) => {
-  const { database } = userConfig;
-  if (database.type === 'MongoDB') {
-    return new MongoClientWrapper(client, service, userConfig);
-  }
-  if (database.type === 'PostgreSQL') {
-    return new PostgresClientWrapper(client, service, userConfig);
-  }
-  return null;
-};
 
-/**
- * Allows the passthrough of metadata from gRPC server to gRPC client
- *
- * @param {*} client
- * @param {*} servere
- */
-chronos.link = (client, server) => {
-  client.metadata = server.metadataHolder;
-};
 
-module.exports = chronos;
+  link(client, server) {
+    /**
+     * Allows the passthrough of metadata from gRPC server to gRPC client
+     *
+     * @param {*} client
+     * @param {*} servere
+     */
+    client.metadata = server.metadataHolder;
+  }
+
+}
+
+module.exports = Chronos;

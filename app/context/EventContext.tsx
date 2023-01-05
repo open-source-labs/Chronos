@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import Electron from 'electron';
-import { transform } from 'd3';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -14,8 +13,14 @@ export const EventContext = React.createContext<any>(null);
 
  */
 
-const EventContextProvider: React.FC = React.memo(({ children }) => {
+interface Props {
+  children: any
+}
+
+const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [eventData, setEventData] = useState({ eventDataList: [], eventTimeList: [] });
+  // const [eventKafkaData, setEventKafkaData] = useState({ eventDataList: [], eventTimeList: [] });
+  // const [eventKubernetesData, setEventKubernetesData] = useState({ eventDataList: [], eventTimeList: [] });
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -29,19 +34,61 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
     return false;
   }
 
-  const fetchEventData = useCallback(() => {
-    ipcRenderer.removeAllListeners('kafkaResponse');
-    ipcRenderer.send('kafkaRequest');
-    ipcRenderer.on('kafkaResponse', (event: Electron.Event, data: any) => {
-      let result: any;
-      if (tryParseJSON(data)) result = JSON.parse(data);
-      let transformedData: any = {};
-      if (result && result.length > 0) {
-        transformedData = transformEventData(result[0]['kafkametrics']);
-        setEventData(transformedData);
-      }
-    });
+  const fetchEventData = useCallback((arg: any) => {
+    if (arg === 'kafkametrics') {
+      ipcRenderer.removeAllListeners('kafkaResponse');
+      ipcRenderer.send('kafkaRequest');
+      ipcRenderer.on('kafkaResponse', (event: Electron.Event, data: any) => {
+        let result: any;
+        if (tryParseJSON(data)) result = JSON.parse(data);
+        let transformedData: any = {};
+        if (result && result.length > 0) {
+          transformedData = transformEventData(result[0]['kafkametrics']);
+          setEventData(transformedData);
+        }
+      });
+    } else if (arg === 'kubernetesmetrics') {
+      ipcRenderer.removeAllListeners('kubernetesResponse');
+      ipcRenderer.send('kubernetesRequest');
+      ipcRenderer.on('kubernetesResponse', (event: Electron.Event, data: any) => {
+        let result: any;
+        if (tryParseJSON(data)) result = JSON.parse(data);
+        let transformedData: any = {};
+        if (result && result.length > 0) {
+          transformedData = transformEventData(result[0]['kubernetesmetrics']);
+          setEventData(transformedData);
+        }
+      });
+    }
   }, []);
+
+  // const fetchKafkaEventData = useCallback(() => {
+  //   ipcRenderer.removeAllListeners('kafkaResponse');
+  //   ipcRenderer.send('kafkaRequest');
+  //   ipcRenderer.on('kafkaResponse', (event: Electron.Event, data: any) => {
+  //     let result: any;
+  //     if (tryParseJSON(data)) result = JSON.parse(data);
+  //     let transformedData: any = {};
+  //     if (result && result.length > 0) {
+  //       transformedData = transformEventData(result[0]['kafkametrics']);
+  //       setEventData(transformedData);
+  //     }
+  //   });
+  // }, []);
+
+  // const fetchKubernetesEventData = useCallback(() => {
+  //   ipcRenderer.removeAllListeners('kafkaResponse');
+  //   ipcRenderer.send('kafkaRequest');
+  //   ipcRenderer.on('kafkaResponse', (event: Electron.Event, data: any) => {
+  //     let result: any;
+  //     if (tryParseJSON(data)) result = JSON.parse(data);
+  //     let transformedData: any = {};
+  //     if (result && result.length > 0) {
+  //       transformedData = transformEventData(result[0]['kafkametrics']);
+  //       setEventData(transformedData);
+  //     }
+  //   });
+  // }, []);
 
   const transformEventData = (data: any[]) => {
     const dataList: any[] = [];
@@ -76,7 +123,13 @@ const EventContextProvider: React.FC = React.memo(({ children }) => {
   };
 
   return (
-    <EventContext.Provider value={{ eventData, setEventData, fetchEventData }}>
+    <EventContext.Provider
+      value={{
+        eventData,
+        setEventData,
+        fetchEventData,
+      }}
+    >
       {children}
     </EventContext.Provider>
   );

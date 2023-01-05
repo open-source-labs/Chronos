@@ -7,7 +7,8 @@
   margin: 10px 20px;
 
   #tracesTitle {
-    position: absolute;
+    position: relative;
+    top: 50px;
     margin-top: 30px;
     padding-top: 4px;
     font-weight: 400;
@@ -54,6 +55,10 @@
         }
       }
     }
+
+    .transferColumns {
+      width: 100%;
+    }
   }
 
   svg {
@@ -61,6 +66,19 @@
     // border: thin solid rgb(155, 155, 155);
     box-shadow: $boxshadow;
   }
+
+  #getChartsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    #getCharts:hover {
+      font-weight: 580;
+    }
+  }
+  
 }
 
 /* Tablet */
@@ -87,6 +105,18 @@
   }
 }
 
+@keyframes FadeIn {
+  from {
+    background-color: #33bcdb;
+    letter-spacing: 1.5px;
+    font-weight: 450;
+  }
+  
+  to {
+    background-color: $darkblue;
+  }
+}
+
 nav {
   display: flex;
   justify-content: space-around;
@@ -97,14 +127,18 @@ nav {
   z-index: 2;
   background: $darkblue;
   button {
+    animation: FadeIn 1.5s ease-in-out forwards;
     color: white;
     margin: 0 16px;
+    
     &.selected {
       text-decoration: underline;
       text-underline-offset: 7px;
       color: rgb(95, 153, 240);
     }
     &:hover {
+      text-decoration: underline;
+      text-underline-offset: 7px;
     }
   }
 }
