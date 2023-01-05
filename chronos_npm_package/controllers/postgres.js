@@ -35,7 +35,7 @@ postgres.connect = async ({ database }) => {
 postgres.services = ({ microservice, interval }) => {
   // Create services table if does not exist
   client.query(
-    `CREATE TABLE IF NOT EXISTS services (
+      `CREATE TABLE IF NOT EXISTS services (
       _id SERIAL PRIMARY KEY NOT NULL,
       microservice VARCHAR(248) NOT NULL UNIQUE,
       interval INTEGER NOT NULL)`,
@@ -46,8 +46,8 @@ postgres.services = ({ microservice, interval }) => {
     }
   );
 
-  client.query(`
-      CREATE TABLE IF NOT EXISTS metrics (
+  client.query(
+      `CREATE TABLE IF NOT EXISTS metrics (
       _id SERIAL PRIMARY KEY NOT NULL,
       metric TEXT NOT NULL UNIQUE,
       selected BOOLEAN,
@@ -163,13 +163,14 @@ function createQueryString(numRows, serviceName) {
 
 // Places the values being inserted into postgres into an array that will eventually
 // hydrate the parameterized query
-function createQueryArray(dataPointsArray) {
+function createQueryArray(dataPointsArray, currentMetricNames) {
   const queryArray = [];
   for (const element of dataPointsArray) {
-    queryArray.push(element.metric);
-    queryArray.push(element.value);
-    queryArray.push(element.category);
-    queryArray.push(element.time / 1000); // Converts milliseconds to seconds to work with postgres
+      queryArray.push(element.metric);
+      queryArray.push(element.value);
+      queryArray.push(element.category);
+      queryArray.push(element.time / 1000);
+       // Converts milliseconds to seconds to work with postgres
   }
   return queryArray;
 }
@@ -179,7 +180,12 @@ function createQueryArray(dataPointsArray) {
  * @param {string} microservice Microservice name
  * @param {number} interval Interval for continuous data collection
  */
-postgres.health = ({ microservice, interval }) => {
+postgres.health = async ({ microservice, interval, mode }) => {
+  let l = 0;
+  const currentMetricNames = {};
+
+  l = await postgres.getSavedMetricsLength(mode, currentMetricNames);
+
   // Create table for the microservice if it doesn't exist yet
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS ${microservice} (
@@ -197,10 +203,14 @@ postgres.health = ({ microservice, interval }) => {
   // Save data point at every interval (ms)
   setInterval(() => {
     collectHealthData()
-      .then(data => {
-        const numRows = data.length;
+      .then(async (data) => {
+        if (l !== data.length) {
+          l = await postgres.addMetrics(data, mode, currentMetricNames);
+        }
+        const documents = data.filter(el => (el.metric in currentMetricNames));
+        const numRows = documents.length;
         const queryString = createQueryString(numRows, microservice);
-        const queryArray = createQueryArray(data);
+        const queryArray = createQueryArray(documents);
         // console.log('POSTGRES QUERY STRING: ', queryString);
         // console.log('POSTGRES QUERY ARRAY', queryArray);
         return client.query(queryString, queryArray);
@@ -357,22 +367,8 @@ postgres.setQueryOnInterval = async (config) => {
     metricsQuery(config)
       .then(async (parsedArray) => {
         if (l !== parsedArray.length) {
-          console.log('currentMetricNames is less than parsedArray length, new metrics available to track');
-          console.log('currentMetricNames has a length of: ', l, ' and parsedArray.length is: ', parsedArray.length);
-          let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
-          parsedArray.forEach(el => {
-            if (!(el.metric in currentMetricNames)) {
-              currentMetricNames[el.metric] = true;
-              metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${config.mode}'), `);
-            }
-          })
-          metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
-          await client.query(metricsQueryString);
-          l = parsedArray.length;
+          l = await postgres.addMetrics(parsedArray, config.mode, currentMetricNames);
         }
-        return parsedArray;
-      })
-      .then(parsedArray => {
         const documents = [];
         for (const metric of parsedArray) {
           if (currentMetricNames[metric.metric]) documents.push(metric)
@@ -385,6 +381,30 @@ postgres.setQueryOnInterval = async (config) => {
       .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
       .catch(err => console.log(`Error inserting ${config.mode} metrics into PostgreSQL:`, '\n', err));
   }, config.interval);
+}
+
+postgres.getSavedMetricsLength = async (mode, currentMetricNames) => {
+  let currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${mode}';`);
+  if (currentMetrics.rows.length > 0) {
+    currentMetrics.rows.forEach(el => {
+    const { metric, selected } = el;
+    currentMetricNames[metric] = selected;
+    })
+  }
+  return currentMetrics.rows.length ? currentMetrics.rows.length : 0;
+}
+
+postgres.addMetrics = async (arr, mode, currentMetricNames) => {
+  let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
+  arr.forEach(el => {
+    if (!(el.metric in currentMetricNames)) {
+      currentMetricNames[el.metric] = true;
+      metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${mode}'), `);
+    }
+  })
+  metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
+  await client.query(metricsQueryString);
+  return arr.length;
 }
 
 module.exports = postgres;

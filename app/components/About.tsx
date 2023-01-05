@@ -21,37 +21,34 @@ const About: React.FC = React.memo(() => {
           to use and expensive to operate, Chronos was born. Chronos is an all-in-one network and
           health monitoring tool for your application or microservice, containerized or not!
         </p>
+        <br>
+        </br>
         <h3 style={currentMode} className="title">
           Fantastic Four
         </h3>
         <div>
           <span style={currentMode} className="text">
-            Nachiket
+            <p>Josh</p>
           </span>
-          <br />
           <span style={currentMode} className="text">
-            Tiffany
+            <p>Elisa</p>
           </span>
-          <br />
           <span style={currentMode} className="text">
-            Bruno
+            <p>Troy</p>
           </span>
-          <br />
           <span style={currentMode} className="text">
-            Danny
+            <p>Gahl</p>
           </span>
-          <br />
           <br />
         </div>
         <h3 style={currentMode} className="title">
           Contributors
         </h3>
         <p style={currentMode} className="text">
-          Vince, Matt, Derek, Kit, Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg, Brianna,
+          Nachiket, Tiffany, Bruno, Danny, Vince, Matt, Derek, Kit, Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg, Brianna,
           Brian, Alon, Alan, Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander
         </p>
         <br />
-        <p style={currentMode}>Copyright © Team Chronos 2021.</p>
       </div>
     </div>
   );

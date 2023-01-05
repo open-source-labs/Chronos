@@ -229,6 +229,11 @@ ipcMain.on('updateSavedMetrics', async (message: Electron.IpcMainEvent, args: Ob
       })
       // let result = await MetricsModel.update();
     }
+    if (currentDatabaseType === 'SQL' && args.length) {
+      args.forEach(async (el: any) => {
+        await pool.query(`UPDATE metrics SET selected=${el.selected} WHERE metric='${el.metric}'`)
+      })
+    }
   }
 
   catch (err) {
