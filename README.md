@@ -56,6 +56,10 @@ Using the Query Tool
 ## Installation
 This is for the latest Chronos **version 8 release**.
 
+**NOTE:** The Chronos tracker code is included in the *chronos_npm_package* folder for ease of development, but the published npm package can be downloaded by running `npm install @chronosmicro/tracker`
+
+<br>
+
 ### Node Version
 Make sure you're running version 16.17.1 of <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" />, to align with the <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /> version used by <img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> version 22. 
 
