@@ -39,22 +39,6 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 #
 
-## Demo
-<br>
-<br>
-Signing Up
-<br>
-<br>
-<a href="#"><img src="assets/enable_sign_up.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
-<br>
-<br>
-Using the Query Tool
-<br>
-<br>
-<a href="#"><img src="assets/query_tool.gif" alt="Query-Tool-Demo" title="Query-Tool-Demo" align="center" height="475" /></a></a>
-
-#
-
 ## Installation
 This is for the latest Chronos **version 8 release**.
 
