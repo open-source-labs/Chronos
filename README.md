@@ -20,7 +20,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 #
 
 ## What's New?
-- Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
+- Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard and reduce database bloat, keeping your database from being overwhelmed with data points that you don't actually need. 
 - Kubernetes metrics monitoring via Prometheus.
 - Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
 - Option to filter by category and individual metric, and flip between services and categories with ease
