@@ -76,6 +76,7 @@ Signing Up
 <a href="#"><img src="./app/assets/enable_sign_up.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
 <br>
 <br>
+<br>
 Using the Query Tool
 <br>
 <br>
