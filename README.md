@@ -14,7 +14,7 @@
 
 ### :star: Star us on GitHub — it helps! :star:
 
-Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, containers, and clusters. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
+Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
 ## Table of Contents
 - [Features](#features)
@@ -56,7 +56,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## Features 
 
-- Distributed tracing enabled across microservices applications
+- Distributed tracing enabled across microservice applications
 - Compatible with <img src="./app/assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
 - Supports <a href="#"><img src="./app/assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="./app/assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 - Displays real-time temperature, speed, latency, and memory statistics
