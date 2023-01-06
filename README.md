@@ -12,7 +12,7 @@
 
 # Chronos 
 
-### :star: Star us on GitHub — it helps! :star:
+###  Star us on GitHub — it helps! 
 
 Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
@@ -76,7 +76,7 @@ Signing Up
 <a href="#"><img src="./app/assets/enable_sign_up.gif" alt="Chronos-Demo" title="Chronos-Demo" align="center" height="500" /></a></a>
 <br>
 <br>
-<br>
+
 Using the Query Tool
 <br>
 <br>
