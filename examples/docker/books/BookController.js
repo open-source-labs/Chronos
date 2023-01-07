@@ -16,7 +16,7 @@ BookController.createBook = (req, res, next) => {
     },
     (err, result) => {
       if (err) {
-        console.log(`This is the error I am getting back ${err}`);
+        console.log(`Error: ${err}`);
         return res.send(404).json(err);
       }
 

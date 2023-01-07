@@ -1,9 +1,14 @@
 {
-  "setupRequired": false,
-  "services": [
-    
-  ],
-  "mode": "light mode",
-  "splash": true,
-  "landingPage": "dashBoard"
+	"services": [
+		[
+			"chronosDB",
+			"MongoDB",
+			"mongodb+srv://troyprejusa:learning@learning.logqirh.mongodb.net/test?retryWrites=true&w=majority",
+			"",
+			"Dec 19, 2022 4:50 PM"
+		]
+	],
+	"mode": "light",
+	"splash": true,
+	"landingPage": "dashBoard"
 }

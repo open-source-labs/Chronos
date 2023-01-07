@@ -21,7 +21,7 @@ const SidebarContainer = React.memo(props => (
       </div>
       <hr className="line" id="firstLine" />
       <div className="thirdRow">
-        <Link className="sidebar-link" to="/applications" id="dash">
+        <Link className="sidebar-link" to="/" id="dash">
           <ListIcon
             style={{
               WebkitBoxSizing: 'content-box',

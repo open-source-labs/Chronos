@@ -1,11 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import './routes/user';
 import './routes/dashboard';
+import { clearGuestSettings } from './routes/dashboard';
 import './routes/data';
 import path from 'path';
-
-const ipc = ipcMain;
-
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
@@ -21,32 +18,38 @@ const createWindow = () => {
     frame: false,
     titleBarStyle: 'hidden',
     webPreferences: {
-      preload: path.join(__dirname, './utilities/preload.js').replace(/\\/g, '/'),
       nodeIntegration: true,
       contextIsolation: false,
     },
   });
 
   if (process.env.NODE_ENV === 'development') {
-    // Development: load the application window to port 8080
+    // Development: load the application window to the port in the webpack config
     win.loadURL('http://localhost:8080/');
   } else {
     // Production
-    win.loadFile(path.resolve('./resources/app/index.html').replace(/\\/g, '/'));
+    win.loadFile(path.resolve(__dirname, '../index.html'));
   }
-  ipc.on('max', () => {
+  
+  ipcMain.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();
   });
-  ipc.on('min', () => {
+
+  ipcMain.on('min', () => {
     win.minimize();
   });
-  ipc.on('close', () => {
+
+  ipcMain.on('close', () => {
     win.close();
   });
 
-  // Production
+  win.on('close', () => {
+    clearGuestSettings()
+  })
 };
+
+
 
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);

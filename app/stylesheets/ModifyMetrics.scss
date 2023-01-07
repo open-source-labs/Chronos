@@ -1,0 +1,51 @@
+@import './constants.scss';
+
+.metricsSelector {
+    max-width: 90%;
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 20px;
+        margin-left: 10px;
+    }
+}
+
+.metricsSublist {
+    margin-left: 20px;
+}
+
+
+.modifyMetric {
+    display: flex;
+    gap: 1em;
+    margin: 10px;
+    align-items: center;
+
+    label {
+        display: flex;
+        font-size: 1em;
+
+        &:hover {
+            font-weight: 550;
+            cursor: pointer;
+            color: royalblue;
+        }
+
+        &:active {
+            color: darkblue;
+        }
+    }
+
+    input {
+        height: 20px;
+        width: 20px;
+        margin-right: 10px;
+    }
+}
+
+#changeDatabaseSettingsButton {
+    margin-bottom: 30px;
+}

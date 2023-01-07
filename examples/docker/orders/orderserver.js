@@ -1,10 +1,11 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const chronos = require('chronos-tracker');
-require('./chronos-config');
 const controller = require('./OrderController');
-require('dotenv').config();
+
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
 
 // Places a unique header on every req in order to trace the path in the req's life cycle.
 chronos.propagate();
@@ -14,19 +15,6 @@ app.use('/', chronos.track());
 
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
-
-// CHAOS FLOW
-app.use((req, res, next) => {
-  console.log(
-    `***************************************************************************************
-    CHAOS FLOW TEST --- METHOD: ${req.method},
-    PATH: ${req.url},
-    BODY: ${JSON.stringify(req.body)},
-    ID: ${req.query.id}
-    ***************************************************************************************`
-  );
-  next();
-});
 
 // Create an Order through this endpoint
 app.post('/orders/createorder', controller.createorder, (req, res) => {
