@@ -12,6 +12,7 @@
 #
 # Chronos 
 
+
 ### Star us on GitHub — it helps!
 Visit our splash page at [chronoslany.com](https://chronoslany.com/)
 
@@ -28,6 +29,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 
 ## Features 
+
 - Distributed tracing enabled across microservices applications
 - Kubernetes monitoring via Prometheus server
 - Compatible with <img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
