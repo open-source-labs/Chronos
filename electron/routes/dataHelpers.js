@@ -58,10 +58,10 @@ fetchData.postgresFetch = async function (serviceName, pool) {
   ;`;
 
   let result = await pool.query(query);
-  console.log('result.rows in dataHelpers postgresFetch:', JSON.stringify(result.rows));
+  // console.log('result.rows in dataHelpers postgresFetch:', JSON.stringify(result.rows));
   result = result.rows;
   result = [{ [serviceName]: result }];
-  console.log('result with servicename in dataHelpers postgresFetch:', JSON.stringify(result));
+  // console.log('result with servicename in dataHelpers postgresFetch:', JSON.stringify(result));
   return result;
 };
 
