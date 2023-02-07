@@ -55,14 +55,14 @@ interface StyleProps {
   
 
 const Occupied = React.memo(() => {
-  const { setServicesData } = useContext(ApplicationContext);
+  const { setServicesData, app, setApp } = useContext(ApplicationContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [app, setApp] = useState<string>('');
+  // const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
     
@@ -84,6 +84,7 @@ const Occupied = React.memo(() => {
   // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
+      console.log('the application that you clicked is: ', selectedApp)
       setIndex(i);
       setApp(selectedApp);
       setServicesData([]);
@@ -274,7 +275,10 @@ const Occupied = React.memo(() => {
                   key={`card-${i}`}
                   className={classes.paper}
                   variant="outlined"
-                  onClick={event => handleClick(event, application[0], i)}
+                  onClick={event => {
+                    console.log('what are all the applications mapped: ', applications)
+                    handleClick(event, application[0], i)
+                  }}
                 >
                   <div className="databaseIconContainer">
                     <div className="databaseIconHeader">
@@ -308,15 +312,17 @@ const Occupied = React.memo(() => {
                     }
                   />
                   <CardContent>
-                    <p id="databaseName">Database Name:</p>
+                    <p id="databaseName">Name:</p>
                     <Typography className={classes.fontStyles}>{application[0]}</Typography>
+                    <p id="databaseName">Service:</p>
+                    <Typography className={classes.fontStyles}>{application[3]}</Typography>
                   </CardContent>
                   <hr className="cardLine" />
 
                   <div className="cardFooter">
                     <UpdateIcon className="cardFooterIcon" />
                     <em>
-                      <p id="cardFooterText">{application[3]}</p>
+                      <p id="cardFooterText">{application[4]}</p>
                     </em>
                   </div>
                 </Card>

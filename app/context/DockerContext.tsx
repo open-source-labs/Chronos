@@ -39,6 +39,7 @@ const DockerContextProvider: React.FC<Props> = React.memo((props) => {
       let result;
       if (tryParseJSON(data)) result = JSON.parse(data);
       const newDockerData = result[0] || {};
+      console.log(newDockerData);
       setDockerData(newDockerData);
     });
   }, []);
