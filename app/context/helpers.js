@@ -2,8 +2,11 @@
 /* eslint-disable camelcase */
 import { useRef, useEffect } from 'react';
 
+console.log('category list at start is: ', categoryList);
+let categoryList = [];
+
 export function transformData(healthData) {
-  const categoryList = getCategory(healthData[0]);
+  if(!categoryList[0]) categoryList = getCategory(healthData[0]);
   const serviceList = getServices(healthData);
   const categoryList_time = [];
   const categoryList_data = [];
@@ -36,10 +39,14 @@ export function transformData(healthData) {
 
 function getCategory(serviceObj) {
   const set = new Set();
+
+  // serviceObj = healthData state
+  // valueArr = array of current service data values
   const valueArr = Object.values(serviceObj)[0];
 
   for (let i = 0; i < valueArr.length; i++) {
     const row = valueArr[i];
+    console.log(row.category);
     set.add(row.category);
   }
   return [...set];

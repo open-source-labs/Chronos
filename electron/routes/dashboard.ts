@@ -65,7 +65,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
-  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
 

@@ -73,7 +73,7 @@ const GraphsContainer: React.FC = React.memo(props => {
           if (service.includes('kubernetesmetrics')) {
             fetchEventData('kubernetesmetrics');
           }
-        }, 3000)
+        }, 10000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
@@ -212,7 +212,12 @@ const GraphsContainer: React.FC = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'all' && <div className="transferColumns"><h2 style={currentMode}>Search Your Metrics to Display</h2><TransferColumns /></div>}
+            {chart === 'all' && 
+              <div className="transferColumns">
+                <h2 style={currentMode}>Search Your Metrics to Display</h2>
+                <TransferColumns />
+              </div>
+            }
             {chart.startsWith('health_') && (
               <HealthContainer
                 colourGenerator={stringToColour}

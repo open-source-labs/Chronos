@@ -58,53 +58,60 @@
         @include centerWithFlex($justify: flex-start, $align: flex-start);
       }
 
-      @include centerWithFlex(space-between);
-      width: 100%;
-      margin: 15px 0;
 
-      select,
-      input,
-      textarea {
-        font-family: 'Roboto';
-        font-size: 14px;
-        padding: 5px;
-        border: thin solid $grey;
-        flex: 1;
-        border-radius: 3px;
-        color: $darkgrey;
-      }
+      .add-fields {
+        display: flex;
+        flex-direction: column;
 
-      // Select field
-      select {
-        cursor: pointer;
-        font-family: 'Roboto';
-        height: 30px;
-        margin: 0;
-        appearance: none;
-        transition: 0.2s;
-
-        &:hover {
-          background-color: darken(#fff, 5%);
+        @include centerWithFlex(space-between);
+        width: 100%;
+        margin: 15px 0;
+  
+        select,
+        input,
+        textarea {
+          font-family: 'Roboto';
+          font-size: 14px;
+          padding: 5px;
+          border: thin solid $grey;
+          flex: 1;
+          border-radius: 3px;
+          color: $darkgrey;
+        }
+  
+        // Select field
+        select {
+          cursor: pointer;
+          font-family: 'Roboto';
+          height: 30px;
+          margin: 0;
+          appearance: none;
+          transition: 0.2s;
+  
+          &:hover {
+            background-color: darken(#fff, 5%);
+          }
+        }
+  
+        // Text input
+        input {
+          height: 30px;
+          color: $darkgrey;
+        }
+  
+        // Textarea
+        textarea {
+          resize: none;
+          height: 90px;
+        }
+  
+        label {
+          width: 140px;
+          font-size: 135%;
+          font-weight: 400;
         }
       }
 
-      // Text input
-      input {
-        height: 30px;
-        color: $darkgrey;
-      }
-
-      // Textarea
-      textarea {
-        resize: none;
-        height: 90px;
-      }
-
-      label {
-        width: 140px;
-        font-size: 135%;
-        font-weight: 400;
-      }
     }
 
     /* Submit button */
