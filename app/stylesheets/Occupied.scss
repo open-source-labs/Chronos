@@ -531,7 +531,7 @@ select:-webkit-autofill:focus {
   width: 85%;
   border: none;
   height: 1px;
-  margin-top: 59px;
+  margin-top: 20px;
   margin-bottom: 15px;
 }
 
@@ -557,8 +557,13 @@ select:-webkit-autofill:focus {
 }
 
 #databaseName {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 0;
   color: $header;
+  font-size: 36px;
+}
+
+#serviceName {
   font-size: 11px;
+  margin-top: 6px;
 }
