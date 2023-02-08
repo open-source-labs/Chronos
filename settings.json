@@ -3,16 +3,7 @@
 		"username": "guest",
 		"password": "",
 		"email": "",
-		"services": [
-			[
-				"test",
-				"SQL",
-				"uri",
-				"",
-				"AWS",
-				"Feb 7, 2023 11:47 PM"
-			]
-		],
+		"services": [],
 		"mode": "light"
 	}
 }
