@@ -25,12 +25,12 @@ const createWindow = () => {
 
   if (process.env.NODE_ENV === 'development') {
     // Development: load the application window to the port in the webpack config
-    win.loadURL('http://localhost:8080/');
+    win.loadURL('http://localhost:8081/');
   } else {
     // Production
     win.loadFile(path.resolve(__dirname, '../index.html'));
   }
-  
+
   ipcMain.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();
@@ -45,11 +45,9 @@ const createWindow = () => {
   });
 
   win.on('close', () => {
-    clearGuestSettings()
-  })
+    clearGuestSettings();
+  });
 };
-
-
 
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);

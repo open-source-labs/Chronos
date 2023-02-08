@@ -22,6 +22,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
   const { category } = props;
   const { service } = useParams<keyof Params>() as Params;
+
   useEffect(() => {
     const temp: JSX.Element[] = [];
     let counter: number = 0;
@@ -74,7 +75,9 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   // return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
   // JJ-ADDITION
   return (
-    <div>{(service !== 'kafkametrics' && service !== 'kubernetesmetrics') ? healthChartsArr : []}</div>
+    <div>
+      {service !== 'kafkametrics' && service !== 'kubernetesmetrics' ? healthChartsArr : []}
+    </div>
   );
 });
 
