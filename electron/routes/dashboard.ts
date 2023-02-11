@@ -81,7 +81,7 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
   const services: string[][] = settings[currentUser].services;
 
   // Return an array of arrays that is a subset of the full services array
-  const dashboardList: string[][] = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  const dashboardList: string[][] = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
   message.returnValue = dashboardList;
 });
 
@@ -105,7 +105,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   });
 
   // Sync event - return new applications list
-  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
 

@@ -15,9 +15,9 @@ import '../stylesheets/Dashboard.scss';
 const DashboardContainer = React.memo(() => {
   const [visible, setVisible] = useState(true);
   
-  useEffect(() => {
-    setTimeout(() => setVisible(true), 4000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setVisible(true), 4000);
+  // }, []);
 
   return (
     <>
