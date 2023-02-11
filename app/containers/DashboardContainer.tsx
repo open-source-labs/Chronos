@@ -9,14 +9,15 @@ import DashboardContextProvider from '../context/DashboardContext';
 import DockerContextProvider from '../context/DockerContext';
 import EventContextProvider from '../context/EventContext';
 import QueryContextProvider from '../context/QueryContext';
+import AwsContextProvider from '../context/AwsContext';
 import '../stylesheets/Dashboard.scss';
 
 const DashboardContainer = React.memo(() => {
   const [visible, setVisible] = useState(true);
   
-  // useEffect(() => {
-  //   setTimeout(() => setVisible(true), 4000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 4000);
+  }, []);
 
   return (
     <>
@@ -30,8 +31,10 @@ const DashboardContainer = React.memo(() => {
                   <HealthContextProvider>
                     <EventContextProvider>
                       <QueryContextProvider>
-                        <SidebarContainer />
-                        <MainContainer />
+                        <AwsContextProvider>
+                          <SidebarContainer />
+                          <MainContainer />
+                        </AwsContextProvider>
                       </QueryContextProvider>
                     </EventContextProvider>
                   </HealthContextProvider>

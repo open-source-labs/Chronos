@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 import { useRef, useEffect } from 'react';
 
-console.log('category list at start is: ', categoryList);
 let categoryList = [];
 
 export function transformData(healthData) {
