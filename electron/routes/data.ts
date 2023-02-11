@@ -19,7 +19,9 @@ const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
-require('dotenv').config();
+require('dotenv').config({
+  path: path.join(__dirname, './.env')
+});
 // Initiate pool variable for SQL setup
 let pool: any;
 
@@ -317,8 +319,8 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent) => {
     
     const cloudwatch = new AWS.CloudWatch({
       region: 'us-west-1',
-      accessKeyId: 'AKIAU4VDDZOHUKZLQREU',
-      secretAccessKey: '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'
+      accessKeyId: process.env.AWS_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_SECRET_KEY
     });
     
     const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
