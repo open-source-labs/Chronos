@@ -46,6 +46,7 @@ import '../stylesheets/Occupied.scss';
 import { DashboardContext } from '../context/DashboardContext';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { CommsContext } from '../context/CommsContext';
+import { AwsContext } from '../context/AwsContext';
 
 // TYPESCRIPT
 interface StyleProps {
@@ -55,6 +56,7 @@ interface StyleProps {
   
 
 const Occupied = React.memo(() => {
+  const { awsData, fetchAwsData } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
@@ -89,6 +91,7 @@ const Occupied = React.memo(() => {
       setApp(selectedApp);
       setServicesData([]);
       setServiceModalOpen(true);
+      fetchAwsData();
     }
   };
 

@@ -3,9 +3,9 @@ import '../stylesheets/Splash.scss';
 
 const Splash: React.FC = React.memo((props) => {
   const [visible, setVisible] = useState(false);
-  // useEffect(() => {
-  //   setTimeout(() => setVisible(false), 4000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => setVisible(false), 4000);
+  }, []);
 
   return (
     <>

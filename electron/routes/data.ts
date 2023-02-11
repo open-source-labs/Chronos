@@ -17,6 +17,7 @@ import MetricsModel from '../models/MetricsModel';
 
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
+const AWS = require('aws-sdk');
 
 require('dotenv').config();
 // Initiate pool variable for SQL setup
@@ -306,6 +307,73 @@ ipcMain.on('kubernetesRequest', async (message) => {
     // Catch errors
     console.log('Error in "kubernetesRequest" event', message);
     message.sender.send('kubernetesResponse', {});
+  }
+})
+
+ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent) => {
+  try {
+    // message.sender.send('awsMetricsResponse', 'hello from chronos team')
+    // console.log('i am inside the ipcmain')
+    
+    const cloudwatch = new AWS.CloudWatch({
+      region: 'us-west-1',
+      accessKeyId: 'AKIAU4VDDZOHUKZLQREU',
+      secretAccessKey: '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'
+    });
+    
+    const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
+    const awsData = {};
+    
+    metricsNamesArray.forEach(metric => {
+      const params = {
+        EndTime: new Date(),
+        MetricName: metric,
+        Namespace: 'AWS/EC2',
+        Period: 60,
+        StartTime: new Date(new Date().getTime() - 60*60*1000),
+        Statistics: ['Average'],
+        Dimensions: [{ 
+          Name: 'InstanceId',
+          Value: 'i-0c5656a0366bc6027'
+        }]
+      }
+      
+      const fetchData = async () => {
+        try {
+          const data = await cloudwatch.getMetricStatistics(params).promise();
+          // console.log(data)
+          
+          const newData = data.Datapoints.map((el, i) => {
+            let transformedData = {};
+          
+            transformedData['time'] = data.Datapoints[i].Timestamp,
+            transformedData['metric'] = data.Label,
+            transformedData['value'] = data.Datapoints[i].Average,
+            transformedData['unit'] = data.Datapoints[i].Unit
+            
+            // console.log(transformedData);
+            // arrayTest.push(transformedData);
+            return transformedData;
+          })
+  
+          awsData[metric] = newData;
+          // console.log(awsData)
+    
+          return awsData; // final returned data
+        } catch (err) {
+          console.log(err);
+        }
+      }
+  
+      fetchData().then(data => {
+        console.log(data)
+  
+        message.sender.send('awsMetricsResponse', JSON.stringify(data)) // send data to frontend
+      })
+    })
+  } catch (err) {
+    console.log('Error in "awsMetricsRequest" event', message);
+    message.sender.send('awsMetricsResponse', { CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
   }
 });
 
