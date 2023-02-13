@@ -324,9 +324,8 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent) => {
     });
     
     const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
-    const awsData = {};
-    
-    metricsNamesArray.forEach(metric => {
+    // const awsData = {};
+    const paramsArray = metricsNamesArray.map(metric => {
       const params = {
         EndTime: new Date(),
         MetricName: metric,
@@ -339,39 +338,36 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent) => {
           Value: 'i-0c5656a0366bc6027'
         }]
       }
-      
-      const fetchData = async () => {
-        try {
-          const data = await cloudwatch.getMetricStatistics(params).promise();
-          // console.log(data)
+
+      return params;
+    });
+
+    const fetchData = async () => {
+      const fetched = {};
+
+      for(let i = 0; i < paramsArray.length; i++) {
+        const data = await cloudwatch.getMetricStatistics(paramsArray[i]).promise();
+        // console.log('what is the data here: ', data)
+
+        const newData = data.Datapoints.map((el, index: number) => {
+          let transformedData = {};
+        
+          transformedData['time'] = data.Datapoints[index].Timestamp,
+          transformedData['metric'] = data.Label,
+          transformedData['value'] = data.Datapoints[index].Average,
+          transformedData['unit'] = data.Datapoints[index].Unit
           
-          const newData = data.Datapoints.map((el, i) => {
-            let transformedData = {};
-          
-            transformedData['time'] = data.Datapoints[i].Timestamp,
-            transformedData['metric'] = data.Label,
-            transformedData['value'] = data.Datapoints[i].Average,
-            transformedData['unit'] = data.Datapoints[i].Unit
-            
-            // console.log(transformedData);
-            // arrayTest.push(transformedData);
-            return transformedData;
-          })
-  
-          awsData[metric] = newData;
-          // console.log(awsData)
-    
-          return awsData; // final returned data
-        } catch (err) {
-          console.log(err);
-        }
+          return transformedData;
+        });
+
+        fetched[paramsArray[i].MetricName] = newData;
       }
-  
-      fetchData().then(data => {
-        console.log(data)
-  
-        message.sender.send('awsMetricsResponse', JSON.stringify(data)) // send data to frontend
-      })
+
+      return fetched;
+    };
+    
+    fetchData().then(data => {
+      message.sender.send('awsMetricsResponse', JSON.stringify(data)) // send data to frontend
     })
   } catch (err) {
     console.log('Error in "awsMetricsRequest" event', message);
