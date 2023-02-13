@@ -28,6 +28,8 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     let counter: number = 0;
     const datalist: any[] = healthData.healthDataList;
     const timelist: any[] = healthData.healthTimeList;
+    console.log('datalist in healthcontainer is:', datalist); //array of healthDataList
+    console.log('timelist in healthcontainer is:', timelist);
 
     if (healthData && datalist && timelist && datalist.length > 0 && timelist.length > 0) {
       let selectedMetricsList: string[] = [];
@@ -49,6 +51,8 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
               const metric: string = Object.keys(serviceMetric)[0];
               const valueList = Object.values(serviceMetric)[0];
               const newTimeList: any = getTime(timelist, serviceName, metric, categoryName);
+              // console.log('valueList is', valueList); -> 50 values in an array
+              // console.log('newTimeList array is:', newTimeList); -> 50 values in an array
               if (selectedMetricsList.includes(metric)) {
                 const newHealthChart = (
                   <HealthChart

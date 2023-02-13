@@ -80,6 +80,7 @@ const Occupied = React.memo(() => {
 
   // Handle clicks on Application cards
   const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
+    console.log(selectedApp, i);
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       setIndex(i);
       setApp(selectedApp);
@@ -311,7 +312,7 @@ const Occupied = React.memo(() => {
                     />
                     <CardContent>
                       {/* <p id="databaseName">Name:</p> */}
-                      <Typography id="databaseName" className={classes.fontStyles}>
+                      <Typography noWrap id="databaseName" className={classes.fontStyles}>
                         {application[0]}
                       </Typography>
                       <p id="serviceName">Service:</p>
