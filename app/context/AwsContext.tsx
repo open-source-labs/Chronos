@@ -11,30 +11,24 @@ interface Props {
 }
 
 const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
-  const [awsData, setAwsData] = useState<any>({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
+  const [awsData, setAwsData] = useState<any>(null)
   
-  const fetchAwsData = useCallback(() => {
-    console.log('i am here in fetchawsdata!!!')
+  const fetchAwsData = () => {
     ipcRenderer.send('awsMetricsRequest');
-    
-    console.log('i am between the send and on!!!!!!!')
-    ipcRenderer.on('awsMetricsResponse', (event: Electron.Event, data: any) => {
-      console.log('data fetched from awsContext', data);
-      setAwsData(data);
+    ipcRenderer.on('awsMetricsResponse', (event: Electron.Event, res: any) => {
+      // console.log('data fetched from awsContext', res);
+      setAwsData(res);
+      // return res;
     })
-    
-    console.log('i am after the ipcrender!!!!')
-  },[]);
+  };
   
-  const { isLoading, data, error, isFetching } = useQuery('awsMetricsResponse', fetchAwsData);
-  
-  // useEffect(() => {
-  //   console.log(data, isLoading, error, isFetching);
-  // });
+  useEffect(() => {
+    console.log('awsdata after fetch is: ', awsData)
+  });
 
   return (
     <AwsContext.Provider
-      value={{ awsData, fetchAwsData }}
+      value={{ fetchAwsData, awsData, setAwsData }}
     >
       {children}
     </AwsContext.Provider>
