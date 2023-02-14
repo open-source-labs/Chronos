@@ -5,7 +5,6 @@ import fs from 'fs';
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
-
 // GLOBAL VARIABLES
 let currentUser = 'guest';
 const settingsLocation = path.resolve(__dirname, '../../settings.json');
@@ -22,7 +21,7 @@ class User {
     this.password = this.hashPassword(password);
     this.email = email;
     this.services = [];
-    this.mode = "light";
+    this.mode = 'light';
   }
 
   hashPassword(password: string) {
@@ -31,7 +30,6 @@ class User {
   }
 }
 
-
 function clearGuestSettings() {
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   // Guest Settings will be an array of length 1 with one object inside
@@ -39,7 +37,6 @@ function clearGuestSettings() {
   settings.guest.mode = 'light';
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 }
-
 
 /**
  * @event   addApp
@@ -68,7 +65,6 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
-
 /**
  * @event   getApps
  * @desc    Retrieves the existing list of applications belonging to the user and current user setting for mode of preference
@@ -81,10 +77,15 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
   const services: string[][] = settings[currentUser].services;
 
   // Return an array of arrays that is a subset of the full services array
-  const dashboardList: string[][] = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  const dashboardList: string[][] = services.map((arr: string[]) => [
+    arr[0],
+    arr[1],
+    arr[3],
+    arr[4],
+    arr[5],
+  ]);
   message.returnValue = dashboardList;
 });
-
 
 /**
  * @event   deleteApp
@@ -94,7 +95,7 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
 ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   // Retrives file contents from settings.json
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const userServices = settings[currentUser].services;;
+  const userServices = settings[currentUser].services;
 
   // Remove application from settings.json
   userServices.splice(index, 1);
@@ -105,9 +106,14 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   });
 
   // Sync event - return new applications list
-  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  message.returnValue = userServices.map((arr: string[]) => [
+    arr[0],
+    arr[1],
+    arr[3],
+    arr[4],
+    arr[5],
+  ]);
 });
-
 
 /**
  * @event changeMode
@@ -118,7 +124,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
 ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   // Retrives file contents from settings.json
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const userSettings = settings[currentUser];;
+  const userSettings = settings[currentUser];
   userSettings.mode = currMode;
 
   // Update settings.json with new mode
@@ -128,30 +134,31 @@ ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   message.returnValue = currMode;
 });
 
+ipcMain.on(
+  'addUser',
+  (message: IpcMainEvent, user: { username: string; password: string; email: string }) => {
+    const { username, password, email } = user;
 
-ipcMain.on('addUser', (message: IpcMainEvent, user: { username: string; password: string, email: string;  }) => {
-  const { username, password, email } = user;
+    // Verify that username and email have not been taken
+    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    if (username in settings) {
+      message.returnValue = false;
+      return;
+    }
 
-  // Verify that username and email have not been taken
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  if (username in settings) {
-    message.returnValue = false;
+    // Add the new user to the local storage
+    const newUser = new User(username, password, email);
+    settings[username] = newUser;
+    fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+    currentUser = username;
+    message.returnValue = true;
     return;
   }
-
-  // Add the new user to the local storage
-  const newUser = new User(username, password, email);
-  settings[username] = newUser;
-  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
-  currentUser = username;
-  message.returnValue = true;
-  return;
-});
-
+);
 
 ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: string }) => {
   const { username, password } = user;
-  
+
   // Load in the stored users
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   if (username in settings && bcrypt.compareSync(password, settings[username].password)) {
@@ -164,11 +171,10 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   }
 });
 
-
 ipcMain.on('signOut', (message: IpcMainEvent) => {
   currentUser = 'guest';
   message.returnValue = true;
   return;
-})
+});
 
 export { clearGuestSettings };

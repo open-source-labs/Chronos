@@ -62,7 +62,7 @@ const TransferColumns = React.memo(() => {
       } else if (eventMetricsReady) {
         setMetricsPool(eventMetrics);
       }
-    } 
+    }
     // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
     else if (service === 'kubernetesmetrics') {
       if (healthDataList && healthDataList.length > 0) {
@@ -70,8 +70,7 @@ const TransferColumns = React.memo(() => {
       } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
-    }
-    else if (!service.includes('kafkametrics')) {
+    } else if (!service.includes('kafkametrics')) {
       if (healthDataList && healthDataList.length > 0) {
         setMetricsPool(getMetrics('health', healthDataList));
       } else if (healthMetricsReady) {
@@ -129,7 +128,7 @@ const TransferColumns = React.memo(() => {
     // setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
-    console.log('targetKeys is: ', targetKeys)
+    console.log('targetKeys is: ', targetKeys);
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -154,7 +153,7 @@ const TransferColumns = React.memo(() => {
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100},
+    { field: 'id', headerName: 'ID', width: 100 },
     {
       field: 'tag',
       headerName: 'Category',
@@ -168,7 +167,7 @@ const TransferColumns = React.memo(() => {
       editable: true,
     },
   ];
-  
+
   const rows: any[] = [];
 
   metricsPool.forEach((el, index) => {
@@ -182,17 +181,19 @@ const TransferColumns = React.memo(() => {
   const selectedRows: any[] = [];
 
   targetKeys.forEach(el => {
-    selectedRows.push(<li style={{marginLeft: '30px', marginTop: '5px', color: currentMode.color}}>{el}</li>)
-  })
+    selectedRows.push(
+      <li style={{ marginLeft: '30px', marginTop: '5px', color: currentMode.color }}>{el}</li>
+    );
+  });
 
   return (
     <>
       <div id="getChartsContainer">
-        <Button id="getCharts" onClick={getCharts} variant='contained' color='primary'>
+        <Button id="getCharts" onClick={getCharts} variant="contained" color="primary">
           Get Charts
         </Button>
       </div>
-      <div id='transferTest'>
+      <div id="transferTest">
         <div style={{ height: '500px', width: '100%' }}>
           <DataGrid
             style={currentMode}
@@ -205,15 +206,15 @@ const TransferColumns = React.memo(() => {
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
                 metrics.push(metricsPool[el].key);
-              })
+              });
               setTargetKeys(metrics);
             }}
           />
         </div>
-        {selectedRows.length > 0 && <h3 style={{marginTop: '20px', color: currentMode.color}}>Selected Rows:</h3>}
-        <ol id="selectedRows">
-          {selectedRows}
-        </ol>
+        {selectedRows.length > 0 && (
+          <h3 style={{ marginTop: '20px', color: currentMode.color }}>Selected Rows:</h3>
+        )}
+        <ol id="selectedRows">{selectedRows}</ol>
       </div>
     </>
   );
