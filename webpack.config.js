@@ -21,7 +21,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env', "@babel/preset-react"],
+              presets: ['@babel/preset-env', '@babel/preset-react'],
             },
           },
         ],
@@ -41,10 +41,10 @@ module.exports = {
   },
   mode: 'development',
   devServer: {
-    port: 8080,
+    port: 8081,
     hot: true,
     historyApiFallback: true,
-    static: './app'
+    static: './app',
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -17,7 +17,7 @@ interface AppContextProps {
 
 export const ApplicationContext = React.createContext<any>(null);
 
-const ApplicationContextProvider: React.FC<AppContextProps> = React.memo((props) => {
+const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props => {
   const children = props.children;
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
@@ -64,14 +64,24 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo((props)
       const store: object = {};
       data.forEach(el => {
         store[el.metric] = el;
-      })
+      });
       setSavedMetrics(store);
     });
   }, []);
 
   return (
     <ApplicationContext.Provider
-      value={{ connectToDB, fetchServicesNames, setServicesData, servicesData, app, getSavedMetrics, setSavedMetrics, savedMetrics }}
+      value={{
+        connectToDB,
+        fetchServicesNames,
+        setServicesData,
+        servicesData,
+        app,
+        setApp,
+        getSavedMetrics,
+        setSavedMetrics,
+        savedMetrics,
+      }}
     >
       {children}
     </ApplicationContext.Provider>
