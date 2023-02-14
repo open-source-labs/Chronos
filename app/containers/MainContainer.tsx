@@ -10,7 +10,6 @@ import { DashboardContext } from '../context/DashboardContext';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
 import '../stylesheets/MainContainer.scss';
-import TestContainer from './TestContainer';
 
 const MainContainer = React.memo(() => {
   const { mode } = useContext(DashboardContext);
