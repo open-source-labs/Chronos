@@ -38,6 +38,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     ipcRenderer.removeAllListeners('healthResponse');
 
     let temp: any[] = [];
+    console.log('the cb being passed into fetch health data from graphscontainer is: ', serv);
 
     Promise.all(
       serv.map((service: string) => {
@@ -47,6 +48,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
             let result: any[];
             if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
               result = JSON.parse(data);
+              console.log('the health results before transformation: ', result)
               if (result && result.length && service === Object.keys(result[0])[0]) {
                 resolve(result[0]);
               }
@@ -58,6 +60,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
             setServices(serv);
             let transformedData: any = {};
             transformedData = transformData(temp);
+            console.log('results from fetch health data: ', transformedData);
             setHealthData(transformedData);
           }
         });
