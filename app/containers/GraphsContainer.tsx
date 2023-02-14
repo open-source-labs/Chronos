@@ -72,7 +72,7 @@ const GraphsContainer: React.FC = React.memo(props => {
           if (service.includes('kubernetesmetrics')) {
             fetchEventData('kubernetesmetrics');
           }
-        }, 3000)
+        }, 10000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);

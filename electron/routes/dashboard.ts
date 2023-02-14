@@ -106,13 +106,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
   });
 
   // Sync event - return new applications list
-  message.returnValue = userServices.map((arr: string[]) => [
-    arr[0],
-    arr[1],
-    arr[3],
-    arr[4],
-    arr[5],
-  ]);
+  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
 });
 
 /**

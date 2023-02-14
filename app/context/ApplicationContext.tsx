@@ -44,6 +44,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       let result: any;
       if (tryParseJSON(data)) result = JSON.parse(data);
+      console.log('result from ipcrenderer services response is: ', result);
       setServicesData(result);
       ipcRenderer.removeAllListeners('servicesResponse');
     });
@@ -64,7 +65,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       const store: object = {};
       data.forEach(el => {
         store[el.metric] = el;
-      });
+      })
+      console.log('result from getSavedMetrics is: ', store)
       setSavedMetrics(store);
     });
   }, []);

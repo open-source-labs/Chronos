@@ -148,7 +148,7 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
-    console.log('SelectedMetrics is: ', temp);
+    console.log('temp array with requested graphs is: ', temp);
     setSelectedMetrics(temp);
   };
 
