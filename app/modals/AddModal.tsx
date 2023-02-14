@@ -63,7 +63,12 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
           <label htmlFor="serv-type">
             Type of Service<span>*</span>
           </label>
-          <select id="serv-type" name="typeOfService" value={typeOfService} onChange={e => handleChange(e)}>
+          <select
+            id="serv-type"
+            name="typeOfService"
+            value={typeOfService}
+            onChange={e => handleChange(e)}
+          >
             <option value="AWS">AWS</option>
             <option value="Docker">Docker</option>
             <option value="gRPC">gRPC</option>

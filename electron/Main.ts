@@ -32,7 +32,7 @@ const createWindow = () => {
     // Production
     win.loadFile(path.resolve(__dirname, '../index.html'));
   }
-  
+
   ipcMain.on('max', () => {
     if (!win.isMaximized()) win.maximize();
     else win.unmaximize();
@@ -47,11 +47,9 @@ const createWindow = () => {
   });
 
   win.on('close', () => {
-    clearGuestSettings()
-  })
+    clearGuestSettings();
+  });
 };
-
-
 
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);

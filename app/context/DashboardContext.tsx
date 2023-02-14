@@ -30,9 +30,9 @@ export const DashboardContext = createContext<any>(null);
 
 const DashboardContextProvider = React.memo((props: any) => {
   const children = props.children;
-  
+
   // Initial user will always be the guest
-  const [user, setUser] = useState('guest');  
+  const [user, setUser] = useState('guest');
   const [applications, setApplications] = useState<string[]>([]);
   const [mode, setMode] = useState<string>('light');
 

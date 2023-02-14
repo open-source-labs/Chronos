@@ -6,7 +6,8 @@ console.log('category list at start is: ', categoryList);
 let categoryList = [];
 
 export function transformData(healthData) {
-  if(!categoryList[0]) categoryList = getCategory(healthData[0]);
+  const categoryList = getCategory(healthData[0]);
+  if (!categoryList[0]) categoryList = getCategory(healthData[0]);
   const serviceList = getServices(healthData);
   const categoryList_time = [];
   const categoryList_data = [];
@@ -129,7 +130,7 @@ export const useIsMount = () => {
 
 // Keep this in sync with the format in the users.json file for guests
 export const guestUser = {
-  "username": "guest",
-  "services":[],
-  "mode": "light"
+  username: 'guest',
+  services: [],
+  mode: 'light',
 };
