@@ -45,6 +45,7 @@ import { DashboardContext } from '../context/DashboardContext';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { CommsContext } from '../context/CommsContext';
 import { AwsContext } from '../context/AwsContext';
+import { useNavigate } from 'react-router-dom';
 
 // TYPESCRIPT
 interface StyleProps {
@@ -65,6 +66,9 @@ const Occupied = React.memo(() => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
 
+  // const [showAwsContainer, setShowAwsContainer] = useState(false);
+  const navigate = useNavigate();
+
   // Grab services and applications whenever the user changes
   useEffect(() => {
     setServicesData([]);
@@ -81,15 +85,23 @@ const Occupied = React.memo(() => {
   };
 
   // Handle clicks on Application cards
-  const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
-    console.log(selectedApp, i);
+  const handleClick = (
+    event: ClickEvent,
+    selectedApp: string,
+    selectedService: string,
+    i: number
+  ) => {
+    //delRaf refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
-      console.log('the application that you clicked is: ', selectedApp)
-      setIndex(i);
-      setApp(selectedApp);
-      setServicesData([]);
-      setServiceModalOpen(true);
-      fetchAwsData();
+      if (selectedService === 'AWS') {
+        navigate(`/aws/:${app}`);
+        fetchAwsData();
+      } else {
+        setIndex(i);
+        setApp(selectedApp);
+        setServicesData([]);
+        setServiceModalOpen(true);
+      }
     }
   };
 
@@ -281,7 +293,7 @@ const Occupied = React.memo(() => {
                     key={`card-${i}`}
                     className={classes.paper}
                     variant="outlined"
-                    onClick={event => handleClick(event, application[0], i)}
+                    onClick={event => handleClick(event, application[0], application[3], i)}
                   >
                     <div className="databaseIconContainer">
                       <div className="databaseIconHeader">
@@ -333,7 +345,6 @@ const Occupied = React.memo(() => {
                   </Card>
                 </div>
               ))}
-
           <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
             <AddModal setOpen={setAddModalOpen} />
           </Modal>

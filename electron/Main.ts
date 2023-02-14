@@ -9,7 +9,7 @@ let win: Electron.BrowserWindow;
 
 /**
  * @desc createWindow sets up the environment of the window (dimensions, port, initial settings)
-*/
+ */
 const createWindow = () => {
   win = new BrowserWindow({
     width: 1920,
@@ -25,7 +25,7 @@ const createWindow = () => {
 
   if (process.env.NODE_ENV === 'development') {
     // Development: load the application window to the port in the webpack config
-    win.loadURL('http://localhost:8080/');
+    win.loadURL('http://localhost:8081/');
     // console.log(win.webContents);
     win.webContents.openDevTools();
   } else {
