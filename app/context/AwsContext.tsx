@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useContext } from 'react';
 import Electron from 'electron';
 import { transformData } from './helpers';
 const { ipcRenderer } = window.require('electron');
@@ -13,18 +13,14 @@ interface Props {
 const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [awsData, setAwsData] = useState<any>(null)
   
-  const fetchAwsData = () => {
-    ipcRenderer.send('awsMetricsRequest');
+  const fetchAwsData = (username) => {
+    ipcRenderer.send('awsMetricsRequest', username);
     ipcRenderer.on('awsMetricsResponse', (event: Electron.Event, res: any) => {
-      // console.log('data fetched from awsContext', res);
+      console.log('data fetched from awsContext', res);
       setAwsData(res);
       // return res;
     })
   };
-  
-  useEffect(() => {
-    console.log('awsdata after fetch is: ', awsData)
-  });
 
   return (
     <AwsContext.Provider

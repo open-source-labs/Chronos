@@ -66,6 +66,33 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 });
 
 /**
+ * @event   addAwsApp
+ * @desc    Adds an AWS application to the user's list in the settings.json with the provided fields
+ * @return  New list of applications
+ */
+ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
+  // Retrieves file contents from settings.json
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const awsServices = settings[currentUser].awsServices;
+
+  // Add new applicaiton to list
+  const newApp = JSON.parse(application);
+
+  // Add a creation date to the application
+  const createdOn = moment().format('lll');
+  newApp.push(createdOn);
+
+  // Add app to list of applications
+  awsServices.push(newApp);
+
+  // Update settings.json with new list
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+
+  // Sync event - return new applications list
+  message.returnValue = awsServices.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[5], arr[6], arr[7]]);
+});
+
+/**
  * @event   getApps
  * @desc    Retrieves the existing list of applications belonging to the user and current user setting for mode of preference
  * @return  Returns the list of applications
