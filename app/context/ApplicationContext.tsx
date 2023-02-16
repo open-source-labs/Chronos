@@ -37,7 +37,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
   }
 
   const fetchServicesNames = useCallback((application: string) => {
-    setApp(application);
+    console.log('app when fetch services name', application);
+    // setApp(application);
 
     ipcRenderer.send('servicesRequest');
 
@@ -65,8 +66,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       const store: object = {};
       data.forEach(el => {
         store[el.metric] = el;
-      })
-      console.log('result from getSavedMetrics is: ', store)
+      });
+      console.log('result from getSavedMetrics is: ', store);
       setSavedMetrics(store);
     });
   }, []);
