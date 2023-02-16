@@ -20,7 +20,7 @@ const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
 require('dotenv').config({
-  path: path.join(__dirname, './.env'),
+  path: path.join(__dirname, './.env')
 });
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -311,11 +311,10 @@ ipcMain.on('kubernetesRequest', async message => {
   }
 });
 
-ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent) => {
+ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username: string) => {
   try {
     // message.sender.send('awsMetricsResponse', 'hello from chronos team')
     // console.log('i am inside the ipcmain')
-
     const cloudwatch = new AWS.CloudWatch({
       region: 'us-west-1',
       accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -366,6 +365,7 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent) => {
     };
 
     fetchData().then(data => {
+      console.log('data to be sent to frontend from data.ts: ', data)
       message.sender.send('awsMetricsResponse', JSON.stringify(data)) // send data to frontend
     })
   } catch (err) {
