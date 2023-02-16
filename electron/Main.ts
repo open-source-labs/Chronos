@@ -9,7 +9,7 @@ let win: Electron.BrowserWindow;
 
 /**
  * @desc createWindow sets up the environment of the window (dimensions, port, initial settings)
-*/
+ */
 const createWindow = () => {
   win = new BrowserWindow({
     width: 1920,
