@@ -32,7 +32,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 
 // // MODALS
-import AddModal from '../modals/AddModal';
+// import AddModal from '../modals/AddModal';
+import EnvModal from '../modals/EnvModal';
 import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
 import Search from './icons/Search';
@@ -59,8 +60,9 @@ const Occupied = React.memo(() => {
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
-  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  // const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
+  const [envModalOpen, setEnvModalOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   // const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -280,7 +282,7 @@ const Occupied = React.memo(() => {
 
         <div className="cardContainer">
           <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => setAddModalOpen(true)}>
+            <Button className={classes.paper} onClick={() => setEnvModalOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
@@ -345,8 +347,12 @@ const Occupied = React.memo(() => {
                   </Card>
                 </div>
               ))}
-          <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
+          {/* <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
             <AddModal setOpen={setAddModalOpen} />
+          </Modal> */}
+
+          <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
+            <EnvModal setOpen={setEnvModalOpen} />
           </Modal>
 
           <Modal open={personModalOpen} onClose={() => setPersonModalOpen(false)}>
