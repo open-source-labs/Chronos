@@ -57,8 +57,6 @@
       &:last-of-type {
         @include centerWithFlex($justify: flex-start, $align: flex-start);
       }
-
-
     }
 
     /* Submit button */
