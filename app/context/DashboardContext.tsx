@@ -11,6 +11,15 @@ interface IFields {
   description: string;
 }
 
+interface AwsFields {
+  typeOfService: string;
+  instance: string;
+  region: string;
+  accessKey: string;
+  secretAccessKey: string;
+  name: string;
+  description?: string
+}
 // interface Props {
 //   children: React.ReactNode;
 // }
@@ -52,6 +61,16 @@ const DashboardContextProvider = React.memo((props: any) => {
     console.log('the current application that was added is : ', result)
   }, []);
 
+  const addAwsApp = useCallback((awsFields: AwsFields) => {
+    const { typeOfService, instance, region, accessKey, secretAccessKey, name, description } = awsFields;
+    const result = ipcRenderer.sendSync(
+      'addAwsApp', //"addApp"
+      JSON.stringify([name, typeOfService, region, description, typeOfService, instance, accessKey, secretAccessKey])
+    );
+    setApplications(result);
+    console.log('the current application that was added is : ', result)
+  }, []);
+
   const deleteApp = useCallback((index: number) => {
     const result = ipcRenderer.sendSync('deleteApp', index);
     setApplications(result);
@@ -71,6 +90,7 @@ const DashboardContextProvider = React.memo((props: any) => {
         setApplications,
         getApplications,
         addApp,
+        addAwsApp,
         deleteApp,
         mode,
         setMode,

@@ -102,6 +102,7 @@ const Occupied = React.memo(() => {
     //delRaf refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       if (selectedService === 'AWS') {
+        setApp(selectedApp);
         navigate(`/aws/:${app}`);
         fetchAwsData();
       } else {
@@ -358,17 +359,13 @@ const Occupied = React.memo(() => {
           </Modal> */}
 
           <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
-            <EnvModal
-              setOpen={setEnvModalOpen}
-              setAwsModalOpen={setAwsModalOpen}
-              setAddModalOpen={setAddModalOpen}
-            />
+            <EnvModal setOpen={setEnvModalOpen} setAwsModalOpen={setAwsModalOpen} setAddModalOpen={setAddModalOpen}/>
           </Modal>
 
           <Modal open={awsModalOpen} onClose={() => setAwsModalOpen(false)}>
             <AwsModal setOpen={setAwsModalOpen} />
           </Modal>
-
+      
           <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
             <AddModal setOpen={setAddModalOpen} />
           </Modal>
