@@ -3,3 +3,22 @@
 .AWS-container {
   margin-top: 40px;
 }
+
+.charts {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}
+
+.chart {
+  padding: 40px;
+  margin: 10px;
+  outline: 1px solid #000;
+  text-align: center;
+}
+
+.AWSheader {
+  padding: 40px;
+  margin: 10px;
+  text-align: center;
+}
