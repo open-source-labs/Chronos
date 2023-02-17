@@ -1,49 +1,47 @@
-import AddModal from '../modals/AddModal';
-// import AwsModal from '../modals/AwsModal'
-import React, { useState, useContext, useCallback } from 'react';
-import { Modal, Button, Typography } from '@material-ui/core';
-import '../stylesheets/envModal.scss';
-import { CloudQueue } from '@material-ui/icons';
+import React from 'react';
+import { Button, Typography } from '@material-ui/core';
+import '../stylesheets/EnvModal.scss';
+import { CloudQueue, Computer } from '@material-ui/icons';
 
 interface EnvModalProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAwsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EnvModal: React.FC<EnvModalProps> = React.memo(({ setOpen }) => {
-  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
-  const [awsModalOpen, setAwsModalOpen] = useState<boolean>(false);
-
-  return (
-    <div className="add-container">
-      <div className="card" id="card-env">
-        <Button
-          onClick={() => {
-            setAwsModalOpen(true);
-            setOpen(false);
-          }}
-        >
-          <h2>Cloud-Based</h2>
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            setAddModalOpen(true);
-            setOpen(false);
-          }}
-        >
-          <CloudQueue />
-          <Typography>Cloud-Based</Typography>
-        </Button>
+const EnvModal: React.FC<EnvModalProps> = React.memo(
+  ({ setOpen, setAddModalOpen, setAwsModalOpen }) => {
+    return (
+      <div className="add-container">
+        <div className="card" id="card-env">
+          <button
+            className="env-button"
+            onClick={() => {
+              setOpen(false);
+              setAwsModalOpen(true);
+            }}
+          >
+            <Typography>
+              <CloudQueue fontSize="large" />
+            </Typography>
+            <Typography>Cloud-Based</Typography>
+          </button>
+          <button
+            className="env-button"
+            onClick={() => {
+              setOpen(false);
+              setAddModalOpen(true);
+            }}
+          >
+            <Typography>
+              <Computer fontSize="large" />
+            </Typography>
+            <Typography>Local Hosted</Typography>
+          </button>
+        </div>
       </div>
-      {/* 
-      <Modal open={awsModalOpen} onClose={() => setAwsModalOpen(false)}>
-        <AwsModal setOpen={setAwsModalOpen} />
-      </Modal> */}
-      <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
-        <AddModal setOpen={setAddModalOpen} />
-      </Modal>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default EnvModal;
