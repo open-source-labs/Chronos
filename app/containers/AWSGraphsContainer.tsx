@@ -15,17 +15,6 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
     fetchAwsData();
   });
 
-  // const { data, status, isLoading } = useQuery('awsData', fetchAwsData);
-
-  //   if(status === 'loading') {
-  //     return <p>Loading...</p>
-  //   }
-
-  //   if(status === 'error') {
-  //     return <p>Error!</p>
-  //   }
-
-  //   else {
   return (
     <div className="AWS-container">
       <p>
