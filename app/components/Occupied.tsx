@@ -32,13 +32,18 @@ import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 
 // // MODALS
+// import AddModal from '../modals/AddModal';
+import EnvModal from '../modals/EnvModal';
 import AddModal from '../modals/AddModal';
+import AwsModal from '../modals/AwsModal';
 import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
 import Search from './icons/Search';
 
 // STYLESHEETS
 import '../stylesheets/Occupied.scss';
+// const SQLLogo = require('../assets/postgres-icon-white.png');
+// const MongoLogo = require('../assets/mongo-icon-white.png')
 
 // // CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
@@ -59,8 +64,11 @@ const Occupied = React.memo(() => {
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
-  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  // const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
+  const [envModalOpen, setEnvModalOpen] = useState<boolean>(false);
+  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  const [awsModalOpen, setAwsModalOpen] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   // const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -94,6 +102,7 @@ const Occupied = React.memo(() => {
     //delRaf refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       if (selectedService === 'AWS') {
+        setApp(selectedApp);
         navigate(`/aws/:${app}`);
         fetchAwsData();
       } else {
@@ -280,7 +289,7 @@ const Occupied = React.memo(() => {
 
         <div className="cardContainer">
           <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => setAddModalOpen(true)}>
+            <Button className={classes.paper} onClick={() => setEnvModalOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
@@ -297,11 +306,11 @@ const Occupied = React.memo(() => {
                   >
                     <div className="databaseIconContainer">
                       <div className="databaseIconHeader">
-                        {application[1] === 'SQL' ? (
+                        {/* {application[1] === 'SQL' ? (
                           <img className="databaseIcon" alt="SQL" />
                         ) : (
                           <img className="databaseIcon" alt="MongoDB" />
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -345,6 +354,18 @@ const Occupied = React.memo(() => {
                   </Card>
                 </div>
               ))}
+          {/* <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
+            <AddModal setOpen={setAddModalOpen} />
+          </Modal> */}
+
+          <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
+            <EnvModal setOpen={setEnvModalOpen} setAwsModalOpen={setAwsModalOpen} setAddModalOpen={setAddModalOpen}/>
+          </Modal>
+
+          <Modal open={awsModalOpen} onClose={() => setAwsModalOpen(false)}>
+            <AwsModal setOpen={setAwsModalOpen} />
+          </Modal>
+      
           <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
             <AddModal setOpen={setAddModalOpen} />
           </Modal>

@@ -55,27 +55,6 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
 
   const { typeOfService, instance, region, accessKey, secretAccessKey, name, description } = awsFields;
 
-  // const awsRegions = {
-  //   'US East(N. Virginia)' : 'us-east-1',
-  //   'us-east-2',
-  //   'us-west-1',
-  //   'us-west-2',
-  //   'ap-south-1',
-  //   'ap-northeast-3',
-  //   'ap-northeast-2',
-  //   'ap-southeast-1',
-  //   'ap-southeast-2',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  //   'us-east-1',
-  // }
-
   return (
     <div className="add-container">
       <div className="add-header">
@@ -86,7 +65,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
         <p>Required*</p>
         <div>
           <label htmlFor="serv-type">
-            Type of Service<span>*</span>
+            Type of Service
           </label>
           <select
             id="serv-type"
@@ -96,10 +75,11 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
           >
             <option value="AWS">AWS</option>
           </select>
+          {/* <h2>AWS</h2> */}
         </div>
         <div>
           <label htmlFor="instance">
-            Instance Name<span>*</span>
+            AWS Instance Name<span>*</span>
           </label>
           <input 
             id="aws-instance"

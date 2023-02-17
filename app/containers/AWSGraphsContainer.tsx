@@ -10,22 +10,18 @@ import '../stylesheets/AWSGraphsContainer.scss';
 
 const AWSGraphsContainer: React.FC = React.memo(props => {
   const { awsData, fetchAwsData, setAwsData } = useContext(AwsContext);
+  const [live, setLive] = useState(true);
 
   useEffect(() => {
-    fetchAwsData();
-  });
+    if(live) {
+      fetchAwsData();
 
-  // const { data, status, isLoading } = useQuery('awsData', fetchAwsData);
+      setInterval(() => {
+        fetchAwsData();
+      }, 100000);
+    }
+  }, []);
 
-  //   if(status === 'loading') {
-  //     return <p>Loading...</p>
-  //   }
-
-  //   if(status === 'error') {
-  //     return <p>Error!</p>
-  //   }
-
-  //   else {
   return (
     <div className="AWS-container">
       <p>
