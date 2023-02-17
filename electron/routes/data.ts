@@ -20,7 +20,7 @@ const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
 require('dotenv').config({
-  path: path.join(__dirname, './.env'),
+  path: path.join(__dirname, './.env')
 });
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -310,3 +310,68 @@ ipcMain.on('kubernetesRequest', async message => {
     message.sender.send('kubernetesResponse', {});
   }
 });
+
+ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username: string) => {
+  try {
+    // message.sender.send('awsMetricsResponse', 'hello from chronos team')
+    // console.log('i am inside the ipcmain')
+    const cloudwatch = new AWS.CloudWatch({
+      region: 'us-west-1',
+      accessKeyId: process.env.AWS_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_SECRET_KEY
+    });
+
+    const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
+    // const awsData = {};
+    const paramsArray = metricsNamesArray.map(metric => {
+      const params = {
+        EndTime: new Date(),
+        MetricName: metric,
+        Namespace: 'AWS/EC2',
+        Period: 60,
+        StartTime: new Date(new Date().getTime() - 60*60*1000),
+        Statistics: ['Average'],
+        Dimensions: [{
+          Name: 'InstanceId',
+          Value: 'i-0c5656a0366bc6027'
+        }]
+      }
+
+      return params;
+    });
+
+    const fetchData = async () => {
+      const fetched = {};
+
+      for(let i = 0; i < paramsArray.length; i++) {
+        const data = await cloudwatch.getMetricStatistics(paramsArray[i]).promise();
+        // console.log('what is the data here: ', data)
+
+        const newData = data.Datapoints.map((el, index: number) => {
+          let transformedData = {};
+
+          transformedData['time'] = data.Datapoints[index].Timestamp,
+          transformedData['metric'] = data.Label,
+          transformedData['value'] = data.Datapoints[index].Average,
+          transformedData['unit'] = data.Datapoints[index].Unit
+
+          return transformedData;
+        });
+
+        fetched[paramsArray[i].MetricName] = newData;
+      }
+
+      return fetched;
+    };
+
+    fetchData().then(data => {
+      console.log('data to be sent to frontend from data.ts: ', data)
+      message.sender.send('awsMetricsResponse', JSON.stringify(data)) // send data to frontend
+    })
+  } catch (err) {
+    console.log('Error in "awsMetricsRequest" event', message);
+    message.sender.send('awsMetricsResponse', { CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+  }
+});
+
+// end fetch

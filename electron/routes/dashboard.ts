@@ -14,6 +14,7 @@ class User {
   password: string;
   email: string;
   services: string[][];
+  cloudServices: string[][];
   mode: string;
 
   constructor(username: string, password: string, email: string) {
@@ -21,6 +22,7 @@ class User {
     this.password = this.hashPassword(password);
     this.email = email;
     this.services = [];
+    this.cloudServices = [];
     this.mode = 'light';
   }
 
@@ -54,9 +56,41 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   // Add a creation date to the application
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
+  //if(arr[0]=== "aws")
 
   // Add app to list of applications
   services.push(newApp);
+
+  // Update settings.json with new list
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+
+  // Sync event - return new applications list
+  // arr[0] = name, arr[1] = database type, arr[3] = description, arr[4] = type of service, arr[5] = time stamp
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+});
+
+/**
+ * @event   addAwsApp
+ * @desc    Adds an AWS application to the user's list in the settings.json with the provided fields
+ * @return  New list of applications
+ */
+ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
+  // Retrieves file contents from settings.json
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const services = settings[currentUser].services;
+
+  // order of variables from addAwsApp
+  // name, instance, region, description, typeOfService, accessKey, secretAccessKey
+
+  // Add new applicaiton to list
+  const newAwsApp = JSON.parse(application);
+
+  // Add a creation date to the application
+  const createdOn = moment().format('lll');
+  newAwsApp.splice(5, 0, createdOn);
+
+  // Add app to list of applications
+  services.push(newAwsApp);
 
   // Update settings.json with new list
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));

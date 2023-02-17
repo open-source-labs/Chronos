@@ -25,7 +25,7 @@ const createWindow = () => {
 
   if (process.env.NODE_ENV === 'development') {
     // Development: load the application window to the port in the webpack config
-    win.loadURL('http://localhost:8081/');
+    win.loadURL('http://localhost:8080/');
     // console.log(win.webContents);
     win.webContents.openDevTools();
   } else {

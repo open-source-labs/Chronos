@@ -8,12 +8,19 @@ import { AwsContext } from '../context/AwsContext';
 
 import '../stylesheets/AWSGraphsContainer.scss';
 
-const AwsGraphsContainer: React.FC = React.memo(props => {
+const AWSGraphsContainer: React.FC = React.memo(props => {
   const { awsData, fetchAwsData, setAwsData } = useContext(AwsContext);
+  const [live, setLive] = useState(true);
 
   useEffect(() => {
-    fetchAwsData();
-  });
+    if(live) {
+      fetchAwsData();
+
+      setInterval(() => {
+        fetchAwsData();
+      }, 100000);
+    }
+  }, []);
 
   return (
     <div className="AWS-container">
@@ -27,4 +34,4 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
   // }
 });
 
-export default AwsGraphsContainer;
+export default AWSGraphsContainer;
