@@ -14,6 +14,7 @@ class User {
   password: string;
   email: string;
   services: string[][];
+  cloudServices: string[][];
   mode: string;
 
   constructor(username: string, password: string, email: string) {
@@ -21,6 +22,7 @@ class User {
     this.password = this.hashPassword(password);
     this.email = email;
     this.services = [];
+    this.cloudServices = [];
     this.mode = 'light';
   }
 
@@ -54,6 +56,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   // Add a creation date to the application
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
+  //if(arr[0]=== "aws")
 
   // Add app to list of applications
   services.push(newApp);
@@ -62,6 +65,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
+  // arr[0] = name, arr[1] = database type, arr[3] = description, arr[4] = type of service, arr[5] = time stamp
   message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
@@ -73,23 +77,26 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   // Retrieves file contents from settings.json
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const awsServices = settings[currentUser].awsServices;
+  const services = settings[currentUser].services;
+
+  // order of variables from addAwsApp
+  // name, instance, region, description, typeOfService, accessKey, secretAccessKey
 
   // Add new applicaiton to list
-  const newApp = JSON.parse(application);
+  const newAwsApp = JSON.parse(application);
 
   // Add a creation date to the application
   const createdOn = moment().format('lll');
-  newApp.push(createdOn);
+  newAwsApp.splice(5, 0, createdOn);
 
   // Add app to list of applications
-  awsServices.push(newApp);
+  services.push(newAwsApp);
 
   // Update settings.json with new list
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
-  message.returnValue = awsServices.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[5], arr[6], arr[7]]);
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
 /**
