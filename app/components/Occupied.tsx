@@ -42,8 +42,6 @@ import Search from './icons/Search';
 
 // STYLESHEETS
 import '../stylesheets/Occupied.scss';
-// const SQLLogo = require('../assets/postgres-icon-white.png');
-// const MongoLogo = require('../assets/mongo-icon-white.png')
 
 // // CONTEXT
 import { DashboardContext } from '../context/DashboardContext';
