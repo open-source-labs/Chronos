@@ -107,7 +107,7 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             name="name"
             value={name}
             onChange={e => handleChange(e)}
-            placeholder="Database Name"
+            placeholder="Add a name for your new service"
             required
           />
         </div>

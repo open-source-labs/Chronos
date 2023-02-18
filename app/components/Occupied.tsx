@@ -67,7 +67,8 @@ const Occupied = React.memo(() => {
   const [envModalOpen, setEnvModalOpen] = useState<boolean>(false);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [awsModalOpen, setAwsModalOpen] = useState<boolean>(false);
-  const [index, setIndex] = useState<number>(0);
+  const { appIndex, setAppIndex } = useContext(ApplicationContext)
+  // const [index, setIndex] = useState<number>(0);
   // const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
@@ -99,11 +100,12 @@ const Occupied = React.memo(() => {
   ) => {
     //delRaf refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
-      if (selectedService === 'AWS') {
+      if (selectedService === 'AWS' || selectedService === 'AWS/EC2' || selectedService === 'AWS/ECS') {
+        setAppIndex(i);
         setApp(selectedApp);
         navigate(`/aws/:${app}`);
       } else {
-        setIndex(i);
+        setAppIndex(i);
         setApp(selectedApp);
         setServicesData([]);
         setServiceModalOpen(true);
@@ -372,7 +374,7 @@ const Occupied = React.memo(() => {
           </Modal>
 
           <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
-            <ServicesModal key={`key-${index}`} i={index} app={app} />
+            <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
           </Modal>
         </div>
       </div>

@@ -65,7 +65,7 @@ const DashboardContextProvider = React.memo((props: any) => {
     const { typeOfService, instance, region, accessKey, secretAccessKey, name, description } = awsFields;
     const result = ipcRenderer.sendSync(
       'addAwsApp', //"addApp"
-      JSON.stringify([name, typeOfService, region, description, typeOfService, instance, accessKey, secretAccessKey])
+      JSON.stringify([name, 'AWS', region, description, typeOfService, instance, accessKey, secretAccessKey])
     );
     setApplications(result);
     console.log('the current application that was added is : ', result)
