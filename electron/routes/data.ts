@@ -314,7 +314,7 @@ ipcMain.on('kubernetesRequest', async message => {
 ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
   try {
     const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-    const userAwsService = fileContents[username].services[appIndex];
+    const userAwsService = fileContents[username]?.services[appIndex];
 
     const [ instanceId, region, accessKey, secretAccessKey ] = [ userAwsService[6], userAwsService[2], userAwsService[7], userAwsService[8] ]
     // message.sender.send('awsMetricsResponse', 'hello from chronos team')
@@ -375,6 +375,24 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username:
   } catch (err) {
     console.log('Error in "awsMetricsRequest" event', message);
     message.sender.send('awsMetricsResponse', { CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+  }
+});
+
+ipcMain.on('awsAppInfoRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+  try {
+    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+    const userAwsService = fileContents[username]?.services[appIndex];
+
+    const [ typeOfService, region ] = [ userAwsService[4], userAwsService[2] ];
+    const response = {
+      typeOfService: typeOfService,
+      region: region
+    }
+
+    message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+  } catch (err) {
+    console.log('Error in awsAppInfoRequest', message);
+    message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' });
   }
 });
 

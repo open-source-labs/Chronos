@@ -10,34 +10,42 @@ import '../stylesheets/AWSGraphsContainer.scss';
 import AwsCpuChart from '../charts/AwsCpuChart';
 
 const AwsGraphsContainer: React.FC = React.memo(props => {
-  const { awsData, fetchAwsData, setAwsData } = useContext(AwsContext);
-  const { app, appIndex } = useContext(ApplicationContext);
+  const { awsData, awsAppInfo, fetchAwsData, fetchAwsAppInfo } = useContext(AwsContext);
+  const { app, appIndex, intervalID, setIntervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
-  const [awsIntervalId, setAwsIntervalId] = useState<NodeJS.Timeout | null>(null);
+  // const [intervalID, setintervalID] = useState<NodeJS.Timeout | null>(null);
   const [awsLive, setAwsLive] = useState<boolean>(false);
 
   useEffect(() => {
     if(awsLive) {
       console.log('we are live! fetching data every 10 seconds...')
 
-      setAwsIntervalId(
+      setIntervalID(
         setInterval(() => {
+          console.log('intervalId after click live', intervalID)
           fetchAwsData(user, appIndex);
+          fetchAwsAppInfo(user, appIndex);
         }, 2000)
       )
+
+      console.log('intervalId after click live', intervalID)
     } else {
+      console.log('interval id after stop live', intervalID)
       console.log('not fetching data')
-      if(awsIntervalId) clearInterval(awsIntervalId);
+      if(intervalID) clearInterval(intervalID);
       fetchAwsData(user, appIndex);
+      fetchAwsAppInfo(user, appIndex);
     }
   }, [awsLive]);
 
   useEffect(() => {
     return () => {
       console.log('changed page, shut down fetching');
-      if(awsIntervalId) clearInterval(awsIntervalId);
+      console.log('intervalId when unmounting ', intervalID)
+
+      if(intervalID) clearInterval(intervalID);
     }
-  }, [awsLive, app])
+  }, [])
   
   const stringToColor = (string: string, recurses = 0) => {
     if (recurses > 20) return string;

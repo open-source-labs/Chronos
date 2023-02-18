@@ -41,7 +41,8 @@ const GraphsContainer: React.FC = React.memo(props => {
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
-  const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
+  const { intervalID, setIntervalID } = useContext(ApplicationContext);
+  // const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
   const { servicesData, getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
