@@ -2,23 +2,42 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ApplicationContext } from '../context/ApplicationContext';
 import * as DashboardContext from '../context/DashboardContext';
-import lightAndDark from '../components/Styling';
+import { Typography } from '@material-ui/core';
 import { useQuery } from 'react-query';
 import { AwsContext } from '../context/AwsContext';
 
 import '../stylesheets/AWSGraphsContainer.scss';
 import AwsCpuChart from '../charts/AwsCpuChart';
 
-const AWSGraphsContainer: React.FC = React.memo(props => {
-  const { awsData, fetchAwsData, data, isLoading, isFetching } = useContext(AwsContext);
-  const [live, setLive] = useState(true);
+const AwsGraphsContainer: React.FC = React.memo(props => {
+  const { awsData, fetchAwsData, setAwsData } = useContext(AwsContext);
+  const { app } = useContext(ApplicationContext);
+
+  const [awsLive, setAwsLive] = useState<boolean>(false);
+
+  let awsIntervalId;
 
   useEffect(() => {
-    if(live) {
+    if(awsLive) {
+      console.log('we are live! fetching data every 10 seconds...')
+
+      // awsIntervalId = setInterval(() => {
+      //   fetchAwsData();
+      // }, 2000);
+
+      // clearInterval(awsIntervalId);
+    } else {
+      console.log('not fetching data')
+      clearInterval(awsIntervalId)
       fetchAwsData();
     }
-  }, []);
 
+  }, [awsLive]);
+
+  useEffect(() => {
+    return () => clearInterval(awsIntervalId);
+  }, [])
+  
   const stringToColor = (string: string, recurses = 0) => {
     if (recurses > 20) return string;
     function hashString(str: string) {
@@ -39,23 +58,71 @@ const AWSGraphsContainer: React.FC = React.memo(props => {
 
   return (
     <div className="AWS-container">
-      <p>
+      {/* <p>
         AWS TEST
         DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
       </p>
       <p>Here is our data: {awsData ? awsData.CPUUtilization?.map(el => el.time) : 'Loading...'}</p>
-      <AwsCpuChart 
-        // key={`Chart${counter}`}
-        renderService='CPUUtilization'
-        metric='Percent'
-        timeList={awsData.CPUUtilization?.map(el => el.time)}
-        valueList={awsData.CPUUtilization?.map(el => el.value)}
-        // sizing={props.sizing}
-        colourGenerator={stringToColor}
-      />
+      
+      <p>Here is our data: {awsData}</p> */}
+      <div className="AWSheader">
+        <Typography variant="h3">{app}</Typography>
+        <p>Metrics for AWS Service</p>
+        <button onClick={() => setAwsLive(!awsLive)}>
+          {awsLive ? (
+            <div>
+              <span id="live">Live</span>
+            </div>
+          ) : (
+            <div id="gatherLiveData">Gather Live Data</div>
+          )}
+        </button>
+      </div>
+      <div className="charts">
+        <AwsCpuChart 
+          className='chart'
+          // key={`Chart${counter}`}
+          renderService='CPU Utilization'
+          metric='Percent'
+          timeList={awsData.CPUUtilization?.map(el => el.time)}
+          valueList={awsData.CPUUtilization?.map(el => el.value)}
+          // sizing={props.sizing}
+          colourGenerator={stringToColor}
+        />
+        <AwsCpuChart 
+          className='chart'
+          // key={`Chart${counter}`}
+          renderService='Network In'
+          metric='Percent'
+          timeList={awsData.NetworkIn?.map(el => el.time)}
+          valueList={awsData.NetworkIn?.map(el => el.value)}
+          // sizing={props.sizing}
+          colourGenerator={stringToColor}
+        />
+        <AwsCpuChart 
+          className='chart'
+          // key={`Chart${counter}`}
+          renderService='Network Out'
+          metric='Percent'
+          timeList={awsData.NetworkOut?.map(el => el.time)}
+          valueList={awsData.NetworkOut?.map(el => el.value)}
+          // sizing={props.sizing}
+          colourGenerator={stringToColor}
+        />
+        <AwsCpuChart 
+          className='chart'
+          // key={`Chart${counter}`}
+          renderService='DiskReadBytes'
+          metric='Percent'
+          timeList={awsData.DiskReadBytes?.map(el => el.time)}
+          valueList={awsData.DiskReadBytes?.map(el => el.value)}
+          // sizing={props.sizing}
+          colourGenerator={stringToColor}
+        />
+      </div>
     </div>
   );
   // }
 });
 
-export default AWSGraphsContainer;
+export default AwsGraphsContainer;
