@@ -23,6 +23,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
+  const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -86,7 +87,9 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
         setSavedMetrics,
         savedMetrics,
         appIndex, 
-        setAppIndex
+        setAppIndex,
+        intervalID,
+        setIntervalID,
       }}
     >
       {children}
