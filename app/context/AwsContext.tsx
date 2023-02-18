@@ -11,14 +11,15 @@ interface Props {
 }
 
 const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
-  const [awsData, setAwsData] = useState<any>(null)
+  const [awsData, setAwsData] = useState<any>({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
   
   const fetchAwsData = (username) => {
     ipcRenderer.send('awsMetricsRequest', username);
     ipcRenderer.on('awsMetricsResponse', (event: Electron.Event, res: any) => {
-      console.log('data fetched from awsContext', res);
-      setAwsData(res);
-      // return res;
+      const data = JSON.parse(res);
+      console.log('data fetched from AWS context is: ', data);
+
+      setAwsData(data);
     })
   };
 
