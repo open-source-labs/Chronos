@@ -311,14 +311,18 @@ ipcMain.on('kubernetesRequest', async message => {
   }
 });
 
-ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username: string) => {
+ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
   try {
+    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+    const userAwsService = fileContents[username].services[appIndex];
+
+    const [ instanceId, region, accessKey, secretAccessKey ] = [ userAwsService[6], userAwsService[2], userAwsService[7], userAwsService[8] ]
     // message.sender.send('awsMetricsResponse', 'hello from chronos team')
     // console.log('i am inside the ipcmain')
     const cloudwatch = new AWS.CloudWatch({
-      region: 'us-west-1',
-      accessKeyId: process.env.AWS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SECRET_KEY
+      region: region,
+      accessKeyId: accessKey,
+      secretAccessKey: secretAccessKey
     });
 
     const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
@@ -333,7 +337,7 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username:
         Statistics: ['Average'],
         Dimensions: [{
           Name: 'InstanceId',
-          Value: 'i-0c5656a0366bc6027'
+          Value: instanceId
         }]
       }
 

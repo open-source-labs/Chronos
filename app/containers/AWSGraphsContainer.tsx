@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import React, { useEffect, useState, useContext } from 'react';
 import { ApplicationContext } from '../context/ApplicationContext';
-import * as DashboardContext from '../context/DashboardContext';
+import { DashboardContext } from '../context/DashboardContext';
 import { Typography } from '@material-ui/core';
 import { useQuery } from 'react-query';
 import { AwsContext } from '../context/AwsContext';
@@ -11,32 +11,33 @@ import AwsCpuChart from '../charts/AwsCpuChart';
 
 const AwsGraphsContainer: React.FC = React.memo(props => {
   const { awsData, fetchAwsData, setAwsData } = useContext(AwsContext);
-  const { app } = useContext(ApplicationContext);
-
+  const { app, appIndex } = useContext(ApplicationContext);
+  const { user } = useContext(DashboardContext);
+  const [awsIntervalId, setAwsIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [awsLive, setAwsLive] = useState<boolean>(false);
-
-  let awsIntervalId;
 
   useEffect(() => {
     if(awsLive) {
       console.log('we are live! fetching data every 10 seconds...')
 
-      // awsIntervalId = setInterval(() => {
-      //   fetchAwsData();
-      // }, 2000);
-
-      // clearInterval(awsIntervalId);
+      setAwsIntervalId(
+        setInterval(() => {
+          fetchAwsData(user, appIndex);
+        }, 2000)
+      )
     } else {
       console.log('not fetching data')
-      clearInterval(awsIntervalId)
-      fetchAwsData();
+      if(awsIntervalId) clearInterval(awsIntervalId);
+      fetchAwsData(user, appIndex);
     }
-
   }, [awsLive]);
 
   useEffect(() => {
-    return () => clearInterval(awsIntervalId);
-  }, [])
+    return () => {
+      console.log('changed page, shut down fetching');
+      if(awsIntervalId) clearInterval(awsIntervalId);
+    }
+  }, [awsLive, app])
   
   const stringToColor = (string: string, recurses = 0) => {
     if (recurses > 20) return string;
@@ -58,13 +59,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
   return (
     <div className="AWS-container">
-      {/* <p>
-        AWS TEST
-        DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-      </p>
-      <p>Here is our data: {awsData ? awsData.CPUUtilization?.map(el => el.time) : 'Loading...'}</p>
       
-      <p>Here is our data: {awsData}</p> */}
       <div className="AWSheader">
         <Typography variant="h3">{app}</Typography>
         <p>Metrics for AWS Service</p>

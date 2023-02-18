@@ -28,9 +28,9 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const { addAwsApp }: IDashboard = useContext(DashboardContext);
 
   const [awsFields, setAwsFields] = useState<AwsFields>({
-    typeOfService: 'AWS',
+    typeOfService: 'AWS/EC2',
     instance: '',
-    region: '',
+    region: 'us-east-1',
     accessKey: '',
     secretAccessKey: '',
     name: '',
@@ -72,20 +72,20 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             value={typeOfService}
             onChange={e => handleChange(e)}
           >
-            <option value="AWS">AWS</option>
+            <option value="AWS/EC2">Elastic Compute Cloud (EC2)</option>
+            <option value="AWS/ECS">Elastic Container Service (ECS)</option>
           </select>
-          {/* <h2>AWS</h2> */}
         </div>
         <div>
           <label htmlFor="instance">
-            AWS Instance Name<span>*</span>
+            Instance/Cluster Name<span>*</span>
           </label>
           <input
             id="aws-instance"
             name="instance"
             value={instance}
             onChange={e => handleChange(e)}
-            placeholder="Instance Name"
+            placeholder="AWS Instance/Cluster Name"
             required
           />
         </div>
@@ -101,7 +101,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             placeholder="AWS Region"
             required
           >
-            <option value="us-east-1">US East (N. Virginia)/us-east-1</option>
+            <option value="us-east-1">US East (N. Virginia) / us-east-1</option>
             <option value="us-east-2">US East (Ohio) / us-east-2</option>
             <option value="us-west-1">US West (N.California) / us-west-1</option>
             <option value="us-west-2">US West (Oregon) / us-west-2</option>
@@ -158,7 +158,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             name="name"
             value={name}
             onChange={e => handleChange(e)}
-            placeholder="AWS Name"
+            placeholder="Add a name for your new service"
             required
           />
         </div>
