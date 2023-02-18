@@ -102,7 +102,6 @@ const Occupied = React.memo(() => {
       if (selectedService === 'AWS') {
         setApp(selectedApp);
         navigate(`/aws/:${app}`);
-        fetchAwsData();
       } else {
         setIndex(i);
         setApp(selectedApp);

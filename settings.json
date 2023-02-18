@@ -1,9 +1,9 @@
 {
-  "guest": {
-    "username": "guest",
-    "password": "",
-    "email": "",
-    "services": [],
-    "mode": "light"
-  }
+	"guest": {
+		"username": "guest",
+		"password": "",
+		"email": "",
+		"services": [],
+		"mode": "light"
+	}
 }
