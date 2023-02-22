@@ -2,7 +2,6 @@ import React, { useCallback, useState, useEffect, useContext } from 'react';
 import Electron from 'electron';
 import { transformData } from './helpers';
 const { ipcRenderer } = window.require('electron');
-import { useQuery } from 'react-query';
 import { ApplicationContext } from './ApplicationContext';
 
 export const AwsContext = React.createContext<any>(null);
