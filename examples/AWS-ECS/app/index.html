@@ -1,0 +1,121 @@
+<html lang="en">
+<style>
+    .container {
+        margin: 40px auto;
+        width: 80%;
+    }
+    .button {
+        width: 160px;
+        height: 45px;
+        border-radius: 6px;
+        font-size: 15px;
+        margin-top: 20px;
+    }
+    img {
+        width: 328px;
+        height: 287px;
+        display: block;
+        margin-bottom: 20px;
+    }
+    hr {
+        width: 400px;
+        margin-left: 0;
+    }
+    h3 {
+        display: inline-block;
+    }
+    #container {
+        display: none;
+    }
+    #container-edit {
+        display: none;
+    }
+    #container-edit input {
+        height: 32px;
+    }
+    #container-edit hr {
+        margin: 25px 0;
+    }
+    #container-edit input {
+        width: 195px;
+        font-size: 15px;
+    }
+</style>
+<script>
+    (async function init() {
+        const response = await fetch('/get-profile');
+        const user = await response.json();
+
+        document.getElementById('name').textContent = user.name ? user.name : 'Anna Smith';
+        document.getElementById('email').textContent = user.email ? user.email : 'anna.smith@example.com';
+        document.getElementById('interests').textContent = user.interests ? user.interests : 'coding';
+
+        const cont = document.getElementById('container');
+        cont.style.display = 'block';
+    })();
+
+    async function handleUpdateProfileRequest() {
+        const contEdit = document.getElementById('container-edit');
+        const cont = document.getElementById('container');
+
+        const payload = {
+            name: document.getElementById('input-name').value, 
+            email: document.getElementById('input-email').value, 
+            interests: document.getElementById('input-interests').value
+        };
+        
+        const response = await fetch('/update-profile', {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        const jsonResponse = await response.json();
+
+        document.getElementById('name').textContent = jsonResponse.name;
+        document.getElementById('email').textContent = jsonResponse.email;
+        document.getElementById('interests').textContent = jsonResponse.interests;
+
+        cont.style.display = 'block';
+        contEdit.style.display = 'none';
+    }
+
+    function updateProfile() {
+        const contEdit = document.getElementById('container-edit');
+        const cont = document.getElementById('container');
+
+        document.getElementById('input-name').value = document.getElementById('name').textContent;
+        document.getElementById('input-email').value = document.getElementById('email').textContent;
+        document.getElementById('input-interests').value = document.getElementById('interests').textContent;
+
+        cont.style.display = 'none';
+        contEdit.style.display = 'block';
+    }
+</script>
+<body>
+    <div class='container' id='container'>
+        <h1>User profile</h1>
+        <img src='profile-picture' alt="user-profile">
+        <span>Name: </span><h3 id='name'>Chronos Team</h3>
+        <hr />
+        <span>Email: </span><h3 id='email'>hello@chronos.com</h3>
+        <hr />
+        <span>Shoutout: </span><h3 id='interests'>Chronos Team rocks!!!</h3>
+        <hr />
+        <button class='button' onclick="updateProfile()">Edit Profile</button>
+    </div>
+    <div class='container' id='container-edit'>
+        <h1>User profile</h1>
+        <img src='profile-picture' alt="user-profile">
+        <span>Name: </span><label for='input-name'></label><input type="text" id='input-name' value='Anna Smith' />
+        <hr />
+        <span>Email: </span><label for='input-email'></label><input type="email" id='input-email' value='anna.smith@example.com' />
+        <hr />
+        <span>Shoutout: </span><label for='input-interests'></label><input type="text" id='input-interests' value='coding' />
+        <hr />
+        <button class='button' onclick="handleUpdateProfileRequest()">Update Profile</button>
+    </div>
+</body>
+</html>
