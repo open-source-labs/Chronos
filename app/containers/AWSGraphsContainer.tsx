@@ -7,7 +7,7 @@ import { useQuery } from 'react-query';
 import { AwsContext } from '../context/AwsContext';
 
 import '../stylesheets/AWSGraphsContainer.scss';
-import AwsCpuChart from '../charts/AwsCpuChart';
+import AwsChart from '../charts/AwsChart';
 
 const AwsGraphsContainer: React.FC = React.memo(props => {
   const { awsData, awsAppInfo, fetchAwsData, fetchAwsAppInfo } = useContext(AwsContext);
@@ -22,15 +22,11 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
       setIntervalID(
         setInterval(() => {
-          console.log('intervalId after click live', intervalID)
           fetchAwsData(user, appIndex);
           fetchAwsAppInfo(user, appIndex);
-        }, 2000)
+        }, 10000)
       )
-
-      console.log('intervalId after click live', intervalID)
     } else {
-      console.log('interval id after stop live', intervalID)
       console.log('not fetching data')
       if(intervalID) clearInterval(intervalID);
       fetchAwsData(user, appIndex);
@@ -40,9 +36,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
   useEffect(() => {
     return () => {
-      console.log('changed page, shut down fetching');
-      console.log('intervalId when unmounting ', intervalID)
-
+      console.log('unmounting, shut down fetch process');
       if(intervalID) clearInterval(intervalID);
     }
   }, [])
@@ -82,17 +76,17 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
         </button>
       </div>
       <div className="charts">
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='CPU Utilization'
-          metric='Percent'
+          metric={awsData.CPUUtilization[0]?.unit}
           timeList={awsData.CPUUtilization?.map(el => el.time)}
           valueList={awsData.CPUUtilization?.map(el => el.value)}
           // sizing={props.sizing}
           colourGenerator={stringToColor}
         />
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='Network In'
@@ -102,7 +96,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           // sizing={props.sizing}
           colourGenerator={stringToColor}
         />
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='Network Out'
@@ -112,7 +106,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           // sizing={props.sizing}
           colourGenerator={stringToColor}
         />
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='DiskReadBytes'

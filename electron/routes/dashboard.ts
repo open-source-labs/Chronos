@@ -14,7 +14,6 @@ class User {
   password: string;
   email: string;
   services: string[][];
-  cloudServices: string[][];
   mode: string;
 
   constructor(username: string, password: string, email: string) {
@@ -22,7 +21,6 @@ class User {
     this.password = this.hashPassword(password);
     this.email = email;
     this.services = [];
-    this.cloudServices = [];
     this.mode = 'light';
   }
 
