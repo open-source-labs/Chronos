@@ -76,19 +76,21 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             <option value="AWS/ECS">Elastic Container Service (ECS)</option>
           </select>
         </div>
-        <div>
-          <label htmlFor="instance">
-            Instance/Cluster Name<span>*</span>
-          </label>
-          <input
-            id="aws-instance"
-            name="instance"
-            value={instance}
-            onChange={e => handleChange(e)}
-            placeholder="AWS Instance/Cluster Name"
-            required
-          />
-        </div>
+        {typeOfService === 'AWS/EC2' &&
+          <div>
+            <label htmlFor="instance">
+              Instance ID<span>*</span>
+            </label>
+            <input
+              id="aws-instance"
+              name="instance"
+              value={instance}
+              onChange={e => handleChange(e)}
+              placeholder="AWS Instance/Cluster Name"
+              required
+            />
+          </div>
+        }
         <div>
           <label htmlFor="region">
             Region<span>*</span>

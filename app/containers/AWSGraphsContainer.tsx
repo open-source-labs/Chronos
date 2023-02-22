@@ -3,14 +3,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import { Typography } from '@material-ui/core';
-import { useQuery } from 'react-query';
 import { AwsContext } from '../context/AwsContext';
 
 import '../stylesheets/AWSGraphsContainer.scss';
-import AwsCpuChart from '../charts/AwsCpuChart';
+import AwsChart from '../charts/AwsChart';
 
 const AwsGraphsContainer: React.FC = React.memo(props => {
-  const { awsData, awsAppInfo, fetchAwsData, fetchAwsAppInfo } = useContext(AwsContext);
+  const { awsData, setAwsData, awsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsAppInfo } = useContext(AwsContext);
   const { app, appIndex, intervalID, setIntervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
   // const [intervalID, setintervalID] = useState<NodeJS.Timeout | null>(null);
@@ -25,25 +24,24 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           console.log('intervalId after click live', intervalID)
           fetchAwsData(user, appIndex);
           fetchAwsAppInfo(user, appIndex);
+          // fetchAwsEcsData(user, appIndex);
         }, 2000)
       )
-
-      console.log('intervalId after click live', intervalID)
     } else {
-      console.log('interval id after stop live', intervalID)
       console.log('not fetching data')
       if(intervalID) clearInterval(intervalID);
       fetchAwsData(user, appIndex);
       fetchAwsAppInfo(user, appIndex);
+      // fetchAwsEcsData(user, appIndex);
     }
   }, [awsLive]);
 
   useEffect(() => {
     return () => {
-      console.log('changed page, shut down fetching');
-      console.log('intervalId when unmounting ', intervalID)
+      console.log('unmounting, shut down fetch process');
 
       if(intervalID) clearInterval(intervalID);
+      setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
     }
   }, [])
   
@@ -65,6 +63,10 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
     }
   }
 
+  // const awsGraphArray = Object.keys(awsData)?.map(metric => {
+
+  // })
+
   return (
     <div className="AWS-container">
       
@@ -82,7 +84,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
         </button>
       </div>
       <div className="charts">
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='CPU Utilization'
@@ -92,7 +94,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           // sizing={props.sizing}
           colourGenerator={stringToColor}
         />
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='Network In'
@@ -102,7 +104,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           // sizing={props.sizing}
           colourGenerator={stringToColor}
         />
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='Network Out'
@@ -112,7 +114,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           // sizing={props.sizing}
           colourGenerator={stringToColor}
         />
-        <AwsCpuChart 
+        <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
           renderService='DiskReadBytes'
