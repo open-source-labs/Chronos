@@ -15,8 +15,24 @@
   text-align: center;
 }
 
+.js-plotly-plot {
+  box-shadow: $boxshadow;
+}
+
+.region {
+  font-size: 12px;
+  color: $teal;
+  padding: 4px 6px;
+  outline: 0.4px solid $teal;
+  border-radius: 4px;
+}
+
 .AWSheader {
   padding: 40px;
   margin: 10px;
   text-align: center;
+}
+
+.ClusterTable-container {
+  margin: 0 20px;
 }
