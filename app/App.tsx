@@ -10,7 +10,6 @@ const queryClient = new QueryClient();
 const App: React.FC = React.memo(() => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
       <Splash />
       <DashboardContainer />
     </QueryClientProvider>

@@ -311,14 +311,13 @@ ipcMain.on('kubernetesRequest', async message => {
   }
 });
 
-ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+ipcMain.on('ec2MetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
   try {
     const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
     const userAwsService = fileContents[username]?.services[appIndex];
 
-    const [ instanceId, region, accessKey, secretAccessKey ] = [ userAwsService[6], userAwsService[2], userAwsService[7], userAwsService[8] ]
-    // message.sender.send('awsMetricsResponse', 'hello from chronos team')
-    // console.log('i am inside the ipcmain')
+    const [ region, typeOfService, instanceId, accessKey, secretAccessKey ] = [ userAwsService[2], userAwsService[4], userAwsService[6], userAwsService[7], userAwsService[8] ]
+    
     const cloudwatch = new AWS.CloudWatch({
       region: region,
       accessKeyId: accessKey,
@@ -326,12 +325,12 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username:
     });
 
     const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
-    // const awsData = {};
+
     const paramsArray = metricsNamesArray.map(metric => {
       const params = {
         EndTime: new Date(),
         MetricName: metric,
-        Namespace: 'AWS/EC2',
+        Namespace: typeOfService,
         Period: 60,
         StartTime: new Date(new Date().getTime() - 60*60*1000),
         Statistics: ['Average'],
@@ -369,12 +368,149 @@ ipcMain.on('awsMetricsRequest', async (message: Electron.IpcMainEvent, username:
     };
 
     fetchData().then(data => {
-      console.log('data to be sent to frontend from data.ts: ', data)
-      message.sender.send('awsMetricsResponse', JSON.stringify(data)) // send data to frontend
+      message.sender.send('ec2MetricsResponse', JSON.stringify(data)) // send data to frontend
     })
   } catch (err) {
-    console.log('Error in "awsMetricsRequest" event', message);
-    message.sender.send('awsMetricsResponse', { CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+    console.log('Error in "ec2MetricsRequest" event', message);
+    message.sender.send('ec2MetricsResponse', { CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+  }
+});
+
+ipcMain.on('ecsMetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+  try {
+    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+    const userAwsService = fileContents[username]?.services[appIndex];
+
+    const [ region, typeOfService, accessKey, secretAccessKey ] = [ userAwsService[2], userAwsService[4], userAwsService[7], userAwsService[8] ]
+    
+    const cloudwatch = new AWS.CloudWatch({
+      region: region,
+      accessKeyId: accessKey,
+      secretAccessKey: secretAccessKey
+    });
+
+    // const metricsNamesArray = ['CPUUtilization', 'MemoryUtilization'];
+
+    const listMetricsParams = {
+      Namespace: 'AWS/ECS'
+    };
+  
+    const paramsDimensions = new Set();
+
+    cloudwatch.listMetrics(listMetricsParams, (err, data) => {
+      if (err) {
+        console.log('Error', err);
+      } else {
+        for(let i = 0; i<data.Metrics.length; i++){
+          // console.log(data)
+          // console.log('Metrics', data.Metrics[i].Dimensions);
+          console.log('Namespace', data.Metrics[i].Namespace)
+          console.log('MetricName', data.Metrics[i].MetricName)
+          console.log('Name', data.Metrics[i].Dimensions[0].Name)
+          console.log('Value', data.Metrics[i].Dimensions[0].Value)
+          console.log('Name', data.Metrics[i].Dimensions[1].Name)
+          console.log('Value', data.Metrics[i].Dimensions[1].Value)
+
+          paramsDimensions.add(data.Metrics[i].Dimensions);
+        }
+
+        console.log('dimensions after list metrics are: ', paramsDimensions.values);
+        message.sender.send('ecsMetricsResponse', JSON.stringify(paramsDimensions));
+      }
+    });
+
+    // const params = {
+    //   MetricDataQueries: [
+        // {
+        //   //Id: 'ecs_cpu_utilization',
+        //   Id: 'chronos_ecs_data',
+        //   MetricStat: {
+        //     Metric: {
+        //       Namespace: 'AWS/ECS',
+        //       //MetricName: 'CPUUtilization',
+        //       MetricName: 'MemoryUtilization',
+        //       Dimensions: [
+        //         {
+        //           Name: 'ClusterName',
+        //           Value: 'my-app'
+        //         },
+                // {
+                //   Name: 'ServiceName',
+                //   Value: 'my-app-MyappService-GIYqHcRROb0B'
+                // }
+        //       ]
+        //     },
+        //     Period: 300,
+        //     Stat: 'Average'
+        //   }
+        // }
+    //     {
+    //       Id: 'm1',
+    //       MetricStat: {
+    //         Metric: {
+    //           Namespace: 'AWS/ECS',
+    //           MetricName: 'CPUUtilization',
+    //           Dimensions: [
+    //             {
+    //               Name: 'ClusterName',
+    //               Value: 'my-app'
+    //             },
+    //             {
+    //               Name: 'ServiceName',
+    //               Value: 'my-app-MyappService-GIYqHcRROb0B'
+    //             }
+    //           ]
+    //         },
+    //         Period: 60,
+    //         Stat: 'Average',
+    //       },
+    //       ReturnData: true,
+    //     },
+    //     {
+    //       Id: 'm2',
+    //       MetricStat: {
+    //         Metric: {
+    //           Namespace: 'AWS/ECS',
+    //           MetricName: 'CPUUtilization',
+    //           Dimensions: [
+    //             {
+    //               Name: 'ClusterName',
+    //               Value: 'my-app'
+    //             },
+    //             {
+    //               Name: 'ServiceName',
+    //               Value: 'my-app-MyappService-GIYqHcRROb0B'
+    //             }
+    //           ]
+    //         },
+    //         Period: 60,
+    //         Stat: 'Average',
+    //       },
+    //       ReturnData: true,
+    //     },
+    //   ],
+    //   StartTime: new Date(Date.now() - 360000),
+    //   //StartTime: new Date(Date.now() - 90000),
+    //   EndTime: new Date(),
+    //   ScanBy: 'TimestampDescending'
+      
+    // };
+
+    // cloudwatch.getMetricData(params, (err, data) => {
+    //   if (err) {
+    //     console.log('Error', err);
+    //   } else {
+    //     console.log(data.MetricDataResults[1].Values)
+    //     console.log(data.MetricDataResults[1].Timestamps)
+    //     console.log(data.MetricDataResults[0].Values)
+    //     console.log(data.MetricDataResults[0].Timestamps)
+        //console.log(data)
+        // console.log('Data', data.MetricDataResults[0].Values, data.MetricDataResults[0].Timestamps);
+      // }
+    // });
+  } catch (err) {
+    console.log('Error in "ecsMetricsRequest" event', message);
+    message.sender.send('ecsMetricsResponse', { CPUUtilization: [], MemoryUtilization: [] });
   }
 });
 

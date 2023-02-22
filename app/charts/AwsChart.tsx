@@ -18,7 +18,7 @@ interface SoloStyles {
   width: number;
 }
 
-const AwsCpuChart: React.FC<any> = React.memo(props => {
+const AwsChart: React.FC<any> = React.memo(props => {
   const { renderService, metric, timeList, valueList, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
   setInterval(() => {
@@ -97,4 +97,4 @@ const AwsCpuChart: React.FC<any> = React.memo(props => {
   );
 });
 
-export default AwsCpuChart;
+export default AwsChart;

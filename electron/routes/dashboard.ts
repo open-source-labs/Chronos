@@ -14,7 +14,6 @@ class User {
   password: string;
   email: string;
   services: string[][];
-  cloudServices: string[][];
   mode: string;
 
   constructor(username: string, password: string, email: string) {
@@ -22,7 +21,6 @@ class User {
     this.password = this.hashPassword(password);
     this.email = email;
     this.services = [];
-    this.cloudServices = [];
     this.mode = 'light';
   }
 
@@ -85,7 +83,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   // Add new applicaiton to list
   const newAwsApp = JSON.parse(application);
 
-  // Add a creation date to the application
+  // Add a creation date to the application on the 5th index
   const createdOn = moment().format('lll');
   newAwsApp.splice(5, 0, createdOn);
 
@@ -93,6 +91,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   services.push(newAwsApp);
 
   // Update settings.json with new list
+  // awsApp array: name[0], 'AWS'[1], region[2], description[3], typeOfService[4], timestamp[5], instanceID[6], accessKey[7], secretAccessKey[8]
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
