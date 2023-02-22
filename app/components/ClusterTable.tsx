@@ -1,55 +1,90 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {AwsContext} from '../context/AwsContext';
+import { AwsContext } from '../context/AwsContext';
+import cluster from 'cluster';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  tableContainer: {
+    margin: '0 20px',
+  },
+  activeCell: {
+    color: 'green',
+  },
+  column: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  body: {
+    fontSize: '1.2rem',
+  },
+  title: {
+    color: '#888888',
+  },
 });
 
 export interface ClusterTableProps {
+  typeOfService: string;
   region: string;
 }
 
-const ClusterTable: React.FC<ClusterTableProps> = React.memo(({region}) => {
+const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
   const classes = useStyles();
   // const {clusterName, servicesNum, tasksNum, status} = useContext(DashboardContext);
 
-    return (
-        <div className="ClusterTable-container">
-          <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="cluster table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Services</TableCell>
-            <TableCell>Tasks</TableCell>
-          </TableRow>
-        </TableHead>
-        {/* <TableBody>
-          {clusters.map((cluster: Cluster, index: number) => (
+  return (
+    <div className="ClusterTable-container">
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="cluster table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.title}>Name</TableCell>
+              <TableCell className={classes.title}>Status</TableCell>
+              <TableCell className={classes.title}>Services</TableCell>
+              <TableCell className={classes.title}>Tasks</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableCell className={classes.body}>
+              <div className={classes.column}>
+                <div>test</div>
+                <div>
+                  <span className="region">{region}</span>
+                </div>
+              </div>
+            </TableCell>
+            {/* <TableCell className={cluster.status === 'active' ? classes.activeCell : undefined}>testactive</TableCell> */}
+            <TableCell className={classes.body}>active</TableCell>
+            <TableCell className={classes.body}>3</TableCell>
+            <TableCell className={classes.body}>0/3</TableCell>
+
+            {/* {clusters.map((cluster: Cluster, index: number) => (
             <TableRow key={index}>
               <TableCell>{cluster.name}</TableCell>
               <TableCell>{cluster.status}</TableCell>
               <TableCell>{cluster.serviceCount}</TableCell>
               <TableCell>{cluster.taskCount}</TableCell>
             </TableRow>
-          ))}
-        </TableBody> */}
-      </Table>
-    </TableContainer>
-        </div>
-    )
-})
+          ))} */}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+});
 
 export default ClusterTable;
-
-
-
-
 
 // type Cluster = {
 //   name: string;
@@ -88,4 +123,3 @@ export default ClusterTable;
 //       }
 //     });
 //   }, []);
-
