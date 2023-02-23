@@ -49,7 +49,7 @@ module.exports = {
   // Mock get context
   HTMLCanvasElement.prototype.getContext = () => {};
   ```
-5. update data base info inside test_settings.json 
+5. update database info inside test_settings.json 
 
 6. use `npm run test` to run jest tests
 
