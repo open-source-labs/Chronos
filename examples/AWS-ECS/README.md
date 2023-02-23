@@ -1,4 +1,10 @@
-## ECS Test Case
+# Chronos AWS ECS Example
+
+Deploy AWS ECS for testing [Chronos](https://github.com/open-source-labs/Chronos), an open-source developer tool that monitors health data from servers, microservices, Kubernetes clusters, and now, AWS services.
+
+## Purpose and Design
+
+This sample AWS ECS example allows developers to explore the functionality of Chronos with cloud-based applications.
 
 ECS clustter is deployed with following process:
 - build Docker Image 
@@ -18,7 +24,7 @@ ECS clustter is deployed with following process:
 
 - If the @chronosmicro/tracker dependency is listed as a local npm package (i.e. `"@chronosmicro/tracker": "file:./chronos_npm_package"`), the Docker build will require that the the Chronos code is in this folder. Copy the _chronos_npm_package_ folder in manually.
 
-### Deploy application in ECS
+## Deploy application in ECS
 
 Step 1: build Docker Image 
 ```
@@ -42,7 +48,7 @@ Step 4: Set up AWS account, grant access to floowing AWS IAM permissions listed 
 
 If you push docker image in ECR you might need additional permission as well.   
 
-Step 5: Generate access key in IAM -> Users -> yourusername -> secureity credentials -> Access Keys. _Make sure you save your secret access key as it is only accessible once when generated._
+Step 5: Generate access key in IAM -> Users -> yourusername -> secureity credentials -> Access Keys. _Make sure you save your secret access key as it is only accessible once when generated._ (These are used for launching Chronos (instruction at the end)
 
 Step 6: Create and use AWS context, follow instruction [here](https://docs.docker.com/cloud/ecs-integration/#requirements). 
 
@@ -50,6 +56,25 @@ Step 7: Deploy test application in ECS
 ```
     docker compose up
 ```
-### some notes about the ecs-test
+ 
 
-The way deployment set up is using Fargate, you will not be able to see graph in cluster->metrics. Instead, check inside services or cloudwatch. The ultimate visulization is in Chronos!!!
+## Monitoring ECS instance on Chronos
+
+1. Start Chronos desktop application.
+
+2. Select `cloud-based`
+
+3. Use Access Key, Secret Access Key, and region to start monitoring ECS instance. 
+
+### Some notes about the ECS-test
+
+The way deployment set up is using Fargate, you will not be able to see graphs in ECS cluster->metrics. Instead, check inside services or Cloudwatch.
+
+## Contributing
+Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
+
+## People
+[Snow X. Bai](https://github.com/xueapp)
+[Taylor Zhang](https://github.com/taylrzhang)
+[Tim Lee](https://github.com/timlee12)
+[Roberto Meloni ](https://github.com/RobertoRueMeloni)
