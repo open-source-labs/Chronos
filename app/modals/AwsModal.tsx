@@ -86,7 +86,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
               name="instance"
               value={instance}
               onChange={e => handleChange(e)}
-              placeholder="AWS Instance/Cluster Name"
+              placeholder="AWS Instance ID"
               required
             />
           </div>
