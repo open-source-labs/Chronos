@@ -501,6 +501,40 @@ select:-webkit-autofill:focus {
   }
 }
 
+#card-AWS {
+  &:hover .databaseIconHeader {
+    visibility: hidden;
+    // background-color: $gblue;
+    // opacity: 0.7;
+    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
+  }
+
+  .databaseIconContainer {
+    display: inline-block;
+    overflow: visible;
+  }
+  .databaseIconHeader {
+    position: absolute;
+    background-color: $gorange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    padding: 15px;
+    float: left;
+    top: -20px;
+    left: 180px;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+    background-image: url('../assets/aws-icon-white.png');
+    background-size: cover;
+    .databaseIcon {
+      visibility: hidden;
+    }
+  }
+}
+
 .databaseIconContainer {
   display: inline-block;
   overflow: visible;

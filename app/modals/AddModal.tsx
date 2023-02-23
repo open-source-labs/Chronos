@@ -26,7 +26,7 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const { addApp }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
-    typeOfService: 'AWS',
+    typeOfService: 'Docker',
     database: 'SQL',
     URI: '',
     name: '',
@@ -69,7 +69,6 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             value={typeOfService}
             onChange={e => handleChange(e)}
           >
-            <option value="AWS">AWS</option>
             <option value="Docker">Docker</option>
             <option value="gRPC">gRPC</option>
             <option value="Kubernetes">Kubernetes</option>
@@ -108,7 +107,7 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             name="name"
             value={name}
             onChange={e => handleChange(e)}
-            placeholder="Database Name"
+            placeholder="Add a name for your new service"
             required
           />
         </div>

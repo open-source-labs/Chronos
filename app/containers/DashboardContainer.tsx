@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import MainContainer from './MainContainer';
 import SidebarContainer from './SidebarContainer';
@@ -13,39 +13,40 @@ import AwsContextProvider from '../context/AwsContext';
 import '../stylesheets/Dashboard.scss';
 
 const DashboardContainer = React.memo(() => {
-  const [visible, setVisible] = useState(true);
-  
-  // useEffect(() => {
-  //   setTimeout(() => setVisible(true), 4000);
-  // }, []);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 4000);
+  }, []);
 
   return (
     <>
-      {visible &&
+      {visible && (
         <Router>
-        <div className="dash">
-          <ApplicationContextProvider>
-            <DashboardContextProvider>
-              <CommsContextProvider>
-                <DockerContextProvider>
-                  <HealthContextProvider>
-                    <EventContextProvider>
-                      <QueryContextProvider>
-                        <AwsContextProvider>
-                          <SidebarContainer />
-                          <MainContainer />
-                        </AwsContextProvider>
-                      </QueryContextProvider>
-                    </EventContextProvider>
-                  </HealthContextProvider>
-                </DockerContextProvider>
-              </CommsContextProvider>
-            </DashboardContextProvider>
-          </ApplicationContextProvider>
-        </div>
-      </Router>
-      }
+          <div className="dash">
+            <ApplicationContextProvider>
+              <DashboardContextProvider>
+                <CommsContextProvider>
+                  <DockerContextProvider>
+                    <HealthContextProvider>
+                      <EventContextProvider>
+                        <QueryContextProvider>
+                          <AwsContextProvider>
+                            <SidebarContainer />
+                            <MainContainer />
+                          </AwsContextProvider>
+                        </QueryContextProvider>
+                      </EventContextProvider>
+                    </HealthContextProvider>
+                  </DockerContextProvider>
+                </CommsContextProvider>
+              </DashboardContextProvider>
+            </ApplicationContextProvider>
+          </div>
+        </Router>
+      )}
     </>
-)});
+  );
+});
 
 export default DashboardContainer;
