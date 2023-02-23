@@ -8,14 +8,19 @@ import { AwsContext } from '../context/AwsContext';
 import '../stylesheets/AWSGraphsContainer.scss';
 import AwsChart from '../charts/AwsChart';
 import ClusterTable from '../components/ClusterTable';
+import AwsEC2Graphs from '../components/AwsEC2Graphs';
+import AwsECSClusterGraphs from '../components/AwsECSClusterGraphs';
+import { useLocation } from 'react-router-dom';
 
 const AwsGraphsContainer: React.FC = React.memo(props => {
-  const { awsData, setAwsData, awsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsAppInfo } = useContext(AwsContext);
+  const { awsData, setAwsData, awsAppInfo, setAwsAppInfo, awsEcsData, setAwsEcsData, fetchAwsData, fetchAwsEcsData, fetchAwsAppInfo } = useContext(AwsContext);
   const { app, appIndex, intervalID, setIntervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
   // const [intervalID, setintervalID] = useState<NodeJS.Timeout | null>(null);
   const [awsLive, setAwsLive] = useState<boolean>(false);
-  const { typeOfService, region } = awsAppInfo;
+  const { region } = awsAppInfo;
+  const { state } = useLocation();
+  const { typeOfService } = state;
 
   useEffect(() => {
     if (awsLive) {
@@ -24,17 +29,17 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       setIntervalID(
         setInterval(() => {
           console.log('intervalId after click live', intervalID);
-          fetchAwsData(user, appIndex);
           fetchAwsAppInfo(user, appIndex);
-          fetchAwsEcsData(user, appIndex);
+          
+          typeOfService === 'AWS/EC2' ? fetchAwsData(user, appIndex) : fetchAwsEcsData(user, appIndex);
         }, 2000)
       )
     } else {
       console.log('not fetching data')
       if(intervalID) clearInterval(intervalID);
-      fetchAwsData(user, appIndex);
       fetchAwsAppInfo(user, appIndex);
-      fetchAwsEcsData(user, appIndex);
+      
+      typeOfService === 'AWS/EC2' ? fetchAwsData(user, appIndex) : fetchAwsEcsData(user, appIndex);
     }
   }, [awsLive]);
 
@@ -44,6 +49,8 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
       if(intervalID) clearInterval(intervalID);
       setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
+      setAwsEcsData({});
+      setAwsAppInfo({ typeOfService: '', region: '' });
     }
   }, [])
   
@@ -84,53 +91,14 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           )}
         </button>
       </div>
-      <div className="cluster-table">
-        {awsAppInfo.typeOfService === 'AWS/ECS' && (
+      {typeOfService === 'AWS/ECS' ? (
+        <div className="cluster-table">
           <ClusterTable typeOfService={typeOfService} region={region} />
-        )}
-      </div>
-      <div className="charts">
-        <AwsChart 
-          className='chart'
-          // key={`Chart${counter}`}
-          renderService="CPU Utilization"
-          metric="Percent"
-          timeList={awsData.CPUUtilization?.map(el => el.time)}
-          valueList={awsData.CPUUtilization?.map(el => el.value)}
-          // sizing={props.sizing}
-          colourGenerator={stringToColor}
-        />
-        <AwsChart 
-          className='chart'
-          // key={`Chart${counter}`}
-          renderService="Network In"
-          metric="Percent"
-          timeList={awsData.NetworkIn?.map(el => el.time)}
-          valueList={awsData.NetworkIn?.map(el => el.value)}
-          // sizing={props.sizing}
-          colourGenerator={stringToColor}
-        />
-        <AwsChart 
-          className='chart'
-          // key={`Chart${counter}`}
-          renderService="Network Out"
-          metric="Percent"
-          timeList={awsData.NetworkOut?.map(el => el.time)}
-          valueList={awsData.NetworkOut?.map(el => el.value)}
-          // sizing={props.sizing}
-          colourGenerator={stringToColor}
-        />
-        <AwsChart 
-          className='chart'
-          // key={`Chart${counter}`}
-          renderService="DiskReadBytes"
-          metric="Percent"
-          timeList={awsData.DiskReadBytes?.map(el => el.time)}
-          valueList={awsData.DiskReadBytes?.map(el => el.value)}
-          // sizing={props.sizing}
-          colourGenerator={stringToColor}
-        />
-      </div>
+          <AwsECSClusterGraphs />
+        </div>
+      ) : (
+        <AwsEC2Graphs />
+      )}
     </div>
   );
   // }

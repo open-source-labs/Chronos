@@ -4,6 +4,19 @@
   margin-top: 40px;
 }
 
+.ecsCharts {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+
+  #service-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .charts {
   display: grid;
   grid-template-columns: auto auto;
