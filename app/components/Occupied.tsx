@@ -57,7 +57,7 @@ interface StyleProps {
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
-  const { awsData, fetchAwsData, fetchAwsAppInfo } = useContext(AwsContext);
+  const { awsData, fetchAwsData, fetchAwsAppInfo, setLoadingState } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);

@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { AwsContext } from '../context/AwsContext';
-import cluster from 'cluster';
 
 const useStyles = makeStyles({
   table: {
@@ -77,7 +76,7 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
               {isLoading ? 'Loading...' : Object.keys(awsEcsData).length - 1}
             </TableCell>
             <TableCell className={classes.body}>
-              {String(activeServices().length) + '/' + String(Object.keys(awsEcsData).length - 1)}
+              {isLoading ? 'Loading...' : String(activeServices().length) + '/' + String(Object.keys(awsEcsData).length - 1)}
             </TableCell>
           </TableBody>
         </Table>

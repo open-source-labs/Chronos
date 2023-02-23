@@ -34,7 +34,6 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
     ipcRenderer.send('ec2MetricsRequest', username, index);
     ipcRenderer.on('ec2MetricsResponse', (event: Electron.Event, res: any) => {
       const data = JSON.parse(res);
-      console.log('ec2 data fetched from AWS context is: ', data);
       
       setAwsData(data);
       setLoadingState(false);
@@ -43,12 +42,10 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
 
   const fetchAwsEcsData = (username: string, index: number) => {
     ipcRenderer.removeAllListeners('ecsMetricsResponse');
-    setLoadingState(true);
     
     ipcRenderer.send('ecsMetricsRequest', username, index);
     ipcRenderer.on('ecsMetricsResponse', (event: Electron.Event, res: any) => {
       const data = JSON.parse(res);
-      console.log('ecs data fetched from AWS context is: ', data);
 
       setAwsEcsData(data);
       setLoadingState(false);
@@ -57,12 +54,10 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
 
   const fetchAwsAppInfo = (username: string, index: number) => {
     ipcRenderer.removeAllListeners('awsAppInfoResponse');
-    setLoadingState(true);
 
     ipcRenderer.send('awsAppInfoRequest', username, index);
     ipcRenderer.on('awsAppInfoResponse', (event: Electron.Event, res: any) => {
       const appInfo = JSON.parse(res);
-      console.log('app info requested from fetchAwsAppInfo: ', appInfo)
 
       setAwsAppInfo(appInfo);
     });
@@ -70,7 +65,7 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
 
   return (
     <AwsContext.Provider
-      value={{ fetchAwsData, awsData, setAwsData, fetchAwsEcsData, awsEcsData, setAwsEcsData, awsAppInfo, setAwsAppInfo, fetchAwsAppInfo, isLoading}}
+      value={{ fetchAwsData, awsData, setAwsData, fetchAwsEcsData, awsEcsData, setAwsEcsData, awsAppInfo, setAwsAppInfo, fetchAwsAppInfo, isLoading, setLoadingState}}
     >
       {children}
     </AwsContext.Provider>

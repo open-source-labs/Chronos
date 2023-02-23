@@ -5,16 +5,12 @@ import { CircularProgress } from '@material-ui/core';
 import zIndex from '@material-ui/core/styles/zIndex';
 
 const AwsEC2Graphs: React.FC = React.memo(props => {
-  const { awsData, setAwsData } = useContext(AwsContext);
-  const [isLoading, setLoadingState] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (awsData) setLoadingState(false);
-  }, []);
+  const { awsData, setAwsData, isLoading, setLoadingState } = useContext(AwsContext);
 
   useEffect(() => {
     return () => {
       setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+      setLoadingState(true);
     };
   }, []);
 
@@ -38,28 +34,13 @@ const AwsEC2Graphs: React.FC = React.memo(props => {
 
   return (
     <div className="charts">
-      {isLoading && (
-        <div
-          style={{
-            display: 'flex',
-            width: 100,
-            height: 100,
-            justifyContent: 'center',
-            position: 'absolute',
-            alignItems: 'center',
-            zIndex: 50,
-          }}
-        >
-          <CircularProgress />
-        </div>
-      )}
       {Object.keys(awsData)?.map(metric => {
         return (
           <AwsChart
             className="chart"
             key={`Chart${metric}`}
-            renderService={metric}
-            metric={awsData[metric][0]?.unit}
+            renderService={isLoading? 'Loading...' : metric}
+            metric={isLoading ? '' : awsData[metric][0]?.unit}
             timeList={awsData[metric]?.map(el => el.time)}
             valueList={awsData[metric]?.map(el => el.value)}
             colourGenerator={stringToColor}
