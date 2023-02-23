@@ -62,6 +62,38 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
+
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+});
+
+/**
+ * @event   addAwsApp
+ * @desc    Adds an AWS application to the user's list in the settings.json with the provided fields
+ * @return  New list of applications
+ */
+ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
+  // Retrieves file contents from settings.json
+  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  const services = settings[currentUser].services;
+
+  // order of variables from addAwsApp
+  // name, instance, region, description, typeOfService, accessKey, secretAccessKey
+
+  // Add new applicaiton to list
+  const newAwsApp = JSON.parse(application);
+
+  // Add a creation date to the application on the 5th index
+  const createdOn = moment().format('lll');
+  newAwsApp.splice(5, 0, createdOn);
+
+  // Add app to list of applications
+  services.push(newAwsApp);
+
+  // Update settings.json with new list
+
+  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+
+  // Sync event - return new applications list
   message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
