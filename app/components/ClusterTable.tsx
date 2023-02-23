@@ -72,7 +72,7 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
               </div>
             </TableCell>
             {/* <TableCell className={cluster.status === 'active' ? classes.activeCell : undefined}>testactive</TableCell> */}
-            <TableCell className={classes.body}>{activeServices().length ? 'active' : 'inactive'}</TableCell>
+            <TableCell className={activeServices().length ? classes.activeCell : undefined}>{activeServices().length ? 'ACTIVE' : 'INACTIVE'}</TableCell>
             <TableCell className={classes.body}>{isLoading ? 'Loading...' : Object.keys(awsEcsData).length - 1}</TableCell>
             <TableCell className={classes.body}>{String(activeServices().length) + '/' + String(Object.keys(awsEcsData).length - 1)}</TableCell>
 
