@@ -8,13 +8,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 import '../stylesheets/SidebarContainer.scss';
 import { ApplicationContext } from '../context/ApplicationContext';
+import { AwsContext } from '../context/AwsContext';
 
 const SidebarContainer = React.memo(props => {
   const { intervalID } = useContext(ApplicationContext);
+  const { isLoading, setLoadingState } = useContext(AwsContext);
 
-  //stopInterval button -> clear interval when leaving graph containers
-  const stopIntervalOnClick = () => {
+  // clear interval and set loading state to true when leaving graph containers
+  const handleClick = () => {
     if(intervalID) clearInterval(intervalID);
+    if(!isLoading) setLoadingState(true);
   }
 
   return (
@@ -30,7 +33,7 @@ const SidebarContainer = React.memo(props => {
         </div>
         <hr className="line" id="firstLine" />
         <div className="thirdRow">
-          <Link className="sidebar-link" to="/" id="dash" onClick={stopIntervalOnClick}>
+          <Link className="sidebar-link" to="/" id="dash" onClick={handleClick}>
             <ListIcon
               style={{
                 WebkitBoxSizing: 'content-box',
@@ -41,7 +44,7 @@ const SidebarContainer = React.memo(props => {
             />
             &emsp;Dashboard
           </Link>
-          <Link className="sidebar-link" to="/settings" id="settings" onClick={stopIntervalOnClick}>
+          <Link className="sidebar-link" to="/settings" id="settings" onClick={handleClick}>
             <SettingsIcon
               style={{
                 WebkitBoxSizing: 'content-box',
@@ -52,7 +55,7 @@ const SidebarContainer = React.memo(props => {
             />
             &emsp;Settings
           </Link>
-          <Link className="sidebar-link" to="/about" id="about" onClick={stopIntervalOnClick}>
+          <Link className="sidebar-link" to="/about" id="about" onClick={handleClick}>
             <InfoIcon
               style={{
                 WebkitBoxSizing: 'content-box',
@@ -63,7 +66,7 @@ const SidebarContainer = React.memo(props => {
             />
             &emsp;About
           </Link>
-          <Link className="sidebar-link" to="/contact" id="contact" onClick={stopIntervalOnClick}>
+          <Link className="sidebar-link" to="/contact" id="contact" onClick={handleClick}>
             <ContactSupportIcon
               style={{
                 WebkitBoxSizing: 'content-box',

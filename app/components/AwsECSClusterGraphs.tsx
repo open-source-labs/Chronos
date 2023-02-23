@@ -3,11 +3,12 @@ import AwsChart from '../charts/AwsChart';
 import { AwsContext } from '../context/AwsContext';
 
 const AwsECSClusterGraphs: React.FC = React.memo(props => {
-  const { awsEcsData, setAwsEcsData } = useContext(AwsContext);
+  const { awsEcsData, setAwsEcsData, setLoadingState } = useContext(AwsContext);
 
   useEffect(() => {
     return () => {
       setAwsEcsData({});
+      setLoadingState(true);
     };
   }, []);
 
