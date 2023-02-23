@@ -1,4 +1,4 @@
-## ECS Test CASE
+## ECS Test Case
 
 ECS clustter is deployed with following process:
 - build Docker Image 
