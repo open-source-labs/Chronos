@@ -4,16 +4,23 @@
   margin-top: 40px;
 }
 
-.ecsCharts {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
+.ecsCharts-container {
+  padding: 20px;
+  background-color: white;
+  margin: 20px;
+  border-radius: 10px;
 
   #service-name {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10px 0;
+  }
+
+  .ecsCharts {
+    display: grid;
+    grid-template-columns: auto auto;
   }
 }
 
@@ -47,5 +54,5 @@
 }
 
 .ClusterTable-container {
-  margin: 0 20px;
+  margin: 0 20px 20px;
 }

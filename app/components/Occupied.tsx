@@ -67,7 +67,7 @@ const Occupied = React.memo(() => {
   const [envModalOpen, setEnvModalOpen] = useState<boolean>(false);
   const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [awsModalOpen, setAwsModalOpen] = useState<boolean>(false);
-  const { appIndex, setAppIndex } = useContext(ApplicationContext)
+  const { appIndex, setAppIndex } = useContext(ApplicationContext);
   // const [index, setIndex] = useState<number>(0);
   // const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -100,11 +100,14 @@ const Occupied = React.memo(() => {
   ) => {
     //delRaf refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
-      if (selectedService === 'AWS' || selectedService === 'AWS/EC2' || selectedService === 'AWS/ECS') {
+      if (
+        selectedService === 'AWS' ||
+        selectedService === 'AWS/EC2' ||
+        selectedService === 'AWS/ECS'
+      ) {
         setAppIndex(i);
         setApp(selectedApp);
-        console.log('the selected AWS service is: ', selectedService)
-        navigate(`/aws/:${app}`, { state: { typeOfService: selectedService }});
+        navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
       } else {
         setAppIndex(i);
         setApp(selectedApp);
@@ -354,10 +357,6 @@ const Occupied = React.memo(() => {
                   </Card>
                 </div>
               ))}
-          {/* <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
-            <AddModal setOpen={setAddModalOpen} />
-          </Modal> */}
-
           <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
             <EnvModal
               setOpen={setEnvModalOpen}

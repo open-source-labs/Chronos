@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../stylesheets/Splash.scss';
 
 const Splash: React.FC = React.memo(props => {
-  const [visible, setVisible] = useState(false);
-  // useEffect(() => {
-  //   setTimeout(() => setVisible(false), 4000);
-  // }, []);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setVisible(false), 4000);
+  }, []);
 
   return (
     <>

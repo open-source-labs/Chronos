@@ -7,9 +7,9 @@ const AwsECSClusterGraphs: React.FC = React.memo(props => {
 
   useEffect(() => {
     return () => {
-      setAwsEcsData({})
+      setAwsEcsData({});
     };
-  }, [])
+  }, []);
 
   const stringToColor = (string: string, recurses = 0) => {
     if (recurses > 20) return string;
@@ -29,39 +29,39 @@ const AwsECSClusterGraphs: React.FC = React.memo(props => {
     }
   };
 
-  const activeServices = Object.keys(awsEcsData).slice(1).filter(el => awsEcsData[el].CPUUtilization?.value.length > 0)
+  const activeServices = Object.keys(awsEcsData)
+    .slice(1)
+    .filter(el => awsEcsData[el].CPUUtilization?.value.length > 0);
   const serviceGraphs = activeServices.map(service => {
     return (
-      <div className='ecsCharts'>
-        <div id='service-name'>
+      <div className="ecsCharts-container">
+        <div id="service-name">
           <p>Service Name:</p>
-          <p>{service}</p>
+          <strong>{service}</strong>
         </div>
-        <AwsChart 
-          className='chart'
-          renderService='CPU Utilization'
-          metric='Percent'
-          timeList={awsEcsData[service]?.CPUUtilization.time}
-          valueList={awsEcsData[service]?.CPUUtilization.value}
-          colourGenerator={stringToColor}
-        />
-        <AwsChart 
-          className='chart'
-          renderService='Memory Utilization'
-          metric='Percent'
-          timeList={awsEcsData[service]?.MemoryUtilization.time}
-          valueList={awsEcsData[service]?.MemoryUtilization.value}
-          colourGenerator={stringToColor}
-        />
+        <div className="ecsCharts">
+          <AwsChart
+            className="chart"
+            renderService="CPU Utilization"
+            metric="Percent"
+            timeList={awsEcsData[service]?.CPUUtilization.time}
+            valueList={awsEcsData[service]?.CPUUtilization.value}
+            colourGenerator={stringToColor}
+          />
+          <AwsChart
+            className="chart"
+            renderService="Memory Utilization"
+            metric="Percent"
+            timeList={awsEcsData[service]?.MemoryUtilization.time}
+            valueList={awsEcsData[service]?.MemoryUtilization.value}
+            colourGenerator={stringToColor}
+          />
+        </div>
       </div>
-    )
+    );
   });
 
-  return (
-    <div>
-      {serviceGraphs}
-    </div>
-  );
+  return <div>{serviceGraphs}</div>;
 });
 
 export default AwsECSClusterGraphs;

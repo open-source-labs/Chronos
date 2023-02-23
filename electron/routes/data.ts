@@ -20,7 +20,7 @@ const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
 require('dotenv').config({
-  path: path.join(__dirname, './.env')
+  path: path.join(__dirname, './.env'),
 });
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -311,136 +311,181 @@ ipcMain.on('kubernetesRequest', async message => {
   }
 });
 
-ipcMain.on('ec2MetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-  try {
-    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-    const userAwsService = fileContents[username]?.services[appIndex];
+/**
+ * @event   event ec2MetricsRequest
+ * @desc    Connects user to Cloudwatch using aws-sdk and fetches data for EC2 instances
+ *          with the passed in parameters
+ * @params  username: current user from DashboardContext
+ *          appIndex: clicked card's index in the application array from ApplicationContext
+ */
+ipcMain.on(
+  'ec2MetricsRequest',
+  async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+    try {
+      // find the clicked service in settings
+      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+      const userAwsService = fileContents[username]?.services[appIndex];
 
-    const [ region, typeOfService, instanceId, accessKey, secretAccessKey ] = [ userAwsService[2], userAwsService[4], userAwsService[6], userAwsService[7], userAwsService[8] ]
-    
-    const cloudwatch = new AWS.CloudWatch({
-      region: region,
-      accessKeyId: accessKey,
-      secretAccessKey: secretAccessKey
-    });
+      // grab variables needed in the parameters for Cloudwatch
+      const [region, typeOfService, instanceId, accessKey, secretAccessKey] = [
+        userAwsService[2],
+        userAwsService[4],
+        userAwsService[6],
+        userAwsService[7],
+        userAwsService[8],
+      ];
 
-    const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
+      // create a new Cloudwatch instance
+      const cloudwatch = new AWS.CloudWatch({
+        region: region,
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey,
+      });
 
-    const paramsArray = metricsNamesArray.map(metric => {
-      const params = {
-        EndTime: new Date(),
-        MetricName: metric,
-        Namespace: typeOfService,
-        Period: 60,
-        StartTime: new Date(new Date().getTime() - 60*60*1000),
-        Statistics: ['Average'],
-        Dimensions: [{
-          Name: 'InstanceId',
-          Value: instanceId
-        }]
-      }
+      // metrics being requested. Each metric will get its own graph in AwsGraphContainer. List of metrics available can be found in AWS Documentation
+      const metricsNamesArray = ['CPUUtilization', 'NetworkIn', 'NetworkOut', 'DiskReadBytes'];
 
-      return params;
-    });
+      const paramsArray = metricsNamesArray.map(metric => {
+        // param needed for Cloudwatch to fetch data, highly opinionated boilerplate
+        const params = {
+          EndTime: new Date(),
+          MetricName: metric,
+          Namespace: typeOfService,
+          Period: 60,
+          StartTime: new Date(new Date().getTime() - 60 * 60 * 1000),
+          Statistics: ['Average'],
+          Dimensions: [
+            {
+              Name: 'InstanceId',
+              Value: instanceId,
+            },
+          ],
+        };
 
-    const fetchData = async () => {
-      const fetched = {};
+        return params;
+      });
 
-      for(let i = 0; i < paramsArray.length; i++) {
-        const data = await cloudwatch.getMetricStatistics(paramsArray[i]).promise();
-        // console.log('what is the data here: ', data)
+      const fetchData = async () => {
+        const fetched = {};
 
-        const newData = data.Datapoints.map((el, index: number) => {
-          let transformedData = {};
+        for (let i = 0; i < paramsArray.length; i++) {
+          // getMetricsStatistics: the fetch method using the current params
+          const data = await cloudwatch.getMetricStatistics(paramsArray[i]).promise();
 
-          transformedData['time'] = data.Datapoints[index].Timestamp,
-          transformedData['metric'] = data.Label,
-          transformedData['value'] = data.Datapoints[index].Average,
-          transformedData['unit'] = data.Datapoints[index].Unit
+          // transform data in format for frontend to render graphs
+          const newData = data.Datapoints.map((el, index: number) => {
+            let transformedData = {};
 
-          return transformedData;
-        });
+            (transformedData['time'] = data.Datapoints[index].Timestamp),
+              (transformedData['metric'] = data.Label),
+              (transformedData['value'] = data.Datapoints[index].Average),
+              (transformedData['unit'] = data.Datapoints[index].Unit);
 
-        fetched[paramsArray[i].MetricName] = newData;
-      }
+            return transformedData;
+          });
 
-      return fetched;
-    };
+          fetched[paramsArray[i].MetricName] = newData;
+        }
 
-    fetchData().then(data => {
-      message.sender.send('ec2MetricsResponse', JSON.stringify(data)) // send data to frontend
-    })
-  } catch (err) {
-    console.log('Error in "ec2MetricsRequest" event', message);
-    message.sender.send('ec2MetricsResponse', { CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+        return fetched;
+      };
+
+      fetchData().then(data => {
+        message.sender.send('ec2MetricsResponse', JSON.stringify(data)); // send data to frontend
+      });
+    } catch (err) {
+      console.log('Error in "ec2MetricsRequest" event', message);
+      message.sender.send('ec2MetricsResponse', {
+        CPUUtilization: [],
+        NetworkIn: [],
+        NetworkOut: [],
+        DiskReadBytes: [],
+      });
+    }
   }
-});
+);
 
-ipcMain.on('ecsMetricsRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-  try {
-    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-    const userAwsService = fileContents[username]?.services[appIndex];
+/**
+ * @event   event ecsMetricsRequest
+ * @desc    Connects user to Cloudwatch using aws-sdk and fetches data for ECS Clusters/Services
+ *          with the passed in parameters
+ * @params  username: current user from DashboardContext
+ *          appIndex: clicked card's index in the application array from ApplicationContext
+ */
+ipcMain.on(
+  'ecsMetricsRequest',
+  async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+    try {
+      // similar function architecture as EC2 fetch request
+      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+      const userAwsService = fileContents[username]?.services[appIndex];
 
-    const [ region, typeOfService, accessKey, secretAccessKey ] = [ userAwsService[2], userAwsService[4], userAwsService[7], userAwsService[8] ]
-    
-    const cloudwatch = new AWS.CloudWatch({
-      region: region,
-      accessKeyId: accessKey,
-      secretAccessKey: secretAccessKey
-    });
+      const [region, typeOfService, accessKey, secretAccessKey] = [
+        userAwsService[2],
+        userAwsService[4],
+        userAwsService[7],
+        userAwsService[8],
+      ];
 
-    const listMetricsParams = {
-      Namespace: 'AWS/ECS'
-    };
-  
-    let clusterName: string = '';
-    const serviceNames: string[] = [];
-    const ecsData = {};
-      
-    cloudwatch.listMetrics(listMetricsParams, (err, data) => {
-      if (err) {
-        console.log('Error', err);
-      } else {
-        for (let i = 0; i < data.Metrics.length; i++) {
-          const dimensions: any[] = data.Metrics[i].Dimensions;
-          
-          for (let j = 0; j < dimensions.length; j++) {
-            if(dimensions[j].Name === 'ClusterName') {
-              clusterName = dimensions[j].Value;
-            }
+      const cloudwatch = new AWS.CloudWatch({
+        region: region,
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey,
+      });
 
-            if(dimensions[j].Name === 'ServiceName'){
-              if(!serviceNames.includes(dimensions[j].Value)) {
-                serviceNames.push(dimensions[j].Value); 
+      const listMetricsParams = {
+        Namespace: 'AWS/ECS',
+      };
+
+      let clusterName: string = '';
+      const serviceNames: string[] = [];
+      const ecsData = {};
+
+      cloudwatch.listMetrics(listMetricsParams, (err, data) => {
+        if (err) {
+          console.log('Error', err);
+        } else {
+          for (let i = 0; i < data.Metrics.length; i++) {
+            const dimensions: any[] = data.Metrics[i].Dimensions;
+
+            for (let j = 0; j < dimensions.length; j++) {
+              if (dimensions[j].Name === 'ClusterName') {
+                clusterName = dimensions[j].Value;
+              }
+
+              if (dimensions[j].Name === 'ServiceName') {
+                if (!serviceNames.includes(dimensions[j].Value)) {
+                  serviceNames.push(dimensions[j].Value);
+                }
               }
             }
           }
         }
-      }
-      
-      const fetchData = async () => {
-        if (clusterName !== '' && serviceNames.length !== 0) {
-          for (let i = 0; i < serviceNames.length; i++) {
-            let currentService = serviceNames[i];
-            
-            const params = {
-              MetricDataQueries: [
-                {
-                  Id: 'm1',
-                  MetricStat: {
-                    Metric: {
-                      Namespace: 'AWS/ECS',
-                      MetricName: 'CPUUtilization',
-                      Dimensions: [
-                        {
-                          Name: 'ClusterName',
-                          Value: clusterName
+
+        const fetchData = async () => {
+          if (clusterName !== '' && serviceNames.length !== 0) {
+            for (let i = 0; i < serviceNames.length; i++) {
+              let currentService = serviceNames[i];
+
+              // cluster may have multiple services, and each service needs its own parameter
+              const params = {
+                MetricDataQueries: [
+                  {
+                    Id: 'm1',
+                    MetricStat: {
+                      Metric: {
+                        Namespace: 'AWS/ECS',
+                        MetricName: 'CPUUtilization',
+                        Dimensions: [
+                          {
+                            Name: 'ClusterName',
+                            Value: clusterName,
                           },
                           {
                             Name: 'ServiceName',
-                            Value: currentService
-                          }
-                        ]
+                            Value: currentService,
+                          },
+                        ],
                       },
                       Period: 60,
                       Stat: 'Average',
@@ -456,13 +501,13 @@ ipcMain.on('ecsMetricsRequest', async (message: Electron.IpcMainEvent, username:
                         Dimensions: [
                           {
                             Name: 'ClusterName',
-                            Value: clusterName
+                            Value: clusterName,
                           },
                           {
                             Name: 'ServiceName',
-                            Value: currentService
-                          }
-                        ]
+                            Value: currentService,
+                          },
+                        ],
                       },
                       Period: 60,
                       Stat: 'Average',
@@ -470,60 +515,63 @@ ipcMain.on('ecsMetricsRequest', async (message: Electron.IpcMainEvent, username:
                     ReturnData: true,
                   },
                 ],
-                StartTime: new Date(Date.now() - 60*60*1000),
+                StartTime: new Date(Date.now() - 60 * 60 * 1000),
                 EndTime: new Date(),
-                ScanBy: 'TimestampDescending'
-              } 
-        
-            const data = await cloudwatch.getMetricData(params).promise();
+                ScanBy: 'TimestampDescending',
+              };
 
-            ecsData[currentService] = {
-              CPUUtilization: {
-                value: data.MetricDataResults[0].Values,
-                time: data.MetricDataResults[0].Timestamps
-              },
-              MemoryUtilization: {
-                value: data.MetricDataResults[1].Values,
-                time: data.MetricDataResults[1].Timestamps
-              }
+              const data = await cloudwatch.getMetricData(params).promise();
+
+              ecsData[currentService] = {
+                CPUUtilization: {
+                  value: data.MetricDataResults[0].Values,
+                  time: data.MetricDataResults[0].Timestamps,
+                },
+                MemoryUtilization: {
+                  value: data.MetricDataResults[1].Values,
+                  time: data.MetricDataResults[1].Timestamps,
+                },
+              };
             }
           }
-        }
-        console.log('here is the ecs data', ecsData)
-        ecsData['clusterInfo'] = {
-          clusterName: clusterName,
-          region: region,
-          typeOfService: typeOfService
-        }
-        return ecsData;
-      }
-        
-      fetchData().then(data => {
-        message.sender.send('ecsMetricsResponse', JSON.stringify(data));
-      })
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
 
+          ecsData['clusterInfo'] = {
+            clusterName: clusterName,
+            region: region,
+            typeOfService: typeOfService,
+          };
+          return ecsData;
+        };
 
-ipcMain.on('awsAppInfoRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-  try {
-    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-    const userAwsService = fileContents[username]?.services[appIndex];
-
-    const [ typeOfService, region ] = [ userAwsService[4], userAwsService[2] ];
-    const response = {
-      typeOfService: typeOfService,
-      region: region
+        fetchData().then(data => {
+          message.sender.send('ecsMetricsResponse', JSON.stringify(data));
+        });
+      });
+    } catch (err) {
+      console.log(err);
     }
-
-    message.sender.send('awsAppInfoResponse', JSON.stringify(response));
-  } catch (err) {
-    console.log('Error in awsAppInfoRequest', message);
-    message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' });
   }
-});
+);
+
+ipcMain.on(
+  'awsAppInfoRequest',
+  async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+    try {
+      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+      const userAwsService = fileContents[username]?.services[appIndex];
+
+      const [typeOfService, region] = [userAwsService[4], userAwsService[2]];
+      const response = {
+        typeOfService: typeOfService,
+        region: region,
+      };
+
+      message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+    } catch (err) {
+      console.log('Error in awsAppInfoRequest', message);
+      message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' });
+    }
+  }
+);
 
 // end fetch
