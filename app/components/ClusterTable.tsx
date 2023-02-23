@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -41,6 +41,7 @@ export interface ClusterTableProps {
 
 const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
   const classes = useStyles();
+  const { awsEcsData } = useContext(AwsContext);
   // const {clusterName, servicesNum, tasksNum, status} = useContext(DashboardContext);
 
   return (
@@ -58,7 +59,7 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
           <TableBody>
             <TableCell className={classes.body}>
               <div className={classes.column}>
-                <div>test</div>
+                <div>{awsEcsData ? awsEcsData.clusterInfo?.clusterName : 'Loading...'}</div>
                 <div>
                   <span className="region">{region}</span>
                 </div>

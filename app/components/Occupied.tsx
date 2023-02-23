@@ -57,7 +57,7 @@ interface StyleProps {
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
-  const { awsData, fetchAwsData } = useContext(AwsContext);
+  const { awsData, fetchAwsData, fetchAwsAppInfo } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
@@ -103,7 +103,8 @@ const Occupied = React.memo(() => {
       if (selectedService === 'AWS' || selectedService === 'AWS/EC2' || selectedService === 'AWS/ECS') {
         setAppIndex(i);
         setApp(selectedApp);
-        navigate(`/aws/:${app}`);
+        console.log('the selected AWS service is: ', selectedService)
+        navigate(`/aws/:${app}`, { state: { typeOfService: selectedService }});
       } else {
         setAppIndex(i);
         setApp(selectedApp);
