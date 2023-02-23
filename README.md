@@ -129,7 +129,7 @@ The `AWS` folder includes 2 example applications with instructions on how to dep
     - The ECS folder includes an web applciation ready to be containerized using Docker. The instruction shows how to deploy application to ECS using Docker CLI command, and it will be managed by Fargate services.
     - The EC2 folder includes a React/Redux/SQL web application ready to be containerized using Docker. The instruction shows how to deploy application using AWS Beanstalk and connect application to RDS database. Beanstalk service will generate EC2 instance.
 
-Refer to the ECS [README](link) and EC2 [README](link) in the `AWS` folder for more details.
+Refer to the ECS [README](https://github.com/oslabs-beta/Chronos/blob/dev/examples/AWS/AWS-ECS/README.md) and EC2 [README](https://github.com/oslabs-beta/Chronos/blob/dev/examples/AWS/AWS-EC2/README.md) in the `AWS` folder for more details.
 
 <br>
 
