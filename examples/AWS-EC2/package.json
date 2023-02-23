@@ -1,0 +1,44 @@
+{
+  "name": "unit-13-DevOps",
+  "version": "1.0.0",
+  "description": "MegaMarket Loyalty Card Tracker ",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js",
+    "start": "node ./server/server.js",
+    "dev:hot": "NODE_ENV=development nodemon ./server/server.js & webpack-dev-server --open --hot",
+    "docker-dev:hot": "docker-compose -f docker-compose-dev-hot.yml up",
+    "test": "NODE_ENV=test jest --coverage"
+  },
+  "author": "Schno Mozingo",
+  "license": "MIT",
+  "dependencies": {
+    "buffer-shims": "^1.0.0",
+    "pg": "^8.7.1",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.0",
+    "@chronosmicro/tracker": "file:./chronos_npm_package"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^6.5.1",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.3.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9",
+    "react-hot-loader": "^4.6.3",
+    "redux-devtools-extension": "^2.13.5",
+    "ret": "^0.2.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-hot-middleware": "^2.24.3"
+  }
+}
