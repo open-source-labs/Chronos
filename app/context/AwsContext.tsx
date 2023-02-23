@@ -10,10 +10,22 @@ interface Props {
   children: any;
 }
 
+interface AwsData {
+  CPUUtilization: [],
+  NetworkIn: [],
+  NetworkOut: [],
+  DiskReadBytes: []
+}
+
+interface AwsAppInfo {
+  typeOfService: string,
+  region: string
+}
+
 const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
-  const [awsData, setAwsData] = useState<any>({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
-  const [awsEcsData, setAwsEcsData] = useState<any>({ CPUUtilization: [], MemoryUtilization: [] });
-  const [awsAppInfo, setAwsAppInfo] = useState<any>({ typeOfService: '', region: '' });
+  const [awsData, setAwsData] = useState<AwsData>({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
+  const [awsEcsData, setAwsEcsData] = useState<any>({});
+  const [awsAppInfo, setAwsAppInfo] = useState<AwsAppInfo>({ typeOfService: '', region: '' });
   
   const fetchAwsData = (username: string, index: number) => {
     ipcRenderer.removeAllListeners('ec2MetricsResponse');
@@ -53,7 +65,7 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
 
   return (
     <AwsContext.Provider
-      value={{ fetchAwsData, awsData, setAwsData, fetchAwsEcsData, awsEcsData, setAwsEcsData, awsAppInfo, fetchAwsAppInfo}}
+      value={{ fetchAwsData, awsData, setAwsData, fetchAwsEcsData, awsEcsData, setAwsEcsData, awsAppInfo, setAwsAppInfo, fetchAwsAppInfo}}
     >
       {children}
     </AwsContext.Provider>
