@@ -389,130 +389,124 @@ ipcMain.on('ecsMetricsRequest', async (message: Electron.IpcMainEvent, username:
       secretAccessKey: secretAccessKey
     });
 
-    // const metricsNamesArray = ['CPUUtilization', 'MemoryUtilization'];
-
     const listMetricsParams = {
       Namespace: 'AWS/ECS'
     };
   
-    const paramsDimensions = new Set();
-
+    let clusterName: string = '';
+    const serviceNames: string[] = [];
+    const ecsData = {};
+      
     cloudwatch.listMetrics(listMetricsParams, (err, data) => {
       if (err) {
         console.log('Error', err);
       } else {
-        for(let i = 0; i<data.Metrics.length; i++){
-          // console.log(data)
-          // console.log('Metrics', data.Metrics[i].Dimensions);
-          console.log('Namespace', data.Metrics[i].Namespace)
-          console.log('MetricName', data.Metrics[i].MetricName)
-          console.log('Name', data.Metrics[i].Dimensions[0].Name)
-          console.log('Value', data.Metrics[i].Dimensions[0].Value)
-          console.log('Name', data.Metrics[i].Dimensions[1].Name)
-          console.log('Value', data.Metrics[i].Dimensions[1].Value)
+        for (let i = 0; i < data.Metrics.length; i++) {
+          const dimensions: any[] = data.Metrics[i].Dimensions;
+          
+          for (let j = 0; j < dimensions.length; j++) {
+            if(dimensions[j].Name === 'ClusterName') {
+              clusterName = dimensions[j].Value;
+            }
 
-          paramsDimensions.add(data.Metrics[i].Dimensions);
+            if(dimensions[j].Name === 'ServiceName'){
+              if(!serviceNames.includes(dimensions[j].Value)) {
+                serviceNames.push(dimensions[j].Value); 
+              }
+            }
+          }
         }
-
-        console.log('dimensions after list metrics are: ', paramsDimensions.values);
-        message.sender.send('ecsMetricsResponse', JSON.stringify(paramsDimensions));
       }
-    });
-
-    // const params = {
-    //   MetricDataQueries: [
-        // {
-        //   //Id: 'ecs_cpu_utilization',
-        //   Id: 'chronos_ecs_data',
-        //   MetricStat: {
-        //     Metric: {
-        //       Namespace: 'AWS/ECS',
-        //       //MetricName: 'CPUUtilization',
-        //       MetricName: 'MemoryUtilization',
-        //       Dimensions: [
-        //         {
-        //           Name: 'ClusterName',
-        //           Value: 'my-app'
-        //         },
-                // {
-                //   Name: 'ServiceName',
-                //   Value: 'my-app-MyappService-GIYqHcRROb0B'
-                // }
-        //       ]
-        //     },
-        //     Period: 300,
-        //     Stat: 'Average'
-        //   }
-        // }
-    //     {
-    //       Id: 'm1',
-    //       MetricStat: {
-    //         Metric: {
-    //           Namespace: 'AWS/ECS',
-    //           MetricName: 'CPUUtilization',
-    //           Dimensions: [
-    //             {
-    //               Name: 'ClusterName',
-    //               Value: 'my-app'
-    //             },
-    //             {
-    //               Name: 'ServiceName',
-    //               Value: 'my-app-MyappService-GIYqHcRROb0B'
-    //             }
-    //           ]
-    //         },
-    //         Period: 60,
-    //         Stat: 'Average',
-    //       },
-    //       ReturnData: true,
-    //     },
-    //     {
-    //       Id: 'm2',
-    //       MetricStat: {
-    //         Metric: {
-    //           Namespace: 'AWS/ECS',
-    //           MetricName: 'CPUUtilization',
-    //           Dimensions: [
-    //             {
-    //               Name: 'ClusterName',
-    //               Value: 'my-app'
-    //             },
-    //             {
-    //               Name: 'ServiceName',
-    //               Value: 'my-app-MyappService-GIYqHcRROb0B'
-    //             }
-    //           ]
-    //         },
-    //         Period: 60,
-    //         Stat: 'Average',
-    //       },
-    //       ReturnData: true,
-    //     },
-    //   ],
-    //   StartTime: new Date(Date.now() - 360000),
-    //   //StartTime: new Date(Date.now() - 90000),
-    //   EndTime: new Date(),
-    //   ScanBy: 'TimestampDescending'
       
-    // };
+      const fetchData = async () => {
+        if (clusterName !== '' && serviceNames.length !== 0) {
+          for (let i = 0; i < serviceNames.length; i++) {
+            let currentService = serviceNames[i];
+            
+            const params = {
+              MetricDataQueries: [
+                {
+                  Id: 'm1',
+                  MetricStat: {
+                    Metric: {
+                      Namespace: 'AWS/ECS',
+                      MetricName: 'CPUUtilization',
+                      Dimensions: [
+                        {
+                          Name: 'ClusterName',
+                          Value: clusterName
+                          },
+                          {
+                            Name: 'ServiceName',
+                            Value: currentService
+                          }
+                        ]
+                      },
+                      Period: 60,
+                      Stat: 'Average',
+                    },
+                    ReturnData: true,
+                  },
+                  {
+                    Id: 'm2',
+                    MetricStat: {
+                      Metric: {
+                        Namespace: 'AWS/ECS',
+                        MetricName: 'MemoryUtilization',
+                        Dimensions: [
+                          {
+                            Name: 'ClusterName',
+                            Value: clusterName
+                          },
+                          {
+                            Name: 'ServiceName',
+                            Value: currentService
+                          }
+                        ]
+                      },
+                      Period: 60,
+                      Stat: 'Average',
+                    },
+                    ReturnData: true,
+                  },
+                ],
+                StartTime: new Date(Date.now() - 60*60*1000),
+                EndTime: new Date(),
+                ScanBy: 'TimestampDescending'
+              } 
+        
+            const data = await cloudwatch.getMetricData(params).promise();
 
-    // cloudwatch.getMetricData(params, (err, data) => {
-    //   if (err) {
-    //     console.log('Error', err);
-    //   } else {
-    //     console.log(data.MetricDataResults[1].Values)
-    //     console.log(data.MetricDataResults[1].Timestamps)
-    //     console.log(data.MetricDataResults[0].Values)
-    //     console.log(data.MetricDataResults[0].Timestamps)
-        //console.log(data)
-        // console.log('Data', data.MetricDataResults[0].Values, data.MetricDataResults[0].Timestamps);
-      // }
-    // });
+            ecsData[currentService] = {
+              CPUUtilization: {
+                value: data.MetricDataResults[0].Values,
+                time: data.MetricDataResults[0].Timestamps
+              },
+              MemoryUtilization: {
+                value: data.MetricDataResults[1].Values,
+                time: data.MetricDataResults[1].Timestamps
+              }
+            }
+          }
+        }
+        console.log('here is the ecs data', ecsData)
+        ecsData['clusterInfo'] = {
+          clusterName: clusterName,
+          region: region,
+          typeOfService: typeOfService
+        }
+        return ecsData;
+      }
+        
+      fetchData().then(data => {
+        message.sender.send('ecsMetricsResponse', JSON.stringify(data));
+      })
+    });
   } catch (err) {
-    console.log('Error in "ecsMetricsRequest" event', message);
-    message.sender.send('ecsMetricsResponse', { CPUUtilization: [], MemoryUtilization: [] });
+    console.log(err);
   }
 });
+
 
 ipcMain.on('awsAppInfoRequest', async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
   try {
