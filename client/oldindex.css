@@ -231,19 +231,6 @@ a#connectWithMeSocial:hover {
   -webkit-animation: fadein 2s;
 }
 
-.hamburgerMenu {
-  /* background-color: pink; */
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
-#hamburgerButton {
-  /* color: red; */
-  color: white;
-  font-size: xx-large;
-}
-
 .DropMenu {
   display: flex;
   /* background-color: pink; */
@@ -323,9 +310,6 @@ a#connectWithMeSocial:hover {
 }
 
 @media (min-width: 768px) {
-  .hamburgerMenu {
-    display: none;
-  }
   #lightDemoWrapper {
     width: 40%;
     background-color: black;

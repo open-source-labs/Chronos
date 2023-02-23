@@ -2,6 +2,7 @@
 dist/*.svg
 dist/*.png
 dist/*.jpg
+dist/*.jpeg
 dist/*.js
 
 # JS Project-Specific #

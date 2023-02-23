@@ -19,7 +19,7 @@ const Home = () => {
         </div>
         <div className="hero-details">
           <p>
-            All-in-one monitoring for Node.js
+            All-in-One Monitoring
           </p>
         </div>
       </div>
