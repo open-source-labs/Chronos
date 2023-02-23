@@ -24,7 +24,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           console.log('intervalId after click live', intervalID)
           fetchAwsData(user, appIndex);
           fetchAwsAppInfo(user, appIndex);
-          // fetchAwsEcsData(user, appIndex);
+          fetchAwsEcsData(user, appIndex);
         }, 2000)
       )
     } else {
@@ -32,7 +32,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       if(intervalID) clearInterval(intervalID);
       fetchAwsData(user, appIndex);
       fetchAwsAppInfo(user, appIndex);
-      // fetchAwsEcsData(user, appIndex);
+      fetchAwsEcsData(user, appIndex);
     }
   }, [awsLive]);
 
