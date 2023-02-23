@@ -80,7 +80,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           className='chart'
           // key={`Chart${counter}`}
           renderService='CPU Utilization'
-          metric={awsData.CPUUtilization[0]?.unit}
+          metric={awsData.CPUUtilization[0] ? awsData.CPUUtilization[0].unit : 'Units'}
           timeList={awsData.CPUUtilization?.map(el => el.time)}
           valueList={awsData.CPUUtilization?.map(el => el.value)}
           // sizing={props.sizing}
@@ -90,7 +90,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           className='chart'
           // key={`Chart${counter}`}
           renderService='Network In'
-          metric='Percent'
+          metric={awsData.NetworkIn[0] ? awsData.NetworkIn[0].unit : 'Units'}
           timeList={awsData.NetworkIn?.map(el => el.time)}
           valueList={awsData.NetworkIn?.map(el => el.value)}
           // sizing={props.sizing}
@@ -100,7 +100,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           className='chart'
           // key={`Chart${counter}`}
           renderService='Network Out'
-          metric='Percent'
+          metric={awsData.NetworkOut[0] ? awsData.NetworkOut[0].unit : 'Units'}
           timeList={awsData.NetworkOut?.map(el => el.time)}
           valueList={awsData.NetworkOut?.map(el => el.value)}
           // sizing={props.sizing}
@@ -109,8 +109,8 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
         <AwsChart 
           className='chart'
           // key={`Chart${counter}`}
-          renderService='DiskReadBytes'
-          metric='Percent'
+          renderService='Disk Read Bytes'
+          metric={awsData.DiskReadBytes[0] ? awsData.DiskReadBytes[0].unit : 'Units'}
           timeList={awsData.DiskReadBytes?.map(el => el.time)}
           valueList={awsData.DiskReadBytes?.map(el => el.value)}
           // sizing={props.sizing}
