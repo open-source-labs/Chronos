@@ -9,8 +9,7 @@ const App: React.FC = React.memo(() => {
       <Splash />
       <DashboardContainer />
     </div>
-
-  )
+  );
 });
 
 export default App;
