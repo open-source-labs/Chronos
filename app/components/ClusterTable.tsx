@@ -42,12 +42,11 @@ export interface ClusterTableProps {
 const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
   const classes = useStyles();
   const { awsEcsData, isLoading } = useContext(AwsContext);
-  // const {clusterName, servicesNum, tasksNum, status} = useContext(DashboardContext);
 
   const activeServices = () => {
     const serviceNames = Object.keys(awsEcsData).slice(1);
 
-    return serviceNames.filter(el => awsEcsData[el].CPUUtilization?.value.length > 0)
+    return serviceNames.filter(el => awsEcsData[el].CPUUtilization?.value.length > 0);
   };
 
   return (
@@ -56,7 +55,7 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
         <Table className={classes.table} aria-label="cluster table">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.title}>Name</TableCell>
+              <TableCell className={classes.title}>Cluster Name</TableCell>
               <TableCell className={classes.title}>Status</TableCell>
               <TableCell className={classes.title}>Services</TableCell>
               <TableCell className={classes.title}>Tasks</TableCell>
@@ -65,25 +64,21 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
           <TableBody>
             <TableCell className={classes.body}>
               <div className={classes.column}>
-                <div>{isLoading ? 'Loading...': awsEcsData.clusterInfo?.clusterName}</div>
+                <div>{isLoading ? 'Loading...' : awsEcsData.clusterInfo?.clusterName}</div>
                 <div>
                   <span className="region">{region}</span>
                 </div>
               </div>
             </TableCell>
-            {/* <TableCell className={cluster.status === 'active' ? classes.activeCell : undefined}>testactive</TableCell> */}
-            <TableCell className={activeServices().length ? classes.activeCell : undefined}>{activeServices().length ? 'ACTIVE' : 'INACTIVE'}</TableCell>
-            <TableCell className={classes.body}>{isLoading ? 'Loading...' : Object.keys(awsEcsData).length - 1}</TableCell>
-            <TableCell className={classes.body}>{String(activeServices().length) + '/' + String(Object.keys(awsEcsData).length - 1)}</TableCell>
-
-            {/* {clusters.map((cluster: Cluster, index: number) => (
-            <TableRow key={index}>
-              <TableCell>{cluster.name}</TableCell>
-              <TableCell>{cluster.status}</TableCell>
-              <TableCell>{cluster.serviceCount}</TableCell>
-              <TableCell>{cluster.taskCount}</TableCell>
-            </TableRow>
-          ))} */}
+            <TableCell className={activeServices().length ? classes.activeCell : undefined}>
+              <strong>{activeServices().length ? 'ACTIVE' : 'INACTIVE'}</strong>
+            </TableCell>
+            <TableCell className={classes.body}>
+              {isLoading ? 'Loading...' : Object.keys(awsEcsData).length - 1}
+            </TableCell>
+            <TableCell className={classes.body}>
+              {String(activeServices().length) + '/' + String(Object.keys(awsEcsData).length - 1)}
+            </TableCell>
           </TableBody>
         </Table>
       </TableContainer>
@@ -92,41 +87,3 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
 });
 
 export default ClusterTable;
-
-// type Cluster = {
-//   name: string;
-//   status: string;
-//   serviceCount: number;
-//   taskCount: number;
-// };
-
-// function ClusterTable() {
-//   const [clusters, setClusters] = useState<Cluster[]>([]);
-//   const classes = useStyles();
-
-//   useEffect(() => {
-//     // Fetch cluster data using the AWS SDK and set the state
-//     const ecs = new AWS.ECS();
-//     ecs.listClusters({}, (err: Error, data: AWS.ECS.ListClustersResponse) => {
-//       if (err) {
-//         console.log(err, err.stack);
-//       } else {
-//         const clusterArns = data.clusterArns;
-//         const clusterPromises = clusterArns?.map(clusterArn => ecs.describeClusters({ clusters: [clusterArn] }).promise());
-//         Promise.all(clusterPromises).then(clusterData => {
-//           const clusters = clusterData.map(cluster => {
-//             const { clusterName, status, registeredContainerInstancesCount, runningTasksCount } = cluster?.clusters[0];
-//             return {
-//               name: clusterName,
-//               status,
-//               serviceCount: registeredContainerInstancesCount,
-//               taskCount: runningTasksCount
-//             };
-//           });
-//           setClusters(clusters);
-//         }).catch(err => {
-//           console.log(err, err.stack);
-//         });
-//       }
-//     });
-//   }, []);

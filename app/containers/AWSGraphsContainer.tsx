@@ -13,7 +13,17 @@ import AwsECSClusterGraphs from '../components/AwsECSClusterGraphs';
 import { useLocation } from 'react-router-dom';
 
 const AwsGraphsContainer: React.FC = React.memo(props => {
-  const { awsData, setAwsData, awsAppInfo, setAwsAppInfo, awsEcsData, setAwsEcsData, fetchAwsData, fetchAwsEcsData, fetchAwsAppInfo } = useContext(AwsContext);
+  const {
+    awsData,
+    setAwsData,
+    awsAppInfo,
+    setAwsAppInfo,
+    awsEcsData,
+    setAwsEcsData,
+    fetchAwsData,
+    fetchAwsEcsData,
+    fetchAwsAppInfo,
+  } = useContext(AwsContext);
   const { app, appIndex, intervalID, setIntervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
   // const [intervalID, setintervalID] = useState<NodeJS.Timeout | null>(null);
@@ -24,35 +34,33 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
   useEffect(() => {
     if (awsLive) {
-      console.log('we are live! fetching data every 10 seconds...');
-
       setIntervalID(
         setInterval(() => {
           console.log('intervalId after click live', intervalID);
           fetchAwsAppInfo(user, appIndex);
-          
-          typeOfService === 'AWS/EC2' ? fetchAwsData(user, appIndex) : fetchAwsEcsData(user, appIndex);
-        }, 2000)
-      )
+
+          typeOfService === 'AWS/EC2'
+            ? fetchAwsData(user, appIndex)
+            : fetchAwsEcsData(user, appIndex);
+        }, 10000)
+      );
     } else {
-      console.log('not fetching data')
-      if(intervalID) clearInterval(intervalID);
+      if (intervalID) clearInterval(intervalID);
       fetchAwsAppInfo(user, appIndex);
-      
+
       typeOfService === 'AWS/EC2' ? fetchAwsData(user, appIndex) : fetchAwsEcsData(user, appIndex);
     }
   }, [awsLive]);
 
   useEffect(() => {
     return () => {
-      console.log('unmounting, shut down fetch process');
-      if(intervalID) clearInterval(intervalID);
-      setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
+      if (intervalID) clearInterval(intervalID);
+      setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
       setAwsEcsData({});
       setAwsAppInfo({ typeOfService: '', region: '' });
-    }
-  }, [])
-  
+    };
+  }, []);
+
   const stringToColor = (string: string, recurses = 0) => {
     if (recurses > 20) return string;
     function hashString(str: string) {
@@ -66,7 +74,6 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
         colour += `00${value.toString(16)}`.substring(-2);
       }
 
-      console.log(colour);
       return colour;
     }
   };

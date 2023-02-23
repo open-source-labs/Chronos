@@ -54,7 +54,6 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   // Add a creation date to the application
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
-  //if(arr[0]=== "aws")
 
   // Add app to list of applications
   services.push(newApp);
@@ -63,7 +62,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
-  // arr[0] = name, arr[1] = database type, arr[3] = description, arr[4] = type of service, arr[5] = time stamp
+
   message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
 });
 
@@ -91,7 +90,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   services.push(newAwsApp);
 
   // Update settings.json with new list
-  // awsApp array: name[0], 'AWS'[1], region[2], description[3], typeOfService[4], timestamp[5], instanceID[6], accessKey[7], secretAccessKey[8]
+
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list

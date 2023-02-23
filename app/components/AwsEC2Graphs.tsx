@@ -9,15 +9,14 @@ const AwsEC2Graphs: React.FC = React.memo(props => {
   const [isLoading, setLoadingState] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log('is state loading? ', !!awsData);
-    if(awsData) setLoadingState(false);
+    if (awsData) setLoadingState(false);
   }, []);
 
   useEffect(() => {
     return () => {
-      setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
-    }
-  }, [])
+      setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
+    };
+  }, []);
 
   const stringToColor = (string: string, recurses = 0) => {
     if (recurses > 20) return string;
@@ -39,67 +38,36 @@ const AwsEC2Graphs: React.FC = React.memo(props => {
 
   return (
     <div className="charts">
-      {isLoading &&
-        <div style={{ display: 'flex', width: 100, height:100, justifyContent: 'center', position: 'absolute', alignItems: 'center', zIndex: 50}}>
+      {isLoading && (
+        <div
+          style={{
+            display: 'flex',
+            width: 100,
+            height: 100,
+            justifyContent: 'center',
+            position: 'absolute',
+            alignItems: 'center',
+            zIndex: 50,
+          }}
+        >
           <CircularProgress />
         </div>
-      }
+      )}
       {Object.keys(awsData)?.map(metric => {
         return (
-          <AwsChart 
-            className='chart'
-            // key={`Chart${counter}`}
+          <AwsChart
+            className="chart"
+            key={`Chart${metric}`}
             renderService={metric}
             metric={awsData[metric][0]?.unit}
             timeList={awsData[metric]?.map(el => el.time)}
             valueList={awsData[metric]?.map(el => el.value)}
-            // sizing={props.sizing}
             colourGenerator={stringToColor}
           />
-        )
+        );
       })}
-      {/* <AwsChart 
-        className='chart'
-        // key={`Chart${counter}`}
-        renderService="CPU Utilization"
-        metric="Percent"
-        timeList={awsData.CPUUtilization?.map(el => el.time)}
-        valueList={awsData.CPUUtilization?.map(el => el.value)}
-        // sizing={props.sizing}
-        colourGenerator={stringToColor}
-      />
-      <AwsChart 
-        className='chart'
-        // key={`Chart${counter}`}
-        renderService="Network In"
-        metric="Percent"
-        timeList={awsData.NetworkIn?.map(el => el.time)}
-        valueList={awsData.NetworkIn?.map(el => el.value)}
-        // sizing={props.sizing}
-        colourGenerator={stringToColor}
-      />
-      <AwsChart 
-        className='chart'
-        // key={`Chart${counter}`}
-        renderService="Network Out"
-        metric="Percent"
-        timeList={awsData.NetworkOut?.map(el => el.time)}
-        valueList={awsData.NetworkOut?.map(el => el.value)}
-        // sizing={props.sizing}
-        colourGenerator={stringToColor}
-      />
-      <AwsChart 
-        className='chart'
-        // key={`Chart${counter}`}
-        renderService="DiskReadBytes"
-        metric="Percent"
-        timeList={awsData.DiskReadBytes?.map(el => el.time)}
-        valueList={awsData.DiskReadBytes?.map(el => el.value)}
-        // sizing={props.sizing}
-        colourGenerator={stringToColor}
-      /> */}
     </div>
-  )
+  );
 });
 
 export default AwsEC2Graphs;
