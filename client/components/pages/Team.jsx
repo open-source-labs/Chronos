@@ -51,7 +51,7 @@ const bios = [
   {
     name: 'Snow X. Bai',
     bioParagraph:
-      'Snow is an experienced full-stack software engineer based in Seattle. She is also a freelance family photographer who loves capturing sweet moments. She\'s alright.',
+      'Snow is a full-stack software developer with a passion for creating innovative solutions. In addition to her technical pursuits, she also has a passion for photography and specializes in capturing precious family moments.',
     picture: bioSnowPic,
     contact: {
       gitHub: 'https://github.com/xueapp',
@@ -61,7 +61,7 @@ const bios = [
   {
     name: 'Tim Lee',
     bioParagraph:
-      'Tim is a full-stack software engineer based out of Los Angeles. Tim loves board games, fantasy football, puzzles, chess, and all things UCLA.',
+      'Tim is a full-stack software engineer based out of Los Angeles. Tim loves fantasy football, crossword puzzles, board games, chess, and all things UCLA.',
     picture: bioTimLeePic,
     contact: {
       gitHub: 'https://github.com/timlee12',
@@ -71,7 +71,7 @@ const bios = [
   {
     name: 'Roberto Meloni',
     bioParagraph:
-      'Roberto is the best.',
+      'Roberto is a full-stack engineer based in San Francisco. He has a passion for building servers and enjoys pairing them with a good wine for dinner.',
     picture: bioRobertoPic,
     contact: {
       gitHub: 'https://github.com/RobertoRueMeloni',
@@ -81,17 +81,17 @@ const bios = [
   {
     name: 'Taylor Zhang',
     bioParagraph:
-      'Taylor is the best.',
+      'Full-stack software engineer with expertise in open-source development and a passion for building scalable and user-friendly applications.',
     picture: bioTaylorPic,
     contact: {
-      gitHub: 'https://github.com/hodesza',
-      linkedIn: 'https://www.linkedin.com/in/vinceho022/',
+      gitHub: 'https://github.com/taylrzhang',
+      linkedIn: 'https://www.linkedin.com/in/taylor-zhang/',
     },
   },
   {
     name: 'Josh James',
     bioParagraph:
-      'Josh is a full-stack software engineer based in _________',
+      'Josh is a software engineer with experience in building full-stack applications using React, Node.js/Express.js, SQL, and NoSQL databases with an emphasis on module design patterns.',
     picture: bioJoshPic,
     contact: {
       gitHub: 'https://github.com/joshjames289',
@@ -101,7 +101,7 @@ const bios = [
   {
     name: 'Elisa Nie',
     bioParagraph:
-      'Elisa is a full-stack software engineer based in ___________',
+      'Elisa is a full-stack engineer based in Seattle. Her passions include indie video games, language learning, and making simple illustrations.',
     picture: bioElisaPic,
     contact: {
       gitHub: 'https://github.com/elisanie',
@@ -120,7 +120,7 @@ const bios = [
   {
     name: 'Troy Prejusa',
     bioParagraph:
-      'Troy is a full-stack software engineer based in __________',
+      'Troy is a full-stack software engineer based out of Los Angeles.',
     picture: bioTroyPic,
     contact: {
       gitHub: 'https://github.com/tprejusa',

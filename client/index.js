@@ -2,17 +2,17 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './App.jsx';
 import {
-  BrowserRouter as Router,
-  Switch,
+  BrowserRouter,
+  Routes,
   Route,
   Link
 } from "react-router-dom";
 
 //render main application
 render(
-  <Router>
+  <BrowserRouter>
     <App />
-  </Router>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
