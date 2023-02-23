@@ -1,0 +1,26 @@
+version: "3"
+services: 
+  dev:
+    image: sg55/mm-dev-chronos:1.0
+    container_name: 'mm-dev-hot'
+    ports:
+      - "8080:8080"
+    volumes:
+      - ".:/usr/src/app"
+      - "node_modules:/usr/src/app/node_modules"
+    command: npm run dev:hot
+    depends_on:
+      - postgres-db
+  postgres-db:
+    image: sg55/mm-postgres-chronos:1.0
+    container_name: 'mm-database'
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=mmadmin
+      - POSTGRES_DB=mmdb
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+
+volumes:
+  node_modules:
+  dev-db-volume:

@@ -5,37 +5,5 @@
 		"email": "",
 		"services": [],
 		"mode": "light"
-	},
-	"ty": {
-		"username": "ty",
-		"password": "$2b$12$1QNK6Y7tVuwxfUKCJfJlneik0m/oJsbrsWtDhkBi8sW13MhZmsZgK",
-		"email": "ty@gmail.com",
-		"services": [
-			[
-				"test",
-				"MongoDB",
-				"mongodb+srv://taylrzhang:3377926Taylor@cluster0.icr54wo.mongodb.net/?retryWrites=true&w=majority",
-				"",
-				"Microservices",
-				"Feb 8, 2023 1:48 PM"
-			],
-			[
-				"test cluster",
-				"SQL",
-				"not real",
-				"",
-				"AWS",
-				"Feb 13, 2023 11:23 AM"
-			],
-			[
-				"realllllonggggname",
-				"SQL",
-				"dsfadsf",
-				"",
-				"AWS",
-				"Feb 13, 2023 11:46 AM"
-			]
-		],
-		"mode": "light"
 	}
 }
