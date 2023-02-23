@@ -76,10 +76,10 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             <option value="AWS/ECS">Elastic Container Service (ECS)</option>
           </select>
         </div>
-        {typeOfService === 'AWS/EC2' &&
+        {typeOfService === 'AWS/EC2' && (
           <div>
             <label htmlFor="instance">
-              Instance ID<span>*</span>
+              AWS Instance ID<span>*</span>
             </label>
             <input
               id="aws-instance"
@@ -90,7 +90,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
               required
             />
           </div>
-        }
+        )}
         <div>
           <label htmlFor="region">
             Region<span>*</span>
@@ -128,7 +128,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
           </label>
           <input
             id="aws-access-key"
-            type="text"
+            type="password"
             name="accessKey"
             value={accessKey}
             onChange={e => handleChange(e)}
@@ -142,7 +142,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
           </label>
           <input
             id="aws-secret-access-key"
-            type="text"
+            type="password"
             name="secretAccessKey"
             value={secretAccessKey}
             onChange={e => handleChange(e)}
