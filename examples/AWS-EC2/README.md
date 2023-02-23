@@ -1,4 +1,10 @@
-# Deploy application in AWS Beanstalk 
+# Chronos AWS EC2 Example
+
+Deploy AWS EC2 for testing [Chronos](https://github.com/open-source-labs/Chronos), an open-source developer tool that monitors health data from servers, microservices, Kubernetes clusters, and now, AWS services.
+
+## Deploy application in AWS Beanstalk 
+
+This sample AWS EC2 example allows developers to explore the functionality of Chronos with cloud-based applications.
 
 ## Setup
 
@@ -59,14 +65,14 @@ git archive -v -o myMM.zip --format=zip HEAD
 
 ## Part 2 - AWS Beanstalk, IAM, EC2, RDS, ECR
 
-1. Create user wiht `AdministratorAccess` policy and log in.
+1. Create user wiht `AdministratorAccess` policy and log in. Create Access Key and Secret Access Key, you would need these for launching Chronos for cloud-based application. (instruction at the end).
 
 2. Start Elastic Beanstalk with following settings:
    - Platform: Docker running on 64bit Amazon Linux 2
    
-3. Upload zipped file (from previous step 9)
+3. Upload zipped file (from previous step 9), it will take a while to beanstalk to set things up.
 
-4. Go to EC2 under the Services menu and select 'Key Pairs'.
+4. Go to EC2 , mark the instance ID for later use (instruction at the end) under the Services menu and select 'Key Pairs'.
 
 5. Create a new key pair and give it a meaningful name like 'mm-ec2-key' and select "pem" as the file format.
 
@@ -110,4 +116,22 @@ git archive -v -o myMM.zip --format=zip HEAD
       - RDS_PORT : 5432
 
 10. Open the Dashboard for application environment and follow the URL at the top to see the application running in the cloud. 
+
+## Monitoring EC2 instance on Chronos
+
+1. Start Chronos desktop application.
+
+2. Select `cloud-based`
+
+3. Use Access Key, Secret Access Key, region, and EC2 instance ID to start monitoring EC2 instance. 
+
+## Contributing
+Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
+
+## People
+[Snow X. Bai](https://github.com/xueapp)
+[Taylor Zhang](https://github.com/taylrzhang)
+[Tim Lee](https://github.com/timlee12)
+[Roberto Meloni ](https://github.com/RobertoRueMeloni)
+
 
