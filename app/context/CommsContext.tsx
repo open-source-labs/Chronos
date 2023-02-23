@@ -46,6 +46,7 @@ const CommsContextProvider: React.FC<Props> = React.memo((props) => {
       ipcRenderer.on('commsResponse', (event: Electron.Event, data: any) => {
         let result: any;
         if (tryParseJSON(data)) result = JSON.parse(data);
+        console.log('communication data from fetch request is: ', result);
         setCommsData(result);
       });
     }

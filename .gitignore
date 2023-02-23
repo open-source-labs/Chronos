@@ -8,6 +8,7 @@ coverage
 __tests__/**/__snapshots__
 .env
 databases.txt
+settings.json
 
 # Compiled source #
 ###################
