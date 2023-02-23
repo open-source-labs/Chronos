@@ -46,7 +46,6 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
   useEffect(() => {
     return () => {
       console.log('unmounting, shut down fetch process');
-
       if(intervalID) clearInterval(intervalID);
       setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
       setAwsEcsData({});
