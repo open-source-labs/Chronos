@@ -41,8 +41,14 @@ export interface ClusterTableProps {
 
 const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
   const classes = useStyles();
-  const { awsEcsData } = useContext(AwsContext);
+  const { awsEcsData, isLoading } = useContext(AwsContext);
   // const {clusterName, servicesNum, tasksNum, status} = useContext(DashboardContext);
+
+  const activeServices = () => {
+    const serviceNames = Object.keys(awsEcsData).slice(1);
+
+    return serviceNames.filter(el => awsEcsData[el].CPUUtilization?.value.length > 0)
+  };
 
   return (
     <div className="ClusterTable-container">
@@ -59,16 +65,16 @@ const ClusterTable: React.FC<ClusterTableProps> = React.memo(({ region }) => {
           <TableBody>
             <TableCell className={classes.body}>
               <div className={classes.column}>
-                <div>{awsEcsData ? awsEcsData.clusterInfo?.clusterName : 'Loading...'}</div>
+                <div>{isLoading ? 'Loading...': awsEcsData.clusterInfo?.clusterName}</div>
                 <div>
                   <span className="region">{region}</span>
                 </div>
               </div>
             </TableCell>
             {/* <TableCell className={cluster.status === 'active' ? classes.activeCell : undefined}>testactive</TableCell> */}
-            <TableCell className={classes.body}>active</TableCell>
-            <TableCell className={classes.body}>3</TableCell>
-            <TableCell className={classes.body}>0/3</TableCell>
+            <TableCell className={classes.body}>{activeServices().length ? 'active' : 'inactive'}</TableCell>
+            <TableCell className={classes.body}>{isLoading ? 'Loading...' : Object.keys(awsEcsData).length - 1}</TableCell>
+            <TableCell className={classes.body}>{String(activeServices().length) + '/' + String(Object.keys(awsEcsData).length - 1)}</TableCell>
 
             {/* {clusters.map((cluster: Cluster, index: number) => (
             <TableRow key={index}>
