@@ -1,0 +1,4 @@
+FROM postgres:12.8
+
+COPY ./scripts/db_init.sql /docker-entrypoint-initdb.d/
+

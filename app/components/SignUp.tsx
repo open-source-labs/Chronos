@@ -14,7 +14,7 @@ const SignUp = React.memo(() => {
   return (
     <div className="home">
       <div className="welcome" data-testid="SignUp">
-        <h1 className="welcomeMessage">Welcome Chronos!</h1>
+        <h1 className="welcomeMessage">Welcome to Chronos!</h1>
         <h2>Your all-in-one application monitoring tool.</h2>
 
         <form className="form" onSubmit={handleSubmit}>

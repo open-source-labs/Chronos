@@ -9,12 +9,13 @@ import GraphsContainer from './GraphsContainer';
 import { DashboardContext } from '../context/DashboardContext';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
+import AwsGraphsContainer from '../containers/AWSGraphsContainer';
+
 import '../stylesheets/MainContainer.scss';
 
 const MainContainer = React.memo(() => {
   const { mode } = useContext(DashboardContext);
-  const currentModeCSS =
-    mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
+  const currentModeCSS = mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
 
   return (
     <>
@@ -27,11 +28,12 @@ const MainContainer = React.memo(() => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/applications/:app/:service" element={<GraphsContainer />} />
+            <Route path="/aws/:app" element={<AwsGraphsContainer />} />
             <Route
-              path="/applications/:app/:service"
-              element={<GraphsContainer />}
+              path="*"
+              element={<h1 style={{ color: 'red', fontSize: '200px' }}>Not Found</h1>}
             />
-            <Route path="*" element={<h1 style={{color: 'red', fontSize: '200px'}}>Not Found</h1>} />
           </Routes>
         </div>
       </div>

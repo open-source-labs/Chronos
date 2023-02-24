@@ -3,7 +3,7 @@
 		[
 			"chronosDB",
 			"MongoDB",
-			"mongodb+srv://troyprejusa:learning@learning.logqirh.mongodb.net/test?retryWrites=true&w=majority",
+			"PUT YOUR MONGO URI HERE",
 			"",
 			"Dec 19, 2022 4:50 PM"
 		]

@@ -4,6 +4,7 @@ import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AddModal.scss';
 
 interface IFields {
+  typeOfService: string;
   database: string;
   URI: string;
   name: string;
@@ -25,6 +26,7 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const { addApp }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
+    typeOfService: 'Docker',
     database: 'SQL',
     URI: '',
     name: '',
@@ -47,7 +49,7 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
     });
   };
 
-  const { database, URI, name, description } = fields;
+  const { typeOfService, database, URI, name, description } = fields;
 
   return (
     <div className="add-container">
@@ -58,8 +60,24 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
       <form onSubmit={handleSubmit}>
         <p>Required*</p>
         <div>
+          <label htmlFor="serv-type">
+            Type of Service<span>*</span>
+          </label>
+          <select
+            id="serv-type"
+            name="typeOfService"
+            value={typeOfService}
+            onChange={e => handleChange(e)}
+          >
+            <option value="Docker">Docker</option>
+            <option value="gRPC">gRPC</option>
+            <option value="Kubernetes">Kubernetes</option>
+            <option value="Microservices">Microservices</option>
+          </select>
+        </div>
+        <div>
           <label htmlFor="db-type">
-            Type<span>*</span>
+            Type of Database<span>*</span>
           </label>
           <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
             <option value="SQL">SQL</option>
@@ -89,7 +107,7 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             name="name"
             value={name}
             onChange={e => handleChange(e)}
-            placeholder="Database Name"
+            placeholder="Add a name for your new service"
             required
           />
         </div>
