@@ -5,12 +5,11 @@ import './stylesheets/scrollBar.scss';
 
 const App: React.FC = React.memo(() => {
   return (
-    <>
+    <div>
       <Splash />
       <DashboardContainer />
-    </>
-
-  )
+    </div>
+  );
 });
 
 export default App;

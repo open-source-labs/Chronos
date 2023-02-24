@@ -38,11 +38,11 @@ interface Params {
 // }
 
 const GraphsContainer: React.FC = React.memo(props => {
-
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
-  const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
+  const { intervalID, setIntervalID } = useContext(ApplicationContext);
+  // const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
   const { servicesData, getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
@@ -59,11 +59,11 @@ const GraphsContainer: React.FC = React.memo(props => {
     const serviceArray = service.split(' ');
     // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it
     // not work correctly, so it has been omitted
-    const healthServiceArray = serviceArray.filter((value: string) => (value !== 'kafkametrics')
-    );
+    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
     if (live) {
       setIntervalID(
         setInterval(() => {
+          //HERE fetching health data when on Live
           fetchCommsData(app, live);
           fetchHealthData(healthServiceArray);
           if (service.includes('kafkametrics')) {
@@ -73,7 +73,7 @@ const GraphsContainer: React.FC = React.memo(props => {
           if (service.includes('kubernetesmetrics')) {
             fetchEventData('kubernetesmetrics');
           }
-        }, 3000)
+        }, 10000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
@@ -97,8 +97,7 @@ const GraphsContainer: React.FC = React.memo(props => {
     };
   }, [service, live]);
 
-  const currentMode =
-    mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const routing = (route: string) => {
     if (location.href.includes('communications')) {
@@ -180,21 +179,25 @@ const GraphsContainer: React.FC = React.memo(props => {
             Docker
           </button>
         )}
-        {commsData.length > 0 && <button
-          id="communication-button"
-          className={chart === 'communications' ? 'selected' : undefined}
-          onClick={() => {
-            if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
-            setChart('communications');
-          }}
-          key="3"
-        >
-          Communication
-        </button>}
+        {commsData.length > 0 && (
+          <button
+            id="communication-button"
+            className={chart === 'communications' ? 'selected' : undefined}
+            onClick={() => {
+              if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
+              setChart('communications');
+            }}
+            key="3"
+          >
+            Communication
+          </button>
+        )}
         <button
           id="modify-metrics-button"
           className={chart === 'modifyMetrics' ? 'selected' : undefined}
-          onClick={() => {routing('modifyMetrics')}}
+          onClick={() => {
+            routing('modifyMetrics');
+          }}
           key="4"
         >
           Modify Metrics
@@ -212,7 +215,12 @@ const GraphsContainer: React.FC = React.memo(props => {
           </div>
         ) : (
           <div className="graphs">
-            {chart === 'all' && <div className="transferColumns"><h2 style={currentMode}>Search Your Metrics to Display</h2><TransferColumns /></div>}
+            {chart === 'all' && (
+              <div className="transferColumns">
+                <h2 style={currentMode}>Search Your Metrics to Display</h2>
+                <TransferColumns />
+              </div>
+            )}
             {chart.startsWith('health_') && (
               <HealthContainer
                 colourGenerator={stringToColour}
