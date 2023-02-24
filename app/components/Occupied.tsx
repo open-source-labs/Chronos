@@ -19,7 +19,6 @@ import {
   Typography,
 } from '@material-ui/core';
 
-
 import { makeStyles } from '@material-ui/core/styles';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 
@@ -32,9 +31,11 @@ import Badge from '@material-ui/core/Badge';
 import PersonIcon from '@material-ui/icons/Person';
 import UpdateIcon from '@material-ui/icons/Update';
 
-
 // // MODALS
+// import AddModal from '../modals/AddModal';
+import EnvModal from '../modals/EnvModal';
 import AddModal from '../modals/AddModal';
+import AwsModal from '../modals/AwsModal';
 import ProfileContainer from '../containers/ProfileContainer';
 import ServicesModal from '../modals/ServicesModal';
 import Search from './icons/Search';
@@ -46,48 +47,73 @@ import '../stylesheets/Occupied.scss';
 import { DashboardContext } from '../context/DashboardContext';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { CommsContext } from '../context/CommsContext';
+import { AwsContext } from '../context/AwsContext';
+import { useNavigate } from 'react-router-dom';
 
 // TYPESCRIPT
 interface StyleProps {
-    root: BaseCSSProperties;
-  }
-  type ClickEvent = React.MouseEvent<HTMLElement>;
-  
+  root: BaseCSSProperties;
+}
+type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const Occupied = React.memo(() => {
-  const { setServicesData } = useContext(ApplicationContext);
+  const { awsData, fetchAwsData, fetchAwsAppInfo, setLoadingState } = useContext(AwsContext);
+  const { setServicesData, app, setApp } = useContext(ApplicationContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
-  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  // const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
-  const [index, setIndex] = useState<number>(0);
-  const [app, setApp] = useState<string>('');
+  const [envModalOpen, setEnvModalOpen] = useState<boolean>(false);
+  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+  const [awsModalOpen, setAwsModalOpen] = useState<boolean>(false);
+  const { appIndex, setAppIndex } = useContext(ApplicationContext);
+  // const [index, setIndex] = useState<number>(0);
+  // const [app, setApp] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [clickedAt, setClickedAt] = useState<string>('2000-01-01T00:00:00Z');
-    
+
+  // const [showAwsContainer, setShowAwsContainer] = useState(false);
+  const navigate = useNavigate();
+
   // Grab services and applications whenever the user changes
   useEffect(() => {
     setServicesData([]);
     getApplications();
-  }, [ user ]);
+  }, [user]);
 
   // Dynamic refs
   const delRef = useRef<any>([]);
-  
+
   // Asks user to confirm deletion
   const confirmDelete = (event: ClickEvent, application: string, i: number) => {
     const message = `The application '${app}' will be permanently deleted. Continue?`;
     if (confirm(message)) deleteApp(i);
   };
-  
+
   // Handle clicks on Application cards
-  const handleClick = (event: ClickEvent, selectedApp: string, i: number) => {
+  const handleClick = (
+    event: ClickEvent,
+    selectedApp: string,
+    selectedService: string,
+    i: number
+  ) => {
+    //delRaf refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
-      setIndex(i);
-      setApp(selectedApp);
-      setServicesData([]);
-      setServiceModalOpen(true);
+      if (
+        selectedService === 'AWS' ||
+        selectedService === 'AWS/EC2' ||
+        selectedService === 'AWS/ECS'
+      ) {
+        setAppIndex(i);
+        setApp(selectedApp);
+        navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
+      } else {
+        setAppIndex(i);
+        setApp(selectedApp);
+        setServicesData([]);
+        setServiceModalOpen(true);
+      }
     }
   };
 
@@ -249,7 +275,11 @@ const Occupied = React.memo(() => {
                   You have {notification ? notification.length : 0} new alerts
                 </span>
                 <NotificationsIcon className="navIcon" id="notificationsIcon" />
-                <Badge overlap="rectangular" badgeContent={notification ? notification.length : 0} color="secondary" />
+                <Badge
+                  overlap="rectangular"
+                  badgeContent={notification ? notification.length : 0}
+                  color="secondary"
+                />
               </div>
               <div className="personIconArea">
                 <Button className="personTooltip" onClick={() => setPersonModalOpen(true)}>
@@ -262,66 +292,82 @@ const Occupied = React.memo(() => {
 
         <div className="cardContainer">
           <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => setAddModalOpen(true)}>
+            <Button className={classes.paper} onClick={() => setEnvModalOpen(true)}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
           {applications &&
-            applications.filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
-            .map((application: string[], i: number | any | string | undefined) => (
-              <div className="card" key={`card-${i}`} id={`card-${application[1]}`}>
-                <Card
-                  key={`card-${i}`}
-                  className={classes.paper}
-                  variant="outlined"
-                  onClick={event => handleClick(event, application[0], i)}
-                >
-                  <div className="databaseIconContainer">
-                    <div className="databaseIconHeader">
-                      {application[1] === 'SQL' ? (
-                        <img className="databaseIcon" alt="SQL" />
-                      ) : (
-                        <img className="databaseIcon" alt="MongoDB" />
-                      )}
+            applications
+              .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+              .map((application: string[], i: number | any | string | undefined) => (
+                <div className="card" key={`card-${i}`} id={`card-${application[1]}`}>
+                  <Card
+                    key={`card-${i}`}
+                    className={classes.paper}
+                    variant="outlined"
+                    onClick={event => handleClick(event, application[0], application[3], i)}
+                  >
+                    <div className="databaseIconContainer">
+                      <div className="databaseIconHeader">
+                        {/* {application[1] === 'SQL' ? (
+                          <img className="databaseIcon" alt="SQL" />
+                        ) : (
+                          <img className="databaseIcon" alt="MongoDB" />
+                        )} */}
+                      </div>
                     </div>
-                  </div>
 
-                  <CardHeader
-                    avatar={
-                      <IconButton
-                        id="iconButton"
-                        ref={element => {
-                          delRef.current[i] = element;
-                        }}
-                        className={classes.iconbutton}
-                        aria-label="Delete"
-                        onClick={event => confirmDelete(event, application[0], i)}
-                      >
-                        <HighlightOffIcon
-                          className={classes.btnStyle}
-                          id="deleteIcon"
+                    <CardHeader
+                      avatar={
+                        <IconButton
+                          id="iconButton"
                           ref={element => {
                             delRef.current[i] = element;
                           }}
-                        />
-                      </IconButton>
-                    }
-                  />
-                  <CardContent>
-                    <p id="databaseName">Database Name:</p>
-                    <Typography className={classes.fontStyles}>{application[0]}</Typography>
-                  </CardContent>
-                  <hr className="cardLine" />
+                          className={classes.iconbutton}
+                          aria-label="Delete"
+                          onClick={event => confirmDelete(event, application[0], i)}
+                        >
+                          <HighlightOffIcon
+                            className={classes.btnStyle}
+                            id="deleteIcon"
+                            ref={element => {
+                              delRef.current[i] = element;
+                            }}
+                          />
+                        </IconButton>
+                      }
+                    />
+                    <CardContent>
+                      {/* <p id="databaseName">Name:</p> */}
+                      <Typography noWrap id="databaseName" className={classes.fontStyles}>
+                        {application[0]}
+                      </Typography>
+                      <p id="serviceName">Service:</p>
+                      <Typography className={classes.fontStyles}>{application[3]}</Typography>
+                    </CardContent>
+                    <hr className="cardLine" />
 
-                  <div className="cardFooter">
-                    <UpdateIcon className="cardFooterIcon" />
-                    <em>
-                      <p id="cardFooterText">{application[3]}</p>
-                    </em>
-                  </div>
-                </Card>
-              </div>
-            ))}
+                    <div className="cardFooter">
+                      <UpdateIcon className="cardFooterIcon" />
+                      <em>
+                        <p id="cardFooterText">{application[4]}</p>
+                      </em>
+                    </div>
+                  </Card>
+                </div>
+              ))}
+          <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
+            <EnvModal
+              setOpen={setEnvModalOpen}
+              setAwsModalOpen={setAwsModalOpen}
+              setAddModalOpen={setAddModalOpen}
+            />
+          </Modal>
+
+          <Modal open={awsModalOpen} onClose={() => setAwsModalOpen(false)}>
+            <AwsModal setOpen={setAwsModalOpen} />
+          </Modal>
 
           <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
             <AddModal setOpen={setAddModalOpen} />
@@ -332,7 +378,7 @@ const Occupied = React.memo(() => {
           </Modal>
 
           <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
-            <ServicesModal key={`key-${index}`} i={index} app={app} />
+            <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
           </Modal>
         </div>
       </div>

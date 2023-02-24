@@ -1,0 +1,13 @@
+FROM --platform=linux/amd64 node:16.13
+
+RUN npm install -g webpack
+
+WORKDIR /usr/src/app
+
+COPY  package*.json /usr/src/app
+
+RUN npm install
+
+EXPOSE 3000
+
+
