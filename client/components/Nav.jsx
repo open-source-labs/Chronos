@@ -40,7 +40,7 @@ const Nav = () => {
           </li>
           <li>
             <a
-              href="https://www.npmjs.com/package/chronos-tracker"
+              href="https://www.npmjs.com/package/@chronosmicro/tracker"
               target="_blank"
             >
               <ion-icon className="icon icon-npm" name="logo-npm"></ion-icon>
