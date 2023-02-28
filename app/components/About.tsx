@@ -19,7 +19,8 @@ const About: React.FC = React.memo(() => {
           The Chronos Team has always had a passion for Open Source endeavors that would greatly
           benefit the developer community. With many existing subscription services being difficult
           to use and expensive to operate, Chronos was born. Chronos is an all-in-one network and
-          health monitoring tool for your application or microservice, containerized or not!
+          health monitoring tool for your application or microservice, containerized or not! Now it
+          can also monitor applications deployed using AWS EC2 and ECS services.
         </p>
         <br>
         </br>
@@ -28,16 +29,16 @@ const About: React.FC = React.memo(() => {
         </h3>
         <div>
           <span style={currentMode} className="text">
-            <p>Josh</p>
+            <p>Snow</p>
           </span>
           <span style={currentMode} className="text">
-            <p>Elisa</p>
+            <p>Taylor</p>
           </span>
           <span style={currentMode} className="text">
-            <p>Troy</p>
+            <p>Tim</p>
           </span>
           <span style={currentMode} className="text">
-            <p>Gahl</p>
+            <p>Roberto</p>
           </span>
           <br />
         </div>
@@ -46,7 +47,7 @@ const About: React.FC = React.memo(() => {
         </h3>
         <p style={currentMode} className="text">
           Nachiket, Tiffany, Bruno, Danny, Vince, Matt, Derek, Kit, Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg, Brianna,
-          Brian, Alon, Alan, Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander
+          Brian, Alon, Alan, Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander, Elisa, Josh, Troy, Gahl
         </p>
         <br />
       </div>
