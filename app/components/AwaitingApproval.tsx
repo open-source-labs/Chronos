@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function AwaitingApproval() {
+//  THIS FILE IS NOT DOING ANYTHING RIGHT NOW
+const AwaitingApproval: React.FC = () => {
   const navigate = useNavigate();
   const reroute = () => navigate('/');
   return (
     <div className="home">
-      <p className="welcomeMessage" data-testid="awaitingApprovalMessage">
+      <p className="welcomeMessage" >
         Your account is awaiting approval. Please contact your administrator if you have any
         questions.
       </p>

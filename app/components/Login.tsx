@@ -21,7 +21,7 @@ const Login = React.memo(() => {
     const username = inputFields[0].value;
     const password = inputFields[1].value;
     // eslint-disable-next-line no-return-assign
-    inputFields.forEach(input => (input.value = ''));
+    // inputFields.forEach(input => (input.value = ''));
     const response: boolean | string = ipcRenderer.sendSync('login', { username, password });
     if (typeof(response) === 'string') {
       setUser(username);
