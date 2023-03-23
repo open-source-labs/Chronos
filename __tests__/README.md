@@ -13,8 +13,10 @@ npm install -g jest
 npm i @jest/types
 npm i ts-jest
 npm i jest-environment-jsdom
-npm i --save-dev @types/jest
+npm i --save-dev @types/jest @testing-library/jest-dom
+<!-- npm i --save-dev @types/jest -->
 npm i @types/node
+npm install -D ts-node
 ```
 3. create jest.config.js 
 ```
