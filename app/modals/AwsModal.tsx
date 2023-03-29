@@ -11,6 +11,7 @@ interface AwsFields {
   secretAccessKey: string;
   name: string;
   description?: string;
+  awsUrl ?: string;
 }
 
 interface IDashboard {
@@ -34,6 +35,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
     accessKey: '',
     secretAccessKey: '',
     name: '',
+    awsUrl: '',
     description: '',
   });
 
@@ -53,7 +55,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
     });
   };
 
-  const { typeOfService, instance, region, accessKey, secretAccessKey, name, description } =
+  const { typeOfService, instance, region, accessKey, secretAccessKey, name, description, awsUrl } =
     awsFields;
 
   return (
@@ -74,6 +76,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
           >
             <option value="AWS/EC2">Elastic Compute Cloud (EC2)</option>
             <option value="AWS/ECS">Elastic Container Service (ECS)</option>
+            <option value="AWS/EKS">Elastic Kubernetes Service (EKS)</option>
           </select>
         </div>
         {typeOfService === 'AWS/EC2' && (
@@ -147,6 +150,20 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             value={secretAccessKey}
             onChange={e => handleChange(e)}
             placeholder="AWS Secret Access Key"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="aws-url">
+            Cluster URL<span>*</span>
+          </label>
+          <input
+            id="aws-url"
+            type="string"
+            name="awsUrl"
+            value={awsUrl}
+            onChange={e => handleChange(e)}
+            placeholder="AWS Url"
             required
           />
         </div>
