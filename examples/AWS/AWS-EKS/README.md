@@ -59,10 +59,10 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
     Click a user and go to the Security Credentials tab.  Click Generate Access Key.  
     **Make sure to copy the access key and secret access key to a secure location**.
     2. In the terminal, run these commands:
-    ``` js
+    `
     export AWS_ACCESS_KEY_ID=<AWS Access Key>
     export AWS_SECRET_ACCESS_KEY=<AWS Secret Access Key>
-    ``` 
+    `
     3. Execute the command `eksctl create cluster --name=<cluster_name> --region=<cluster_region>`.  Note there are more [flags](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) you can add to customize the cluster further.  Cluster creation takes around 20 minutes. 
 
 ## Installing the Amazon EBS CSI Driver
