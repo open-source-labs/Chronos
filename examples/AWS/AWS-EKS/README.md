@@ -50,14 +50,16 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
     5. Generate an access key for this user
 
 ## Installing eksctl
-    1. To create a cluster in your terminal, you will need eksctl, a command line tool.  Follow this [documentation](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) and make sure to read up on your operating system. 
+    1. To create a cluster in your terminal, you will need eksctl, a command line tool. 
+    Follow this [documentation](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+    and make sure to read up on your operating system. 
 
 ## Creating an EKS cluster
     1. To establish a connection between your AWS account and the terminal, go to IAM --> Users --> 
     Click a user and go to the Security Credentials tab.  Click Generate Access Key.  
     **Make sure to copy the access key and secret access key to a secure location**.
     2. In the terminal, run these commands:
-    ```
+    ``` js
     export AWS_ACCESS_KEY_ID=<AWS Access Key>
     export AWS_SECRET_ACCESS_KEY=<AWS Secret Access Key>
     ``` 
