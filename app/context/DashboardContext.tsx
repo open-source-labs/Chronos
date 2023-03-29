@@ -19,6 +19,7 @@ interface AwsFields {
   secretAccessKey: string;
   name: string;
   description?: string
+  awsUrl: string;
 }
 // interface Props {
 //   children: React.ReactNode;
@@ -62,10 +63,10 @@ const DashboardContextProvider = React.memo((props: any) => {
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {
-    const { typeOfService, instance, region, accessKey, secretAccessKey, name, description } = awsFields;
+    const { typeOfService, instance, region, accessKey, secretAccessKey, name, description, awsUrl } = awsFields;
     const result = ipcRenderer.sendSync(
       'addAwsApp', //"addApp"
-      JSON.stringify([name, 'AWS', region, description, typeOfService, instance, accessKey, secretAccessKey])
+      JSON.stringify([name, 'AWS', region, description, typeOfService, instance, accessKey, secretAccessKey, awsUrl])
     );
     setApplications(result);
     console.log('the current application that was added is : ', result)
