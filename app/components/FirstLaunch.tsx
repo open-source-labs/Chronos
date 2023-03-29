@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 
-const FirstLaunch = React.memo(() => {
+//  THIS FILE IS NOT DOING ANYTHING RIGHT NOW
+const FirstLaunch: React.FC = React.memo(() => {
   const { updateLandingPage } = useContext(DashboardContext);
 
   return (
