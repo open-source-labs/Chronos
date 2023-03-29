@@ -34,21 +34,28 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
 
 ## Creating an AWS Account
 
-    1. Sign up at https://aws.amazon.com/console/.  Note that you will need to input your credit card information.  **Even though there are free services, setting up an EKS cluster according to this tutorial will cost you.**  
+    1. Sign up at https://aws.amazon.com/console/.  Note that you will need to input your credit card information.  
+    **Even though there are free services, setting up an EKS cluster according to this tutorial will cost you.**  
     2. Sign into your newly created account and change the region defined in the upper right corner to the region closest to you.
 
 ## Creating an AWS Account
-    1. Right now you are the root user, and it's unadvisable to do anything as a root user outside of billing and setting up groups.  To create a group, go to the Identity and Access Management (IAM) service.  For any service, simply look it up on the search bar at the top of the page.  
+    1. Right now you are the root user, and it's unadvisable to do anything as a root user 
+    outside of billing and setting up groups.  To create a group, go to the Identity and Access Management (IAM) service. 
+    For any service, simply look it up on the search bar at the top of the page.  
     2. Give the group a name (such as admin) and attach the AdminstratorAccess Policy.  
-    3. Add a user to the group.  Grant the user Programmatic and Console access.  Make sure to download csv file containing the user's credentials. 
-    4. Sign out and sign back in, this time using the url in the csv file.  I recommend saving the Account ID, username, and password in a secure place as you will need all three to log into this IAM role in the future.   
+    3. Add a user to the group.  Grant the user Programmatic and Console access.  
+    Make sure to download csv file containing the user's credentials. 
+    4. Sign out and sign back in, this time using the url in the csv file.  I recommend saving the Account ID,
+    username, and password in a secure place as you will need all three to log into this IAM role in the future.   
     5. Generate an access key for this user
 
 ## Installing eksctl
     1. To create a cluster in your terminal, you will need eksctl, a command line tool.  Follow this [documentation](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) and make sure to read up on your operating system. 
 
 ## Creating an EKS cluster
-    1. To establish a connection between your AWS account and the terminal, go to IAM --> Users --> Click a user and go to the Security Credentials tab.  Click Generate Access Key.  **Make sure to copy the access key and secret access key to a secure location**.
+    1. To establish a connection between your AWS account and the terminal, go to IAM --> Users --> 
+    Click a user and go to the Security Credentials tab.  Click Generate Access Key.  
+    **Make sure to copy the access key and secret access key to a secure location**.
     2. In the terminal, run these commands:
     ```
     export AWS_ACCESS_KEY_ID=<AWS Access Key>
