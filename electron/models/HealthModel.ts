@@ -19,6 +19,6 @@ const HealthSchema = new Schema({
   },
 });
 
-const HealthModelFunc = (serviceName: any) => mongoose.model<any>(serviceName, HealthSchema);
+const HealthModelFunc = (serviceName: string) => mongoose.model<any>(serviceName, HealthSchema);
 
 export default HealthModelFunc;

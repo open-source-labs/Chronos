@@ -4,14 +4,18 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import { Typography } from '@material-ui/core';
 import { AwsContext } from '../context/AwsContext';
-
+// import AwsEksGrafana from '../components/AwsEksGrafana';
 import '../stylesheets/AWSGraphsContainer.scss';
 import AwsChart from '../charts/AwsChart';
 import ClusterTable from '../components/ClusterTable';
 import AwsEC2Graphs from '../components/AwsEC2Graphs';
 import AwsECSClusterGraphs from '../components/AwsECSClusterGraphs';
 import { useLocation } from 'react-router-dom';
-
+import GrafanaIFrame from './GrafanaIFrame';
+interface Dashboard {
+  uid: string;
+  url: string;
+}
 const AwsGraphsContainer: React.FC = React.memo(props => {
   const {
     awsData,
@@ -19,11 +23,15 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
     awsAppInfo,
     setAwsAppInfo,
     awsEcsData,
+    awsEksData,
     setAwsEcsData,
+    setAwsEksData,
     fetchAwsData,
     fetchAwsEcsData,
+    fetchAwsEksData,
     fetchAwsAppInfo,
   } = useContext(AwsContext);
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const { app, appIndex, intervalID, setIntervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
   // const [intervalID, setintervalID] = useState<NodeJS.Timeout | null>(null);
@@ -31,6 +39,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
   const { region } = awsAppInfo;
   const { state } = useLocation();
   const { typeOfService } = state;
+  const { awsUrl } = awsAppInfo;
 
   useEffect(() => {
     if (awsLive) {
@@ -39,17 +48,21 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           console.log('intervalId after click live', intervalID);
           fetchAwsAppInfo(user, appIndex);
 
-          typeOfService === 'AWS/EC2'
-            ? fetchAwsData(user, appIndex)
-            : fetchAwsEcsData(user, appIndex);
+          if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;
+          if (typeOfService === 'AWS/ECS')fetchAwsEcsData(user, appIndex);
+           if (typeOfService === 'AWS/EKS') fetchAwsEksData(user, appIndex)
         }, 10000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchAwsAppInfo(user, appIndex);
 
-      typeOfService === 'AWS/EC2' ? fetchAwsData(user, appIndex) : fetchAwsEcsData(user, appIndex);
+      if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;
+      if (typeOfService === 'AWS/ECS') fetchAwsEcsData(user, appIndex);
+      if (typeOfService === 'AWS/EKS') fetchAwsEksData(user, appIndex)
+
     }
+
   }, [awsLive]);
 
   useEffect(() => {
@@ -57,7 +70,8 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       if (intervalID) clearInterval(intervalID);
       setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
       setAwsEcsData({});
-      setAwsAppInfo({ typeOfService: '', region: '' });
+      setAwsEksData({});
+      setAwsAppInfo({ typeOfService: '', region: '', awsUrl: '' });
     };
   }, []);
 
@@ -77,10 +91,8 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       return colour;
     }
   };
-
-  // const awsGraphArray = Object.keys(awsData)?.map(metric => {
-
-  // })
+ 
+  console.log(awsUrl)
 
   return (
     <div className="AWS-container">
@@ -91,23 +103,39 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           {awsLive ? (
             <div>
               <span id="live">Live</span>
+
             </div>
           ) : (
             <div id="gatherLiveData">Gather Live Data</div>
+            
           )}
         </button>
       </div>
-      {typeOfService === 'AWS/ECS' ? (
+      {typeOfService === 'AWS/ECS' && (
         <div className="cluster-table">
           <ClusterTable typeOfService={typeOfService} region={region} />
-          <AwsECSClusterGraphs />
+          {/* <iframe src="http://a43696611f78d41e89960d0f1bb06f07-578600705.us-west-2.elb.amazonaws.com/d/3H7r_bB4z/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light" width="100" height="1300" ></iframe> */}
+          <AwsECSClusterGraphs /> 
         </div>
-      ) : (
-        <AwsEC2Graphs />
+      ) }
+      {typeOfService === 'AWS/EC2' && (
+        <div className="cluster-table">
+          <AwsEC2Graphs />
+        </div>
+      )}
+      {typeOfService === 'AWS/EKS' && (
+        <div>
+          {/* <iframe src={`${awsUrl}/d/8jYcvsBVz/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light&kiosk`} width="1300" height="1300" ></iframe> */}
+          {/* <iframe src={`${awsUrl}/d/jPEGwyfVk/opencost?orgId=1&theme=light&kiosk`} width="1300" height="1300" ></iframe> */}
+
+          <iframe src={`http://a9921cff905094aa0a45e6e330684283-98913978.us-east-2.elb.amazonaws.com/d/8jYcvsBVz/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light&kiosk`} width="1300" height="1300" ></iframe>
+          <iframe src={`http://a9921cff905094aa0a45e6e330684283-98913978.us-east-2.elb.amazonaws.com/d/jPEGwyfVk/opencost?orgId=1&theme=light&kiosk`} width="1300" height="1300" ></iframe>
+
+          {/* <GrafanaIFrame {...awsAppInfo}/> */}
+        </div>
       )}
     </div>
   );
   // }
 });
-
 export default AwsGraphsContainer;

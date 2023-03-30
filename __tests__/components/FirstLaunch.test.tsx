@@ -5,6 +5,7 @@ import FirstLaunch from '../../app/components/FirstLaunch';
 
 const { ipcRenderer } = require('electron');
 
+//  THE FILE THAT IS BEING TESTED IS NOT BEING USED
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
 describe('FirstLaunch Page', () => {

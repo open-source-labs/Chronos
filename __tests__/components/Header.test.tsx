@@ -5,6 +5,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import Header from '../../app/components/Header';
 import { DashboardContext } from '../../app/context/DashboardContext';
 import { ApplicationContext } from '../../app/context/ApplicationContext';
+import { HashRouter as Router } from 'react-router-dom';
 import mockData from '../mock_data.json';
 import '@testing-library/jest-dom';
 
@@ -24,11 +25,13 @@ describe('Speed Chart', () => {
   let element;
   beforeEach(() => {
     render(
-      <ApplicationContext.Provider value={{ servicesData: '' }}>
-        <DashboardContext.Provider value={{ mode: 'light' }}>
-          <Header app={['Test DB']} service="Test Service" setLive={jest.fn()} live={false} />
-        </DashboardContext.Provider>
-      </ApplicationContext.Provider>
+      <Router>
+        <ApplicationContext.Provider value={{ servicesData: '' }}>
+          <DashboardContext.Provider value={{ mode: 'light' }}>
+            <Header app={['Test DB']} service="Test Service" setLive={jest.fn()} live={false} />
+          </DashboardContext.Provider>
+        </ApplicationContext.Provider>
+      </Router>
     );
     element = screen.getByTestId('Header');
   });
