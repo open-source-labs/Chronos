@@ -174,7 +174,7 @@ const TransferColumns = React.memo(() => {
     const row = {};
     row['id'] = index;
     row['tag'] = el.tag;
-    row['title'] = el.title.split(' | ')[1];
+    row['title'] = el.title.split(' | ')[1].replace("kubernetes-cadvisor/docker-desktop/", ""); // gets rid of the full path
     rows.push(row);
   });
 

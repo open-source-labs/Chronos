@@ -14,6 +14,7 @@ import fetch, { FetchError } from 'electron-fetch';
 //import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
 import MetricsModel from '../models/MetricsModel';
+const log = require('electron-log');
 
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
@@ -560,10 +561,88 @@ ipcMain.on(
       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
       const userAwsService = fileContents[username]?.services[appIndex];
 
-      const [typeOfService, region] = [userAwsService[4], userAwsService[2]];
+      const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
       const response = {
         typeOfService: typeOfService,
         region: region,
+        awsUrl: awsUrl
+      };
+
+      message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+    } catch (err) {
+      console.log('Error in awsAppInfoRequest', message);
+      message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' , awsUrl: ''});
+    }
+  }
+);
+
+ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: string, appIndex: number) => {
+  const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+  const userAwsService = fileContents[username]?.services[appIndex];
+  const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
+  const url = `${awsUrl}/api/search?folderIds=0`
+  console.log("hi")
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ=='
+    },
+  });
+  log.info(response);
+  const data = await response.json();
+  console.log(data)
+  console.log(awsUrl)
+  message.sender.send('eksMetricsResponse', JSON.stringify(data));
+});
+
+//end fetch
+// ipcMain.on(
+//   'eksMetricsRequest',
+//   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+//     try {
+//       // similar function architecture as EC2 fetch request
+//       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+//       const userAwsService = fileContents[username]?.services[appIndex];
+//       const awsUrl = userAwsService[9];
+//       const url = `${awsUrl}/api/search?folderIds=0`
+
+
+//         const fetchData = async () => {
+//              await fetch(url, {
+//                 method: 'GET',
+//                 headers: {
+//                   "Access-Control-Allow-Origin": "*",
+//                   Accept: "application/json",
+//                   "Content-Type": "application/json",
+//                   Authorization: 'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ=='
+//                 },
+//               });
+
+//         fetchData().then(data => {
+//           message.sender.send('eksMetricsResponse', JSON.stringify(data));
+//         });
+//       };
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// );
+
+ipcMain.on(
+  'awsAppInfoRequest',
+  async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+    try {
+      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+      const userAwsService = fileContents[username]?.services[appIndex];
+
+      const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
+      const response = {
+        typeOfService: typeOfService,
+        region: region,
+        awsUrl: awsUrl
       };
 
       message.sender.send('awsAppInfoResponse', JSON.stringify(response));
@@ -573,5 +652,3 @@ ipcMain.on(
     }
   }
 );
-
-// end fetch

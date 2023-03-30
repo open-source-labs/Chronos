@@ -20,12 +20,15 @@ interface AwsData {
 interface AwsAppInfo {
   typeOfService: string,
   region: string
+  awsUrl: string
 }
 
 const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [awsData, setAwsData] = useState<AwsData>({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
   const [awsEcsData, setAwsEcsData] = useState<any>({});
-  const [awsAppInfo, setAwsAppInfo] = useState<AwsAppInfo>({ typeOfService: '', region: '' });
+  const [awsEksData, setAwsEksData] = useState<any>({});
+
+  const [awsAppInfo, setAwsAppInfo] = useState<AwsAppInfo>({ typeOfService: '', region: '' , awsUrl: ''});
   const [isLoading, setLoadingState] = useState<boolean>(true);
   
   const fetchAwsData = (username: string, index: number) => {
@@ -51,6 +54,20 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
       setLoadingState(false);
     });
   };
+  const fetchAwsEksData = (username: string, index: number) => {
+    ipcRenderer.removeAllListeners('eksMetricsResponse');
+    
+    ipcRenderer.send('eksMetricsRequest', username, index);
+    console.log("hi2");
+    ipcRenderer.on('eksMetricsResponse', (event: Electron.Event, res: any) => {
+      console.log('response: ', res)
+      const data = JSON.parse(res);
+      console.log('data: ', data)
+      setAwsEksData(data);
+      setLoadingState(false);
+    });
+    
+  };
 
   const fetchAwsAppInfo = (username: string, index: number) => {
     ipcRenderer.removeAllListeners('awsAppInfoResponse');
@@ -62,10 +79,9 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
       setAwsAppInfo(appInfo);
     });
   };
-
   return (
     <AwsContext.Provider
-      value={{ fetchAwsData, awsData, setAwsData, fetchAwsEcsData, awsEcsData, setAwsEcsData, awsAppInfo, setAwsAppInfo, fetchAwsAppInfo, isLoading, setLoadingState}}
+      value={{ fetchAwsData, awsData, setAwsData, fetchAwsEcsData,fetchAwsEksData, awsEksData, setAwsEksData, awsEcsData, setAwsEcsData, awsAppInfo, setAwsAppInfo, fetchAwsAppInfo, isLoading, setLoadingState}}
     >
       {children}
     </AwsContext.Provider>

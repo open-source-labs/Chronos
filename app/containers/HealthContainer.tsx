@@ -54,11 +54,12 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
               // console.log('valueList is', valueList); -> 50 values in an array
               // console.log('newTimeList array is:', newTimeList); -> 50 values in an array
               if (selectedMetricsList.includes(metric)) {
+                const re = /_/g;
                 const newHealthChart = (
                   <HealthChart
                     key={`Chart${counter}`}
                     renderService={serviceName}
-                    metric={metric}
+                    metric={metric.replace(re, " ")}
                     timeList={newTimeList}
                     valueList={valueList}
                     sizing={props.sizing}

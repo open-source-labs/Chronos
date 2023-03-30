@@ -24,7 +24,7 @@ const aggregator = [
   },
 ];
 
-// TCreate a model based on the serviceName
+// healthModelFunc creates a model based on the serviceName
 // Create an aggregator based on the aggregator variable
 // return the result
 fetchData.mongoFetch = async function (serviceName) {

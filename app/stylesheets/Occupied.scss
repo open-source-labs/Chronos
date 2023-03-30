@@ -42,6 +42,7 @@
   font-size: 42px;
   margin: 10px;
   padding: 5px;
+
   &:hover {
     cursor: pointer;
     box-shadow: $boxshadow3;
@@ -54,6 +55,7 @@
   top: 43px;
   left: 300px;
   margin-left: $logoPositionLeft - 34px;
+
   &:hover {
     color: $gblue;
     font-weight: 500;
@@ -110,6 +112,7 @@
   margin: 0px;
   margin-left: 15px;
   margin-right: 15px;
+
   &:hover {
     cursor: pointer;
     box-shadow: $boxshadow3;
@@ -123,6 +126,7 @@
   margin-left: -35px;
   font-size: 26px;
   padding: 8px;
+
   &:hover {
     cursor: pointer;
     box-shadow: $boxshadow3;
@@ -172,6 +176,7 @@
   margin-top: 4px;
   margin-left: 2px;
   font-size: 26px;
+
   // padding: 8px;
   &:hover {
     cursor: pointer;
@@ -222,6 +227,7 @@
   margin-top: 4px;
   margin-left: 2px;
   font-size: 26px;
+
   // padding: 8px;
   &:hover {
     cursor: pointer;
@@ -284,6 +290,7 @@ button {
   margin: 10px 0;
   // padding: 0px;
   color: transparent;
+
   &:hover {
     background-color: transparent;
   }
@@ -296,6 +303,7 @@ button {
   box-shadow: none;
   transform: translateX(-40px);
   filter: none;
+
   &:hover {
     background: none;
     background-color: none;
@@ -321,6 +329,7 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
+
   .searchIconSvg {
     transform: scale(0.1) translate(758.9px, -720px);
     position: absolute;
@@ -383,6 +392,7 @@ select:-webkit-autofill:focus {
   padding: 0;
   cursor: pointer;
   transition: all 0.5s;
+
   &:after,
   &:before {
     content: ' ';
@@ -391,10 +401,12 @@ select:-webkit-autofill:focus {
     position: absolute;
     transition: all 0.5s;
   }
+
   &:hover {
     position: relative;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 0px;
+
     &:before,
     &:after {
       width: 25%;
@@ -410,22 +422,28 @@ select:-webkit-autofill:focus {
     // opacity: 0.7;
     // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
   }
+
   &:hover p {
     color: $background;
     font-weight: 400;
   }
+
   &:hover .cardFooter {
     color: $background;
   }
+
   &:hover .cardLine {
     background-color: $background;
   }
+
   &:hover #cardFooterText {
     color: $background;
   }
+
   &:hover .cardFooterIcon {
     color: $background;
   }
+
   &:hover #databaseName {
     color: $background;
   }
@@ -438,10 +456,12 @@ select:-webkit-autofill:focus {
     // opacity: 0.7;
     // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
   }
+
   .databaseIconContainer {
     display: inline-block;
     overflow: visible;
   }
+
   .databaseIconHeader {
     position: absolute;
     background-color: $ggreen;
@@ -460,6 +480,7 @@ select:-webkit-autofill:focus {
     background-position: center;
     background-size: 70%;
     background-repeat: no-repeat;
+
     .databaseIcon {
       width: 55px;
       height: 55px;
@@ -475,10 +496,12 @@ select:-webkit-autofill:focus {
     // opacity: 0.7;
     // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
   }
+
   .databaseIconContainer {
     display: inline-block;
     overflow: visible;
   }
+
   .databaseIconHeader {
     position: absolute;
     background-color: $gyellow;
@@ -495,6 +518,7 @@ select:-webkit-autofill:focus {
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
     background-image: url('../assets/postgres-icon-white.png');
     background-size: cover;
+
     .databaseIcon {
       visibility: hidden;
     }
@@ -513,6 +537,7 @@ select:-webkit-autofill:focus {
     display: inline-block;
     overflow: visible;
   }
+
   .databaseIconHeader {
     position: absolute;
     background-color: $gorange;
@@ -529,6 +554,7 @@ select:-webkit-autofill:focus {
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
     background-image: url('../assets/aws-icon-white.png');
     background-size: cover;
+
     .databaseIcon {
       visibility: hidden;
     }
@@ -554,6 +580,7 @@ select:-webkit-autofill:focus {
   left: 180px;
   border-radius: 3px;
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 255, 42, 0.4);
+
   .databaseIcon {
     width: 55px;
     height: 55px;
