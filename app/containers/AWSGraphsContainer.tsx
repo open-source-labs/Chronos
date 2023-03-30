@@ -50,10 +50,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
           if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;
           if (typeOfService === 'AWS/ECS')fetchAwsEcsData(user, appIndex);
-           if (typeOfService === 'AWS/EKS'){
-            console.log("hi")
-            fetchAwsEksData(user, appIndex)
-          };
+           if (typeOfService === 'AWS/EKS') fetchAwsEksData(user, appIndex)
         }, 10000)
       );
     } else {
@@ -62,10 +59,8 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
 
       if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;
       if (typeOfService === 'AWS/ECS') fetchAwsEcsData(user, appIndex);
-      if (typeOfService === 'AWS/EKS'){
-        console.log("hi")
-        fetchAwsEksData(user, appIndex)
-      };
+      if (typeOfService === 'AWS/EKS') fetchAwsEksData(user, appIndex)
+
     }
 
   }, [awsLive]);
