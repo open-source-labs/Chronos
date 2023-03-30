@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 // REACT 18 Syntax below
 // import { createRoot } from 'react-dom/client';
 
-//this is a test comment
-
 import './stylesheets/index.scss';
 import { createTheme, ThemeProvider } from '@material-ui/core/';
 import App from './App';
