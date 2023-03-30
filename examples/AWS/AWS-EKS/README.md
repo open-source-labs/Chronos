@@ -74,10 +74,10 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
    you can add to customize the cluster further. Cluster creation takes around 20 minutes. 
 
 ## Installing the Amazon EBS CSI Driver
-    You need to install the Elastic Block Store (EBS) Container Storage Interface (CSI) Driver so the EKS cluster can manage Amazon EBS volumes.  This is necessary if you want to run any application that has a database, such as Prometheus.  
-    1. First, attach an OpenID Connect (OIDC) identity provider so that applications within the EKS cluster can access AWS resources.  Execute the command `eksctl utils associate-iam-oidc-provider --region=<cluster_region> --cluster=<cluster_name> --approve`.
-    2. Next, grant the prospective EBS CSI driver IAM permissions to call the AWS APIs with this command:
-    '''
+   You need to install the Elastic Block Store (EBS) Container Storage Interface (CSI) Driver so the EKS cluster can manage Amazon EBS volumes.  This is necessary if      you want to run any application that has a database, such as Prometheus.  
+   1. First, attach an OpenID Connect (OIDC) identity provider so that applications within the EKS cluster can access AWS resources.  Execute the command `eksctl utils    associate-iam-oidc-provider --region=<cluster_region> --cluster=<cluster_name> --approve`.
+   2. Next, grant the prospective EBS CSI driver IAM permissions to call the AWS APIs with this command:
+   
     eksctl create iamserviceaccount \
     --name ebs-csi-controller-sa \
     --namespace kube-system \
@@ -87,40 +87,40 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
     --role-only \
     --role-name AmazonEKS_EBS_CSI_DriverRole \
     --region <cluster_region>
-    '''
-    3. Finally, add the EBS CSI driver with this command:
-        `eksctl create addon --name aws-ebs-csi-driver --cluster <cluster_name> --service-account-role-arn arn:aws:iam::<AWS Account ID>:role/AmazonEKS_EBS_CSI_DriverRole --region <cluster region>`
-    Note the Account ID is the 12-digit number associated with the user you created earlier.  
+   
+   3. Finally, add the EBS CSI driver with this command:
+   `eksctl create addon --name aws-ebs-csi-driver --cluster <cluster_name> --service-account-role-arn 
+   arn:aws:iam::<AWS Account ID>:role/AmazonEKS_EBS_CSI_DriverRole --region <cluster region>`
+   Note the Account ID is the 12-digit number associated with the user you created earlier.  
 
 ## Deploying the sample application
-    1. Execute the command `cd {your_path}/Chronos/examples/AWS/AWS-EKS` so you are in the AWS-EKS directory.
-    2. Execute the command `kubectl apply -f knote` to deploy the sample application. 
-    3. Run `kubectl get pods` to monitor the status of the pods.  Wait until all pods go from status 'ContainerCreating' to 'Running.'
-    4. Run `kubectl get service knote` and visit the external IP address.  Add some notes or images to your functioning application! 
+   1. Execute the command `cd {your_path}/Chronos/examples/AWS/AWS-EKS` so you are in the AWS-EKS directory.
+   2. Execute the command `kubectl apply -f knote` to deploy the sample application. 
+   3. Run `kubectl get pods` to monitor the status of the pods.  Wait until all pods go from status 'ContainerCreating' to 'Running.'
+   4. Run `kubectl get service knote` and visit the external IP address.  Add some notes or images to your functioning application! 
 
 ## Deploying Prometheus
-    1. Exectute the command: 
-        `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
-    2. Execute the command:
-       ```
+   1. Exectute the command: 
+   `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
+   2. Execute the command:
+       
        helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus \
         --namespace prometheus --create-namespace \
         --set pushgateway.enabled=false \
         --set alertmanager.enabled=false \
         -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/prometheus/extraScrapeConfigs.yaml
-       ```
-
+       
 ## Deploying OpenCost
-    1. Execute the command:
-        `kubectl apply --namespace opencost -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/opencost.yaml`
-    2. Check the UI with the command: 
-        `kubectl port-forward --namespace opencost service/opencost 9003 9090`
+   1. Execute the command:
+      `kubectl apply --namespace opencost -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/opencost.yaml`
+   2. Check the UI with the command: 
+      `kubectl port-forward --namespace opencost service/opencost 9003 9090`
     
 ## Deploying and Configuring Grafana
-    1. Execute the command:
-        `helm repo add grafana https://grafana.github.io/helm-charts`
-    2. Execute the command:
-        ```
+   1. Execute the command:
+      `helm repo add grafana https://grafana.github.io/helm-charts`
+   2. Execute the command:
+        
         helm install grafana grafana/grafana \
         --namespace grafana \
         --set persistence.storageClassName="gp2" \
@@ -128,18 +128,18 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
         --set adminPassword='EKS!sAWSome' \
         --values ${HOME}/environment/grafana/grafana.yaml \
         --set service.type=LoadBalancer
-        ```
-    3. Execute these commands to get the URL.  Login in with the username admin and the password EKS!sAWsome
-        ```
+        
+   3. Execute these commands to get the URL.  Login in with the username admin and the password EKS!sAWsome
+        
         export ELB=$(kubectl get svc -n grafana grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
         echo "http://$ELB"
         ```
-    4. To create the dashboard for monitoring Prometheus metrics, go to the sidebar, click on the four square icon, and click '+Import.'  For the ID, type in 3119. For tracking, select Prometheus.  Hit Create.  
-    5. For the Opencost dashbaord, go to the sidebar, click on the four square icon, and click '+Import.'  Upload the opencostGrafana.json file, select Prometheus under tracking, and then create.
-    6. You need to edit the Grafana ini file to make Grafana publicly accessible.  In order to do so, go to your terminal and run: 
+   4. To create the dashboard for monitoring Prometheus metrics, go to the sidebar, click on the four square icon, and click '+Import.'  For the ID, type in 3119. For tracking, select Prometheus.  Hit Create.  
+   5. For the Opencost dashbaord, go to the sidebar, click on the four square icon, and click '+Import.'  Upload the opencostGrafana.json file, select Prometheus under tracking, and then create.
+   6. You need to edit the Grafana ini file to make Grafana publicly accessible.  In order to do so, go to your terminal and run: 
     `kubectl edit -n grafana configmap/grafana`
-    7. Press the 'i' key to start editing and add this into the Grafana ini section: 
-    ```
+   7. Press the 'i' key to start editing and add this into the Grafana ini section: 
+    
     documentation:
     [security]
     allow_embedding: true
@@ -147,18 +147,18 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
     enabled: true
     [dataproxy]
     timeout: 600
-    ```
-    8. Type ':wq' to save the file and quit the editor. 
-    9. Execute this command: `kubectl rollout restart deployment grafana -n grafana`
+    
+   8. Type ':wq' to save the file and quit the editor. 
+   9. Execute this command: `kubectl rollout restart deployment grafana -n grafana`
 
 ## Adding EKS cluster to Chronos dashboard using the Grafana URL
-    1. Click the add modal on the dashboard.  Select Cloudbased Services.  Select EKS.  Input your Grafana URL (ex: xxxx.region.xxx.amazonaws.com) at the root path.  
-    2. You should now be able to view two Grafana embedded dashboards -- the Prometheus Metrics & Opencost!  Anytime you want to view the status of other microservices, whether cloudbased or locally hosted, go back to the Dashboard on the sidebar menu and click a new modal.  
+   1. Click the add modal on the dashboard.  Select Cloudbased Services.  Select EKS.  Input your Grafana URL (ex: xxxx.region.xxx.amazonaws.com) at the root path.  
+   2. You should now be able to view two Grafana embedded dashboards -- the Prometheus Metrics & Opencost!  Anytime you want to view the status of other microservices, whether cloudbased or locally hosted, go back to the Dashboard on the sidebar menu and click a new modal.  
 
 ## Cleanup
-    To tear down your cluster, execute this command:
-       `eksctl delete cluster --name=<cluster_name> --region=<cluster_region>`
+   To tear down your cluster, execute this command:
+      `eksctl delete cluster --name=<cluster_name> --region=<cluster_region>`
 
 ## Credit
-    Credit for Knote application goes to the user learnK8s on [Github](https://github.com/learnk8s).  Here is the source project [folder](https://github.com/learnk8s/knote-js/tree/master/04-05/kube). 
+   Credit for Knote application goes to the user learnK8s on [Github](https://github.com/learnk8s).  Here is the source project [folder](https://github.com/learnk8s/knote-js/tree/master/04-05/kube). 
 
