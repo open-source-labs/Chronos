@@ -104,11 +104,11 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
    `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
    2. Execute the command:
         
-        helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus \
-        --namespace prometheus --create-namespace \
-        --set pushgateway.enabled=false \
-        --set alertmanager.enabled=false \
-        -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/prometheus/extraScrapeConfigs.yaml
+     helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus \
+     --namespace prometheus --create-namespace \
+     --set pushgateway.enabled=false \
+     --set alertmanager.enabled=false \
+     -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/prometheus/extraScrapeConfigs.yaml
         
 ## Deploying OpenCost
    1. Execute the command:
@@ -121,19 +121,19 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
       `helm repo add grafana https://grafana.github.io/helm-charts`
    2. Execute the command:
         
-         helm install grafana grafana/grafana \
-         --namespace grafana \
-         --set persistence.storageClassName="gp2" \
-         --set persistence.enabled=true \
-         --set adminPassword='EKS!sAWSome' \
-         --values ${HOME}/environment/grafana/grafana.yaml \
-         --set service.type=LoadBalancer
+     helm install grafana grafana/grafana \
+     --namespace grafana \
+     --set persistence.storageClassName="gp2" \
+     --set persistence.enabled=true \
+     --set adminPassword='EKS!sAWSome' \
+     --values ${HOME}/environment/grafana/grafana.yaml \
+     --set service.type=LoadBalancer
         
    3. Execute these commands to get the URL.  Login in with the username admin and the password EKS!sAWsome
         
-        export ELB=$(kubectl get svc -n grafana grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
-        echo "http://$ELB"
-        ```
+     export ELB=$(kubectl get svc -n grafana grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+     echo "http://$ELB"
+        
    4. To create the dashboard for monitoring Prometheus metrics, go to the sidebar, click on the four square icon, and click '+Import.'  For the ID, type in 3119. For tracking, select Prometheus.  Hit Create.  
    5. For the Opencost dashbaord, go to the sidebar, click on the four square icon, and click '+Import.'  Upload the opencostGrafana.json file, select Prometheus under tracking, and then create.
    6. You need to edit the Grafana ini file to make Grafana publicly accessible.  In order to do so, go to your terminal and run: 
