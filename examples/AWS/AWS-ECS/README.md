@@ -6,7 +6,7 @@ Deploy AWS ECS for testing [Chronos](https://github.com/open-source-labs/Chronos
 
 This sample AWS ECS example allows developers to explore the functionality of Chronos with cloud-based applications.
 
-ECS clustter is deployed with following process:
+ECS cluster is deployed with following process:
 - build Docker Image 
 - upload to Docker hub or ECR 
 - update docker-compose file

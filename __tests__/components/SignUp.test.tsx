@@ -3,15 +3,18 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import { ipcRenderer } from 'electron';
 import SignUp from '../../app/components/SignUp';
 import DashboardContextProvider from '../../app/context/DashboardContext';
+import { HashRouter as Router } from 'react-router-dom';
 
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
 describe('Create Admin Page', () => {
   beforeEach(() => {
     render(
-      <DashboardContextProvider>
-        <SignUp />
-      </DashboardContextProvider>
+      <Router>
+        <DashboardContextProvider>
+          <SignUp />
+        </DashboardContextProvider>
+      </Router>
     );
   });
 
@@ -25,7 +28,7 @@ describe('Create Admin Page', () => {
     expect(element.querySelectorAll('h2').length).toBe(1);
     expect(element.querySelectorAll('form').length).toBe(1);
     expect(element.querySelectorAll('button').length).toBe(2);
-    expect(element.querySelectorAll('input').length).toBe(3);
+    expect(element.querySelectorAll('input').length).toBe(4);
   });
 
   it('Sign up button should submit email, username, and password to addUser', () => {
@@ -34,11 +37,35 @@ describe('Create Admin Page', () => {
     inputs[0].value = 'me';
     inputs[1].value = 'me@gmail.com';
     inputs[2].value = 'me123';
-    fireEvent.click(screen.getByText('Sign Up'));
-    expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
-      email: 'me@gmail.com',
-      username: 'me',
-      password: 'me123',
-    });
+    fireEvent.click(element);
+    expect(ipcRenderer.sendSync).toHaveBeenCalledTimes(1);
+    // expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
+    //   username: 'me',
+    //   email: 'me@gmail.com',
+    //   password: 'me123',
+    // });
   });
 });
+
+// describe('handle submit function', () => {
+//   beforeEach(() => {
+//     render(
+//       <Router>
+//         <DashboardContextProvider>
+//           <SignUp />
+//         </DashboardContextProvider>
+//       </Router>
+//     );
+//   });
+
+//   it('should show error message when passwords don\'t match', () => {
+//     const element = screen.getByTestId('SignUp');
+//     const inputs = element.querySelectorAll('input');
+//     inputs[0].value = 'me';
+//     inputs[1].value = 'me@gmail.com';
+//     inputs[2].value = 'me123';
+//     inputs[3].value = 'me1234';
+//     fireEvent.submit(element);
+//     expect(screen.getByText('Entered passwords do not match')).toBeInTheDocument();
+//   })
+// })

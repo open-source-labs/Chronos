@@ -29,7 +29,10 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
 
   const createChart = () => {
     const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
+    const reverseTimeArr = timeArr.reverse()
     const hashedColour = colourGenerator(metric);
+    const newMetricName =  metric.replace("kubernetes-cadvisor/docker-desktop/", ""); // this will get rid of the long path 
+    const re = /_/g;
     let plotlyData: {
       name: any;
       x: any;
@@ -40,7 +43,7 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
     };
     plotlyData = {
       name: metric,
-      x: timeArr,
+      x: reverseTimeArr,
       y: valueList,
       type: 'scattergl',
       mode: 'lines',
@@ -53,7 +56,7 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
         data={[plotlyData]}
         config={{ displayModeBar: false }}
         layout={{
-          title: metric,
+          title: newMetricName.replace(re," "), // this will reaplce all the underscores in the graph titlke,
           ...sizeSwitch,
           font: {
             color: '#444d56',

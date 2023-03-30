@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "target": "ES6",
+    // "target": "es2019",
     "noImplicitAny": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
@@ -9,12 +11,17 @@
     "sourceMap": true,
     "module": "commonjs",
     "allowJs": true,
-    "target": "es2019",
     "jsx": "react",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    // "types": ["jest", "node", "@testing-library/jest-dom"],
+    "types": ["jest", "node"]
   },
-  "include": ["./electron/**/*", "./electron/**/*.json"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": ["./electron/**/*", "./electron/**/*.json", "jest.config.js"]
 }
