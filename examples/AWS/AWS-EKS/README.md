@@ -104,7 +104,7 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
    `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
    2. Execute the command:
        
-       helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus \
+        helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus \
         --namespace prometheus --create-namespace \
         --set pushgateway.enabled=false \
         --set alertmanager.enabled=false \
