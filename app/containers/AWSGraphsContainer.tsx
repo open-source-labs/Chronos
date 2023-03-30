@@ -23,7 +23,9 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
     awsAppInfo,
     setAwsAppInfo,
     awsEcsData,
+    awsEksData,
     setAwsEcsData,
+    setAwsEksData,
     fetchAwsData,
     fetchAwsEcsData,
     fetchAwsEksData,
@@ -46,16 +48,19 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
           console.log('intervalId after click live', intervalID);
           fetchAwsAppInfo(user, appIndex);
 
-          typeOfService === 'AWS/EC2'
-            ? fetchAwsData(user, appIndex)
-            : fetchAwsEcsData(user, appIndex);
+          if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;
+          if (typeOfService === 'AWS/ECS')fetchAwsEcsData(user, appIndex);
+           if (typeOfService === 'AWS/EKS') fetchAwsEksData(user, appIndex)
         }, 10000)
       );
     } else {
       if (intervalID) clearInterval(intervalID);
       fetchAwsAppInfo(user, appIndex);
 
-      typeOfService === 'AWS/EC2'? fetchAwsData(user, appIndex) : fetchAwsEcsData(user, appIndex);
+      if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;
+      if (typeOfService === 'AWS/ECS') fetchAwsEcsData(user, appIndex);
+      if (typeOfService === 'AWS/EKS') fetchAwsEksData(user, appIndex)
+
     }
 
   }, [awsLive]);
@@ -65,6 +70,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       if (intervalID) clearInterval(intervalID);
       setAwsData({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] });
       setAwsEcsData({});
+      setAwsEksData({});
       setAwsAppInfo({ typeOfService: '', region: '', awsUrl: '' });
     };
   }, []);
@@ -119,9 +125,9 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       )}
       {typeOfService === 'AWS/EKS' && (
         <div>
-          {/* <iframe src={`${awsUrl}/d/8jYcvsBVz/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light`} width="1300" height="1300" ></iframe>
-          <iframe src={`${awsUrl}/d/jPEGwyfVk/opencost?orgId=1&theme=light`} width="1300" height="1300" ></iframe> */}
-          <GrafanaIFrame {...awsAppInfo} />
+          <iframe src={`${awsUrl}/d/8jYcvsBVz/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light&kiosk`} width="1300" height="1300" ></iframe>
+          <iframe src={`${awsUrl}/d/jPEGwyfVk/opencost?orgId=1&theme=light&kiosk`} width="1300" height="1300" ></iframe>
+          {/* <GrafanaIFrame {...awsAppInfo}/> */}
         </div>
       )}
     </div>

@@ -21,6 +21,7 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
+
   });
 
   if (process.env.NODE_ENV === 'development') {
@@ -28,7 +29,7 @@ const createWindow = () => {
     win.loadURL('http://localhost:8080/');
 
     // Uncomment below to use Dev Tools on Electron
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
   } else {
     // Production
     win.loadFile(path.resolve(__dirname, '../index.html'));

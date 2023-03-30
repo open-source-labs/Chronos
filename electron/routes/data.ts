@@ -14,6 +14,7 @@ import fetch, { FetchError } from 'electron-fetch';
 //import { postgresFetch, mongoFetch }  from './dataHelpers';
 import { fetchData } from './dataHelpers';
 import MetricsModel from '../models/MetricsModel';
+const log = require('electron-log');
 
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
@@ -575,50 +576,79 @@ ipcMain.on(
   }
 );
 
+ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: string, appIndex: number) => {
+  const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+  const userAwsService = fileContents[username]?.services[appIndex];
+  const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
+  const url = `${awsUrl}/api/search?folderIds=0`
+  console.log("hi")
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: 'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ=='
+    },
+  });
+  log.info(response);
+  const data = await response.json();
+  console.log(data)
+  console.log(awsUrl)
+  message.sender.send('eksMetricsResponse', JSON.stringify(data));
+});
+
+//end fetch
 // ipcMain.on(
 //   'eksMetricsRequest',
-//   async (message: Electron.IpcMainEvent, username: string, appIndex: number, clusterUrl: string) => {
+//   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
 //     try {
 //       // similar function architecture as EC2 fetch request
 //       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-//       //const userAwsService = fileContents[username]?.services[appIndex];
-//       // set the username and password 
-//       const username = 'admin';
-//       const password = 'prom-operator';
-//       // Encode username and password (required to send via fetch)
-//       // we have to coed in the user and password so that we can get into the grafana api
-//       const encodedCredentials = btoa(`${username}:${password}`);
-  
+//       const userAwsService = fileContents[username]?.services[appIndex];
+//       const awsUrl = userAwsService[9];
+//       const url = `${awsUrl}/api/search?folderIds=0`
 
-//     // possibly hve to change these?
-//       let clusterName: string = '';
-//       const serviceNames: string[] = [];
-//       const ecsData = {};
-//       const dashboardSearchStrings = {
-//         nodeExporterUId: 'Node%20Exporter%20/%20Nodes',
-//         prometheusUId: 'Prometheus%20/%20Overview',
-//         kubeletUId: 'Kubernetes%20/%20Kubelet',
-//         apiServerUId: 'Kubernetes%20/%20API%20Server',
+
+//         const fetchData = async () => {
+//              await fetch(url, {
+//                 method: 'GET',
+//                 headers: {
+//                   "Access-Control-Allow-Origin": "*",
+//                   Accept: "application/json",
+//                   "Content-Type": "application/json",
+//                   Authorization: 'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ=='
+//                 },
+//               });
+
+//         fetchData().then(data => {
+//           message.sender.send('eksMetricsResponse', JSON.stringify(data));
+//         });
 //       };
-//       const response = await fetch(
-//         // make a get request to the cluster url through the grafana api and get the data 
-//         `${clusterUrl}/api/dashboards/db`,
-//         {
-//           method: 'GET',
-//           headers: {
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//             Authorization: `Basic ${encodedCredentials}`,
-//           },
-//         }
-//       )
-//       // we'll used this pared data to show the dashboard 
-//       const parsed  = await response.json();
-
 //     } catch (err) {
 //       console.log(err);
 //     }
 //   }
 // );
 
-//end fetch
+ipcMain.on(
+  'awsAppInfoRequest',
+  async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+    try {
+      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+      const userAwsService = fileContents[username]?.services[appIndex];
+
+      const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
+      const response = {
+        typeOfService: typeOfService,
+        region: region,
+        awsUrl: awsUrl
+      };
+
+      message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+    } catch (err) {
+      console.log('Error in awsAppInfoRequest', message);
+      message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' });
+    }
+  }
+);
