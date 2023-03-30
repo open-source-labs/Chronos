@@ -29,7 +29,9 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
 
   const createChart = () => {
       const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
+      const reverseTimeArr = timeArr.reverse()
       const hashedColour = colourGenerator(renderService);
+      const re = /_/g;
       let plotlyData: {
         name: any;
         x: any;
@@ -39,8 +41,8 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
         marker: { color: string };
       };
       plotlyData = {
-        name: metric,
-        x: timeArr,
+        name: metric.replace(re, " "),
+        x: reverseTimeArr,
         y: valueList,
         type: 'scattergl',
         mode: 'lines',

@@ -4,7 +4,7 @@ import '../stylesheets/Contact.scss';
 import { DashboardContext } from '../context/DashboardContext';
 import lightAndDark from './Styling';
 
-const Contact = React.memo(() => {
+const Contact:React.FC = React.memo(() => {
   const { mode } = useContext(DashboardContext);
 
   const currentMode =

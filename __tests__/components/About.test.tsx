@@ -15,7 +15,7 @@ describe('About Page', () => {
   });
 
   it('Should have three p tags', () => {
-    expect(element.querySelectorAll('p').length).toBe(3);
+    expect(element.querySelectorAll('p').length).toBe(6);
   });
 
   it('Should have three h3 tags', () => {

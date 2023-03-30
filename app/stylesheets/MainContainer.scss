@@ -1,12 +1,15 @@
 @import './constants.scss';
+
 .main-container {
   background-color: $grey;
-  flex: 1;
+  // flex: 1;
   min-height: 100vh;
   @include centerWithFlex(space-between);
   flex-direction: column;
   padding-left: $sidebarWidth;
+  transition: padding-left, 200ms;
   max-width: 100%;
+
 
   .main-routes {
     width: 100%;
@@ -14,6 +17,7 @@
     height: 100%;
     padding-bottom: 20px;
   }
+
   .copyright-container {
     @include centerWithFlex(center);
     position: fixed;

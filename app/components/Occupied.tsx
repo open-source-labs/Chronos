@@ -1,4 +1,4 @@
-/** From Version 5.2 Team:
+ /** From Version 5.2 Team:
  * We only fixed linting issues regarding Notifications.
  * Otherwise, Notifications still does not function properly.
  * Good luck!
@@ -103,7 +103,8 @@ const Occupied = React.memo(() => {
       if (
         selectedService === 'AWS' ||
         selectedService === 'AWS/EC2' ||
-        selectedService === 'AWS/ECS'
+        selectedService === 'AWS/ECS' ||
+        selectedService === 'AWS/EKS'
       ) {
         setAppIndex(i);
         setApp(selectedApp);
