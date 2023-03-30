@@ -23,9 +23,9 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-- Option to choose between cloud hosted services and local services, now giving Chronos the ability to monitor instances and clusters on AWS' EC2 and ECS platforms.
-- An updated AWS Graphs Container to dynamically render plots for EC2 or ECS data fetched with electron using event listeners connecting to AWS CloudWatch w/ the aws-sdk package
-- A step-by-step instruction on setting up a new, functional EC2 instance and/or ECS cluster, ready to be monitored and tested by the app
+- Option to choose between cloud hosted services and local services, now giving Chronos the ability to monitor instances and clusters on AWS' EC2, ECS, and EKS platforms.
+- An updated AWS Graphs Container to dynamically render plots for EC2 or ECS data fetched with Electron using event listeners connecting to AWS CloudWatch w/ the aws-sdk package, as well as utilizing Prometheus and Grafana to fetch and render EKS data.
+- A step-by-step instruction on setting up a new, functional EC2 instance, ECS cluster, and EKS cluster, ready to be monitored and tested by the app.
 - Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 
 ## Features
@@ -44,7 +44,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## Installation
 
-This is for the latest Chronos **version 8 release**.
+This is for the latest Chronos **version 9 release**.
 
 **NOTE:** The Chronos tracker code is included in the _chronos_npm_package_ folder for ease of development, but the published npm package can be downloaded by running `npm install @chronosmicro/tracker`
 
