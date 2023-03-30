@@ -24,7 +24,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## What's New?
 
 - Option to choose between cloud hosted services and local services, now giving Chronos the ability to monitor instances and clusters on AWS' EC2, ECS, and EKS platforms.
-- An updated AWS Graphs Container to dynamically render plots for EC2 or ECS data fetched with Electron using event listeners connecting to AWS CloudWatch w/ the aws-sdk package, as well as utilizing Prometheus and Grafana to fetch and render EKS data.
+- An updated AWS Graphs Container to dynamically render plots for EC2 or ECS data fetched with Electron using event listeners connecting to AWS CloudWatch w/ the aws-sdk package, as well as utilizing Prometheus data scraping and Grafana integration to fetch and render EKS data.
 - A step-by-step instruction on setting up a new, functional EC2 instance, ECS cluster, and EKS cluster, ready to be monitored and tested by the app.
 - Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 
