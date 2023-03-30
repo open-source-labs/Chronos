@@ -12,7 +12,6 @@ You should install the following platforms/tools:
     - Go to the gear icon in the upper right corner.  Go to Kubernetes and check the first box to enable.  Then click 'Apply and Restart.'
 - [Helm](https://helm.sh/docs/intro/install/)
     - Make sure to run `helm repo add stable https://charts.helm.sh/stable` before installing any packages.
-    - 
 
 ## Purpose and Design
 
