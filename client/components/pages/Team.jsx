@@ -66,7 +66,7 @@ const bios = [
   {
     name: 'Brian Lim',
     bioParagraph:
-      'Brian is a full-stack engineer who loves to dance.',
+      'Brian is a full-stack software engineer based in Los Angeles. When he is not knee-deep in a codebase, you can find him shanking golf balls, hiking, or stress eating.',
     picture: bioBrianLimPic,
     contact: {
       gitHub: 'https://github.com/brianlim89',
@@ -76,7 +76,7 @@ const bios = [
   {
     name: 'Victor Ye',
     bioParagraph:
-      'Victor is a full-stack engineer, and a really cool guy.',
+      'Victor is a full-stack engineer located in New York City. He enjoys olympic weightlifting, video games, sports, and customizing mechanical keyboards.',
     picture: bioVictorPic,
     contact: {
       gitHub: '',
