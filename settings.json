@@ -3,7 +3,32 @@
 		"username": "guest",
 		"password": "",
 		"email": "",
-		"services": [],
+		"services": [
+			[
+				"11",
+				"AWS",
+				"us-east-1",
+				"",
+				"AWS/EKS",
+				"Mar 29, 2023 8:58 PM",
+				"",
+				"123",
+				"123",
+				"http://a9921cff905094aa0a45e6e330684283-98913978.us-east-2.elb.amazonaws.com"
+			],
+			[
+				"fdsfds",
+				"AWS",
+				"us-east-1",
+				"",
+				"AWS/EKS",
+				"Mar 29, 2023 9:19 PM",
+				"",
+				"das",
+				"dsa",
+				"http://a9921cff905094aa0a45e6e330684283-98913978.us-east-2.elb.amazonaws.com"
+			]
+		],
 		"mode": "light"
 	}
 }
