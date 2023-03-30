@@ -103,13 +103,13 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
    1. Exectute the command: 
    `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
    2. Execute the command:
-        `
+        
         helm install my-prometheus --repo https://prometheus-community.github.io/helm-charts prometheus \
         --namespace prometheus --create-namespace \
         --set pushgateway.enabled=false \
         --set alertmanager.enabled=false \
         -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/prometheus/extraScrapeConfigs.yaml
-        `
+        
 ## Deploying OpenCost
    1. Execute the command:
       `kubectl apply --namespace opencost -f https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/opencost.yaml`
@@ -121,13 +121,13 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
       `helm repo add grafana https://grafana.github.io/helm-charts`
    2. Execute the command:
         
-        helm install grafana grafana/grafana \
-        --namespace grafana \
-        --set persistence.storageClassName="gp2" \
-        --set persistence.enabled=true \
-        --set adminPassword='EKS!sAWSome' \
-        --values ${HOME}/environment/grafana/grafana.yaml \
-        --set service.type=LoadBalancer
+         helm install grafana grafana/grafana \
+         --namespace grafana \
+         --set persistence.storageClassName="gp2" \
+         --set persistence.enabled=true \
+         --set adminPassword='EKS!sAWSome' \
+         --values ${HOME}/environment/grafana/grafana.yaml \
+         --set service.type=LoadBalancer
         
    3. Execute these commands to get the URL.  Login in with the username admin and the password EKS!sAWsome
         
