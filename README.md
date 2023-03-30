@@ -126,11 +126,11 @@ Refer to the [README](link) in the `kubernetes` folder for more details.
 
 The `AWS` folder includes 3 example applications with instructions on how to deploy them in AWS platforms. Note that using AWS services may cause charges.
 
-    - The ECS folder includes an web application ready to be containerized using Docker. The instruction shows how to deploy application to ECS using Docker CLI command, and it will be managed by Fargate services.
-    - The EC2 folder includes a React/Redux/SQL web application ready to be containerized using Docker. The instruction shows how to deploy application using AWS Beanstalk and connect application to RDS database. Beanstalk service will generate EC2 instance.
-    - The EKS folder includes a containerized note taking app that uses a Mongo database as its persistent volume.  The instructions show how to deploy this application on EKS, how to monitor with Prometheus & Opencost, and how to use Grafana to grab visualizations. 
+- The ECS folder includes an web application ready to be containerized using Docker. The instruction shows how to deploy application to ECS using Docker CLI command, and it will be managed by Fargate services.
+- The EC2 folder includes a React/Redux/SQL web application ready to be containerized using Docker. The instruction shows how to deploy application using AWS Beanstalk and connect application to RDS database. Beanstalk service will generate EC2 instance.
+- The EKS folder includes a containerized note taking app that uses a Mongo database as its persistent volume.  The instructions show how to deploy this application on EKS, how to monitor with Prometheus & Opencost, and how to use Grafana to grab visualizations. 
 
-Refer to the ECS [README](https://github.com/oslabs-beta/Chronos/blob/dev/examples/AWS/AWS-ECS/README.md), EC2 [README](https://github.com/oslabs-beta/Chronos/blob/dev/examples/AWS/AWS-EC2/README.md), and EKS [README] (https://github.com/open-source-labs/Chronos/blob/master/examples/AWS/AWS-EKS/README.md) example in the `AWS` folder for more details.
+Refer to the ECS [README](https://github.com/oslabs-beta/Chronos/blob/dev/examples/AWS/AWS-ECS/README.md), EC2 [README](https://github.com/oslabs-beta/Chronos/blob/dev/examples/AWS/AWS-EC2/README.md), and EKS [README](https://github.com/open-source-labs/Chronos/blob/master/examples/AWS/AWS-EKS/README.md) example in the `AWS` folder for more details.
 
 <br>
 
