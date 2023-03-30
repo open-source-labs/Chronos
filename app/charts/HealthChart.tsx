@@ -42,7 +42,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
       };
       plotlyData = {
         name: metric.replace(re, " "),
-        x: reverseTimeArr,
+        x: reverseTimeArr, //reversed for better UX
         y: valueList,
         type: 'scattergl',
         mode: 'lines',
