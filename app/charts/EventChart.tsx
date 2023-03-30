@@ -31,7 +31,7 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
     const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
     const reverseTimeArr = timeArr.reverse()
     const hashedColour = colourGenerator(metric);
-    const newMetricName =  metric.replace("kubernetes-cadvisor/docker-desktop/", ""); // this will get rid of the long path 
+    const newMetricName =  metric.replace("kubernetes-cadvisor/docker-desktop/", ""); // this will get rid of the long path
     const re = /_/g;
     let plotlyData: {
       name: any;
