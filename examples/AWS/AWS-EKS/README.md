@@ -119,14 +119,14 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
 ## Deploying and Configuring Grafana
    1. Execute the command:
       `helm repo add grafana https://grafana.github.io/helm-charts`
-   2. Execute the command:
+   2. Execute the command (you can find the grafana.yaml file in the AWS-EKS directory):
         
      helm install grafana grafana/grafana \
      --namespace grafana \
      --set persistence.storageClassName="gp2" \
      --set persistence.enabled=true \
      --set adminPassword='EKS!sAWSome' \
-     --values ${HOME}/environment/grafana/grafana.yaml \
+     --values grafana.yaml \
      --set service.type=LoadBalancer
         
    3. Execute these commands to get the URL.  Login in with the username admin and the password EKS!sAWsome
