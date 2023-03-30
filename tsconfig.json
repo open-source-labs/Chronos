@@ -16,7 +16,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmitOnError": false,
-    "types": ["jest", "node", "@testing-library/jest-dom"],
+    // "types": ["jest", "node", "@testing-library/jest-dom"],
+    "types": ["jest", "node"]
   },
   "exclude": [
     "node_modules",

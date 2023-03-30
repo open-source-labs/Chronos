@@ -571,7 +571,7 @@ ipcMain.on(
       message.sender.send('awsAppInfoResponse', JSON.stringify(response));
     } catch (err) {
       console.log('Error in awsAppInfoRequest', message);
-      message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' });
+      message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' , awsUrl: ''});
     }
   }
 );
