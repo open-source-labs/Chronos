@@ -125,7 +125,6 @@ const TransferColumns = React.memo(() => {
   };
 
   const getCharts = () => {
-    // setSelectedMetrics
     const temp: any[] = [];
     const categorySet = new Set();
     console.log('targetKeys is: ', targetKeys);
