@@ -44,10 +44,55 @@ import bioSnowPic from '../../assets/Bio_picture_Snow.jpg';
 import bioTimLeePic from '../../assets/Bio_picture_Tim_Lee.jpg';
 import bioRobertoPic from '../../assets/Bio_picture_Roberto.jpeg';
 import bioTaylorPic from '../../assets/Bio_picture_Taylor.png';
+import bioClairePic from '../../assets/Bio_picture_Claire.png';
+import bioBrianLimPic from '../../assets/Bio_picture_Brian_Lim.jpg';
+import bioVictorPic from '../../assets/Bio_picture_Victor.jpg';
+import bioLennonPic from '../../assets/Bio_picture_Lennon.jpg';
+
 
 import '../../stylesheets/Team.scss';
 
 const bios = [
+  {
+    name: 'Claire Tischuk',
+    bioParagraph:
+      'Claire is a full stack engineer located in Tallahassee, Florida.  She is passionate about building useful products that make a difference in people\'s lives.',
+    picture: bioClairePic,
+    contact: {
+      gitHub: 'https://github.com/BoopdiBop',
+      linkedIn: 'https://www.linkedin.com/in/claire-tischuk-45160b1a7/',
+    },
+  },
+  {
+    name: 'Brian Lim',
+    bioParagraph:
+      'Brian is a full-stack software engineer based in Los Angeles. When he is not knee-deep in a codebase, you can find him shanking golf balls, hiking, or stress eating.',
+    picture: bioBrianLimPic,
+    contact: {
+      gitHub: 'https://github.com/brianlim89',
+      linkedIn: 'https://www.linkedin.com/in/brianlim-/',
+    },
+  },
+  {
+    name: 'Victor Ye',
+    bioParagraph:
+      'Victor is a full-stack engineer located in New York City. He enjoys olympic weightlifting, video games, sports, and customizing mechanical keyboards.',
+    picture: bioVictorPic,
+    contact: {
+      gitHub: '',
+      linkedIn: 'https://www.linkedin.com/in/ye-victor/',
+    },
+  },
+  {
+    name: 'Lennon Stewart',
+    bioParagraph:
+      'Lennon is a full-stack engineer who loves playing games, films, and bouldering.',
+    picture: bioLennonPic,
+    contact: {
+      gitHub: '',
+      linkedIn: 'https://www.linkedin.com/in/lennon-stewart-45669524a/',
+    },
+  },
   {
     name: 'Snow X. Bai',
     bioParagraph:
