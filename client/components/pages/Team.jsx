@@ -79,7 +79,7 @@ const bios = [
       'Victor is a full-stack engineer located in New York City. He enjoys olympic weightlifting, video games, sports, and customizing mechanical keyboards.',
     picture: bioVictorPic,
     contact: {
-      gitHub: '',
+      gitHub: 'https://github.com/vctorye',
       linkedIn: 'https://www.linkedin.com/in/ye-victor/',
     },
   },
@@ -89,7 +89,7 @@ const bios = [
       'Lennon is a full-stack engineer who loves playing games, films, and bouldering.',
     picture: bioLennonPic,
     contact: {
-      gitHub: '',
+      gitHub: 'https://github.com/noahoo7',
       linkedIn: 'https://www.linkedin.com/in/lennon-stewart-45669524a/',
     },
   },
