@@ -2,12 +2,13 @@
   "name": "@chronosmicro/display",
   "version": "8.0.1",
   "description": "Chronos microservice metrics display",
-  "main": "./build/Main.js",
+  "main": "./build/electron/Main.js",
   "directories": {
     "doc": "docs",
     "example": "examples"
   },
   "dependencies": {
+    "@chronosmicro/tracker": "^8.0.3",
     "@jest/types": "^29.5.0",
     "@material-ui/core": "^4.12.4",
     "@material-ui/data-grid": "^4.0.0-alpha.37",
@@ -44,7 +45,7 @@
     "babel-plugin-import": "^1.13.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
-    "electron": "^22.0.0",
+    "electron": "^22.3.6",
     "electron-packager": "^17.1.1",
     "fs-extra": "^11.1.0",
     "html-webpack-plugin": "^5.5.0",
