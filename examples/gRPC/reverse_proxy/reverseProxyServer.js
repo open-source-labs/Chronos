@@ -3,7 +3,9 @@ const express = require('express');
 const path = require('path');
 const grpc = require('@grpc/grpc-js');
 const { v4: uuidv4 } = require('uuid');
-const chronos = require('@chronosmicro/tracker');
+const Chronos = require('@chronosmicro/tracker');
+const chronosConfig = require('./chronos-config');
+const chronos = new Chronos(chronosConfig);
 require('./chronos-config');
 
 chronos.track();
