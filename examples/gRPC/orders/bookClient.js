@@ -1,6 +1,8 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const chronos = require('@chronosmicro/tracker');
+const Chronos = require('@chronosmicro/tracker');
+const chronosConfig = require('./chronos-config');
+const chronos = new Chronos(chronosConfig);
 
 const PROTO_PATH = './order.proto';
 
