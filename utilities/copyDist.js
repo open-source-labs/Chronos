@@ -55,3 +55,9 @@ fse.copyFileSync(
   path.resolve(__dirname, '../settings.json'),
   path.resolve(__dirname, '../dist/settings.json')
 );
+
+// Copy settings.json from root directory into the build folder
+fse.copyFileSync(
+  path.resolve(__dirname, '../settings.json'),
+  path.resolve(__dirname, '../build/settings.json')
+);
