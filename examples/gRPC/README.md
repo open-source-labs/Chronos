@@ -25,7 +25,6 @@ CHRONOS_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<db
 
 ORDER_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbname>?retryWrites=true&w=majority
 ```
-  - In each Microservice Mode.js file import and set the Microservice_URI
   - In each Microservices *chronos-config.js* file, verify that `"mode"` property has a value of `"microservices"`
 
 ```
@@ -39,7 +38,7 @@ ORDER_URI = mongodb+srv://<username>:<password>@cluster0.o2hx5.mongodb.net/<dbna
     - The URI should be your CHRONOS_URI
 
 
-**To test the functionality of Chronos using this sample microservices architecture, you must install the [Chronos node module](https://www.npmjs.com/package/chronos-microservice-debugger3) within each microservice. _It is not pre-installed._ Installation instructions for both the Chronos node module and the Chronos desktop visualizer are below:**
+**To test the functionality of Chronos using this sample microservices architecture, you must have the [Chronos node module](https://www.npmjs.com/package/chronos-microservice-debugger3) within each microservice. This is already included as a dependency therefore there should be no need to install it manually. But if it is missing from the dependency list, the installation instructions for both the Chronos node module and the Chronos desktop visualizer are below:**
 
 
 #### Electron desktop application
