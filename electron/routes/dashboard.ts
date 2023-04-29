@@ -1,4 +1,4 @@
-import { ipcMain, IpcMainEvent } from 'electron';
+import { BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 import moment from 'moment';
 import path from 'path';
 import fs from 'fs';
@@ -160,25 +160,28 @@ ipcMain.on('changeMode', (message: IpcMainEvent, currMode: string) => {
   message.returnValue = currMode;
 });
 
-ipcMain.on(
+ipcMain.handle(
   'addUser',
   (message: IpcMainEvent, user: { username: string; password: string; email: string }) => {
     const { username, password, email } = user;
+    console.log(user)
 
     // Verify that username and email have not been taken
     const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-    if (username in settings) {
+    if (settings[username]) {
       message.returnValue = false;
-      return;
+      return message.returnValue;
     }
-
+    
     // Add the new user to the local storage
-    const newUser = new User(username, password, email);
-    settings[username] = newUser;
-    fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
-    currentUser = username;
-    message.returnValue = true;
-    return;
+    else {
+      const newUser = new User(username, password, email);
+      settings[username] = newUser;
+      fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+      currentUser = username;
+      message.returnValue = true;
+      return message.returnValue;
+    }
   }
 );
 
