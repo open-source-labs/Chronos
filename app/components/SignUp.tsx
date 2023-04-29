@@ -22,6 +22,10 @@ const SignUp:React.FC = React.memo(() => {
     // eslint-disable-next-line no-return-assign
     inputFields.forEach(input => (input.value = ''));
 
+    if (!password) {
+      setFailedSignUp(<p>Please enter valid password</p>)
+      return;
+    }
     if (password !== confirmPassword) {
       setFailedSignUp(<p>Entered passwords do not match</p>);
       return;
