@@ -28,13 +28,15 @@ const SignUp:React.FC = React.memo(() => {
     }
 
     ipcRenderer.invoke('addUser', { username, email, password})
-    .then(validSignUp => {
-      if (validSignUp) {
-      setUser(username);
-      navigate('/');
-    } else
-      setFailedSignUp(<p>Sorry, your sign up failed. Please try a different username or email</p>);
-    }).catch(error => {
+      .then((message) => {
+        if (message === true) {
+          setUser(username);
+          console.log(username)
+          navigate('/');
+        } else {
+          setFailedSignUp(<p>Sorry, your sign up failed. Please try a different username or email</p>)
+        }
+      }).catch(error => {
       console.error('Failed to sign up:', error);
       setFailedSignUp(<p>Sorry, your sign up failed. Please try again later</p>);
     });
