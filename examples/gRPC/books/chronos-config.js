@@ -1,9 +1,9 @@
 require('dotenv').config();
-const chronos = require('@chronosmicro/tracker');
 
-chronos.use({
+module.exports = {
   microservice: 'books',
   interval: 2000,
+  mode: 'microservices',
   // dockerized: true,ß
   database: {
     connection: 'gRPC',
@@ -11,4 +11,5 @@ chronos.use({
     URI: process.env.CHRONOS_URI,
   },
   notifications: [],
-});
+};
+

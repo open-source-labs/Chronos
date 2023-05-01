@@ -11,9 +11,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@chronosmicro/tracker": "^8.0.3",
         "@grpc/grpc-js": "^1.2.3",
         "@grpc/proto-loader": "^0.5.5",
-        "@chronosmicro/tracker": "^6.0.3",
         "dotenv": "^8.2.0",
         "mongoose": "^5.11.12"
     }
