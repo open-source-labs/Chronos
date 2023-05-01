@@ -11,11 +11,12 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@chronosmicro/tracker": "^8.0.3",
         "@grpc/grpc-js": "^1.2.5",
         "@grpc/proto-loader": "^0.5.5",
-        "@chronosmicro/tracker": "^6.0.3",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "nodemon": "^2.0.22",
         "uuid": "^8.3.2"
     }
 }

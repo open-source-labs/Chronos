@@ -12,21 +12,19 @@ The frontend has a reverse proxy set up for proxying requests to the appropriate
 ## Steps to Run Example
 Peform the following steps in each of the _books_, _customers_, _frontend_, and _orders_ directories
 
-1. Add a `.env` file to *each* folder with the following key/value pairs:
+1. Add a `.env` file to *each* folder with the following key/value pairs: 
+- **NOTE**: Ensure that there are no quotes surrounding any of the keys and values.
 
-- `CHRONOS_DB`: `MongoDB` or `PostgreSQL`
-- `CHRONOS_URI`: The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
-- `BOOK_URI`: A **MongoDB** URI for the bookserver microservice to use
-- `CUSTOMER_URI`: A **MongoDB** URI for the customerserver microservice to use
-- `ORDER_URI`:  A **MongoDB** URI for the orderserver microservice to use
-
+```
+CHRONOS_DB = MongoDB or PostgreSQL
+CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
+BOOK_URI = A **MongoDB** URI for the bookserver microservice to use
+CUSTOMER_URI = A **MongoDB** URI for the customerserver microservice to use
+ORDER_URI =  A **MongoDB** URI for the orderserver microservice to use
+```
 2.  Verify that @chronosmicro/tracker is a dependency in each of the /books, /customers, /frontend, and /orders folders (see the `package.json` in each folder).
 
-- If the @chronosmicro/tracker dependency is listed as a remote npm package (i.e. `"@chronosmicro/tracker": "^8.0.1"`), no further work is needed.
-
-- If the @chronosmicro/tracker dependency is listed as a local npm package (i.e. `"@chronosmicro/tracker": "file:./chronos_npm_package"`), the Docker build will require that the the Chronos code is in this folder. Either copy the _chronos_npm_package_ folder in manually, or see next bullet to automate this process **if you are a Mac user**. If the folder is copied in manually for this example, we recommend deleting the copied in folder from each directory when the example is complete.
-
-- **Mac users only:** `cd` into the _scripts_ folder and run the `buildDockerExample.sh` script. This will automatically copy the _chronos_npm_package_ folder into all 4 folders, and then runs the requried `docker-compose` command. If you run this script this, the example should be up and running and no further steps are needed. To delete the copied in folders if they were not automatically deleted by `buildDockerExample.sh`, run the script `cleanupDockerExample.sh`.
+- If the @chronosmicro/tracker dependency is listed as a remote npm package (i.e. `"@chronosmicro/tracker": "^8.0.3"`) and you've ran *npm install*, no further work is needed continue to step 3. If you have the dependency as `"@chronosmicro/tracker": "file:./chronos_npm_package"`, make sure to change the version from `"file:./chronos_npm_package"` to `"^8.0.3"` and run npm install.
 
 3. With the terminal navigated to the the examples/docker folder, run the command:
 ```
