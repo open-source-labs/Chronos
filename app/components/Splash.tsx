@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../stylesheets/Splash.scss';
 
+//Chronos logo when first starting the electron app. Has the picture for 4 seconds. 
 const Splash: React.FC = React.memo(props => {
   const [visible, setVisible] = useState(true);
 

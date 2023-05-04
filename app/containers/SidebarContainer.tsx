@@ -11,7 +11,8 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import { AwsContext } from '../context/AwsContext';
 
 const SidebarContainer = React.memo(props => {
-  const { intervalID } = useContext(ApplicationContext);
+  
+  const { intervalID } = useContext  (ApplicationContext);
   const { isLoading, setLoadingState } = useContext(AwsContext);
 
   // clear interval and set loading state to true when leaving graph containers

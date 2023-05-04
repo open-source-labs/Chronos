@@ -24,8 +24,13 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-
-  function tryParseJSON(jsonString: any) {
+  
+  /**
+ * @function tryParseJson - a function that will parse the JSON data into an object. If there is any error during parsing (a.k.a there is a circular inside the JSON data), console log the error
+ * @param jsonString - JSON data that is received from backend
+ * @return an object with all information from backend
+ */
+  function tryParseJSON(jsonString: string) {
     try {
       const o = JSON.parse(jsonString);
 
@@ -38,6 +43,17 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     return false;
   }
 
+  /**
+   * @function fetchServicesNames - a function that will take an application name and update the state of `serviceData` based on backend response
+   * 1. Take in an application name
+   * 
+   * 2. Send a `servicesRequest` to backend
+   * 
+   * 3. Upon `servicesResponse`, parse the received JSON data and assign it to `servicesData`
+   * 
+   * 4. Remove the listener for `servicesResponse`
+   * @param application - application name
+   */  
   const fetchServicesNames = useCallback((application: string) => {
     console.log('app when fetch services name', application);
     // setApp(application);
@@ -46,6 +62,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
 
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       let result: any;
+      // Parse JSON data into object
       if (tryParseJSON(data)) result = JSON.parse(data);
       console.log('result from ipcrenderer services response is: ', result);
       setServicesData(result);
@@ -53,6 +70,12 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     });
   }, []);
 
+  /**
+   * @function connectToDB - a function that ensure database is connected with passed-in `username` and `index`. After that, invoke `fetchServicesName`, passing in `application`
+   * @param username - 
+   * @param index -
+   * @param application - application name
+   */
   const connectToDB = useCallback((username: string, index: number, application: string) => {
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index);
@@ -62,6 +85,9 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     });
   }, []);
 
+  /**
+   * @function getSavedMetrics - a function that will wait for backend `savedMetricsResponse` to update metrics using `setSavedMetrics`
+   */
   const getSavedMetrics = useCallback(() => {
     ipcRenderer.send('savedMetricsRequest');
     ipcRenderer.on('savedMetricsResponse', (event: Electron.Event, data: any) => {
