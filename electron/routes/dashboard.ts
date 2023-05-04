@@ -8,7 +8,7 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
-const MONGO_URI = 'mongodb+srv://wiris316:admin@cluster0.0gybpkf.mongodb.net/?retryWrites=true&w=majority'
+const MONGO_URI = ''
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true, 
   useUnifiedtopology: true,
@@ -35,10 +35,10 @@ const settingsLocation = path.resolve(__dirname, '../../settings.json');
 //     this.mode = 'light';
 //   }
 
-//   hashPassword(password: string) {
-//     const salt = bcrypt.genSaltSync(saltRounds);
-//     return bcrypt.hashSync(password, salt);
-//   }
+function hashPassword(password: string) {
+    const salt = bcrypt.genSaltSync(saltRounds);
+    return bcrypt.hashSync(password, salt);
+  }
 // }
 function checkUser(username) {
   const userExist = User.findOne({ username })
@@ -50,7 +50,7 @@ function checkUser(username) {
 
 function addUser(username, password, email) {
   console.log('inside addUser', username)
-  const newUser = new User({ username: username, password: password, email: email})
+  const newUser = new User({ username: username, password: hashPassword(password), email: email})
   console.log('after calling new User')
 
   newUser.save()
