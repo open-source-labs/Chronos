@@ -4,30 +4,59 @@ import path from 'path';
 import fs from 'fs';
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
+const User = require('../models/UserModel')
+const mongoose = require('mongoose');
+// const db = require('../databases/mongo')
+
+const MONGO_URI = 'mongodb+srv://wiris316:admin@cluster0.0gybpkf.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true, 
+  useUnifiedtopology: true,
+})
 
 // GLOBAL VARIABLES
 let currentUser = 'guest';
 const settingsLocation = path.resolve(__dirname, '../../settings.json');
 
-class User {
-  username: string;
-  password: string;
-  email: string;
-  services: string[][];
-  mode: string;
 
-  constructor(username: string, password: string, email: string) {
-    this.username = username;
-    this.password = this.hashPassword(password);
-    this.email = email;
-    this.services = [];
-    this.mode = 'light';
-  }
 
-  hashPassword(password: string) {
-    const salt = bcrypt.genSaltSync(saltRounds);
-    return bcrypt.hashSync(password, salt);
-  }
+// class User {
+//   username: string;
+//   password: string;
+//   email: string;
+//   services: string[][];
+//   mode: string;
+
+//   constructor(username: string, password: string, email: string) {
+//     this.username = username;
+//     this.password = this.hashPassword(password);
+//     this.email = email;
+//     this.services = [];
+//     this.mode = 'light';
+//   }
+
+//   hashPassword(password: string) {
+//     const salt = bcrypt.genSaltSync(saltRounds);
+//     return bcrypt.hashSync(password, salt);
+//   }
+// }
+function checkUser(username) {
+  const userExist = User.findOne({ username })
+    .then(() => console.log('heeere', userExist))
+    .catch((error) => console.log('checkUser failed'))
+  // console.log('heeeeere', userExist)
+  // return userExist ? true : false;
+}
+
+function addUser(username, password, email) {
+  console.log('inside addUser', username)
+  const newUser = new User({ username: username, password: password, email: email})
+  console.log('after calling new User')
+
+  newUser.save()
+    .then((data) => {
+    console.log('data hurr', data)
+  })
 }
 
 function clearGuestSettings() {
@@ -164,7 +193,7 @@ ipcMain.handle(
   'addUser',
   (message: IpcMainEvent, user: { username: string; password: string; email: string }) => {
     const { username, password, email } = user;
-    console.log(user)
+    console.log('in ipcMainhandle', user)
 
     // Verify that username and email have not been taken
     const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
@@ -172,14 +201,23 @@ ipcMain.handle(
       message.returnValue = false;
       return message.returnValue;
     }
+    // if (checkUser(username) === true) {
+    //   message.returnValue = false; 
+    //   return message.returnValue;
+    // }
     
     // Add the new user to the local storage
+    // else {
+    //   const newUser = new User(username, password, email);
+    //   settings[username] = newUser;
+    //   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+    //   currentUser = username;
+    //   message.returnValue = true;
+    //   return message.returnValue;
+    // }
     else {
-      const newUser = new User(username, password, email);
-      settings[username] = newUser;
-      fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
-      currentUser = username;
-      message.returnValue = true;
+      addUser(username, password, email)
+      message.returnValue = true; 
       return message.returnValue;
     }
   }
