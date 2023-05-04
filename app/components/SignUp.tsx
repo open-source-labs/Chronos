@@ -10,6 +10,10 @@ const SignUp:React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { setUser } = useContext(DashboardContext);
   const [failedSignUp, setFailedSignUp] = useState<JSX.Element>(<>hey</>);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -18,9 +22,17 @@ const SignUp:React.FC = React.memo(() => {
     const email = inputFields[1].value;
     const password = inputFields[2].value;
     const confirmPassword = inputFields[3].value;
+    // setUsername(inputFields[0].value);
+    // setEmail(inputFields[1].value);
+    // setPassword(inputFields[2].value);
+    // setConfirmPassword(inputFields[3].value);
+
+
 
     // eslint-disable-next-line no-return-assign
     inputFields.forEach(input => (input.value = ''));
+
+    console.log('check', username, password, email)
 
     if (password !== confirmPassword) {
       setFailedSignUp(<p>Entered passwords do not match</p>);
