@@ -11,11 +11,17 @@ import { ApplicationContext } from '../context/ApplicationContext';
 import { AwsContext } from '../context/AwsContext';
 
 const SidebarContainer = React.memo(props => {
-  
+  // Extract invervalID from ApplicationContext. Initival value: intervalID = null
   const { intervalID } = useContext  (ApplicationContext);
-  const { isLoading, setLoadingState } = useContext(AwsContext);
+  // Extract isLoading and setLoading state from AwsContext. Initial value: isLoading = true
+  const { isLoading, setLoadingState } = useContext(AwsContext); 
 
   // clear interval and set loading state to true when leaving graph containers
+
+  /**
+   * @function handleCLick - check if the 'intervalID' exists. If so, theres a timer running and the fuunction clears the timer using @function clearInterval - function. 
+   * Checks if variable 'isLoading' is false and if so the content is not loading and therefore, sets it to true using the setLoadingState function.   
+   */
   const handleClick = () => {
     if(intervalID) clearInterval(intervalID);
     if(!isLoading) setLoadingState(true);
