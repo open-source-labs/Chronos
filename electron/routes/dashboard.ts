@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
 const MONGO_URI = ''
+
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true, 
   useUnifiedtopology: true,
@@ -39,14 +40,19 @@ function hashPassword(password: string) {
     const salt = bcrypt.genSaltSync(saltRounds);
     return bcrypt.hashSync(password, salt);
   }
+
+// function checkUser(username): any {
+//   const userExist = User.findOne({ username })
+//     .then((data) => {
+//       console.log('User found', data);
+//       return true;
+//     })
+//     .catch((error) => {
+//       console.log(`checkUser failed : ${error}`)
+//       // return false;
+//     })
+//   // console.log('heeeeere', userExist)
 // }
-function checkUser(username) {
-  const userExist = User.findOne({ username })
-    .then(() => console.log('heeere', userExist))
-    .catch((error) => console.log('checkUser failed'))
-  // console.log('heeeeere', userExist)
-  // return userExist ? true : false;
-}
 
 function addUser(username, password, email) {
   console.log('inside addUser', username)
@@ -196,12 +202,33 @@ ipcMain.handle(
     console.log('in ipcMainhandle', user)
 
     // Verify that username and email have not been taken
-    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-    if (settings[username]) {
-      message.returnValue = false;
-      return message.returnValue;
-    }
+    // const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    // if (settings[username]) {
+    //   message.returnValue = false;
+    //   return message.returnValue;
+    // }
+    
+
+    // checks if username exist in DB, if not, addUser is invoked
+    return User.findOne({ username:username })
+    .then((data) => {
+      console.log('User found', data);
+      if (data) {
+        message.returnValue = false;
+        return message.returnValue;
+      } else {
+        addUser(username, password, email)
+        message.returnValue = true; 
+        return message.returnValue;
+      }
+    })
+    .catch((error) => {
+      console.log(`checkUser failed : ${error}`)
+      // return false;
+    })
+
     // if (checkUser(username) === true) {
+    //   console.log('checkUser invoked', checkUser(username))
     //   message.returnValue = false; 
     //   return message.returnValue;
     // }
@@ -215,11 +242,12 @@ ipcMain.handle(
     //   message.returnValue = true;
     //   return message.returnValue;
     // }
-    else {
-      addUser(username, password, email)
-      message.returnValue = true; 
-      return message.returnValue;
-    }
+    // if (!checkUser(username)) {
+      // addUser(username, password, email)
+      // message.returnValue = true; 
+      // return message.returnValue;
+    // }
+    // return false;
   }
 );
 
