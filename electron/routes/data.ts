@@ -47,7 +47,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
     const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
     // Connect to the proper database
-    if (databaseType === 'MongoDB') await connectMongo(URI);
+    if (databaseType === 'MongoDB') await connectMongo(index,URI);
     if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
 
     // Currently set to a global variable
