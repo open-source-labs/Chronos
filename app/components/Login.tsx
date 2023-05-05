@@ -23,7 +23,8 @@ const Login = React.memo(() => {
     // eslint-disable-next-line no-return-assign
     // inputFields.forEach(input => (input.value = ''));
     const response: boolean | string = ipcRenderer.sendSync('login', { username, password });
-    if (typeof(response) === 'string') {
+    if (typeof (response) === 'string') {
+      console.log('response', response)
       setUser(username);
       setMode(response);
       navigate('/');

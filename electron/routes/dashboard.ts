@@ -8,7 +8,7 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
-const MONGO_URI = ''
+const MONGO_URI = 'mongodb+srv://wiris316:testtesttest123@cluster0.0gybpkf.mongodb.net/?retryWrites=true&w=majority'
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true, 
@@ -141,7 +141,8 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
 ipcMain.on('getApps', (message: IpcMainEvent) => {
   // Retrieves file contents from settings.json for current Apps
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const services: string[][] = settings[currentUser].services;
+  // const services: string[][] = settings[currentUser].services;
+  const services: string[][] = settings['guest'].services; // temporarily set to guests at every login attempt
 
   // Return an array of arrays that is a subset of the full services array
   const dashboardList: string[][] = services.map((arr: string[]) => [
@@ -255,15 +256,44 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   const { username, password } = user;
 
   // Load in the stored users
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  if (username in settings && bcrypt.compareSync(password, settings[username].password)) {
-    currentUser = username;
-    message.returnValue = settings[username].mode;
-    return;
-  } else {
-    message.returnValue = false;
-    return;
-  }
+  // const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  // if (username in settings && bcrypt.compareSync(password, settings[username].password)) {
+  //   currentUser = username;
+  //   message.returnValue = settings[username].mode;
+  //   return;
+  // } else {
+  //   message.returnValue = false;
+  //   return;
+  // }
+  console.log('in login')
+
+  return User.findOne({ username : username })
+    .then((data) => {
+    console.log('data', data)
+    if (data !== null && bcrypt.compareSync(password, data.password)) {
+      console.log('User found');
+      // console.log('found data', data.mode)
+      currentUser = username
+      message.returnValue = data.mode
+      return message.returnValue;
+    } else {
+      message.returnValue = false; 
+      return message.returnValue;
+    }
+  })
+  .catch((error) => {
+    console.log(`checkUser failed : ${error}`)
+    // return false;
+  })
+
+
+
+
+
+
+
+
+
 });
 
 ipcMain.on('signOut', (message: IpcMainEvent) => {
