@@ -97,7 +97,9 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
   //     }
   //   });
   // }, []);
-
+/**
+ * @function transformEventData - seems like this function tranforms raw data into a format that can be visualize in graphs. 
+ */
   const transformEventData = (data: any[]) => {
     const dataList: any[] = [];
     const timeList: any[] = [];
@@ -127,7 +129,7 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
         });
       }
     });
-    return { eventDataList: dataList, eventTimeList: timeList };
+    return { eventDataList: dataList, eventTimeList: timeList }; 
   };
 
   return (
@@ -142,5 +144,4 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
     </EventContext.Provider>
   );
 });
-
 export default EventContextProvider;
