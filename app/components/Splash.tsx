@@ -5,7 +5,7 @@ const Splash: React.FC = React.memo(props => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setVisible(false), 4000);
+    setTimeout(() => setVisible(false), 1000);
   }, []);
 
   return (
