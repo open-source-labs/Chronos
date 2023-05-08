@@ -87,6 +87,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
 
   /**
    * @function getSavedMetrics - a function that will wait for backend `savedMetricsResponse` to update metrics using `setSavedMetrics`
+   * Trying to find what the data type needs to be. 
    */
   const getSavedMetrics = useCallback(() => {
     ipcRenderer.send('savedMetricsRequest');
