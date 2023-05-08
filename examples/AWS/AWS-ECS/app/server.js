@@ -9,7 +9,8 @@ const chronosConfig = require('./chronos-config.js');
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 chronos.propagate();
-app.use('/', chronos.track());
+
+chronos.track()
 
 
 app.use(bodyParser.urlencoded({
