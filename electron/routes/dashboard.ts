@@ -41,19 +41,6 @@ function hashPassword(password: string) {
     return bcrypt.hashSync(password, salt);
   }
 
-// function checkUser(username): any {
-//   const userExist = User.findOne({ username })
-//     .then((data) => {
-//       console.log('User found', data);
-//       return true;
-//     })
-//     .catch((error) => {
-//       console.log(`checkUser failed : ${error}`)
-//       // return false;
-//     })
-//   // console.log('heeeeere', userExist)
-// }
-
 function addUser(username, password, email) {
   console.log('inside addUser', username)
   const newUser = new User({ username: username, password: hashPassword(password), email: email})
@@ -79,34 +66,13 @@ function clearGuestSettings() {
  * @return  New list of applications
  */
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
-  // // Retrieves file contents from settings.json
-  // const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  // const services = settings[currentUser].services;
-
-  // // Add new applicaiton to list
-  // const newApp = JSON.parse(application);
-
-  // // Add a creation date to the application
-  // const createdOn = moment().format('lll');
-  // newApp.push(createdOn);
-
-  // // Add app to list of applications
-  // services.push(newApp);
-
-  // // Update settings.json with new list
-  // fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
-
-  // // Sync event - return new applications list
-
-  // message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
-
   const newApp = JSON.parse(application)
-  console.log('newApp here', newApp)
-  console.log('current user', currentUser)
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
 
+  //If currentUser is guest, add services to local instance (settings.json)
   if (currentUser === 'guest') {
+    // Retrieves file contents from settings.json
     const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
     const services = settings[currentUser].services;
 
@@ -117,20 +83,20 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
     fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
     // Sync event - return new applications list
-    message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+    message.returnValue = services.map((arr: string[]) => [...arr]);
+
+  // Else currentUser is not guest, find user in DB and add app to list of applications
   } else {
     console.log('not guest')
     return User.findOneAndUpdate({ username: currentUser }, {
       $push: {services: newApp}
-    })
+    }, {new: true})
     .then((data) => {
-      console.log('User found', data);
-      console.log('services here', data.services)
-      message.returnValue = data.services.map((arr:string[]) => [...arr])
+      console.log('User updated', data);
+      message.returnValue = data.services.map((arr)=> [...arr])
     })
     .catch((error) => {
       console.log(`addApp failed : ${error}`)
-      // return false;
     })
   }
 });
