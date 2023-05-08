@@ -34,6 +34,14 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
     return false;
   }
 
+  /**
+   * @function fetchEventData - takes parameter arg. 
+   * Checks if arg is strictly equals to 'kafkametrics', if so removes the event listerner suing the ipcRenderer.removeAllListeners. 
+   * Sends a message using 'ipcRenderer.send'. 
+   * This function seems to be fetching event data and updating the state accordingly. 
+   * Problem: trying to change type any to something some concrete. 
+   */
+
   const fetchEventData = useCallback((arg: any) => {
     if (arg === 'kafkametrics') {
       ipcRenderer.removeAllListeners('kafkaResponse');

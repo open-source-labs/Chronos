@@ -193,7 +193,6 @@ ipcMain.on('dockerRequest', async (message, service) => {
 ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any = {};
-
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents from the services collection
