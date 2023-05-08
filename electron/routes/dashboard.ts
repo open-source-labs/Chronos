@@ -8,7 +8,7 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
-const MONGO_URI = 'mongodb+srv://wiris316:testtesttest123@cluster0.0gybpkf.mongodb.net/?retryWrites=true&w=majority'
+const MONGO_URI = ''
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true, 
@@ -79,26 +79,60 @@ function clearGuestSettings() {
  * @return  New list of applications
  */
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
-  // Retrieves file contents from settings.json
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const services = settings[currentUser].services;
+  // // Retrieves file contents from settings.json
+  // const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  // const services = settings[currentUser].services;
 
-  // Add new applicaiton to list
-  const newApp = JSON.parse(application);
+  // // Add new applicaiton to list
+  // const newApp = JSON.parse(application);
 
-  // Add a creation date to the application
+  // // Add a creation date to the application
+  // const createdOn = moment().format('lll');
+  // newApp.push(createdOn);
+
+  // // Add app to list of applications
+  // services.push(newApp);
+
+  // // Update settings.json with new list
+  // fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+
+  // // Sync event - return new applications list
+
+  // message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+
+  const newApp = JSON.parse(application)
+  console.log('newApp here', newApp)
+  console.log('current user', currentUser)
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
 
-  // Add app to list of applications
-  services.push(newApp);
+  if (currentUser === 'guest') {
+    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    const services = settings[currentUser].services;
 
-  // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+    // Add app to list of applications
+    services.push(newApp);
 
-  // Sync event - return new applications list
+    // Update settings.json with new list
+    fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
-  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+    // Sync event - return new applications list
+    message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+  } else {
+    console.log('not guest')
+    return User.findOneAndUpdate({ username: currentUser }, {
+      $push: {services: newApp}
+    })
+    .then((data) => {
+      console.log('User found', data);
+      console.log('services here', data.services)
+      message.returnValue = data.services.map((arr:string[]) => [...arr])
+    })
+    .catch((error) => {
+      console.log(`addApp failed : ${error}`)
+      // return false;
+    })
+  }
 });
 
 /**
@@ -129,7 +163,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
-  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[4], arr[5]]);
 });
 
 /**
@@ -142,17 +176,47 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
   // Retrieves file contents from settings.json for current Apps
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   // const services: string[][] = settings[currentUser].services;
-  const services: string[][] = settings['guest'].services; // temporarily set to guests at every login attempt
+  let services: string[][] = settings['guest'].services; // temporarily set to guests at every login attempt
 
-  // Return an array of arrays that is a subset of the full services array
-  const dashboardList: string[][] = services.map((arr: string[]) => [
-    arr[0],
-    arr[1],
-    arr[3],
-    arr[4],
-    arr[5],
-  ]);
-  message.returnValue = dashboardList;
+  if (currentUser === 'guest') {
+    services = settings['guest'].services
+    const dashboardList: string[][] = services.map((arr: string[]) => [
+      arr[0],
+      arr[1],
+      arr[3],
+      arr[4],
+      arr[5],
+    ]);
+    message.returnValue = dashboardList;
+  } else {
+    return User.findOne({ username: currentUser })
+    .then((data) => {
+      console.log('User found', data);
+        services = data.services; 
+        const dashboardList: string[][] = services.map((arr: string[]) => [
+          arr[0],
+          arr[1],
+          arr[3],
+          arr[4],
+          arr[5],
+        ]);
+      message.returnValue = dashboardList;
+    })
+    .catch((error) => {
+      console.log(`checkUser failed : ${error}`)
+      // return false;
+    })
+  }
+
+  // // Return an array of arrays that is a subset of the full services array
+  // const dashboardList: string[][] = services.map((arr: string[]) => [
+  //   arr[0],
+  //   arr[1],
+  //   arr[3],
+  //   arr[4],
+  //   arr[5],
+  // ]);
+  // message.returnValue = dashboardList;
 });
 
 /**
