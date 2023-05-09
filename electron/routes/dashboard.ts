@@ -159,12 +159,7 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
     .then((data) => {
       console.log('User found', data);
         services = data.services; 
-        const dashboardList: string[][] = services.map((arr: string[]) => [
-          arr[0],
-          arr[1],
-          arr[3],
-          arr[4],
-          arr[5],
+        const dashboardList: string[][] = services.map((arr: string[]) => [...arr
         ]);
       message.returnValue = dashboardList;
     })

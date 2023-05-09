@@ -53,9 +53,9 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     });
   }, []);
 
-  const connectToDB = useCallback((username: string, index: number, application: string) => {
+  const connectToDB = useCallback((username: string, index: number, application: string, URI: string) => {
     ipcRenderer.removeAllListeners('databaseConnected');
-    ipcRenderer.send('connect', username, index);
+    ipcRenderer.send('connect', username, index, URI);
 
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       fetchServicesNames(application);
