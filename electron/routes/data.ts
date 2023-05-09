@@ -16,6 +16,10 @@ import { fetchData } from './dataHelpers';
 import MetricsModel from '../models/MetricsModel';
 const log = require('electron-log');
 
+
+const mongoose = require('mongoose');
+const User = require('../models/UserModel')
+
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
@@ -37,24 +41,60 @@ const settingsLocation = path.resolve(__dirname, '../../settings.json');
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number) => {
+ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number, URI: string) => {
   try {
     // Extract databaseType and URI from settings.json at particular index
     // get index from application context
-    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-    const userDatabase = fileContents[username].services[index];
-    // We get index from sidebar container: which is the mapplication (DEMO)
-    const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-    // Connect to the proper database
-    if (databaseType === 'MongoDB') await connectMongo(index,URI);
-    if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
+    // Connect to User database instantiated in 'dashboard.ts'
+    if (username !== 'guest') {
+      
+      const MONGO_URI = URI
+      mongoose.connect(MONGO_URI, {
+        useNewUrlParser: true, 
+        useUnifiedtopology: true,
+      })
+  
+      // Check for existing user in DB, if found, connect to load application based on database type
+      return User.findOne({ username: username })
+      .then(async (data) => {
+        const databaseType = data.services[index][1]
+        const appURI = data.services[index][2]
+        console.log('database type', databaseType)
+        if (databaseType === 'MongoDB') {
+          await connectMongo(index, appURI)
+          currentDatabaseType = databaseType;
+          message.sender.send('databaseConnected', 'connected!');
+        } else if (databaseType === 'SQL') {
+          pool = await connectPostgres(index, appURI);
+          currentDatabaseType = databaseType;
+          message.sender.send('databaseConnected', 'connected!');
+        }
+      })
+      .catch((error) => {
+        console.log(` Error in connect, failed to load application : ${error}`)
+        // return false;
+      })
+    }
 
-    // Currently set to a global variable
-    currentDatabaseType = databaseType;
+    //LOCAL INSTANCE: SETTINGS.JSON
+    else {
 
-    message.sender.send('databaseConnected', 'connected!');
-    // eslint-disable-next-line no-shadow
+      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+      const userDatabase = fileContents[username].services[index];
+      // We get index from sidebar container: which is the mapplication (DEMO)
+      const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
+  
+      // Connect to the proper database
+      if (databaseType === 'MongoDB') await connectMongo(index,URI);
+      if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
+  
+      // Currently set to a global variable
+      currentDatabaseType = 'MongoDB';
+  
+      message.sender.send('databaseConnected', 'connected!');
+      // eslint-disable-next-line no-shadow
+    }
   } catch ({ message }) {
     console.log('Error in "connect" event', message);
   }
