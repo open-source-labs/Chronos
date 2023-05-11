@@ -10,6 +10,10 @@ const SignUp:React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { setUser } = useContext(DashboardContext);
   const [failedSignUp, setFailedSignUp] = useState<JSX.Element>(<>hey</>);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   function handleSubmit(e: any) {
     e.preventDefault();
@@ -18,6 +22,12 @@ const SignUp:React.FC = React.memo(() => {
     const email = inputFields[1].value;
     const password = inputFields[2].value;
     const confirmPassword = inputFields[3].value;
+    // setUsername(inputFields[0].value);
+    // setEmail(inputFields[1].value);
+    // setPassword(inputFields[2].value);
+    // setConfirmPassword(inputFields[3].value);
+
+
 
     // eslint-disable-next-line no-return-assign
     inputFields.forEach(input => (input.value = ''));
@@ -33,12 +43,14 @@ const SignUp:React.FC = React.memo(() => {
 
     ipcRenderer.invoke('addUser', { username, email, password})
       .then((message) => {
-        if (message === true) {
-          setUser(username);
-          console.log(username)
-          navigate('/');
-        } else {
+        console.log('message', message)
+        if (message === false) {
           setFailedSignUp(<p>Sorry, your sign up failed. Please try a different username or email</p>)
+        } else {
+          console.log('in frontend', username)
+          // setUser(username);
+          navigate('/login');
+          alert('USER CREATED: PLEASE LOG IN')
         }
       }).catch(error => {
       console.error('Failed to sign up:', error);
@@ -55,13 +67,13 @@ const SignUp:React.FC = React.memo(() => {
 
         <form className="form" onSubmit={handleSubmit}>
           <label className="username">
-            <input type="text" name="username" id="username" placeholder="enter username" />
+            <input type="text" name="username" id="username" minLength={4} placeholder="enter username" />
           </label>
           <label className="email">
             <input type="email" name="email" id="email" placeholder="your@email.here" />
           </label>
           <label className="password">
-            <input type="password" name="password" id="password" placeholder="enter password" />
+            <input type="password" name="password" id="password" minLength={9} placeholder="enter password" />
           </label>
           <label className="passwordConfirm">
             <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="confirm password" />

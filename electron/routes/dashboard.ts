@@ -4,30 +4,52 @@ import path from 'path';
 import fs from 'fs';
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
+const User = require('../models/UserModel')
+const mongoose = require('mongoose');
+// const db = require('../databases/mongo')
+
+const MONGO_URI = ''
+
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true, 
+  useUnifiedtopology: true,
+})
 
 // GLOBAL VARIABLES
 let currentUser = 'guest';
 const settingsLocation = path.resolve(__dirname, '../../settings.json');
 
-class User {
-  username: string;
-  password: string;
-  email: string;
-  services: string[][];
-  mode: string;
 
-  constructor(username: string, password: string, email: string) {
-    this.username = username;
-    this.password = this.hashPassword(password);
-    this.email = email;
-    this.services = [];
-    this.mode = 'light';
-  }
 
-  hashPassword(password: string) {
+// class User {
+//   username: string;
+//   password: string;
+//   email: string;
+//   services: string[][];
+//   mode: string;
+
+//   constructor(username: string, password: string, email: string) {
+//     this.username = username;
+//     this.password = this.hashPassword(password);
+//     this.email = email;
+//     this.services = [];
+//     this.mode = 'light';
+//   }
+
+function hashPassword(password: string) {
     const salt = bcrypt.genSaltSync(saltRounds);
     return bcrypt.hashSync(password, salt);
   }
+
+function addUser(username, password, email) {
+  console.log('inside addUser', username)
+  const newUser = new User({ username: username, password: hashPassword(password), email: email})
+  console.log('after calling new User')
+
+  newUser.save()
+    .then((data) => {
+    console.log('data hurr', data)
+  })
 }
 
 function clearGuestSettings() {
@@ -44,26 +66,39 @@ function clearGuestSettings() {
  * @return  New list of applications
  */
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
-  // Retrieves file contents from settings.json
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const services = settings[currentUser].services;
-
-  // Add new applicaiton to list
-  const newApp = JSON.parse(application);
-
-  // Add a creation date to the application
+  const newApp = JSON.parse(application)
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
 
-  // Add app to list of applications
-  services.push(newApp);
+  //If currentUser is guest, add services to local instance (settings.json)
+  if (currentUser === 'guest') {
+    // Retrieves file contents from settings.json
+    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    const services = settings[currentUser].services;
 
-  // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+    // Add app to list of applications
+    services.push(newApp);
 
-  // Sync event - return new applications list
+    // Update settings.json with new list
+    fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
-  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+    // Sync event - return new applications list
+    message.returnValue = services.map((arr: string[]) => [...arr]);
+
+  // Else currentUser is not guest, find user in DB and add app to list of applications
+  } else {
+    console.log('not guest')
+    return User.findOneAndUpdate({ username: currentUser }, {
+      $push: {services: newApp}
+    }, {new: true})
+    .then((data) => {
+      console.log('User updated', data);
+      message.returnValue = data.services.map((arr)=> [...arr])
+    })
+    .catch((error) => {
+      console.log(`addApp failed : ${error}`)
+    })
+  }
 });
 
 /**
@@ -94,7 +129,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
 
   // Sync event - return new applications list
-  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4], arr[5]]);
+  message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[4], arr[5]]);
 });
 
 /**
@@ -106,17 +141,43 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
 ipcMain.on('getApps', (message: IpcMainEvent) => {
   // Retrieves file contents from settings.json for current Apps
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const services: string[][] = settings[currentUser].services;
+  // const services: string[][] = settings[currentUser].services;
+  let services: string[][] = settings['guest'].services; // temporarily set to guests at every login attempt
 
-  // Return an array of arrays that is a subset of the full services array
-  const dashboardList: string[][] = services.map((arr: string[]) => [
-    arr[0],
-    arr[1],
-    arr[3],
-    arr[4],
-    arr[5],
-  ]);
-  message.returnValue = dashboardList;
+  if (currentUser === 'guest') {
+    services = settings['guest'].services
+    const dashboardList: string[][] = services.map((arr: string[]) => [
+      arr[0],
+      arr[1],
+      arr[3],
+      arr[4],
+      arr[5],
+    ]);
+    message.returnValue = dashboardList;
+  } else {
+    return User.findOne({ username: currentUser })
+    .then((data) => {
+      console.log('User found', data);
+        services = data.services; 
+        const dashboardList: string[][] = services.map((arr: string[]) => [...arr
+        ]);
+      message.returnValue = dashboardList;
+    })
+    .catch((error) => {
+      console.log(`checkUser failed : ${error}`)
+      // return false;
+    })
+  }
+
+  // // Return an array of arrays that is a subset of the full services array
+  // const dashboardList: string[][] = services.map((arr: string[]) => [
+  //   arr[0],
+  //   arr[1],
+  //   arr[3],
+  //   arr[4],
+  //   arr[5],
+  // ]);
+  // message.returnValue = dashboardList;
 });
 
 /**
@@ -125,20 +186,48 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
  * @return  Returns the new list of applications
  */
 ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
-  // Retrives file contents from settings.json
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const userServices = settings[currentUser].services;
 
-  // Remove application from settings.json
-  userServices.splice(index, 1);
+  if (currentUser === 'guest') {
 
-  // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'), {
-    encoding: 'utf8',
-  });
+    // Retrives file contents from settings.json
+    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    const userServices = settings[currentUser].services;
+  
+    // Remove application from settings.json
+    userServices.splice(index, 1);
+  
+    // Update settings.json with new list
+    fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'), {
+      encoding: 'utf8',
+    });
+  
+    // Sync event - return new applications list
+    message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  }
 
-  // Sync event - return new applications list
-  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  else {
+    console.log('not guest')
+    return User.findOne({ username: currentUser })
+    .then((data) => {
+      console.log('User found', data);
+        const service = data.services[index]; 
+        return User.findOneAndUpdate({ username: currentUser }, {
+          $pull: {services: service}
+          }, {new: true})
+          .then((data) => {
+            console.log('Service deleted', data);
+            message.returnValue = data.services.map((arr)=> [...arr])
+          })
+  .catch((error) => {
+    console.log(`addApp failed : ${error}`)
+  })
+      })
+    .catch((error) => {
+      console.log(`checkUser failed : ${error}`)
+      // return false;
+    })
+
+  }
 });
 
 /**
@@ -164,24 +253,55 @@ ipcMain.handle(
   'addUser',
   (message: IpcMainEvent, user: { username: string; password: string; email: string }) => {
     const { username, password, email } = user;
-    console.log(user)
+    console.log('in ipcMainhandle', user)
 
     // Verify that username and email have not been taken
-    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-    if (settings[username]) {
-      message.returnValue = false;
-      return message.returnValue;
-    }
+    // const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    // if (settings[username]) {
+    //   message.returnValue = false;
+    //   return message.returnValue;
+    // }
+    
+
+    // checks if username exist in DB, if not, addUser is invoked
+    return User.findOne({ username:username })
+    .then((data) => {
+      console.log('User found', data);
+      if (data) {
+        message.returnValue = false;
+        return message.returnValue;
+      } else {
+        addUser(username, password, email)
+        message.returnValue = true; 
+        return message.returnValue;
+      }
+    })
+    .catch((error) => {
+      console.log(`checkUser failed : ${error}`)
+      // return false;
+    })
+
+    // if (checkUser(username) === true) {
+    //   console.log('checkUser invoked', checkUser(username))
+    //   message.returnValue = false; 
+    //   return message.returnValue;
+    // }
     
     // Add the new user to the local storage
-    else {
-      const newUser = new User(username, password, email);
-      settings[username] = newUser;
-      fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
-      currentUser = username;
-      message.returnValue = true;
-      return message.returnValue;
-    }
+    // else {
+    //   const newUser = new User(username, password, email);
+    //   settings[username] = newUser;
+    //   fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
+    //   currentUser = username;
+    //   message.returnValue = true;
+    //   return message.returnValue;
+    // }
+    // if (!checkUser(username)) {
+      // addUser(username, password, email)
+      // message.returnValue = true; 
+      // return message.returnValue;
+    // }
+    // return false;
   }
 );
 
@@ -189,15 +309,44 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   const { username, password } = user;
 
   // Load in the stored users
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  if (username in settings && bcrypt.compareSync(password, settings[username].password)) {
-    currentUser = username;
-    message.returnValue = settings[username].mode;
-    return;
-  } else {
-    message.returnValue = false;
-    return;
-  }
+  // const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+  // if (username in settings && bcrypt.compareSync(password, settings[username].password)) {
+  //   currentUser = username;
+  //   message.returnValue = settings[username].mode;
+  //   return;
+  // } else {
+  //   message.returnValue = false;
+  //   return;
+  // }
+  console.log('in login')
+
+  return User.findOne({ username : username })
+    .then((data) => {
+    console.log('data', data)
+    if (data !== null && bcrypt.compareSync(password, data.password)) {
+      console.log('User found');
+      // console.log('found data', data.mode)
+      currentUser = username
+      message.returnValue = data.mode
+      return message.returnValue;
+    } else {
+      message.returnValue = false; 
+      return message.returnValue;
+    }
+  })
+  .catch((error) => {
+    console.log(`checkUser failed : ${error}`)
+    // return false;
+  })
+
+
+
+
+
+
+
+
+
 });
 
 ipcMain.on('signOut', (message: IpcMainEvent) => {
