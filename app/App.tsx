@@ -5,6 +5,7 @@ import './stylesheets/scrollBar.scss';
 
 
 // this is the fitness gram pacer test
+// React memo helps with rendering optimization. The components within React memo will only be rerendered if prompt has changed
 const App: React.FC = React.memo(() => {
   return (
     <div>

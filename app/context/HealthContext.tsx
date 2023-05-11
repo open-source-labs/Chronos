@@ -34,10 +34,15 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     return false;
   }
 
+
+  /**
+   * @function fetchEventData - sending a request to the backend to retrieve data. 
+   * Data is then parsed and the setHealthData is then set. 
+   */
   const fetchHealthData = useCallback(serv => {
     ipcRenderer.removeAllListeners('healthResponse');
 
-    let temp: any[] = [];
+    let temp: string[] = [];
     console.log('the cb being passed into fetch health data from graphscontainer is: ', serv);
 
     Promise.all(
