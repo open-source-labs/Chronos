@@ -64,6 +64,7 @@ const DashboardContextProvider = React.memo((props: any) => {
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {
     const { typeOfService, instance, region, accessKey, secretAccessKey, name, description, awsUrl } = awsFields;
+  // call to ipcRenderer returns an array consisting of name, 'AWS', region, 'AWS/(instance)', instance
     const result = ipcRenderer.sendSync(
       'addAwsApp', //"addApp"
       JSON.stringify([name, 'AWS', region, description, typeOfService, instance, accessKey, secretAccessKey, awsUrl])

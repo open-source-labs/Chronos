@@ -28,6 +28,7 @@ type FormElement = React.FormEvent<HTMLFormElement>;
 const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const { addAwsApp }: IDashboard = useContext(DashboardContext);
 
+  // instance is instanceID
   const [awsFields, setAwsFields] = useState<AwsFields>({
     typeOfService: 'AWS/EC2',
     instance: '',

@@ -25,7 +25,7 @@ const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
 require('dotenv').config({
-  path: path.join(__dirname, './.env'),
+   path: path.join(__dirname, './.env'),
 });
 // Initiate pool variable for SQL setup
 let pool: any;

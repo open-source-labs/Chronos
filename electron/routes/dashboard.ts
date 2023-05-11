@@ -8,13 +8,19 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
-const MONGO_URI = ''
+const MONGO_URI = 'mongodb+srv://chronoslany:chronoslany@cluster0.tvzzzbv.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true, 
-  useUnifiedtopology: true,
-})
+main().catch(err => console.log(err));
+async function main() {
+  await mongoose.connect(MONGO_URI);
+  console.log('user info db connection established...')
+}
+// mongoose.connect(MONGO_URI, {
+//   useNewUrlParser: true, 
+//   useUnifiedtopology: true,
+// })
 
+// may need to first check if db has a current user and if not, change it to guest
 // GLOBAL VARIABLES
 let currentUser = 'guest';
 const settingsLocation = path.resolve(__dirname, '../../settings.json');
@@ -67,6 +73,8 @@ function clearGuestSettings() {
  */
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   const newApp = JSON.parse(application)
+  console.log('parsed newApp: ', newApp);
+  console.log('currentUser', currentUser);
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
 
@@ -103,10 +111,33 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 
 /**
  * @event   addAwsApp
+ * @param  name, 'AWS', region, description, typeOfService, instanceID, accessKey, secretAccessKey, awsURL
  * @desc    Adds an AWS application to the user's list in the settings.json with the provided fields
  * @return  New list of applications
  */
 ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
+
+  const newAwsApp = JSON.parse(application);
+  console.log('parsed newApp: ', newAwsApp);
+  console.log('currentUser', currentUser);
+  const createdOn = moment().format('lll');
+  newAwsApp.push(createdOn);
+
+  if(currentUser !== 'guest'){
+    return User.findOneAndUpdate({ username: currentUser }, {
+      $push: {services: newAwsApp}
+    }, {new: true})
+    .then((data) => {
+      console.log('User updated', data);
+      // returning each array element name, 'AWS', region, 'AWS/(instance)', Date
+      message.returnValue = data.services.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[4], arr[5]])
+    })
+    .catch((error) => {
+      console.log(`addAWSApp failed : ${error}`)
+    })
+  } else {
+    // if user is not guest, should not have to pull info from settings.json file
+  console.log('current user is a guest, data will be saved locally...')
   // Retrieves file contents from settings.json
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   const services = settings[currentUser].services;
@@ -115,10 +146,10 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   // name, instance, region, description, typeOfService, accessKey, secretAccessKey
 
   // Add new applicaiton to list
-  const newAwsApp = JSON.parse(application);
+  // const newAwsApp = JSON.parse(application);
 
   // Add a creation date to the application on the 5th index
-  const createdOn = moment().format('lll');
+  // const createdOn = moment().format('lll');
   newAwsApp.splice(5, 0, createdOn);
 
   // Add app to list of applications
@@ -130,6 +161,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
 
   // Sync event - return new applications list
   message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[4], arr[5]]);
+  }
 });
 
 /**
