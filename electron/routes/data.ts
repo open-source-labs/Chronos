@@ -85,12 +85,13 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
       // We get index from sidebar container: which is the mapplication (DEMO)
       const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
   
+      console.log('if guest, inputted URI here...', URI)
       // Connect to the proper database
       if (databaseType === 'MongoDB') await connectMongo(index,URI);
       if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
   
       // Currently set to a global variable
-      currentDatabaseType = 'MongoDB';
+      currentDatabaseType = databaseType;
   
       message.sender.send('databaseConnected', 'connected!');
       // eslint-disable-next-line no-shadow
@@ -107,9 +108,9 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-
+    
     // Mongo Database
-    if (currentDatabaseType === 'MongoDB') {
+    if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
       result = await ServicesModel.find();
     }

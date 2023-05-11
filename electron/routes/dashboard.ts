@@ -186,20 +186,48 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
  * @return  Returns the new list of applications
  */
 ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
-  // Retrives file contents from settings.json
-  const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-  const userServices = settings[currentUser].services;
 
-  // Remove application from settings.json
-  userServices.splice(index, 1);
+  if (currentUser === 'guest') {
 
-  // Update settings.json with new list
-  fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'), {
-    encoding: 'utf8',
-  });
+    // Retrives file contents from settings.json
+    const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
+    const userServices = settings[currentUser].services;
+  
+    // Remove application from settings.json
+    userServices.splice(index, 1);
+  
+    // Update settings.json with new list
+    fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'), {
+      encoding: 'utf8',
+    });
+  
+    // Sync event - return new applications list
+    message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  }
 
-  // Sync event - return new applications list
-  message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+  else {
+    console.log('not guest')
+    return User.findOne({ username: currentUser })
+    .then((data) => {
+      console.log('User found', data);
+        const service = data.services[index]; 
+        return User.findOneAndUpdate({ username: currentUser }, {
+          $pull: {services: service}
+          }, {new: true})
+          .then((data) => {
+            console.log('Service deleted', data);
+            message.returnValue = data.services.map((arr)=> [...arr])
+          })
+  .catch((error) => {
+    console.log(`addApp failed : ${error}`)
+  })
+      })
+    .catch((error) => {
+      console.log(`checkUser failed : ${error}`)
+      // return false;
+    })
+
+  }
 });
 
 /**
