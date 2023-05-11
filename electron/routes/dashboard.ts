@@ -111,23 +111,33 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
 
 /**
  * @event   addAwsApp
+ * @param  name, 'AWS', region, description, typeOfService, instanceID, accessKey, secretAccessKey, awsURL
  * @desc    Adds an AWS application to the user's list in the settings.json with the provided fields
  * @return  New list of applications
  */
 ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
 
-  const newAWSApp = JSON.parse(application);
-  console.log('parsed newApp: ', newAWSApp);
+  const newAwsApp = JSON.parse(application);
+  console.log('parsed newApp: ', newAwsApp);
   console.log('currentUser', currentUser);
   const createdOn = moment().format('lll');
-  newAWSApp.push(createdOn);
+  newAwsApp.push(createdOn);
 
   if(currentUser !== 'guest'){
-    
-  }
-
-  // if user is not guest, should not have to pull info from settings.json file
-  
+    return User.findOneAndUpdate({ username: currentUser }, {
+      $push: {services: newAwsApp}
+    }, {new: true})
+    .then((data) => {
+      console.log('User updated', data);
+      // returning each array element name, 'AWS', region, 'AWS/(instance)', Date
+      message.returnValue = data.services.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[4], arr[5]])
+    })
+    .catch((error) => {
+      console.log(`addAWSApp failed : ${error}`)
+    })
+  } else {
+    // if user is not guest, should not have to pull info from settings.json file
+  console.log('current user is a guest, data will be saved locally...')
   // Retrieves file contents from settings.json
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   const services = settings[currentUser].services;
@@ -136,7 +146,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   // name, instance, region, description, typeOfService, accessKey, secretAccessKey
 
   // Add new applicaiton to list
-  const newAwsApp = JSON.parse(application);
+  // const newAwsApp = JSON.parse(application);
 
   // Add a creation date to the application on the 5th index
   // const createdOn = moment().format('lll');
@@ -151,6 +161,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
 
   // Sync event - return new applications list
   message.returnValue = services.map((arr: string[]) => [arr[0], arr[1], arr[2], arr[4], arr[5]]);
+  }
 });
 
 /**
