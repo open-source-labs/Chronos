@@ -34,6 +34,14 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
     return false;
   }
 
+  /**
+   * @function fetchEventData - takes parameter arg. 
+   * Checks if arg is strictly equals to 'kafkametrics', if so removes the event listerner suing the ipcRenderer.removeAllListeners. 
+   * Sends a message using 'ipcRenderer.send'. 
+   * This function seems to be fetching event data and updating the state accordingly. 
+   * Problem: trying to change type any to something some concrete. 
+   */
+
   const fetchEventData = useCallback((arg: any) => {
     if (arg === 'kafkametrics') {
       ipcRenderer.removeAllListeners('kafkaResponse');
@@ -89,7 +97,9 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
   //     }
   //   });
   // }, []);
-
+/**
+ * @function transformEventData - seems like this function tranforms raw data into a format that can be visualize in graphs. 
+ */
   const transformEventData = (data: any[]) => {
     const dataList: any[] = [];
     const timeList: any[] = [];
@@ -119,7 +129,7 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
         });
       }
     });
-    return { eventDataList: dataList, eventTimeList: timeList };
+    return { eventDataList: dataList, eventTimeList: timeList }; 
   };
 
   return (
@@ -134,5 +144,4 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
     </EventContext.Provider>
   );
 });
-
 export default EventContextProvider;
