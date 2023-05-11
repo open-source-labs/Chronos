@@ -18,7 +18,9 @@ interface IService {
 }
 
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
-  const { user } = useContext(DashboardContext)
+  const { user, applications } = useContext(DashboardContext)
+  console.log('hereerer', useContext(DashboardContext))
+  console.log('aappp', applications[i][2])
   const { servicesData, connectToDB } = useContext(ApplicationContext);
   const [services, setServices] = useState<Array<string>>([]);
 
@@ -32,7 +34,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   };
 
   useEffect(() => {
-    connectToDB(user, i, app);
+    connectToDB(user, i, app, applications[i][2]);
   }, [i]);
 
   return (
