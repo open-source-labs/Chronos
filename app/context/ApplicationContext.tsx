@@ -70,15 +70,9 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     });
   }, []);
 
-  /**
-   * @function connectToDB - a function that ensure database is connected with passed-in `username` and `index`. After that, invoke `fetchServicesName`, passing in `application`
-   * @param username - 
-   * @param index -
-   * @param application - application name
-   */
-  const connectToDB = useCallback((username: string, index: number, application: string) => {
+  const connectToDB = useCallback((username: string, index: number, application: string, URI: string) => {
     ipcRenderer.removeAllListeners('databaseConnected');
-    ipcRenderer.send('connect', username, index);
+    ipcRenderer.send('connect', username, index, URI);
 
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       fetchServicesNames(application);
