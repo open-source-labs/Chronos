@@ -594,10 +594,28 @@ ipcMain.on(
   }
 );
 
+// ELENA WHERE I LEFT OFF
 ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-    try {
+
+    if(username !== 'guest'){
+      return User.findOne({username: username})
+      .then((data) => {
+        console.log('DB returned user data: ', data);
+        const { services } = data;
+        const [typeOfService, region, awsUrl] = [services[4], services[2], services[9]];
+        const response = {
+          typeOfService, region, awsUrl
+        }
+        message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+      })
+      .catch((error) => {
+        console.log('Error in awsAppInfoRequest in data.ts');
+      })
+    }
+    else {
+      try {
       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
       const userAwsService = fileContents[username]?.services[appIndex];
 
@@ -613,6 +631,8 @@ ipcMain.on(
       console.log('Error in awsAppInfoRequest', message);
       message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' , awsUrl: ''});
     }
+    }
+    
   }
 );
 
