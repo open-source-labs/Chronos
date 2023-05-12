@@ -142,7 +142,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   const services = settings[currentUser].services;
 
-  // order of variables from addAwsApp
+  // order of variables from addAwsApp 
   // name, instance, region, description, typeOfService, accessKey, secretAccessKey
 
   // Add new applicaiton to list

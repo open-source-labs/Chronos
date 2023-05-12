@@ -17,10 +17,15 @@ interface IService {
   microservice: string;
 }
 
+// v10: Seems to never have been updated for cloud-based info...
+// applications[i][2] refers to the local instance URI
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
+  console.log('Hi, inside ServicesModal. Memoize function invoked in ServicesModal.');
+  
   const { user, applications } = useContext(DashboardContext)
-  console.log('hereerer', useContext(DashboardContext))
-  console.log('aappp', applications[i][2])
+  console.log('user from Dashboard Context:', user);
+  console.log('applications from Dashboard Context: ', applications);
+  console.log('applications[i][2]: ', applications[i][2]);
   const { servicesData, connectToDB } = useContext(ApplicationContext);
   const [services, setServices] = useState<Array<string>>([]);
 

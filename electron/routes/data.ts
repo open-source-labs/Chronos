@@ -36,6 +36,9 @@ let currentDatabaseType: string;
 // Provide location to settings.json
 const settingsLocation = path.resolve(__dirname, '../../settings.json');
 
+// v10 notes: should only be calling connect for local instances. Currently, the services array is differenct for
+// local instances vs cloud instances but this function can still be called by cloud isntances, causing an issue.
+// fix below is a band-aid for now, a better solution would be optimal.
 /**
  * @event   connect
  * @desc    Connects user to database and sets global currentDatabaseType which
@@ -49,18 +52,20 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
     // Connect to User database instantiated in 'dashboard.ts'
     if (username !== 'guest') {
       
-      const MONGO_URI = URI
-      mongoose.connect(MONGO_URI, {
-        useNewUrlParser: true, 
-        useUnifiedtopology: true,
-      })
+      // const MONGO_URI = URI
+      // mongoose.connect(MONGO_URI, {
+      //   useNewUrlParser: true, 
+      //   useUnifiedtopology: true,
+      // })
   
       // Check for existing user in DB, if found, connect to load application based on database type
       return User.findOne({ username: username })
       .then(async (data) => {
+        console.log('Hi, inside ipcMain.on connect in data.ts!');
         const databaseType = data.services[index][1]
         const appURI = data.services[index][2]
-        console.log('database type', databaseType)
+        console.log('database type', databaseType);
+        console.log('appURI', appURI);
         if (databaseType === 'MongoDB') {
           await connectMongo(index, appURI)
           currentDatabaseType = databaseType;
@@ -70,6 +75,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
           currentDatabaseType = databaseType;
           message.sender.send('databaseConnected', 'connected!');
         }
+        console.log('leaving ipcMain.on connect.')
       })
       .catch((error) => {
         console.log(` Error in connect, failed to load application : ${error}`)
@@ -594,12 +600,13 @@ ipcMain.on(
   }
 );
 
-// ELENA WHERE I LEFT OFF
+// returns response object containing the typeOfService, region, and awsURL for a selected AWS APP
 ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-
+    console.log('Hi, inside data.ts - awsAppInfoRequest');
     if(username !== 'guest'){
+      console.log('inside awsAppInfoRequest, not a guest');
       return User.findOne({username: username})
       .then((data) => {
         console.log('DB returned user data: ', data);
