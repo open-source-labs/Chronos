@@ -69,6 +69,13 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
     
   };
 
+  /**
+ * @event   fetchAWSAppInfo - invoked in AWSGraphsContainer
+ * @desc    
+ * @params  username: 
+ *          index: 
+ */
+  
   const fetchAwsAppInfo = (username: string, index: number) => {
     console.log('Hi, AwsContext -> fetchAwsAppInfo was invoked.');
     ipcRenderer.removeAllListeners('awsAppInfoResponse');
@@ -77,7 +84,7 @@ const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
     ipcRenderer.send('awsAppInfoRequest', username, index);
     ipcRenderer.on('awsAppInfoResponse', (event: Electron.Event, res: any) => {
       const appInfo = JSON.parse(res);
-      console.log('received response: ', res);
+      console.log('received response: ', appInfo);
       setAwsAppInfo(appInfo);
     });
   };

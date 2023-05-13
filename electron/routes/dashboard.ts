@@ -8,13 +8,13 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
-const MONGO_URI = 'mongodb+srv://chronoslany:chronoslany@cluster0.tvzzzbv.mongodb.net/?retryWrites=true&w=majority';
+// const MONGO_URI = 'mongodb+srv://chronoslany:chronoslany@cluster0.tvzzzbv.mongodb.net/?retryWrites=true&w=majority';
 
-main().catch(err => console.log(err));
-async function main() {
-  await mongoose.connect(MONGO_URI);
-  console.log('user info db connection established...')
-}
+// main().catch(err => console.log(err));
+// async function main() {
+//   await mongoose.connect(MONGO_URI);
+//   console.log('user info db connection established...')
+// }
 // mongoose.connect(MONGO_URI, {
 //   useNewUrlParser: true, 
 //   useUnifiedtopology: true,
@@ -354,7 +354,8 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
 
   return User.findOne({ username : username })
     .then((data) => {
-    console.log('data', data)
+    // console.log('data', data)
+    console.log(data.username, ' is being logged in...');
     if (data !== null && bcrypt.compareSync(password, data.password)) {
       console.log('User found');
       // console.log('found data', data.mode)
@@ -365,6 +366,7 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
       message.returnValue = false; 
       return message.returnValue;
     }
+    
   })
   .catch((error) => {
     console.log(`checkUser failed : ${error}`)

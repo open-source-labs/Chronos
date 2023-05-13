@@ -20,6 +20,19 @@ const log = require('electron-log');
 const mongoose = require('mongoose');
 const User = require('../models/UserModel')
 
+// const testURL = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
+// const connectMongoose = async (i: number, URI: string) => {
+//   try {
+//     const db2 = mongoose.createConnection(testURL);
+//     console.log('connection to user provided db established..');
+//     return db2;
+//   } catch (error) {
+//     console.log('Error connecting to second db... ', error);
+//   }
+// }
+
+
+
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
@@ -57,17 +70,23 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
       //   useNewUrlParser: true, 
       //   useUnifiedtopology: true,
       // })
-  
+      // test().catch((error) => console.log('error in second db', error));
+      // async function test() {
+      //   const db2 = await mongoose.createConnection('mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority');
+      //   console.log('connection to user provided db established..');
+      // }
       // Check for existing user in DB, if found, connect to load application based on database type
       return User.findOne({ username: username })
       .then(async (data) => {
-        console.log('Hi, inside ipcMain.on connect in data.ts!');
+        console.log('Hi, inside ipcMain.on connect in data.ts! User db is working, testing second db.');
         const databaseType = data.services[index][1]
         const appURI = data.services[index][2]
         console.log('database type', databaseType);
         console.log('appURI', appURI);
         if (databaseType === 'MongoDB') {
-          await connectMongo(index, appURI)
+          const shouldbedb = await connectMongo(index, appURI);
+          // console.log(shouldbedb);
+          // await connectMongo()
           currentDatabaseType = databaseType;
           message.sender.send('databaseConnected', 'connected!');
         } else if (databaseType === 'SQL') {
@@ -114,7 +133,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-    
+    console.log('Hi, inside data.ts - servicesRequest.');
     // Mongo Database
     if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
@@ -129,6 +148,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
       result = result.rows;
     }
 
+    console.log('Sending the following result to frontend:', result);
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
     // eslint-disable-next-line no-shadow
@@ -698,6 +718,13 @@ ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: 
 //   }
 // );
 
+  /**
+ * @event   awsAppInfoRequest - invoked in fetchAwsAppInfo in ipcRenderer
+ * @desc    Connects to user or guest database and returns a reponse object with the typeOfService,
+ *          region, and awsURL of the services at provided appIndex.
+ * @params  username: 
+ *          index: 
+ */
 ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {

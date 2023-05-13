@@ -20,6 +20,7 @@ export const ApplicationContext = React.createContext<any>(null);
 const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props => {
   const children = props.children;
   const [servicesData, setServicesData] = useState([]);
+  // v10 note: there is not function for setApp so app is never updated.
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
@@ -70,10 +71,16 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     });
   }, []);
 
+    /**
+   * @function connectToTB - invoked in Services Modal when Service Modal component is first rendered or when useEffect invoked.
+   *  creates an event emitter that connects to the user provided URI for the service (should be the database URI...)
+   * v10 notes: seems to only be set up for local instances, not when a cloud based service is clicked, causes an issue since a user provided 
+   * database should not exist...
+   */
   const connectToDB = useCallback((username: string, index: number, application: string, URI: string) => {
+    
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI);
-
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       fetchServicesNames(application);
     });
