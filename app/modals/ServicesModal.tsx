@@ -21,8 +21,8 @@ interface IService {
 // applications[i][2] refers to the local instance URI
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   console.log('Hi, inside ServicesModal. Memoize function invoked in ServicesModal.');
-  
-  const { user, applications } = useContext(DashboardContext)
+
+  const { user, applications } = useContext(DashboardContext);
   console.log('user from Dashboard Context:', user);
   console.log('applications from Dashboard Context: ', applications);
   console.log('applications[i][2]: ', applications[i][2]);
@@ -38,7 +38,9 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
     }
   };
 
+  // note: connectToDB function definition in Application Context. Used
   useEffect(() => {
+    console.log('Hi, inside ServicesModal - connectToDB');
     connectToDB(user, i, app, applications[i][2]);
   }, [i]);
 
