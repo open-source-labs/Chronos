@@ -10,10 +10,11 @@
   "author": "Nana Janashia",
   "license": "ISC",
   "dependencies": {
+    "@chronosmicro/tracker": "^8.0.3",
     "body-parser": "^1.19.0",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "mongodb": "^3.3.3",
-    "mongoose": "^6.9.1",
-    "@chronosmicro/tracker": "file:./chronos_npm_package"
+    "mongoose": "^6.9.1"
   }
 }

@@ -9,7 +9,8 @@ const chronosConfig = require('./chronos-config.js');
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 chronos.propagate();
-app.use('/', chronos.track());
+
+chronos.track()
 
 
 app.use(bodyParser.urlencoded({
@@ -39,47 +40,49 @@ let mongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 // "user-account" with docker. "my-db" with docker-compose
 let databaseName = "my-db";
 
-app.post('/update-profile', function (req, res) {
+app.post('/update-profile', async function (req, res) {
   let userObj = req.body;
 
-  MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
-    if (err) throw err;
-
+  try {
+    const client = await MongoClient.connect(mongoUrlDocker, mongoClientOptions);
     let db = client.db(databaseName);
     userObj['userid'] = 1;
 
     let myquery = { userid: 1 };
     let newvalues = { $set: userObj };
 
-    db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
-      if (err) throw err;
-      client.close();
-    });
+    await db.collection("users").updateOne(myquery, newvalues, {upsert: true});
 
-  });
-  // Send response
-  res.send(userObj);
+    client.close();
+
+    // Send response
+    res.send(userObj);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-app.get('/get-profile', function (req, res) {
-  let response = {};
-  // Connect to the db
-  MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
-    if (err) throw err;
 
-    let db = client.db(databaseName);
+app.get('/get-profile', async function (req, res) {
+  try {
+    // Connect to the db
+    const client = await MongoClient.connect(mongoUrlDocker, mongoClientOptions);
+    const db = client.db(databaseName);
 
-    let myquery = { userid: 1 };
+    const myquery = { userid: 1 };
 
-    db.collection("users").findOne(myquery, function (err, result) {
-      if (err) throw err;
-      response = result;
-      client.close();
+    const result = await db.collection("users").findOne(myquery);
+    const response = result || {};
 
-      // Send response
-      res.send(response ? response : {});
-    });
-  });
+    client.close();
+
+    // Send response
+    res.send(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.listen(3000, function () {
