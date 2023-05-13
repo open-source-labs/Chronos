@@ -14,7 +14,8 @@ const Login = React.memo(() => {
    * Function that will be called when the form button is clicked
    * It handles submitting the login information
    */
-
+  // v10: ipcRenderer returning a string with the response of user mode (light or dark).
+  // There is currently no redirection after failed login.
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const inputFields: HTMLInputElement[] = e.currentTarget.querySelectorAll('input');
@@ -24,7 +25,8 @@ const Login = React.memo(() => {
     // inputFields.forEach(input => (input.value = ''));
     const response: boolean | string = ipcRenderer.sendSync('login', { username, password });
     if (typeof (response) === 'string') {
-      console.log('response', response)
+      console.log('Hi, login successful and response string (mode) is:', response);
+      console.log('Redirected to Occupied from Login.');
       setUser(username);
       setMode(response);
       navigate('/');

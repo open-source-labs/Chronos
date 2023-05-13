@@ -18,9 +18,10 @@ interface IService {
 }
 
 // v10: Seems to never have been updated for cloud-based info...
-// applications[i][2] refers to the local instance URI
+// servicesModal is re-rendered depending on i and application passed in...
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   console.log('Hi, inside ServicesModal. Memoize function invoked in ServicesModal.');
+  console.log('ServicesModal current props (index, app): ', i, ' ', app);
 
   const { user, applications } = useContext(DashboardContext);
   console.log('user from Dashboard Context:', user);
@@ -38,9 +39,13 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
     }
   };
 
-  // note: connectToDB function definition in Application Context. Used
+  // v10: connectToDB function definition in Application Context.
+  // parameters for connectToDB call: user, i (index), app (card title), app URL (url on card)
+  // applications[i][2] refers to the local instance URI
   useEffect(() => {
-    console.log('Hi, inside ServicesModal - connectToDB');
+    console.log('Hi, inside useEffect in ServicesModal. Calling connectToDB function.');
+    console.log("Passing the following parameters for user, i, app, applications, ");
+    console.log(user, ' ', i, ' ', app, ' ', applications);
     connectToDB(user, i, app, applications[i][2]);
   }, [i]);
 
