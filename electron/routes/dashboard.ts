@@ -338,6 +338,7 @@ ipcMain.handle(
 );
 
 ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: string }) => {
+  console.log('Hi, inside ipcMain(login) call in dashboard.ts!');
   const { username, password } = user;
 
   // Load in the stored users
@@ -350,16 +351,18 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   //   message.returnValue = false;
   //   return;
   // }
-  console.log('in login')
 
   return User.findOne({ username : username })
     .then((data) => {
     // console.log('data', data)
     console.log(data.username, ' is being logged in...');
     if (data !== null && bcrypt.compareSync(password, data.password)) {
-      console.log('User found');
-      // console.log('found data', data.mode)
+      console.log('Login was successful.');
+      console.log('returned data: ', data);
+      console.log('found data', data.mode);
       currentUser = username
+
+      // returnValue being set to mode, returned as string.
       message.returnValue = data.mode
       return message.returnValue;
     } else {
@@ -372,14 +375,6 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
     console.log(`checkUser failed : ${error}`)
     // return false;
   })
-
-
-
-
-
-
-
-
 
 });
 

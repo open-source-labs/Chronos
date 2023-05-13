@@ -55,7 +55,10 @@ interface StyleProps {
 }
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
+//v10: Memoized function, witouth any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
+  console.log('Hi, inside Occupied. Memoize function invoked');
+
   const { awsData, fetchAwsData, fetchAwsAppInfo, setLoadingState } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
@@ -76,7 +79,9 @@ const Occupied = React.memo(() => {
   const navigate = useNavigate();
 
   // Grab services and applications whenever the user changes
+  // v10: Runs once when Occupied is memoized, and subsequently when user is updated.
   useEffect(() => {
+    console.log('Hi, inside Occupied.ts useEffect function.');
     setServicesData([]);
     getApplications();
   }, [user]);
@@ -91,6 +96,8 @@ const Occupied = React.memo(() => {
   };
 
   // Handle clicks on Application cards
+  // v10 info: when card is clicked (not on the delete button) if the service is an AWS instance,
+  // you are redirected to AWSGraphsContainer passing in the state object containing typeOfService
   const handleClick = (
     event: ClickEvent,
     selectedApp: string,
@@ -106,9 +113,13 @@ const Occupied = React.memo(() => {
         selectedService === 'AWS/EKS'
       ) {
         setAppIndex(i);
+        // setApp is never invoked, function is not established?
         setApp(selectedApp);
         navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
       } else {
+        console.log('In handleClick Method (local) in Occupied.tsx');
+        console.log('The following are the current values for appIndex, app, servicesData, and serviceModalOpen:');
+        console.log(i, ' ', selectedApp, ' ', 'N/A ', serviceModalOpen );
         setAppIndex(i);
         setApp(selectedApp);
         setServicesData([]);
