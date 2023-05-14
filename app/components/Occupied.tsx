@@ -78,6 +78,7 @@ const Occupied = React.memo(() => {
   // const [showAwsContainer, setShowAwsContainer] = useState(false);
   const navigate = useNavigate();
 
+
   // Grab services and applications whenever the user changes
   // v10: Runs once when Occupied is memoized, and subsequently when user is updated.
   useEffect(() => {
@@ -118,8 +119,9 @@ const Occupied = React.memo(() => {
         navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
       } else {
         console.log('In handleClick Method (local) in Occupied.tsx');
-        console.log('The following are the current values for appIndex, app, servicesData, and serviceModalOpen:');
+        console.log('The following are the new values for appIndex, app, servicesData, and serviceModalOpen:');
         console.log(i, ' ', selectedApp, ' ', 'N/A ', serviceModalOpen );
+      
         setAppIndex(i);
         setApp(selectedApp);
         setServicesData([]);
