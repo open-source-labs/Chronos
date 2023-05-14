@@ -41,13 +41,15 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
 
   // v10: connectToDB function definition in Application Context.
   // parameters for connectToDB call: user, i (index), app (card title), app URL (url on card)
-  // applications[i][2] refers to the local instance URI
+  // applications[i][2] refers to the user provided URI
   useEffect(() => {
     console.log('Hi, inside useEffect in ServicesModal. Calling connectToDB function.');
     console.log("Passing the following parameters for user, i, app, applications, ");
     console.log(user, ' ', i, ' ', app, ' ', applications);
     connectToDB(user, i, app, applications[i][2]);
   }, [i]);
+
+
 
   return (
     <div className="servicesContainer">
