@@ -121,14 +121,9 @@ const Occupied = React.memo(() => {
         selectedService === 'AWS/EKS'
       ) {
         setAppIndex(i);
-        // setApp is never invoked, function is not established?
         setApp(selectedApp);
         navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
       } else {
-        console.log('In handleClick Method (local) in Occupied.tsx');
-        console.log('The following are the new values for appIndex, app, servicesData, and serviceModalOpen:');
-        console.log(i, ' ', selectedApp, ' ', 'N/A ', serviceModalOpen );
-      
         setAppIndex(i);
         setApp(selectedApp);
         setServicesData([]);
