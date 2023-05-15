@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import './routes/dashboard';
 import { clearGuestSettings } from './routes/dashboard';
 import './routes/data';
+import './routes/cloudbased';
 import path from 'path';
 
 // Declare variable to be used as the application window
