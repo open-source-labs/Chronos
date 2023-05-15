@@ -42,10 +42,11 @@ const DashboardContextProvider = React.memo((props: any) => {
   const children = props.children;
 
   // Initial user will always be the guest
-  const [user, setUser] = useState('guest');
-  const [applications, setApplications] = useState<string[]>([]);
+  const [user, setUser] = useState<string>('guest');
+  const [applications, setApplications] = useState<string[][]>([]);
   const [mode, setMode] = useState<string>('light');
 
+  
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
@@ -53,13 +54,17 @@ const DashboardContextProvider = React.memo((props: any) => {
 
   const addApp = useCallback((fields: IFields) => {
     const { typeOfService, database, URI, name, description } = fields;
+    const newApp = [name, database, URI, description, typeOfService];
     console.log('what is the service that was passed into add app: ', typeOfService)
     const result = ipcRenderer.sendSync(
       'addApp',
       JSON.stringify([name, database, URI, description, typeOfService])
     );
     setApplications(result);
-    console.log('the current application that was added is : ', result)
+    // console.log('applications: ', applications);
+    // console.log('new app to add: ', newApp);
+    // setApplications([...applications, newApp]);
+    // console.log('the current application that was added is : ', result);
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {

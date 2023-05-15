@@ -8,13 +8,13 @@ const User = require('../models/UserModel')
 const mongoose = require('mongoose');
 // const db = require('../databases/mongo')
 
-const MONGO_URI = 'mongodb+srv://chronoslany:chronoslany@cluster0.tvzzzbv.mongodb.net/?retryWrites=true&w=majority';
+// const MONGO_URI = 'mongodb+srv://chronoslany:chronoslany@cluster0.tvzzzbv.mongodb.net/?retryWrites=true&w=majority';
 
-main().catch(err => console.log(err));
-async function main() {
-  await mongoose.connect(MONGO_URI);
-  console.log('user info db connection established...')
-}
+// main().catch(err => console.log(err));
+// async function main() {
+//   await mongoose.connect(MONGO_URI);
+//   console.log('user info db connection established...')
+// }
 // mongoose.connect(MONGO_URI, {
 //   useNewUrlParser: true, 
 //   useUnifiedtopology: true,
@@ -142,7 +142,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
   const services = settings[currentUser].services;
 
-  // order of variables from addAwsApp
+  // order of variables from addAwsApp 
   // name, instance, region, description, typeOfService, accessKey, secretAccessKey
 
   // Add new applicaiton to list
@@ -338,6 +338,7 @@ ipcMain.handle(
 );
 
 ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: string }) => {
+  console.log('Hi, inside ipcMain(login) call in dashboard.ts!');
   const { username, password } = user;
 
   // Load in the stored users
@@ -350,34 +351,30 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   //   message.returnValue = false;
   //   return;
   // }
-  console.log('in login')
 
   return User.findOne({ username : username })
     .then((data) => {
-    console.log('data', data)
+    // console.log('data', data)
+    console.log(data.username, ' is being logged in...');
     if (data !== null && bcrypt.compareSync(password, data.password)) {
-      console.log('User found');
-      // console.log('found data', data.mode)
+      console.log('Login was successful.');
+      console.log('returned data: ', data);
+      console.log('found data', data.mode);
       currentUser = username
+
+      // returnValue being set to mode, returned as string.
       message.returnValue = data.mode
       return message.returnValue;
     } else {
       message.returnValue = false; 
       return message.returnValue;
     }
+    
   })
   .catch((error) => {
     console.log(`checkUser failed : ${error}`)
     // return false;
   })
-
-
-
-
-
-
-
-
 
 });
 

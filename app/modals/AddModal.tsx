@@ -13,6 +13,7 @@ interface IFields {
 
 interface IDashboard {
   addApp: (fields: IFields) => void;
+  setApplications: any;
 }
 
 interface AddModalProps {
@@ -23,7 +24,7 @@ type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTM
 type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
-  const { addApp }: IDashboard = useContext(DashboardContext);
+  const { addApp, setApplications }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
     typeOfService: 'Docker',
@@ -36,6 +37,8 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   // Submit form data and save to database
   const handleSubmit = (event: FormElement) => {
     event.preventDefault();
+    // const newApp = [name, database, URI, description, typeOfService];
+    // setApplications(prev => [...prev, ...newApp])
     addApp(fields);
     setOpen(false); // Close modal on submit
   };

@@ -20,6 +20,7 @@ export const ApplicationContext = React.createContext<any>(null);
 const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props => {
   const children = props.children;
   const [servicesData, setServicesData] = useState([]);
+  // v10 note: there is not function for setApp so app is never updated.
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
@@ -54,8 +55,10 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    * 4. Remove the listener for `servicesResponse`
    * @param application - application name
    */  
+  // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
-    console.log('app when fetch services name', application);
+    console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
+    console.log('app when fetch services name: ', application);
     // setApp(application);
 
     ipcRenderer.send('servicesRequest');
@@ -63,17 +66,27 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       let result: any;
       // Parse JSON data into object
-      if (tryParseJSON(data)) result = JSON.parse(data);
+      // if (tryParseJSON(data)) result = JSON.parse(data);
+      result = JSON.parse(data);
       console.log('result from ipcrenderer services response is: ', result);
+      console.log('Calling setServicesData passing in above result. Current servicesData is the following: ', servicesData);
       setServicesData(result);
+      console.log('Leaving fetchedServicesNames function.');
       ipcRenderer.removeAllListeners('servicesResponse');
     });
   }, []);
 
-  const connectToDB = useCallback((username: string, index: number, application: string, URI: string) => {
+    /**
+   * @function connectToTB - invoked in Services Modal when Service Modal component is first rendered or when useEffect invoked.
+   *  creates an event emitter that connects to the user provided URI for the service (should be the database URI...)
+   * v10 notes: seems to only be set up for local instances, not when a cloud based service is clicked, causes an issue since a user provided 
+   * database should not exist...
+   * @params application - is the name of the card taht was clicked on
+   */
+  const connectToDB = useCallback((username: string, index: number, application: string, URI: string, databaseType: string) => {
+    console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
     ipcRenderer.removeAllListeners('databaseConnected');
-    ipcRenderer.send('connect', username, index, URI);
-
+    ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       fetchServicesNames(application);
     });
