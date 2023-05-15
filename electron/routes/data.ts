@@ -58,166 +58,42 @@ const settingsLocation = path.resolve(__dirname, '../../settings.json');
  *          is accessed in info.commsData and info.healthData
  */
 
-ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number, URI: string) => {
+ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number, URI: string, databaseType: string) => {
   
   try{
-    const isConnected = mongoose.connection.readyState === 1;
-    if (isConnected){
-      // console.log('Connection to MongoDb has already been established.');
-      console.log('A connection to a mongoDB has already been establisehd.');
-      mongoose.connection.close((error) => {
-        if(error) {
-          console.log('Error closing mongoDB connection: ', error);
-        }
-        else {
-          console.log('MongoDB connection closed. Reconfiguring connection to new database.');
-          mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-          .then(() => {
-          console.log('Connected to user provided mongo database!');
-          // testing database
-          // ServicesModel.find()
-          // .then(data => console.log(data))
-          // .catch(err => console.log('error fetching services'));
-
-          message.sender.send('databaseConnected', 'connected!');
-          })
-          .catch(error => {
-            console.log('Error connecting to MongoDB inside data.ts connection:', error);
-          });
-        }
-      });
-    } else {
+    // set database type from parameter
+    currentDatabaseType = databaseType;
+    console.log('Database type: ', databaseType);
+    if(currentDatabaseType === 'MongoDB'){
+      // First check if there is already an established mongoose connection with another databse...
+      const isConnected = mongoose.connection.readyState === 1;
+      if (isConnected){
+        console.log('A connection to a mongoDB has already been established. Closing connection.');
+        mongoose.connection.close((error) => {
+          if(error) {
+            console.log('Error closing mongoDB connection: ', error);
+          }
+        });
+      } 
       console.log('Database connection not found. Establishing connection...');
-      // Connect to the proper database
-       mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-          .then(() => {
+        // Connect to the proper database
+      mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+      .then(() => {
           console.log('Connected to user provided mongo database!');
-          // testing database
-          // ServicesModel.find()
-          // .then(data => console.log(data))
-          // .catch(err => console.log('error fetching services'));
-
           message.sender.send('databaseConnected', 'connected!');
-          })
-          .catch(error => {
-            console.log('Error connecting to MongoDB inside data.ts connection:', error);
-          });
-      
-    }
-  }catch(err){
+      })
+      .catch(error => {
+          console.log('Error connecting to MongoDB inside data.ts connection:', error);
+      });  
+    } else if (currentDatabaseType === 'SQL'){
+      // has not been reconfigured to handle different requests to SQL databses.
+       pool = await connectPostgres(index, URI);
+        message.sender.send('databaseConnected', 'connected!');
+    } 
+  } catch(err){
     console.log('Error connecting to databse: ', err);
   }
 });
-//         console.log(` Error in connect, failed to load application : ${error}`)
-
-
-// ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number, URI: string) => {
-//   try {
-//     // const isConnected = mongoose.connection.readyState === 1;
-//     // if (isConnected){
-//     //   console.log('Connection to MongoDb has already been established.');
-//     // } else {
-      
-//     // }
-//     // Extract databaseType and URI from settings.json at particular index
-//     // get index from application context
-
-//     // Connect to User database instantiated in 'dashboard.ts'
-//     if (username !== 'guest') {
-
-//           const isConnected = mongoose.connection.readyState === 1;
-//     if (isConnected){
-//       console.log('Connection to MongoDb has already been established.');
-//       message.sender.send('databaseConnected', 'connection already established.');
-//     } else {
-//        return User.findOne({ username: username })
-//       .then(async (data) => {
-//         console.log('Hi, inside ipcMain.on connect in data.ts! Establishing connection to user provided database URI');
-//         const databaseType = data.services[index][1]
-//         const appURI = data.services[index][2]
-//         console.log('database type', databaseType);
-//         console.log('appURI', appURI);
-//         if (databaseType === 'MongoDB') {
-//           const shouldbedb = await connectMongo(index, appURI);
-//           // console.log(shouldbedb);
-//           // await connectMongo()
-//           currentDatabaseType = databaseType;
-//           message.sender.send('databaseConnected', 'connected!');
-//         } else if (databaseType === 'SQL') {
-//           pool = await connectPostgres(index, appURI);
-//           currentDatabaseType = databaseType;
-//           message.sender.send('databaseConnected', 'connected!');
-//         }
-//         console.log('Established connection to user provided URL...');
-//         console.log('leaving ipcMain.on connect.')
-//       })
-//       .catch((error) => {
-//         console.log(` Error in connect, failed to load application : ${error}`)
-//         // return false;
-//       })
-//     }
-      
-//       // const MONGO_URI = URI
-//       // mongoose.connect(MONGO_URI, {
-//       //   useNewUrlParser: true, 
-//       //   useUnifiedtopology: true,
-//       // })
-//       // test().catch((error) => console.log('error in second db', error));
-//       // async function test() {
-//       //   const db2 = await mongoose.createConnection('mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority');
-//       //   console.log('connection to user provided db established..');
-//       // }
-//       // Check for existing user in DB, if found, connect to load application based on database type
-//       // return User.findOne({ username: username })
-//       // .then(async (data) => {
-//       //   console.log('Hi, inside ipcMain.on connect in data.ts! Establishing connection to user provided database URI');
-//       //   const databaseType = data.services[index][1]
-//       //   const appURI = data.services[index][2]
-//       //   console.log('database type', databaseType);
-//       //   console.log('appURI', appURI);
-//       //   if (databaseType === 'MongoDB') {
-//       //     const shouldbedb = await connectMongo(index, appURI);
-//       //     // console.log(shouldbedb);
-//       //     // await connectMongo()
-//       //     currentDatabaseType = databaseType;
-//       //     message.sender.send('databaseConnected', 'connected!');
-//       //   } else if (databaseType === 'SQL') {
-//       //     pool = await connectPostgres(index, appURI);
-//       //     currentDatabaseType = databaseType;
-//       //     message.sender.send('databaseConnected', 'connected!');
-//       //   }
-//       //   console.log('Established connection to user provided URL...');
-//       //   console.log('leaving ipcMain.on connect.')
-//       // })
-//       // .catch((error) => {
-//       //   console.log(` Error in connect, failed to load application : ${error}`)
-//       //   // return false;
-//       // })
-//     }
-
-//     //LOCAL INSTANCE: SETTINGS.JSON
-//     else {
-
-//       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-//       const userDatabase = fileContents[username].services[index];
-//       // We get index from sidebar container: which is the mapplication (DEMO)
-//       const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
-  
-//       console.log('if guest, inputted URI here...', URI)
-//       // Connect to the proper database
-//       if (databaseType === 'MongoDB') await connectMongo(index,URI);
-//       if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
-  
-//       // Currently set to a global variable
-//       currentDatabaseType = databaseType;
-  
-//       message.sender.send('databaseConnected', 'connected!');
-//       // eslint-disable-next-line no-shadow
-//     }
-//   } catch ({ message }) {
-//     console.log('Error in "connect" event', message);
-//   }
-// });
 
 /**
  * @event   serviceRequest/serviceResponse
@@ -228,17 +104,8 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
     let result: any;
     console.log('Hi, inside data.ts - servicesRequest function. Fetching services...');
 
-    console.log('Testing ServicesModel!');
-    ServicesModel.find()
-    .then(data => {
-       console.log('Testing ServicesModel. Here is the data being sent to front end: ', data);
-       result = data;
-       message.sender.send('servicesResponse', JSON.stringify(result));
-     })
-     .catch(err => console.log('error fetching services'));
-
     // Mongo Database
-    // console.log('CurrentDataBase TYPE:', currentDatabaseType);
+    console.log('CurrentDataBase TYPE:', currentDatabaseType);
     if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
       result = await ServicesModel.find();
@@ -254,7 +121,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 
     // console.log('Sending servicesResponse to frontend with the following result:', result);
     // Async event emitter - send response
-    // message.sender.send('servicesResponse', JSON.stringify(result));
+    message.sender.send('servicesResponse', JSON.stringify(result));
     // eslint-disable-next-line no-shadow
   } catch ({ message }) {
     console.log('Error in "servicesRequest" event', message);
