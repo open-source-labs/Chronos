@@ -55,12 +55,18 @@ interface StyleProps {
 }
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
+// type OccupiedProps = {
+//   switch: any;
+//   setSwitch: any;
+// };
+
 //v10: Memoized function, witouth any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
   console.log('Hi, inside Occupied. Memoize function invoked');
 
   const { awsData, fetchAwsData, fetchAwsAppInfo, setLoadingState } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
+  // const { user, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
@@ -86,6 +92,7 @@ const Occupied = React.memo(() => {
     setServicesData([]);
     getApplications();
   }, [user]);
+
 
   // Dynamic refs
   const delRef = useRef<any>([]);

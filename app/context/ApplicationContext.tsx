@@ -58,7 +58,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
   // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
     console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
-    console.log('app when fetch services name (not sure if necesarry)', application);
+    console.log('app when fetch services name: ', application);
     // setApp(application);
 
     ipcRenderer.send('servicesRequest');
@@ -66,7 +66,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       let result: any;
       // Parse JSON data into object
-      if (tryParseJSON(data)) result = JSON.parse(data);
+      // if (tryParseJSON(data)) result = JSON.parse(data);
+      result = JSON.parse(data);
       console.log('result from ipcrenderer services response is: ', result);
       console.log('Calling setServicesData passing in above result. Current servicesData is the following: ', servicesData);
       setServicesData(result);
@@ -82,10 +83,10 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    * database should not exist...
    * @params application - is the name of the card taht was clicked on
    */
-  const connectToDB = useCallback((username: string, index: number, application: string, URI: string) => {
+  const connectToDB = useCallback((username: string, index: number, application: string, URI: string, databaseType: string) => {
     console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
     ipcRenderer.removeAllListeners('databaseConnected');
-    ipcRenderer.send('connect', username, index, URI);
+    ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
       fetchServicesNames(application);
     });

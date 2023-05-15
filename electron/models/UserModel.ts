@@ -1,4 +1,3 @@
-// const MONGO_URI = 'mongodb+srv://chronoslany:chronoslany@cluster0.tvzzzbv.mongodb.net/?retryWrites=true&w=majority';
 const MONGO_URI = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
 // import mongoose, { Schema, Document } from 'mongoose';
 
