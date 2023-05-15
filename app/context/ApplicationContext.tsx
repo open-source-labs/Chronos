@@ -20,6 +20,7 @@ export const ApplicationContext = React.createContext<any>(null);
 const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props => {
   const children = props.children;
   const [servicesData, setServicesData] = useState([]);
+  const [serviceConnected, setServiceConnected] = useState<boolean>(false);
   // v10 note: there is not function for setApp so app is never updated.
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
@@ -74,6 +75,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       console.log('Leaving fetchedServicesNames function.');
       ipcRenderer.removeAllListeners('servicesResponse');
     });
+
   }, []);
 
     /**
@@ -88,7 +90,11 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
-      fetchServicesNames(application);
+      if(data === true) {
+        fetchServicesNames(application);
+      } else {
+        alert('Database connection is not valid.');
+      }
     });
   }, []);
 

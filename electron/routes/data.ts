@@ -80,9 +80,10 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
       mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => {
           console.log('Connected to user provided mongo database!');
-          message.sender.send('databaseConnected', 'connected!');
+          message.sender.send('databaseConnected', true);
       })
       .catch(error => {
+          message.sender.send('databaseConnected', false);
           console.log('Error connecting to MongoDB inside data.ts connection:', error);
       });  
     } else if (currentDatabaseType === 'SQL'){
@@ -91,9 +92,11 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
         message.sender.send('databaseConnected', 'connected!');
     } 
   } catch(err){
+    message.sender.send('databaseConnected', false);
     console.log('Error connecting to databse: ', err);
   }
 });
+
 
 /**
  * @event   serviceRequest/serviceResponse
