@@ -3,13 +3,13 @@ const MONGO_URI = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mong
 const mongoose = require('mongoose')
 
 const db2 = mongoose.createConnection(MONGO_URI)
-.then(() => {
-	console.log('Connected to User database...');
-})
-.catch(err => {
-	console.log('Error connecting to User database: ', err);
-})
-console.log('establishing connection to database');
+// .then(() => {
+// 	console.log('Connected to User database...');
+// })
+// .catch(err => {
+// 	console.log('Error connecting to User database: ', err);
+// })
+// console.log('establishing connection to database');
 
 
 const userSchema = new mongoose.Schema({
