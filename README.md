@@ -23,38 +23,44 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
+- Chronos is now able to work out of the box, addressing previous bugs that prevented Chronos to work as intended. File structure, dependencies, and webpack entry point have been updated, allowing Chronos Electron desktop application to run on multiple platforms. 
+- User's account information and services can now be stored and saved in MongoDB User database. 
+- Bug fixes and UI tweaks — Chronos is now a faster and more seamless experience than ever.
+- Updated step-by-step instructions to learn how to deploy local services such as dockerized containers, microservices, and gRPC examples, as well as monitor them using the chronosmicro/tracker npm package. 
+- Steamlined approach to access and dynamically displayed grafana dashboards for deployed EKS cluster (utilizing Prometheus data scraping and generated grafana dashboards) using the Grafana API. 
+
+Previously implemented updates:
 - Option to choose between cloud hosted services and local services, now giving Chronos the ability to monitor instances and clusters on AWS' EC2, ECS, and EKS platforms.
 - An updated AWS Graphs Container to dynamically render plots for EC2 or ECS data fetched with Electron using event listeners connecting to AWS CloudWatch w/ the aws-sdk package, as well as utilizing Prometheus data scraping and Grafana integration to fetch and render EKS data.
 - A step-by-step instruction on setting up a new, functional EC2 instance, ECS cluster, and EKS cluster, ready to be monitored and tested by the app.
-- Bug fixes and UI tweaks — Chronos is now a more seamless experience than ever.
 
 ## Features
 
-- Distributed tracing enabled across microservices applications
-- Kubernetes monitoring via Prometheus server
-- Compatible with <img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
-- Supports <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
-- Displays real-time temperature, speed, latency, and memory statistics
-- Display and compare multiple microservice metrics in a single graph
-- Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
-- Monitor a Kubernetes cluster via a Prometheus monitoring server
-- Monitor Amazon Web Services (AWS) instances and clusters <img src="assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="20" /></a>
+- Cloud-Based Instances:
+    - Option to choose between cloud hosted services and local services, now giving Chronos the ability to monitor instances and clusters on AWS' EC2, ECS, and EKS platforms <img src="assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="20" /></a>
+- Local Instances utilitizing @chronosmicro/tracker NPM package:
+    - Distributed tracing enabled across microservices applications
+    - Displays real-time temperature, speed, latency, and memory statistics for local services
+    - Display and compare multiple microservice metrics in a single graph
+    - Kubernetes monitoring via Prometheus server
+    - Compatible with <img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
+    - Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
+    - Supports <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 
 #
 
 ## Installation
 
-This is for the latest Chronos **version 9 release**.
+This is for the latest Chronos **version 10 release**.
 
 **NOTE:** The Chronos tracker code is included in the _chronos_npm_package_ folder for ease of development, but the published npm package can be downloaded by running `npm install @chronosmicro/tracker`
 
 <br>
 
-### Node Version
-
-Make sure you're running version 16.17.1 of <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" />, to align with the <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /> version used by <img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> version 22.
-
-<br>
+<!-- ### Node Version -->
+<!-- v10 notes: Our team never reverted to version 16.17.1 and had no issues running Node 18 and Electron 22 together. Commenting this out for future iteration teams' reference. -->
+<!-- Make sure you're running version 16.17.1 of <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" />, to align with the <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /> version used by <img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> version 22. -->
+<!-- <br> -->
 
 ### WSL2 Environment
 
@@ -79,8 +85,9 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 ### Running the Chronos Desktop App in Development Mode
 
 1. From the root directory, run `npm install`
-2. Open a terminal and run `npm run dev:app` to start the Webpack development server
-3. Open another terminal and run `npm run dev:electron` to start the Electron UI in development mode
+2. Run 'npm run build'
+3. Open a new terminal and run `npm run dev:app` to start the Webpack development server
+4. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode
 
 ### Packing the Chronos App into an Executable
 

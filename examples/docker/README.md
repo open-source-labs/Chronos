@@ -58,6 +58,10 @@ Chronos hopes to inspire an active community of both users and developers. For q
 [Jenae Pennie](https://github.com/jenaepen),
 [Chris Romano](https://github.com/robicano22),
 [Natalie Umanzor](https://github.com/nmczormick)
+[John Donato](https://github.com/jdonuto)
+[Iris Wong](https://github.com/wiris316)
+[Jon Cruz](https://github.com/Jrcrz)
+[Elena Atencio](https://github.com/elenaatencio)
 
 ## License
 [MIT](LICENSE)
