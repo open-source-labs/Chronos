@@ -14,9 +14,9 @@ import AwsGraphsContainer from '../containers/AWSGraphsContainer';
 import '../stylesheets/MainContainer.scss';
 
 const MainContainer = React.memo(() => {
-  const { mode } = useContext(DashboardContext);
+  const { mode, applications } = useContext(DashboardContext);
   const currentModeCSS = mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
-
+  
   return (
     <>
       <div className="main-container" style={currentModeCSS}>
