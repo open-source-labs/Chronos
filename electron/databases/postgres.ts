@@ -7,6 +7,7 @@ const connectSQL = async (i: number, URI: string) => {
     })
     const client = await pool.connect();
     client.release()
+    console.log('connected to sql')
     return pool; 
   } catch (err) {
     console.log('Error connecting to SQL')
