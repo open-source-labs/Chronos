@@ -70,7 +70,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
           console.log('Connected to user provided MongoDB database')
           message.sender.send('databaseConnected', true);
         } else {
-          console.log('Failed to connect to databse')
+          console.log('Failed to connect to database')
           message.sender.send('databaseConnected', false);
         }
       })
@@ -85,43 +85,6 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
         message.sender.send('databaseConnected', false);
       }
     }
-    
-  
-  
-//   try{
-//     // set database type from parameter
-//     currentDatabaseType = databaseType;
-//     console.log('Database type: ', databaseType);
-//     if(currentDatabaseType === 'MongoDB'){
-//       // First check if there is already an established mongoose connection with another databse...
-//       // const isConnected = mongoose.connection.readyState === 1;
-//       // if (isConnected){
-//         // console.log('A connection to a mongoDB has already been established. Closing connection.');
-//         mongoose.connection.close((error) => {
-//           if(error) {
-//             console.log('Error closing mongoDB connection: ', error);
-//           }
-//         });
-//       // } 
-//       console.log('Database connection not found. Establishing connection...');
-//         // Connect to the proper database
-//       mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//       .then(() => {
-//           console.log('Connected to user provided mongo database!');
-//           message.sender.send('databaseConnected', true);
-//       })
-//       .catch(error => {
-//           console.log('Error connecting to MongoDB inside data.ts connection:', error);
-//       });  
-//     } else if (currentDatabaseType === 'SQL'){
-//       // has not been reconfigured to handle different requests to SQL databses.
-//        pool = await connectPostgres(index, URI);
-//         message.sender.send('databaseConnected', true);
-//       } 
-//     } catch(err){
-//     message.sender.send('databaseConnected', false);
-//     console.log('Error connecting to databse: ', err);
-//   }
 });
 
 /**
@@ -202,17 +165,22 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
+      console.log('inside healthRequest call')
       // Get last 50 documents. If less than 50 get all
       result = await postgresFetch(service, pool);
+      // const query = `SELECT * FROM services`;
+      // result = await pool.query(query);
+      // result = result.rows;
     }
-
+    console.log('result', result)
     // Async event emitter - send response'
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "healthRequest" event', message);
-    message.sender.send('healthResponse', {});
+    console.log('error sending result to healthresponse in healthrequest')
+    // console.log(' event', message);
+    // message.sender.send('healthResponse', {});
   }
 });
 
