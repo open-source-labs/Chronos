@@ -125,13 +125,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
       )}
       {typeOfService === 'AWS/EKS' && (
         <div>
-          {/* <iframe src={`${awsUrl}/d/8jYcvsBVz/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light&kiosk`} width="1300" height="1300" ></iframe> */}
-          {/* <iframe src={`${awsUrl}/d/jPEGwyfVk/opencost?orgId=1&theme=light&kiosk`} width="1300" height="1300" ></iframe> */}
-
-          <iframe src={`http://a9921cff905094aa0a45e6e330684283-98913978.us-east-2.elb.amazonaws.com/d/8jYcvsBVz/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=10s&theme=light&kiosk`} width="1300" height="1300" ></iframe>
-          <iframe src={`http://a9921cff905094aa0a45e6e330684283-98913978.us-east-2.elb.amazonaws.com/d/jPEGwyfVk/opencost?orgId=1&theme=light&kiosk`} width="1300" height="1300" ></iframe>
-
-          {/* <GrafanaIFrame {...awsAppInfo}/> */}
+           <iframe src={`${awsEksData}?orgId=1&refresh=10s&theme=light&kiosk`} width="1300" height="1300" ></iframe>
         </div>
       )}
     </div>
