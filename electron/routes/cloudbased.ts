@@ -265,7 +265,7 @@ ipcMain.on(
 ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: string, appIndex: number) => {
   const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
   const userAwsService = fileContents[username]?.services[appIndex];
-  const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
+  const [typeOfService, region, awsUrl, token] = [userAwsService[4], userAwsService[2], userAwsService[9], userAwsService[7]];
 
   const url = `${awsUrl}/api/search?folderIds=0`
   console.log("hi")
@@ -275,7 +275,7 @@ ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: 
       "Access-Control-Allow-Origin": "*",
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: 'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ=='
+      Authorization: `Bearer ${token}`,
     },
   });
   log.info(response);
