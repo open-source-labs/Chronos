@@ -55,6 +55,6 @@ app.use((error, req, res, next) => {
 });
 
 // Open and listen to server on specified port
-app.listen(3000, () => {
-  console.log('Frontend server running on port 3000 ...');
+app.listen(3333, () => {
+  console.log('Frontend server running on port 3333 ...');
 });
