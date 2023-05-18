@@ -21,8 +21,11 @@ docker build -t frontend:1.0 .
 
 ## Build the Server
 First, add a `.env` file to the *server* folder that contains the following key/value pairs:
-- `CHRONOS_DB`: `MongoDB` or `PostgreSQL`
-- `CHRONOS_URI`: The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
+
+```
+CHRONOS_DB = MongoDB or PostgreSQL
+CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
+```
 
 Then look at the `package.json` file in the server folder and note how `@chronosmicro/tracker` is included as a dependency:
 
