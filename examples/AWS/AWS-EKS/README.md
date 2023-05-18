@@ -128,7 +128,7 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
      --values grafana.yaml \
      --set service.type=LoadBalancer
         
-   3. Execute these commands to get the URL.  Login in with the username admin and the password EKS!sAWsome
+   3. Execute these commands to get the URL.  Login in with the username   admin and the password EKS!sAWsome. The URL received after exporting the   external hostname (from the command below) will be used to render the   graphs in Electron. 
         
      export ELB=$(kubectl get svc -n grafana grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
      echo "http://$ELB"
