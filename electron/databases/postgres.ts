@@ -4,9 +4,10 @@ const connectSQL = async (i: number, URI: string) => {
   try {
     const pool= new Pool({
       connectionString: URI,
+      idleTimeoutMillis: 2000, // Time after which idle connections are closed
     })
     const client = await pool.connect();
-    client.release()
+    client.release() // Releases connection back to the pool
     console.log('connected to sql')
     return pool; 
   } catch (err) {
