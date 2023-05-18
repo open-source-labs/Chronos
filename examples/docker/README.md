@@ -31,7 +31,7 @@ ORDER_URI =  A **MongoDB** URI for the orderserver microservice to use
 docker-compose -f docker-compose.yml up
 ```
 
-#
+# 
 
 You should now see the containers running in your terminal, each reporting "Docker data recorded in...". If this is being displayed for the books, customers, frontend, and orders microservices then the example is successfully saving health metrics to your database of choice!
 
@@ -39,7 +39,10 @@ You should now see the containers running in your terminal, each reporting "Dock
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
 
-#
+
+# To stop and remove containers
+Use `docker compose down` to stop containers
+
 
 ## Contributing
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
