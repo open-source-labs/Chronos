@@ -37,6 +37,12 @@ const CommsContextProvider: React.FC<Props> = React.memo((props) => {
     return false;
   }
 
+
+  /**
+   * @function fetchCommsData - uses useCallback Hook returns a memoized callback function.
+   * One reason to use useCallback is to prevent a component from re-rendering unless its props have changed.
+   * fetches the data
+   */
   const fetchCommsData = useCallback((app: string, live: boolean) => {
 
     if (app !== currentApp || live) {
@@ -47,6 +53,7 @@ const CommsContextProvider: React.FC<Props> = React.memo((props) => {
         let result: any;
         if (tryParseJSON(data)) result = JSON.parse(data);
         console.log('communication data from fetch request is: ', result);
+        console.log(data); 
         setCommsData(result);
       });
     }

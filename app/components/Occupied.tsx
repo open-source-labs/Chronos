@@ -55,9 +55,18 @@ interface StyleProps {
 }
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
+// type OccupiedProps = {
+//   switch: any;
+//   setSwitch: any;
+// };
+
+//v10: Memoized function, witouth any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
+  console.log('Hi, inside Occupied. Memoize function invoked');
+
   const { awsData, fetchAwsData, fetchAwsAppInfo, setLoadingState } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
+  // const { user, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { user, applications, getApplications, deleteApp, mode } = useContext(DashboardContext);
   const { commsData } = useContext(CommsContext);
   const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
@@ -75,11 +84,15 @@ const Occupied = React.memo(() => {
   // const [showAwsContainer, setShowAwsContainer] = useState(false);
   const navigate = useNavigate();
 
+
   // Grab services and applications whenever the user changes
+  // v10: Runs once when Occupied is memoized, and subsequently when user is updated.
   useEffect(() => {
+    console.log('Hi, inside Occupied.ts useEffect function.');
     setServicesData([]);
     getApplications();
   }, [user]);
+
 
   // Dynamic refs
   const delRef = useRef<any>([]);
@@ -91,6 +104,8 @@ const Occupied = React.memo(() => {
   };
 
   // Handle clicks on Application cards
+  // v10 info: when card is clicked (not on the delete button) if the service is an AWS instance,
+  // you are redirected to AWSGraphsContainer passing in the state object containing typeOfService
   const handleClick = (
     event: ClickEvent,
     selectedApp: string,

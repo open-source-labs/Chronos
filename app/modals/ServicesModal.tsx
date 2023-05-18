@@ -17,8 +17,13 @@ interface IService {
   microservice: string;
 }
 
+// v10: Seems to never have been updated for cloud-based info...
+// servicesModal is re-rendered depending on i and application passed in...
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
-  const { user } = useContext(DashboardContext)
+  console.log('Hi, inside ServicesModal. Memoize function invoked in ServicesModal.');
+  console.log('ServicesModal current props (index, app): ', i, ' ', app);
+
+  const { user, applications } = useContext(DashboardContext);
   const { servicesData, connectToDB } = useContext(ApplicationContext);
   const [services, setServices] = useState<Array<string>>([]);
 
@@ -31,9 +36,16 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
     }
   };
 
+  // v10: connectToDB function definition in Application Context.
+  // parameters for connectToDB call: user, i (index), app (card title), app URL (url on card)
+  // applications[i][2] refers to the user provided URI
+  // adding database type to make connection and fetchServiceNames more efficient
   useEffect(() => {
-    connectToDB(user, i, app);
+    console.log('Hi, inside useEffect in ServicesModal. Calling connectToDB function.');
+    connectToDB(user, i, app, applications[i][2], applications[i][1]);
   }, [i]);
+
+
 
   return (
     <div className="servicesContainer">

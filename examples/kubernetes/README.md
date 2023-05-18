@@ -21,8 +21,11 @@ docker build -t frontend:1.0 .
 
 ## Build the Server
 First, add a `.env` file to the *server* folder that contains the following key/value pairs:
-- `CHRONOS_DB`: `MongoDB` or `PostgreSQL`
-- `CHRONOS_URI`: The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
+
+```
+CHRONOS_DB = MongoDB or PostgreSQL
+CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save health metrics via **Chronos**
+```
 
 Then look at the `package.json` file in the server folder and note how `@chronosmicro/tracker` is included as a dependency:
 
@@ -92,6 +95,10 @@ Chronos hopes to inspire an active community of both users and developers. For q
 [Jenae Pennie](https://github.com/jenaepen),
 [Chris Romano](https://github.com/robicano22),
 [Natalie Umanzor](https://github.com/nmczormick)
+[John Donato](https://github.com/jdonuto)
+[Iris Wong](https://github.com/wiris316)
+[Jon Cruz](https://github.com/Jrcrz)
+[Elena Atencio](https://github.com/elenaatencio)
 
 ## License
 [MIT](LICENSE)

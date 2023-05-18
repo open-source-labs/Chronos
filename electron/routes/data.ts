@@ -16,12 +16,29 @@ import { fetchData } from './dataHelpers';
 import MetricsModel from '../models/MetricsModel';
 const log = require('electron-log');
 
+
+const mongoose = require('mongoose');
+const User = require('../models/UserModel')
+
+// const testURL = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
+// const connectMongoose = async (i: number, URI: string) => {
+//   try {
+//     const db2 = mongoose.createConnection(testURL);
+//     console.log('connection to user provided db established..');
+//     return db2;
+//   } catch (error) {
+//     console.log('Error connecting to second db... ', error);
+//   }
+// }
+
+
+
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
 require('dotenv').config({
-  path: path.join(__dirname, './.env'),
+   path: path.join(__dirname, './.env'),
 });
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -32,32 +49,42 @@ let currentDatabaseType: string;
 // Provide location to settings.json
 const settingsLocation = path.resolve(__dirname, '../../settings.json');
 
+// v10 notes: should only be calling connect for local instances. Currently, the services array is differenct for
+// local instances vs cloud instances but this function can still be called by cloud isntances, causing an issue.
+// fix below is a band-aid for now, a better solution would be optimal.
 /**
  * @event   connect
  * @desc    Connects user to database and sets global currentDatabaseType which
  *          is accessed in info.commsData and info.healthData
  */
-ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number) => {
-  try {
-    // Extract databaseType and URI from settings.json at particular index
-    // get index from application context
-    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-    const userDatabase = fileContents[username].services[index];
-    // We get index from sidebar container: which is the mapplication (DEMO)
-    const [databaseType, URI] = [userDatabase[1], userDatabase[2]];
 
-    // Connect to the proper database
-    if (databaseType === 'MongoDB') await connectMongo(index, URI);
-    if (databaseType === 'SQL') pool = await connectPostgres(index, URI);
+ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number, URI: string, databaseType: string) => {
 
-    // Currently set to a global variable
-    currentDatabaseType = databaseType;
+  // set database type from parameter
+  currentDatabaseType = databaseType;
 
-    message.sender.send('databaseConnected', 'connected!');
-    // eslint-disable-next-line no-shadow
-  } catch ({ message }) {
-    console.log('Error in "connect" event', message);
-  }
+  if (currentDatabaseType === 'MongoDB') {
+    connectMongo(index, URI)
+      .then((data) => {
+        if (data) {
+          console.log('Connected to user provided MongoDB database')
+          message.sender.send('databaseConnected', true);
+        } else {
+          console.log('Failed to connect to database')
+          message.sender.send('databaseConnected', false);
+        }
+      })
+    
+    } else if (currentDatabaseType === 'SQL') {
+      pool = await connectPostgres(index, URI);
+      if (pool) {
+        console.log('Connected to user provided PostgreSQL database')
+        message.sender.send('databaseConnected', true);
+      } else {
+        console.log('Failed to connect to database')
+        message.sender.send('databaseConnected', false);
+      }
+    }
 });
 
 /**
@@ -67,9 +94,11 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
+    console.log('Hi, inside data.ts - servicesRequest function. Fetching services...');
 
     // Mongo Database
-    if (currentDatabaseType === 'MongoDB') {
+    console.log('CurrentDataBase TYPE:', currentDatabaseType);
+    if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
       result = await ServicesModel.find();
     }
@@ -82,6 +111,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
       result = result.rows;
     }
 
+    // console.log('Sending servicesResponse to frontend with the following result:', result);
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
     // eslint-disable-next-line no-shadow
@@ -135,17 +165,22 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
+      console.log('inside healthRequest call')
       // Get last 50 documents. If less than 50 get all
       result = await postgresFetch(service, pool);
+      // const query = `SELECT * FROM services`;
+      // result = await pool.query(query);
+      // result = result.rows;
     }
-
+    console.log('result', result)
     // Async event emitter - send response'
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "healthRequest" event', message);
-    message.sender.send('healthResponse', {});
+    console.log('error sending result to healthresponse in healthrequest')
+    // console.log(' event', message);
+    // message.sender.send('healthResponse', {});
   }
 });
 
@@ -193,7 +228,6 @@ ipcMain.on('dockerRequest', async (message, service) => {
 ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any = {};
-
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get all documents from the services collection
@@ -554,10 +588,29 @@ ipcMain.on(
   }
 );
 
+// returns response object containing the typeOfService, region, and awsURL for a selected AWS APP
 ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-    try {
+    console.log('Hi, inside data.ts - awsAppInfoRequest');
+    if(username !== 'guest'){
+      console.log('inside awsAppInfoRequest, not a guest');
+      return User.findOne({username: username})
+      .then((data) => {
+        console.log('DB returned user data: ', data);
+        const { services } = data;
+        const [typeOfService, region, awsUrl] = [services[4], services[2], services[9]];
+        const response = {
+          typeOfService, region, awsUrl
+        }
+        message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+      })
+      .catch((error) => {
+        console.log('Error in awsAppInfoRequest in data.ts');
+      })
+    }
+    else {
+      try {
       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
       const userAwsService = fileContents[username]?.services[appIndex];
 
@@ -573,6 +626,8 @@ ipcMain.on(
       console.log('Error in awsAppInfoRequest', message);
       message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' , awsUrl: ''});
     }
+    }
+    
   }
 );
 
@@ -631,6 +686,13 @@ ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: 
 //   }
 // );
 
+  /**
+ * @event   awsAppInfoRequest - invoked in fetchAwsAppInfo in ipcRenderer
+ * @desc    Connects to user or guest database and returns a reponse object with the typeOfService,
+ *          region, and awsURL of the services at provided appIndex.
+ * @params  username: 
+ *          index: 
+ */
 ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
