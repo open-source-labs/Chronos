@@ -28,6 +28,7 @@ type FormElement = React.FormEvent<HTMLFormElement>;
 const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const { addAwsApp }: IDashboard = useContext(DashboardContext);
 
+  // instance is instanceID
   const [awsFields, setAwsFields] = useState<AwsFields>({
     typeOfService: 'AWS/EC2',
     instance: '',
@@ -126,8 +127,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
           </select>
         </div>
         <div>
-          <label htmlFor="aws-access-key">
-            Access Key<span>*</span>
+          <label htmlFor="aws-access-key">{(typeOfService === 'AWS/EKS') ? 'Bearer Token' : 'Access Key'} <span>*</span>
           </label>
           <input
             id="aws-access-key"
@@ -135,11 +135,12 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             name="accessKey"
             value={accessKey}
             onChange={e => handleChange(e)}
-            placeholder="AWS Access Key"
+            placeholder={typeOfService === 'AWS/EKS' ? 'Grafana Bearer Token' : 'AWS Access Key'}
             required
           />
         </div>
-        <div>
+        {(typeOfService !== 'AWS/EKS') && (
+          <div>
           <label htmlFor="aws-secret-access-key">
             Secret Access Key<span>*</span>
           </label>
@@ -153,9 +154,25 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             required
           />
         </div>
+        )}
+        {/* <div>
+          <label htmlFor="aws-secret-access-key">
+            Secret Access Key<span>*</span>
+          </label>
+          <input
+            id="aws-secret-access-key"
+            type="password"
+            name="secretAccessKey"
+            value={secretAccessKey}
+            onChange={e => handleChange(e)}
+            placeholder="AWS Secret Access Key"
+            required
+          />
+        </div> */}
+        
         <div>
           <label htmlFor="aws-url">
-            Cluster URL<span>*</span>
+            {(typeOfService === 'AWS/EKS') ? 'Grafana URL' : 'Access Key'}<span>*</span>
           </label>
           <input
             id="aws-url"
@@ -163,8 +180,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
             name="awsUrl"
             value={awsUrl}
             onChange={e => handleChange(e)}
-            placeholder="AWS Url"
-            required
+            placeholder={typeOfService === 'AWS/EKS'? 'Grafana Provided URL': 'AWS Url'}
           />
         </div>
         <div>

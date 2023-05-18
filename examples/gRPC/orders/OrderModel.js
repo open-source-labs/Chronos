@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { Schema } = mongoose;
 
-// UNCOMMENT THE LINE BELOW AND REPLACE WITH AN ACTUAL MONGODB URI FOR YOUR "ORDERS" DATABASE
+// Add your "ORDER_URI = " to your .env file
 // require('./chronos-config'); // Bring in config file
 const myURI = process.env.ORDER_URI;
-// const myURI = 'mongodb+srv://johndoe:johndoe@cluster0-abcdef.mongodb.net/';
 
 mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected!!!********* Order Database is live!!!'))

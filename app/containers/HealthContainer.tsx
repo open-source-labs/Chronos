@@ -51,8 +51,8 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
               const metric: string = Object.keys(serviceMetric)[0];
               const valueList = Object.values(serviceMetric)[0];
               const newTimeList: any = getTime(timelist, serviceName, metric, categoryName);
-              // console.log('valueList is', valueList); -> 50 values in an array
-              // console.log('newTimeList array is:', newTimeList); -> 50 values in an array
+              // console.log('valueList is', valueList); //-> 50 values in an array
+              // console.log('newTimeList array is:', newTimeList); //-> 50 values in an array
               if (selectedMetricsList.includes(metric)) {
                 const re = /_/g;
                 const newHealthChart = (
