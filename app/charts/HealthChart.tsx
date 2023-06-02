@@ -28,6 +28,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   }, 20);
 
   const createChart = () => {
+      // 
       const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
       const reverseTimeArr = timeArr.reverse()
       const hashedColour = colourGenerator(renderService);
