@@ -85,7 +85,7 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 ### Running the Chronos Desktop App in Development Mode
 
 1. From the root directory, run `npm install`
-2. Run 'npm run build'
+2. Run `npm run build`
 3. Open a new terminal and run `npm run dev:app` to start the Webpack development server
 4. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode
 

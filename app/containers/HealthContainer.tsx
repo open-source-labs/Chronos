@@ -28,6 +28,9 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     let counter: number = 0;
     const datalist: any[] = healthData.healthDataList;
     const timelist: any[] = healthData.healthTimeList;
+    // dataList and timeList are the EXACT same thing. An array of 4 objects. [Memory, CPU, Processes, Latency]
+    // Each element has all its metrics.
+    console.log('healthData object in state: ', healthData);
     console.log('datalist in healthcontainer is:', datalist); //array of healthDataList
     console.log('timelist in healthcontainer is:', timelist);
 
