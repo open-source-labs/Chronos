@@ -44,6 +44,16 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
 
       datalist.forEach((element: {}) => {
         const categoryName: string = Object.keys(element)[0];
+        // 'element' is the category found in the datalist response from the server query for metrics data
+        // the above forEach method loops through the different categories
+        // 'category' variable is the specific category passed in to HealthContainer via prop drilling
+        // 'category' is the string Memory, CPU, or others that are in the Category column of the Query Selector interface
+        // 'categoryName' is the string that is Memory/CPU/other inside the metrics data response
+        // when the 'element'/'categoryName' matches the 'category' selected in the Query Selection interface...
+        // ... it will dive into that object to pull out a chart for each metric selected in the selection interface
+        // selectedMetricsList is derived from the selectedMetrics that were in the QueryContext
+        // selectedMetricsList is how we know which metrics should be made into a chart
+        // selectedMetricsList is the way we can give one chart the multiple metrics being requested
         if (category === categoryName) {
           const categoryObj: [] = element[categoryName];
           for (const metricObj of categoryObj) {
