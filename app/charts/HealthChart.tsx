@@ -21,23 +21,51 @@ interface SoloStyles {
   width: number;
 }
 
+type plotlyData = {
+  name: string;
+  x: string[];
+  y: string[];
+  type: string;
+  mode: string;
+  marker: { colors: string[] };
+};
+
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
-  // const { renderService, metric, timeList, valueList, sizing, colourGenerator } = props;
+  // 'metrics' is an array of the user-specified metrics as objects
   const { serviceName, categoryName, metrics, timeList, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
-  // metrics = specific metrics in categories
-  // temporary y-axis values for testing purposes
-  const valueList = metrics[0].books[0].activememory_in_bytes
-  // filter through metrics to desired metrics and then plot them
+  const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
+  const reverseTimeArr = timeArr.reverse();
+  const re = /_/g;
+  const plotlyDataObjectArray: plotlyData[] = [];
 
-  function generatePlotlyDataObjects(metricsArray) {
+  // generates an array plotly data objects to add to be passed into our plotly chart's data prop
+  const generatePlotlyDataObjects = (metricsArray, timeArray) => {
+    console.log('metricsArray: ', metricsArray);
+    console.log('timeArray: ', timeArray);
+    // initalize an array of objects for output
     // iterate through the metricsArray
-      // each element is an array of num data (y-axis)
-      // generate a plotly data object to add to an array that will be passed into our plotly chart's data prop
-    
-  }
-
-
+    // each element is an array of num data (y-axis)
+    metricsArray.forEach(el => {
+      const originalMetricName = Object.keys(el)[0];
+      const prettyMetricName = originalMetricName.replace(re, ' ');
+      const newColor = colourGenerator(serviceName);
+      console.log('prettyMetricName ', prettyMetricName);
+      // plotly's data prop takes an array of objects that each have x, y, type, mode, marker
+      const dataObject: plotlyData = {
+        name: prettyMetricName,
+        x: timeArray,
+        y: el[originalMetricName],
+        type: 'scattergl',
+        mode: 'lines',
+        marker: {
+          colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
+        },
+      };
+      plotlyDataObjectArray.push(dataObject);
+    });
+    console.log('plotlydataObjectarray: ', plotlyDataObjectArray);
+  };
 
   setInterval(() => {
     if (solo !== soloStyle) {
@@ -46,34 +74,13 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   }, 20);
 
   const createChart = () => {
-    //
-    const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
-    const reverseTimeArr = timeArr.reverse();
-    const hashedColour = colourGenerator(serviceName);
-    const re = /_/g;
-    type plotlyData = {
-      name: any;
-      x: any;
-      y: any;
-      type: any;
-      mode: any;
-      marker: { color: string };
-    };
-    // const plotlyData = {
-    //   name: metric.replace(re, ' '),
-    //   x: reverseTimeArr, //reversed for better UX
-    //   y: valueList,
-    //   type: 'scattergl',
-    //   mode: 'lines',
-    //   marker: { color: hashedColour },
-    // };
+    generatePlotlyDataObjects(metrics, reverseTimeArr);
     const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
-        // data takes an array of objects that each have x, y, type, mode, marker
-        data={[plotlyData]}
-        config={{ displayModeBar: false }}
+        data={plotlyDataObjectArray}
+        config={{ displayModeBar: true }}
         layout={{
           title: `${serviceName} | ${categoryName}`,
           ...sizeSwitch,
