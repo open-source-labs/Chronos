@@ -26,13 +26,13 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   useEffect(() => {
     const temp: JSX.Element[] = [];
     let counter: number = 0;
-    const dataList: any[] = healthData.healthdataList;
+    const dataList: any[] = healthData.healthDataList;
     const timeList: any[] = healthData.healthTimeList;
     // dataList and timeList are structured the same, but time holds timestamps. An array of 4 objects. [Memory, CPU, Processes, Latency]
     // Each element has all its metrics.
-    console.log('healthData object in state: ', healthData);
-    console.log('dataList in healthcontainer is:', dataList); //array of healthdataList
-    console.log('timelist in healthcontainer is:', timeList);
+    // console.log('healthData object in state: ', healthData);
+    // console.log('dataList in healthcontainer is:', dataList);
+    // console.log('timelist in healthcontainer is:', timeList);
 
     if (healthData && dataList && timeList && dataList.length > 0 && timeList.length > 0) {
       let selectedMetricsList: string[] = [];
@@ -41,7 +41,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
           selectedMetricsList = element[category];
         }
       });
-      // temporary solution to getting the list of times for our single chart
+      // ***ALERT*** temporary solution to getting the list of times for our single chart
       const times: string[] = timeList[0].Memory[0].books[0].activememory_in_bytes;
 
       dataList.forEach((element: {}) => {
@@ -60,34 +60,27 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
         */
         if (category === categoryName) {
           const categoryObj: [] = element[categoryName];
-          let filteredMetrics;
+          const filteredMetrics: any[] = [];
           for (const metricObj of categoryObj) {
             // serviceName = category (ex. books)
-            const serviceName: string = Object.keys(metricObj)[0];
-            /* serviceMetricsArr = array of ALL objects
+            const serviceName: string = Object.keys(metricObj)[0]; 
+            console.log('metricObj: ', metricObj)           
+            const serviceMetricsArr: any[] = Object.values(metricObj).flat();
+            console.log('serviceMetricsArr: ', serviceMetricsArr); // -> array of arrays containing numerical data.
+            /* serviceMetricsArr = array of all metric objects
             [0: {
               total-availle-memory-in-bytes: [numbers, more numbers, nums, woo]
             }]
             */
-            const serviceMetricsArr: any[] = Object.values(metricObj).flat();
-            // const serviceTimesArr: any[] = Object.values();
-            console.log('serviceMetricsArr: ', serviceMetricsArr); // -> array of objects.
-            // filter through the desired metrics and pass them down to HealthChart
+
+            // filters through the desired metrics and pass them down to HealthChart
             selectedMetricsList.forEach(selected => {
-              filteredMetrics = serviceMetricsArr.filter(metric => {
-                metric[selected];
+              serviceMetricsArr.forEach(metric => {
+                if (metric[selected]) filteredMetrics.push(metric);
               });
             });
+            console.log('filteredMetrics: ', filteredMetrics);
 
-            // serviceMetricsArr.filter(...selectedMetricsList)
-
-            // for (const serviceMetric of serviceMetricsArr) {
-            // const metric: string = Object.keys(serviceMetric)[0];
-            // const valueList = Object.values(serviceMetric)[0];
-            // const newTimeList: any = getTime(timelist, serviceName, metric, categoryName);
-            // console.log('valueList is', valueList); //-> 50 values in an array
-            // console.log('newTimeList array is:', newTimeList); //-> 50 values in an array
-            // if (selectedMetricsList.includes(metric)) {
             const re = /_/g;
             const newHealthChart = (
               <HealthChart
