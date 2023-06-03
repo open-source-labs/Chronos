@@ -173,7 +173,7 @@ const TransferColumns = React.memo(() => {
     const row = {};
     row['id'] = index;
     row['tag'] = el.tag;
-    row['title'] = el.title.split(' | ')[1].replace("kubernetes-cadvisor/docker-desktop/", ""); // gets rid of the full path
+    row['title'] = el.title.split(' | ')[1].replace('kubernetes-cadvisor/docker-desktop/', ''); // gets rid of the full path
     rows.push(row);
   });
 
@@ -184,6 +184,8 @@ const TransferColumns = React.memo(() => {
       <li style={{ marginLeft: '30px', marginTop: '5px', color: currentMode.color }}>{el}</li>
     );
   });
+
+  //! BZ: creates metrics query page in Chronos
 
   return (
     <>
