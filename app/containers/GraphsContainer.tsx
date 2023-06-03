@@ -156,8 +156,9 @@ const GraphsContainer: React.FC = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
-  console.log({GraphsContainer: selectedMetrics})
-  console.log({GraphsContainer: chart});
+  console.log('selected metrics: ', {GraphsContainer: selectedMetrics})
+  console.log('chart: ', { GraphsContainer: chart });
+  
   return (
     <>
       <nav id="navigationBar">
