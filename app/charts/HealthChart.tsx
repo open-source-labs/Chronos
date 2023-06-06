@@ -2,7 +2,6 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
-import { getTime } from '../context/helpers';
 
 interface HealthChartProps {
   key: string;
@@ -31,19 +30,19 @@ type plotlyData = {
 };
 
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
-  // 'metrics' is an array of the user-specified metrics as objects
+  // 'metrics' is an array of the user-specified metrics as objects => 'metric name': [metric values]
   const { serviceName, categoryName, metrics, timeList, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
   const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
   const reverseTimeArr = timeArr.reverse();
   const re = /_/g;
-  const plotlyDataObjectArray: plotlyData[] = [];
 
+  // this array gets populated once generatePlotlyDataObjects is invoked in `createChart`
+  const plotlyDataObjectArray: plotlyData[] = [];
   // generates an array plotly data objects to add to be passed into our plotly chart's data prop
   const generatePlotlyDataObjects = (metricsArray, timeArray) => {
     console.log('metricsArray: ', metricsArray);
     console.log('timeArray: ', timeArray);
-    // initalize an array of objects for output
     // iterate through the metricsArray
     // each element is an array of num data (y-axis)
     metricsArray.forEach(el => {
