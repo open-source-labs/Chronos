@@ -28,15 +28,15 @@ const TransferColumns = React.memo(() => {
   const { mode } = useContext(DashboardContext.DashboardContext);
 
   const eventDataList = eventData.eventDataList;
-  const healthDataList = healthData.healthDataList;
+  const healthDataObject = healthData;
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   useEffect(() => {
-    if (healthDataList && healthDataList.length > 0) {
+    if (healthDataObject) {
       setHealthMetricsReady(true);
     }
-  }, [healthDataList]);
+  }, [healthDataObject]);
 
   useEffect(() => {
     if (eventDataList && eventDataList.length > 0) {
@@ -45,7 +45,7 @@ const TransferColumns = React.memo(() => {
   }, [eventDataList]);
 
   useEffect(() => {
-    setHealthMetrics(getMetrics('health', healthDataList));
+    setHealthMetrics(getMetrics('health', healthDataObject));
   }, [healthMetricsReady]);
 
   useEffect(() => {
@@ -65,26 +65,21 @@ const TransferColumns = React.memo(() => {
     }
     // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
     else if (service === 'kubernetesmetrics') {
-      if (healthDataList && healthDataList.length > 0) {
-        setMetricsPool(getMetrics('health', healthDataList));
+      if (healthDataObject) {
+        setMetricsPool(getMetrics('health', healthDataObject));
       } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
     } else if (!service.includes('kafkametrics')) {
-      if (healthDataList && healthDataList.length > 0) {
-        setMetricsPool(getMetrics('health', healthDataList));
+      if (healthDataObject) {
+        setMetricsPool(getMetrics('health', healthDataObject));
       } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
     } else {
-      if (
-        healthDataList &&
-        healthDataList.length > 0 &&
-        eventDataList &&
-        eventDataList.length > 0
-      ) {
+      if (healthDataObject && eventDataList && eventDataList.length > 0) {
         setMetricsPool(
-          getMetrics('event', eventDataList).concat(getMetrics('health', healthDataList))
+          getMetrics('event', eventDataList).concat(getMetrics('health', healthDataObject))
         );
       } else if (healthMetricsReady && eventMetricsReady) {
         setMetricsPool(eventMetrics.concat(healthMetrics));
