@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Electron from 'electron';
-import { transformData } from './helpers';
+import { transformer } from './helpers';
 const { ipcRenderer } = window.require('electron');
 
 export const HealthContext = React.createContext<any>(null);
@@ -34,10 +34,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     return false;
   }
 
-
   /**
-   * @function fetchEventData - sending a request to the backend to retrieve data. 
-   * Data is then parsed and the setHealthData is then set. 
+   * @function fetchEventData - sending a request to the backend to retrieve data.
+   * Data is then parsed and the setHealthData is then set.
    */
   const fetchHealthData = useCallback(serv => {
     ipcRenderer.removeAllListeners('healthResponse');
@@ -53,7 +52,6 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
             let result: any[];
             if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
               result = JSON.parse(data);
-              console.log('the health results before transformation: ', result)
               if (result && result.length && service === Object.keys(result[0])[0]) {
                 resolve(result[0]);
               }
@@ -64,8 +62,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
           if (checkServicesComplete(temp, serv)) {
             setServices(serv);
             let transformedData: any = {};
-            transformedData = transformData(temp);
-            console.log('results from fetch health data: ', transformedData);
+            console.log('original data before transformation: ', temp);
+            transformedData = transformer(temp);
+            console.log('data after tranformation: ', transformedData);
             setHealthData(transformedData);
           }
         });
