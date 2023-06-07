@@ -29,7 +29,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
   // makes time data human-readable, and reverses it so it shows up correctly in the graph
-  const prettierTimeInReverse = (timeArray: string[]): string[] => {
+  const prettyTimeInReverse = (timeArray: string[]): string[] => {
     return timeArray.map((el: any) => moment(el).format('kk:mm:ss')).reverse();
   };
 
@@ -55,7 +55,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
       // define the metrics for this service
       const metrics = chartData[serviceName];
       // loop through the list of metrics for the current service
-      for (const metricName of metrics) {
+      for (const metricName in metrics) {
         // define the value and time arrays
         const dataArray = metrics[metricName].value;
         const timeArray = metrics[metricName].time;
@@ -66,7 +66,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
         // create the plotly object
         const plotlyDataObject: PlotlyData = {
           name: prettyMetricName(metricName),
-          x: prettierTimeInReverse(timeArray),
+          x: prettyTimeInReverse(timeArray),
           y: dataArray,
           type: 'scattergl',
           mode: 'lines',
