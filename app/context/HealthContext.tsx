@@ -34,10 +34,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     return false;
   }
 
-
   /**
-   * @function fetchEventData - sending a request to the backend to retrieve data. 
-   * Data is then parsed and the setHealthData is then set. 
+   * @function fetchEventData - sending a request to the backend to retrieve data.
+   * Data is then parsed and the setHealthData is then set.
    */
   const fetchHealthData = useCallback(serv => {
     ipcRenderer.removeAllListeners('healthResponse');
