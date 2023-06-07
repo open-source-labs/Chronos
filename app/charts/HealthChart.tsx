@@ -56,12 +56,12 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
       const metrics = chartData[serviceName];
       // loop through the list of metrics for the current service
       for (const metricName in metrics) {
-        // define the value and time arrays
-        const dataArray = metrics[metricName].value;
+        // define the value and time arrays; allow data to be reassignable in case we need to convert the bytes data into megabytes
+        let dataArray = metrics[metricName].value;
         const timeArray = metrics[metricName].time;
-        // specifically for `Megabyte` types, convert the data of bytes into a value of megabytes before graphing
+        // specifically for `Megabyte` types, convert the original data of bytes into a value of megabytes before graphing
         if (dataType === 'Memory in Megabytes' || 'Cache in Megabytes') {
-          dataArray.map(value => (value / 1000000).toFixed(2));
+          dataArray = dataArray.map(value => (value / 1000000).toFixed(2));
         }
         // create the plotly object
         const plotlyDataObject: PlotlyData = {
@@ -79,7 +79,6 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
       }
     }
     // return the array of plotlyDataObject
-    console.log('plotlyObjectArray: ', arrayOfPlotlyDataObjects);
     return arrayOfPlotlyDataObjects;
   };
 

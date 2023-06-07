@@ -21,19 +21,18 @@ interface DataObject {
 
 const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   /*
-    Pull in all the health data via HealthContext
-    Pull in the list of ALL user-selected metrics via QueryContext as strings, even if they don't pertain to this category.
-    Destructure category from props. This category was passed down from the GraphsContainer and creates a new tab in Chronos to view charts pertaining only to the category.
+    healthData - Pull in all the health data via HealthContext
+    selectedMetrics - Pull in the list of ALL user-selected metrics via QueryContext as strings, even if they don't pertain to this category.
+    category - Destructure category from props. This category was passed down from the GraphsContainer and creates a new tab in Chronos to view charts pertaining only to the category.
     Think of each <HealthContainer /> as the new tab in Chronos. It will only create charts pertaining to that category.
-    healthChartsArr is local state that gets updated here with an array of <HealthChart />'s that display user-selected data for the category.
-    `service` is only used to determine if we should display our health charts (because kafka and kubernetes specifically don't use HealthChart to display data).
+    healthChartsArr - local state that gets updated with an array of <HealthChart />'s that display user-selected data.
+    `service` - only used to determine if we should display our health charts (because kafka and kubernetes specifically don't use HealthChart to display data).
     */
   const { healthData } = useContext(HealthContext);
   const { selectedMetrics } = useContext(QueryContext);
   const { category } = props;
   const { service } = useParams<keyof Params>() as Params;
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
-
   /* 
   This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
   Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
@@ -45,12 +44,13 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     const filteredMetricNames: string[] = [];
     // iterate over the selectedMetrics from QueryContext
     selectedMetrics.forEach(metricObj => {
-      // due to the way the data is stored, the metricObj only has one key on it; thus [0] is tacked onto the end
+      // due to the way the data is stored, each metricObj has a key of category, and an array of selected metrics as a value
       const metricCategory = Object.keys(metricObj)[0];
-      // if the current metric's category matches our category, add its array content to the filteredHealthData array
+      const metricValuesArray = metricObj[metricCategory];
+      // if the current metricObj's category matches our instance's current category, iterate through its array of values
       if (metricCategory === category) {
-        metricObj[metricCategory].forEach(metricName => {
-          filteredMetricNames.push(metricName);
+        metricValuesArray.forEach(metricName => {
+          filteredMetricNames.push(metricName); // add the metricNames to the filteredMetricNames array
         });
       }
     });
@@ -76,7 +76,6 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     }
     return filteredHealthData;
   };
-
   // function to create a version of the healthData based on the value type
   // current healthData value types: GHz, bytes, temperature, percent, ticks, processes, num, latency
   const defineDataValueType = (metricName: string): string => {
@@ -95,7 +94,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
       cache: 'Cache in Megabytes',
       latency: 'Latency',
     };
-    // iterate through the dictionary and check if the key matches any part of the metricName
+    // iterate through the dictionary and check if the key matches any part of the passed in metricName
     // if they match, update type variable to the value of the matching key and return
     let type: string = ''; // type will store the result for returning
     for (const [key, value] of Object.entries(typeDictionary)) {
@@ -141,7 +140,9 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   // function to generate charts using the type-sorted data
   const generateCharts = sortedData => {
     const chartsArray: JSX.Element[] = [];
-    let keymaker = 1;
+    const keymaker = () => {
+      return Math.floor(Math.random()*1000)
+    }
     // iterate over the sortedData and create a chart for each data type
     for (const dataType in sortedData) {
       // pass down the value of the current data type object
@@ -149,7 +150,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
       console.log('dataType: ', dataType, 'chartData: ', chartData);
       chartsArray.push(
         <HealthChart
-          key={`Chart${keymaker++}`}
+          key={'H' + keymaker()}
           dataType={dataType}
           chartData={sortedData[dataType]}
           categoryName={`${category}`}
@@ -164,16 +165,12 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   useEffect(() => {
     // returns an object containing only the healthData for the current category and the metrics the User selected
     const filteredHealthData = filterSelectedMetricsAndHealthData();
-    console.log('filteredHealthData: ', filteredHealthData)
     // returns an object containing the filtered data sorted by data type
     const typeSortedHealthData = healthDataGroupedByDataType(filteredHealthData);
-    console.log('typeSortedHealthData: ', typeSortedHealthData);
     // invoking generateCharts with the sorted data will update healthChartsArr in state with the list of charts to be rendered
     generateCharts(typeSortedHealthData);
-    console.log(healthChartsArr)
   }, [category]);
 
-  // return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
   // JJ-ADDITION
   return (
     <div>
