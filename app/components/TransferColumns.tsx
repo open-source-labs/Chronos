@@ -28,15 +28,21 @@ const TransferColumns = React.memo(() => {
   const { mode } = useContext(DashboardContext.DashboardContext);
 
   const eventDataList = eventData.eventDataList;
-  const healthDataList = healthData.healthDataList;
+  const healthDataObject = healthData;
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
+  // console.log('healthMetrics: ', healthMetrics);
+  // console.log('metricsPool: ', metricsPool);
+  // console.log('targetKeys: ', targetKeys);
+  // console.log('eventData: ', eventData);
+  // console.log('eventDataList: ', eventDataList);
+
   useEffect(() => {
-    if (healthDataList && healthDataList.length > 0) {
+    if (healthDataObject) {
       setHealthMetricsReady(true);
     }
-  }, [healthDataList]);
+  }, [healthDataObject]);
 
   useEffect(() => {
     if (eventDataList && eventDataList.length > 0) {
@@ -45,7 +51,7 @@ const TransferColumns = React.memo(() => {
   }, [eventDataList]);
 
   useEffect(() => {
-    setHealthMetrics(getMetrics('health', healthDataList));
+    setHealthMetrics(getMetrics('health', healthDataObject));
   }, [healthMetricsReady]);
 
   useEffect(() => {
@@ -65,26 +71,21 @@ const TransferColumns = React.memo(() => {
     }
     // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
     else if (service === 'kubernetesmetrics') {
-      if (healthDataList && healthDataList.length > 0) {
-        setMetricsPool(getMetrics('health', healthDataList));
+      if (healthDataObject) {
+        setMetricsPool(getMetrics('health', healthDataObject));
       } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
     } else if (!service.includes('kafkametrics')) {
-      if (healthDataList && healthDataList.length > 0) {
-        setMetricsPool(getMetrics('health', healthDataList));
+      if (healthDataObject) {
+        setMetricsPool(getMetrics('health', healthDataObject));
       } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
     } else {
-      if (
-        healthDataList &&
-        healthDataList.length > 0 &&
-        eventDataList &&
-        eventDataList.length > 0
-      ) {
+      if (healthDataObject && eventDataList && eventDataList.length > 0) {
         setMetricsPool(
-          getMetrics('event', eventDataList).concat(getMetrics('health', healthDataList))
+          getMetrics('event', eventDataList).concat(getMetrics('health', healthDataObject))
         );
       } else if (healthMetricsReady && eventMetricsReady) {
         setMetricsPool(eventMetrics.concat(healthMetrics));
@@ -92,6 +93,7 @@ const TransferColumns = React.memo(() => {
     }
   }, [service, eventData, healthData]);
 
+  // responsible for parsing data and updating state via setMetricsPool
   const getMetrics = (type, datalist) => {
     let pool: any[] = [];
     if (type === 'event') {
@@ -105,24 +107,32 @@ const TransferColumns = React.memo(() => {
         pool.push(temp);
       });
     } else {
-      datalist.forEach(category => {
-        const tag: string = Object.keys(category)[0];
-        const serviceObj: {} = category[tag][0];
-        const valuesOfServiceObj: any[] = Object.values(serviceObj);
-        const metricsArr: any[] = valuesOfServiceObj[0];
-        metricsArr.forEach(element => {
-          const temp = {};
-          const metricName: string = Object.keys(element)[0];
-          const key = tag + ' | ' + metricName;
-          temp['key'] = key;
-          temp['title'] = key;
-          temp['tag'] = tag;
-          pool.push(temp);
-        });
-      });
+      // iterate throught the healthData object to populate the `Metrics Query` tab with metrics options
+      // The pool array wants an object with a specific format in order to populate the selection table
+      for (const service in healthData) {
+        const categoryObjects = healthData[service];
+        for (const category in categoryObjects) {
+          const metricsObjects = categoryObjects[category];
+          for (const metric in metricsObjects) {
+            const key = category + ' | ' + metric;
+            pool.push({
+              key: key,
+              title: key,
+              tag: category,
+            });
+          }
+        }
+      }
     }
     return pool;
   };
+
+  // Justin's alternative to  getCharts (b/c getCharts is just saving the user-selected metrics into QueryContext)
+  // getCharts takes data that already exists in state as an array of strings, and makes it into an array of objects, just to save it to QueryContext state
+  // the selectedMetrics from QueryContext is used in TransferColumns, EventContainer, GraphsContainer, and HealthContainer
+  // const saveSelectedMetrics = () => {
+  //   // iterate over the targetKeys array
+  // }
 
   const getCharts = () => {
     const temp: any[] = [];
@@ -151,6 +161,7 @@ const TransferColumns = React.memo(() => {
     setSelectedMetrics(temp);
   };
 
+  // makes the column titles for the selection grid
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
     {
@@ -167,8 +178,8 @@ const TransferColumns = React.memo(() => {
     },
   ];
 
+  // makes the rows needed for the selection grid
   const rows: any[] = [];
-
   metricsPool.forEach((el, index) => {
     const row = {};
     row['id'] = index;
@@ -177,8 +188,8 @@ const TransferColumns = React.memo(() => {
     rows.push(row);
   });
 
+  // makes the Printed list of 'currently selected rows' on the page using targetKeys array
   const selectedRows: any[] = [];
-
   targetKeys.forEach(el => {
     selectedRows.push(
       <li style={{ marginLeft: '30px', marginTop: '5px', color: currentMode.color }}>{el}</li>
