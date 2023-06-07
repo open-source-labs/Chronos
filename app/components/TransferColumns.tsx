@@ -32,11 +32,11 @@ const TransferColumns = React.memo(() => {
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
-  console.log('healthMetrics: ', healthMetrics);
-  console.log('metricsPool: ', metricsPool);
-  console.log('targetKeys: ', targetKeys);
-  console.log('eventData: ', eventData);
-  console.log('eventDataList: ', eventDataList);
+  // console.log('healthMetrics: ', healthMetrics);
+  // console.log('metricsPool: ', metricsPool);
+  // console.log('targetKeys: ', targetKeys);
+  // console.log('eventData: ', eventData);
+  // console.log('eventDataList: ', eventDataList);
 
   useEffect(() => {
     if (healthDataObject) {
