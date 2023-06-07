@@ -91,7 +91,7 @@ const GraphsContainer: React.FC = React.memo(props => {
 
     return () => {
       if (intervalID) clearInterval(intervalID);
-      setHealthData({ healthDataList: [], healthTimeList: [] });
+      setHealthData({});
       setDockerData({});
       setEventData({ eventDataList: [], eventTimeList: [] });
     };
@@ -156,9 +156,9 @@ const GraphsContainer: React.FC = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
-  console.log('selected metrics: ', {GraphsContainer: selectedMetrics})
-  console.log('chart: ', { GraphsContainer: chart });
-  
+  console.log('selected metrics: ', selectedMetrics);
+  console.log('chart: ', chart);
+
   return (
     <>
       <nav id="navigationBar">
