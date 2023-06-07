@@ -5,22 +5,17 @@ import { all, solo as soloStyle } from './sizeSwitch';
 
 interface HealthChartProps {
   key: string;
-  serviceName: string;
-  // metric: string;
+  dataType: string;
+  chartData: object;
   categoryName: string;
-  metrics: any[];
-  timeList: any[];
-  // valueList: any;
   sizing: string;
   colourGenerator: Function;
 }
-
 interface SoloStyles {
   height: number;
   width: number;
 }
-
-type plotlyData = {
+type PlotlyData = {
   name: string;
   x: string[];
   y: string[];
@@ -30,40 +25,62 @@ type plotlyData = {
 };
 
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
-  // 'metrics' is an array of the user-specified metrics as objects => 'metric name': [metric values]
-  const { serviceName, categoryName, metrics, timeList, sizing, colourGenerator } = props;
+  const { dataType, chartData, categoryName, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
-  const timeArr = timeList.map((el: any) => moment(el).format('kk:mm:ss'));
-  const reverseTimeArr = timeArr.reverse();
-  const re = /_/g;
 
-  // this array gets populated once generatePlotlyDataObjects is invoked in `createChart`
-  const plotlyDataObjectArray: plotlyData[] = [];
-  // generates an array plotly data objects to add to be passed into our plotly chart's data prop
-  const generatePlotlyDataObjects = (metricsArray, timeArray) => {
-    console.log('metricsArray: ', metricsArray);
-    console.log('timeArray: ', timeArray);
-    // iterate through the metricsArray
-    // each element is an array of num data (y-axis)
-    metricsArray.forEach(el => {
-      const originalMetricName = Object.keys(el)[0];
-      const prettyMetricName = originalMetricName.replace(re, ' ');
-      const newColor = colourGenerator(serviceName);
-      console.log('prettyMetricName ', prettyMetricName);
-      // plotly's data prop takes an array of objects that each have x, y, type, mode, marker
-      const dataObject: plotlyData = {
-        name: prettyMetricName,
-        x: timeArray,
-        y: el[originalMetricName],
-        type: 'scattergl',
-        mode: 'lines',
-        marker: {
-          colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
-        },
-      };
-      plotlyDataObjectArray.push(dataObject);
-    });
-    console.log('plotlydataObjectarray: ', plotlyDataObjectArray);
+  // makes time data human-readable, and reverses it so it shows up correctly in the graph
+  const prettierTimeInReverse = (timeArray: string[]): string[] => {
+    return timeArray.map((el: any) => moment(el).format('kk:mm:ss')).reverse();
+  };
+
+  // removes underscores from metric names to improve their look in the graph
+  const prettyMetricName = metricName => {
+    return metricName.replaceAll('_', ' ');
+  };
+
+  // pulls the current service names to be shown in the graph title from chartData
+  const serviceNamesAsString = (chartData: object): string => {
+    let serviceNameString = '';
+    for (const serviceName in chartData) {
+      serviceNameString += `${serviceName} | `;
+    }
+    return serviceNameString;
+  };
+
+  // generates an array of plotly data objects to be passed into our plotly chart's data prop
+  const generatePlotlyDataObjects = (chartData: object): object[] => {
+    const arrayOfPlotlyDataObjects: PlotlyData[] = [];
+    // iterate through the chartData
+    for (const serviceName in chartData) {
+      // define the metrics for this service
+      const metrics = chartData[serviceName];
+      // loop through the list of metrics for the current service
+      for (const metricName of metrics) {
+        // define the value and time arrays
+        const dataArray = metrics[metricName].value;
+        const timeArray = metrics[metricName].time;
+        // specifically for `Megabyte` types, convert the data of bytes into a value of megabytes before graphing
+        if (dataType === 'Memory in Megabytes' || 'Cache in Megabytes') {
+          dataArray.map(value => (value / 1000000).toFixed(2));
+        }
+        // create the plotly object
+        const plotlyDataObject: PlotlyData = {
+          name: prettyMetricName(metricName),
+          x: prettierTimeInReverse(timeArray),
+          y: dataArray,
+          type: 'scattergl',
+          mode: 'lines',
+          marker: {
+            colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
+          },
+        };
+        // push the dataObject into the arrayOfPlotlyDataObjects
+        arrayOfPlotlyDataObjects.push(plotlyDataObject);
+      }
+    }
+    // return the array of plotlyDataObject
+    console.log('plotlyObjectArray: ', arrayOfPlotlyDataObjects);
+    return arrayOfPlotlyDataObjects;
   };
 
   setInterval(() => {
@@ -73,15 +90,16 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   }, 20);
 
   const createChart = () => {
-    generatePlotlyDataObjects(metrics, reverseTimeArr);
+    const dataArray = generatePlotlyDataObjects(chartData);
+    const serviceNames = serviceNamesAsString(chartData);
     const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
       <Plot
-        data={plotlyDataObjectArray}
+        data={dataArray}
         config={{ displayModeBar: true }}
         layout={{
-          title: `${serviceName} | ${categoryName}`,
+          title: `${serviceNames}| ${categoryName}`,
           ...sizeSwitch,
           font: {
             color: '#444d56',
@@ -92,10 +110,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
           plot_bgcolor: 'white',
           showlegend: true,
           legend: {
-            orientation: 'h',
-            xanchor: 'center',
-            x: 0.5,
-            y: 5,
+            orientation: 'v',
           },
           xaxis: {
             title: 'Time',
@@ -109,8 +124,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
           },
           yaxis: {
             rangemode: 'nonnegative',
-            //! change this later :^)
-            title: 'Value',
+            title: `${dataType}`,
           },
         }}
       />
