@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import HealthChart from '../charts/HealthChart';
-import { getTime } from '../context/helpers';
 import { useParams } from 'react-router-dom';
 
 interface HealthContainerProps {
@@ -16,97 +15,162 @@ interface Params {
   service: string;
 }
 
+interface DataObject {
+  [key: string]: object;
+}
+
 const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
+  /*
+    healthData - Pull in all the health data via HealthContext
+    selectedMetrics - Pull in the list of ALL user-selected metrics via QueryContext as strings, even if they don't pertain to this category.
+    category - Destructure category from props. This category was passed down from the GraphsContainer and creates a new tab in Chronos to view charts pertaining only to the category.
+    Think of each <HealthContainer /> as the new tab in Chronos. It will only create charts pertaining to that category.
+    healthChartsArr - local state that gets updated with an array of <HealthChart />'s that display user-selected data.
+    `service` - only used to determine if we should display our health charts (because kafka and kubernetes specifically don't use HealthChart to display data).
+    */
   const { healthData } = useContext(HealthContext);
   const { selectedMetrics } = useContext(QueryContext);
-  const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
   const { category } = props;
   const { service } = useParams<keyof Params>() as Params;
-
-  useEffect(() => {
-    const temp: JSX.Element[] = [];
-    let counter: number = 0;
-    const dataList: any[] = healthData.healthDataList;
-    const timeList: any[] = healthData.healthTimeList;
-    // dataList and timeList are structured the same, but time holds timestamps. An array of 4 objects. [Memory, CPU, Processes, Latency]
-    // Each element has all its metrics.
-    // console.log('healthData object in state: ', healthData);
-    // console.log('dataList in healthcontainer is:', dataList);
-    // console.log('timelist in healthcontainer is:', timeList);
-
-    if (healthData && dataList && timeList && dataList.length > 0 && timeList.length > 0) {
-      let selectedMetricsList: string[] = [];
-      selectedMetrics.forEach(element => {
-        if (Object.keys(element)[0] === category) {
-          selectedMetricsList = element[category];
-        }
-      });
-      // ***ALERT*** temporary solution to getting the list of times for our single chart
-      const times: string[] = timeList[0].Memory[0].books[0].activememory_in_bytes;
-
-      dataList.forEach((element: {}) => {
-        const categoryName: string = Object.keys(element)[0];
-        /*
-        'element' is the category found in the dataList response from the server query for metrics data.
-        The above forEach method loops through the different categories.
-        The 'category' variable is the specific category passed in to HealthContainer via prop drilling.
-        The 'category' is the string Memory, CPU, or others that are in the Category column of the Query Selector interface.
-        The 'categoryName' is the string that is Memory/CPU/other inside the metrics data response ('dataList' or 'timelist').
-        When the 'element'/'categoryName' matches the 'category' selected in the Query Selection interface...
-        ... it will dive into that Category object to pull out a chart for each metric selected in the selection interface.
-        selectedMetricsList is derived from the selectedMetrics that were in the QueryContext.
-        selectedMetricsList is how we know which metrics should be made into a chart.
-        selectedMetricsList is the way we can give one chart the multiple metrics being requested.
-        */
-        if (category === categoryName) {
-          const categoryObj: [] = element[categoryName];
-          const filteredMetrics: any[] = [];
-          for (const metricObj of categoryObj) {
-            // serviceName = category (ex. books)
-            const serviceName: string = Object.keys(metricObj)[0]; 
-            console.log('metricObj: ', metricObj)           
-            const serviceMetricsArr: any[] = Object.values(metricObj).flat();
-            console.log('serviceMetricsArr: ', serviceMetricsArr); // -> array of arrays containing numerical data.
-            /* serviceMetricsArr = array of all metric objects
-            [0: {
-              total-availle-memory-in-bytes: [numbers, more numbers, nums, woo]
-            }]
-            */
-
-            // filters through the desired metrics and pass them down to HealthChart
-            selectedMetricsList.forEach(selected => {
-              serviceMetricsArr.forEach(metric => {
-                if (metric[selected]) filteredMetrics.push(metric);
-              });
-            });
-            console.log('filteredMetrics: ', filteredMetrics);
-
-            const re = /_/g;
-            const newHealthChart = (
-              <HealthChart
-                key={`Chart${counter}`}
-                categoryName={categoryName}
-                serviceName={serviceName}
-                // metric={metric.replace(re, " ")}
-                metrics={filteredMetrics}
-                timeList={times}
-                // valueList={valueList}
-                sizing={props.sizing}
-                colourGenerator={props.colourGenerator}
-              />
-            );
-            counter++;
-            temp.push(newHealthChart);
-            // }
-            // }
+  const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
+  /* 
+  This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
+  Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
+  */
+  const filterSelectedMetricsAndHealthData = (): DataObject => {
+    // define a filtered health data object for output
+    // define an array of filteredMetricNames
+    const filteredHealthData = {};
+    const filteredMetricNames: string[] = [];
+    // iterate over the selectedMetrics from QueryContext
+    selectedMetrics.forEach(metricObj => {
+      // due to the way the data is stored, each metricObj has a key of category, and an array of selected metrics as a value
+      const metricCategory = Object.keys(metricObj)[0];
+      const metricValuesArray = metricObj[metricCategory];
+      // if the current metricObj's category matches our instance's current category, iterate through its array of values
+      if (metricCategory === category) {
+        metricValuesArray.forEach(metricName => {
+          filteredMetricNames.push(metricName); // add the metricNames to the filteredMetricNames array
+        });
+      }
+    });
+    /* 
+    Now that we've defined which of the user's selected metrics belong in this category, iterate over the healthData object
+    and filter it down to the selected category and metrics.
+    */
+    for (const service in healthData) {
+      filteredHealthData[service] = {};
+      const categoryObjects = healthData[service];
+      for (const categoryName in categoryObjects) {
+        // if the category in healthData matches the category passed down to this HealthContainer, iterate over the related metrics
+        if (categoryName === category) {
+          const metricObjects = categoryObjects[categoryName];
+          for (const metric in metricObjects) {
+            // if the metric title matches any element in the filtered metrics array, add the metric serviceName to the filteredHealthData object, then add the metrics for that service
+            if (filteredMetricNames.includes(metric)) {
+              filteredHealthData[service][metric] = metricObjects[metric];
+            }
           }
         }
-      });
-      setHealthChartsArr(temp);
+      }
     }
-  }, [healthData, category]);
+    return filteredHealthData;
+  };
+  // function to create a version of the healthData based on the value type
+  // current healthData value types: GHz, bytes, temperature, percent, ticks, processes, num, latency
+  const defineDataValueType = (metricName: string): string => {
+    /* 
+    define a dictionary of data types where the key is the expected chars to be found in the parameter
+    and the value is the desired data type label
+    */
+    const typeDictionary = {
+      GHz: 'Speed in GHz',
+      memory: 'Memory in Megabytes',
+      temperature: 'Degrees in Celsius',
+      percent: 'Percent',
+      ticks: 'Total Ticks',
+      processes: 'Number of Processes',
+      num_of: 'Total Amount',
+      cache: 'Cache in Megabytes',
+      latency: 'Latency',
+    };
+    // iterate through the dictionary and check if the key matches any part of the passed in metricName
+    // if they match, update type variable to the value of the matching key and return
+    let type: string = ''; // type will store the result for returning
+    for (const [key, value] of Object.entries(typeDictionary)) {
+      if (metricName.includes(key)) {
+        type = value;
+        break;
+      } else {
+        type = 'Unknown Value';
+      }
+    }
+    return type;
+  };
 
-  // return <div>{service !== 'kafkametrics' ? healthChartsArr : []}</div>;
+  // function to sort the filteredHealthData by data type to build graphs based on the same data label
+  const healthDataGroupedByDataType = (filteredHealthData: object): DataObject => {
+    const typeGroupedObject = {};
+    // iterate over the services in the healthData object
+    for (const serviceName in filteredHealthData) {
+      // save the filtered metrics of the current service to a variable
+      // define the types of each metric in the metrics object as an array
+      const metrics: object = filteredHealthData[serviceName];
+      const typesArray: string[] = Object.keys(metrics).map((metricName: string): string => {
+        return defineDataValueType(metricName);
+      });
+      // iterate over the types array and assign the typeGroupedObject a key of type, with a value of an object
+      // then assign that newly created object a key of the current service and a value of an object
+      typesArray.forEach((metricType: string) => {
+        typeGroupedObject[metricType] = {};
+        typeGroupedObject[metricType][serviceName] = {};
+      })
+      // iterate over the metrics object
+      for (const metric in metrics) {
+        // define the current metric's type
+        const metricType: string = defineDataValueType(metric);
+        // store the current metric and its value in the typeGrouped object at the appropriate type and serviceName
+        typeGroupedObject[metricType][serviceName][metric] = metrics[metric];
+      }
+    }
+    console.log('typeGroupedObject: ', typeGroupedObject);
+    return typeGroupedObject;
+  };
+
+  // function to generate charts using the type-sorted data
+  const generateCharts = sortedData => {
+    const chartsArray: JSX.Element[] = [];
+    const keymaker = () => {
+      return Math.floor(Math.random()*1000)
+    }
+    // iterate over the sortedData and create a chart for each data type
+    for (const dataType in sortedData) {
+      // pass down the value of the current data type object
+      const chartData = sortedData[dataType];
+      console.log('dataType: ', dataType, 'chartData: ', chartData);
+      chartsArray.push(
+        <HealthChart
+          key={'H' + keymaker()}
+          dataType={dataType}
+          chartData={sortedData[dataType]}
+          categoryName={`${category}`}
+          sizing={props.sizing}
+          colourGenerator={props.colourGenerator}
+        />
+      );
+    }
+    setHealthChartsArr(chartsArray);
+  };
+  
+  useEffect(() => {
+    // returns an object containing only the healthData for the current category and the metrics the User selected
+    const filteredHealthData = filterSelectedMetricsAndHealthData();
+    // returns an object containing the filtered data sorted by data type
+    const typeSortedHealthData = healthDataGroupedByDataType(filteredHealthData);
+    // invoking generateCharts with the sorted data will update healthChartsArr in state with the list of charts to be rendered
+    generateCharts(typeSortedHealthData);
+  }, [category]);
+
   // JJ-ADDITION
   return (
     <div>
