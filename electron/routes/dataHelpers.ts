@@ -67,7 +67,7 @@ const postgresFetch = async (
     result = [{ [serviceName]: result }];
     return result;
   } catch (error) {
-    console.error('Query error in postgresFetch(): ', error);
+    console.log('Query error in postgresFetch(): ', error);
   }
 };
 
