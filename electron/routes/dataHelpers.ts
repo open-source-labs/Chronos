@@ -37,7 +37,7 @@ const mongoFetch = async (
     result = [{ [serviceName]: result }];
     return result;
   } catch (error) {
-    console.error('Aggregation error in mongoFetch(): ', error);
+    console.log('Aggregation error in mongoFetch(): ', error);
   }
 };
 
