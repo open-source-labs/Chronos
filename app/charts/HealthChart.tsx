@@ -50,6 +50,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   // generates an array of plotly data objects to be passed into our plotly chart's data prop
   const generatePlotlyDataObjects = (chartData: object): object[] => {
     const arrayOfPlotlyDataObjects: PlotlyData[] = [];
+    console.log('chartData:::::::: ', chartData);
     // iterate through the chartData
     for (const serviceName in chartData) {
       // define the metrics for this service

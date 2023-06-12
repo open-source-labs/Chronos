@@ -36,9 +36,15 @@ describe('Create Admin Page', () => {
   it('Login button should submit username and password to addUser', () => {
     const element = screen.getByTestId('Login');
     const inputs = element.querySelectorAll('input');
-    inputs[0].value = 'St1nky';
-    inputs[1].value = 'me123';
-    fireEvent.click(element);
+
+    const usernameInput = screen.getByPlaceholderText('username');
+    const passwordInput = screen.getByPlaceholderText('password');
+    const loginButton = screen.getByRole('button', { name: /Login/i });
+    
+    fireEvent.change(usernameInput, { target: { value: 'St1nky' } });
+    fireEvent.change(passwordInput, { target: { value: 'me123' } });
+
+    fireEvent.click(loginButton);
     // expect(ipcRenderer.sendSync).toHaveBeenCalled;
     // above passes test but below fails and says number of calls is zero
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('login', {
