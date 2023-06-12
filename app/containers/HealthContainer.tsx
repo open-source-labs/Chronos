@@ -151,15 +151,22 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     for (const dataType in sortedData) {
       const serviceObjects = sortedData[dataType];
       for (const serviceName in serviceObjects) {
-        // pass down the value of the current data type object
+        // pass down the value of the current data type and service
         const chartData = serviceObjects[serviceName];
-        console.log('dataType: ', dataType, 'chartData: ', chartData);
+        console.log(
+          'dataType: ',
+          dataType,
+          'service name: ',
+          serviceName,
+          'chartData: ',
+          chartData
+        );
         chartsArray.push(
           <HealthChart
             key={'H' + keymaker()}
             dataType={dataType}
             serviceName={serviceName}
-            chartData={sortedData[dataType]}
+            chartData={chartData}
             categoryName={`${category}`}
             sizing={props.sizing}
             colourGenerator={props.colourGenerator}
