@@ -133,7 +133,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
         typeGroupedObject[metricType][serviceName][metric] = metrics[metric];
       }
     }
-    console.log('typeGroupedObject: ', typeGroupedObject);
+    
     return typeGroupedObject;
   };
 
