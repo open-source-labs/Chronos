@@ -37,6 +37,7 @@ const TransferColumns = React.memo(() => {
   // console.log('targetKeys: ', targetKeys);
   // console.log('eventData: ', eventData);
   // console.log('eventDataList: ', eventDataList);
+  // console.log('event metrics: ', eventMetrics);
 
   useEffect(() => {
     if (healthDataObject) {
@@ -71,10 +72,10 @@ const TransferColumns = React.memo(() => {
     }
     // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
     else if (service === 'kubernetesmetrics') {
-      if (healthDataObject) {
-        setMetricsPool(getMetrics('health', healthDataObject));
-      } else if (healthMetricsReady) {
-        setMetricsPool(healthMetrics);
+      if (eventDataList && eventDataList.length > 0) {
+        setMetricsPool(getMetrics('event', eventDataList));
+      } else if (eventMetricsReady) {
+        setMetricsPool(eventMetrics);
       }
     } else if (!service.includes('kafkametrics')) {
       if (healthDataObject) {
@@ -127,14 +128,14 @@ const TransferColumns = React.memo(() => {
     return pool;
   };
 
-  // Justin's alternative to  getCharts (b/c getCharts is just saving the user-selected metrics into QueryContext)
+  // Justin's alternative idea to  getCharts (b/c getCharts is just saving the user-selected metrics into QueryContext)
   // getCharts takes data that already exists in state as an array of strings, and makes it into an array of objects, just to save it to QueryContext state
   // the selectedMetrics from QueryContext is used in TransferColumns, EventContainer, GraphsContainer, and HealthContainer
   // const saveSelectedMetrics = () => {
   //   // iterate over the targetKeys array
   // }
 
-  const getCharts = () => {
+  const createSelectedMetricsList = () => {
     const temp: any[] = [];
     const categorySet = new Set();
     console.log('targetKeys is: ', targetKeys);
@@ -157,7 +158,7 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
-    console.log('temp array with requested graphs is: ', temp);
+    console.log('temp array with requested metrics is: ', temp);
     setSelectedMetrics(temp);
   };
 
@@ -201,7 +202,7 @@ const TransferColumns = React.memo(() => {
   return (
     <>
       <div id="getChartsContainer">
-        <Button id="getCharts" onClick={getCharts} variant="contained" color="primary">
+        <Button id="getCharts" onClick={createSelectedMetricsList} variant="contained" color="primary">
           Get Charts
         </Button>
       </div>
@@ -219,6 +220,7 @@ const TransferColumns = React.memo(() => {
               metricIndeces.forEach(el => {
                 metrics.push(metricsPool[el].key);
               });
+              console.log('targetKeys is set to: ', metrics);
               setTargetKeys(metrics);
             }}
           />
