@@ -29,12 +29,17 @@ describe('Create Admin Page', () => {
   });
 
   it('Create Account button should submit email, username, and password to addUser', () => {
-    const element = screen.getByTestId('CreateAdmin');
-    const inputs = element.querySelectorAll('input');
-    inputs[0].value = 'me';
-    inputs[1].value = 'me@gmail.com';
-    inputs[2].value = 'me123';
-    fireEvent.click(screen.getByText('Create Account'));
+    const username = screen.getByPlaceholderText('enter username');
+    const email = screen.getByPlaceholderText('your@email.here');
+    const password = screen.getByPlaceholderText('enter password');
+    const createAccountButton = screen.getByRole('button', { name: /create account/i });
+
+    fireEvent.change(email, { target: { value: 'me@gmail.com' } });
+    fireEvent.change(username, { target: { value: 'me' } });
+    fireEvent.change(password, { target: { value: 'me123' } });
+
+    fireEvent.click(createAccountButton);
+
     expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
       email: 'me@gmail.com',
       username: 'me',
