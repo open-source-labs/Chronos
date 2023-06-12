@@ -60,7 +60,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    * @params application - is the name of the card taht was clicked on
    */
   const connectToDB = useCallback((username: string, index: number, application: string, URI: string, databaseType: string) => {
-    console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
+    // console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {

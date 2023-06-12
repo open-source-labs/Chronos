@@ -62,9 +62,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
           if (checkServicesComplete(temp, serv)) {
             setServices(serv);
             let transformedData: any = {};
-            console.log('original data before transformation: ', temp);
+            console.log('original healthData before transformation: ', temp);
             transformedData = transformer(temp);
-            console.log('data after tranformation: ', transformedData);
+            console.log('healthData after tranformation: ', transformedData);
             setHealthData(transformedData);
           }
         });

@@ -62,8 +62,6 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 
 //v10: Memoized function, witouth any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
-  console.log('Hi, inside Occupied. Memoize function invoked');
-
   const { awsData, fetchAwsData, fetchAwsAppInfo, setLoadingState } = useContext(AwsContext);
   const { setServicesData, app, setApp } = useContext(ApplicationContext);
   // const { user, getApplications, deleteApp, mode } = useContext(DashboardContext);
