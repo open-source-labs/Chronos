@@ -3,7 +3,7 @@ import './routes/dashboard';
 import { clearGuestSettings } from './routes/dashboard';
 import './routes/data';
 import './routes/cloudbased';
-import path from 'path';
+import { join } from 'path';
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
@@ -22,7 +22,6 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
-
   });
 
   if (process.env.NODE_ENV === 'development') {
@@ -33,7 +32,11 @@ const createWindow = () => {
     win.webContents.openDevTools();
   } else {
     // Production
-    win.loadFile(path.resolve(__dirname, '../index.html'));
+    // win.loadFile(path.resolve(__dirname, '../index.html'));
+    //* Wasn't going to the correct file in the line above.
+    const indexPath = join(app.getAppPath(), 'index.html');
+    console.log('indexPath: ', indexPath); //* I can't get this to console log. I would love to see what this path is to better understand the build!
+    win.loadFile(indexPath);
   }
 
   ipcMain.on('max', () => {
