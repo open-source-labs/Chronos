@@ -28,7 +28,7 @@ jest.mock('electron', () => ({
 
 // jest.mock('react-plotly.js', () => (props) {
 //   const div = document.createElement('div');
-  
+
 // })
 
 describe('HealthChart', () => {
@@ -77,7 +77,6 @@ describe('HealthChart', () => {
   // });
 
   it('Should have correct data on y-axis based off mock data', () => {
-    console.log('GRAPH DATA: ', graph.data);
     expect(graph.data[0].y[0]).toBe((mockData.ServiceName.Metric.value[0] / 1000000).toFixed(2));
     expect(graph.data[0].y[1]).toBe((mockData.ServiceName.Metric.value[1] / 1000000).toFixed(2));
   });
