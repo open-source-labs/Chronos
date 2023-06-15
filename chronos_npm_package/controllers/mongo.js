@@ -131,7 +131,7 @@ mongo.health = async ({ microservice, interval, mode }) => {
 };
 
 /**
- * Runs instead of health if dockerized is true
+ * !Runs instead of health if dockerized is true
  * Collects information on the docker container
  */
 mongo.docker = ({ microservice, interval, mode }) => {
