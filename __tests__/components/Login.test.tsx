@@ -4,9 +4,15 @@ import { ipcRenderer } from 'electron';
 import Login from '../../app/components/Login';
 import DashboardContextProvider from '../../app/context/DashboardContext';
 import { HashRouter as Router } from 'react-router-dom';
+import '@testing-library/jest-dom';
+
+const navigateMock = jest.fn();
 
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
-
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => navigateMock,
+}));
 // const mock = jest.fn(Electron.ipcRenderer.sendSync())
 
 describe('Create Admin Page', () => {
@@ -18,6 +24,7 @@ describe('Create Admin Page', () => {
         </DashboardContextProvider>
       </Router>
     );
+    navigateMock.mockReset();
   });
 
   it('should render', () => {
@@ -37,7 +44,7 @@ describe('Create Admin Page', () => {
     const usernameInput = screen.getByPlaceholderText('username');
     const passwordInput = screen.getByPlaceholderText('password');
     const loginButton = screen.getByRole('button', { name: /Login/i });
-    
+
     fireEvent.change(usernameInput, { target: { value: 'St1nky' } });
     fireEvent.change(passwordInput, { target: { value: 'me123' } });
 
@@ -46,5 +53,13 @@ describe('Create Admin Page', () => {
       username: 'St1nky',
       password: 'me123',
     });
+  });
+
+  it('Should reroute user to signup', () => {
+    const button = screen.getByText(/need an account/i);
+    expect(button).toBeInTheDocument();
+    fireEvent.click(button);
+
+    expect(navigateMock).toHaveBeenCalledTimes(1);
   });
 });

@@ -8,6 +8,7 @@ jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
 describe('Create Admin Page', () => {
   beforeEach(() => {
+    console.error = jest.fn();
     render(
       <DashboardContextProvider>
         <CreateAdmin />
@@ -15,7 +16,7 @@ describe('Create Admin Page', () => {
     );
   });
 
-  it('should render', () => {
+  it('Should render', () => {
     expect(screen).toBeTruthy();
   });
 
