@@ -1,9 +1,13 @@
 import KafkaModel from '../models/KafkaModel';
 import HealthModelFunc from '../models/HealthModel';
+import { Pool } from 'pg';
 
-const fetchData = {};
+interface fetchData {
+  mongoFetch: (serviceName: string) => Promise<Array<{ [key: string]: any[] }>>;
+  postgresFetch: (serviceName: string, pool: Pool) => Promise<Array<{ [key: string]: any[] }>>;
+}
 
-const aggregator = [
+const aggregator: any[] = [
   {
     $setWindowFields: {
       partitionBy: '$metric',
@@ -24,10 +28,9 @@ const aggregator = [
   },
 ];
 
-// healthModelFunc creates a model based on the serviceName
-// Create an aggregator based on the aggregator variable
-// return the result
-fetchData.mongoFetch = async function (serviceName) {
+const mongoFetch = async (
+  serviceName: string
+): Promise<Array<{ [key: string]: any[] }> | undefined> => {
   try {
     const testModel = HealthModelFunc(serviceName);
     let result = await testModel.aggregate(aggregator);
@@ -38,17 +41,18 @@ fetchData.mongoFetch = async function (serviceName) {
   }
 };
 
-fetchData.postgresFetch = async function (serviceName, pool) {
+const postgresFetch = async (
+  serviceName: string,
+  pool: Pool
+): Promise<Array<{ [key: string]: any[] }> | undefined> => {
   const query = `
-    WITH
-      temp
-    AS (
+    WITH temp AS (
         SELECT
           metric, value, category, time,
           row_number() OVER(PARTITION BY metric ORDER BY time DESC) AS rowNumber
         FROM
           ${serviceName}
-      )
+    )
     SELECT
       metric, value, category, time
     FROM
@@ -57,12 +61,19 @@ fetchData.postgresFetch = async function (serviceName, pool) {
       rowNumber <= 50
   ;`;
 
-  let result = await pool.query(query);
-  // console.log('result.rows in dataHelpers postgresFetch:', JSON.stringify(result.rows));
-  result = result.rows;
-  result = [{ [serviceName]: result }];
-  // console.log('result with servicename in dataHelpers postgresFetch:', JSON.stringify(result));
-  return result;
+  try {
+    let result = await pool.query(query);
+    result = result.rows;
+    result = [{ [serviceName]: result }];
+    return result;
+  } catch (error) {
+    console.log('Query error in postgresFetch(): ', error);
+  }
+};
+
+const fetchData = {
+  mongoFetch,
+  postgresFetch,
 };
 
 export { fetchData };
