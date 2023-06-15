@@ -92,7 +92,7 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 ### Packing the Chronos App into an Executable
 
 1. From the root directory, run `npm run build`
-2. Run `npm package`
+2. Run `npm run package`
 3. Find the `chronos.app` executable inside the newly created `release-builds` folder in the root directory.
 
 #
