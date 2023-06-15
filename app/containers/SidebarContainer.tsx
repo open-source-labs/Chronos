@@ -12,30 +12,31 @@ import { AwsContext } from '../context/AwsContext';
 
 const SidebarContainer = React.memo(props => {
   // Extract invervalID from ApplicationContext. Initival value: intervalID = null
-  const { intervalID } = useContext  (ApplicationContext);
+  const { intervalID } = useContext(ApplicationContext);
   // Extract isLoading and setLoading state from AwsContext. Initial value: isLoading = true
-  const { isLoading, setLoadingState } = useContext(AwsContext); 
+  const { isLoading, setLoadingState } = useContext(AwsContext);
 
   // clear interval and set loading state to true when leaving graph containers
 
   /**
-   * @function handleCLick - check if the 'intervalID' exists. If so, theres a timer running and the fuunction clears the timer using @function clearInterval - function. 
-   * Checks if variable 'isLoading' is false and if so the content is not loading and therefore, sets it to true using the setLoadingState function.   
+   * @function handleCLick - check if the 'intervalID' exists. If so, theres a timer running and the fuunction clears the timer using @function clearInterval - function.
+   * Checks if variable 'isLoading' is false and if so the content is not loading and therefore, sets it to true using the setLoadingState function.
    */
   const handleClick = () => {
-    if(intervalID) clearInterval(intervalID);
-    if(!isLoading) setLoadingState(true);
-  }
+    if (intervalID) clearInterval(intervalID);
+    if (!isLoading) setLoadingState(true);
+  };
 
   return (
     <div className="sidebar-container" id="mySidebar">
       <div className="sidebar">
         <div className="firstRow">
           <span>
-            <img alt="C" id="C" src="../assets/C.svg" />
+            {/* Attempting to change the path by taking out the ../ */}
+            <img alt="C" id="C" src="assets/C.svg" />
           </span>
           <span>
-            <img alt="Chronos" id="logo" src="../assets/logo.svg" />
+            <img alt="Chronos" id="logo" src="assets/logo.svg" />
           </span>
         </div>
         <hr className="line" id="firstLine" />
@@ -87,7 +88,7 @@ const SidebarContainer = React.memo(props => {
         </div>
       </div>
     </div>
-  )
+  );
 });
 
 export default SidebarContainer;
