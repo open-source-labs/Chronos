@@ -54,8 +54,6 @@ healthHelpers.collectHealthData = () => {
   const healthDataCollection = [];
   const time = Date.now();
 
-  console.log('in health helpers 2');
-
   si.cpu()
     .then(data => {
       const siMethodName = 'cpu';
