@@ -86,8 +86,6 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
 
   const createChart = () => {
     const dataArray = generatePlotlyDataObjects(chartData);
-
-    console.log('serviceName: ', serviceName);
     const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (

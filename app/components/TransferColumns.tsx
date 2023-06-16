@@ -27,36 +27,26 @@ const TransferColumns = React.memo(() => {
   const { service } = useParams<keyof Params>() as Params;
   const { mode } = useContext(DashboardContext.DashboardContext);
 
-  const eventDataList = eventData.eventDataList;
-  const healthDataObject = healthData;
-
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
-  // console.log('healthMetrics: ', healthMetrics);
-  // console.log('metricsPool: ', metricsPool);
-  // console.log('targetKeys: ', targetKeys);
-  // console.log('eventData: ', eventData);
-  // console.log('eventDataList: ', eventDataList);
-  // console.log('event metrics: ', eventMetrics);
-
   useEffect(() => {
-    if (healthDataObject) {
+    if (healthData) {
       setHealthMetricsReady(true);
     }
-  }, [healthDataObject]);
+  }, [healthData]);
 
   useEffect(() => {
-    if (eventDataList && eventDataList.length > 0) {
+    if (eventData) {
       setEventMetricsReady(true);
     }
-  }, [eventDataList]);
+  }, [eventData]);
 
   useEffect(() => {
-    setHealthMetrics(getMetrics('health', healthDataObject));
+    setHealthMetrics(getMetrics('health', healthData));
   }, [healthMetricsReady]);
 
   useEffect(() => {
-    setEventMetrics(getMetrics('event', eventDataList));
+    setEventMetrics(getMetrics('event', eventData));
   }, [eventMetricsReady]);
 
   useEffect(() => {
@@ -64,30 +54,28 @@ const TransferColumns = React.memo(() => {
       return;
     }
     if (service === 'kafkametrics') {
-      if (eventDataList && eventDataList.length > 0) {
-        setMetricsPool(getMetrics('event', eventDataList));
+      if (eventData) {
+        setMetricsPool(getMetrics('event', eventData));
       } else if (eventMetricsReady) {
         setMetricsPool(eventMetrics);
       }
     }
     // JJ-ADDITION (CAN ALSO JUST ADD OR OPERATOR TO ABOVE CONDITIONAL)
     else if (service === 'kubernetesmetrics') {
-      if (eventDataList && eventDataList.length > 0) {
-        setMetricsPool(getMetrics('event', eventDataList));
+      if (eventData) {
+        setMetricsPool(getMetrics('event', eventData));
       } else if (eventMetricsReady) {
         setMetricsPool(eventMetrics);
       }
     } else if (!service.includes('kafkametrics')) {
-      if (healthDataObject) {
-        setMetricsPool(getMetrics('health', healthDataObject));
+      if (healthData) {
+        setMetricsPool(getMetrics('health', healthData));
       } else if (healthMetricsReady) {
         setMetricsPool(healthMetrics);
       }
     } else {
-      if (healthDataObject && eventDataList && eventDataList.length > 0) {
-        setMetricsPool(
-          getMetrics('event', eventDataList).concat(getMetrics('health', healthDataObject))
-        );
+      if (healthData && eventData) {
+        setMetricsPool(getMetrics('event', eventData).concat(getMetrics('health', healthData)));
       } else if (healthMetricsReady && eventMetricsReady) {
         setMetricsPool(eventMetrics.concat(healthMetrics));
       }
@@ -95,27 +83,29 @@ const TransferColumns = React.memo(() => {
   }, [service, eventData, healthData]);
 
   // responsible for parsing data and updating state via setMetricsPool
-  const getMetrics = (type, datalist) => {
+  const getMetrics = (type, dataObject) => {
     let pool: any[] = [];
     if (type === 'event') {
-      datalist.forEach(metric => {
-        const temp = {};
-        const metricName: string = Object.keys(metric)[0];
-        const key = 'Event | ' + metricName;
-        temp['key'] = key;
-        temp['title'] = key;
-        temp['tag'] = 'Event';
-        pool.push(temp);
-      });
+      for (const category in dataObject) {
+        const metricsObjects = dataObject[category];
+        for (const metricName in metricsObjects) {
+          const key = category + ' | ' + metricName;
+          pool.push({
+            key: key,
+            title: key,
+            tag: category,
+          });
+        }
+      }
     } else {
       // iterate throught the healthData object to populate the `Metrics Query` tab with metrics options
       // The pool array wants an object with a specific format in order to populate the selection table
-      for (const service in healthData) {
-        const categoryObjects = healthData[service];
+      for (const service in dataObject) {
+        const categoryObjects = dataObject[service];
         for (const category in categoryObjects) {
           const metricsObjects = categoryObjects[category];
-          for (const metric in metricsObjects) {
-            const key = category + ' | ' + metric;
+          for (const metricName in metricsObjects) {
+            const key = category + ' | ' + metricName;
             pool.push({
               key: key,
               title: key,
@@ -138,7 +128,6 @@ const TransferColumns = React.memo(() => {
   const createSelectedMetricsList = () => {
     const temp: any[] = [];
     const categorySet = new Set();
-    console.log('targetKeys is: ', targetKeys);
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -158,7 +147,6 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
-    console.log('temp array with requested metrics is: ', temp);
     setSelectedMetrics(temp);
   };
 
@@ -182,10 +170,11 @@ const TransferColumns = React.memo(() => {
   // makes the rows needed for the selection grid
   const rows: any[] = [];
   metricsPool.forEach((el, index) => {
-    const row = {};
-    row['id'] = index;
-    row['tag'] = el.tag;
-    row['title'] = el.title.split(' | ')[1].replace('kubernetes-cadvisor/docker-desktop/', ''); // gets rid of the full path
+    const row = {
+      id: index,
+      tag: el.tag,
+      title: el.title.split(' | ')[1].replace('kubernetes-cadvisor/docker-desktop/', ''),
+    }; // gets rid of the full path
     rows.push(row);
   });
 
@@ -202,7 +191,12 @@ const TransferColumns = React.memo(() => {
   return (
     <>
       <div id="getChartsContainer">
-        <Button id="getCharts" onClick={createSelectedMetricsList} variant="contained" color="primary">
+        <Button
+          id="getCharts"
+          onClick={createSelectedMetricsList}
+          variant="contained"
+          color="primary"
+        >
           Get Charts
         </Button>
       </div>

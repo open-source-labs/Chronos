@@ -17,8 +17,26 @@ export const guestUser = {
   mode: 'light',
 };
 
+/* Interfaces: HealthDataObject's have an initial key determined by whichever service was selected by the user,
+and then another array of MetricObjects as a value.
+Contrastly, EventData is simply an array of MetricObjects. Since they all fall under the same category of 'Event',
+previous groups decided to simply
+*/
+interface MetricObject {
+  category: string;
+  metric: string;
+  rowNumber: number;
+  time: string;
+  value: number;
+  __v: number;
+  _id: string;
+}
+interface HealthDataObject {
+  [key: string]: MetricObject[]
+}
+
 // Transforms health data into a nested object based on service name
-export function transformer(healthData) {
+export function healthTransformer(healthData: HealthDataObject[]) {
   // make an object for storing different services' metrics data
   const serviceMetricsObject = {};
   // loop through the services in the healthData array
@@ -26,6 +44,7 @@ export function transformer(healthData) {
     // grab the key string from the current service object
     const serviceName = Object.keys(serviceObj)[0];
     const serviceElements = serviceObj[serviceName];
+    console.log('serviceElements: ', serviceElements);
     // add the serviceName as a key on the serviceMetricsObject and assign it an empty object
     serviceMetricsObject[serviceName] = {};
     // loop through the elements of the current service
@@ -57,4 +76,28 @@ export function transformer(healthData) {
     });
   })
   return serviceMetricsObject;
+};
+
+export function eventTransformer(eventData: MetricObject[]) {
+  // make an object for storing the metrics data
+  const eventMetricsObject = {};
+  // loop through the services in the eventData array
+  eventData.forEach((metricObj: MetricObject) => {
+    // destructure the category, metric name, time stamp, and metric value from the metricObj
+    const { category, metric, time, value } = metricObj
+    // if the category doesn't exist on the output object yet, initialize it
+    if (!eventMetricsObject[category]) eventMetricsObject[category] = {};
+    // if it doesn't exist yet in that nested object, assign a key using the current dataObject's metric name and assign its value an empty object
+    if (!eventMetricsObject[category][metric]) eventMetricsObject[category][metric] = {};
+    // if a key of 'value' doesn't exist in the previously made object, assign it key of 'value' and an array as its value that includes the information stored in value
+    // if it does exist, push the value of the current dataObject's time key onto the array
+    if (!eventMetricsObject[category][metric].value) eventMetricsObject[category][metric].value = [value];
+    eventMetricsObject[category][metric].value.push(value);
+    // in that same object, if the key 'time' doesn't exist yet, assign it a key of 'time' with the value as an array that includes the time value
+    // if it does exist aready, push the current time value into the time array
+    if (!eventMetricsObject[category][metric].time) eventMetricsObject[category][metric].time = [time];
+    eventMetricsObject[category][metric].time.push(time); 
+  });
+  // return the eventMetricsObject
+  return eventMetricsObject;
 };
