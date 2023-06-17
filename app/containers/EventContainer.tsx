@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { EventContext } from '../context/EventContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
+import { Button } from '@material-ui/core';
 
 interface EventContainerProps {
   sizing: string;
@@ -17,7 +18,6 @@ interface MetricObject {
     value: string[],
     time: string[]
   }
-
 }
 
 interface EventDataObject {
@@ -31,6 +31,22 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const { sizing, colourGenerator } = props;
   // eventChartsArr contains all charts of all metrics
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
+  const [currIndex, setCurrIndex] = useState(0);
+  const [currChunk, setCurrChunk] = useState<JSX.Element[]>([]);
+  const chunkSize = 7;
+
+  // nextChunk and prevChunk handle button clicks to show a limited number of graphs per page to prevent crashing
+  function nextChunk() {
+    const nextChunk = eventChartsArr.slice(currIndex, currIndex + chunkSize);
+    setCurrChunk(nextChunk);
+    setCurrIndex(currIndex + chunkSize);
+  }
+
+  function prevChunk() {
+    const prevChunk = eventChartsArr.slice(currIndex - 2 * chunkSize, currIndex - chunkSize);
+    setCurrChunk(prevChunk);
+    setCurrIndex(currIndex - chunkSize);
+  }
 
   /*
   Chronos11 -- Unfortunately, eventData is not in a good place for UI/UX purposes. These charts are being rendered 1:1 with the list of metrics (over 500).
@@ -57,8 +73,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         if (selectedArr.includes(metricName)) {
           filteredEventData[service][metricName] = serviceMetricsObject[metricName];
         }
-      }
-    }
+      };
+    };
     return filteredEventData;
   };
 
@@ -85,6 +101,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     }
     setEventChartsArr(chartsArray);
   };
+
   // invoke the filter and generate functions to render charts
   useEffect(() => {
     const filteredEventData = filterSelectedEventMetricsandData(eventData);
@@ -93,9 +110,17 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
 
   return (
     <div>
-      {service.includes('kafkametrics') || service.includes('kubernetesmetrics')
-        ? eventChartsArr
-        : []}
+      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
+      {eventChartsArr.length > chunkSize && (
+        <>
+          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize }>
+            Prev
+          </Button>
+          <Button id="nextCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= eventChartsArr.length}>
+            Next
+          </Button>
+        </>
+      )}
     </div>
   );
 });
