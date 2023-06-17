@@ -41,7 +41,6 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     setCurrChunk(nextChunk);
     setCurrIndex(currIndex + chunkSize);
   }
-
   function prevChunk() {
     const prevChunk = eventChartsArr.slice(currIndex - 2 * chunkSize, currIndex - chunkSize);
     setCurrChunk(prevChunk);
@@ -55,7 +54,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   It would be wonderful if a future iteration could manipulate the prometheus configuration in the kubernetes example to send its data
   to an instance of Grafana, and integrate Grafana's dashboard into Chronos to visualize the data.
   */
-
+  
   const filterSelectedEventMetricsandData = (eventDataObj: EventDataObject): EventDataObject => {
     const filteredEventData = {};
     // there's only one element in the selected metrics array for now...
@@ -100,6 +99,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       }
     }
     setEventChartsArr(chartsArray);
+    setCurrChunk(chartsArray.slice(currIndex, currIndex + chunkSize));
+    setCurrIndex(currIndex + chunkSize);
   };
 
   // invoke the filter and generate functions to render charts
