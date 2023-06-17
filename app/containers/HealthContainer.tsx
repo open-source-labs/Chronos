@@ -142,7 +142,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   };
 
   // function to generate charts using the type-sorted data
-  const generateCharts = sortedData => {
+  const generateHealthCharts = sortedData => {
     const chartsArray: JSX.Element[] = [];
     const keymaker = () => {
       return Math.floor(Math.random() * 1000);
@@ -183,7 +183,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     // returns an object containing the filtered data sorted by data type
     const typeSortedHealthData = healthDataGroupedByDataType(filteredHealthData);
     // invoking generateCharts with the sorted data will update healthChartsArr in state with the list of charts to be rendered
-    generateCharts(typeSortedHealthData);
+    generateHealthCharts(typeSortedHealthData);
   }, [category]);
 
   // JJ-ADDITION
