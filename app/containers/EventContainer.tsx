@@ -89,10 +89,10 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
-          <Button id="getCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize }>
+          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize }>
             Prev
           </Button>
-          <Button id="getCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= eventChartsArr.length}>
+          <Button id="nextCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= eventChartsArr.length}>
             Next
           </Button>
         </>
