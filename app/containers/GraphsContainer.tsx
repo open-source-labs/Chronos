@@ -146,7 +146,6 @@ const GraphsContainer: React.FC = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
-  console.log('selected metrics: ', selectedMetrics);
 
   return (
     <>
