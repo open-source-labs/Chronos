@@ -24,6 +24,10 @@ describe('Speed Chart', () => {
   };
   let element;
   beforeEach(() => {
+    // const mockData = [
+    //   { microservice1: 'Test 1'},
+    //   { microservice2: 'Test 2'},
+    // ]
     render(
       <Router>
         <ApplicationContext.Provider value={{ servicesData: '' }}>
@@ -49,4 +53,15 @@ describe('Speed Chart', () => {
   it('Button should have an onClick function', () => {
     expect(typeof element.querySelector('button').onclick).toBe('function');
   });
+
+  // trying to test the functionality of component not passed as props
+  it('Should check/uncheck the checkbox when clicking services', () => {
+    // const checkBox = screen.getByRole('checkbox');
+    // fireEvent.click(checkBox);
+    // expect(checkBox.parentElement).toHaveClass('selected');
+    // fireEvent.click(checkBox);
+    // expect(checkBox.parentElement).not.toHaveClass('selected');
+  });
+
+  it('Should also change selectModal to true or false', () => {});
 });
