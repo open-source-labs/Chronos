@@ -30,9 +30,9 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     */
   const { healthData } = useContext(HealthContext);
   const { selectedMetrics } = useContext(QueryContext);
-  const { category } = props;
   const { service } = useParams<keyof Params>() as Params;
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
+  const { category, sizing, colourGenerator } = props;
   /* 
   This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
   Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
@@ -160,8 +160,8 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
             serviceName={serviceName}
             chartData={chartData}
             categoryName={category}
-            sizing={props.sizing}
-            colourGenerator={props.colourGenerator}
+            sizing={sizing}
+            colourGenerator={colourGenerator}
           />
         );
       }

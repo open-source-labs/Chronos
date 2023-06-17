@@ -12,11 +12,23 @@ interface EventContainerProps {
 interface Params {
   service: string;
 }
+interface MetricObject {
+  [key: string]: {
+    value: string[],
+    time: string[]
+  }
+
+}
+
+interface EventDataObject {
+  [key: string]: MetricObject
+}
 
 const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const { eventData } = useContext(EventContext);
   const { selectedMetrics } = useContext(QueryContext);
   const { service } = useParams<keyof Params>() as Params;
+  const { sizing, colourGenerator } = props;
   // eventChartsArr contains all charts of all metrics
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
 
@@ -28,7 +40,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   to an instance of Grafana, and integrate Grafana's dashboard into Chronos to visualize the data.
   */
 
-  const filterSelectedEventMetricsandData = eventDataObj => {
+  const filterSelectedEventMetricsandData = (eventDataObj: EventDataObject): EventDataObject => {
     const filteredEventData = {};
     // there's only one element in the selected metrics array for now...
     // selectedMetrics is... [{Event: ['metric', 'names', 'as', 'strings']}]
@@ -51,7 +63,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   };
 
   // iterate over the filtered event data to build an array of charts, then set the event charts array state
-  const generateEventCharts = filteredEventDataObj => {
+  const generateEventCharts = (filteredEventDataObj: EventDataObject): void => {
     const chartsArray: JSX.Element[] = [];
     const keymaker = () => {
       return Math.floor(Math.random() * 1000);
@@ -65,6 +77,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
             key={'E' + keymaker()}
             metricName={metricName}
             chartData={chartData}
+            sizing={sizing}
+            colourGenerator={colourGenerator}
           />
         );
       }

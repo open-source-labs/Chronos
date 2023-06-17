@@ -35,8 +35,8 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   };
 
   // removes underscores from metric names to improve their look in the graph
-  const prettyMetricName = metricName => {
-    return metricName.replaceAll('_', ' ');
+  const prettyMetricName = (metricName: string): string => {
+    return metricName.replace(/_/g, ' ');
   };
 
   // pulls the current service names to be shown in the graph title from chartData
@@ -118,7 +118,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
           },
           yaxis: {
             rangemode: 'nonnegative',
-            title: `${dataType}`,
+            title: dataType,
           },
         }}
       />

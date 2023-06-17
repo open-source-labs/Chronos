@@ -118,13 +118,6 @@ const TransferColumns = React.memo(() => {
     return pool;
   };
 
-  // Justin's alternative idea to  getCharts (b/c getCharts is just saving the user-selected metrics into QueryContext)
-  // getCharts takes data that already exists in state as an array of strings, and makes it into an array of objects, just to save it to QueryContext state
-  // the selectedMetrics from QueryContext is used in TransferColumns, EventContainer, GraphsContainer, and HealthContainer
-  // const saveSelectedMetrics = () => {
-  //   // iterate over the targetKeys array
-  // }
-
   const createSelectedMetricsList = () => {
     const temp: any[] = [];
     const categorySet = new Set();
@@ -214,7 +207,6 @@ const TransferColumns = React.memo(() => {
               metricIndeces.forEach(el => {
                 metrics.push(metricsPool[el].key);
               });
-              console.log('targetKeys is set to: ', metrics);
               setTargetKeys(metrics);
             }}
           />
