@@ -50,24 +50,17 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   // generates an array of plotly data objects to be passed into our plotly chart's data prop
   const generatePlotlyDataObjects = (chartDataObj: object): object[] => {
     const arrayOfPlotlyDataObjects: PlotlyData[] = [];
-    console.log('chartData:::::::: ', chartData);
     // iterate through the chartData
     for (const serviceName in chartDataObj) {
-      console.log('SERVICENAME: ', serviceName);
       // define the metrics for this service
       const metrics = chartDataObj[serviceName];
-      console.log('METRICS: ', metrics);
       // loop through the list of metrics for the current service
       for (const metricName in metrics) {
-        console.log('METRICNAME: ', metricName);
         // define the value and time arrays; allow data to be reassignable in case we need to convert the bytes data into megabytes
         let dataArray = metrics[metricName].value;
-        console.log('DATAARRAY: ', dataArray);
         const timeArray = metrics[metricName].time;
-        console.log('TIMEARRAY: ', timeArray);
         // specifically for `Megabyte` types, convert the original data of bytes into a value of megabytes before graphing
         if (dataType === 'Memory in Megabytes' || dataType === 'Cache in Megabytes') {
-          console.log('DATATYPE: ', dataType);
           dataArray = dataArray.map(value => (value / 1000000).toFixed(2));
         }
         // create the plotly object
@@ -81,7 +74,6 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
             colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
           },
         };
-        console.log('PLOTLYDATAOBJECT: ', plotlyDataObject)
         // push the dataObject into the arrayOfPlotlyDataObjects
         arrayOfPlotlyDataObjects.push(plotlyDataObject);
       }
