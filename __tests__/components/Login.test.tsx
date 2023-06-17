@@ -13,8 +13,8 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => navigateMock,
 }));
-// const mock = jest.fn(Electron.ipcRenderer.sendSync())
 
+// testing suite for the CreateAdmin.tsx file
 describe('Create Admin Page', () => {
   beforeEach(() => {
     render(

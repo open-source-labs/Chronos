@@ -7,7 +7,7 @@ import { HashRouter as Router } from 'react-router-dom';
 
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
-describe('Create Admin Page', () => {
+describe('Create Signup Page', () => {
   beforeEach(() => {
     render(
       <Router>
@@ -43,35 +43,5 @@ describe('Create Admin Page', () => {
     fireEvent.change(username, { target: { value: 'me' } });
     fireEvent.change(password, { target: { value: 'me123' } });
     fireEvent.click(signupButton);
-
-    // expect(ipcRenderer.sendSync).toHaveBeenCalledTimes(1);
-    // expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
-    //   username: 'me',
-    //   email: 'me@gmail.com',
-    //   password: 'me123',
-    // });
   });
 });
-
-// describe('handle submit function', () => {
-//   beforeEach(() => {
-//     render(
-//       <Router>
-//         <DashboardContextProvider>
-//           <SignUp />
-//         </DashboardContextProvider>
-//       </Router>
-//     );
-//   });
-
-//   it('should show error message when passwords don\'t match', () => {
-//     const element = screen.getByTestId('SignUp');
-//     const inputs = element.querySelectorAll('input');
-//     inputs[0].value = 'me';
-//     inputs[1].value = 'me@gmail.com';
-//     inputs[2].value = 'me123';
-//     inputs[3].value = 'me1234';
-//     fireEvent.submit(element);
-//     expect(screen.getByText('Entered passwords do not match')).toBeInTheDocument();
-//   })
-// })
