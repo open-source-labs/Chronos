@@ -12,7 +12,7 @@ const config: Config.InitialOptions = {
       '<rootDir>/jest_setup/fileMock.js',
     '\\.(css|less|scss)$': '<rootDir>/jest_setup/styleMock.js',
   },
-  collectCoverage: true,
+  // collectCoverage: true,
 };
 
 export default config;

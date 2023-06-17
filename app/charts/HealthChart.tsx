@@ -51,28 +51,33 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   // generates an array of plotly data objects to be passed into our plotly chart's data prop
   const generatePlotlyDataObjects = (chartDataObj: object): object[] => {
     const arrayOfPlotlyDataObjects: PlotlyData[] = [];
-    // loop through the list of metrics for the current chart
-    for (const metricName in chartDataObj) {
-      // define the value and time arrays; allow data to be reassignable in case we need to convert the bytes data into megabytes
-      let dataArray = chartDataObj[metricName].value;
-      const timeArray = chartDataObj[metricName].time;
-      // specifically for `Megabyte` types, convert the original data of bytes into a value of megabytes before graphing
-      if (dataType === 'Memory in Megabytes' || dataType === 'Cache in Megabytes') {
-        dataArray = dataArray.map(value => (value / 1000000).toFixed(2));
+    // iterate through the chartData
+    for (const serviceName in chartDataObj) {
+      // define the metrics for this service
+      const metrics = chartDataObj[serviceName];
+      // loop through the list of metrics for the current service
+      for (const metricName in metrics) {
+        // define the value and time arrays; allow data to be reassignable in case we need to convert the bytes data into megabytes
+        let dataArray = metrics[metricName].value;
+        const timeArray = metrics[metricName].time;
+        // specifically for `Megabyte` types, convert the original data of bytes into a value of megabytes before graphing
+        if (dataType === 'Memory in Megabytes' || dataType === 'Cache in Megabytes') {
+          dataArray = dataArray.map(value => (value / 1000000).toFixed(2));
+        }
+        // create the plotly object
+        const plotlyDataObject: PlotlyData = {
+          name: prettyMetricName(metricName),
+          x: prettyTimeInReverse(timeArray),
+          y: dataArray,
+          type: 'scattergl',
+          mode: 'lines',
+          marker: {
+            colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
+          },
+        };
+        // push the dataObject into the arrayOfPlotlyDataObjects
+        arrayOfPlotlyDataObjects.push(plotlyDataObject);
       }
-      // create the plotly object
-      const plotlyDataObject: PlotlyData = {
-        name: prettyMetricName(metricName),
-        x: prettyTimeInReverse(timeArray),
-        y: dataArray,
-        type: 'scattergl',
-        mode: 'lines',
-        marker: {
-          colors: ['#fc4039', '#4b54ea', '#32b44f', '#3788fc', '#9c27b0', '#febc2c'],
-        },
-      };
-      // push the dataObject into the arrayOfPlotlyDataObjects
-      arrayOfPlotlyDataObjects.push(plotlyDataObject);
     }
     // return the array of plotlyDataObject
     return arrayOfPlotlyDataObjects;
