@@ -134,7 +134,7 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
      echo "http://$ELB"
         
    4. To create the dashboard for monitoring Prometheus metrics, go to the sidebar, click on the four square icon, and click '+Import.'  For the ID, type in 3119. For tracking, select Prometheus.  Hit Create.  
-   5. For the Opencost dashbaord, go to the sidebar, click on the four square icon, and click '+Import.'  Upload the opencostGrafana.json file, select Prometheus under tracking, and then create.
+   5. For the Opencost dashboard, go to the sidebar, click on the four square icon, and click '+Import.'  Upload the opencostGrafana.json file, select Prometheus under tracking, and then create.
    6. You need to edit the Grafana ini file to make Grafana publicly accessible.  In order to do so, go to your terminal and run: 
     `kubectl edit -n grafana configmap/grafana`
    7. Press the 'i' key to start editing and add this into the Grafana ini section: 
