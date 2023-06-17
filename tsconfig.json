@@ -23,5 +23,5 @@
     "node_modules",
     "dist"
   ],
-  "include": ["./electron/**/*", "./electron/**/*.json", "jest.config.js"]
+  "include": ["./electron/**/*", "./electron/**/*.json", "jest.config.ts"]
 }

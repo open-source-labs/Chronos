@@ -51,7 +51,7 @@ const Login = React.memo(() => {
           <button className="link" id="submitBtn" type="submit">
             Login
           </button>
-          <button className="link needAccount" onClick={() => navigate('/signup')}>
+          <button className="link needAccount" type="button" onClick={() => navigate('/signup')}>
             Need an account?
           </button>
         </form>
