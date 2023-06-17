@@ -65,12 +65,6 @@ describe('Traffic Chart', () => {
     expect(graph._fullLayout.height).toBe(300);
   });
 
-  // it('Should have correct colors', () => {
-  //   expect(graph.outerHTML.includes('{fill: #3f4f75;}')).toBeTruthy();
-  //   expect(graph.outerHTML.includes('{fill: #80cfbe;}')).toBeTruthy();
-  //   expect(graph.outerHTML.includes('{fill: #fff;}')).toBeTruthy();
-  // });
-
   it('Should have correct data points based off mock data', () => {
     expect(graph.calcdata[0][0].isBlank).toBeFalsy();
     expect(graph.data[0].x).toEqual(['customers']);
