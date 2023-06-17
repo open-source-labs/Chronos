@@ -6,6 +6,7 @@ import { all, solo as soloStyle } from './sizeSwitch';
 interface HealthChartProps {
   key: string;
   dataType: string;
+  serviceName: string;
   chartData: object;
   categoryName: string;
   sizing: string;
@@ -25,7 +26,7 @@ type PlotlyData = {
 };
 
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
-  const { dataType, chartData, categoryName, sizing, colourGenerator } = props;
+  const { dataType, serviceName, chartData, categoryName, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
   // makes time data human-readable, and reverses it so it shows up correctly in the graph
@@ -34,8 +35,8 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   };
 
   // removes underscores from metric names to improve their look in the graph
-  const prettyMetricName = metricName => {
-    return metricName.replaceAll('_', ' ');
+  const prettyMetricName = (metricName: string): string => {
+    return metricName.replace(/_/g, ' ');
   };
 
   // pulls the current service names to be shown in the graph title from chartData
@@ -90,7 +91,6 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
 
   const createChart = () => {
     const dataArray = generatePlotlyDataObjects(chartData);
-    const serviceNames = serviceNamesAsString(chartData);
     const sizeSwitch = sizing === 'all' ? all : solo;
 
     return (
@@ -98,7 +98,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
         data={dataArray}
         config={{ displayModeBar: true }}
         layout={{
-          title: `${serviceNames}| ${categoryName}`,
+          title: `${serviceName} || ${categoryName}`,
           ...sizeSwitch,
           font: {
             color: '#444d56',
@@ -123,7 +123,7 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
           },
           yaxis: {
             rangemode: 'nonnegative',
-            title: `${dataType}`,
+            title: dataType,
           },
         }}
       />
