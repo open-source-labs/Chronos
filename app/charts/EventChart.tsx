@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
 
+interface ChartData {
+  value: string[];
+  time: string[];
+}
+
 interface EventChartProps {
   key: string;
-  metric: string;
-  timeList: any;
-  valueList: any;
-  sizing: string;
-  colourGenerator: Function;
+  metricName: string;
+  chartData: ChartData
 }
 
 interface SoloStyles {
@@ -18,7 +20,7 @@ interface SoloStyles {
 }
 
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
-  const { metric, timeList, valueList, sizing, colourGenerator } = props;
+  const { metricName, chartData  } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
 
   setInterval(() => {
