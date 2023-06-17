@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { EventContext } from '../context/EventContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
+import { Button } from '@material-ui/core';
 
 interface EventContainerProps {
   sizing: string;
@@ -20,6 +21,9 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const eventDataList: any[] = eventData.eventDataList;
   const eventTimeList: any[] = eventData.eventTimeList;
   const { service } = useParams<keyof Params>() as Params;
+  const [currIndex, setCurrIndex] = useState(0);
+  const [currChunk, setCurrChunk] = useState<JSX.Element[]>([]);
+  const chunkSize = 7;
 
   useEffect(() => {
     const temp: JSX.Element[] = [];
@@ -50,6 +54,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         }
       });
       setEventChartsArr(temp);
+      setCurrChunk(temp.slice(currIndex, currIndex + chunkSize));
+      setCurrIndex(currIndex + chunkSize);
     }
   }, [eventData, service]);
 
@@ -63,11 +69,34 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     }
     return lst;
   };
+
+  console.log('CHUNKS', currChunk);
+
+  function nextChunk() {
+    const nextChunk = eventChartsArr.slice(currIndex, currIndex + chunkSize);
+    setCurrChunk(nextChunk);
+    setCurrIndex(currIndex + chunkSize);
+  }
+
+  function prevChunk() {
+    const prevChunk = eventChartsArr.slice(currIndex - (2 * chunkSize), currIndex - chunkSize);
+    setCurrChunk(prevChunk);
+    setCurrIndex(currIndex - chunkSize); 
+  }
+
   return (
     <div>
-      {service.includes('kafkametrics') || service.includes('kubernetesmetrics')
-        ? eventChartsArr
-        : []}
+      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
+      {eventChartsArr.length > chunkSize && (
+        <>
+          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize }>
+            Prev
+          </Button>
+          <Button id="nextCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= eventChartsArr.length}>
+            Next
+          </Button>
+        </>
+      )}
     </div>
   );
 });
