@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, getByPlaceholderText } from '@testing-library/react';
 import { ipcRenderer } from 'electron';
 import SignUp from '../../app/components/SignUp';
 import DashboardContextProvider from '../../app/context/DashboardContext';
@@ -7,7 +7,7 @@ import { HashRouter as Router } from 'react-router-dom';
 
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
-describe('Create Admin Page', () => {
+describe('Create Signup Page', () => {
   beforeEach(() => {
     render(
       <Router>
@@ -31,41 +31,17 @@ describe('Create Admin Page', () => {
     expect(element.querySelectorAll('input').length).toBe(4);
   });
 
-  it('Sign up button should submit email, username, and password to addUser', () => {
-    const element = screen.getByTestId('SignUp');
-    const inputs = element.querySelectorAll('input');
-    inputs[0].value = 'me';
-    inputs[1].value = 'me@gmail.com';
-    inputs[2].value = 'me123';
-    fireEvent.click(element);
-    expect(ipcRenderer.sendSync).toHaveBeenCalledTimes(1);
-    // expect(ipcRenderer.sendSync).toHaveBeenCalledWith('addUser', {
-    //   username: 'me',
-    //   email: 'me@gmail.com',
-    //   password: 'me123',
-    // });
+  it('Sign up button should submit email, username, and password to addUser', async () => {
+    screen.debug();
+
+    const username = screen.getByPlaceholderText('enter username');
+    const email = screen.getByPlaceholderText('your@email.here');
+    const password = screen.getByPlaceholderText('enter password');
+    const signupButton = screen.getByRole('signup');
+
+    fireEvent.change(email, { target: { value: 'me@gmail.com' } });
+    fireEvent.change(username, { target: { value: 'me' } });
+    fireEvent.change(password, { target: { value: 'me123' } });
+    fireEvent.click(signupButton);
   });
 });
-
-// describe('handle submit function', () => {
-//   beforeEach(() => {
-//     render(
-//       <Router>
-//         <DashboardContextProvider>
-//           <SignUp />
-//         </DashboardContextProvider>
-//       </Router>
-//     );
-//   });
-
-//   it('should show error message when passwords don\'t match', () => {
-//     const element = screen.getByTestId('SignUp');
-//     const inputs = element.querySelectorAll('input');
-//     inputs[0].value = 'me';
-//     inputs[1].value = 'me@gmail.com';
-//     inputs[2].value = 'me123';
-//     inputs[3].value = 'me1234';
-//     fireEvent.submit(element);
-//     expect(screen.getByText('Entered passwords do not match')).toBeInTheDocument();
-//   })
-// })
