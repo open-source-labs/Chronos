@@ -9,9 +9,11 @@ const chronosConfig = require('./chronos-config');
 const chronos = new Chronos(chronosConfig);
 require('./chronos-config');
 
+// invoking Chronos's tracking
 chronos.track();
 const app = express();
 // requiring in the clients used for this reverse proxy server
+// these clients contain methods and services that were created
 const orderClient = require('./orderClient.js');
 const bookClient = require('./bookClient.js');
 
