@@ -2,7 +2,10 @@ const si = require('systeminformation');
 
 const healthHelpers = {};
 
-/* This object contains all systeminformation methods, metric names, and corresponding points */
+/**
+ * This object contains all systeminformation methods,
+ * metric names, and corresponding data points
+ */
 
 const collectedMetrics = {
   cpu: {
@@ -50,10 +53,18 @@ const collectedMetrics = {
   inetLatency: 'all data collected',
 };
 
+/**
+ * collectHealthData scrapes metrics for microservices
+ * @returns Promise array with each metric in an object
+ */
+
 healthHelpers.collectHealthData = () => {
   const healthDataCollection = [];
   const time = Date.now();
 
+  /** obtains core CPU metrics and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.cpu()
     .then(data => {
       const siMethodName = 'cpu';
@@ -72,6 +83,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
+  /** obtains CPU speed metrics and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.cpuCurrentSpeed()
     .then(data => {
       const siMethodName = 'cpuCurrentSpeed';
@@ -90,6 +104,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
+  /** obtains CPU temperature metrics and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.cpuTemperature()
     .then(data => {
       const siMethodName = 'cpuTemperature';
@@ -108,6 +125,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
+  /** obtains metrics relating to current load and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.currentLoad()
     .then(data => {
       const siMethodName = 'currentLoad';
@@ -126,6 +146,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
+  /** obtains metrics relating to memory and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.mem()
     .then(data => {
       const siMethodName = 'mem';
@@ -144,6 +167,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
+  /** obtains metrics relating to current processes and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.processes()
     .then(data => {
       const siMethodName = 'processes';
@@ -162,6 +188,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
+  /** obtains latency and creates and pushes object with
+   *  metric name and value to the healthDataCollection array
+   */
   si.inetLatency()
     .then(data => {
       const siMethodName = 'inetLatency';
@@ -178,22 +207,14 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
-  // Return a promise that resolves to an array of all of the data points unnested
-  return (
-    Promise.all(healthDataCollection)
-      // Remove any empty strings, NaN, or "NaN" from values prevent database errors
-      .then(array =>
-        array.filter(metric => {
-          if (
-            isNaN(metric.value) ||
-            metric.value === 'NaN' ||
-            metric.value === '' ||
-            metric.value === null
-          )
-            return false;
-          else return true;
-        })
-      )
+  /** Return a promise that resolves to an array of all of the data points
+   * and removes any empty strings, NaN, or "NaN" from values prevent database errors
+   */
+  return Promise.all(healthDataCollection).then(array =>
+    array.filter(metric => {
+      if (isNaN(metric.value) || metric.value === 'NaN' || metric.value === '') return false;
+      else return true;
+    })
   );
 };
 
