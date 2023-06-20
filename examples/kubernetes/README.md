@@ -7,13 +7,13 @@ This example demonstrates how `Chronos` can be used to track health metrics of a
 - *scripts*: Scripts to automate some of the steps involved in running the example
 
 ## Install Docker Desktop
-This example has been developed and tested using the Kubernetes Engine packaged in the Docker Desktop application. Follow instructions online to download/install Docker Desktop and to enable the Kubernetes Engine.
+This example has been developed and tested using the Kubernetes Engine packaged in the Docker Desktop application. 
 
+Follow instructions online to download/install Docker Desktop and to **enable the Kubernetes Engine**. The examples will not work without the Kubernetes Engine enabled. 
 ## Build the Client
 `cd` into the *client* folder and run the following command:
 ```
 docker build -t frontend:1.0 .
-
 ```
 **Mac Users:** Alternatively running the above command, `cd` into the scripts folder and run the `buildClient.sh` script
 

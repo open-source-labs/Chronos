@@ -89,7 +89,7 @@ _See mode-specific configuration descriptions in the "Chronos Tracker for Micros
 
 The `microservice` property takes in a string. This should be a descriptive name for your microservice.
 
-- <img src="assets/important.png" alt="Important" title="Important" align="center" height="20" /> For **Dockerized** microservices, this field **must** match the _container_name_ of the corresponding Docker container.
+- <img src="../assets/important.png" alt="Important" title="Important" align="center" height="20" /> For **Dockerized** microservices, this field **must** match the _container_name_ of the corresponding Docker container.
 
 The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will default to recording server health every 60000 ms or 60 seconds.
 
@@ -279,7 +279,7 @@ When viewing your information in the Chronos Electron application the data will 
 
 ### Chronos Tracker for gRPC
 
-To monitory your gRPC server, setup `chronos-config.js` as if it was a standard microservices example, but be sure to set the `connection` type to `gRPC`.
+To monitor your gRPC server, setup `chronos-config.js` as if it was a standard microservices example, but be sure to set the `connection` type to `gRPC`.
 
 ```js
 module.exports = {
