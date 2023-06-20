@@ -153,6 +153,10 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
       for (const serviceName in serviceObjects) {
         // pass down the value of the current data type and service
         const chartData = serviceObjects[serviceName];
+        console.log('dataType: ', dataType);
+        console.log('current service Object: ', serviceObjects);
+        console.log('current Service Name: ', serviceName);
+        console.log('current chartData Object: ', chartData);
         chartsArray.push(
           <HealthChart
             key={'H' + keymaker()}
