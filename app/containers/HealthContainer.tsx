@@ -20,22 +20,14 @@ interface DataObject {
 }
 
 const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
-  /*
-    healthData - Pull in all the health data via HealthContext
-    selectedMetrics - Pull in the list of ALL user-selected metrics via QueryContext as strings, even if they don't pertain to this category.
-    category - Destructure category from props. This category was passed down from the GraphsContainer and creates a new tab in Chronos to view charts pertaining only to the category.
-    Think of each <HealthContainer /> as the new tab in Chronos. It will only create charts pertaining to that category.
-    healthChartsArr - local state that gets updated with an array of <HealthChart />'s that display user-selected data.
-    `service` - only used to determine if we should display our health charts (because kafka and kubernetes specifically don't use HealthChart to display data).
-    */
   const { healthData } = useContext(HealthContext);
   const { selectedMetrics } = useContext(QueryContext);
   const { service } = useParams<keyof Params>() as Params;
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
   const { category, sizing, colourGenerator } = props;
-  /* 
-  This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
-  Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
+  /**
+   * This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
+   * Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
   */
   const filterSelectedMetricsAndHealthData = (): DataObject => {
     // define a filtered health data object for output
@@ -79,9 +71,9 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   // function to create a version of the healthData based on the value type
   // current healthData value types: GHz, bytes, temperature, percent, ticks, processes, num, latency
   const defineDataValueType = (metricName: string): string => {
-    /* 
-    define a dictionary of data types where the key is the expected chars to be found in the parameter
-    and the value is the desired data type label
+    /**
+     * Define a dictionary of data types where the key is the expected chars to be found in the parameter
+     * and the value is the desired data type label.
     */
     const typeDictionary = {
       GHz: 'Speed in GHz',
@@ -152,10 +144,6 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
       for (const serviceName in serviceObjects) {
         // pass down the value of the current data type and service
         const chartData = serviceObjects[serviceName];
-        console.log('dataType: ', dataType);
-        console.log('current service Object: ', serviceObjects);
-        console.log('current Service Name: ', serviceName);
-        console.log('current chartData Object: ', chartData);
         chartsArray.push(
           <HealthChart
             key={'H' + keymaker()}
