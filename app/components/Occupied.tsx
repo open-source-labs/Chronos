@@ -86,7 +86,6 @@ const Occupied = React.memo(() => {
   // Grab services and applications whenever the user changes
   // v10: Runs once when Occupied is memoized, and subsequently when user is updated.
   useEffect(() => {
-    // console.log('Hi, inside Occupied.ts useEffect function.');
     setServicesData([]);
     getApplications();
   }, [user]);

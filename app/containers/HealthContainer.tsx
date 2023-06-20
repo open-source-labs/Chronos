@@ -113,7 +113,6 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     const typeGroupedObject = {};
     // iterate over the services in the healthData object
     for (const serviceName in filteredHealthData) {
-      console.log('service name in datatype function: ', serviceName);
       // save the filtered metrics of the current service to a variable
       // define the types of each metric in the metrics object as an array
       const metrics: object = filteredHealthData[serviceName];
