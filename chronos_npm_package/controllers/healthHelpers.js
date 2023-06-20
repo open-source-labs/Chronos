@@ -126,8 +126,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
-  /** obtains metrics relating to current load and creates and pushes object with
-   *  metric name and value to the healthDataCollection array
+  /**
+   * obtains metrics relating to current load and creates and pushes object with
+   * metric name and value to the healthDataCollection array
    */
   si.currentLoad()
     .then(data => {
@@ -147,8 +148,9 @@ healthHelpers.collectHealthData = () => {
       }
     });
 
-  /** obtains metrics relating to memory and creates and pushes object with
-   *  metric name and value to the healthDataCollection array
+  /**
+   * obtains metrics relating to memory and creates and pushes object with
+   * metric name and value to the healthDataCollection array
    */
   si.mem()
     .then(data => {
