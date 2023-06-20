@@ -28,21 +28,11 @@ interface Params {
   service: string;
 }
 
-// interface GraphsContainerProps {
-//   match: {
-//     path: string;
-//     url: string;
-//     isExact: boolean;
-//     params: Params;
-//   };
-// }
-
 const GraphsContainer: React.FC = React.memo(props => {
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
   const { intervalID, setIntervalID } = useContext(ApplicationContext);
-  // const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
   const { servicesData, getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
@@ -59,7 +49,7 @@ const GraphsContainer: React.FC = React.memo(props => {
     const serviceArray = service.split(' ');
     // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it
     // not work correctly, so it has been omitted
-    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics');
+    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics');
     if (live) {
       setIntervalID(
         setInterval(() => {
@@ -156,8 +146,6 @@ const GraphsContainer: React.FC = React.memo(props => {
   };
 
   const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
-  console.log('selected metrics: ', selectedMetrics);
-  console.log('chart: ', chart);
 
   return (
     <>

@@ -30,16 +30,16 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     */
   const { healthData } = useContext(HealthContext);
   const { selectedMetrics } = useContext(QueryContext);
-  const { category } = props;
   const { service } = useParams<keyof Params>() as Params;
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
+  const { category, sizing, colourGenerator } = props;
   /* 
   This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
   Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
   */
   const filterSelectedMetricsAndHealthData = (): DataObject => {
     // define a filtered health data object for output
-    // define an array of filteredMetricNames
+    // define an array of filteredMetricNames for later use
     const filteredHealthData = {};
     const filteredMetricNames: string[] = [];
     // iterate over the selectedMetrics from QueryContext
@@ -122,10 +122,13 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
       // iterate over the types array and assign the typeGroupedObject a key of type, with a value of an object
       // then assign that newly created object a key of the current service and a value of an object
       typesArray.forEach((metricType: string) => {
-        typeGroupedObject[metricType] = {};
+        if (!typeGroupedObject[metricType]) {
+          // if the metric type doesn't exist, initalize it
+          typeGroupedObject[metricType] = {};
+        } // if it does exist alread, add the service name to it
         typeGroupedObject[metricType][serviceName] = {};
-      })
-      // iterate over the metrics object
+      });
+      // iterate over the metrics object of the current service
       for (const metric in metrics) {
         // define the current metric's type
         const metricType: string = defineDataValueType(metric);
@@ -133,42 +136,45 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
         typeGroupedObject[metricType][serviceName][metric] = metrics[metric];
       }
     }
-    
+
     return typeGroupedObject;
   };
 
   // function to generate charts using the type-sorted data
-  const generateCharts = sortedData => {
+  const generateHealthCharts = sortedData => {
     const chartsArray: JSX.Element[] = [];
     const keymaker = () => {
-      return Math.floor(Math.random()*1000)
-    }
-    // iterate over the sortedData and create a chart for each data type
+      return Math.floor(Math.random() * 1000);
+    };
+    // iterate over the sortedData and create a chart for each data type and each service of that data
     for (const dataType in sortedData) {
-      // pass down the value of the current data type object
-      const chartData = sortedData[dataType];
-      console.log('dataType: ', dataType, 'chartData: ', chartData);
-      chartsArray.push(
-        <HealthChart
-          key={'H' + keymaker()}
-          dataType={dataType}
-          chartData={sortedData[dataType]}
-          categoryName={`${category}`}
-          sizing={props.sizing}
-          colourGenerator={props.colourGenerator}
-        />
-      );
+      const serviceObjects = sortedData[dataType];
+      for (const serviceName in serviceObjects) {
+        // pass down the value of the current data type and service
+        const chartData = serviceObjects[serviceName];
+        chartsArray.push(
+          <HealthChart
+            key={'H' + keymaker()}
+            dataType={dataType}
+            serviceName={serviceName}
+            chartData={chartData}
+            categoryName={category}
+            sizing={sizing}
+            colourGenerator={colourGenerator}
+          />
+        );
+      }
     }
     setHealthChartsArr(chartsArray);
   };
-  
+
   useEffect(() => {
     // returns an object containing only the healthData for the current category and the metrics the User selected
     const filteredHealthData = filterSelectedMetricsAndHealthData();
     // returns an object containing the filtered data sorted by data type
     const typeSortedHealthData = healthDataGroupedByDataType(filteredHealthData);
     // invoking generateCharts with the sorted data will update healthChartsArr in state with the list of charts to be rendered
-    generateCharts(typeSortedHealthData);
+    generateHealthCharts(typeSortedHealthData);
   }, [category]);
 
   // JJ-ADDITION
