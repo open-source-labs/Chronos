@@ -1,24 +1,27 @@
-// INSERT URI TO MONGODB TO SET UP USER DATABASE
-const MONGO_URI = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
-const mongoose = require('mongoose')
+require('dotenv').config();
 
-const db2 = mongoose.createConnection(MONGO_URI)
-// .then(() => {
-// 	console.log('Connected to User database...');
-// })
-// .catch(err => {
-// 	console.log('Error connecting to User database: ', err);
-// })
+// INSERT URI TO MONGODB TO SET UP USER DATABASE
+const MONGO_URI = process.env.USER_DB_URI;
+console.log(MONGO_URI);
+// const MONGO_URI = process.env.CHRONOS_USER_DB_URI;
+const mongoose = require('mongoose');
+
+const userDB = mongoose.createConnection(MONGO_URI);
+//   .then(() => {
+//     console.log('Connected to User database...');
+//   })
+//   .catch(err => {
+//     console.log('Error connecting to User database: ', err);
+//   });
 // console.log('establishing connection to database');
 
-
 const userSchema = new mongoose.Schema({
-		username: {type: String, required:true, unique: true},
-		password: {type: String, required:true},
-		email: String,
-    services: [],
-    mode: {type: String, default: 'light'}
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  email: String,
+  services: [],
+  mode: { type: String, default: 'light' },
 });
 
-const UserModel = db2.model('users', userSchema);
+const UserModel = userDB.model('users', userSchema);
 module.exports = UserModel;
