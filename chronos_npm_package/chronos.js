@@ -149,11 +149,7 @@ class Chronos {
 
   ServerWrapper(server, proto, methods) {
     /**
-     * Wraps the gRPC server object to automatically write logs to user configed DB
-     *
-     * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
-     *
-     * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
+     * Wraps the gRPC server object to automatically write logs to provided DB
      * @param {*} server
      * @param {*} proto
      * @param {*} methods
@@ -171,11 +167,7 @@ class Chronos {
 
   ClientWrapper(client, service) {
     /**
-     * Wraps the gRPC client to automatically write logs to user configed DB
-     *
-     * If the provided database is MongoDB, connection will be made to the Mongodb Atlas
-     *
-     * If the provided database is PostgreSQL, connection will be made to PostgreSQL client
+     * Wraps the gRPC client to automatically write logs to provided DB
      *
      * @param {*} client
      * @param {*} service
