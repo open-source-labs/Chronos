@@ -107,6 +107,7 @@ healthHelpers.collectHealthData = () => {
   /** obtains CPU temperature metrics and creates and pushes object with
    *  metric name and value to the healthDataCollection array
    */
+
   si.cpuTemperature()
     .then(data => {
       const siMethodName = 'cpuTemperature';
