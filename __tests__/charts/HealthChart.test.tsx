@@ -30,6 +30,7 @@ describe('HealthChart', () => {
   const props = {
     key: 'testKey',
     dataType: 'Memory in Megabytes',
+    serviceName: 'serviceName',
     chartData: mockData,
     categoryName: 'Test Name',
     sizing: 'all',
