@@ -28,15 +28,6 @@ const MetricsContainer: React.FC = React.memo(props => {
     setSavedMetrics(updatedMetric);
   };
 
-  const toggleCheckbox = () => {
-    const newMetrics = { ...savedMetrics };
-    for (let key in newMetrics) {
-      newMetrics[key].selected = !showCheckMark;
-    }
-    setSavedMetrics(newMetrics);
-    setShowCheckMark(!showCheckMark);
-  };
-
   const updateMetrics = () => {
     // Sets state for savedMetrics with metrics "selected" option updated based on checkbox selection
     const newMetrics = { ...savedMetrics };
@@ -47,6 +38,18 @@ const MetricsContainer: React.FC = React.memo(props => {
     // Sends patch request to db to update which metrics get saved to db
     ipcRenderer.send('updateSavedMetrics', Object.values(metricsToChange));
     // ipcRenderer.on('updateResponse')
+  };
+
+  /** 
+   * @desc Toggle functionality to deselect and select all metrics.
+   */
+  const toggleCheckbox = () => {
+    const newMetrics = { ...savedMetrics };
+    for (let key in newMetrics) {
+      newMetrics[key].selected = !showCheckMark;
+    }
+    setSavedMetrics(newMetrics);
+    setShowCheckMark(!showCheckMark);
   };
 
   Object.values(savedMetrics).forEach((el: any) => {
@@ -83,8 +86,8 @@ const MetricsContainer: React.FC = React.memo(props => {
       <button id="changeDatabaseSettingsButton" className="select" onClick={updateMetrics}>
         Change Database Settings
       </button>
-      <Button id="toggleCheck" onClick={toggleCheckbox}>
-        Select/Deselect All
+      <Button variant="contained" color="primary" id="toggleCheck" onClick={toggleCheckbox}>
+        {showCheckMark ? 'Deselect All' : 'Select All'}
       </Button>
       {!!kubernetesMetrics.length && (
         <div className="metricsSublist">
