@@ -21,6 +21,9 @@ Chronos welcomes all pull requests.
       - Once compiled, `npm run dev:app` and `npm run dev:electron`
       * Note: If typescript is not installed, `npm install -g typescript` 
 
+## Chronos Website
+
+The `chronosWebsite` branch holds the code for the website. Edit the website by checking out the branch, modifying the website, and then updating the AWS S3 bucket with the changes.
 ## Issues
 
 Please do not hesitate to file issues that detail bugs or offer ways to enhace Chronos.
