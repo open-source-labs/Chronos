@@ -28,6 +28,9 @@ type PlotlyData = {
   marker: { colors: string[] };
 };
 
+/** 
+ * @desc 
+ */
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const { metricName, chartData, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
