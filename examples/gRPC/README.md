@@ -58,7 +58,7 @@ Chronos hopes to inspire an active community of both users and developers. For q
 
 ## License
 
-  [MIT](LICENSE)
+[MIT](LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/chronos-microservice-debugger3.svg
 [npm-url]: https://www.npmjs.com/package/chronos-microservice-debugger3

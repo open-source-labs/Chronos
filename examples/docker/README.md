@@ -46,25 +46,5 @@ Use `docker compose down` to stop containers
 
 ## Contributing
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
-
-## People
-[Josh James](https://github.com/joshjames289)
-[Elise Nie](https://github.com/elisanie)
-[Gahl Peled](https://github.com/GP3-RS)
-[Troy Prejusa](https://github.com/tprejusa)
-[Tim Atapagra](https://github.com/timpagra),
-[Mohtasim Chowdhury](https://github.com/mohtasim317),
-[Ousman Diallo](https://github.com/Dialloousman),
-[Michelle Herrera](https://github.com/mesherrera),
-[Duane McFarlane](https://github.com/Duane11003),
-[Ben Mizel](https://github.com/ben-mizel),
-[Jenae Pennie](https://github.com/jenaepen),
-[Chris Romano](https://github.com/robicano22),
-[Natalie Umanzor](https://github.com/nmczormick)
-[John Donato](https://github.com/jdonuto)
-[Iris Wong](https://github.com/wiris316)
-[Jon Cruz](https://github.com/Jrcrz)
-[Elena Atencio](https://github.com/elenaatencio)
-
 ## License
 [MIT](LICENSE)

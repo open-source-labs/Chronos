@@ -1,12 +1,21 @@
 ## People
-[Josh James](https://github.com/joshjames289)
-[Elise Nie](https://github.com/elisanie)
-[Gahl Peled](https://github.com/GP3-RS)
-[Troy Prejusa](https://github.com/tprejusa)
+
+[Snow X. Bai](https://github.com/xueapp),
+[Taylor Zhang](https://github.com/taylrzhang),
+[Tim Lee](https://github.com/timlee12),
+[Roberto Meloni ](https://github.com/RobertoRueMeloni),
+[Brian Lim](https://github.com/brianlim89),
+[Claire Tischuk](https://github.com/BoopdiBop),
+[Lennon Stewart](https://github.com/noahoo7),
+[Victor Ye](https://github.com/vctorye),
+[Josh James](https://github.com/joshjames289),
+[Elise Nie](https://github.com/elisanie),
+[Gahl Peled](https://github.com/GP3-RS),
+[Troy Prejusa](https://github.com/tprejusa),
 [Vince Ho](https://github.com/hodesza)
-[Matt Jiang](https://github.com/mattljiang)
-[Derek Lam](https://github.com/DerekQuoc)
-[Kit Loong Yee](https://github.com/kitloong1)
+[Matt Jiang](https://github.com/mattljiang),
+[Derek Lam](https://github.com/DerekQuoc),
+[Kit Loong Yee](https://github.com/kitloong1),
 [Tim Atapagra](https://github.com/timpagra),
 [Mohtasim Chowdhury](https://github.com/mohtasim317),
 [Ousman Diallo](https://github.com/Dialloousman),

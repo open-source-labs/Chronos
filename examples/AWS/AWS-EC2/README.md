@@ -128,18 +128,4 @@ git archive -v -o myMM.zip --format=zip HEAD
 ## Contributing
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
-## People
-[Snow X. Bai](https://github.com/xueapp)
-[Taylor Zhang](https://github.com/taylrzhang)
-[Tim Lee](https://github.com/timlee12)
-[Roberto Meloni ](https://github.com/RobertoRueMeloni)
-[Brian Lim](https://github.com/brianlim89)
-[Claire Tischuk](https://github.com/BoopdiBop)
-[Lennon Stewart](https://github.com/noahoo7)
-[Victor Ye](https://github.com/vctorye)
-[John Donato](https://github.com/jdonuto)
-[Iris Wong](https://github.com/wiris316)
-[Jon Cruz](https://github.com/Jrcrz)
-[Elena Atencio](https://github.com/elenaatencio)
-
 

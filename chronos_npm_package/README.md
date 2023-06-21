@@ -7,11 +7,8 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 - Bug Fixes
-- Metric query tool so you can filter out specific metrics — now you only have to see what you want on the dashboard.
-- Additional metrics added, bringing Chronos up from only 12 to 100+ metrics that are currently available
-- Option to filter by category and individual metric, and flip between services and categories with ease
-- Kubernetes monitoring via Prometheus server
-- Apache Kafka monitoring capability, all you need to do is run Prometheus JMX exporter on the system your Chronos application is running on. A sample JMX config.yaml file is provided in the Chronos repository for a quick and easy setup, however you are free to configure however you like.
+- Refactored code for additional modularity and customization
+- Ability for developers to increase number of metrics monitored for microservices
 
 #
 
@@ -75,7 +72,7 @@ module.exports = {
 }
 ```
 
-Then utilize the `chronos-config.js` file into your microservice application by importing it and using it as the Chronos class constructor argument:
+Then utilize the `chronos-config.js` file into your application by importing it and using it as the Chronos class constructor argument:
 ```js
 const chronosConfig = require('./chronos-config.js');
 const Chronos = require('@chronosmicro/tracker');

@@ -160,13 +160,3 @@ This process can also be done using the AWS Command Line Interface (CLI) or the 
 
 ## Credit
    Credit for Knote application goes to the user learnK8s on [Github](https://github.com/learnk8s).  Here is the source project [folder](https://github.com/learnk8s/knote-js/tree/master/04-05/kube). 
-
-## People
-[Brian Lim](https://github.com/brianlim89)
-[Claire Tischuk](https://github.com/BoopdiBop)
-[Lennon Stewart](https://github.com/noahoo7)
-[Victor Ye](https://github.com/vctorye)
-[John Donato](https://github.com/jdonuto)
-[Iris Wong](https://github.com/wiris316)
-[Jon Cruz](https://github.com/Jrcrz)
-[Elena Atencio](https://github.com/elenaatencio)
