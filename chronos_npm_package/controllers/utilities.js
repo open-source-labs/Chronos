@@ -226,7 +226,7 @@ const helpers = {
     const URI = helpers.getMetricsURI(config);
     const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
     try {
-      const response = await axios.get(URI);
+      const response = await axios.get(query);
       return helpers.parseProm(response.data.data.result);
     } catch (error) {
       return console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n', error);
