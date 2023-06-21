@@ -29,6 +29,10 @@ fse.copyFileSync(
   path.resolve(__dirname, '../dist/package.json')
 );
 
+// Copy .env from root directory into webpack's /dist folder
+// so that the necessary env variables are available
+fse.copyFileSync(path.resolve(__dirname, '../.env'), path.resolve(__dirname, '../build/.env'));
+
 // Copy tsc'd electron code from /build to webpack's /dist folder
 sourceDir = path.resolve(__dirname, '../build');
 destDir = path.resolve(__dirname, '../dist/build');
