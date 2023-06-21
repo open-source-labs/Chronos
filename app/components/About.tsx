@@ -9,6 +9,19 @@ const About: React.FC = React.memo(() => {
   const currentMode =
     mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
+  /**
+   * Enter your OSP group's names into the explicit array of names in nameArray, and it will render them Chronos appropriately.
+   * Feel free to change the header for the list of names.
+   * 
+   */
+  const nameArray: JSX.Element[] = ['Brisa', 'Kelsi', 'Lucie', 'Jeffrey', 'Justin'].map(name => {
+    return (
+      <span style={currentMode} className="text">
+        <p>{`${name}`}</p>
+      </span>
+    );
+  });
+
   return (
     <div className="about">
       <div className="blurb" data-testid="aboutPage">
@@ -16,38 +29,27 @@ const About: React.FC = React.memo(() => {
           About
         </h3>
         <p style={currentMode} className="text">
-          The Chronos Team has always had a passion for Open Source endeavors that would greatly
-          benefit the developer community. With many existing subscription services being difficult
-          to use and expensive to operate, Chronos was born. Chronos is an all-in-one network and
-          health monitoring tool for your application or microservice, containerized or not! Now it
-          can also monitor applications deployed using AWS EC2 and ECS services.
+          The Chronos Team has a passion for building tools that are powerful, beautifully
+          designed, and easy to use. Chronos was conceived as an Open Source endeavor that directly benefits the developer
+          community. Together, the Chronos application and NPM package make up an all-in-one network and health monitoring
+          tool for your containerized or non-conatinerized applications or microservices. It can also
+          monitor applications deployed using AWS, EC2, and ECS from Amazon.
         </p>
-        <br>
-        </br>
+        <br></br>
         <h3 style={currentMode} className="title">
-          Fantastic Four
+          Current Version Authors
         </h3>
-        <div>
-          <span style={currentMode} className="text">
-            <p>Snow</p>
-          </span>
-          <span style={currentMode} className="text">
-            <p>Taylor</p>
-          </span>
-          <span style={currentMode} className="text">
-            <p>Tim</p>
-          </span>
-          <span style={currentMode} className="text">
-            <p>Roberto</p>
-          </span>
+        <div id='OSPNames'>
+          {nameArray}
           <br />
         </div>
         <h3 style={currentMode} className="title">
-          Contributors
+          Past Contributors
         </h3>
         <p style={currentMode} className="text">
-          Nachiket, Tiffany, Bruno, Danny, Vince, Matt, Derek, Kit, Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg, Brianna,
-          Brian, Alon, Alan, Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander, Elisa, Josh, Troy, Gahl
+          Snow, Taylor, Tim, Roberto, Nachiket, Tiffany, Bruno, Danny, Vince, Matt, Derek, Kit,
+          Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg, Brianna, Brian, Alon, Alan,
+          Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander, Elisa, Josh, Troy, Gahl
         </p>
         <br />
       </div>
