@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { JsxElement } from 'typescript';
 import { ApplicationContext } from '../context/ApplicationContext';
 import * as DashboardContext from '../context/DashboardContext';
@@ -9,6 +9,7 @@ const { ipcRenderer } = window.require('electron');
 
 const MetricsContainer: React.FC = React.memo(props => {
   const { savedMetrics, setSavedMetrics } = useContext(ApplicationContext);
+  const [showCheckMark, setShowCheckMark] = useState(true);
   const kubernetesMetrics: any[] = [];
   const kafkaMetrics: any[] = [];
   const healthMetrics: any[] = [];
@@ -27,12 +28,13 @@ const MetricsContainer: React.FC = React.memo(props => {
     setSavedMetrics(updatedMetric);
   };
 
-  const deselectMetrics = () => {
+  const toggleCheckbox = () => {
     const newMetrics = { ...savedMetrics };
     for (let key in newMetrics) {
-      newMetrics[key].selected = !newMetrics[key].selected;
+      newMetrics[key].selected = !showCheckMark;
     }
     setSavedMetrics(newMetrics);
+    setShowCheckMark(!showCheckMark);
   };
 
   const updateMetrics = () => {
@@ -81,8 +83,8 @@ const MetricsContainer: React.FC = React.memo(props => {
       <button id="changeDatabaseSettingsButton" className="select" onClick={updateMetrics}>
         Change Database Settings
       </button>
-      <Button className="deselect" onClick={deselectMetrics}>
-        Toggle
+      <Button id="toggleCheck" onClick={toggleCheckbox}>
+        Select/Deselect All
       </Button>
       {!!kubernetesMetrics.length && (
         <div className="metricsSublist">
