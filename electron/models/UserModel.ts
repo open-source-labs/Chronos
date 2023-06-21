@@ -1,24 +1,17 @@
-// INSERT URI TO MONGODB TO SET UP USER DATABASE
-const MONGO_URI = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
-const mongoose = require('mongoose')
+// Insert the MongoDB URI for your private User database in place of the example URI provided below.
+const MONGO_URI = 'mongodb+srv:/<username>:<password>@cluster0.abc123.mongodb.net/';
 
-const db2 = mongoose.createConnection(MONGO_URI)
-// .then(() => {
-// 	console.log('Connected to User database...');
-// })
-// .catch(err => {
-// 	console.log('Error connecting to User database: ', err);
-// })
-// console.log('establishing connection to database');
+const mongoose = require('mongoose');
 
+const userDB = mongoose.createConnection(MONGO_URI);
 
 const userSchema = new mongoose.Schema({
-		username: {type: String, required:true, unique: true},
-		password: {type: String, required:true},
-		email: String,
-    services: [],
-    mode: {type: String, default: 'light'}
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  email: String,
+  services: [],
+  mode: { type: String, default: 'light' },
 });
 
-const UserModel = db2.model('users', userSchema);
+const UserModel = userDB.model('users', userSchema);
 module.exports = UserModel;
