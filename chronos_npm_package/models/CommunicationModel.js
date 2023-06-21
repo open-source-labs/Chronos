@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+/**
+ * This model is used for storing alerts and communications to developers
+ */
+
 const CommunicationsSchema = new Schema({
   microservice: {
     type: String,
