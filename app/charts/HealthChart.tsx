@@ -26,7 +26,7 @@ type PlotlyData = {
 };
 
 /**
- * @params {HealthChartProps} props - the props object containing necessary data.
+ * @params {HealthChartProps} props - the props object containing relevant data.
  * @desc Memoized component to generate a health chart with formatted data.
  * @returns {JSX.Element} The JSX element with the health chart. 
  */
