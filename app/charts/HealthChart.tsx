@@ -25,6 +25,11 @@ type PlotlyData = {
   marker: { colors: string[] };
 };
 
+/**
+ * @params {HealthChartProps} props - the props object containing necessary data.
+ * @desc Memoized component to generate a health chart with formatted data.
+ * @returns JSX element with the health chart. 
+ */
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   const { dataType, serviceName, chartData, categoryName, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
