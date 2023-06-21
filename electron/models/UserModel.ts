@@ -1,18 +1,9 @@
-require('dotenv').config();
+// Insert the MongoDB URI for your private User database in place of the example URI provided below.
+const MONGO_URI = 'mongodb+srv:/<username>:<password>@cluster0.abc123.mongodb.net/';
 
-// INSERT URI TO MONGODB TO SET UP USER DATABASE
-const MONGO_URI = `${process.env.USER_DB_URI}`;
-console.log(MONGO_URI);
 const mongoose = require('mongoose');
 
 const userDB = mongoose.createConnection(MONGO_URI);
-//   .then(() => {
-//     console.log('Connected to User database...');
-//   })
-//   .catch(err => {
-//     console.log('Error connecting to User database: ', err);
-//   });
-// console.log('establishing connection to database');
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
