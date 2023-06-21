@@ -18,6 +18,11 @@ interface SoloStyles {
   width: number;
 }
 
+/** 
+ * @params props - the props object containing relevant data.
+ * @desc Handles AWS Charts. Memoized component to generate an AWS chart with formatted data.
+ * @returns {JSX.Element} The JSX element with the AWS chart.
+ */
 const AwsChart: React.FC<any> = React.memo(props => {
   const { renderService, metric, timeList, valueList, colourGenerator, sizing } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
