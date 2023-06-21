@@ -25,6 +25,11 @@ type PlotlyData = {
   marker: { colors: string[] };
 };
 
+/**
+ * @params {HealthChartProps} props - the props object containing relevant data.
+ * @desc Handles microservices metrics. Memoized component to generate a health chart with formatted data.
+ * @returns {JSX.Element} The JSX element with the health chart. 
+ */
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
   const { dataType, serviceName, chartData, categoryName, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
@@ -76,6 +81,10 @@ const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
     }
   }, 20);
 
+  /**
+   * @desc Takes the chart data and configures Plotly object to render associated health chart.
+   * @returns {JSX.Element} Configured Plotly object representing health chart.
+   */
   const createChart = () => {
     const dataArray = generatePlotlyDataObjects(chartData);
     const sizeSwitch = sizing === 'all' ? all : solo;
