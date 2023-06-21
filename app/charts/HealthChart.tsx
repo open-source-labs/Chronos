@@ -27,7 +27,7 @@ type PlotlyData = {
 
 /**
  * @params {HealthChartProps} props - the props object containing relevant data.
- * @desc Memoized component to generate a health chart with formatted data.
+ * @desc Handles microservices metrics. Memoized component to generate a health chart with formatted data.
  * @returns {JSX.Element} The JSX element with the health chart. 
  */
 const HealthChart: React.FC<HealthChartProps> = React.memo(props => {
