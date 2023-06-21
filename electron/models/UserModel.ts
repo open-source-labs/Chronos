@@ -1,9 +1,8 @@
 require('dotenv').config();
 
 // INSERT URI TO MONGODB TO SET UP USER DATABASE
-const MONGO_URI = process.env.USER_DB_URI;
+const MONGO_URI = `${process.env.USER_DB_URI}`;
 console.log(MONGO_URI);
-// const MONGO_URI = process.env.CHRONOS_USER_DB_URI;
 const mongoose = require('mongoose');
 
 const userDB = mongoose.createConnection(MONGO_URI);
