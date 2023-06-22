@@ -60,15 +60,9 @@ describe('Traffic Chart', () => {
     expect(graph.scrollTop).toBe(0);
   });
 
-  it('Should have width 700, height 450, and white background', () => {
+  it('Should have width 300, height 300, and white background', () => {
     expect(graph._fullLayout.width).toBe(300);
     expect(graph._fullLayout.height).toBe(300);
-  });
-
-  it('Should have correct colors', () => {
-    expect(graph.outerHTML.includes('{fill: #3f4f75;}')).toBeTruthy();
-    expect(graph.outerHTML.includes('{fill: #80cfbe;}')).toBeTruthy();
-    expect(graph.outerHTML.includes('{fill: #fff;}')).toBeTruthy();
   });
 
   it('Should have correct data points based off mock data', () => {

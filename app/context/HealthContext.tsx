@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Electron from 'electron';
-import { transformData } from './helpers';
+import { healthTransformer } from './helpers';
 const { ipcRenderer } = window.require('electron');
 
 export const HealthContext = React.createContext<any>(null);
@@ -16,6 +16,20 @@ export const HealthContext = React.createContext<any>(null);
 interface Props {
   children: any;
 }
+
+interface MetricObject {
+  category: string;
+  metric: string;
+  rowNumber: number;
+  time: string;
+  value: number;
+  __v: number;
+  _id: string;
+}
+interface HealthDataObject {
+  [key: string]: MetricObject[];
+}
+
 const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [healthData, setHealthData] = useState<any>({ healthDataList: [], healthTimeList: [] });
   const [services, setServices] = useState<Array<string>>([]);
@@ -34,26 +48,23 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     return false;
   }
 
-
   /**
-   * @function fetchEventData - sending a request to the backend to retrieve data. 
-   * Data is then parsed and the setHealthData is then set. 
+   * @function fetchEventData - sending a request to the backend to retrieve data.
+   * Data is then parsed and setHealthData is called with the transformed information.
    */
   const fetchHealthData = useCallback(serv => {
     ipcRenderer.removeAllListeners('healthResponse');
 
-    let temp: string[] = [];
-    console.log('the cb being passed into fetch health data from graphscontainer is: ', serv);
+    let temp: HealthDataObject[] = [];
 
     Promise.all(
       serv.map((service: string) => {
         return new Promise((resolve, reject) => {
           ipcRenderer.send('healthRequest', service);
           ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
-            let result: any[];
+            let result: object[];
             if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
               result = JSON.parse(data);
-              console.log('the health results before transformation: ', result)
               if (result && result.length && service === Object.keys(result[0])[0]) {
                 resolve(result[0]);
               }
@@ -64,8 +75,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
           if (checkServicesComplete(temp, serv)) {
             setServices(serv);
             let transformedData: any = {};
-            transformedData = transformData(temp);
-            console.log('results from fetch health data: ', transformedData);
+            console.log('original healthData before transformation: ', temp);
+            transformedData = healthTransformer(temp);
+            console.log('healthData after tranformation: ', transformedData);
             setHealthData(transformedData);
           }
         });

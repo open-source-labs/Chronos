@@ -6,8 +6,11 @@ require('dotenv').config({
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// UNCOMMENT THE LINE BELOW AND REPLACE WITH AN ACTUAL MONGODB URI FOR YOUR "CUSTOMERS" DATABASE
-require('./chronos-config'); // Bring in config file
+require('./chronos-config');
+/**
+ * Your .env file's BOOK_URI will be referenced here to connect the 
+ * `books` microservice metrics to your database.
+ */
 const myURI = process.env.BOOK_URI;
 
 mongoose.connect(myURI, { useNewUrlParser: true, useUnifiedTopology: true })
