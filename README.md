@@ -129,8 +129,9 @@ We provide eight example applications for you to test out both the Chronos NPM p
 - Kubernetes
     - [Kubernetes README](./examples/kubernetes/README.md)
 - Microservices
-    - [microservices README](./examples/microservices/README.md)
+    - [Microservices README](./examples/microservices/README.md)
 
+Additional documentation on how Chronos is used **in each example** can be found in the [Chronos NPM Package README](./chronos_npm_package/README.md).
 
 #### _AWS_
 
@@ -175,9 +176,15 @@ In the `microservices` folder, we provide a sample microservice application that
 Refer to the [microservices README](./examples/microservices/README.md) in the `microservices` folder for more details.
 #
 
+# Testing
+
+We've created testing suites for Chronos with React Testing and Jest - instructions on running them can be found in the [testing README](./__tests__/README.md).
+#
 ## Contributing
 
-Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bug fixes and improvements. Read our [contributing README](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md) to learn how you can take part in improving Chronos.
+Development of Chronos is open source on GitHub through the tech accelerator OS Labs, and we are grateful to the community for contributing bug fixes and improvements. 
+
+Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take part in improving Chronos.
 
 ### **Last Iterating Team**
 
@@ -216,8 +223,7 @@ Development of Chronos is open source on GitHub through the tech accelerator umb
 
 ## License
 
-Chronos is [MIT licensed.](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
-
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
 #
 
 ###### Return to [Top](#chronos)
