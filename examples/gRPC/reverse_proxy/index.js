@@ -33,7 +33,7 @@ const addBook = () => {
         display.appendChild(listItem);
       })
       .catch(err => {
-        console.log(err);
+        console.log("error in the addBook method: ", err);
       });
   }
 };

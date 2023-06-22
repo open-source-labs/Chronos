@@ -10,6 +10,9 @@ This sample microservices architecture allows developers to explore the function
 - reverse_proxy
 
 Each microservice has its own server, which receives requests from both the client and from other microservices. Books, Customers, and Orders also have their own databases, which they can query to respond to those requests.
+## Additional Documentation
+
+For additional information on how Chronos works this example, please review the microservices section in the [Chronos NPM Package README](../../chronos_npm_package/README.md).
 
 ## To Set Up Database for Storing/Retrieving Metrics
 Create a single .env file in the *examples/microservices* folder with the following key/value pairs:
@@ -37,30 +40,11 @@ Your microservice health metrics can now be viewed in the given `CHRONOS_URI` da
 #
 
 ## Contributing
+
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
-## People
-[Josh James](https://github.com/joshjames289)
-[Elise Nie](https://github.com/elisanie)
-[Gahl Peled](https://github.com/GP3-RS)
-[Troy Prejusa](https://github.com/tprejusa)
-[Vince Ho](https://github.com/hodesza)
-[Matt Jiang](https://github.com/mattljiang)
-[Derek Lam](https://github.com/DerekQuoc)
-[Kit Loong Yee](https://github.com/kitloong1)
-[Tim Atapagra](https://github.com/timpagra),
-[Mohtasim Chowdhury](https://github.com/mohtasim317),
-[Ousman Diallo](https://github.com/Dialloousman),
-[Michelle Herrera](https://github.com/mesherrera),
-[Duane McFarlane](https://github.com/Duane11003),
-[Ben Mizel](https://github.com/ben-mizel),
-[Jenae Pennie](https://github.com/jenaepen),
-[Chris Romano](https://github.com/robicano22),
-[Natalie Umanzor](https://github.com/nmczormick)
-[John Donato](https://github.com/jdonuto)
-[Iris Wong](https://github.com/wiris316)
-[Jon Cruz](https://github.com/Jrcrz)
-[Elena Atencio](https://github.com/elenaatencio)
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
 
 ## License
-[MIT](LICENSE)
+
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)

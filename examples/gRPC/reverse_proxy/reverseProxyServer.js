@@ -2,14 +2,19 @@ const PORT = 3000;
 const express = require('express');
 const path = require('path');
 const grpc = require('@grpc/grpc-js');
+// uuid creates unqiue identifiers
 const { v4: uuidv4 } = require('uuid');
 const Chronos = require('@chronosmicro/tracker');
 const chronosConfig = require('./chronos-config');
 const chronos = new Chronos(chronosConfig);
 require('./chronos-config');
 
+/** invoking Chrono's tracking */
 chronos.track();
 const app = express();
+/** requiring in the clients used for this reverse proxy server */ 
+/** these clients contain methods and services that were created via the proto file, so we can use them later in the code*/
+
 const orderClient = require('./orderClient.js');
 const bookClient = require('./bookClient.js');
 
@@ -18,6 +23,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname)));
 
+/** HTML file to serve upon accessing PORT 3000 */ 
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, './index.html'));
 });
