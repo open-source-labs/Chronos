@@ -9,6 +9,11 @@ This sample microservices architecture allows developers to explore the function
 
 Each microservice has its own server, which receives requests from both the client and from other microservices. Books, Customers, and Orders also have their own databases, which they can query to respond to those requests.
 
+
+## Additional Documentation
+
+For additional information on how Chronos works this example, please review the gRPC section in the [Chronos NPM Package README](../../chronos_npm_package/README.md).
+
 ## Getting Started w/ gRPC Example Microservices 
 
 Follow **'main'** branch [README](../../README.md) steps: Pre-Installation, Install Dependencies before start. 
@@ -56,9 +61,11 @@ Inside the downloaded directory, install all dependencies using the `npm install
 
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
+
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
 
 [npm-image]: https://img.shields.io/npm/v/chronos-microservice-debugger3.svg
 [npm-url]: https://www.npmjs.com/package/chronos-microservice-debugger3

@@ -13,7 +13,7 @@ require('./chronos-config');
 chronos.track();
 const app = express();
 /** requiring in the clients used for this reverse proxy server */ 
-/** these clients contain methods and services that were created */
+/** these clients contain methods and services that were created via the proto file, so we can use them later in the code*/
 
 const orderClient = require('./orderClient.js');
 const bookClient = require('./bookClient.js');
@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname)));
 
-// HTML file to serve upon accessing PORT 3000
+/** HTML file to serve upon accessing PORT 3000 */ 
 app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, './index.html'));
 });

@@ -5,7 +5,6 @@
 1. React Testing Library versions 13+ require React v18. If your project uses an older version of React, be sure to install version 12
 ```
 npm install --save-dev @testing-library/react@12
-
 ``` 
 2. install additional packages
 ```
@@ -55,12 +54,9 @@ module.exports = {
 
 6. use `npm run test` to run jest tests
 
-### Contributing
+## Contributing
 
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
-### People
-[Snow X. Bai](https://github.com/xueapp)
-[Taylor Zhang](https://github.com/taylrzhang)
-[Tim Lee](https://github.com/timlee12)
-[Roberto Meloni](https://github.com/RobertoRueMeloni)
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
+

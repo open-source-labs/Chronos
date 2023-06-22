@@ -1,15 +1,7 @@
-# Chronos
-Visit our splash page at [chronoslany.com](https://chronoslany.com/)
-
-Chronos is a comprehensive developer tool that monitors the health and web traffic of servers, microservices, and containers. Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
-
-#
-
 ## What's New?
 - Bug Fixes
 - Refactored code for additional modularity and customization
 - Ability for developers to increase number of metrics monitored for microservices
-
 #
 
 ## Features 
@@ -32,7 +24,6 @@ Install the package as a dependency in each of the microservices you want to tra
 npm install @chronosmicro/tracker
 ```
 
-<br>
 
 ### Configuring Chronos Tracker
 Create a `.js` Chronos configuration file (hereby referred to as `chronos-config.js`), which exports a JavaScript object with required Chronos configuration parameters. This object will be used as the sole Chronos class constructor argument. Feel free to use a `.env` file to hold sensitive parameters like the database URI, for example.
@@ -79,7 +70,6 @@ const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 ```
 
-<br>
 
 #### Chronos Configuration Parameters
 _See mode-specific configuration descriptions in the "Chronos Tracker for Microservices" section_
@@ -141,14 +131,13 @@ Chronos provides the option to send  emails. The properties that should be provi
 - `user` - The email address (string) of the sender
 - `password` - The password (string) of the sender email
 
-_NOTE: Email notification settings may require alternative security settings to work_
 
-<br>
+**NOTE: Email notification settings may require alternative security settings to work**
 
 ### Chronos Tracker for "Microservices" Mode
 The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with Docker. If omitted, Chronos will assume this server is not running in a container, i.e. `dockerized` will default to _false_. 
 
-Setting the flag to _false_ will collect metrics from the host computer directly, while _true_ indicates for Chronos to pull metrics from the Docker daemon.
+Setting the flag to `false` will collect metrics from the host computer directly, while `true` indicates for Chronos to pull metrics from the Docker daemon.
 
 ```js
 // Excerpt from a chronos-config.js
@@ -172,7 +161,9 @@ const chronos = new Chronos(chronosConfig);
 chronos.track()
 ```
 
-If you are using an Express.js REST API, calling `Chronos.track()` returns middleware that allows users to track incoming network requests and outgoing their corresponding outgoing responses by marking them with unique IDs using `Chronos.propagate`. If you want to utilize this feature, setup a catchall route that will serve as a pass through for tracking and chain in the middleware from `Chronos.track`.
+If you are using an Express.js REST API, calling `Chronos.track()` returns middleware that allows users to track incoming network requests and outgoing their corresponding outgoing responses by marking them with unique IDs using `Chronos.propagate`.
+
+If you want to utilize this feature, setup a catchall route that will serve as a pass through for tracking and chain in the middleware from `Chronos.track`.
 
 ```js
 const chronosConfig = require('./chronos-config.js');
@@ -208,7 +199,6 @@ If you're using `docker-compose` to start up multiple containers, you can add a 
 volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
-<br>
 
 ### Chronos Tracker for "Kubernetes" Mode
 Chronos can monitor an Kubernetes clusters by saving metric data from instant queries to a Prometheus server in your Kubernetes cluster. 
@@ -238,7 +228,6 @@ const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 
 chronos.kubernetes();
-
 ```
 
 
@@ -261,7 +250,7 @@ module.exports = {
 }
 ```
 
-Then, in ***ONE AND ONLY ONE** of your microservices, call `Chronos.kafka`: 
+Then, in **ONE AND ONLY ONE** of your microservices, call `Chronos.kafka`: 
 ```js
 const chronosConfig = require('./chronos-config.js');
 const Chronos = require('@chronosmicro/tracker');
@@ -397,14 +386,10 @@ chronos.link(client, ServerWrapper);
 ### Viewing Chronos Data
 Once you have configured and intialized Chronos Tracker, it will automatically record monitoring data when your servers are running. The data will be saved into your database of choice, and then start the Chronos desktop app to view by cloning our [GitHub repo](https://github.com/open-source-labs/Chronos). Folow the ReadMe in that repo to setup the Chronos desktop app. 
 
-<br>
 
 ## Examples
 
-We provide working example microservice applications in Chronos desktop app repo in the *examples* folder.
-[GitHub repo](https://github.com/open-source-labs/Chronos)
-
-#
+We provide working example microservice applications in Chronos desktop app repo in the [**examples**](../chronos_npm_package/README.md) folder.
 
 ## Technologies
 - Electron
@@ -421,18 +406,16 @@ We provide working example microservice applications in Chronos desktop app repo
 - Docker
 - Kubernetes
 
-#
 
 ## Contributing
 
-Development of Chronos is open source on GitHub through the tech accelerator umbrella OS Labs, and we are grateful to the community for contributing bug fixes and improvements. Read below to learn how you can take part in improving Chronos.
+Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
-[Contributing](https://github.com/oslabs-beta/Chronos/blob/master/CONTRIBUTING.md)
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
 
-#
 
 ## License
 
-Chronos is MIT licenced 
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
 #
 ###### Return to [Top](#chronos)

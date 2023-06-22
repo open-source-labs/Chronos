@@ -124,8 +124,10 @@ git archive -v -o myMM.zip --format=zip HEAD
 2. Select `cloud-based`
 
 3. Use Access Key, Secret Access Key, region, and EC2 instance ID to start monitoring EC2 instance. 
-
 ## Contributing
+
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
+
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
 
 

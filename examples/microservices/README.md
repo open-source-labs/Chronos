@@ -10,6 +10,9 @@ This sample microservices architecture allows developers to explore the function
 - reverse_proxy
 
 Each microservice has its own server, which receives requests from both the client and from other microservices. Books, Customers, and Orders also have their own databases, which they can query to respond to those requests.
+## Additional Documentation
+
+For additional information on how Chronos works this example, please review the microservices section in the [Chronos NPM Package README](../../chronos_npm_package/README.md).
 
 ## To Set Up Database for Storing/Retrieving Metrics
 Create a single .env file in the *examples/microservices* folder with the following key/value pairs:
@@ -37,7 +40,11 @@ Your microservice health metrics can now be viewed in the given `CHRONOS_URI` da
 #
 
 ## Contributing
+
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
+
 ## License
-[MIT](LICENSE)
+
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)

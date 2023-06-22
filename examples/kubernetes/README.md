@@ -6,6 +6,10 @@ This example demonstrates how **Chronos** can be used to track health metrics of
 - *launch*: YAML files describing the *deployment* and *service* configurations for the client, server, and Prometheus server
 - *scripts*: Scripts to automate some of the steps involved in running the example
 
+## Additional Documentation
+
+For additional information on how Chronos works this example, please review the Kubernetes section in the [Chronos NPM Package README](../../chronos_npm_package/README.md).
+
 ## Install Docker Desktop
 This example has been developed and tested using the Kubernetes Engine packaged in the Docker Desktop application. 
 
@@ -85,7 +89,11 @@ kubectl delete -f frontend.yml
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `stopKuber.sh` script
 
 ## Contributing
+
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
+
 ## License
-[MIT](LICENSE)
+
+[MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)

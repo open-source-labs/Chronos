@@ -69,6 +69,8 @@ Step 7: Deploy test application in ECS
 ### Some notes about the ECS-test
 
 The way deployment set up is using Fargate, you will not be able to see graphs in ECS cluster->metrics. Instead, check inside services or Cloudwatch.
-
 ## Contributing
+
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
+
+Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
