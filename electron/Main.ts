@@ -22,7 +22,6 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
     },
-
   });
 
   if (process.env.NODE_ENV === 'development') {
@@ -33,7 +32,7 @@ const createWindow = () => {
     win.webContents.openDevTools();
   } else {
     // Production
-    win.loadFile(path.resolve(__dirname, '../index.html'));
+    win.loadFile(path.join(app.getAppPath(), 'index.html'));
   }
 
   ipcMain.on('max', () => {

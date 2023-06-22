@@ -45,7 +45,7 @@ const ContainerSchema = new Schema({
   time: {
     type: Date,
     default: Date.now(),
-  }
+  },
 });
 
 module.exports = ContainerName => mongoose.model(ContainerName, ContainerSchema);
