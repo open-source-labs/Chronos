@@ -83,7 +83,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       data.forEach(el => {
         store[el.metric] = el;
       });
-      console.log('result from getSavedMetrics is: ', store);
+      // console.log('result from getSavedMetrics is: ', store);
       setSavedMetrics(store);
     });
   }, []);

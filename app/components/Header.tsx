@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/Header.scss';
@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
         left: 0,
         behavior: 'smooth',
       });
-      
+
       /** From Version 5.2 Team:
        * Can't remove ! in Lines 45 and 49 as they are strictNullChecks
        */
@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
 
   const handleServices = () => {
     const joinedServices = selectedServices.join(' ');
-    navigate(joinedServices);
+    navigate(`/applications/${app}/${joinedServices}`);
     setLive(false);
   };
 
@@ -65,7 +65,9 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
       <h1 className="microserviceTitle">{app}</h1>
 
       {selectModal && <div className="filter" onClick={dropdownClickHandler}></div>}
-      <div><span>select services to display</span></div>
+      <div>
+        <span>select services to display</span>
+      </div>
       <div className={selectModal ? 'dropdown active' : 'dropdown'}>
         <div
           className={selectModal ? 'select disabled' : 'select'}
@@ -85,7 +87,8 @@ const Header: React.FC<HeaderProps> = React.memo(({ app, service, setLive, live 
                     value={`${microservice}`}
                     id={`${microservice}`}
                     name={`${microservice}`}
-                    onChange={handleCheckbox} />
+                    onChange={handleCheckbox}
+                  />
                 </label>
               );
             })}

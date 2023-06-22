@@ -4,6 +4,7 @@ const cors = require('cors');
 const controller = require('./BookController.js');
 
 const chronosConfig = require('./chronos-config.js');
+// follow directions in chronos_npm_tracker README - this downloads an npm package that a previous iteration made
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 

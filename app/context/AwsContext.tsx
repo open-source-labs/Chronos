@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect, useContext } from 'react';
 import Electron from 'electron';
-import { transformData } from './helpers';
 const { ipcRenderer } = window.require('electron');
 import { ApplicationContext } from './ApplicationContext';
 
