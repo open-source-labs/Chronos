@@ -221,7 +221,7 @@ postgres.health = async ({ microservice, interval, mode }) => {
 };
 
 /**
- * Runs instead of health
+ * !Runs instead of health for docker
  * If dockerized is true, this function is invoked
  * Collects information on the container
  */

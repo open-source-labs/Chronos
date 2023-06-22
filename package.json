@@ -1,6 +1,6 @@
 {
   "name": "@chronosmicro/display",
-  "version": "8.0.1",
+  "version": "11.0.1",
   "description": "Chronos microservice metrics display",
   "main": "./build/electron/Main.js",
   "directories": {
