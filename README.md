@@ -94,7 +94,7 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 
 ### Creating User Database
 
-**NOTE: You must create a user database **
+**NOTE: You must create your own user database**
 
 1. Create a MongoDB database in which to store user information and insert it on line 2 within the [UserModel.ts](./electron/models/UserModel.ts) (_electron/models/UserModel.ts_) file.
     - This database will privately store user information.
