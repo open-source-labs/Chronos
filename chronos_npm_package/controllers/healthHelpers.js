@@ -200,7 +200,7 @@ healthHelpers.collectHealthData = () => {
       healthDataCollection.push({
         metric: 'latency',
         value: data,
-        category: 'Memory',
+        category: 'Latency',
         time,
       });
     })
