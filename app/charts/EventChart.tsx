@@ -28,6 +28,11 @@ type PlotlyData = {
   marker: { colors: string[] };
 };
 
+/** 
+ * @params {EventChartProps} props - the props object containing relevant data.
+ * @desc Handles k8s metrics. Memoized component to generate event chart with formatted data 
+ * @returns {JSX.Element} The JSX element with the event chart.
+ */
 const EventChart: React.FC<EventChartProps> = React.memo(props => {
   const { metricName, chartData, sizing, colourGenerator } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
