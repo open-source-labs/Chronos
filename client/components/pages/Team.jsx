@@ -48,11 +48,66 @@ import bioClairePic from '../../assets/Bio_picture_Claire.png';
 import bioBrianLimPic from '../../assets/Bio_picture_Brian_Lim.jpg';
 import bioVictorPic from '../../assets/Bio_picture_Victor.jpg';
 import bioLennonPic from '../../assets/Bio_picture_Lennon.jpg';
+import bioBrisaPic from '../../assets/Bio_picture_Brisa.png';
+import bioLuciePic from '../../assets/Bio_picture_Lucie.jpg';
+import bioJeffPic from '../../assets/Bio_picture_Jeff.jpg';
+import bioJustinPPic from '../../assets/Bio_picture_JustinP.jpeg';
+import bioKelsiPic from '../../assets/Bio_picture_Kelsi.jpg';
 
 
 import '../../stylesheets/Team.scss';
 
 const bios = [
+  {
+    name: 'Brisa Zhu',
+    bioParagraph:
+      'Brisa is a software engineer based in New York that enjoys creating applications with minimalist and user-friendly features. When she\'s not coding, she enjoys playing with her foster cats and taking care of her houseplants.',
+    picture: bioBrisaPic,
+    contact: {
+      gitHub: 'https://github.com/beezoo10',
+      linkedIn: 'https://www.linkedin.com/in/brisazhu',
+    },
+  },
+  {
+    name: 'Lucie Seidler',
+    bioParagraph:
+      'Lucie is a full-stack software engineer focused on problem resolution and  delivering innovative engineering solutions. She is also passionate about STEM outreach and animal advocacy. ',
+    picture: bioLuciePic,
+    contact: {
+      gitHub: 'https://github.com/lucieseidler',
+      linkedIn: 'https://www.linkedin.com/in/lucie-seidler/',
+    },
+  },
+  {
+    name: 'Justin Poirier',
+    bioParagraph:
+      'Justin is a software engineer living in Austin, Texas. He likes to spend his time sailing, honing his cooking skills, and being with his family and friends.',
+    picture: bioJustinPPic,
+    contact: {
+      gitHub: 'https://github.com/jcpoirier20',
+      linkedIn: 'https://www.linkedin.com/in/justincpoirier/',
+    },
+  },
+  {
+    name: 'Kelsi Webb',
+    bioParagraph:
+      'Kelsi is a software engineer who loves channeling her creativity into building beautiful and innovative products with the end user in mind.',
+    picture: bioKelsiPic,
+    contact: {
+      gitHub: 'https://github.com/kelsicw',
+      linkedIn: 'https://www.linkedin.com/in/kelsiwebb',
+    },
+  },
+  {
+    name: 'Jeffrey Na',
+    bioParagraph:
+      'Jeffrey is a software engineer based out of New York who is passionate about building efficient and reliable products to solve complex problems.',
+    picture: bioJeffPic,
+    contact: {
+      gitHub: 'https://github.com/jeffreyNa',
+      linkedIn: 'https://www.linkedin.com/in/jeffrey-na',
+    },
+  },
   {
     name: 'Claire Tischuk',
     bioParagraph:
