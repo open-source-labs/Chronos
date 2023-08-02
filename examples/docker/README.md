@@ -9,11 +9,11 @@ This sample microservices architecture allows developers to explore the function
 Each microservice has its own server, which receives requests from both the client and from other microservices.
 - _books_, _customers_, and _orders_ also have their own databases, which they can query to respond to those requests.
 
-The frontend has a reverse proxy set up for proxying requests to the appropriate service (individual application) in the microservice network. 
+The frontend has a reverse proxy set up for proxying requests to the appropriate service (individual application) in the microservice network.
 
-In development they're all run separately on different ports, with said ports listening out for requests. This is for demonstration and testing purposes. 
+In development they're all run separately on different ports, with said ports listening out for requests. This is for demonstration and testing purposes.
 
-Ideally, in a production environment, all the services will be up and running concurrently from the get go and that's what the `docker-compose.yml` file helps us achieve. It is able to chain all the services and run them together with one command. 
+Ideally, in a production environment, all the services will be up and running concurrently from the get go and that's what the `docker-compose.yml` file helps us achieve. It is able to chain all the services and run them together with one command.
 
 Docker also ensures that the versions that worked well on dev are bundled up and distributed and used to run the containers for the individual containers.
 
@@ -24,8 +24,10 @@ For additional details on how Chronos works this example, please review the Dock
 ## Steps to Run Example
 Peform the following steps in each of the _books_, _customers_, _frontend_, and _orders_ directories
 
-1. Add a `.env` file to *each* folder with the following key/value pairs: 
+1. Add a `.env` file to *each* folder with the following key/value pairs:
 - **NOTE**: Ensure that there are no quotes surrounding any of the keys and values.
+
+>>>New collaboration group - testing all 5 added to each .env// --> testing now...<<<
 
 ```
 CHRONOS_DB = MongoDB or PostgreSQL
@@ -42,13 +44,15 @@ ORDER_URI = A MongoDB URI for the orderserver microservice to use
     `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^11.0.1"` and run npm install.
 
 3. With the terminal navigated to the the _examples/docker_ folder, run the command:
+
+>>>No working, installing VSC docker ext<<< --must have docker installed for this command to run
 ```
 docker-compose -f docker-compose.yml up
 ```
 
-# 
+#
 
-You should now see the containers running in your terminal, each reporting `"Docker data recorded in..."`. 
+You should now see the containers running in your terminal, each reporting `"Docker data recorded in..."`.
 
 <p align="center">
   <img alt="docker data being recorded" src="../../assets/examples_docker_data.png">
@@ -56,7 +60,7 @@ You should now see the containers running in your terminal, each reporting `"Doc
 
 If this is being displayed for the books, customers, frontend, and orders microservices then the example is successfully saving health metrics to your database of choice!
 
-If there is any error when running the applications and the underlying files for a microservice were changed, be sure to delete the previous image before calling `docker-compose -f docker-compose.yml up` again. 
+If there is any error when running the applications and the underlying files for a microservice were changed, be sure to delete the previous image before calling `docker-compose -f docker-compose.yml up` again.
 
 - If you do not, the above docker compose command will not know to rebuild the image and the code changes meant to fix any issues will not be rolled into the existing Docker image!
 
