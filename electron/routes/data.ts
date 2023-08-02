@@ -67,14 +67,14 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
     connectMongo(index, URI)
       .then((data) => {
         if (data) {
-          console.log('Connected to user provided MongoDB database')
+          console.log('Connected to user provided MongoDB database "data.ts"')
           message.sender.send('databaseConnected', true);
         } else {
-          console.log('Failed to connect to database')
+          console.log('Failed to connect to database "data.ts"')
           message.sender.send('databaseConnected', false);
         }
       })
-    
+
     } else if (currentDatabaseType === 'SQL') {
       pool = await connectPostgres(index, URI);
       if (pool) {
@@ -100,7 +100,9 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
     console.log('CurrentDataBase TYPE:', currentDatabaseType);
     if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
+      //>>>>>
       result = await ServicesModel.find();
+      console.log('result of MongoQuery: ', result);
     }
 
     // SQL Database
@@ -111,7 +113,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
       result = result.rows;
     }
 
-    // console.log('Sending servicesResponse to frontend with the following result:', result);
+    console.log('Sending servicesResponse to frontend with the following result:', result);
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
     // eslint-disable-next-line no-shadow
@@ -160,6 +162,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
+      console.log('database', currentDatabaseType, 'service', service)
       result = await mongoFetch(service);
     }
 
@@ -172,7 +175,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       // result = await pool.query(query);
       // result = result.rows;
     }
-    console.log('result', result)
+    console.log('result data.ts line 177', result, result[0][`orders-containerinfos`][0])
     // Async event emitter - send response'
 
     message.sender.send('healthResponse', JSON.stringify(result));
@@ -627,7 +630,7 @@ ipcMain.on(
       message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' , awsUrl: ''});
     }
     }
-    
+
   }
 );
 
@@ -690,8 +693,8 @@ ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: 
  * @event   awsAppInfoRequest - invoked in fetchAwsAppInfo in ipcRenderer
  * @desc    Connects to user or guest database and returns a reponse object with the typeOfService,
  *          region, and awsURL of the services at provided appIndex.
- * @params  username: 
- *          index: 
+ * @params  username:
+ *          index:
  */
 ipcMain.on(
   'awsAppInfoRequest',
