@@ -25,7 +25,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-  
+
 
   /**
    * @function fetchServicesNames - a function that will take an application name and update the state of `serviceData` based on backend response
@@ -34,7 +34,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    * 3. Upon `servicesResponse`, parse the received JSON data and assign it to `servicesData`
    * 4. Remove the listener for `servicesResponse`
    * @param application - application name
-   */  
+   */
   // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
     // console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
@@ -43,7 +43,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       let result: any;
       result = JSON.parse(data);
-      // console.log('result from ipcrenderer services response is: ', result);
+      console.log('result from ipcrenderer services response is: ', result);
       // console.log('Calling setServicesData passing in above result. Current servicesData is the following: ', servicesData);
       setServicesData(result);
       // console.log('Leaving fetchedServicesNames function.');
@@ -55,7 +55,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     /**
    * @function connectToTB - invoked in Services Modal when Service Modal component is first rendered or when useEffect invoked.
    *  creates an event emitter that connects to the user provided URI for the service (should be the database URI...)
-   * v10 notes: seems to only be set up for local instances, not when a cloud based service is clicked, causes an issue since a user provided 
+   * v10 notes: seems to only be set up for local instances, not when a cloud based service is clicked, causes an issue since a user provided
    * database should not exist...
    * @params application - is the name of the card taht was clicked on
    */
@@ -74,7 +74,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
 
   /**
    * @function getSavedMetrics - a function that will wait for backend `savedMetricsResponse` to update metrics using `setSavedMetrics`
-   * Trying to find what the data type needs to be. 
+   * Trying to find what the data type needs to be.
    */
   const getSavedMetrics = useCallback(() => {
     ipcRenderer.send('savedMetricsRequest');
@@ -100,7 +100,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
         getSavedMetrics,
         setSavedMetrics,
         savedMetrics,
-        appIndex, 
+        appIndex,
         setAppIndex,
         intervalID,
         setIntervalID,
