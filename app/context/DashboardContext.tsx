@@ -46,7 +46,7 @@ const DashboardContextProvider = React.memo((props: any) => {
   const [applications, setApplications] = useState<string[][]>([]);
   const [mode, setMode] = useState<string>('light');
 
-  
+
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
@@ -64,7 +64,7 @@ const DashboardContextProvider = React.memo((props: any) => {
     // console.log('applications: ', applications);
     // console.log('new app to add: ', newApp);
     // setApplications([...applications, newApp]);
-    // console.log('the current application that was added is : ', result);
+    console.log('the current application that was added is : ', result);
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {
