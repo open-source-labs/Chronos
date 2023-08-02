@@ -32,6 +32,7 @@ const mongoFetch = async (
   serviceName: string
 ): Promise<Array<{ [key: string]: any[] }> | undefined> => {
   try {
+    console.log('in mongoFetch line 35 dataHelpers.ts: ', serviceName)
     const testModel = HealthModelFunc(serviceName);
     let result = await testModel.aggregate(aggregator);
     result = [{ [serviceName]: result }];

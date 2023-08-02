@@ -16,9 +16,8 @@ import { fetchData } from './dataHelpers';
 import MetricsModel from '../models/MetricsModel';
 const log = require('electron-log');
 
-
 const mongoose = require('mongoose');
-const User = require('../models/UserModel')
+const User = require('../models/UserModel');
 
 // const testURL = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
 // const connectMongoose = async (i: number, URI: string) => {
@@ -31,14 +30,12 @@ const User = require('../models/UserModel')
 //   }
 // }
 
-
-
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
 const AWS = require('aws-sdk');
 
 require('dotenv').config({
-   path: path.join(__dirname, './.env'),
+  path: path.join(__dirname, './.env'),
 });
 // Initiate pool variable for SQL setup
 let pool: any;
@@ -58,34 +55,40 @@ const settingsLocation = path.resolve(__dirname, '../../settings.json');
  *          is accessed in info.commsData and info.healthData
  */
 
-ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, index: number, URI: string, databaseType: string) => {
+ipcMain.on(
+  'connect',
+  async (
+    message: Electron.IpcMainEvent,
+    username: string,
+    index: number,
+    URI: string,
+    databaseType: string
+  ) => {
+    // set database type from parameter
+    currentDatabaseType = databaseType;
 
-  // set database type from parameter
-  currentDatabaseType = databaseType;
-
-  if (currentDatabaseType === 'MongoDB') {
-    connectMongo(index, URI)
-      .then((data) => {
+    if (currentDatabaseType === 'MongoDB') {
+      connectMongo(index, URI).then(data => {
         if (data) {
-          console.log('Connected to user provided MongoDB database "data.ts"')
+          console.log('Connected to user provided MongoDB database "data.ts"');
           message.sender.send('databaseConnected', true);
         } else {
-          console.log('Failed to connect to database "data.ts"')
+          console.log('Failed to connect to database "data.ts"');
           message.sender.send('databaseConnected', false);
         }
-      })
-
+      });
     } else if (currentDatabaseType === 'SQL') {
       pool = await connectPostgres(index, URI);
       if (pool) {
-        console.log('Connected to user provided PostgreSQL database')
+        console.log('Connected to user provided PostgreSQL database');
         message.sender.send('databaseConnected', true);
       } else {
-        console.log('Failed to connect to database')
+        console.log('Failed to connect to database');
         message.sender.send('databaseConnected', false);
       }
     }
-});
+  }
+);
 
 /**
  * @event   serviceRequest/serviceResponse
@@ -98,7 +101,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 
     // Mongo Database
     console.log('CurrentDataBase TYPE:', currentDatabaseType);
-    if (currentDatabaseType === 'MongoDB' ) {
+    if (currentDatabaseType === 'MongoDB') {
       // Get all documents from the services collection
       //>>>>>
       result = await ServicesModel.find();
@@ -159,29 +162,29 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
   try {
     let result: any;
-
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      console.log('database', currentDatabaseType, 'service', service)
+      console.log('database', currentDatabaseType, 'service', service);
       result = await mongoFetch(service);
+      console.log('result line 169:', result)
     }
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
-      console.log('inside healthRequest call')
+      console.log('inside healthRequest call');
       // Get last 50 documents. If less than 50 get all
       result = await postgresFetch(service, pool);
       // const query = `SELECT * FROM services`;
       // result = await pool.query(query);
       // result = result.rows;
     }
-    console.log('result data.ts line 177', result, result[0][`orders-containerinfos`][0])
+    console.log('result data.ts line 177', result, result[0][`orders-containerinfos`][0]);
     // Async event emitter - send response'
 
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('error sending result to healthresponse in healthrequest')
+    console.log('error sending result to healthresponse in healthrequest', error);
     // console.log(' event', message);
     // message.sender.send('healthResponse', {});
   }
@@ -596,65 +599,77 @@ ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
     console.log('Hi, inside data.ts - awsAppInfoRequest');
-    if(username !== 'guest'){
+    if (username !== 'guest') {
       console.log('inside awsAppInfoRequest, not a guest');
-      return User.findOne({username: username})
-      .then((data) => {
-        console.log('DB returned user data: ', data);
-        const { services } = data;
-        const [typeOfService, region, awsUrl] = [services[4], services[2], services[9]];
-        const response = {
-          typeOfService, region, awsUrl
-        }
-        message.sender.send('awsAppInfoResponse', JSON.stringify(response));
-      })
-      .catch((error) => {
-        console.log('Error in awsAppInfoRequest in data.ts');
-      })
-    }
-    else {
+      return User.findOne({ username: username })
+        .then(data => {
+          console.log('DB returned user data: ', data);
+          const { services } = data;
+          const [typeOfService, region, awsUrl] = [services[4], services[2], services[9]];
+          const response = {
+            typeOfService,
+            region,
+            awsUrl,
+          };
+          message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+        })
+        .catch(error => {
+          console.log('Error in awsAppInfoRequest in data.ts');
+        });
+    } else {
       try {
-      const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-      const userAwsService = fileContents[username]?.services[appIndex];
+        const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+        const userAwsService = fileContents[username]?.services[appIndex];
 
-      const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
-      const response = {
-        typeOfService: typeOfService,
-        region: region,
-        awsUrl: awsUrl
-      };
+        const [typeOfService, region, awsUrl] = [
+          userAwsService[4],
+          userAwsService[2],
+          userAwsService[9],
+        ];
+        const response = {
+          typeOfService: typeOfService,
+          region: region,
+          awsUrl: awsUrl,
+        };
 
-      message.sender.send('awsAppInfoResponse', JSON.stringify(response));
-    } catch (err) {
-      console.log('Error in awsAppInfoRequest', message);
-      message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' , awsUrl: ''});
+        message.sender.send('awsAppInfoResponse', JSON.stringify(response));
+      } catch (err) {
+        console.log('Error in awsAppInfoRequest', message);
+        message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '', awsUrl: '' });
+      }
     }
-    }
-
   }
 );
 
-ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: string, appIndex: number) => {
-  const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
-  const userAwsService = fileContents[username]?.services[appIndex];
-  const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
-  const url = `${awsUrl}/api/search?folderIds=0`
-  console.log("hi")
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: 'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ=='
-    },
-  });
-  log.info(response);
-  const data = await response.json();
-  console.log(data)
-  console.log(awsUrl)
-  message.sender.send('eksMetricsResponse', JSON.stringify(data));
-});
+ipcMain.on(
+  'eksMetricsRequest',
+  async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
+    const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
+    const userAwsService = fileContents[username]?.services[appIndex];
+    const [typeOfService, region, awsUrl] = [
+      userAwsService[4],
+      userAwsService[2],
+      userAwsService[9],
+    ];
+    const url = `${awsUrl}/api/search?folderIds=0`;
+    console.log('hi');
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer eyJrIjoiamN4UGRKVHg3cUQyZ201N042NW41bHg5bGhJaVFlaFciLCJuIjoidGVzdEtleSIsImlkIjoxfQ==',
+      },
+    });
+    log.info(response);
+    const data = await response.json();
+    console.log(data);
+    console.log(awsUrl);
+    message.sender.send('eksMetricsResponse', JSON.stringify(data));
+  }
+);
 
 //end fetch
 // ipcMain.on(
@@ -666,7 +681,6 @@ ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: 
 //       const userAwsService = fileContents[username]?.services[appIndex];
 //       const awsUrl = userAwsService[9];
 //       const url = `${awsUrl}/api/search?folderIds=0`
-
 
 //         const fetchData = async () => {
 //              await fetch(url, {
@@ -689,7 +703,7 @@ ipcMain.on('eksMetricsRequest', async (message:Electron.IpcMainEvent, username: 
 //   }
 // );
 
-  /**
+/**
  * @event   awsAppInfoRequest - invoked in fetchAwsAppInfo in ipcRenderer
  * @desc    Connects to user or guest database and returns a reponse object with the typeOfService,
  *          region, and awsURL of the services at provided appIndex.
@@ -703,11 +717,15 @@ ipcMain.on(
       const fileContents = JSON.parse(fs.readFileSync(settingsLocation, 'utf8'));
       const userAwsService = fileContents[username]?.services[appIndex];
 
-      const [typeOfService, region, awsUrl] = [userAwsService[4], userAwsService[2], userAwsService[9]];
+      const [typeOfService, region, awsUrl] = [
+        userAwsService[4],
+        userAwsService[2],
+        userAwsService[9],
+      ];
       const response = {
         typeOfService: typeOfService,
         region: region,
-        awsUrl: awsUrl
+        awsUrl: awsUrl,
       };
 
       message.sender.send('awsAppInfoResponse', JSON.stringify(response));
