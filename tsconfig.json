@@ -11,6 +11,7 @@
     "sourceMap": true,
     "module": "commonjs",
     "allowJs": true,
+    "checkJs": false,
     "jsx": "react",
     "esModuleInterop": true,
     "resolveJsonModule": true,
