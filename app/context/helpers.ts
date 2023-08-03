@@ -44,7 +44,7 @@ export function healthTransformer(healthData: HealthDataObject[]) {
     // grab the key string from the current service object
     const serviceName = Object.keys(serviceObj)[0];
     const serviceElements = serviceObj[serviceName];
-    console.log('serviceElements: ', serviceElements);
+    console.log('helpers.ts ln 47 serviceElements: ', serviceElements);
     // add the serviceName as a key on the serviceMetricsObject and assign it an empty object
     serviceMetricsObject[serviceName] = {};
     // loop through the elements of the current service
@@ -96,7 +96,7 @@ export function eventTransformer(eventData: MetricObject[]) {
     // in that same object, if the key 'time' doesn't exist yet, assign it a key of 'time' with the value as an array that includes the time value
     // if it does exist aready, push the current time value into the time array
     if (!eventMetricsObject[category][metric].time) eventMetricsObject[category][metric].time = [time];
-    eventMetricsObject[category][metric].time.push(time); 
+    eventMetricsObject[category][metric].time.push(time);
   });
   // return the eventMetricsObject
   return eventMetricsObject;
