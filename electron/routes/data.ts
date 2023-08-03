@@ -67,7 +67,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
     connectMongo(index, URI)
       .then((data) => {
         if (data) {
-          console.log('Connected to user provided MongoDB database "data.ts"')
+          console.log('Connected to user provided MongoDB database in line 70 data.ts')
           message.sender.send('databaseConnected', true);
         } else {
           console.log('Failed to connect to database "data.ts"')
@@ -94,7 +94,7 @@ ipcMain.on('connect', async (message: Electron.IpcMainEvent, username: string, i
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-    console.log('Hi, inside data.ts - servicesRequest function. Fetching services...');
+    console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
 
     // Mongo Database
     console.log('CurrentDataBase TYPE:', currentDatabaseType);
@@ -102,7 +102,6 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
       // Get all documents from the services collection
       //>>>>>
       result = await ServicesModel.find();
-      console.log('result of MongoQuery: ', result);
     }
 
     // SQL Database
@@ -162,8 +161,8 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      console.log('database', currentDatabaseType, 'service', service)
       result = await mongoFetch(service);
+      console.log('database', currentDatabaseType, 'service', service)
     }
 
     // SQL Database
