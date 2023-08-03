@@ -97,7 +97,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
     console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
 
     // Mongo Database
-    console.log('CurrentDataBase TYPE:', currentDatabaseType);
+    console.log('data.ts line 100 CurrentDataBase TYPE:', currentDatabaseType);
     if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
       //>>>>>
@@ -161,8 +161,9 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
+      console.log('data.ts ln 164: database', currentDatabaseType, 'service', service)
       result = await mongoFetch(service);
-      console.log('database', currentDatabaseType, 'service', service)
+      console.log('data.ts ln 166 result:', result, result[0][`${service}`][0])
     }
 
     // SQL Database
@@ -174,7 +175,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
       // result = await pool.query(query);
       // result = result.rows;
     }
-    console.log('result data.ts line 177', result, result[0][`orders-containerinfos`][0])
+    console.log('result data.ts line 177', result)
     // Async event emitter - send response'
 
     message.sender.send('healthResponse', JSON.stringify(result));
