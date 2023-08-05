@@ -40,7 +40,8 @@ spec:
           configMap:
               defaultMode: 420
               name: grafana-datasources
-
+      # environment:
+      #   GF_PATHS_CONFIG: ./grafana.ini
 
 
 apiVersion: v1
