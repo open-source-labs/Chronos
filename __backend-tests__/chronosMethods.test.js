@@ -9,6 +9,8 @@ const postgres = require('../chronos_npm_package/controllers/postgres.js');
 jest.mock('../chronos_npm_package/controllers/utilities.js', () => ({
   validateInput: jest.fn(config => config),
   addNotifications: jest.fn(config => config),
+  testMetricsQuery: jest.fn(config => config),
+  getMetricsURI: jest.fn(config => config),
 }));
 
 // mock propogate from Chronos
@@ -21,6 +23,7 @@ jest.mock('../chronos_npm_package/controllers/mongo.js', () => ({
   docker: jest.fn(config => config),
   health: jest.fn(config => config),
   communications: jest.fn(config => config),
+  serverQuery: jest.fn(config => config),
 }));
 
 jest.mock('../chronos_npm_package/controllers/postgres.js', () => ({
@@ -29,6 +32,7 @@ jest.mock('../chronos_npm_package/controllers/postgres.js', () => ({
   docker: jest.fn(config => config),
   health: jest.fn(config => config),
   communications: jest.fn(config => config),
+  serverQuery: jest.fn(config => config),
 }));
 
 describe('Chronos Config', () => {
@@ -136,6 +140,65 @@ describe('Chronos Config', () => {
         if (dockerized) expect(postgres.docker).toHaveBeenCalledWith(config);
         if (!falseDock) expect(postgres.health).toHaveBeenCalledWith(config);
         if (database.connection === 'REST') expect(postgres.communications).not.toBeUndefined();
+      }
+    });
+  });
+  describe('kafka', () => {
+    test('should check if kafka is functional', async () => {
+      const config = {
+        microservice: 'test',
+        interval: 300,
+        mode: 'micro',
+        dockerized: true,
+        database: {
+          connection: 'REST',
+          type: 'MongoDB',
+          URI: process.env.CHRONOS_URI,
+        },
+        notifications: [],
+      };
+      const { database, dockerized } = config;
+      const falseDock = { dockerized: false };
+      const chronos = new Chronos(config);
+      chronos.kafka();
+      await helpers.testMetricsQuery(config);
+      if (database.type === 'MongoDB') {
+        expect(mongo.connect).toHaveBeenCalledWith(config);
+        expect(mongo.serverQuery).toHaveBeenCalledWith(config);
+      }
+      if (database.type === 'PostgreSQL') {
+        expect(postgres.connect).toHaveBeenCalledWith(config);
+        expect(postgres.serverQuery).toHaveBeenCalledWith(config);
+      }
+    });
+  });
+
+  describe('kubernetes', () => {
+    test('should check if kubernetes is functional', async () => {
+      const config = {
+        microservice: 'test',
+        interval: 300,
+        mode: 'micro',
+        dockerized: true,
+        database: {
+          connection: 'REST',
+          type: 'MongoDB',
+          URI: process.env.CHRONOS_URI,
+        },
+        notifications: [],
+      };
+      const { database, dockerized } = config;
+      const falseDock = { dockerized: false };
+      const chronos = new Chronos(config);
+      chronos.kubernetes();
+      await helpers.testMetricsQuery(config);
+      if (database.type === 'MongoDB') {
+        expect(mongo.connect).toHaveBeenCalledWith(config);
+        expect(mongo.serverQuery).toHaveBeenCalledWith(config);
+      }
+      if (database.type === 'PostgreSQL') {
+        expect(postgres.connect).toHaveBeenCalledWith(config);
+        expect(postgres.serverQuery).toHaveBeenCalledWith(config);
       }
     });
   });
