@@ -3,7 +3,7 @@ const Chronos = require('../chronos_npm_package/chronos.js');
 const helpers = require('../chronos_npm_package/controllers/utilities.js');
 const hpropagate = require('hpropagate');
 const mongo = require('../chronos_npm_package/controllers/mongo.js');
-// utilities.addNotifications
+const postgres = require('../chronos_npm_package/controllers/postgres.js');
 
 // Mock the utilities module functions
 jest.mock('../chronos_npm_package/controllers/utilities.js', () => ({
@@ -16,6 +16,14 @@ jest.mock('hpropagate');
 
 //mock fns found in track
 jest.mock('../chronos_npm_package/controllers/mongo.js', () => ({
+  connect: jest.fn(config => config),
+  services: jest.fn(config => config),
+  docker: jest.fn(config => config),
+  health: jest.fn(config => config),
+  communications: jest.fn(config => config),
+}));
+
+jest.mock('../chronos_npm_package/controllers/postgres.js', () => ({
   connect: jest.fn(config => config),
   services: jest.fn(config => config),
   docker: jest.fn(config => config),
@@ -78,7 +86,7 @@ describe('Chronos Config', () => {
   });
 
   describe('track', () => {
-    test('should check if track function works', () => {
+    test('should check if track function for MongoDB works', () => {
       //check if we can destructure database and dockerized from config
       const config = {
         microservice: 'test',
@@ -102,6 +110,32 @@ describe('Chronos Config', () => {
         if (dockerized) expect(mongo.docker).toHaveBeenCalledWith(config);
         if (!falseDock) expect(mongo.health).toHaveBeenCalledWith(config);
         if (database.connection === 'REST') expect(mongo.communications).not.toBeUndefined();
+      }
+    });
+    test('should check if track function for Postgres works', () => {
+      //check if we can destructure database and dockerized from config
+      const config = {
+        microservice: 'test',
+        interval: 300,
+        mode: 'micro',
+        dockerized: true,
+        database: {
+          connection: 'REST',
+          type: 'PostgreSQL',
+          URI: process.env.CHRONOS_URI,
+        },
+        notifications: [],
+      };
+      const { database, dockerized } = config;
+      const falseDock = { dockerized: false };
+      const chronos = new Chronos(config);
+      chronos.track();
+      if (database.type === 'PostgreSQL') {
+        expect(postgres.connect).toHaveBeenCalledWith(config);
+        expect(postgres.services).toHaveBeenCalledWith(config);
+        if (dockerized) expect(postgres.docker).toHaveBeenCalledWith(config);
+        if (!falseDock) expect(postgres.health).toHaveBeenCalledWith(config);
+        if (database.connection === 'REST') expect(postgres.communications).not.toBeUndefined();
       }
     });
   });
