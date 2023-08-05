@@ -1,7 +1,8 @@
+const { EcoTwoTone } = require('@material-ui/icons');
 const Chronos = require('../chronos_npm_package/chronos.js');
 const helpers = require('../chronos_npm_package/controllers/utilities.js');
 const hpropagate = require('hpropagate');
-
+const mongo = require('../chronos_npm_package/controllers/mongo.js');
 // utilities.addNotifications
 
 // Mock the utilities module functions
@@ -12,6 +13,15 @@ jest.mock('../chronos_npm_package/controllers/utilities.js', () => ({
 
 // mock propogate from Chronos
 jest.mock('hpropagate');
+
+//mock fns found in track
+jest.mock('../chronos_npm_package/controllers/mongo.js', () => ({
+  connect: jest.fn(config => config),
+  services: jest.fn(config => config),
+  docker: jest.fn(config => config),
+  health: jest.fn(config => config),
+  communications: jest.fn(config => config),
+}));
 
 describe('Chronos Config', () => {
   afterEach(() => {
@@ -70,7 +80,29 @@ describe('Chronos Config', () => {
   describe('track', () => {
     test('should check if track function works', () => {
       //check if we can destructure database and dockerized from config
-      
-    })
+      const config = {
+        microservice: 'test',
+        interval: 300,
+        mode: 'micro',
+        dockerized: true,
+        database: {
+          connection: 'REST',
+          type: 'MongoDB',
+          URI: process.env.CHRONOS_URI,
+        },
+        notifications: [],
+      };
+      const { database, dockerized } = config;
+      const falseDock = { dockerized: false };
+      const chronos = new Chronos(config);
+      chronos.track();
+      if (database.type === 'MongoDB') {
+        expect(mongo.connect).toHaveBeenCalledWith(config);
+        expect(mongo.services).toHaveBeenCalledWith(config);
+        if (dockerized) expect(mongo.docker).toHaveBeenCalledWith(config);
+        if (!falseDock) expect(mongo.health).toHaveBeenCalledWith(config);
+        if (database.connection === 'REST') expect(mongo.communications).not.toBeUndefined();
+      }
+    });
   });
 });
