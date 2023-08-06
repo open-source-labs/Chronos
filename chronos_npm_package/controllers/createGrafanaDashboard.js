@@ -1,7 +1,6 @@
 
 export default async function createGrafanaDashboard(
-    containerID,
-    containerName,
+    metrix,
     datasource,
 ) {
     // create dashboard object boilerplate
