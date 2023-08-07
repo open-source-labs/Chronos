@@ -106,106 +106,91 @@ export default function createGrafanaPanelObject(
     // };
 
     const panel = {
-        "dashboard": {
-            "id": null,
-            "uid": metric.id,
-            "title": metric.name,
-            "tags": ["templated"],
-            "timezone": "browser",
-            "schemaVersion": 16,
-            "version": 0,
-            "refresh": "10s",
-            "panels": [{
-                "datasource": datasource,
-                "fieldConfig": {
-                    "defaults": {
-                        "color": {
-                            "mode": "palette-classic"
-                        },
-                        "custom": {
-                            "axisCenteredZero": false,
-                            "axisColorMode": "text",
-                            "axisLabel": "",
-                            "axisPlacement": "auto",
-                            "barAlignment": 0,
-                            "drawStyle": "line",
-                            "fillOpacity": 0,
-                            "gradientMode": "none",
-                            "hideFrom": {
-                                "legend": false,
-                                "tooltip": false,
-                                "viz": false
-                            },
-                            "lineInterpolation": "linear",
-                            "lineWidth": 1,
-                            "pointSize": 5,
-                            "scaleDistribution": {
-                                "type": "linear"
-                            },
-                            "showPoints": "auto",
-                            "spanNulls": false,
-                            "stacking": {
-                                "group": "A",
-                                "mode": "none"
-                            },
-                            "thresholdsStyle": {
-                                "mode": "off"
-                            }
-                        },
-                        "mappings": [],
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [
-                                {
-                                    "color": "green",
-                                    "value": null
-                                },
-                                {
-                                    "color": "red",
-                                    "value": 80
-                                }
-                            ]
-                        },
-                        "min": 0
-                    },
-                    "overrides": []
+        "datasource": datasource,
+        "fieldConfig": {
+            "defaults": {
+                "color": {
+                    "mode": "palette-classic"
                 },
-                "gridPos": {
-                    "h": 8,
-                    "w": 12,
-                    "x": 0,
-                    "y": 0
-                },
-                "options": {
-                    "legend": {
-                        "calcs": [],
-                        "displayMode": "list",
-                        "placement": "bottom",
-                        "showLegend": true
+                "custom": {
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                        "legend": false,
+                        "tooltip": false,
+                        "viz": false
                     },
-                    "tooltip": {
-                        "mode": "single",
-                        "sort": "none"
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                        "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                        "group": "A",
+                        "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                        "mode": "off"
                     }
                 },
-                "id": 1,
-                "targets": [{
-                    "datasource": datasource,
-                    "editorMode": "builder",
-                    "expr": "access_evaluation_duration_bucket",
-                    "instant": false,
-                    "range": true,
-                    "refId": "A"
-                }],
-                "title": "hello",
-                "type": "timeseries",
-                "interval": "2s"
-            }]
+                "mappings": [],
+                "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                        {
+                            "color": "green",
+                            "value": null
+                        },
+                        {
+                            "color": "red",
+                            "value": 80
+                        }
+                    ]
+                },
+                "min": 0
+            },
+            "overrides": []
         },
-        "folderId": 0,
-        "overwrite": true
+        "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+        },
+        "options": {
+            "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+            },
+            "tooltip": {
+                "mode": "single",
+                "sort": "none"
+            }
+        },
+        "id": 1,
+        "targets": [{
+            "datasource": datasource,
+            "editorMode": "builder",
+            "expr": "access_evaluation_duration_bucket",
+            "instant": false,
+            "range": true,
+            "refId": "A"
+        }],
+        "title": "hello",
+        "type": "timeseries",
+        "interval": "2s"
     }
-
     // Switch case to handle name of panel.
     // If you add more metrics, add more cases here!
     //promQLQueries.forEach((el) => {
