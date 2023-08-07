@@ -77,19 +77,18 @@ class Chronos {
         return mongo.communications(this.config);
       }
     } else if (database.type === 'PostgreSQL') {
-
-    /**
-     * If the provided database is PostgreSQL
-     * - Connection is made to the postgres client via the provided URI by the user.
-     *
-     * - 'services' table will be created if not already and stores every microservice
-     * that is apart of the application.
-     *
-     * - Information is collected if the microservice is containerized
-     *
-     * - 'communications' table will be created which creates a new row entry for every
-     * endpoint that the user Request travels through (tracked with hpropograte)
-     */
+      /**
+       * If the provided database is PostgreSQL
+       * - Connection is made to the postgres client via the provided URI by the user.
+       *
+       * - 'services' table will be created if not already and stores every microservice
+       * that is apart of the application.
+       *
+       * - Information is collected if the microservice is containerized
+       *
+       * - 'communications' table will be created which creates a new row entry for every
+       * endpoint that the user Request travels through (tracked with hpropograte)
+       */
       postgres.connect(this.config);
       postgres.services(this.config);
       dockerized ? postgres.docker(this.config) : postgres.health(this.config);
