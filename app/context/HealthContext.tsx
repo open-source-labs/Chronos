@@ -53,7 +53,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
    * Data is then parsed and setHealthData is called with the transformed information.
    */
 
-  const fetchHealthData = useCallback(async (serv) => {
+  const fetchHealthData = useCallback(async serv => {
     ipcRenderer.removeAllListeners('healthResponse');
 
     let temp: HealthDataObject[] = [];
@@ -93,8 +93,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
             console.log("healthcontext.tsx ERROR: ", err);
           };
         }
-      ));
-   }, []);
+      })
+    );
+  }, []);
   // const fetchHealthData = useCallback(serv => {
   //   ipcRenderer.removeAllListeners('healthResponse');
 
