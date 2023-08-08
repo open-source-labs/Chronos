@@ -181,7 +181,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('error sending result to healthresponse in healthrequest')
+    console.log('error sending result to healthresponse in healthrequest', error)
     // console.log(' event', message);
     // message.sender.send('healthResponse', {});
   }

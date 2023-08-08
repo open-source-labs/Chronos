@@ -21,7 +21,7 @@ interface IService {
 // servicesModal is re-rendered depending on i and application passed in...
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   //console.log('Hi, inside ServicesModal. Memoize function invoked in ServicesModal.');
-  console.log('ServicesModal current props (index, app): ', i, ' ', app);
+  //console.log('ServicesModal current props (index, app): ', i, ' ', app);
 
   const { user, applications } = useContext(DashboardContext);
   const { servicesData, connectToDB } = useContext(ApplicationContext);
