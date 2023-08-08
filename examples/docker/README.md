@@ -27,7 +27,7 @@ Peform the following steps in each of the _books_, _customers_, _frontend_, and 
 1. Add a `.env` file to *each* folder with the following key/value pairs:
 - **NOTE**: Ensure that there are no quotes surrounding any of the keys and values.
 
->>>New collaboration group - testing all 5 added to each .env// --> testing now...<<<
+>>>New collaboration group - testing all 5 url added to each .env// --> testing now...<<<
 
 ```
 CHRONOS_DB = MongoDB or PostgreSQL

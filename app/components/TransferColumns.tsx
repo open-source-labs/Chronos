@@ -146,7 +146,7 @@ const TransferColumns = React.memo(() => {
 
   // makes the column titles for the selection grid
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'id', headerName: 'ID', flex: 1 },
     {
       field: 'tag',
       headerName: 'Category',

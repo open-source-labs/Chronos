@@ -38,40 +38,52 @@ interface HealthDataObject {
 // Transforms health data into a nested object based on service name
 export function healthTransformer(healthData: HealthDataObject[]) {
   // make an object for storing different services' metrics data
-  const serviceMetricsObject = {};
+  const serviceMetricsObject = {}; //books:..., customers:..., orders:..., frontend:...
   // loop through the services in the healthData array
-  healthData.forEach(serviceObj => {
+  healthData.forEach(serviceObj => { //books
     // grab the key string from the current service object
-    const serviceName = Object.keys(serviceObj)[0];
-    const serviceElements = serviceObj[serviceName];
-    console.log('helpers.ts ln 47 serviceElements: ', serviceElements);
+    const serviceName = Object.keys(serviceObj)[0]; //books-containerinfos
     // add the serviceName as a key on the serviceMetricsObject and assign it an empty object
-    serviceMetricsObject[serviceName] = {};
+    serviceMetricsObject[serviceName] = {}; //add key service Name to object
+    const serviceElements = serviceObj[serviceName]; //array of metric objects IN heatlhdataObj @ serviceName
+    console.log('serviceElements: ', serviceElements);
     // loop through the elements of the current service
-    serviceElements.forEach(dataObject => {
-      // if it doesn't exist, generate a key for that object that matches the category value of the current dataObject
-      if (!serviceMetricsObject[serviceName][dataObject.category]) {
-        serviceMetricsObject[serviceName][dataObject.category] = {};
+    serviceElements.forEach((dataObject:any) => { //--v12 --make it an object typscript?
+      console.log('raw dataOBJ LN 53', dataObject);
+      // !containerName exist, generate a key for that object that matches the category value of the current dataObject
+      let containerName = dataObject.containername;
+      if (!serviceMetricsObject[serviceName][containerName]) {
+        serviceMetricsObject[serviceName][containerName] = {};
+        console.log('line 58  if category ', [containerName])
       }
-      // in that nested object, assign a key using the current dataObject's metric value and assign its value an empty object
-      if (!serviceMetricsObject[serviceName][dataObject.category][dataObject.metric]) {
-        serviceMetricsObject[serviceName][dataObject.category][dataObject.metric] = {};
-      }
-      // if the 'value' key doesn't exist in the previous object assign a key of 'value' with the value of an array that includes the value of value
-      if (!serviceMetricsObject[serviceName][dataObject.category][dataObject.metric].value) {
-        serviceMetricsObject[serviceName][dataObject.category][dataObject.metric].value = [dataObject.value];
-      } else { // if it does exist, push the value of the current dataObject's time key onto the array
-        serviceMetricsObject[serviceName][dataObject.category][dataObject.metric].value.push(
-          dataObject.value
-        );
-      }
-      // in that same object, if the key 'time' doesn't exist yet, assign a key of 'time' with the value as an array that includes the time value
-      if (!serviceMetricsObject[serviceName][dataObject.category][dataObject.metric].time) {
-        serviceMetricsObject[serviceName][dataObject.category][dataObject.metric].time = [dataObject.time];
-      } else { // if it does exist aready, push the current time value into the time array
-        serviceMetricsObject[serviceName][dataObject.category][dataObject.metric].time.push(
-          dataObject.time
-        );
+
+      for (let metric in dataObject) { //loop the data object for metric names and values
+        // in containerName nested object, assign a key using the current dataObject's metric value and assign its value an empty object
+        if (!serviceMetricsObject[serviceName][containerName][metric]) {
+          serviceMetricsObject[serviceName][containerName][metric] = {};
+          console.log('line 60  if metric ', metric)
+        }
+        // if the 'value' key doesn't exist in the previous object assign a key of 'value' with the value of an array that includes the value of value
+        if (!serviceMetricsObject[serviceName][containerName][metric].value) {
+          serviceMetricsObject[serviceName][containerName][metric].value = [dataObject[metric]];
+          console.log('line 65  if value ', dataObject[metric])
+        } else { // if it does exist, push the value of the current dataObject's time key onto the array
+          serviceMetricsObject[serviceName][containerName][metric].value.push(
+            dataObject[metric]
+            );
+            console.log('line 68  else value ', dataObject[metric])
+        }
+        // in that same object, if the key 'time' doesn't exist yet, assign a key of 'time' with the value as an array that includes the time value
+        if (!serviceMetricsObject[serviceName][containerName][metric].time) {
+          serviceMetricsObject[serviceName][containerName][metric].time = [dataObject.time];
+          console.log('line 75  if time ', [dataObject.time])
+        } else { // if it does exist aready, push the current time value into the time array
+          serviceMetricsObject[serviceName][containerName][metric].time.push(
+            dataObject.time
+            );
+            console.log('line 78  else time ', [dataObject.time])
+        }
+        console.log('serviceMetricsOBJ LN83: ', serviceMetricsObject)
       }
     });
   })
