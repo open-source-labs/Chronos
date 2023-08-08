@@ -15,48 +15,44 @@ spec:
         app: grafana
     spec:
       containers:
-      - name: grafana
-        image: grafana/grafana:latest
-        ports:
         - name: grafana
-          containerPort: 3000
-        resources:
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
-          requests: 
-            memory: 500M
-            cpu: "500m"
-        volumeMounts:
-          - mountPath: /var/lib/grafana
-            name: grafana-storage
-          - mountPath: /etc/grafana/provisioning/datasources
-            name: grafana-datasources
-            readOnly: false
+          image: grafana/grafana:latest
+          env:
+            - name: 'GF_SECURITY_ALLOW_EMBEDDING'
+              value: 'true'
+          ports:
+            - name: grafana
+              containerPort: 3000
+          resources:
+            limits:
+              memory: '1Gi'
+              cpu: '1000m'
+            requests:
+              memory: 500M
+              cpu: '500m'
+          volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: grafana-storage
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: grafana-datasources
+              readOnly: false
+
       volumes:
         - name: grafana-storage
           emptyDir: {}
         - name: grafana-datasources
           configMap:
-              defaultMode: 420
-              name: grafana-datasources
-      # environment:
-      #   GF_PATHS_CONFIG: ./grafana.ini
+            defaultMode: 420
+            name: grafana-datasources
 
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: grafana
-  namespace: default
-  annotations:
-      prometheus.io/scrape: 'true'
-      prometheus.io/port:   '3000'
-spec:
-  selector: 
-    app: grafana
-  type: NodePort  
-  ports:
-    - port: 3000
-      targetPort: 3000
-      nodePort: 32000
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: grafana
+#   namespace: default
+# data:
+#   grafana.ini: |
+#   [security]
+# #     allow_embedding = true
