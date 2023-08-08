@@ -24,7 +24,7 @@ type PlotlyData = {
  * @desc Handles k8s metrics. Memoized component to generate event chart with formatted data 
  * @returns {JSX.Element} The JSX element with the event chart.
  */
-const EventChart: React.FC<EventChartProps> = React.memo(props => {
+const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     const { parsedName } = props;
     const [solo, setSolo] = useState<SoloStyles | null>(null);
 
@@ -107,4 +107,4 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
     );
 });
 
-export default EventChart;
+export default GrafanaEventChart;
