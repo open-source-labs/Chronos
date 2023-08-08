@@ -2,14 +2,14 @@ const si = require('systeminformation');
 
 /**
  * Finds the data pt with containerName that matches microservice and extracts container ID, name, platform, and start time.
- * @param {*} microservice 
+ * @param {*} microservice
  * @returns array of active containers (ea. container = an obj).
  */
 async function getDockerContainer(microservice) {
   try {
-      
+
       const containers = await si.dockerContainers();
-      const out = {};;
+      const out = {};
       let found = false;
       for (let container of containers) {
           if (container.name === microservice) {
@@ -31,7 +31,7 @@ async function getDockerContainer(microservice) {
     } catch (e) {
         console.error(e);
         return e;
-    }  
+    }
 
 }
 

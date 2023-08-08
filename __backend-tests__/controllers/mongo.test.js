@@ -59,6 +59,9 @@ describe('mongo.connect', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   test('should connect to MongoDB database', async () => {
     await mongo.connect({ database: { URI: db } });
@@ -81,6 +84,9 @@ describe('mongo.connect', () => {
 });
 
 describe('mongo.services', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   beforeEach(() => {
     jest.clearAllMocks();
   });
