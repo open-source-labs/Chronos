@@ -4,7 +4,7 @@ import { EventContext } from '../context/EventContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
-import GrafanaEventChart from '../charts/GrafanaEventChart';
+// import GrafanaEventChart from '../charts/GrafanaEventChart';
 import { get } from 'http';
 
 interface EventContainerProps {
@@ -105,7 +105,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       const metricObject = filteredEventDataObj[service];
       for (const metricName in metricObject) {
         console.log('metricName IS: ', metricName)
-        parsedName = metricName.slice(getIndex(metricName, '/', 2) + 1, metricName.length);
+        // parsedName = metricName.slice(getIndex(metricName, '/', 2) + 1, metricName.length);
         const chartData = metricObject[metricName];
         console.log('chartData IS: ', chartData)
         // plotting using plotly
@@ -119,8 +119,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
           />
         );
         // plotting using grafana
-        grafanaChartsArray.push(
-          <GrafanaEventChart parsedName={parsedName} />);
+        // grafanaChartsArray.push(
+        //   <GrafanaEventChart parsedName={parsedName} />);
       }
     }
     setEventChartsArr(chartsArray);
