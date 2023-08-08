@@ -13,7 +13,7 @@
     "@grpc/grpc-js": "^1.8.0",
     "axios": "^1.2.1",
     "hpropagate": "1.0.1",
-    "mongoose": "^6.8.0",
+    "mongoose": "^6.11.5",
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
     "systeminformation": "^5.16.1"

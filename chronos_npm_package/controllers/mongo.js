@@ -133,7 +133,7 @@ mongo.health = async ({ microservice, interval, mode }) => {
  */
 mongo.docker = ({ microservice, interval, mode }) => {
   // Create collection using name of microservice
-  const containerInfo = ContainerInfoFunc(`${microservice}-containerinfo`);
+  const containerInfo = ContainerInfoFunc(`${microservice}`);
   dockerHelper
     .getDockerContainer(microservice)
     .then(containerData => {
@@ -144,7 +144,7 @@ mongo.docker = ({ microservice, interval, mode }) => {
             return containerInfo.create(data);
           })
           .then(_ =>
-            console.log(`Docker data recorded in MongoDB collection ${microservice}-containerinfo`)
+            console.log(`Docker data recorded in MongoDB collection ${microservice}`)
           )
           .catch(err => {
             throw new Error(err);
