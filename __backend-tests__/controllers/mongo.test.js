@@ -6,9 +6,9 @@ const { connectDB, dropDB, dropCollections } = require('./testdbsetup');
 const alert = require('../../chronos_npm_package/controllers/alert');
 const ContainerInfo = require('../../chronos_npm_package/models/ContainerInfo');
 
-//require('dotenv').config();
+require('dotenv').config();
 
-//const db = process.env.DB_URI;
+const db = process.env.DB_URI;
 
 beforeAll(async () => {
   await connectDB();
@@ -17,9 +17,6 @@ beforeAll(async () => {
 afterAll(async () => {
   await dropDB();
 });
-
-const db =
-  'mongodb+srv://admin:EtwpxnXTfQbrs7b4@cluster0.hmrjxwf.mongodb.net/test?retryWrites=true&w=majority';
 
 jest.spyOn(console, 'log').mockImplementation(() => {});
 
