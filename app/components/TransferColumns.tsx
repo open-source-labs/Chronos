@@ -121,6 +121,7 @@ const TransferColumns = React.memo(() => {
   const createSelectedMetricsList = () => {
     const temp: any[] = [];
     const categorySet = new Set();
+    console.log('Inside TransferColumns.txs line 124 targetKeys: ', targetKeys)
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -191,6 +192,7 @@ const TransferColumns = React.memo(() => {
           color="primary"
         >
           Get Charts
+          I'm in TransferColumns.txs line 194!
         </Button>
       </div>
       <div id="transferTest">
