@@ -232,7 +232,12 @@ mongo.setQueryOnInterval = async config => {
           if (currentMetricNames[metric.metric]) documents.push(model(metric));
         }
         return model.insertMany(documents, err => {
-          if (err) console.error(err);
+          if (err) console.error(err)
+          // model.find({}, (err, data) => {
+          //   if (err) console.error(err)
+          //   console.log('data is: ', data)
+          //   data.
+          // });
         });
       })
       .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
