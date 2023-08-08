@@ -233,16 +233,21 @@ mongo.setQueryOnInterval = async config => {
         }
         return model.insertMany(documents, err => {
           if (err) console.error(err)
-          // model.find({}, (err, data) => {
-          //   if (err) console.error(err)
-          //   console.log('data is: ', data)
-          //   data.
-          // });
-        });
-      })
-      .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
-      .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
-  }, config.interval);
+        })
+          .then(async () => {
+            console.log(`${config.mode} metrics recorded in MongoDB!!!`)
+            model.find({}, async (err, data) => {
+              if (err) console.error(err)
+              console.log('time to create grafana dashboards')
+              let datasource = await utilities.getGrafanaDatasource();
+              data.forEach(async el => {
+                await utilities.createGrafanaDashboard(el, datasource);
+              });
+            });
+          })
+          .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
+      }), config.interva
+  });
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
@@ -254,7 +259,7 @@ mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
     });
   }
   return currentMetrics.length ? currentMetrics.length : 0;
-};
+}
 
 mongo.addMetrics = async (arr, mode, obj) => {
   const newMets = [];
