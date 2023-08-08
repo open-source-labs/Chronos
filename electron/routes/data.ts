@@ -97,7 +97,7 @@ ipcMain.on(
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-    console.log('Hi, inside data.ts - servicesRequest function. Fetching services...');
+    console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
 
     // Mongo Database
     console.log('CurrentDataBase TYPE:', currentDatabaseType);
@@ -105,7 +105,6 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
       // Get all documents from the services collection
       //>>>>>
       result = await ServicesModel.find();
-      console.log('result of MongoQuery: ', result);
     }
 
     // SQL Database
@@ -164,9 +163,8 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     let result: any;
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      console.log('database', currentDatabaseType, 'service', service);
       result = await mongoFetch(service);
-      console.log('result line 169:', result)
+      console.log('database', currentDatabaseType, 'service', service)
     }
 
     // SQL Database
