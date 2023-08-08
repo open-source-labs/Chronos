@@ -1,5 +1,7 @@
 const axios = require('axios').default;
 
+const createGrafanaPanelObject = require('./createGrafanaPanelObject.js');
+
 /**
  * User Config object {
   microservice: string - Name of the microservice. Will be used as a table name in the chronos's db
@@ -282,6 +284,72 @@ const helpers = {
 
     return res;
   },
+
+  createGrafanaDashboard: async (
+    metrix,
+    datasource,
+  ) => {
+    // create dashboard object boilerplate
+    const dashboard = {
+      "dashboard": {
+        "id": null,
+        "uid": metric.id,
+        "title": metrix.name,
+        "tags": ["templated"],
+        "timezone": "browser",
+        "schemaVersion": 16,
+        "version": 0,
+        "refresh": "10s",
+        panels: [],
+      },
+      folderId: 0,
+      overwrite: true,
+    };
+
+
+    // push panel into dashboard object with a line for each metric in promQLQueries object
+    dashboard.dashboard.panels.push(createGrafanaPanelObject(metrix, datasource));
+
+    try {
+      // POST request to Grafana Dashboard API to create a dashboard
+      const dashboardResponse = await axios.post(
+        'http://localhost:32000/api/dashboards/db',
+        JSON.stringify(dashboard),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+          },
+        }
+      );
+
+      // Descriptive error log for developers
+      if (dashboardResponse.status >= 400) {
+        console.log(
+          'Error with POST request to Grafana Dashboards API. In createGrafanaDashboardObject.'
+        );
+      } else {
+        // A simple console log to show when graphs are done being posted to Grafana.
+        console.log(`📊 Grafana graphs 📊 for the ${containerName} container are ready!!`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getGrafanaDatasource: async () => {
+    // Fetch datasource information from grafana API.
+    // This datasource is PRECONFIGURED on launch using grafana config.
+    const datasourceResponse = await axios.get('http://localhost:32000/api/datasources');
+
+    // Create a datasource object to be used within panels.
+    const datasource = {
+      type: datasourceResponse[0].type,
+      uid: datasourceResponse[0].uid,
+    };
+
+    return datasource;
+  }
 };
 
 module.exports = helpers;

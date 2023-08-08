@@ -1,7 +1,6 @@
-import { GrafanaDatasource, GrafanaDatasourceResponse } from '../../types';
-import axios from 'axios';
+const axios = require('axios');
 
-export default async function getGrafanaDatasource() {
+async function getGrafanaDatasource() {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
     const datasourceResponse = await axios.get('http://localhost:32000/api/datasources');
@@ -14,3 +13,5 @@ export default async function getGrafanaDatasource() {
 
     return datasource;
 }
+
+module.exports = getGrafanaDatasource;

@@ -1,5 +1,7 @@
+const axios = require('axios');
+const createGrafanaPanelObject = require('./createGrafanaPanelObject,js');
 
-export default async function createGrafanaDashboard(
+async function createGrafanaDashboard(
     metrix,
     datasource,
 ) {
@@ -7,8 +9,8 @@ export default async function createGrafanaDashboard(
     const dashboard = {
         "dashboard": {
             "id": null,
-            "uid": metrix.id,
-            "title": metrix.name,
+            "uid": metric.meric.replace(/.*\/.*\//g, ''),
+            "title": metric.meric.replace(/.*\/.*\//g, ''),
             "tags": ["templated"],
             "timezone": "browser",
             "schemaVersion": 16,
@@ -32,6 +34,7 @@ export default async function createGrafanaDashboard(
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
                 },
             }
         );
@@ -49,3 +52,5 @@ export default async function createGrafanaDashboard(
         console.log(err);
     }
 }
+
+module.exports = createGrafanaDashboard;
