@@ -366,6 +366,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
     const datasourceResponse = await axios.get('http://localhost:32000/api/datasources', {
+      //mode: 'no-cors',
       headers: {
         "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',
