@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: node-backend
-        image: backend:2.0
+        image: backend:1.0
         resources:
           limits:
             memory: "128Mi"

@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-const createGrafanaPanelObject = require('./createGrafanaPanelObject.js');
+const createGrafanaPanelObject = require('./createGrafanaPanel.js');
 
 /**
  * User Config object {
@@ -160,7 +160,7 @@ const helpers = {
       else console.log('Successful initial response from metrics server:', URI);
       return response;
     } catch (error) {
-      console.error(response);
+      console.log(error);
       throw new Error('Unable to query metrics server: ' + URI);
     }
   },
@@ -286,15 +286,15 @@ const helpers = {
   },
 
   createGrafanaDashboard: async (
-    metrix,
+    metric,
     datasource,
   ) => {
     // create dashboard object boilerplate
     const dashboard = {
       "dashboard": {
         "id": null,
-        "uid": metric.id,
-        "title": metrix.name,
+        "uid": metric,
+        "title": metric,
         "tags": ["templated"],
         "timezone": "browser",
         "schemaVersion": 16,
@@ -308,12 +308,12 @@ const helpers = {
 
 
     // push panel into dashboard object with a line for each metric in promQLQueries object
-    dashboard.dashboard.panels.push(createGrafanaPanelObject(metrix, datasource));
+    dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource));
 
     try {
       // POST request to Grafana Dashboard API to create a dashboard
       const dashboardResponse = await axios.post(
-        'http://localhost:32000/api/dashboards/db',
+        'http://grafana:3000/api/dashboards/db',
         JSON.stringify(dashboard),
         {
           headers: {
@@ -340,7 +340,12 @@ const helpers = {
   getGrafanaDatasource: async () => {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
-    const datasourceResponse = await axios.get('http://localhost:32000/api/datasources');
+    const datasourceResponse = await axios.get('http://grafana:3000/api/datasources', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+      },
+    });
 
     // Create a datasource object to be used within panels.
     const datasource = {

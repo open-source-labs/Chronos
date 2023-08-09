@@ -23,7 +23,7 @@ const mongo = {};
  * @param {Object} database Contains DB type and DB URI
  */
 mongo.connect = async ({ database }) => {
-  console.log('Attemping to connect to database...');
+  console.log('Hello, Attemping to connect to database...');
   try {
     await mongoose.connect(`${database.URI}`);
     // Print success message
@@ -232,28 +232,32 @@ mongo.setQueryOnInterval = async config => {
 
           if (currentMetricNames[metric.metric]) documents.push(model(metric));
         }
-        return model.insertMany(documents, err => {
-          console.log("insert many")
-          if (err) console.error(err)
-        })
-          .then(async () => {
-            console.log(`${config.mode} metrics recorded in MongoDB!!!`)
-            model.find({}, async (err, data) => {
-              if (err) console.error(err)
-              console.log('time to create grafana dashboards')
-              try {
-                let datasource = await utilities.getGrafanaDatasource();
-                data.forEach(async el => {
-                  await utilities.createGrafanaDashboard(el, datasource);
-                });
-              } catch (err) {
-                console.error(err);
-              }
-            });
-          })
-          .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
-      }), config.interva
-  });
+        return model.create(documents
+          //   err => {
+          //   console.log("insert many")
+          //   if (err) console.error(err)
+          // }
+        );
+      })
+      .then(async (data) => {
+        console.log(`${config.mode} metrics recorded in MongoDB!!!`)
+        console.log('data is')
+        // model.find({}, async (err, data) => {
+        //   if (err) console.error(err)
+
+        //   try {
+        //     console.log("grafana");
+        //     let datasource = await utilities.getGrafanaDatasource();
+        //     data.forEach(async el => {
+        //       await utilities.createGrafanaDashboard(el.metric.replace(/.*\/.*\//g, ''), datasource);
+        //     });
+        //   } catch (err) {
+        //     console.error(err);
+        //   }
+        // });
+      })
+      .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
+  }, config.interval);
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
