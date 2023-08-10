@@ -907,6 +907,7 @@ mongo.createGrafanaDashboards = async config => {
     const parsedArray = await utilities.promMetricsQuery(config);
     //const datasource = await utilities.getGrafanaDatasource();
     console.log("parsedArray is: ", parsedArray.slice(0, 5));
+    console.log('parsedArray.length is: ', parsedArray.length);
     for (let metric of parsedArray) {
       console.log(`🧠creating ${metric.metric.replace(/.*\/.*\//g, '')} dashboard`);
       await utilities.createGrafanaDashboard(metric, datasource);
