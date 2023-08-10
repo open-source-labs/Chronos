@@ -209,7 +209,6 @@ const GraphsContainer: React.FC = React.memo(props => {
             {chart === 'all' && (
               <div className="transferColumns">
                 <h2 style={currentMode}>Search Your Metrics to Display</h2>
-                <div>THIS is LINE 212 in graphsContainer.tsx!!</div>
                 <TransferColumns />
               </div>
             )}
