@@ -110,12 +110,12 @@ class Chronos {
   async kafka() {
     // Test metrics server connection
     await utilities.testMetricsQuery(this.config);
-  
+
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.serverQuery(this.config);
     }
-  
+
     else if (this.config.database.type === 'PostgreSQL') {
       postgres.connect(this.config);
       postgres.serverQuery(this.config);
@@ -129,13 +129,14 @@ class Chronos {
   async kubernetes() {
     // Test metrics server connection
     await utilities.testMetricsQuery(this.config);
-  
+
     if (this.config.database.type === 'MongoDB') {
-      mongo.connect(this.config);
+      await mongo.connect(this.config);
+      await mongo.createGrafanaDashboards(this.config);
       mongo.serverQuery(this.config);
       // return mongo.modifyMetrics(this.config);
     }
-  
+
     else if (this.config.database.type === 'PostgreSQL') {
       postgres.connect(this.config);
       postgres.serverQuery(this.config);

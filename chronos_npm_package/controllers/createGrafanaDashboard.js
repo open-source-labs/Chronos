@@ -34,7 +34,7 @@ async function createGrafanaDashboard(
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+                    'Authorization': 'Bearer glsa_pITqM0BIfNHNKL4PsXJqmTYQl0D9QGxF_486f63e1'
                 },
             }
         );
