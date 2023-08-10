@@ -192,7 +192,6 @@ const TransferColumns = React.memo(() => {
           color="primary"
         >
           Get Charts
-          I'm in TransferColumns.txs line 194!
         </Button>
       </div>
       <div id="transferTest">
