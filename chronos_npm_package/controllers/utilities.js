@@ -303,9 +303,9 @@ const helpers = {
     metric,
     datasource,
   ) => {
-    let uid = metric.metric.replace(/.*\/.*\//g, '')
-    if (metric.metric.replace(/.*\/.*\//g, '').length >= 40) {
-      uid = metric.metric.slice(metric.metric.length - 39);
+    let uid = metric.metric.__name__.replace(/.*\/.*\//g, '')
+    if (metric.metric.__name__.replace(/.*\/.*\//g, '').length >= 40) {
+      uid = metric.metric.__name__.slice(metric.metric.__name__.length - 39);
     }
     // create dashboard object boilerplate
     const dashboard = {
