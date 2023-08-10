@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { all, solo as soloStyle } from './sizeSwitch';
 
 interface EventChartProps {
-    parsedName: string;
+    metricName: string;
 }
 
 // interface SoloStyles {
@@ -18,7 +18,7 @@ interface EventChartProps {
  * @returns {JSX.Element} The JSX element with the event chart.
  */
 const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
-    const { parsedName } = props;
+    const { metricName } = props;
     // const [solo, setSolo] = useState<SoloStyles | null>(null);
     console.log("inside GrafanaEventChart")
 
@@ -27,13 +27,21 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     //         setSolo(soloStyle);
     //     }
     // }, 20);
+    console.log("metricName: ", metricName)
+    let uid = metricName.replace(/.*\/.*\//g, '')
+    if (uid.length >= 40) {
+        uid = metricName.slice(metricName.length - 39);
+    }
 
+    let parsedName = metricName.replace(/.*\/.*\//g, '')
+    console.log("uid: ", uid)
+    console.log("parsedName: ", parsedName)
 
     return (
         <div className="chart" data-testid="Grafana Event Chart">
             <h2>Grafana Display</h2>
             {/* create chart using grafana */}
-            <iframe src={`http://localhost:32000/d-solo/${parsedName}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
+            <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
         </div>
     );
 });

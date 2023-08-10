@@ -229,11 +229,25 @@ const helpers = {
     const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
     try {
       const response = await axios.get(query);
+      console.log("response is: ", response);
       return helpers.parseProm(response.data.data.result);
     } catch (error) {
       return console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n', error);
     }
   },
+
+  promMetrics: async config => {
+    const URI = `http://${config.promService}:${config.promPort}/api/v1/query?query=`;
+    const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
+    try {
+      const response = await axios.get(query);
+      console.log("response is: ", response);
+      return response.data.data.result;
+    } catch (error) {
+      return console.error('Error fetching from URI:', URI, '\n', error);
+    }
+  },
+
 
   /**
    * Parses response from Prometheus request and returns object with
@@ -281,7 +295,7 @@ const helpers = {
         category: category,
       });
     }
-
+    console.log("!res is: ", res);
     return res;
   },
 
@@ -289,12 +303,16 @@ const helpers = {
     metric,
     datasource,
   ) => {
+    let uid = metric.metric.replace(/.*\/.*\//g, '')
+    if (metric.metric.replace(/.*\/.*\//g, '').length >= 40) {
+      uid = metric.metric.slice(metric.metric.length - 39);
+    }
     // create dashboard object boilerplate
     const dashboard = {
       "dashboard": {
         "id": null,
-        "uid": metric,
-        "title": metric,
+        "uid": uid,
+        "title": metric.metric.replace(/.*\/.*\//g, ''),
         "tags": ["templated"],
         "timezone": "browser",
         "schemaVersion": 16,
@@ -318,10 +336,11 @@ const helpers = {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+            'Authorization': 'Bearer glsa_pITqM0BIfNHNKL4PsXJqmTYQl0D9QGxF_486f63e1'
           },
         }
       );
+      console.log(dashboardResponse)
 
       // Descriptive error log for developers
       if (dashboardResponse.status >= 400) {
@@ -340,18 +359,20 @@ const helpers = {
   getGrafanaDatasource: async () => {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
+    console.log('getting datasource');
     const datasourceResponse = await axios.get('http://grafana:3000/api/datasources', {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+        'Authorization': 'Bearer glsa_pITqM0BIfNHNKL4PsXJqmTYQl0D9QGxF_486f63e1'
       },
     });
-
+    console.log(datasourceResponse.data)
     // Create a datasource object to be used within panels.
     const datasource = {
-      type: datasourceResponse[0].type,
-      uid: datasourceResponse[0].uid,
+      type: datasourceResponse.data[0].type,
+      uid: datasourceResponse.data[0].uid,
     };
+    console.log('datasource is', datasource)
 
     return datasource;
   }

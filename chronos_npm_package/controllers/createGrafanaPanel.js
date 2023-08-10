@@ -80,12 +80,12 @@ function createGrafanaPanelObject(
         "targets": [{
             "datasource": datasource,
             "editorMode": "builder",
-            "expr": metric.meric.replace(/.*\/.*\//g, ''),
+            "expr": metric.metric.replace(/.*\/.*\//g, ''),
             "instant": false,
             "range": true,
             "refId": "A"
         }],
-        "title": metric.meric.replace(/.*\/.*\//g, ''),
+        "title": metric.metric.replace(/.*\/.*\//g, ''),
         "type": "timeseries",
         "interval": "2s"
     }
