@@ -140,7 +140,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     for (let i = 0; i < temp.length; i++) {
       arr1.push(Object.keys(temp[i])[0]);
     }
-    console.log('in checkServicesComplete line 139: ', arr1)
+    console.log('in checkServicesComplete line 139: ', arr1);
     return arr1.sort().toString() === serv.sort().toString();
   };
 

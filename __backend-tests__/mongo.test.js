@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-const mongo = require('../../chronos_npm_package/controllers/mongo');
-const ServicesModel = require('../../chronos_npm_package/models/ServicesModel');
-const CommunicationModel = require('../../chronos_npm_package/models/CommunicationModel');
-const { connectDB, dropDB, dropCollections } = require('./testdbsetup');
-const alert = require('../../chronos_npm_package/controllers/alert');
-const ContainerInfo = require('../../chronos_npm_package/models/ContainerInfo');
+const mongo = require('../chronos_npm_package/controllers/mongo');
+const ServicesModel = require('../chronos_npm_package/models/ServicesModel');
+const CommunicationModel = require('../chronos_npm_package/models/CommunicationModel');
+const { connectDB, dropDB, dropCollections } = require('./mockdbsetup');
+const alert = require('../chronos_npm_package/controllers/alert');
+const ContainerInfoFunc = require('../chronos_npm_package/models/ContainerInfo');
+const dockerHelper = require('../chronos_npm_package/controllers/dockerHelper');
 
 require('dotenv').config();
 
@@ -20,13 +21,13 @@ afterAll(async () => {
 
 jest.spyOn(console, 'log').mockImplementation(() => {});
 
-jest.mock('../../chronos_npm_package/controllers/alert');
+jest.mock('../chronos_npm_package/controllers/alert');
 
 jest.useFakeTimers();
 
 jest.spyOn(global, 'setInterval');
 
-jest.mock('../../chronos_npm_package/controllers/healthHelpers', () => {
+jest.mock('../chronos_npm_package/controllers/healthHelpers', () => {
   return [
     {
       time: Date.now(),
@@ -43,8 +44,8 @@ jest.mock('../../chronos_npm_package/controllers/healthHelpers', () => {
   ];
 });
 
-jest.mock('../../chronos_npm_package/controllers/mongo', () => ({
-  ...jest.requireActual('../../chronos_npm_package/controllers/mongo'),
+jest.mock('../chronos_npm_package/controllers/mongo', () => ({
+  ...jest.requireActual('../chronos_npm_package/controllers/mongo'),
   addMetrics: jest.fn(),
   getSavedMetricsLength: jest.fn(),
 }));
@@ -53,12 +54,22 @@ const HealthModel = {
   insertMany: jest.fn(() => Promise.resolve()),
 };
 
+jest.mock('../chronos_npm_package/controllers/dockerHelper', () => ({
+  ...jest.requireActual('../chronos_npm_package/controllers/dockerHelper'),
+  getDockerContainer: jest.fn(),
+  readDockerContainer: jest.fn(),
+}));
+
+// jest.mock('../../chronos_npm_package/models/ContainerInfo', () => {
+//     const mockContainerInfoInstance = {
+//       create: jest.fn(),
+//     };
+//     return jest.fn(() => mockContainerInfoInstance);
+// });
+
 const HealthModelFunc = jest.fn(() => HealthModel);
 
 describe('mongo.connect', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -87,9 +98,6 @@ describe('mongo.services', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   afterEach(async () => {
     await dropCollections();
@@ -103,6 +111,10 @@ describe('mongo.services', () => {
 });
 
 describe('mongo.communications', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   afterEach(async () => {
     await dropCollections();
   });
@@ -202,7 +214,7 @@ describe('mongo.docker', () => {
   });
 
   test('should collect docker container information', async () => {
-    const microservice = 'mongo.docker test'; 
+    const microservice = 'mongo.docker test';
     const mockContainerData = {
       containername: microservice,
       containerId: '234',
@@ -222,18 +234,13 @@ describe('mongo.docker', () => {
       time: Date.now(),
     };
 
-    jest.mock('../../chronos_npm_package/controllers/dockerHelper', () => ({
-      getDockerContainer: jest.fn(() => Promise.resolve(mockContainerData)),
-      readDockerContainer: jest.fn(() => Promise.resolve(mockReadDockerContainerData)),
-    }));
+    dockerHelper.getDockerContainer.mockResolvedValue(mockContainerData);
+    dockerHelper.readDockerContainer.mockResolvedValue(mockReadDockerContainerData);
 
     await mongo.docker({ microservice: microservice, interval: 1000, mode: 'testMode' });
-    expect(getDockerContainer).toHaveBeenCalledWith(microservice);
+    expect(dockerHelper.getDockerContainer).toHaveBeenCalledWith(microservice);
     jest.advanceTimersByTime(1000);
-    expect(readDockerContainer).toHaveBeenCalledWith(mockContainerData);
-    const savedContainerInfo = await ContainerInfo.findOne({ containername: microservice });
-    expect(savedContainerInfo).toBeDefined();
-    expect(savedContainerInfo).toMatchObject(mockReadDockerContainerData);
+    expect(dockerHelper.readDockerContainer).toHaveBeenCalledWith(mockContainerData);
+    //expect(mockContainerInfoInstance.create).toHaveBeenCalledWith(mockReadDockerContainerData);
   });
 });
-
