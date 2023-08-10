@@ -22,7 +22,7 @@ services:
 
   books:
     build: './books'
-#only changes the docker desktop name of the container
+    #only changes the docker desktop name of the container
     container_name: 'books'
 
     ports:
@@ -101,12 +101,24 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus
     ports:
-    - 9090:9090
+      - 9090:9090
     command:
-    - --config.file=/etc/prometheus/prometheus.yml
+      - --config.file=/etc/prometheus/prometheus.yml
     volumes:
-    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
-    - cadvisor
+      - cadvisor
 
-
+    grafana:
+      image: grafana/grafana:latest
+      container_name: grafana
+      ports:
+        - 2999:3000
+      volumes:
+        # Share the named volume with the grafana container
+        - grafana-dir:/etc/grafana
+      environment:
+        GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+        GF_SECURITY_ALLOW_EMBEDDING: 'true'
+      depends_on:
+        - prometheus
