@@ -22,7 +22,7 @@ services:
 
   books:
     build: './books'
-
+#only changes the docker desktop name of the container
     container_name: 'books'
 
     ports:
