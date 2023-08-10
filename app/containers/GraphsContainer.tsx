@@ -48,7 +48,9 @@ const GraphsContainer: React.FC = React.memo(props => {
   useEffect(() => {
     const serviceArray = service.split(' ');
     // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it  not work correctly, so it has been omitted
-    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics');
+    const healthServiceArray = serviceArray.filter(
+      (value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics'
+    );
     if (live) {
       setIntervalID(
         setInterval(() => {
@@ -156,10 +158,9 @@ const GraphsContainer: React.FC = React.memo(props => {
           onClick={() => routing('all')}
           key="0"
         >
-          Metrics Query onclick is not coming thru
+          Metrics Query
         </button>
         {HealthAndEventButtons}
-        <div font-color='white'>Here I am! in GraphsContainer.tsx!</div>
         {dockerData.containername && (
           <button
             id="docker-button"
