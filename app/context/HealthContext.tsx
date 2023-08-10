@@ -62,14 +62,14 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
 
           try {
             const newPromise: any = await new Promise((resolve, reject) => {
-              ipcRenderer.send('healthRequest', `${service}-containerinfos`);
+              ipcRenderer.send('healthRequest', `${service}`);
               ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
                 let result: object[];
                 if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
                   result = JSON.parse(data);
                   console.log('HealthContext.tsx line 68 result: ', result, 'service', service, 'Obj key', Object.keys(result[0])[0]);
                   //result exists, has a length prop, and the service name and database name are same
-                  if (result && result.length && `${service}-containerinfos` === Object.keys(result[0])[0]) {
+                  if (result && result.length && `${service}` === Object.keys(result[0])[0]) {
                     resolve(result[0]);
                   }
                 }
@@ -77,8 +77,8 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
             })
             temp.push(newPromise);
             console.log('HealthContext.tsx line 80 temp populates?: ', temp, serv)
-            if (checkServicesComplete(temp, [`${service}-containerinfos`])) {
-              setServices([`${service}-containerinfos`]);
+            if (checkServicesComplete(temp, [`${service}`])) {
+              setServices([`${service}`]);
               let transformedData: any = {};
               console.log('original healthData before transformation: ', temp);
               // transformedData = {
@@ -93,9 +93,8 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
             console.log("healthcontext.tsx ERROR: ", err);
           };
         }
-      })
-    );
-  }, []);
+      ))
+    } , []);
   // const fetchHealthData = useCallback(serv => {
   //   ipcRenderer.removeAllListeners('healthResponse');
 
