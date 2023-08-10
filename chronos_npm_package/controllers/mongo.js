@@ -830,6 +830,8 @@ mongo.setQueryOnInterval = async config => {
     metricsQuery(config)
       // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
       .then(async parsedArray => {
+        await mongo.createGrafanaDashboards(config, parsedArray);
+        console.log('parsedArray.length is: ', parsedArray.length);
         // This conditional would be used if new metrics are available to be tracked.
         if (length !== parsedArray.length) {
           length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames);
@@ -898,16 +900,16 @@ mongo.addMetrics = async (arr, mode, obj) => {
 //   };
 // }
 
-mongo.createGrafanaDashboards = async config => {
+mongo.createGrafanaDashboards = async (config, parsedArray) => {
   try {
     console.log('In mongo.createGrafanaDashboards!!!')
     console.log('Calling utilities.getGrafanaDatasource()');
     const datasource = await utilities.getGrafanaDatasource();
-    console.log('Calling utilities.promMetricsQuery()');
-    const parsedArray = await utilities.promMetricsQuery(config);
+    //console.log('Calling utilities.promMetricsQuery()');
+    //const parsedArray = await utilities.promMetricsQuery(config);
     //const datasource = await utilities.getGrafanaDatasource();
-    console.log("parsedArray is: ", parsedArray.slice(0, 5));
-    console.log('parsedArray.length is: ', parsedArray.length);
+    // console.log("parsedArray is: ", parsedArray.slice(0, 5));
+    // console.log('parsedArray.length is: ', parsedArray.length);
     for (let metric of parsedArray) {
       console.log(`🧠creating ${metric.metric.replace(/.*\/.*\//g, '')} dashboard`);
       await utilities.createGrafanaDashboard(metric, datasource);
