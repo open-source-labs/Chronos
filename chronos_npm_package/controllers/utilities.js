@@ -274,7 +274,8 @@ const helpers = {
     for (const info of data) {
       if (!info.metric.job) continue;
       // Set the base name using the job, IP, and metric __name__
-      let name = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+      let wholeName = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+      let name = wholeName.replace(/.*\/.*\//g, '');
       if (names.has(name)) continue;
       else {
         names.add(name);
@@ -290,14 +291,14 @@ const helpers = {
         if (isNaN(value) || value === 'NaN') continue;
 
         res.push({
-          metric: name,
+          metric: wholeName,
           value: value,
           time: time,
           category: category,
         })
       }
     }
-    console.log(res.length === new Set(res));
+    console.log('is size equal?', res.length === new Set(res).size);
     //console.log("!res is: ", res);
     return res;
   },
