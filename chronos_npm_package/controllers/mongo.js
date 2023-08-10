@@ -777,12 +777,12 @@ mongo.docker = ({ microservice, interval, mode }) => {
  It then takes the returned array of metrics, turns them into documents based on
  KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
 */
-mongo.serverQuery = config => {
-  mongo.saveService(config);
-  mongo.setQueryOnInterval(config);
+mongo.serverQuery = async config => {
+  await mongo.saveService(config);
+  await mongo.setQueryOnInterval(config);
 };
 
-mongo.saveService = config => {
+mongo.saveService = async config => {
   let microservice;
   if (config.mode === 'kafka') {
     microservice = 'kafkametrics';
@@ -814,10 +814,10 @@ mongo.setQueryOnInterval = async config => {
 
   if (config.mode === 'kafka') {
     model = KafkaModel;
-    metricsQuery = utilities.kafkaMetricsQuery;
+    metricsQuery = await utilities.kafkaMetricsQuery;
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
-    metricsQuery = utilities.promMetricsQuery;
+    metricsQuery = await utilities.promMetricsQuery;
   } else {
     throw new Error('Unrecognized mode');
   }
@@ -899,14 +899,27 @@ mongo.addMetrics = async (arr, mode, obj) => {
 // }
 
 mongo.createGrafanaDashboards = async config => {
-  console.log('creating Grafana Dashboards')
-  utilities.promMetrics(config).then(async parsedArray => {
+  try {
+    console.log('In mongo.createGrafanaDashboards!!!')
+    console.log('Calling utilities.getGrafanaDatasource()');
     const datasource = await utilities.getGrafanaDatasource();
-    console.log("parsedArray is: ", parsedArray);
-    parsedArray.forEach(async metric => {
+    console.log('Calling utilities.promMetricsQuery()');
+    const parsedArray = await utilities.promMetricsQuery(config);
+    //const datasource = await utilities.getGrafanaDatasource();
+    console.log("parsedArray is: ", parsedArray.slice(0, 5));
+    for (let metric of parsedArray) {
+      console.log(`🧠creating ${metric.metric.replace(/.*\/.*\//g, '')} dashboard`);
       await utilities.createGrafanaDashboard(metric, datasource);
-    });
-  });
+    }
+
+    // await parsedArray.forEach(async (metric, i) => {
+    //   //console.log("metric is: ", metric);
+    //   console.log(`creating ${i}th dashboard`);
+    //   await utilities.createGrafanaDashboard(metric, datasource);
+    // });
+  } catch (err) {
+    console.error("error in mongo.createGrafanaDashboards: ", err)
+  }
 };
 
 

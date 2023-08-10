@@ -229,7 +229,7 @@ const helpers = {
     const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
     try {
       const response = await axios.get(query);
-      console.log("response is: ", response);
+      //console.log("response is: ", response);
       return helpers.parseProm(response.data.data.result);
     } catch (error) {
       return console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n', error);
@@ -241,7 +241,7 @@ const helpers = {
     const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
     try {
       const response = await axios.get(query);
-      console.log("response is: ", response);
+      //console.log("response is: ", response);
       return response.data.data.result;
     } catch (error) {
       return console.error('Error fetching from URI:', URI, '\n', error);
@@ -276,26 +276,29 @@ const helpers = {
       // Set the base name using the job, IP, and metric __name__
       let name = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
       if (names.has(name)) continue;
-      else names.add(name);
-      // Tack on the remaining key's values from the remaining metric descriptors
-      // This might result in an overly-long metric name though, so commented for now
-      // for (let field in info.metric) {
-      //     if ((field in usedCategories)) continue
-      //     name += '/' + info.metric[field];
-      // }
+      else {
+        names.add(name);
+        // Tack on the remaining key's values from the remaining metric descriptors
+        // This might result in an overly-long metric name though, so commented for now
+        // for (let field in info.metric) {
+        //     if ((field in usedCategories)) continue
+        //     name += '/' + info.metric[field];
+        // }
 
-      let value = info.value;
-      if (value.constructor.name === 'Array') value = info.value[1];
-      if (isNaN(value) || value === 'NaN') continue;
+        let value = info.value;
+        if (value.constructor.name === 'Array') value = info.value[1];
+        if (isNaN(value) || value === 'NaN') continue;
 
-      res.push({
-        metric: name,
-        value: value,
-        time: time,
-        category: category,
-      });
+        res.push({
+          metric: name,
+          value: value,
+          time: time,
+          category: category,
+        })
+      }
     }
-    console.log("!res is: ", res);
+    console.log(res.length === new Set(res));
+    //console.log("!res is: ", res);
     return res;
   },
 
@@ -303,10 +306,12 @@ const helpers = {
     metric,
     datasource,
   ) => {
-    let uid = metric.metric.__name__.replace(/.*\/.*\//g, '')
-    if (metric.metric.__name__.replace(/.*\/.*\//g, '').length >= 40) {
-      uid = metric.metric.__name__.slice(metric.metric.__name__.length - 39);
+    let uid = metric.metric.replace(/.*\/.*\//g, '')
+    if (metric.metric.replace(/.*\/.*\//g, '').length >= 40) {
+      uid = metric.metric.slice(metric.metric.length - 39);
     }
+    //console.log("uid is: ", uid)
+    //console.log("metric is: ", metric)
     // create dashboard object boilerplate
     const dashboard = {
       "dashboard": {
@@ -336,11 +341,11 @@ const helpers = {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer glsa_pITqM0BIfNHNKL4PsXJqmTYQl0D9QGxF_486f63e1'
+            'Authorization': 'Bearer glsa_FZQR8XW4ouUyK95YgCG1bwFS6NomoqXA_546c1dc5'
           },
         }
       );
-      console.log(dashboardResponse)
+      //console.log("dashboardResponse is: ", dashboardResponse)
 
       // Descriptive error log for developers
       if (dashboardResponse.status >= 400) {
@@ -349,7 +354,7 @@ const helpers = {
         );
       } else {
         // A simple console log to show when graphs are done being posted to Grafana.
-        console.log(`📊 Grafana graphs 📊 for the ${containerName} container are ready!!`);
+        console.log(`📊 Grafana graphs 📊 for the ${metric.metric.replace(/.*\/.*\//g, '')} metric are ready!!!`);
       }
     } catch (err) {
       console.log(err);
@@ -359,14 +364,14 @@ const helpers = {
   getGrafanaDatasource: async () => {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
-    console.log('getting datasource');
+    console.log('In utilities.getGrafanaDatasource!!!');
     const datasourceResponse = await axios.get('http://grafana:3000/api/datasources', {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer glsa_pITqM0BIfNHNKL4PsXJqmTYQl0D9QGxF_486f63e1'
+        'Authorization': 'Bearer glsa_FZQR8XW4ouUyK95YgCG1bwFS6NomoqXA_546c1dc5'
       },
     });
-    console.log(datasourceResponse.data)
+    console.log("Successfully fetched datasource from Grafana API")
     // Create a datasource object to be used within panels.
     const datasource = {
       type: datasourceResponse.data[0].type,
