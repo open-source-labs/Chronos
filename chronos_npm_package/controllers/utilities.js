@@ -333,7 +333,7 @@ const helpers = {
 
 
     // push panel into dashboard object with a line for each metric in promQLQueries object
-    dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource));
+    dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource, graphType));
 
     try {
       // POST request to Grafana Dashboard API to create a dashboard
@@ -352,7 +352,7 @@ const helpers = {
       // Descriptive error log for developers
       if (dashboardResponse.status >= 400) {
         console.log(
-          'Error with POST request to Grafana Dashboards API. In createGrafanaDashboardObject.'
+          'Error with POST request to Grafana Dashboards API. In createGrafanaDashboard.'
         );
       } else {
         // A simple console log to show when graphs are done being posted to Grafana.
@@ -429,11 +429,11 @@ const helpers = {
       // Descriptive error log for developers
       if (dashboardResponse.status >= 400) {
         console.log(
-          'Error with POST request to Grafana Dashboards API. In createGrafanaDashboardObject.'
+          'Error with POST request to Grafana Dashboards API. In updateGrafanaDashboard.'
         );
       } else {
         // A simple console log to show when graphs are done being posted to Grafana.
-        console.log(`📊 Grafana graphs 📊 for the ${metric.metric.replace(/.*\/.*\//g, '')} metric are ready!!!`);
+        console.log(`📊 Grafana graphs 📊 for the ${metric.metric.replace(/.*\/.*\//g, '')} has been updated!!!`);
       }
     } catch (err) {
       console.log(err);
