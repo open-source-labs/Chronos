@@ -862,7 +862,9 @@ mongo.setQueryOnInterval = async config => {
         // });
         let allMetrics = await model.find({});
         console.log('allMetrics.length: ', allMetrics.length);
+        console.log("🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡start creating dashboards🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡")
         await mongo.createGrafanaDashboards(config, allMetrics);
+        console.log("✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅finish creating dashboards✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅")
       })
       // .then(() => {
       //   console.log(`${config.mode} metrics recorded in MongoDB`)
