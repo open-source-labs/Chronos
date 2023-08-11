@@ -625,6 +625,7 @@ const MetricsModel = require('../models/MetricsModel');
 const dockerHelper = require('./dockerHelper');
 const utilities = require('./utilities');
 require('../models/ContainerInfo');
+const GrafanaAPIKeyModel = require('../models/GrafanaAPIKeyModel');
 
 mongoose.set('strictQuery', true);
 
@@ -938,6 +939,15 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
     console.error("error in mongo.createGrafanaDashboards: ", err)
   }
 };
+
+mongo.storeGrafanaAPIKey = async (config) => {
+  try {
+    await GrafanaAPIKeyModel.create({ token: config.grafanaAPIKey });
+  } catch (err) {
+    console.error("error in mongo.storeGrafanaAPIKey: ", err);
+  }
+}
+
 
 
 module.exports = mongo;
