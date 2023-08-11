@@ -912,7 +912,7 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
     // console.log('parsedArray.length is: ', parsedArray.length);
     for (let metric of parsedArray) {
       console.log(`🧠creating ${metric.metric.replace(/.*\/.*\//g, '')} dashboard`);
-      await utilities.createGrafanaDashboard(metric, datasource);
+      await utilities.createGrafanaDashboard(metric, datasource, "timeseries");
     }
 
     // await parsedArray.forEach(async (metric, i) => {
