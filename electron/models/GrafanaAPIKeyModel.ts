@@ -9,4 +9,4 @@ const GrafanaAPIKeySchema = new Schema({
     }
 })
 
-export default mongoose.model('kafgrafanaAPI', GrafanaAPIKeySchema);
+export default mongoose.model('grafanaAPI', GrafanaAPIKeySchema);
