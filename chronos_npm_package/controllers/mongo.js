@@ -942,7 +942,9 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
 
 mongo.storeGrafanaAPIKey = async (config) => {
   try {
+    console.log('In mongo.storeGrafanaAPIKey!!!')
     await GrafanaAPIKeyModel.create({ token: config.grafanaAPIKey });
+    console.log('Grafana API Key stored in MongoDB');
   } catch (err) {
     console.error("error in mongo.storeGrafanaAPIKey: ", err);
   }
