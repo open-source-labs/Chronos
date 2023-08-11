@@ -82,9 +82,10 @@ export function eventTransformer(eventData: MetricObject[]) {
   // make an object for storing the metrics data
   const eventMetricsObject = {};
   // loop through the services in the eventData array
+  console.log('eventData: ', eventData);
   eventData.forEach((metricObj: MetricObject) => {
     // destructure the category, metric name, time stamp, and metric value from the metricObj
-    const { category, metric, time, value } = metricObj
+    const { category, metric, time, value, _id } = metricObj
     // if the category doesn't exist on the output object yet, initialize it
     if (!eventMetricsObject[category]) eventMetricsObject[category] = {};
     // if it doesn't exist yet in that nested object, assign a key using the current dataObject's metric name and assign its value an empty object
@@ -96,8 +97,12 @@ export function eventTransformer(eventData: MetricObject[]) {
     // in that same object, if the key 'time' doesn't exist yet, assign it a key of 'time' with the value as an array that includes the time value
     // if it does exist aready, push the current time value into the time array
     if (!eventMetricsObject[category][metric].time) eventMetricsObject[category][metric].time = [time];
-    eventMetricsObject[category][metric].time.push(time); 
+    eventMetricsObject[category][metric].time.push(time);
+
+    if (!eventMetricsObject[category][metric].id) eventMetricsObject[category][metric].id = _id;
   });
   // return the eventMetricsObject
+  console.log('eventMetricsObject: ', eventMetricsObject);
+  //console.log('eventMetricsObject.length', eventMetricsObject);
   return eventMetricsObject;
 };

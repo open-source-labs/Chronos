@@ -132,7 +132,7 @@ class Chronos {
 
     if (this.config.database.type === 'MongoDB') {
       await mongo.connect(this.config);
-      await mongo.createGrafanaDashboards(this.config);
+      //await mongo.createGrafanaDashboards(this.config);
       mongo.serverQuery(this.config);
       // return mongo.modifyMetrics(this.config);
     }
