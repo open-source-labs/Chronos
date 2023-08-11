@@ -38,9 +38,15 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     console.log("uid: ", uid)
     console.log("parsedName: ", parsedName)
 
-    const handleSelectionChange = (event) => {
+    const handleSelectionChange = async (event) => {
         setGraphType(event.target.value);
-        fetch('http://localhost:1111/random')
+        await fetch('http://localhost:1111/api/updateDashboard', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ graphType: event.target.value, metric: metricName })
+        })
+
     }
 
     return (
