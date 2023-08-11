@@ -306,7 +306,8 @@ const helpers = {
   createGrafanaDashboard: async (
     metric,
     datasource,
-    graphType
+    graphType,
+    token
   ) => {
     let uid = metric.metric.replace(/.*\/.*\//g, '')
     if (metric.metric.replace(/.*\/.*\//g, '').length >= 40) {
@@ -343,7 +344,7 @@ const helpers = {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer glsa_FZQR8XW4ouUyK95YgCG1bwFS6NomoqXA_546c1dc5'
+            'Authorization': token
           },
         }
       );
@@ -363,14 +364,14 @@ const helpers = {
     }
   },
 
-  getGrafanaDatasource: async () => {
+  getGrafanaDatasource: async (token) => {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
     console.log('In utilities.getGrafanaDatasource!!!');
     const datasourceResponse = await axios.get('http://grafana:3000/api/datasources', {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer glsa_FZQR8XW4ouUyK95YgCG1bwFS6NomoqXA_546c1dc5'
+        'Authorization': token
       },
     });
     console.log("Successfully fetched datasource from Grafana API")
