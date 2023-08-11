@@ -35,6 +35,7 @@ const mongoFetch = async (
   try {
     const testModel = HealthModelFunc(serviceName);
     const grafanaAPIKey = await GrafanaAPIKeyModel.find({});
+    console.log('grafanaAPIKey: ', grafanaAPIKey)
     let result = await testModel.aggregate(aggregator);
     for (let i = 0; i < result.length; i++) {
       result[i].token = grafanaAPIKey[0].token;

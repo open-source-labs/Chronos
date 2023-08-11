@@ -863,7 +863,7 @@ mongo.setQueryOnInterval = async config => {
         // });
         let allMetrics = await model.find({});
         console.log('allMetrics.length: ', allMetrics.length);
-        console.log("🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡 start creating dashboards 🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡")
+        console.log("🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 start creating dashboards 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡")
         await mongo.createGrafanaDashboards(config, allMetrics);
         console.log("✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ finish creating dashboards ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅")
       })
@@ -919,7 +919,7 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
   try {
     console.log('In mongo.createGrafanaDashboards!!!')
     console.log('Calling utilities.getGrafanaDatasource()');
-    const datasource = await utilities.getGrafanaDatasource();
+    const datasource = await utilities.getGrafanaDatasource(config.grafanaAPIKey);
     //console.log('Calling utilities.promMetricsQuery()');
     //const parsedArray = await utilities.promMetricsQuery(config);
     //const datasource = await utilities.getGrafanaDatasource();
@@ -927,7 +927,7 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
     // console.log('parsedArray.length is: ', parsedArray.length);
     for (let metric of parsedArray) {
       console.log(`🎉 creating dashboard 🎉`);
-      await utilities.createGrafanaDashboard(metric, datasource, "timeseries");
+      await utilities.createGrafanaDashboard(metric, datasource, "timeseries", config.grafanaAPIKey);
     }
 
     // await parsedArray.forEach(async (metric, i) => {
