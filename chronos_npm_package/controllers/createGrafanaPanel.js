@@ -1,6 +1,7 @@
 function createGrafanaPanelObject(
     metric,
-    datasource
+    datasource,
+    graphType
 ) {
     // Create a panel object to be used within dashboards.
     const panel = {
@@ -86,7 +87,7 @@ function createGrafanaPanelObject(
             "refId": "A"
         }],
         "title": metric.metric.replace(/.*\/.*\//g, ''),
-        "type": "timeseries",
+        "type": graphType,
         "interval": "2s"
     }
     return panel;
