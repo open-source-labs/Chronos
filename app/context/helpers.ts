@@ -102,7 +102,7 @@ export function eventTransformer(eventData: MetricObject[]) {
     if (!eventMetricsObject[category][metric].id) eventMetricsObject[category][metric].id = _id;
   });
   // return the eventMetricsObject
-  console.log('eventMetricsObject: ', eventMetricsObject);
+  console.log('eventMetricsObject.Event.length: ', Object.keys(eventMetricsObject["Event"]).length);
   //console.log('eventMetricsObject.length', eventMetricsObject);
   return eventMetricsObject;
 };
