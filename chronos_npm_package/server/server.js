@@ -13,6 +13,7 @@ app.use(express.urlencoded());
 
 app.get('/random', (req, res) => {
     console.log('random endpoint hit')
+    console.log('number: ', Math.floor(Math.random() * Math.floor(100)))
     res.json({
         number: Math.floor(Math.random() * Math.floor(100))
     })
