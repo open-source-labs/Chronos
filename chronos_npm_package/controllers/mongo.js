@@ -857,7 +857,7 @@ mongo.setQueryOnInterval = async config => {
         console.log(`${config.mode} metrics recorded in MongoDB`)
       })
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
-  }, 20000);
+  }, config.interval);
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
