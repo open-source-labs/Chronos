@@ -1,6 +1,7 @@
 import KafkaModel from '../models/KafkaModel';
 import HealthModelFunc from '../models/HealthModel';
 import { Pool } from 'pg';
+import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel';
 
 interface fetchData {
   mongoFetch: (serviceName: string) => Promise<Array<{ [key: string]: any[] }>>;
@@ -33,7 +34,11 @@ const mongoFetch = async (
 ): Promise<Array<{ [key: string]: any[] }> | undefined> => {
   try {
     const testModel = HealthModelFunc(serviceName);
+    const grafanaAPIKey = await GrafanaAPIKeyModel.find({});
     let result = await testModel.aggregate(aggregator);
+    for (let i = 0; i < result.length; i++) {
+      result[i].token = grafanaAPIKey[0].token;
+    }
     result = [{ [serviceName]: result }];
     return result;
   } catch (error) {
