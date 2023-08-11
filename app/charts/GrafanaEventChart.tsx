@@ -19,6 +19,7 @@ interface EventChartProps {
  */
 const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     const { metricName } = props;
+    const [graphType, setGraphType] = useState<string>("timeseries");
     // const [solo, setSolo] = useState<SoloStyles | null>(null);
     console.log("inside GrafanaEventChart")
 
@@ -37,13 +38,17 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     console.log("uid: ", uid)
     console.log("parsedName: ", parsedName)
 
+    const handleSelectionChange = (event) => {
+        setGraphType(event.target.value);
+        fetch('http://localhost:1111/random')
+    }
+
     return (
         <div className="chart" data-testid="Grafana Event Chart">
-            <br />
             <h2>{parsedName}</h2>
-            {/* create chart using grafana */}
+            {/* create chart using grafana iframe tag*/}
             <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
-            <select name="cars" id="cars">
+            <select name="graphType" id="graphType" value={graphType} onChange={handleSelectionChange}>
                 <option value="timeseries">Time Series</option>
                 <option value="barchart">Bar Chart</option>
                 <option value="stat">Stat</option>
