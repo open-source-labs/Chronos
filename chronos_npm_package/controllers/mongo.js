@@ -862,9 +862,9 @@ mongo.setQueryOnInterval = async config => {
         // });
         let allMetrics = await model.find({});
         console.log('allMetrics.length: ', allMetrics.length);
-        console.log("🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡start creating dashboards🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡")
+        console.log("🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡 start creating dashboards 🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡🟡")
         await mongo.createGrafanaDashboards(config, allMetrics);
-        console.log("✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅finish creating dashboards✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅")
+        console.log("✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ finish creating dashboards ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅")
       })
       // .then(() => {
       //   console.log(`${config.mode} metrics recorded in MongoDB`)
@@ -925,7 +925,7 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
     // console.log("parsedArray is: ", parsedArray.slice(0, 5));
     // console.log('parsedArray.length is: ', parsedArray.length);
     for (let metric of parsedArray) {
-      console.log(`🧠creating ${metric.metric.replace(/.*\/.*\//g, '')} dashboard`);
+      console.log(`🎉 creating dashboard 🎉`);
       await utilities.createGrafanaDashboard(metric, datasource, "timeseries");
     }
 
