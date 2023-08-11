@@ -824,40 +824,51 @@ mongo.setQueryOnInterval = async config => {
 
   length = await mongo.getSavedMetricsLength(config.mode, currentMetricNames);
 
-  console.log('currentMetricNames is: ', Object.keys(currentMetricNames).length);
+  console.log('currentMetricNames.length: ', Object.keys(currentMetricNames).length);
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     metricsQuery(config)
       // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
       .then(async parsedArray => {
-        await mongo.createGrafanaDashboards(config, parsedArray);
+        //await mongo.createGrafanaDashboards(config, parsedArray);
         console.log('parsedArray.length is: ', parsedArray.length);
         // This conditional would be used if new metrics are available to be tracked.
         if (length !== parsedArray.length) {
-          length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames);
+          // for (let metric of parsedArray) {
+          //   if (!(metric.metric in currentMetricNames)) {
+          //     await model.create(metric);
+          //     //currentMetricNames[metric] = true;
+          //   }
+          // }
+          length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames, model);
         }
-        const documents = [];
-        for (const metric of parsedArray) {
-          /**
-           * This will check if the current metric in the parsed array
-           * evaluates to true within the currentMetricNames object
-           * which is updated by the user when they select/deselect metrics on the electron app
-           * helping to avoid overloading the db with unnecessary data.
-           */
+        // const documents = [];
+        // for (const metric of parsedArray) {
+        //   /**
+        //    * This will check if the current metric in the parsed array
+        //    * evaluates to true within the currentMetricNames object
+        //    * which is updated by the user when they select/deselect metrics on the electron app
+        //    * helping to avoid overloading the db with unnecessary data.
+        //    */
 
-          if (currentMetricNames[metric.metric]) documents.push(model(metric));
-        }
-        return model.insertMany(documents, err => {
-          if (err) {
-            console.error(err)
-          }
-        });
+        //   if (currentMetricNames[metric.metric]) documents.push(model(metric));
+        // }
+        // await model.insertMany(parsedArray, err => {
+        //   if (err) {
+        //     console.error(err)
+        //   } else {
+        //     console.log(`${config.mode} metrics recorded in MongoDB`)
+        //   }
+        // });
+        let allMetrics = await model.find({});
+        console.log('allMetrics.length: ', allMetrics.length);
+        await mongo.createGrafanaDashboards(config, allMetrics);
       })
-      .then(() => {
-        console.log(`${config.mode} metrics recorded in MongoDB`)
-      })
+      // .then(() => {
+      //   console.log(`${config.mode} metrics recorded in MongoDB`)
+      // })
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
-  }, config.interval);
+  }, 40000);
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
@@ -871,18 +882,19 @@ mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
   return currentMetrics.length ? currentMetrics.length : 0;
 };
 
-mongo.addMetrics = async (arr, mode, obj) => {
+mongo.addMetrics = async (arr, mode, obj, model) => {
+  const metrics = [];
   const newMets = [];
-  arr.forEach(el => {
-    if (!(el.metric in obj)) {
-      const { metric } = el;
-      newMets.push({ metric: metric, mode: mode });
-      obj[el.metric] = true;
+  for (let metric of arr) {
+    if (!(metric.metric in obj)) {
+      const name = metric.metric;
+      newMets.push({ metric: name, mode: mode });
+      metrics.push(metric);
+      obj[metric.metric] = true;
     }
-  });
-  await MetricsModel.insertMany(newMets, err => {
-    if (err) console.error(err);
-  });
+  };
+  await MetricsModel.create(newMets);
+  await model.create(metrics);
   return arr.length;
 };
 
