@@ -43,6 +43,14 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
             <h2>{parsedName}</h2>
             {/* create chart using grafana */}
             <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
+            <select name="cars" id="cars">
+                <option value="timeseries">Time Series</option>
+                <option value="barchart">Bar Chart</option>
+                <option value="stat">Stat</option>
+                <option value="gauge">Gauge</option>
+                <option value="table">Table</option>
+                <option value="histogram">Histogram</option>
+            </select>
         </div>
     );
 });
