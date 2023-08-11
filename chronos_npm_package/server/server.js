@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express()
 const port = 1111;
+const utilities = require('./utilities');
 
 
 app.use(cors());
@@ -18,22 +19,30 @@ app.get('/random', (req, res) => {
 }
 );
 
+app.get('api/updateDashboard', async (req, res) => {
+    const { graphType } = req.body;
+    console.log('updateDashboard endpoint hit');
+    const datasource = await utilities.getGrafanaDatasource();
+    utilities.updateGrafanaDashboard(graphType, datasource);
 
 
-app.use('*', (req, res) => {
-    res.status(404).send('Not Found');
-});
 
-// global error handler
-app.use((err, req, res, next) => {
-    const defaultErr = {
-        log: 'Express error handler caught unknown middleware error',
-        status: 500,
-        message: { err: 'An error occurred' },
-    };
-    const errorObj = Object.assign({}, defaultErr, err);
-    console.log(errorObj.log);
-    return res.status(errorObj.status).json(errorObj.message);
-});
 
-app.listen(port, () => console.log(`Example app listening on port ${port}! chronos_npm_package Server Loaded`))
+
+    app.use('*', (req, res) => {
+        res.status(404).send('Not Found');
+    });
+
+    // global error handler
+    app.use((err, req, res, next) => {
+        const defaultErr = {
+            log: 'Express error handler caught unknown middleware error',
+            status: 500,
+            message: { err: 'An error occurred' },
+        };
+        const errorObj = Object.assign({}, defaultErr, err);
+        console.log(errorObj.log);
+        return res.status(errorObj.status).json(errorObj.message);
+    });
+
+    app.listen(port, () => console.log(`Example app listening on port ${port}! chronos_npm_package Server Loaded`))
