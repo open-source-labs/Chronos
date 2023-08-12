@@ -121,6 +121,7 @@ const TransferColumns = React.memo(() => {
   const createSelectedMetricsList = () => {
     const temp: any[] = [];
     const categorySet = new Set();
+    console.log('Inside TransferColumns.txs line 124 targetKeys: ', targetKeys)
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -146,7 +147,7 @@ const TransferColumns = React.memo(() => {
 
   // makes the column titles for the selection grid
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'id', headerName: 'ID', flex: 1 },
     {
       field: 'tag',
       headerName: 'Category',
