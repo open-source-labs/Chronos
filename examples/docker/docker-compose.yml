@@ -109,16 +109,16 @@ services:
     depends_on:
       - cadvisor
 
-  # grafana:
-  #   image: grafana/grafana:latest
-  #   container_name: grafana
-  #   ports:
-  #     - 2999:3000
-  #   volumes:
-  #     # Share the named volume with the grafana container
-  #     - grafana-dir:/etc/grafana
-  #   environment:
-  #     GF_PATHS_CONFIG: /etc/grafana/grafana.ini
-  #     GF_SECURITY_ALLOW_EMBEDDING: 'true'
-  #   depends_on:
-  #     - prometheus
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 2999:3000
+    volumes:
+      # Share the named volume with the grafana container
+      - grafana-dir:/etc/grafana
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+      GF_SECURITY_ALLOW_EMBEDDING: 'true'
+    depends_on:
+      - prometheus
