@@ -106,6 +106,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
     depends_on:
       - cadvisor
 
@@ -122,3 +123,6 @@ services:
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
     depends_on:
       - prometheus
+
+volumes:
+  grafana-dir: {}
