@@ -19,7 +19,9 @@ interface Params {
 interface MetricObject {
   [key: string]: {
     value: string[],
-    time: string[]
+    time: string[],
+    id: string,
+    token: string
   }
 }
 
@@ -109,6 +111,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         //parsedName = metricName.replace(/.*\/.*\//g, '')
         const chartData = metricObject[metricName];
         console.log('chartData IS: ', chartData)
+        const token = chartData.token;
+        console.log('token IS: ', token);
         // plotting using plotly
         // chartsArray.push(
         //   <EventChart
@@ -122,7 +126,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         // plotting using grafana
         console.log("I'm here")
         grafanaChartsArray.push(
-          <GrafanaEventChart metricName={metricName} />);
+          <GrafanaEventChart metricName={metricName} token={token} />);
       }
     }
     console.log(grafanaChartsArray)

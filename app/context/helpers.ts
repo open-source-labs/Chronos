@@ -86,7 +86,7 @@ export function eventTransformer(eventData: MetricObject[]) {
   console.log('eventData: ', eventData);
   eventData.forEach((metricObj: MetricObject) => {
     // destructure the category, metric name, time stamp, and metric value from the metricObj
-    const { category, metric, time, value, _id } = metricObj
+    const { category, metric, time, value, _id, token } = metricObj
     // if the category doesn't exist on the output object yet, initialize it
     if (!eventMetricsObject[category]) eventMetricsObject[category] = {};
     // if it doesn't exist yet in that nested object, assign a key using the current dataObject's metric name and assign its value an empty object
@@ -101,9 +101,12 @@ export function eventTransformer(eventData: MetricObject[]) {
     eventMetricsObject[category][metric].time.push(time);
 
     if (!eventMetricsObject[category][metric].id) eventMetricsObject[category][metric].id = _id;
+    if (!eventMetricsObject[category][metric].token) eventMetricsObject[category][metric].token = token;
+
   });
   // return the eventMetricsObject
   console.log('eventMetricsObject.Event.length: ', Object.keys(eventMetricsObject["Event"]).length);
+  console.log('eventMetricsObject: ', eventMetricsObject)
   //console.log('eventMetricsObject.length', eventMetricsObject);
   return eventMetricsObject;
 };
