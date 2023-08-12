@@ -1,6 +1,7 @@
 import KafkaModel from '../models/KafkaModel';
 import HealthModelFunc from '../models/HealthModel';
 import { Pool } from 'pg';
+import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel';
 
 interface fetchData {
   mongoFetch: (serviceName: string) => Promise<Array<{ [key: string]: any[] }>>;
@@ -34,8 +35,15 @@ const mongoFetch = async (
   try {
     console.log('in mongoFetch line 35 dataHelpers.ts: ', serviceName)
     const testModel = HealthModelFunc(serviceName);
+    console.log('testModel: ', testModel);
+    const grafanaAPIKey = await GrafanaAPIKeyModel.find({});
+    console.log('grafanaAPIKey: ', grafanaAPIKey)
     let result = await testModel.aggregate(aggregator);
+    for (let i = 0; i < result.length; i++) {
+      result[i].token = grafanaAPIKey[0].token;
+    }
     result = [{ [serviceName]: result }];
+    console.log('result: ', result)
     return result;
   } catch (error) {
     console.log('Aggregation error in mongoFetch(): ', error);
