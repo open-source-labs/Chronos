@@ -47,9 +47,10 @@ const GraphsContainer: React.FC = React.memo(props => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it
-    // not work correctly, so it has been omitted
-    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics');
+    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it  not work correctly, so it has been omitted
+    const healthServiceArray = serviceArray.filter(
+      (value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics'
+    );
     if (live) {
       setIntervalID(
         setInterval(() => {
@@ -87,6 +88,7 @@ const GraphsContainer: React.FC = React.memo(props => {
     };
   }, [service, live]);
 
+  //random variable to hold the light or dark mode of the display?..ok....sure
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const routing = (route: string) => {

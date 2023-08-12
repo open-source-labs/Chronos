@@ -54,6 +54,6 @@ const DockerSchema = new Schema({
 });
 
 const DockerModelFunc = (serviceName: any) =>
-  mongoose.model<any>(`${serviceName}-containerinfos`, DockerSchema);
+  mongoose.model<any>(`${serviceName}`, DockerSchema);
 
 export default DockerModelFunc;

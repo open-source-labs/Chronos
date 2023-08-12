@@ -1,5 +1,6 @@
 import type { Config } from '@jest/types';
 
+
 // describes the jest testing configuration for all test files
 const config: Config.InitialOptions = {
   verbose: true,
