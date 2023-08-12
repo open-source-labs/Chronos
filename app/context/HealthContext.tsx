@@ -25,6 +25,7 @@ interface MetricObject {
   value: number;
   __v: number;
   _id: string;
+  token: string;
 }
 interface HealthDataObject {
   [key: string]: MetricObject[];

@@ -1,5 +1,7 @@
 const axios = require('axios').default;
 
+const { createGrafanaPanelObject, updateGrafanaPanelObject } = require('./GrafanaPanel.js');
+
 /**
  * User Config object {
   microservice: string - Name of the microservice. Will be used as a table name in the chronos's db
@@ -158,7 +160,7 @@ const helpers = {
       else console.log('Successful initial response from metrics server:', URI);
       return response;
     } catch (error) {
-      console.error(response);
+      console.log(error);
       throw new Error('Unable to query metrics server: ' + URI);
     }
   },
@@ -227,11 +229,25 @@ const helpers = {
     const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
     try {
       const response = await axios.get(query);
+      //console.log("response is: ", response);
       return helpers.parseProm(response.data.data.result);
     } catch (error) {
       return console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n', error);
     }
   },
+
+  promMetrics: async config => {
+    const URI = `http://${config.promService}:${config.promPort}/api/v1/query?query=`;
+    const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
+    try {
+      const response = await axios.get(query);
+      //console.log("response is: ", response);
+      return response.data.data.result;
+    } catch (error) {
+      return console.error('Error fetching from URI:', URI, '\n', error);
+    }
+  },
+
 
   /**
    * Parses response from Prometheus request and returns object with
@@ -258,30 +274,194 @@ const helpers = {
     for (const info of data) {
       if (!info.metric.job) continue;
       // Set the base name using the job, IP, and metric __name__
-      let name = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+      let wholeName = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+      let name = wholeName.replace(/.*\/.*\//g, '');
       if (names.has(name)) continue;
-      else names.add(name);
-      // Tack on the remaining key's values from the remaining metric descriptors
-      // This might result in an overly-long metric name though, so commented for now
-      // for (let field in info.metric) {
-      //     if ((field in usedCategories)) continue
-      //     name += '/' + info.metric[field];
-      // }
+      else {
+        names.add(name);
+        // Tack on the remaining key's values from the remaining metric descriptors
+        // This might result in an overly-long metric name though, so commented for now
+        // for (let field in info.metric) {
+        //     if ((field in usedCategories)) continue
+        //     name += '/' + info.metric[field];
+        // }
 
-      let value = info.value;
-      if (value.constructor.name === 'Array') value = info.value[1];
-      if (isNaN(value) || value === 'NaN') continue;
+        let value = info.value;
+        if (value.constructor.name === 'Array') value = info.value[1];
+        if (isNaN(value) || value === 'NaN') continue;
 
-      res.push({
-        metric: name,
-        value: value,
-        time: time,
-        category: category,
-      });
+        res.push({
+          metric: wholeName,
+          value: value,
+          time: time,
+          category: category,
+        })
+      }
     }
-
+    console.log('is size equal?', res.length === new Set(res).size);
+    //console.log("!res is: ", res);
     return res;
   },
+
+  createGrafanaDashboard: async (
+    metric,
+    datasource,
+    graphType,
+    token
+  ) => {
+    let uid = metric.metric.replace(/.*\/.*\//g, '')
+    if (metric.metric.replace(/.*\/.*\//g, '').length >= 40) {
+      uid = metric.metric.slice(metric.metric.length - 39);
+    }
+    //console.log("uid is: ", uid)
+    //console.log("metric is: ", metric)
+    // create dashboard object boilerplate
+    const dashboard = {
+      "dashboard": {
+        "id": null,
+        "uid": uid,
+        "title": metric.metric.replace(/.*\/.*\//g, ''),
+        "tags": ["templated"],
+        "timezone": "browser",
+        "schemaVersion": 16,
+        "version": 0,
+        "refresh": "10s",
+        panels: [],
+      },
+      folderId: 0,
+      overwrite: true,
+    };
+
+
+    // push panel into dashboard object with a line for each metric in promQLQueries object
+    dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource, graphType));
+
+    try {
+      // POST request to Grafana Dashboard API to create a dashboard
+      const dashboardResponse = await axios.post(
+        'http://grafana:3000/api/dashboards/db',
+        JSON.stringify(dashboard),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          },
+        }
+      );
+      //console.log("dashboardResponse is: ", dashboardResponse)
+
+      // Descriptive error log for developers
+      if (dashboardResponse.status >= 400) {
+        console.log(
+          'Error with POST request to Grafana Dashboards API. In createGrafanaDashboard.'
+        );
+      } else {
+        // A simple console log to show when graphs are done being posted to Grafana.
+        console.log(`📊 Grafana graphs for the ${metric.metric.replace(/.*\/.*\//g, '')} metric are ready 📊 `);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  getGrafanaDatasource: async (token) => {
+    // Fetch datasource information from grafana API.
+    // This datasource is PRECONFIGURED on launch using grafana config.
+    console.log('In utilities.getGrafanaDatasource!!!');
+    const datasourceResponse = await axios.get('http://grafana:3000/api/datasources', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    });
+    console.log("Successfully fetched datasource from Grafana API")
+    // Create a datasource object to be used within panels.
+    const datasource = {
+      type: datasourceResponse.data[0].type,
+      uid: datasourceResponse.data[0].uid,
+    };
+    console.log('datasource is', datasource)
+
+    return datasource;
+  },
+
+  updateGrafanaDatasource: async (token) => {
+    // Fetch datasource information from grafana API.
+    // This datasource is PRECONFIGURED on launch using grafana config.
+    console.log('In utilities.getGrafanaDatasource!!!');
+    const datasourceResponse = await axios.get('http://localhost:32000/api/datasources', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    });
+    console.log("Successfully fetched datasource from Grafana API")
+    // Create a datasource object to be used within panels.
+    const datasource = {
+      type: datasourceResponse.data[0].type,
+      uid: datasourceResponse.data[0].uid,
+    };
+    console.log('datasource is', datasource)
+
+    return datasource;
+  },
+
+  updateGrafanaDashboard: async (graphType, token, metric, datasource) => {
+    let uid = metric.replace(/.*\/.*\//g, '')
+    if (metric.replace(/.*\/.*\//g, '').length >= 40) {
+      uid = metric.slice(metric.metric.length - 39);
+    }
+    //console.log("uid is: ", uid)
+    //console.log("metric is: ", metric)
+    // create dashboard object boilerplate
+    const dashboard = {
+      "dashboard": {
+        "id": null,
+        "uid": uid,
+        "title": metric.replace(/.*\/.*\//g, ''),
+        "tags": ["templated"],
+        "timezone": "browser",
+        "schemaVersion": 16,
+        "version": 0,
+        "refresh": "10s",
+        panels: [],
+      },
+      folderId: 0,
+      overwrite: true,
+    };
+
+
+    // push panel into dashboard object with a line for each metric in promQLQueries object
+    dashboard.dashboard.panels.push(updateGrafanaPanelObject(metric, datasource, graphType));
+
+    try {
+      // POST request to Grafana Dashboard API to create a dashboard
+      const dashboardResponse = await axios.post(
+        'http://grafana:3000/api/dashboards/db',
+        JSON.stringify(dashboard),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          },
+        }
+      );
+      //console.log("dashboardResponse is: ", dashboardResponse)
+
+      // Descriptive error log for developers
+      if (dashboardResponse.status >= 400) {
+        console.log(
+          'Error with POST request to Grafana Dashboards API. In updateGrafanaDashboard.'
+        );
+      } else {
+        // A simple console log to show when graphs are done being posted to Grafana.
+        console.log(`📊 Grafana graphs 📊 for the ${metric.metric.replace(/.*\/.*\//g, '')} has been updated!!!`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
 };
 
 module.exports = helpers;
