@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 
-const createGrafanaPanelObject = require('./createGrafanaPanel.js');
+const { createGrafanaPanelObject, updateGrafanaPanelObject } = require('./GrafanaPanel.js');
 
 /**
  * User Config object {
@@ -385,10 +385,31 @@ const helpers = {
     return datasource;
   },
 
+  updateGrafanaDatasource: async (token) => {
+    // Fetch datasource information from grafana API.
+    // This datasource is PRECONFIGURED on launch using grafana config.
+    console.log('In utilities.getGrafanaDatasource!!!');
+    const datasourceResponse = await axios.get('http://localhost:32000/api/datasources', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+    });
+    console.log("Successfully fetched datasource from Grafana API")
+    // Create a datasource object to be used within panels.
+    const datasource = {
+      type: datasourceResponse.data[0].type,
+      uid: datasourceResponse.data[0].uid,
+    };
+    console.log('datasource is', datasource)
+
+    return datasource;
+  },
+
   updateGrafanaDashboard: async (graphType, token, metric, datasource) => {
-    let uid = metric.metric.replace(/.*\/.*\//g, '')
-    if (metric.metric.replace(/.*\/.*\//g, '').length >= 40) {
-      uid = metric.metric.slice(metric.metric.length - 39);
+    let uid = metric.replace(/.*\/.*\//g, '')
+    if (metric.replace(/.*\/.*\//g, '').length >= 40) {
+      uid = metric.slice(metric.metric.length - 39);
     }
     //console.log("uid is: ", uid)
     //console.log("metric is: ", metric)
@@ -397,7 +418,7 @@ const helpers = {
       "dashboard": {
         "id": null,
         "uid": uid,
-        "title": metric.metric.replace(/.*\/.*\//g, ''),
+        "title": metric.replace(/.*\/.*\//g, ''),
         "tags": ["templated"],
         "timezone": "browser",
         "schemaVersion": 16,
@@ -411,7 +432,7 @@ const helpers = {
 
 
     // push panel into dashboard object with a line for each metric in promQLQueries object
-    dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource, graphType));
+    dashboard.dashboard.panels.push(updateGrafanaPanelObject(metric, datasource, graphType));
 
     try {
       // POST request to Grafana Dashboard API to create a dashboard
@@ -421,7 +442,7 @@ const helpers = {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer glsa_FZQR8XW4ouUyK95YgCG1bwFS6NomoqXA_546c1dc5'
+            'Authorization': token
           },
         }
       );

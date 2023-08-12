@@ -3,6 +3,7 @@ import { all, solo as soloStyle } from './sizeSwitch';
 
 interface EventChartProps {
     metricName: string;
+    token: string;
 }
 
 // interface SoloStyles {
@@ -18,7 +19,7 @@ interface EventChartProps {
  * @returns {JSX.Element} The JSX element with the event chart.
  */
 const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
-    const { metricName } = props;
+    const { metricName, token } = props;
     const [graphType, setGraphType] = useState<string>("timeseries");
     // const [solo, setSolo] = useState<SoloStyles | null>(null);
     console.log("inside GrafanaEventChart")
@@ -41,10 +42,11 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     const handleSelectionChange = async (event) => {
         setGraphType(event.target.value);
         await fetch('http://localhost:1111/api/updateDashboard', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ graphType: event.target.value, metric: metricName })
+            body: JSON.stringify({ graphType: event.target.value, metric: metricName, token: token }),
         })
 
     }
