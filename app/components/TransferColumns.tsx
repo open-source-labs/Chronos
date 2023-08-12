@@ -141,6 +141,7 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
+    console.log('temp', temp)
     setSelectedMetrics(temp);
   };
 
@@ -167,7 +168,7 @@ const TransferColumns = React.memo(() => {
     const row = {
       id: index,
       tag: el.tag,
-      title: el.title.split(' | ')[1].replace('kubernetes-cadvisor/docker-desktop/', ''),
+      title: el.title.split(' | ')[1].replace(/.*\/.*\//g, ''),
     }; // gets rid of the full path
     rows.push(row);
   });
