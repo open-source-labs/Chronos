@@ -160,6 +160,7 @@ const GraphsContainer: React.FC = React.memo(props => {
         >
           Metrics Query
         </button>
+        <button onClick={() => fetch('http://localhost:1111/random')}>test</button>
         {HealthAndEventButtons}
         {dockerData.containername && (
           <button
@@ -222,7 +223,10 @@ const GraphsContainer: React.FC = React.memo(props => {
               />
             )}
             {chart.startsWith('event_') && (
-              <EventContainer colourGenerator={stringToColour} sizing="solo" />
+              <>
+                <EventContainer colourGenerator={stringToColour} sizing="solo" />
+              </>
+
             )}
             {chart === 'docker' && <DockerChart />}
             {chart === 'modifyMetrics' && <ModifyMetrics />}

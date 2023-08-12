@@ -4,6 +4,9 @@ import { EventContext } from '../context/EventContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
+import GrafanaEventChart from '../charts/GrafanaEventChart';
+import { get } from 'http';
+import axios from 'axios';
 
 interface EventContainerProps {
   sizing: string;
@@ -16,7 +19,9 @@ interface Params {
 interface MetricObject {
   [key: string]: {
     value: string[],
-    time: string[]
+    time: string[],
+    id: string,
+    token: string
   }
 }
 
@@ -54,18 +59,20 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   It would be wonderful if a future iteration could manipulate the prometheus configuration in the kubernetes example to send its data
   to an instance of Grafana, and integrate Grafana's dashboard into Chronos to visualize the data.
   */
-  
+
   const filterSelectedEventMetricsandData = (eventDataObj: EventDataObject): EventDataObject => {
     const filteredEventData = {};
     // there's only one element in the selected metrics array for now...
     // selectedMetrics is... [{Event: ['metric', 'names', 'as', 'strings']}]
     // use this array of selected metrics to filter the eventData down to only the metrics we want to see
     const selectedArr = selectedMetrics[0].Event;
+    console.log('selectedArr IS: ', selectedArr)
     // only one service... 'Event'
     for (const service in eventDataObj) {
       filteredEventData[service] = {};
       // define the object of all the metrics
       const serviceMetricsObject = eventDataObj[service];
+      console.log('serviceMetricsObject IS: ', serviceMetricsObject)
       // iterate through all the metrics
       for (const metricName in serviceMetricsObject) {
         // if the metric name matches a string in the selectedArr, we add it to our filtered object
@@ -74,39 +81,340 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         }
       };
     };
+    console.log('filteredEventData IS: ', filteredEventData)
     return filteredEventData;
   };
+
+  // helper function for geting only the names of the metrics
+  const getIndex = (str: string, substr: string, ind: number): number => {
+    let Len = str.length,
+      i = -1;
+    while (ind-- && i++ < Len) {
+      i = str.indexOf(substr, i);
+      if (i < 0) break;
+    }
+    return i;
+  }
 
   // iterate over the filtered event data to build an array of charts, then set the event charts array state
   const generateEventCharts = (filteredEventDataObj: EventDataObject): void => {
     const chartsArray: JSX.Element[] = [];
+    const grafanaChartsArray: JSX.Element[] = [];
+    let parsedName: string = '';
     const keymaker = () => {
       return Math.floor(Math.random() * 1000);
     };
     for (const service in filteredEventDataObj) {
       const metricObject = filteredEventDataObj[service];
       for (const metricName in metricObject) {
+        console.log('metricName IS: ', metricName)
+        //parsedName = metricName.replace(/.*\/.*\//g, '')
         const chartData = metricObject[metricName];
-        chartsArray.push(
-          <EventChart
-            key={'E' + keymaker()}
-            metricName={metricName}
-            chartData={chartData}
-            sizing={sizing}
-            colourGenerator={colourGenerator}
-          />
-        );
+        console.log('chartData IS: ', chartData)
+        const token = chartData.token;
+        console.log('token IS: ', token);
+        // plotting using plotly
+        // chartsArray.push(
+        //   <EventChart
+        //     key={'E' + keymaker()}
+        //     metricName={metricName}
+        //     chartData={chartData}
+        //     sizing={sizing}
+        //     colourGenerator={colourGenerator}
+        //   />
+        // );
+        // plotting using grafana
+        console.log("I'm here")
+        grafanaChartsArray.push(
+          <GrafanaEventChart metricName={metricName} token={token} />);
       }
     }
-    setEventChartsArr(chartsArray);
-    setCurrChunk(chartsArray.slice(currIndex, currIndex + chunkSize));
+    console.log(grafanaChartsArray)
+    setEventChartsArr(grafanaChartsArray);
+    setCurrChunk(grafanaChartsArray.slice(currIndex, currIndex + chunkSize));
     setCurrIndex(currIndex + chunkSize);
   };
+
+  // function createGrafanaPanelObject(
+  //   metric,
+  //   datasource
+  // ) {
+  //   // Create a panel object to be used within dashboards.
+  //   const panel = {
+  //     "datasource": datasource,
+  //     "fieldConfig": {
+  //       "defaults": {
+  //         "color": {
+  //           "mode": "palette-classic"
+  //         },
+  //         "custom": {
+  //           "axisCenteredZero": false,
+  //           "axisColorMode": "text",
+  //           "axisLabel": "",
+  //           "axisPlacement": "auto",
+  //           "barAlignment": 0,
+  //           "drawStyle": "line",
+  //           "fillOpacity": 0,
+  //           "gradientMode": "none",
+  //           "hideFrom": {
+  //             "legend": false,
+  //             "tooltip": false,
+  //             "viz": false
+  //           },
+  //           "lineInterpolation": "linear",
+  //           "lineWidth": 1,
+  //           "pointSize": 5,
+  //           "scaleDistribution": {
+  //             "type": "linear"
+  //           },
+  //           "showPoints": "auto",
+  //           "spanNulls": false,
+  //           "stacking": {
+  //             "group": "A",
+  //             "mode": "none"
+  //           },
+  //           "thresholdsStyle": {
+  //             "mode": "off"
+  //           }
+  //         },
+  //         "mappings": [],
+  //         "thresholds": {
+  //           "mode": "absolute",
+  //           "steps": [
+  //             {
+  //               "color": "green",
+  //               "value": null
+  //             },
+  //             {
+  //               "color": "red",
+  //               "value": 80
+  //             }
+  //           ]
+  //         },
+  //         "min": 0
+  //       },
+  //       "overrides": []
+  //     },
+  //     "gridPos": {
+  //       "h": 8,
+  //       "w": 12,
+  //       "x": 0,
+  //       "y": 0
+  //     },
+  //     "options": {
+  //       "legend": {
+  //         "calcs": [],
+  //         "displayMode": "list",
+  //         "placement": "bottom",
+  //         "showLegend": true
+  //       },
+  //       "tooltip": {
+  //         "mode": "single",
+  //         "sort": "none"
+  //       }
+  //     },
+  //     "id": 1,
+  //     "targets": [{
+  //       "datasource": datasource,
+  //       "editorMode": "builder",
+  //       "expr": metric,
+  //       "instant": false,
+  //       "range": true,
+  //       "refId": "A"
+  //     }],
+  //     "title": metric,
+  //     "type": "timeseries",
+  //     "interval": "2s"
+  //   }
+  //   return panel;
+  // }
+
+  // const createGrafanaDashboard = async (
+  //   metric,
+  //   datasource,
+  // ) => {
+  //   // create dashboard object boilerplate
+  //   const dashboard = {
+  //     "dashboard": {
+  //       "id": null,
+  //       "uid": metric,
+  //       "title": metric,
+  //       "tags": ["templated"],
+  //       "timezone": "browser",
+  //       "schemaVersion": 16,
+  //       "version": 0,
+  //       "refresh": "10s",
+  //       panels: [{
+  //         "datasource": datasource,
+  //         "fieldConfig": {
+  //           "defaults": {
+  //             "color": {
+  //               "mode": "palette-classic"
+  //             },
+  //             "custom": {
+  //               "axisCenteredZero": false,
+  //               "axisColorMode": "text",
+  //               "axisLabel": "",
+  //               "axisPlacement": "auto",
+  //               "barAlignment": 0,
+  //               "drawStyle": "line",
+  //               "fillOpacity": 0,
+  //               "gradientMode": "none",
+  //               "hideFrom": {
+  //                 "legend": false,
+  //                 "tooltip": false,
+  //                 "viz": false
+  //               },
+  //               "lineInterpolation": "linear",
+  //               "lineWidth": 1,
+  //               "pointSize": 5,
+  //               "scaleDistribution": {
+  //                 "type": "linear"
+  //               },
+  //               "showPoints": "auto",
+  //               "spanNulls": false,
+  //               "stacking": {
+  //                 "group": "A",
+  //                 "mode": "none"
+  //               },
+  //               "thresholdsStyle": {
+  //                 "mode": "off"
+  //               }
+  //             },
+  //             "mappings": [],
+  //             "thresholds": {
+  //               "mode": "absolute",
+  //               "steps": [
+  //                 {
+  //                   "color": "green",
+  //                   "value": null
+  //                 },
+  //                 {
+  //                   "color": "red",
+  //                   "value": 80
+  //                 }
+  //               ]
+  //             },
+  //             "min": 0
+  //           },
+  //           "overrides": []
+  //         },
+  //         "gridPos": {
+  //           "h": 8,
+  //           "w": 12,
+  //           "x": 0,
+  //           "y": 0
+  //         },
+  //         "options": {
+  //           "legend": {
+  //             "calcs": [],
+  //             "displayMode": "list",
+  //             "placement": "bottom",
+  //             "showLegend": true
+  //           },
+  //           "tooltip": {
+  //             "mode": "single",
+  //             "sort": "none"
+  //           }
+  //         },
+  //         "id": 1,
+  //         "targets": [{
+  //           "datasource": datasource,
+  //           "editorMode": "builder",
+  //           "expr": metric,
+  //           "instant": false,
+  //           "range": true,
+  //           "refId": "A"
+  //         }],
+  //         "title": metric,
+  //         "type": "timeseries",
+  //         "interval": "2s"
+  //       }],
+  //     },
+  //     folderId: 0,
+  //     overwrite: true,
+  //   };
+
+
+  //   // push panel into dashboard object with a line for each metric in promQLQueries object
+  //   //dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource));
+
+  //   try {
+  //     // POST request to Grafana Dashboard API to create a dashboard
+  //     const dashboardResponse = await axios.post(
+  //       'http://localhost:32000/api/dashboards/db',
+  //       JSON.stringify(dashboard),
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+  //         },
+  //       }
+  //     );
+
+  //     // Descriptive error log for developers
+  //     if (dashboardResponse.status >= 400) {
+  //       console.log(
+  //         'Error with POST request to Grafana Dashboards API. In createGrafanaDashboardObject.'
+  //       );
+  //     } else {
+  //       // A simple console log to show when graphs are done being posted to Grafana.
+  //       console.log(`📊 Grafana graphs 📊 for the ${metric} container are ready!!`);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  // const getGrafanaDatasource = async () => {
+  //   // Fetch datasource information from grafana API.
+  //   // This datasource is PRECONFIGURED on launch using grafana config.
+  //   const datasourceResponse = await axios.get('http://localhost:32000/api/datasources', {
+  //     //mode: 'no-cors',
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "*",
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
+  //     },
+  //   });
+
+  //   // Create a datasource object to be used within panels.
+  //   const datasource = {
+  //     type: datasourceResponse[0].type,
+  //     uid: datasourceResponse[0].uid,
+  //   };
+
+  //   return datasource;
+  // }
+
+  // // const createDashboards = async (filteredEventData) => {
+  // //   for (let key in filteredEventData.Event) {
+  // //     try {
+  // //       let datasource = await getGrafanaDatasource();
+  // //       await createGrafanaDashboard(key.replace(/.*\/.*\//g, ''), datasource);
+  // //     } catch (err) {
+  // //       console.error(err);
+  // //     }
+  // //   }
+  // // }
 
   // invoke the filter and generate functions to render charts
   useEffect(() => {
     const filteredEventData = filterSelectedEventMetricsandData(eventData);
+    // const createDashboards = async (filteredEventData) => {
+    //   for (let key in filteredEventData.Event) {
+    //     try {
+    //       let datasource = await getGrafanaDatasource();
+    //       console.log("dssd")
+    //       await createGrafanaDashboard(key.replace(/.*\/.*\//g, ''), datasource);
+    //     } catch (err) {
+    //       console.error(err);
+    //     }
+    //   }
+    // }
+    // createDashboards(filteredEventData)
     generateEventCharts(filteredEventData);
+
   }, [eventData, service]);
 
   return (
@@ -114,7 +422,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
-          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize }>
+          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize}>
             Prev
           </Button>
           <Button id="nextCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= eventChartsArr.length}>
@@ -127,3 +435,4 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
 });
 
 export default EventContainer;
+

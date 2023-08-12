@@ -50,14 +50,14 @@ const EventChart: React.FC<EventChartProps> = React.memo(props => {
 
   // removes underscores from metric names to improve their look in the graph
   const prettyMetricName = (metricName: string): string => {
-    const newName = metricName.replace(/kubernetes-cadvisor\/docker-desktop\//g, '');    
+    const newName = metricName.replace(/.*\/.*\//g, '');
     return newName.replace(/_/g, ' ');
   };
 
   const createChart = () => {
     const prettyName = prettyMetricName(metricName);
     const prettyTime = prettyTimeInReverse(chartData.time);
-  
+
     const plotlyDataObject: PlotlyData = {
       name: prettyName,
       x: prettyTime,
