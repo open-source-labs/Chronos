@@ -39,8 +39,10 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     console.log("uid: ", uid)
     console.log("parsedName: ", parsedName)
 
+
+
     const handleSelectionChange = async (event) => {
-        setGraphType(event.target.value);
+        //setGraphType(event.target.value);
         await fetch('http://localhost:1111/api/updateDashboard', {
             method: 'POST',
             headers: {
@@ -48,22 +50,32 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
             },
             body: JSON.stringify({ graphType: event.target.value, metric: metricName, token: token }),
         })
-
+        console.log("event.target.value: ", event.target.value)
+        setGraphType(event.target.value);
     }
+
 
     return (
         <div className="chart" data-testid="Grafana Event Chart">
             <h2>{parsedName}</h2>
             {/* create chart using grafana iframe tag*/}
-            <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
-            <select name="graphType" id="graphType" value={graphType} onChange={handleSelectionChange}>
-                <option value="timeseries">Time Series</option>
-                <option value="barchart">Bar Chart</option>
-                <option value="stat">Stat</option>
-                <option value="gauge">Gauge</option>
-                <option value="table">Table</option>
-                <option value="histogram">Histogram</option>
-            </select>
+            {graphType !== "timeseries" ? <>  <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&panelId=1`} width="650" height="400" ></iframe>
+                <select name="graphType" id="graphType" onChange={handleSelectionChange}>
+                    <option value="timeseries">Time Series</option>
+                    <option value="barchart">Bar Chart</option>
+                    <option value="stat">Stat</option>
+                    <option value="gauge">Gauge</option>
+                    <option value="table">Table</option>
+                    <option value="histogram">Histogram</option>
+                </select></> : <><iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&panelId=1`} width="650" height="400" ></iframe>
+                <select name="graphType" id="graphType" onChange={handleSelectionChange}>
+                    <option value="timeseries">Time Series</option>
+                    <option value="barchart">Bar Chart</option>
+                    <option value="stat">Stat</option>
+                    <option value="gauge">Gauge</option>
+                    <option value="table">Table</option>
+                    <option value="histogram">Histogram</option>
+                </select> </>}
         </div>
     );
 });
