@@ -409,7 +409,7 @@ const helpers = {
   updateGrafanaDashboard: async (graphType, token, metric, datasource) => {
     let uid = metric.replace(/.*\/.*\//g, '')
     if (metric.replace(/.*\/.*\//g, '').length >= 40) {
-      uid = metric.slice(metric.metric.length - 39);
+      uid = metric.slice(metric.length - 39);
     }
     //console.log("uid is: ", uid)
     //console.log("metric is: ", metric)
@@ -437,7 +437,7 @@ const helpers = {
     try {
       // POST request to Grafana Dashboard API to create a dashboard
       const dashboardResponse = await axios.post(
-        'http://grafana:3000/api/dashboards/db',
+        'http://localhost:32000/api/dashboards/db',
         JSON.stringify(dashboard),
         {
           headers: {
@@ -455,7 +455,7 @@ const helpers = {
         );
       } else {
         // A simple console log to show when graphs are done being posted to Grafana.
-        console.log(`📊 Grafana graphs 📊 for the ${metric.metric.replace(/.*\/.*\//g, '')} has been updated!!!`);
+        console.log(`📊 Grafana graphs 📊 for the ${metric.replace(/.*\/.*\//g, '')} has been updated!!!`);
       }
     } catch (err) {
       console.log(err);
