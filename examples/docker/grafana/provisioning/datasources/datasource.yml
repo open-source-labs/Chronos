@@ -4,4 +4,4 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus-service.default.svc:9090
+    url: http://host.docker.internal:9090
