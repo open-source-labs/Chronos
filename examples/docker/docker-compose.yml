@@ -85,6 +85,7 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     privileged: true
+    platform: linux/amd64
     ports:
       - 8080:8080
     volumes:
@@ -119,7 +120,7 @@ services:
       - 2999:3000
     volumes:
       # Share the named volume with the grafana container
-      - grafana-dir:/etc/grafana
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
     environment:
       GF_PATHS_CONFIG: /etc/grafana/grafana.ini
       GF_SECURITY_ALLOW_EMBEDDING: 'true'
