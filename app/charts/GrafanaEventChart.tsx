@@ -20,8 +20,11 @@ interface EventChartProps {
  */
 const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     const { metricName, token } = props;
-    const [graphType, setGraphType] = useState<string>("timeseries");
+    const [graphType, setGraphType] = useState("timeseries");
+    const [type, setType] = useState(['timeserie']);
     // const [solo, setSolo] = useState<SoloStyles | null>(null);
+    console.log("graphType: ", graphType)
+    console.log("type: ", type)
     console.log("inside GrafanaEventChart")
 
     // setInterval(() => {
@@ -39,8 +42,13 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     console.log("uid: ", uid)
     console.log("parsedName: ", parsedName)
 
+    let currentType;
+
+
+
     const handleSelectionChange = async (event) => {
-        setGraphType(event.target.value);
+        //setGraphType(event.target.value);
+        setType([...type, graphType]);
         await fetch('http://localhost:1111/api/updateDashboard', {
             method: 'POST',
             headers: {
@@ -48,24 +56,61 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
             },
             body: JSON.stringify({ graphType: event.target.value, metric: metricName, token: token }),
         })
-
+        console.log("event.target.value: ", event.target.value)
+        setGraphType(event.target.value);
     }
+
 
     return (
         <div className="chart" data-testid="Grafana Event Chart">
-            <h2>{parsedName}</h2>
+            <h2>{`${parsedName} - ${graphType}`}</h2>
+            <div>
+                <select name="graphType" id="graphType" onChange={handleSelectionChange}>
+                    <option value="timeseries">Time Series</option>
+                    <option value="barchart">Bar Chart</option>
+                    <option value="stat">Stat</option>
+                    <option value="gauge">Gauge</option>
+                    <option value="table">Table</option>
+                    <option value="histogram">Histogram</option>
+                </select>
+            </div>
             {/* create chart using grafana iframe tag*/}
-            <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
-            <select name="graphType" id="graphType" value={graphType} onChange={handleSelectionChange}>
-                <option value="timeseries">Time Series</option>
-                <option value="barchart">Bar Chart</option>
-                <option value="stat">Stat</option>
-                <option value="gauge">Gauge</option>
-                <option value="table">Table</option>
-                <option value="histogram">Histogram</option>
-            </select>
+            {/* {type[type.length - 1] !== graphType ?
+                <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>
+                : <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1`} width="650" height="400" ></iframe>} */}
+            {graphType === "timeseries" ? TimeSeries(uid, parsedName, graphType) :
+                graphType === "barchart" ? BarChart(uid, parsedName, graphType) :
+                    graphType === "stat" ? Stat(uid, parsedName, graphType) :
+                        graphType === "gauge" ? Gauge(uid, parsedName, graphType) :
+                            graphType === "table" ? Table(uid, parsedName, graphType) :
+                                graphType === "histogram" ? Histogram(uid, parsedName, graphType) :
+                                    null}
+
         </div>
     );
 });
 
+const TimeSeries = (uid, parsedName, graphType) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1&${graphType}`} width="650" height="400" ></iframe>
+}
+
+const BarChart = (uid, parsedName, graphType) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1${graphType}`} width="650" height="400" ></iframe>
+}
+
+const Stat = (uid, parsedName, graphType) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1${graphType}`} width="650" height="400" ></iframe>
+}
+
+const Gauge = (uid, parsedName, graphType) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1${graphType}`} width="650" height="400" ></iframe>
+}
+
+const Table = (uid, parsedName, graphType) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1${graphType}`} width="650" height="400" ></iframe>
+}
+
+const Histogram = (uid, parsedName, graphType) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-5m&to=now&panelId=1${graphType}`} width="650" height="400" ></iframe>
+}
 export default GrafanaEventChart;
