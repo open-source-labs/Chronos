@@ -57,6 +57,9 @@ docker-compose -f docker-compose.yml up
 ```
 
 4. If you run into any issues regarding 'linux/amd64,linux/arm/v7,linux/arm64/v8' for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary. Change "platform" to linux/arm64/v8 for M1 Chips and linux/amd64 for Intel Chips.
+
+If you run into any issues regarding versions/images cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary. Change "image" to `image: gcr.io/cadvisor/cadvisor:latest` to `image: gcr.io/cadvisor/cadvisor:v0.47.0`
+
 ###
 
 You should now see the containers running in your terminal, each reporting `"Docker data recorded in..."`.
