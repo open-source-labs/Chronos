@@ -85,7 +85,7 @@ services:
     image: gcr.io/cadvisor/cadvisor:v0.47.0
     container_name: cadvisor
     privileged: true
-    platform: linux/arm64
+    platform: linux/arm64/v8
     ports:
       - 8080:8080
     volumes:
