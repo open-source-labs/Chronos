@@ -97,6 +97,16 @@ kubectl delete -f frontend.yml
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `stopKuber.sh` script
 
+**note**: The above part only teardown Prometheus and Kubernetes, it leaves Grafana running. This is because if you teardown Grafana, the next time you redeploy you will be login with a new account, the access token and dashboard you created within this account will lose.
+
+To teardown grafana, run the following commands:
+```
+kubectl delete -f ../launch/grafana-datasource-config.yml
+kubectl delete -f ../launch/grafanaService.yml
+kubectl delete -f ../launch/grafana.yml
+```
+
+
 ## Contributing
 
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
