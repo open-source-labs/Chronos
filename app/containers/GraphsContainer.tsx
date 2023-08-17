@@ -160,7 +160,6 @@ const GraphsContainer: React.FC = React.memo(props => {
         >
           Metrics Query
         </button>
-        <button onClick={() => fetch('http://localhost:1111/random')}>test</button>
         {HealthAndEventButtons}
         {dockerData.containername && (
           <button
