@@ -24,8 +24,8 @@ app.post('/api/updateDashboard', async (req, res) => {
     const { graphType, metric, token } = req.body;
     console.log(graphType, metric, token);
     console.log('updateDashboard endpoint hit');
-    const datasource = await utilities.updateGrafanaDatasource();
-    //await utilities.updateGrafanaDashboard(graphType, token, metric, datasource);
+    const datasource = await utilities.updateGrafanaDatasource(token);
+    await utilities.updateGrafanaDashboard(graphType, token, metric, datasource);
     console.log('Dashboard Updated');
     return res.status(200).send('Dashboard Updated');
 });
