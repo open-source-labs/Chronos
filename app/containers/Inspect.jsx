@@ -13,8 +13,10 @@ const Inspect = () => {
             .onChange(orientation => graph && graph.dagMode(orientation));
 
         // graph config
-        const NODE_REL_SIZE = 3;
+        const NODE_REL_SIZE = 5;
         const graph = ForceGraph3D()
+            .width(1000)
+            .height(500)
             .dagMode('td')
             .dagLevelDistance(50)
             .backgroundColor('#101020')
@@ -26,8 +28,9 @@ const Inspect = () => {
             .nodeAutoColorBy('module')
             .nodeOpacity(0.9)
             .linkDirectionalParticles(2)
-            .linkDirectionalParticleWidth(0.8)
+            .linkDirectionalParticleWidth(1)
             .linkDirectionalParticleSpeed(0.006)
+            .linkWidth(5)
             .d3Force('collision', d3.forceCollide(node => Math.cbrt(node.size) * NODE_REL_SIZE))
             .d3VelocityDecay(0.3);
 
@@ -63,9 +66,14 @@ const Inspect = () => {
                     }
                 });
 
-                const elem = document.getElementById('graph');
-                const Graph = ForceGraph3D()
-                    (elem)
+
+                graph(document.getElementById('graph'))
+                    .graphData({ nodes, links })
+                    .onNodeDragEnd(node => {
+                        node.fx = node.x;
+                        node.fy = node.y;
+                        node.fz = node.z;
+                    })
                     .onNodeClick(node => {
                         // Aim at node from outside it
                         const distance = 40;
@@ -75,21 +83,12 @@ const Inspect = () => {
                             ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
                             : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
 
-                        Graph.cameraPosition(
+                        graph.cameraPosition(
                             newPos, // new position
                             node, // lookAt ({ x, y, z })
                             3000  // ms transition duration
                         );
                     });
-
-
-                graph(document.getElementById('graph'))
-                    .graphData({ nodes, links })
-                    .onNodeDragEnd(node => {
-                        node.fx = node.x;
-                        node.fy = node.y;
-                        node.fz = node.z;
-                    })
 
 
             });
