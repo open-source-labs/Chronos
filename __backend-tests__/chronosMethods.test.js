@@ -24,6 +24,7 @@ jest.mock('../chronos_npm_package/controllers/mongo.js', () => ({
   health: jest.fn(config => config),
   communications: jest.fn(config => config),
   serverQuery: jest.fn(config => config),
+  storeGrafanaAPIKey: jest.fn(config => config),
 }));
 
 jest.mock('../chronos_npm_package/controllers/postgres.js', () => ({
@@ -144,7 +145,7 @@ describe('Chronos Config', () => {
     });
   });
   describe('kafka', () => {
-    test('should check if kafka is functional', async () => {
+    test('should check if kafka with MongoDB functional', async () => {
       const config = {
         microservice: 'test',
         interval: 300,
@@ -166,6 +167,25 @@ describe('Chronos Config', () => {
         expect(mongo.connect).toHaveBeenCalledWith(config);
         expect(mongo.serverQuery).toHaveBeenCalledWith(config);
       }
+    });
+    test('should check if kafka with PostgreSQL is functional', async () => {
+      const config = {
+        microservice: 'test',
+        interval: 300,
+        mode: 'micro',
+        dockerized: true,
+        database: {
+          connection: 'REST',
+          type: 'PostgreSQL',
+          URI: process.env.CHRONOS_URI,
+        },
+        notifications: [],
+      };
+      const { database, dockerized } = config;
+      const falseDock = { dockerized: false };
+      const chronos = new Chronos(config);
+      chronos.kafka();
+      await helpers.testMetricsQuery(config);
       if (database.type === 'PostgreSQL') {
         expect(postgres.connect).toHaveBeenCalledWith(config);
         expect(postgres.serverQuery).toHaveBeenCalledWith(config);
@@ -174,11 +194,11 @@ describe('Chronos Config', () => {
   });
 
   describe('kubernetes', () => {
-    test('should check if kubernetes is functional', async () => {
+    test('should check if kubernetes with mongodb is functional', async () => {
       const config = {
         microservice: 'test',
         interval: 300,
-        mode: 'micro',
+        mode: 'kubernetes',
         dockerized: true,
         database: {
           connection: 'REST',
@@ -193,9 +213,33 @@ describe('Chronos Config', () => {
       chronos.kubernetes();
       await helpers.testMetricsQuery(config);
       if (database.type === 'MongoDB') {
-        expect(mongo.connect).toHaveBeenCalledWith(config);
+        await expect(mongo.connect).toHaveBeenCalledWith(config);
+        await expect(mongo.storeGrafanaAPIKey).toHaveBeenCalledWith(config);
         expect(mongo.serverQuery).toHaveBeenCalledWith(config);
       }
+      if (database.type === 'PostgreSQL') {
+        expect(postgres.connect).toHaveBeenCalledWith(config2);
+        expect(postgres.serverQuery).toHaveBeenCalledWith(config2);
+      }
+    });
+    test('should check if kubernetes with PostGres is functional', async () => {
+      const config = {
+        microservice: 'test',
+        interval: 300,
+        mode: 'kubernetes',
+        dockerized: true,
+        database: {
+          connection: 'REST',
+          type: 'PostgreSQL',
+          URI: process.env.CHRONOS_URI,
+        },
+        notifications: [],
+      };
+      const { database, dockerized } = config;
+      const falseDock = { dockerized: false };
+      const chronos = new Chronos(config);
+      chronos.kubernetes();
+      await helpers.testMetricsQuery(config);
       if (database.type === 'PostgreSQL') {
         expect(postgres.connect).toHaveBeenCalledWith(config);
         expect(postgres.serverQuery).toHaveBeenCalledWith(config);
