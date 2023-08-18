@@ -5,6 +5,11 @@ import dat from 'dat.gui'; // Import dat.gui library here
 import '../stylesheets/Inspect.scss';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
+
+
+// currently, Insepect only works statically, but it should be possible to make it dynamic. To do so, we need to make get kubernetes resources information from the backend, and then pass it to the graph.
+// It will be great if future iteration group can make it dynamic.
+
 const Inspect = () => {
     useEffect(() => {
         // controls
@@ -14,7 +19,7 @@ const Inspect = () => {
             .onChange(orientation => graph && graph.dagMode(orientation));
 
         // graph config
-        const NODE_REL_SIZE = 8;
+        const NODE_REL_SIZE = 7;
         const graph = ForceGraph3D({
             extraRenderers: [new CSS2DRenderer()]
         })
