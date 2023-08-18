@@ -3,6 +3,7 @@ import * as d3 from 'd3'; // Import D3 libraries here
 import ForceGraph3D from '3d-force-graph'; // Import 3d-force-graph library here
 import dat from 'dat.gui'; // Import dat.gui library here
 import '../stylesheets/Inspect.scss';
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
 const Inspect = () => {
     useEffect(() => {
@@ -13,12 +14,14 @@ const Inspect = () => {
             .onChange(orientation => graph && graph.dagMode(orientation));
 
         // graph config
-        const NODE_REL_SIZE = 5;
-        const graph = ForceGraph3D()
+        const NODE_REL_SIZE = 8;
+        const graph = ForceGraph3D({
+            extraRenderers: [new CSS2DRenderer()]
+        })
             .width(1000)
             .height(500)
             .dagMode('td')
-            .dagLevelDistance(50)
+            .dagLevelDistance(100)
             .backgroundColor('#101020')
             .linkColor(() => 'rgba(255,255,255,0.2)')
             .nodeRelSize(NODE_REL_SIZE)
@@ -27,6 +30,7 @@ const Inspect = () => {
             .nodeLabel('path')
             .nodeAutoColorBy('module')
             .nodeOpacity(0.9)
+            .nodeLabel('path')
             .linkDirectionalParticles(2)
             .linkDirectionalParticleWidth(1)
             .linkDirectionalParticleSpeed(0.006)
@@ -35,7 +39,8 @@ const Inspect = () => {
             .d3VelocityDecay(0.3);
 
         // Decrease repel intensity
-        graph.d3Force('charge').strength(-15);
+        graph.d3Force('charge').strength(-500);
+
 
 
         fetch('http://localhost:1111/api/data')
@@ -88,7 +93,15 @@ const Inspect = () => {
                             node, // lookAt ({ x, y, z })
                             3000  // ms transition duration
                         );
-                    });
+                    })
+                    .nodeThreeObject((node) => {
+                        const nodeEl = document.createElement('div');
+                        nodeEl.textContent = node.path;
+                        nodeEl.style.color = node.color;
+                        nodeEl.className = 'node-label';
+                        return new CSS2DObject(nodeEl);
+                    })
+                    .nodeThreeObjectExtend(true);
 
 
             });
