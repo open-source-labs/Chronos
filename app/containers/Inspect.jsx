@@ -13,10 +13,10 @@ const Inspect = () => {
             .onChange(orientation => graph && graph.dagMode(orientation));
 
         // graph config
-        const NODE_REL_SIZE = 1;
+        const NODE_REL_SIZE = 3;
         const graph = ForceGraph3D()
             .dagMode('td')
-            .dagLevelDistance(200)
+            .dagLevelDistance(50)
             .backgroundColor('#101020')
             .linkColor(() => 'rgba(255,255,255,0.2)')
             .nodeRelSize(NODE_REL_SIZE)
@@ -98,7 +98,12 @@ const Inspect = () => {
                 });
 
                 graph(document.getElementById('graph'))
-                    .graphData({ nodes, links });
+                    .graphData({ nodes, links })
+                    .onNodeDragEnd(node => {
+                        node.fx = node.x;
+                        node.fy = node.y;
+                        node.fz = node.z;
+                    });
             });
     }, []);
 
