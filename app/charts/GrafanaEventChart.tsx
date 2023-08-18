@@ -76,7 +76,9 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
                     <option value="histogram">Histogram</option>
                 </select>
 
-                <label htmlFor="graphType">     Time Frame: </label>
+                <label htmlFor="graphType" style={{
+                    marginLeft: '20px'
+                }}> Time Frame: </label>
                 <select name="graphType" id="graphType" onChange={(e) => setTimeFrame(e.target.value as TimeFrame)}>
                     <option value={'5m'}>5 minutes</option>
                     <option value={'15m'}>15 minutes</option>
