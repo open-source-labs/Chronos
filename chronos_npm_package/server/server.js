@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express()
 const port = 1111;
 const utilities = require('../controllers/utilities');
+const fs = require('fs');
 
 
 app.use(cors());
@@ -29,6 +30,19 @@ app.post('/api/updateDashboard', async (req, res) => {
     console.log('Dashboard Updated');
     return res.status(200).send('Dashboard Updated');
 });
+
+app.get('/api/data', async (req, res) => {
+    fs.readFile('./data.csv', 'utf8', (err, data) => {
+        if (err) {
+            console.log('error: ', err);
+            return res.status(500).send('Error');
+
+        }
+        console.log('data: ', data);
+        return res.status(200).send(data);
+    });
+});
+
 
 
 
