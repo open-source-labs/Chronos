@@ -5,8 +5,6 @@ import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
 import GrafanaEventChart from '../charts/GrafanaEventChart';
-import { get } from 'http';
-import axios from 'axios';
 
 interface EventContainerProps {
   sizing: string;
@@ -39,6 +37,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const [currIndex, setCurrIndex] = useState(0);
   const [currChunk, setCurrChunk] = useState<JSX.Element[]>([]);
   const chunkSize = 7;
+  let [isGrafana, setIsGrafana] = useState(false);
 
   // nextChunk and prevChunk handle button clicks to show a limited number of graphs per page to prevent crashing
   function nextChunk() {
@@ -114,6 +113,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         const token = chartData.token;
         console.log('token IS: ', token);
         // plotting using plotly
+        // if (!isGrafana) {
+        // console.log("plotting plotly")
         // chartsArray.push(
         //   <EventChart
         //     key={'E' + keymaker()}
@@ -123,302 +124,42 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         //     colourGenerator={colourGenerator}
         //   />
         // );
+        // } else {
+
         // plotting using grafana
-        console.log("I'm here")
+        console.log("plotting grafana")
         grafanaChartsArray.push(
           <GrafanaEventChart metricName={metricName} token={token} />);
+
+        // }
       }
     }
+    // if (isGrafana) {
     console.log(grafanaChartsArray)
     setEventChartsArr(grafanaChartsArray);
     setCurrChunk(grafanaChartsArray.slice(currIndex, currIndex + chunkSize));
     setCurrIndex(currIndex + chunkSize);
+    // }
+    // else {
+    //   console.log(chartsArray)
+    //   setEventChartsArr(chartsArray);
+    //   setCurrChunk(chartsArray.slice(currIndex, currIndex + chunkSize));
+    //   setCurrIndex(currIndex + chunkSize);
+    // }
   };
 
-  // function createGrafanaPanelObject(
-  //   metric,
-  //   datasource
-  // ) {
-  //   // Create a panel object to be used within dashboards.
-  //   const panel = {
-  //     "datasource": datasource,
-  //     "fieldConfig": {
-  //       "defaults": {
-  //         "color": {
-  //           "mode": "palette-classic"
-  //         },
-  //         "custom": {
-  //           "axisCenteredZero": false,
-  //           "axisColorMode": "text",
-  //           "axisLabel": "",
-  //           "axisPlacement": "auto",
-  //           "barAlignment": 0,
-  //           "drawStyle": "line",
-  //           "fillOpacity": 0,
-  //           "gradientMode": "none",
-  //           "hideFrom": {
-  //             "legend": false,
-  //             "tooltip": false,
-  //             "viz": false
-  //           },
-  //           "lineInterpolation": "linear",
-  //           "lineWidth": 1,
-  //           "pointSize": 5,
-  //           "scaleDistribution": {
-  //             "type": "linear"
-  //           },
-  //           "showPoints": "auto",
-  //           "spanNulls": false,
-  //           "stacking": {
-  //             "group": "A",
-  //             "mode": "none"
-  //           },
-  //           "thresholdsStyle": {
-  //             "mode": "off"
-  //           }
-  //         },
-  //         "mappings": [],
-  //         "thresholds": {
-  //           "mode": "absolute",
-  //           "steps": [
-  //             {
-  //               "color": "green",
-  //               "value": null
-  //             },
-  //             {
-  //               "color": "red",
-  //               "value": 80
-  //             }
-  //           ]
-  //         },
-  //         "min": 0
-  //       },
-  //       "overrides": []
-  //     },
-  //     "gridPos": {
-  //       "h": 8,
-  //       "w": 12,
-  //       "x": 0,
-  //       "y": 0
-  //     },
-  //     "options": {
-  //       "legend": {
-  //         "calcs": [],
-  //         "displayMode": "list",
-  //         "placement": "bottom",
-  //         "showLegend": true
-  //       },
-  //       "tooltip": {
-  //         "mode": "single",
-  //         "sort": "none"
-  //       }
-  //     },
-  //     "id": 1,
-  //     "targets": [{
-  //       "datasource": datasource,
-  //       "editorMode": "builder",
-  //       "expr": metric,
-  //       "instant": false,
-  //       "range": true,
-  //       "refId": "A"
-  //     }],
-  //     "title": metric,
-  //     "type": "timeseries",
-  //     "interval": "2s"
-  //   }
-  //   return panel;
-  // }
-
-  // const createGrafanaDashboard = async (
-  //   metric,
-  //   datasource,
-  // ) => {
-  //   // create dashboard object boilerplate
-  //   const dashboard = {
-  //     "dashboard": {
-  //       "id": null,
-  //       "uid": metric,
-  //       "title": metric,
-  //       "tags": ["templated"],
-  //       "timezone": "browser",
-  //       "schemaVersion": 16,
-  //       "version": 0,
-  //       "refresh": "10s",
-  //       panels: [{
-  //         "datasource": datasource,
-  //         "fieldConfig": {
-  //           "defaults": {
-  //             "color": {
-  //               "mode": "palette-classic"
-  //             },
-  //             "custom": {
-  //               "axisCenteredZero": false,
-  //               "axisColorMode": "text",
-  //               "axisLabel": "",
-  //               "axisPlacement": "auto",
-  //               "barAlignment": 0,
-  //               "drawStyle": "line",
-  //               "fillOpacity": 0,
-  //               "gradientMode": "none",
-  //               "hideFrom": {
-  //                 "legend": false,
-  //                 "tooltip": false,
-  //                 "viz": false
-  //               },
-  //               "lineInterpolation": "linear",
-  //               "lineWidth": 1,
-  //               "pointSize": 5,
-  //               "scaleDistribution": {
-  //                 "type": "linear"
-  //               },
-  //               "showPoints": "auto",
-  //               "spanNulls": false,
-  //               "stacking": {
-  //                 "group": "A",
-  //                 "mode": "none"
-  //               },
-  //               "thresholdsStyle": {
-  //                 "mode": "off"
-  //               }
-  //             },
-  //             "mappings": [],
-  //             "thresholds": {
-  //               "mode": "absolute",
-  //               "steps": [
-  //                 {
-  //                   "color": "green",
-  //                   "value": null
-  //                 },
-  //                 {
-  //                   "color": "red",
-  //                   "value": 80
-  //                 }
-  //               ]
-  //             },
-  //             "min": 0
-  //           },
-  //           "overrides": []
-  //         },
-  //         "gridPos": {
-  //           "h": 8,
-  //           "w": 12,
-  //           "x": 0,
-  //           "y": 0
-  //         },
-  //         "options": {
-  //           "legend": {
-  //             "calcs": [],
-  //             "displayMode": "list",
-  //             "placement": "bottom",
-  //             "showLegend": true
-  //           },
-  //           "tooltip": {
-  //             "mode": "single",
-  //             "sort": "none"
-  //           }
-  //         },
-  //         "id": 1,
-  //         "targets": [{
-  //           "datasource": datasource,
-  //           "editorMode": "builder",
-  //           "expr": metric,
-  //           "instant": false,
-  //           "range": true,
-  //           "refId": "A"
-  //         }],
-  //         "title": metric,
-  //         "type": "timeseries",
-  //         "interval": "2s"
-  //       }],
-  //     },
-  //     folderId: 0,
-  //     overwrite: true,
-  //   };
-
-
-  //   // push panel into dashboard object with a line for each metric in promQLQueries object
-  //   //dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource));
-
-  //   try {
-  //     // POST request to Grafana Dashboard API to create a dashboard
-  //     const dashboardResponse = await axios.post(
-  //       'http://localhost:32000/api/dashboards/db',
-  //       JSON.stringify(dashboard),
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
-  //         },
-  //       }
-  //     );
-
-  //     // Descriptive error log for developers
-  //     if (dashboardResponse.status >= 400) {
-  //       console.log(
-  //         'Error with POST request to Grafana Dashboards API. In createGrafanaDashboardObject.'
-  //       );
-  //     } else {
-  //       // A simple console log to show when graphs are done being posted to Grafana.
-  //       console.log(`📊 Grafana graphs 📊 for the ${metric} container are ready!!`);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  // const getGrafanaDatasource = async () => {
-  //   // Fetch datasource information from grafana API.
-  //   // This datasource is PRECONFIGURED on launch using grafana config.
-  //   const datasourceResponse = await axios.get('http://localhost:32000/api/datasources', {
-  //     //mode: 'no-cors',
-  //     headers: {
-  //       "Access-Control-Allow-Origin": "*",
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer glsa_k6xRnpAs8yiOJBI1eQTqyuRbRhI4lHAi_16c38fd4'
-  //     },
-  //   });
-
-  //   // Create a datasource object to be used within panels.
-  //   const datasource = {
-  //     type: datasourceResponse[0].type,
-  //     uid: datasourceResponse[0].uid,
-  //   };
-
-  //   return datasource;
-  // }
-
-  // // const createDashboards = async (filteredEventData) => {
-  // //   for (let key in filteredEventData.Event) {
-  // //     try {
-  // //       let datasource = await getGrafanaDatasource();
-  // //       await createGrafanaDashboard(key.replace(/.*\/.*\//g, ''), datasource);
-  // //     } catch (err) {
-  // //       console.error(err);
-  // //     }
-  // //   }
-  // // }
 
   // invoke the filter and generate functions to render charts
   useEffect(() => {
     const filteredEventData = filterSelectedEventMetricsandData(eventData);
-    // const createDashboards = async (filteredEventData) => {
-    //   for (let key in filteredEventData.Event) {
-    //     try {
-    //       let datasource = await getGrafanaDatasource();
-    //       console.log("dssd")
-    //       await createGrafanaDashboard(key.replace(/.*\/.*\//g, ''), datasource);
-    //     } catch (err) {
-    //       console.error(err);
-    //     }
-    //   }
-    // }
-    // createDashboards(filteredEventData)
     generateEventCharts(filteredEventData);
 
   }, [eventData, service]);
 
   return (
+
     <div>
+      {/* <div id="grafana" onClick={() => { setIsGrafana(!isGrafana) }}>Grafana</div> */}
       {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
