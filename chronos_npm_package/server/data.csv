@@ -3,7 +3,8 @@ size,path
 ,default/service-backend
 ,default/service-backend/pod
 ,default/service-frontend
-,default/service-frontend/pod
+,default/service-frontend/pod1
+,default/service-frontend/pod2
 ,default/service-grafana
 ,default/service-grafana/pod
 ,default/service-kubernetes
