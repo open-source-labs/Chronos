@@ -74,6 +74,8 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
                     <option value="gauge">Gauge</option>
                     <option value="table">Table</option>
                     <option value="histogram">Histogram</option>
+                    <option value="piechart">Pie Chart</option>
+                    <option value="alertlist">Alert</option>
                 </select>
 
                 <label htmlFor="graphType" style={{
@@ -99,7 +101,9 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
                         graphType === "gauge" ? Gauge(uid, parsedName, graphType, timeFrame) :
                             graphType === "table" ? Table(uid, parsedName, graphType, timeFrame) :
                                 graphType === "histogram" ? Histogram(uid, parsedName, graphType, timeFrame) :
-                                    null}
+                                    graphType === "piechart" ? PieChart(uid, parsedName, graphType, timeFrame) :
+                                        graphType === "alertlist" ? AlertList(uid, parsedName, graphType, timeFrame) :
+                                            null}
 
         </div>
     );
@@ -129,6 +133,14 @@ const Table = (uid, parsedName, graphType, timeFrame) => {
 }
 
 const Histogram = (uid, parsedName, graphType, timeFrame) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+}
+
+const PieChart = (uid, parsedName, graphType, timeFrame) => {
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+}
+
+const AlertList = (uid, parsedName, graphType, timeFrame) => {
     return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 export default GrafanaEventChart;
