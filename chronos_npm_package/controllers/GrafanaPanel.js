@@ -18,15 +18,15 @@ function createGrafanaPanelObject(
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
+                    "fillOpacity": 40,
+                    "gradientMode": "opacity",
                     "hideFrom": {
                         "legend": false,
                         "tooltip": false,
                         "viz": false
                     },
-                    "lineInterpolation": "linear",
-                    "lineWidth": 1,
+                    "lineInterpolation": "smooth",
+                    "lineWidth": 2,
                     "pointSize": 5,
                     "scaleDistribution": {
                         "type": "linear"
@@ -75,7 +75,11 @@ function createGrafanaPanelObject(
             "tooltip": {
                 "mode": "single",
                 "sort": "none"
-            }
+            },
+            // "displayLabels": [
+            //     "percent"
+            // ]
+
         },
         "id": 1,
         "targets": [{
@@ -113,15 +117,15 @@ function updateGrafanaPanelObject(
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
+                    "fillOpacity": 40,
+                    "gradientMode": "opacity",
                     "hideFrom": {
                         "legend": false,
                         "tooltip": false,
                         "viz": false
                     },
-                    "lineInterpolation": "linear",
-                    "lineWidth": 1,
+                    "lineInterpolation": "smooth",
+                    "lineWidth": 2,
                     "pointSize": 5,
                     "scaleDistribution": {
                         "type": "linear"
@@ -170,7 +174,10 @@ function updateGrafanaPanelObject(
             "tooltip": {
                 "mode": "single",
                 "sort": "none"
-            }
+            },
+            "displayLabels": [
+                "percent"
+            ]
         },
         "id": 1,
         "targets": [{
