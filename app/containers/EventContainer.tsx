@@ -113,6 +113,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         const token = chartData.token;
         console.log('token IS: ', token);
         // plotting using plotly
+        // if (!isGrafana) {
+        // console.log("plotting plotly")
         // chartsArray.push(
         //   <EventChart
         //     key={'E' + keymaker()}
@@ -122,16 +124,28 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         //     colourGenerator={colourGenerator}
         //   />
         // );
+        // } else {
+
         // plotting using grafana
-        console.log("I'm here")
+        console.log("plotting grafana")
         grafanaChartsArray.push(
           <GrafanaEventChart metricName={metricName} token={token} />);
+
+        // }
       }
     }
+    // if (isGrafana) {
     console.log(grafanaChartsArray)
     setEventChartsArr(grafanaChartsArray);
     setCurrChunk(grafanaChartsArray.slice(currIndex, currIndex + chunkSize));
     setCurrIndex(currIndex + chunkSize);
+    // }
+    // else {
+    //   console.log(chartsArray)
+    //   setEventChartsArr(chartsArray);
+    //   setCurrChunk(chartsArray.slice(currIndex, currIndex + chunkSize));
+    //   setCurrIndex(currIndex + chunkSize);
+    // }
   };
 
 
@@ -145,7 +159,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   return (
 
     <div>
-      {/* <div id="gatherLiveData" onClick={() => { setIsGrafana(!isGrafana) }}>Gather Live Data</div> */}
+      {/* <div id="grafana" onClick={() => { setIsGrafana(!isGrafana) }}>Grafana</div> */}
       {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
