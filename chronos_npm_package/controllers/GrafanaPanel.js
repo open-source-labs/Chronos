@@ -25,7 +25,7 @@ function createGrafanaPanelObject(
                         "tooltip": false,
                         "viz": false
                     },
-                    "lineInterpolation": "linear",
+                    "lineInterpolation": "smooth",
                     "lineWidth": 1,
                     "pointSize": 5,
                     "scaleDistribution": {
