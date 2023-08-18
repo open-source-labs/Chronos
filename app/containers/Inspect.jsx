@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3'; // Import D3 libraries here
 import ForceGraph3D from '3d-force-graph'; // Import 3d-force-graph library here
 import dat from 'dat.gui'; // Import dat.gui library here
-// import fs from 'fs';
+import '../stylesheets/Inspect.scss';
 
 const Inspect = () => {
     useEffect(() => {
@@ -34,40 +34,6 @@ const Inspect = () => {
         // Decrease repel intensity
         graph.d3Force('charge').strength(-15);
 
-        // fs.readFile('./d3-dependencies.csv', 'utf8', function (err, data) {
-        //     if (err) {
-        //         return console.log(err);
-        //     } else {
-        //         console.log(data);
-        //         const nodes = [], links = [];
-        //         data.forEach(({ size, path }) => {
-        //             const levels = path.split('/'),
-        //                 level = levels.length - 1,
-        //                 module = level > 0 ? levels[1] : null,
-        //                 leaf = levels.pop(),
-        //                 parent = levels.join('/');
-
-        //             const node = {
-        //                 path,
-        //                 leaf,
-        //                 module,
-        //                 size: +size || 20,
-        //                 level
-        //             };
-
-        //             nodes.push(node);
-
-        //             if (parent) {
-        //                 links.push({ source: parent, target: path, targetNode: node });
-        //             }
-        //         });
-
-
-
-        //         graph(document.getElementById('graph'))
-        //             .graphData({ nodes, links });
-        //     }
-        // });
 
         fetch('http://localhost:1111/api/data')
             .then(r => r.text())
@@ -97,18 +63,44 @@ const Inspect = () => {
                     }
                 });
 
+                const elem = document.getElementById('graph');
+                const Graph = ForceGraph3D()
+                    (elem)
+                    .onNodeClick(node => {
+                        // Aim at node from outside it
+                        const distance = 40;
+                        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+                        const newPos = node.x || node.y || node.z
+                            ? { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+                            : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+                        Graph.cameraPosition(
+                            newPos, // new position
+                            node, // lookAt ({ x, y, z })
+                            3000  // ms transition duration
+                        );
+                    });
+
+
                 graph(document.getElementById('graph'))
                     .graphData({ nodes, links })
                     .onNodeDragEnd(node => {
                         node.fx = node.x;
                         node.fy = node.y;
                         node.fz = node.z;
-                    });
+                    })
+
+
             });
     }, []);
 
 
-    return <div id="graph" />;
+    return <div id="Infrastructure">
+        <h2>Infrastructure</h2>
+        <div id="graph" />;
+    </div>
+    // <div id="graph" />;
 };
 
 export default Inspect;
