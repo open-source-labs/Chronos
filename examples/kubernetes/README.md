@@ -19,6 +19,18 @@ This example has been developed and tested using the Kubernetes Engine packaged 
   <img alt="enabled kubernetes engine in docker" src="../../assets/examples_enable_kubernetes_engine.png">
 </p>
 
+## Setup Prometheus and Grafana
+1. `cd` into the *scripts* folder and run the setup script with `./setup.sh` - the process of configuring Prometheus and Grafana.
+
+2. In your browser, go to `localhost:32000`, which will be the login page of grafana. Use `admin` as both username and password to login. You can change the password after login.
+
+3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create an service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
+
+4. Add a `.env` file to the *server* folder that contains the following key/value pairs:
+
+```
+CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in step 3]
+```
 
 ## Build the Client
 1. `cd` into the *client* folder and run the following command:
@@ -29,7 +41,7 @@ docker build -t frontend:1.0 .
 
 
 ## Build the Server
-1. Add a `.env` file to the *server* folder that contains the following key/value pairs:
+1. In the `.env` file you just created, add the following key/value pairs as well:
 
 ```
 CHRONOS_DB = MongoDB or PostgreSQL
@@ -56,9 +68,6 @@ docker build -t backend:1.0 .
 ## Deploy the Cluster
 1. `cd` into the launch folder and run the following commands to start the services and deployments described in the YAML files:
 ```
-kubectl apply -f clusterRole.yml
-kubectl apply -f promConfig.yml
-kubectl apply -f prometheus.yml
 kubectl apply -f backend.yml
 kubectl apply -f frontend.yml
 ```
@@ -87,6 +96,16 @@ kubectl delete -f frontend.yml
 ```
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `stopKuber.sh` script
+
+**note**: The above part only teardown Prometheus and Kubernetes, it leaves Grafana running. This is because if you teardown Grafana, the next time you redeploy you will be login with a new account, the access token and dashboard you created within this account will lose.
+
+To teardown grafana, run the following commands:
+```
+kubectl delete -f ../launch/grafana-datasource-config.yml
+kubectl delete -f ../launch/grafanaService.yml
+kubectl delete -f ../launch/grafana.yml
+```
+
 
 ## Contributing
 
