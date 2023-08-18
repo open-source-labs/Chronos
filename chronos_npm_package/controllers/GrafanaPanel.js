@@ -18,15 +18,15 @@ function createGrafanaPanelObject(
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "drawStyle": "line",
-                    "fillOpacity": 0,
-                    "gradientMode": "none",
+                    "fillOpacity": 30,
+                    "gradientMode": "opacity",
                     "hideFrom": {
                         "legend": false,
                         "tooltip": false,
                         "viz": false
                     },
                     "lineInterpolation": "smooth",
-                    "lineWidth": 1,
+                    "lineWidth": 2,
                     "pointSize": 5,
                     "scaleDistribution": {
                         "type": "linear"
