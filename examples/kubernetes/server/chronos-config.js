@@ -24,6 +24,7 @@ module.exports = {
     URI: process.env.CHRONOS_URI,
   },
 
+  // Grafana Configuration
   grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
 
   notifications: [],
