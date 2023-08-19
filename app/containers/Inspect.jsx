@@ -48,7 +48,7 @@ const Inspect = () => {
 
 
 
-        fetch('http://localhost:1111/api/data')
+        fetch('http://localhost:1111/api/kuberData')
             .then(r => r.text())
             .then(d3.csvParse)
             .then(data => {
