@@ -8,9 +8,12 @@ import path from 'path';
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
 
+app.commandLine.appendSwitch('remote-debugging-port', '9222');
+
 /**
  * @desc createWindow sets up the environment of the window (dimensions, port, initial settings)
  */
+
 const createWindow = () => {
   win = new BrowserWindow({
     width: 1920,
