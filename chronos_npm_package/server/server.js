@@ -45,7 +45,7 @@ app.get('/api/data', async (req, res) => {
 });
 
 
-app.get('/api/getData', kuberControllers.getData, (req, res) => {
+app.get('/api/getData', kuberControllers.getResources, (req, res) => {
     console.log('getData endpoint hit');
     return res.status(200).send('getData endpoint hit');
 });
