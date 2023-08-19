@@ -21,6 +21,7 @@ This example has been developed and tested using the Kubernetes Engine packaged 
 
 ## Setup Prometheus and Grafana
 1. `cd` into the *scripts* folder and run the setup script with `./setup.sh` - the process of configuring Prometheus and Grafana.
+
 **Note**: If you run into `Permission denied` error, try run this command: `chmod +x [the_file_name]` in the terminal and re-run `./setup.sh`.
 
 2. In your browser, go to `localhost:32000`, which will be the login page of grafana. Use `admin` as both username and password to login. You can change the password after login.
@@ -75,9 +76,9 @@ kubectl apply -f frontend.yml
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `startKuber.sh` script.
 
-#
 
 2. `cd` into the `server` folder inside `chronos_npm_package`, then run `npm install` and `npm start`
+
 3. Check in Docker desktop if your containers have been created. You should see something similar to the following:
 
 <p align="center">
@@ -86,8 +87,9 @@ kubectl apply -f frontend.yml
 
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
-#
+
 ## Teardown the Cluster
+
 1. `cd` into the launch folder and run the following commands to stop the running services and deployments:
 ```
 kubectl delete -f clusterRole.yml
