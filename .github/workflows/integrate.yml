@@ -27,5 +27,5 @@ jobs:
           node-version: 18.17.1
       - run: npm ci
       - run: npm run build
-      - run: cd __backend tests__
       - run: npx jest --__config backend-tests__/jest.config.js --verbose
+        working-directory: ./__backend-tests
