@@ -4,6 +4,7 @@ const app = express()
 const port = 1111;
 const utilities = require('../controllers/utilities');
 const fs = require('fs');
+const kuberControllers = require('./kuberControllers');
 
 
 app.use(cors());
@@ -42,6 +43,15 @@ app.get('/api/data', async (req, res) => {
         return res.status(200).send(data);
     });
 });
+
+
+app.get('/api/getData', kuberControllers.getData, (req, res) => {
+    console.log('getData endpoint hit');
+    return res.status(200).send('getData endpoint hit');
+});
+
+
+
 
 
 
