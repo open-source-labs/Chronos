@@ -5,7 +5,7 @@ on:
     branches: [ devDocker_v2 ]
 
 jobs:
-  testing:
+  frontend_testing:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -16,4 +16,15 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run test
+
+  backend_testing:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18.17.1
+      - run: npm ci
+      - run: npm run build
       - run: cd __backend tests__ && npx jest --__config backend-tests__/jest.config.js --verbose
