@@ -8,7 +8,7 @@ jobs:
   testing:
     runs-on: ubuntu-latest
     steps:
-      - continue-on-error: true
+      continue-on-error: true
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
