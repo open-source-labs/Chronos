@@ -227,6 +227,7 @@ mongo.setQueryOnInterval = async config => {
           //     //currentMetricNames[metric] = true;
           //   }
           // }
+          ///////
           length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames, model);
         }
         // const documents = [];
