@@ -98,6 +98,13 @@ const Inspect = () => {
                             node, // lookAt ({ x, y, z })
                             3000  // ms transition duration
                         );
+
+                        // Show label
+                        const nodeEl = document.createElement('div');
+                        nodeEl.innerHTML = node.path;
+                        nodeEl.style.color = node.color;
+                        nodeEl.className = 'node-label';
+                        return new CSS2DObject(nodeEl);
                     })
                     .nodeThreeObject((node) => {
                         const nodeEl = document.createElement('div');

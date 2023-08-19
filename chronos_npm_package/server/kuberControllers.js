@@ -119,17 +119,17 @@ kuberControllers.getResources = async (req, res, next) => {
         }
 
         const data = [];
-        data.push({ size: '', path: 'default' })
+        data.push({ size: '', path: 'Namespace: default' })
         for (let d of deployments) {
             const obj = {};
             for (let s in d.services) {
-                let path = 'default/' + 'service: ' + s
+                let path = 'Namespace: default/' + 'Service: ' + s
                 for (let p of d.services[s]) {
-                    let path = 'default/' + 'service: ' + s
-                    path += '/pod: ' + p;
+                    let path = 'Namespace: default/' + 'Service: ' + s
+                    path += '/Pod: ' + p;
                     data.push({ size: '', path: path })
                 }
-                path = 'default/' + 'service: ' + s
+                path = 'Namespace: default/' + 'Service: ' + s
                 data.push({ size: '', path: path })
             }
 
