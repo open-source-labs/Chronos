@@ -101,7 +101,7 @@ const Inspect = () => {
                     })
                     .nodeThreeObject((node) => {
                         const nodeEl = document.createElement('div');
-                        nodeEl.textContent = node.path;
+                        nodeEl.textContent = node.path.split('/').pop().replace(/:.*/, '');
                         nodeEl.style.color = node.color;
                         nodeEl.className = 'node-label';
                         return new CSS2DObject(nodeEl);
