@@ -28,4 +28,4 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx jest --__config backend-tests__/jest.config.js --verbose
-        working-directory: ./__backend-tests
+        working-directory: __backend-tests
