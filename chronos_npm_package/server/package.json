@@ -5,11 +5,14 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@json2csv/plainjs": "^7.0.2",
+    "@kubernetes/client-node": "^0.18.1",
+    "convert-array-to-csv": "^2.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2"
   }
