@@ -7,7 +7,6 @@ on:
 jobs:
   frontend_testing:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -19,7 +18,7 @@ jobs:
 
   backend_testing:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -27,5 +26,4 @@ jobs:
           node-version: 18.17.1
       - run: npm ci
       - run: npm run build
-      - run: npx jest --__config backend-tests__/jest.config.js --verbose
-        working-directory: __backend-tests__
+      - run: npx jest --config __backend-tests__/jest.config.js --verbose
