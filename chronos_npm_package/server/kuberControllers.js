@@ -112,27 +112,33 @@ kuberControllers.getResources = async (req, res, next) => {
                 }
 
             }
-
-            // const podRes = await coreV1Api.listNamespacedPod('default');
-            // //console.log('Pods: ', podRes.body.items[0]);
-            // for (let pod of podRes.body.items) {
-            //     //console.log('Pod: ', pod);
-            //     for (let d of deployments) {
-            //         if (pod.metadata.labels.app === d.app) {
-            //             d.services[service.metadata.name].push(pod.metadata.name);
-            //         }
-            //     }
-            // }
-
-            // }
-            // }
-
-
         }
         console.log('final deployments: ', deployments);
         for (let d of deployments) {
             console.log('pods: ', d.services);
         }
+
+        const data = [];
+        data.push({ size: '', path: 'default' })
+        for (let d of deployments) {
+            const obj = {};
+            for (let s in d.services) {
+                let path = 'default/' + 'service: ' + s
+                for (let p of d.services[s]) {
+                    let path = 'default/' + 'service: ' + s
+                    path += '/pod: ' + p;
+                    data.push({ size: '', path: path })
+                }
+                path = 'default/' + 'service: ' + s
+                data.push({ size: '', path: path })
+            }
+
+
+        }
+
+        console.log('data: ', data);
+        res.locals.data = data;
+        next();
 
 
     } catch (err) {

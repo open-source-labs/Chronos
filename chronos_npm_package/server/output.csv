@@ -1,0 +1,11 @@
+size,path
+"",default
+"",default/service: grafana/pod: grafana-85d768d55b-jkr84
+"",default/service: grafana
+"",default/service: frontend/pod: nginx-frontend-55b44fbc7-q4glh
+"",default/service: frontend/pod: nginx-frontend-55b44fbc7-s47v4
+"",default/service: frontend
+"",default/service: backend/pod: node-backend-d597768c-rtwwx
+"",default/service: backend
+"",default/service: prometheus-service/pod: prometheus-deployment-96898bbc9-km5cf
+"",default/service: prometheus-service
