@@ -12,7 +12,6 @@ jobs:
         with:
           node-version: '18.17.1'
           registry-url: 'https://registry.npmjs.org'
-      - run: cd chronos_npm_package
       - run: npm ci
       - run: npm publish --access=public
         env:
