@@ -60,7 +60,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 # Installation
 
-This is for the latest Chronos **version 11.0 release**.
+This is for the latest Chronos **version 12.0 release**.
 
 ## NPM Package
 
