@@ -161,7 +161,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
 
     <div>
       {/* <div id="grafana" onClick={() => { setIsGrafana(!isGrafana) }}>Grafana</div> */}
-      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') || service.includes('books') || service.includes('customers') || service.includes('frontend') || service.includes('orders')? currChunk : []}
+      <button>Inspect</button>
+      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
           <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize}>
