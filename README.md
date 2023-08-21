@@ -75,6 +75,7 @@ For more details on the NPM package and instructions for how to use it, please v
 #
 
 <!-- ### Node Version -->
+<!-- v12 notes: Our team also had no issues - we ran Node 18 and Electron 22-->
 <!-- v11 notes: Our team also had no issues - we ran Node 18.-->
 <!-- v10 notes: Our team never reverted to version 16.17.1 and had no issues running Node 18 and Electron 22 together. Commenting this out for future iteration teams' reference. -->
 <!-- Make sure you're running version 16.17.1 of <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" />, to align with the <img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="20" /> version used by <img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /> version 22. -->
