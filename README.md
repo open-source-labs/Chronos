@@ -226,6 +226,7 @@ Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take 
 - <a href="#"><img src="assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
 - <a href="#"><img src="assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
 - <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
+- <a href="#"><img src="assets/grafana-logo.png" alt="Grafana" title="Grafana" align="center" height="30" /></a>
 
 
 ## License
