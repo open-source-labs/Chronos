@@ -11,7 +11,7 @@
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
 - Monitor an Apache Kafka cluster via the JMX Prometheus Exporter
-- Monitor Docker and Kubernetes cluster via a Prometheus monitoring server and display charts in Grafana
+- Monitor Docker and Kubernetes cluster via a Prometheus monitoring server and display charts using Grafana
 
 #
 
@@ -215,6 +215,15 @@ module.exports = {
   mode: 'kubernetes',
   promService: 'prometheus-service',
   promPort: 8080,
+
+    database: {
+    connection: 'REST',
+    type: process.env.CHRONOS_DB,
+    URI: process.env.CHRONOS_URI,
+  },
+
+
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
 
   // ...
 }
