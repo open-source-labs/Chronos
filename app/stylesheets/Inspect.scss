@@ -1,0 +1,19 @@
+h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.node-label {
+    font-size: 12px;
+    padding: 1px 4px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    user-select: none;
+}

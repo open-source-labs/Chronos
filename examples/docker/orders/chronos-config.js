@@ -17,6 +17,7 @@ module.exports = {
     type: process.env.CHRONOS_DB,
     URI: process.env.CHRONOS_URI,
   },
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
 
   notifications: [],
 }
