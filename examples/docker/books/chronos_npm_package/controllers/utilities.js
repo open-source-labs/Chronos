@@ -337,7 +337,7 @@ const helpers = {
 
     // push panel into dashboard object with a line for each metric in promQLQueries object
     dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource, graphType));
-
+    console.log('utilities.createGrafanaDashboard line 340:', dashboard.dashboard.panels);
     try {
       // POST request to Grafana Dashboard API to create a dashboard
       const dashboardResponse = await axios.post(
@@ -350,7 +350,7 @@ const helpers = {
           },
         }
       );
-      //console.log("dashboardResponse is: ", dashboardResponse)
+      console.log("utilities.createGrafanaDashboard line 353 dashboardResponse is: ", dashboardResponse)
 
       // Descriptive error log for developers
       if (dashboardResponse.status >= 400) {
@@ -376,6 +376,7 @@ const helpers = {
         'Authorization': token
       },
     });
+    console.log('utilities.getGrafanaDatasource line 379:', datasourceResponse);
     console.log("Successfully fetched datasource from Grafana API")
     // Create a datasource object to be used within panels.
     const datasource = {
