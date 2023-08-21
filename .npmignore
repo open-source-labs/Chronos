@@ -1,0 +1,4 @@
+#Ignore all
+*
+#DO NOT Ignore
+!chronos_npm_package/
