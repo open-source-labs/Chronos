@@ -2,6 +2,7 @@
 - Bug Fixes
 - Refactored code for additional modularity and customization
 - Ability for developers to increase number of metrics monitored for microservices
+- Connected to Grafana interface.
 #
 
 ## Features 
@@ -10,7 +11,7 @@
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
 - Monitor an Apache Kafka cluster via the JMX Prometheus Exporter
-- Monitor a Kubernetes cluster via a Prometheus monitoring server
+- Monitor Docker and Kubernetes cluster via a Prometheus monitoring server and display charts in Grafana
 
 #
 
