@@ -228,6 +228,8 @@ Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take 
 - <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
 - <a href="#"><img src="assets/grafana-logo.png" alt="Grafana" title="Grafana" align="center" height="30" /></a>
 - <a href="#"><img src="assets/selenium-logo.png" alt="Selenium" title="Selenium" align="center" height="30" /></a>
+- <a href="#"><img src="assets/prometheus-logo.png" alt="Prometheus" title="Prometheus" align="center" height="30" /></a>
+- <a href="#"><img src="assets/github-action-logo.png" alt="Github Action" title="Github Action" align="center" height="30" /></a>
 
 
 ## License
