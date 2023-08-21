@@ -34,3 +34,7 @@
 [Brisa Zhu](https://github.com/beezoo10),
 [Kelsi Webb](https://github.com/kelsicw),
 [Justin Poirier](https://github.com/jcpoirier20)
+[Tyler Coryell](https://github.com/Tcoryell)
+[Edwin Leong](https://github.com/edwinlny)
+[Eisha Kaushal](https://github.com/eishakaushal)
+[Haoyu Liu](https://github.com/HaoyL666)
