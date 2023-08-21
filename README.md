@@ -227,11 +227,11 @@ Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take 
 - <a href="#"><img src="assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
 - <a href="#"><img src="assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
 - <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
-- <a href="#"><img src="assets/grafana-logo.png" alt="Grafana" title="Grafana" align="center" height="30" /></a>
+- <a href="#"><img src="assets/grafana-logo.png" alt="Grafana" title="Grafana" align="center" height="40" /></a>
 - <a href="#"><img src="assets/selenium-logo.png" alt="Selenium" title="Selenium" align="center" height="30" /></a>
-- <a href="#"><img src="assets/prometheus-logo.png" alt="Prometheus" title="Prometheus" align="center" height="30" /></a>
-- <a href="#"><img src="assets/github-action-logo.png" alt="Github Action" title="Github Action" align="center" height="30" /></a>
-- <a href="#"><img src="assets/threeJS-logo.png" alt="Github Action" title="Github Action" align="center" height="30" /></a>
+- <a href="#"><img src="assets/prometheus-logo.png" alt="Prometheus" title="Prometheus" align="center" height="40" /></a>
+- <a href="#"><img src="assets/github-action-logo.png" alt="Github Action" title="Github Action" align="center" height="40" /></a>
+- <a href="#"><img src="assets/threeJS-logo.png" alt="Github Action" title="Github Action" align="center" height="40" /></a>
 
 
 ## License
