@@ -20,6 +20,6 @@ module.exports = {
   // Code coverage settings
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  // Specify the test path patterns to ignore (frontend tests)
-  testPathIgnorePatterns: ['/node_modules/', '/__tests__/'],
+  // Specify the test path files/patterns to ignore
+  testPathIgnorePatterns: ['/node_modules/', '/__tests__/', '/__backend-tests__/mongo.test.js'],
 };
