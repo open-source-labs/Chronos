@@ -186,7 +186,7 @@ Refer to the [microservices README](./examples/microservices/README.md) in the `
 
 # Testing
 
-We've created testing suites for Chronos with React Testing, Jest, and  - instructions on running them can be found in the [testing README](./__tests__/README.md).
+We've created testing suites for Chronos with React Testing, Jest, and Selenium for unit, integration, and end-to-end tests - instructions on running them can be found in the [testing README](./__tests__/README.md).
 #
 ## Contributing
 
