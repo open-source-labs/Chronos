@@ -29,10 +29,10 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Improved metrics visualization by embedding more interactive and flexible Grafana charts for Docker and Kubernetes examples.
 - Increased test coverage up to 80% by crafting comprehensive unit, integration, and end-to-end tests using Jest and Selenium.
 - Fixed Docker example for not being able to display metrics correctly.
-- Designed an interactive 3D visualization showcasing the infrastructure of Kubernetes clusters, providing enhanced insights into the intricate resource distribution and configuration within the cluster for developers and users.
+- Designed an interactive 3D visualization showcasing the infrastructure of Kubernetes clusters (Namespace, Service, Pod), providing enhanced insights into the intricate resource distribution and configuration within the cluster for developers and users.
 - Engineered workflow efficiencies by orchestrating CI/CD pipelines, automating testing, and establishing deployment procedures, resulting in accelerated development cycles and higher reliability.
-- Increased Typescript coverage for more code quality and application robustness.
-- Updated README instructions within the provided Docker and Kubernetes examples for how to configure Grafana in a smooth and easy way. 
+- Increased Typescript coverage for better code quality and application robustness.
+- Updated README instructions within the provided Docker and Kubernetes examples for how to configure Prometheus and Grafana in a smooth and easy way. 
 - Revised README instructions for the `@chronosmicro/tracker` NPM package for how to use this package to monitor their own applications.
 
 
@@ -186,7 +186,7 @@ Refer to the [microservices README](./examples/microservices/README.md) in the `
 
 # Testing
 
-We've created testing suites for Chronos with React Testing and Jest - instructions on running them can be found in the [testing README](./__tests__/README.md).
+We've created testing suites for Chronos with React Testing, Jest, and  - instructions on running them can be found in the [testing README](./__tests__/README.md).
 #
 ## Contributing
 
