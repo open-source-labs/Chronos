@@ -1,6 +1,7 @@
 <a href="https://chronoslany.com/">
-    <img src="assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="500" />
+    <img src="assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="500" width="400" />
 </a>
+<br>
 <a href="https://chronoslany.com/">
     <img src="assets/demo.gif" alt="Chronos" title="Chronos" align="center" height="500" />
 </a>
