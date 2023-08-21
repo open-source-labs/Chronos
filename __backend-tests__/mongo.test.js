@@ -1,3 +1,6 @@
+//Issues with mongo memory server causing timeout for each test. Change file type from .txt to .js to run
+
+
 const mongoose = require('mongoose');
 const mongo = require('../chronos_npm_package/controllers/mongo');
 const ServicesModel = require('../chronos_npm_package/models/ServicesModel');
@@ -9,7 +12,7 @@ const dockerHelper = require('../chronos_npm_package/controllers/dockerHelper');
 
 require('dotenv').config();
 
-const db = process.env.DB_URI;
+const db = 'mongodb+srv://Ok:Ok@cluster0.axo7iyw.mongodb.net/?retryWrites=true&w=majority';
 
 beforeAll(async () => {
   await connectDB();
@@ -77,10 +80,10 @@ describe('mongo.connect', () => {
   test('should connect to MongoDB database', async () => {
     await mongo.connect({ database: { URI: db } });
 
-    //expect(mongoose.connect).toHaveBeenCalledWith(db);
-    expect(console.log).toHaveBeenCalledWith(
-      expect.stringContaining('MongoDB database connected at')
-    );
+    expect(mongoose.connect).toHaveBeenCalledWith(db);
+    // expect(console.log).toHaveBeenCalledWith(
+    //   expect.stringContaining('MongoDB database connected at')
+    // );
   });
 
   test('should handle connection errors', async () => {
