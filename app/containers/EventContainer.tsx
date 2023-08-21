@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { EventContext } from '../context/EventContext';
+import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
