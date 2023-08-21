@@ -24,21 +24,25 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-### With Chronos 11.0:
+### With Chronos 12.0:
 
+- Improved metrics visualization by embedding more interactive and flexible Grafana charts for Docker and Kubernetes examples.
+- Increased test coverage up to 80% by crafting comprehensive unit, integration, and end-to-end tests using Jest and Selenium.
+- Fixed Docker example for not being able to display metrics correctly.
+- Designed an interactive 3D visualization showcasing the infrastructure of Kubernetes clusters, providing enhanced insights into the intricate resource distribution and configuration within the cluster for developers and users.
+- Engineered workflow efficiencies by orchestrating CI/CD pipelines, automating testing, and establishing deployment procedures, resulting in accelerated development cycles and higher reliability.
+- Increased Typescript coverage for more code quality and application robustness.
+- Updated README instructions within the provided Docker and Kubernetes examples for how to configure Grafana in a smooth and easy way. 
+- Revised README instructions for the `@chronosmicro/tracker` NPM package for how to use this package to monitor their own applications.
+
+
+**Previously implemented updates:**
 - Added interactive charting to better visualize metrics and increase user engagement with their data
 - Followed best test-driven development practices and increased testing with React Testing and Jest for the front end
 - Overhauled user database security, mitigating database breaches and providing a safer experience
 - Bug fixes and UI tweaks, creating a more pleasant user experience
 - Updated outdated README instructions within the provided Docker, gRPC, Kubernetes, and microservices examples
 - Revised README instructions for the `@chronosmicro/tracker` NPM package
-
-
-**Previously implemented updates:**
-- Streamlined approach to access and dynamically display Grafana dashboards for deployed EKS clusters (utilizing Prometheus data scraping and generated Grafana dashboards) using the Grafana API.
-- Option to choose between cloud hosted services and local services, giving Chronos the ability to monitor instances and clusters on AWS' EC2, ECS, and EKS platforms.
-- An updated AWS Graphs Container to dynamically render plots for EC2 or ECS data fetched with Electron using event listeners connecting to AWS CloudWatch w/ the aws-sdk package, as well as utilizing Prometheus data scraping and Grafana integration to fetch and render EKS data.
-- Step-by-step instructions on setting up a new, functional EC2 instances, ECS clusters, and EKS clusters, ready to be monitored and tested by the app.
 
 ## Features
 
