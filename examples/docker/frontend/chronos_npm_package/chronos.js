@@ -141,7 +141,8 @@ class Chronos {
   async docker () {
     await utilities.testMetricsQuery(this.config);
     if (this.config.database.type === 'MongoDB') {
-      mongo.connect(this.config);
+      await mongo.connect(this.config);
+      await mongo.storeGrafanaAPIKey(this.config);
       mongo.serverQuery(this.config);
       // return mongo.modifyMetrics(this.config);
     } else if (this.config.database.type === 'PostgreSQL') {

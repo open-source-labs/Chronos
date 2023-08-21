@@ -20,6 +20,7 @@ import HealthContainer from './HealthContainer';
 import ModifyMetrics from './ModifyMetricsContainer';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from '../components/Styling';
+import DockerHealthContainer from './DockerHealthContainer';
 
 import '../stylesheets/GraphsContainer.scss';
 
@@ -130,7 +131,14 @@ const GraphsContainer: React.FC = React.memo(props => {
     if (selectedMetrics) {
       selectedMetrics.forEach((element, id) => {
         const categoryName = Object.keys(element)[0];
-        const prefix = categoryName === 'Event' ? 'event_' : 'health_';
+        let prefix;
+        if (categoryName === 'Event') {
+          prefix = 'event_';
+        } else if (categoryName === 'books' || categoryName === 'customers' || categoryName === 'frontend' || categoryName === 'orders'){
+          prefix = 'docker_';
+        } else {
+          prefix = 'health_';
+        }
         buttonList.push(
           <button
             id={`${prefix}${categoryName}-button`}
@@ -224,6 +232,12 @@ const GraphsContainer: React.FC = React.memo(props => {
             {chart.startsWith('event_') && (
               <>
                 <EventContainer colourGenerator={stringToColour} sizing="solo" />
+              </>
+
+            )}
+            {chart.startsWith('docker_') && (
+              <>
+                <DockerHealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)} />
               </>
 
             )}

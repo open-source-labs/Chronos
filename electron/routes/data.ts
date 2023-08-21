@@ -180,6 +180,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
     console.log('result data.ts line 177', result)
     // Async event emitter - send response'
 
+    console.log('Hi, inside data.ts line 183 - healthRequest. sending health response...');
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
@@ -199,6 +200,7 @@ ipcMain.on('dockerRequest', async (message, service) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
+      console.log('Hi, inside data.ts line 203 - dockerRequest. Fetching data...');
       let num = await DockerModelFunc(service).countDocuments();
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
