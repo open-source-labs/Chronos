@@ -138,6 +138,21 @@ class Chronos {
     }
   }
 
+  async docker () {
+    await utilities.testMetricsQuery(this.config);
+    if (this.config.database.type === 'MongoDB') {
+      await mongo.connect(this.config);
+      await mongo.storeGrafanaAPIKey(this.config);
+      mongo.serverQuery(this.config);
+      // return mongo.modifyMetrics(this.config);
+    } else if (this.config.database.type === 'PostgreSQL') {
+      postgres.connect(this.config);
+      postgres.serverQuery(this.config);
+    } else {
+      throw new Error('The only allowed database types are MongoDB and PostgreSQL');
+    }
+  }
+
   ServerWrapper(server, proto, methods) {
     /**
      * Wraps the gRPC server object to automatically write logs to provided DB

@@ -11,6 +11,7 @@ const MetricsModel = require('../models/MetricsModel');
 const dockerHelper = require('./dockerHelper');
 const utilities = require('./utilities');
 require('../models/ContainerInfo');
+const GrafanaAPIKeyModel = require('../models/GrafanaAPIKeyModel');
 
 mongoose.set('strictQuery', true);
 
@@ -163,9 +164,9 @@ mongo.docker = ({ microservice, interval, mode }) => { //:config file, interval 
  It then takes the returned array of metrics, turns them into documents based on
  KafkaModel.js, and inserts them into the db at the provided uri with insertMany()
 */
-mongo.serverQuery = config => {
-  mongo.saveService(config);
-  mongo.setQueryOnInterval(config);
+mongo.serverQuery = async config => {
+  await mongo.saveService(config);
+  await mongo.setQueryOnInterval(config);
 };
 
 mongo.saveService = config => {
@@ -174,6 +175,8 @@ mongo.saveService = config => {
     microservice = 'kafkametrics';
   } else if (config.mode === 'kubernetes') {
     microservice = 'kubernetesmetrics';
+  } else if (config.mode === 'docker') {
+    microservice = `${config.containerName}`;
   } else {
     throw new Error('Unrecongnized mode');
   }
@@ -200,25 +203,39 @@ mongo.setQueryOnInterval = async config => {
 
   if (config.mode === 'kafka') {
     model = KafkaModel;
-    metricsQuery = utilities.kafkaMetricsQuery;
+    metricsQuery = await utilities.kafkaMetricsQuery;
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
+    metricsQuery = await utilities.promMetricsQuery;
+  } else if (config.mode === 'docker') {
+    model = ContainerInfoFunc(`${config.containerName}`);
+    //console.log('setQueryOnInterval line 212 dockerModel:', ContainerInfoFunc(`${config.containerName}`));
     metricsQuery = utilities.promMetricsQuery;
+    //console.log('setQueryOnInterval line 214 metricsQuery:', metricsQuery);
   } else {
     throw new Error('Unrecognized mode');
   }
 
   length = await mongo.getSavedMetricsLength(config.mode, currentMetricNames);
 
-  console.log('currentMetricNames is: ', Object.keys(currentMetricNames).length);
+  console.log('currentMetricNames.length: ', Object.keys(currentMetricNames).length);
   // Use setInterval to send queries to metrics server and then pipe responses to database
   setInterval(() => {
     metricsQuery(config)
       // This updates the Metrics Model with all chosen metrics. If there are no chosen metrics it sets all available metrics as chosen metrics within the metrics model.
       .then(async parsedArray => {
+        //await mongo.createGrafanaDashboards(config, parsedArray);
+        console.log('parsedArray.length is: ', parsedArray.length);
         // This conditional would be used if new metrics are available to be tracked.
         if (length !== parsedArray.length) {
-          length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames);
+          // for (let metric of parsedArray) {
+          //   if (!(metric.metric in currentMetricNames)) {
+          //     await model.create(metric);
+          //     //currentMetricNames[metric] = true;
+          //   }
+          // }
+          ///////
+          length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames, model);
         }
         const documents = [];
         for (const metric of parsedArray) {
@@ -231,13 +248,25 @@ mongo.setQueryOnInterval = async config => {
 
           if (currentMetricNames[metric.metric]) documents.push(model(metric));
         }
-        return model.insertMany(documents, err => {
-          if (err) console.error(err);
+        await model.insertMany(parsedArray, err => {
+          if (err) {
+            console.error(err)
+          } else {
+            console.log(`${config.mode} metrics recorded in MongoDB`)
+          }
         });
+
+        let allMetrics = await model.find({});
+        console.log('allMetrics.length: ', allMetrics.length);
+        console.log("🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 start creating dashboards 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡")
+        await mongo.createGrafanaDashboards(config, allMetrics);
+        console.log("✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ finish creating dashboards ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅")
       })
-      .then(() => console.log(`${config.mode} metrics recorded in MongoDB`))
+      // .then(() => {
+      //   console.log(`${config.mode} metrics recorded in MongoDB`)
+      // })
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
-  }, config.interval);
+  }, 40000);
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
@@ -251,18 +280,19 @@ mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
   return currentMetrics.length ? currentMetrics.length : 0;
 };
 
-mongo.addMetrics = async (arr, mode, obj) => {
+mongo.addMetrics = async (arr, mode, obj, model) => {
+  const metrics = [];
   const newMets = [];
-  arr.forEach(el => {
-    if (!(el.metric in obj)) {
-      const { metric } = el;
-      newMets.push({ metric: metric, mode: mode });
-      obj[el.metric] = true;
+  for (let metric of arr) {
+    if (!(metric.metric in obj)) {
+      const name = metric.metric;
+      newMets.push({ metric: name, mode: mode });
+      metrics.push(metric);
+      obj[metric.metric] = true;
     }
-  });
-  await MetricsModel.insertMany(newMets, err => {
-    if (err) console.error(err);
-  });
+  };
+  await MetricsModel.create(newMets);
+  await model.create(metrics);
   return arr.length;
 };
 
@@ -279,5 +309,43 @@ mongo.addMetrics = async (arr, mode, obj) => {
 //     return next();
 //   };
 // }
+
+mongo.createGrafanaDashboards = async (config, parsedArray) => {
+  try {
+    console.log('In mongo.createGrafanaDashboards!!!')
+    console.log('Calling utilities.getGrafanaDatasource()');
+    const datasource = await utilities.getGrafanaDatasource(config.grafanaAPIKey);
+    console.log('mongo.createGrafanaDashboards line 318:', datasource);
+    //console.log('Calling utilities.promMetricsQuery()');
+    //const parsedArray = await utilities.promMetricsQuery(config);
+    //const datasource = await utilities.getGrafanaDatasource();
+    // console.log("parsedArray is: ", parsedArray.slice(0, 5));
+    // console.log('parsedArray.length is: ', parsedArray.length);
+    for (let metric of parsedArray) {
+      console.log(`🎉 creating dashboard 🎉`);
+      await utilities.createGrafanaDashboard(metric, datasource, "timeseries", config.grafanaAPIKey);
+    }
+
+    // await parsedArray.forEach(async (metric, i) => {
+    //   //console.log("metric is: ", metric);
+    //   console.log(`creating ${i}th dashboard`);
+    //   await utilities.createGrafanaDashboard(metric, datasource);
+    // });
+  } catch (err) {
+    console.error("error in mongo.createGrafanaDashboards: ", err)
+  }
+};
+
+mongo.storeGrafanaAPIKey = async (config) => {
+  try {
+    console.log('In mongo.storeGrafanaAPIKey!!!')
+    await GrafanaAPIKeyModel.create({ token: config.grafanaAPIKey });
+    console.log('Grafana API Key stored in MongoDB');
+  } catch (err) {
+    console.error("error in mongo.storeGrafanaAPIKey: ", err);
+  }
+}
+
+
 
 module.exports = mongo;
