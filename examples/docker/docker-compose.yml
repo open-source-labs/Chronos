@@ -119,7 +119,7 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - 2999:3000
+      - 32000:3000
     volumes:
       # Share the named volume with the grafana container
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources

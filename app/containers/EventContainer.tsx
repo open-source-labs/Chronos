@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { EventContext } from '../context/EventContext';
+import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
@@ -160,7 +161,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
 
     <div>
       {/* <div id="grafana" onClick={() => { setIsGrafana(!isGrafana) }}>Grafana</div> */}
-      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
+      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') || service.includes('books') || service.includes('customers') || service.includes('frontend') || service.includes('orders')? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
           <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize}>
