@@ -13,7 +13,7 @@ jobs:
           node-version: '18.17.1'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npm publish chronos_npm_package --access=public
+      - run: npm publish --access=public
         env:
           # need to add NPM token to github secret if not available
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
