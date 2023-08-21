@@ -196,12 +196,11 @@ Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take 
 
 ### **Last Iterating Team**
 
-#### Chronos 11.0
-- [Lucie Seidler](https://github.com/LucieSeidler)
-- [Jeffrey Na](https://github.com/jeffreyNa)
-- [Brisa Zhu](https://github.com/beezoo10)
-- [Kelsi Webb](https://github.com/kelsicw)
-- [Justin Poirier](https://github.com/jcpoirier20)
+#### Chronos 12.0
+- [Tyler Coryell](https://github.com/Tcoryell)
+- [Edwin Leong](https://github.com/edwinlny)
+- [Eisha Kaushal](https://github.com/eishakaushal)
+- [Haoyu Liu](https://github.com/HaoyL666)
 
 
 #### Past [Contributors](contributors.md)
