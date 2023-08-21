@@ -105,9 +105,9 @@ kubectl delete -f frontend.yml
 
 To teardown grafana, run the following commands:
 ```
-kubectl delete -f ../launch/grafana-datasource-config.yml
-kubectl delete -f ../launch/grafanaService.yml
-kubectl delete -f ../launch/grafana.yml
+kubectl delete -f launch/grafana-datasource-config.yml
+kubectl delete -f launch/grafanaService.yml
+kubectl delete -f launch/grafana.yml
 ```
 
 
