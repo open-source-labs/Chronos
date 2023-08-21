@@ -19,7 +19,9 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets:
-          - docker.for.mac.localhost:8080
+          - docker.for.mac.localhost:8081
+
+
     # - job_name: 'frontend'
     #   static_configs:
     #     - targets: ['localhost:3333']
@@ -35,3 +37,4 @@ scrape_configs:
     # - job_name: 'orders'
     #   static_configs:
     #     - targets: ['localhost:7777']
+  

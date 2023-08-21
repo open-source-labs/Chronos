@@ -169,12 +169,14 @@ mongo.serverQuery = async config => {
   await mongo.setQueryOnInterval(config);
 };
 
-mongo.saveService = async config => {
+mongo.saveService = config => {
   let microservice;
   if (config.mode === 'kafka') {
     microservice = 'kafkametrics';
   } else if (config.mode === 'kubernetes') {
     microservice = 'kubernetesmetrics';
+  } else if (config.mode === 'docker') {
+    microservice = `${config.containerName}`;
   } else {
     throw new Error('Unrecongnized mode');
   }
@@ -205,6 +207,11 @@ mongo.setQueryOnInterval = async config => {
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
     metricsQuery = await utilities.promMetricsQuery;
+  } else if (config.mode === 'docker') {
+    model = ContainerInfoFunc(`${config.containerName}`);
+    //console.log('setQueryOnInterval line 212 dockerModel:', ContainerInfoFunc(`${config.containerName}`));
+    metricsQuery = utilities.promMetricsQuery;
+    //console.log('setQueryOnInterval line 214 metricsQuery:', metricsQuery);
   } else {
     throw new Error('Unrecognized mode');
   }
@@ -227,26 +234,28 @@ mongo.setQueryOnInterval = async config => {
           //     //currentMetricNames[metric] = true;
           //   }
           // }
+          ///////
           length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames, model);
         }
-        // const documents = [];
-        // for (const metric of parsedArray) {
-        //   /**
-        //    * This will check if the current metric in the parsed array
-        //    * evaluates to true within the currentMetricNames object
-        //    * which is updated by the user when they select/deselect metrics on the electron app
-        //    * helping to avoid overloading the db with unnecessary data.
-        //    */
+        const documents = [];
+        for (const metric of parsedArray) {
+          /**
+           * This will check if the current metric in the parsed array
+           * evaluates to true within the currentMetricNames object
+           * which is updated by the user when they select/deselect metrics on the electron app
+           * helping to avoid overloading the db with unnecessary data.
+           */
 
-        //   if (currentMetricNames[metric.metric]) documents.push(model(metric));
-        // }
-        // await model.insertMany(parsedArray, err => {
-        //   if (err) {
-        //     console.error(err)
-        //   } else {
-        //     console.log(`${config.mode} metrics recorded in MongoDB`)
-        //   }
-        // });
+          if (currentMetricNames[metric.metric]) documents.push(model(metric));
+        }
+        await model.insertMany(parsedArray, err => {
+          if (err) {
+            console.error(err)
+          } else {
+            console.log(`${config.mode} metrics recorded in MongoDB`)
+          }
+        });
+
         let allMetrics = await model.find({});
         console.log('allMetrics.length: ', allMetrics.length);
         console.log("🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 start creating dashboards 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡")
@@ -306,6 +315,7 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
     console.log('In mongo.createGrafanaDashboards!!!')
     console.log('Calling utilities.getGrafanaDatasource()');
     const datasource = await utilities.getGrafanaDatasource(config.grafanaAPIKey);
+    console.log('mongo.createGrafanaDashboards line 318:', datasource);
     //console.log('Calling utilities.promMetricsQuery()');
     //const parsedArray = await utilities.promMetricsQuery(config);
     //const datasource = await utilities.getGrafanaDatasource();

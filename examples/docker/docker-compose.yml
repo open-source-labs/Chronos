@@ -85,8 +85,11 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     privileged: true
+    # platform: linux/arm64/v8
     ports:
-      - 8080:8080
+      - 8081:8081
+    command:
+      - '-port=8081'
     volumes:
       - /:/rootfs:ro
       - /etc/machine-id:/etc/machine-id:ro
@@ -108,19 +111,24 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
     depends_on:
       - cadvisor
 
-  # grafana:
-  #   image: grafana/grafana:latest
-  #   container_name: grafana
-  #   ports:
-  #     - 2999:3000
-  #   volumes:
-  #     # Share the named volume with the grafana container
-  #     - grafana-dir:/etc/grafana
-  #   environment:
-  #     GF_PATHS_CONFIG: /etc/grafana/grafana.ini
-  #     GF_SECURITY_ALLOW_EMBEDDING: 'true'
-  #   depends_on:
-  #     - prometheus
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 32000:3000
+    volumes:
+      # Share the named volume with the grafana container
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+      GF_SECURITY_ALLOW_EMBEDDING: 'true'
+    depends_on:
+      - prometheus
+
+volumes:
+  grafana-dir: {}

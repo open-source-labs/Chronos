@@ -27,7 +27,7 @@ const EnvModal: React.FC<EnvModalProps> = React.memo(
             <Typography>Cloud-Based</Typography>
           </button>
           <button
-            className="env-button"
+            className="env-button2"
             onClick={() => {
               setOpen(false);
               setAddModalOpen(true);
