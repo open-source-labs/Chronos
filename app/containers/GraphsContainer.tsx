@@ -23,6 +23,8 @@ import lightAndDark from '../components/Styling';
 import DockerHealthContainer from './DockerHealthContainer';
 
 import '../stylesheets/GraphsContainer.scss';
+import { Link } from 'react-router-dom';
+import Inspect from './Inspect';
 
 interface Params {
   app: any;
@@ -45,6 +47,7 @@ const GraphsContainer: React.FC = React.memo(props => {
   const [chart, setChart] = useState<string>('all');
   const [prevRoute, setPrevRoute] = useState<string>('');
   const { mode } = useContext(DashboardContext.DashboardContext);
+  let [inspect, setInspect] = useState<boolean>(false);
 
   useEffect(() => {
     const serviceArray = service.split(' ');
@@ -202,8 +205,21 @@ const GraphsContainer: React.FC = React.memo(props => {
         >
           Modify Metrics
         </button>
+        {/* <Link className="sidebar-link" to="/Inspect" id="Inspect" >
+          <SettingsIcon
+              style={{
+                WebkitBoxSizing: 'content-box',
+                boxShadow: 'none',
+                width: '35px',
+                height: '35px',
+              }}
+            />
+          &emsp;Inspect
+        </Link> */}
+        <button onClick={() => { setInspect(!inspect) }}>Inspect</button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
+      {inspect && <Inspect />}
       <div className="graphs-container">
         {chart === 'communications' ? (
           <div className="graphs">

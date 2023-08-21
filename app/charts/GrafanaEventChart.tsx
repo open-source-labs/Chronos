@@ -12,7 +12,7 @@ interface EventChartProps {
 //     width: number;
 // }
 
-type TimeFrame = '5m' | '15m' | '1h' | '2h' | '1d' | '2d' | '3d';
+type TimeFrame = '5m' | '15m' | '30m' | '1h' | '2h' | '1d' | '2d';
 
 
 
@@ -84,11 +84,12 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
                 <select name="graphType" id="graphType" onChange={(e) => setTimeFrame(e.target.value as TimeFrame)}>
                     <option value={'5m'}>5 minutes</option>
                     <option value={'15m'}>15 minutes</option>
+                    <option value={'30m'}>30 minutes</option>
                     <option value={'1h'}>1 hour</option>
                     <option value={'2h'}>2 hours</option>
                     <option value={'1d'}>1 day</option>
                     <option value={'2d'}>2 days</option>
-                    <option value={'3d'}>3 days</option>
+
                 </select>
             </div>
             {/* create chart using grafana iframe tag*/}
