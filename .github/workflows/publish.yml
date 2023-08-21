@@ -15,4 +15,5 @@ jobs:
       - run: npm ci
       - run: npm publish
         env:
+        # need to add NPM token to github secret if not available
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
