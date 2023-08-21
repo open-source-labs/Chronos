@@ -171,7 +171,7 @@ Refer to the [gRPC README](./examples/gRPC/README.md) in the `gRPC` folder for m
 
 #### _Kubernetes_
 
-The `kubernetes` folder includes a React frontend and an Express server backend, and the Dockerfiles needed to containerize them for Kubernetes deployment. The _launch_ folder includes the YAML files needed to configure the deployments, services, and configurations of the frontend, backend, and Prometheus server.
+The `kubernetes` folder includes a React frontend and an Express server backend, and the Dockerfiles needed to containerize them for Kubernetes deployment. The _launch_ folder includes the YAML files needed to configure the deployments, services, and configurations of the frontend, backend, Prometheus server, and Grafana.
 
 Refer to the [Kubernetes README](./examples/kubernetes/README.md) in the `kubernetes` folder for more details.
 
