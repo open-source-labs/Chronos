@@ -6,9 +6,11 @@ module.exports = {
   microservice: 'frontend',
   interval: 5000,
 
-  // Mode Specific
-  mode: 'microservices',
-  dockerized: true,
+ // Mode Specific
+ mode: 'docker',
+ promService: 'docker.for.mac.localhost',
+ promPort: 9090,
+ containerName: 'frontend',
 
   database: {
     connection: 'REST',

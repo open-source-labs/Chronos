@@ -82,12 +82,14 @@ services:
       - orders
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     privileged: true
-    platform: linux/arm64/v8
+    # platform: linux/arm64/v8
     ports:
-      - 8080:8080
+      - 8081:8081
+    command:
+      - '-port=8081'
     volumes:
       - /:/rootfs:ro
       - /etc/machine-id:/etc/machine-id:ro

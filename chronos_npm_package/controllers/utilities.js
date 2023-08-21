@@ -55,11 +55,11 @@ const helpers = {
       );
     }
 
-    const modeTypes = ['kafka', 'kubernetes', 'microservices'];
+    const modeTypes = ['kafka', 'kubernetes', 'microservices', 'docker'];
 
     if (!mode || !modeTypes.includes(mode)) {
       throw new Error(
-        'You must input a mode into your chronos.config file. The mode may either be "kubernetes", "kafka", or "microservice"'
+        'You must input a mode into your chronos.config file. The mode may either be "kubernetes", "kafka", "microservice", or "docker"'
       );
     }
 
@@ -69,7 +69,7 @@ const helpers = {
       );
     }
 
-    if (mode === 'kubernetes') {
+    if (mode === 'kubernetes' || mode === 'docker') {
       if (
         !promService ||
         typeof promService !== 'string' ||
@@ -139,7 +139,7 @@ const helpers = {
   getMetricsURI: config => {
     if (config.mode === 'kafka') {
       return config.jmxuri;
-    } else if (config.mode === 'kubernetes') {
+    } else if (config.mode === 'kubernetes' || config.mode === 'docker') {
       return `http://${config.promService}:${config.promPort}/api/v1/query?query=`;
     } else {
       throw new Error('Unrecognized mode');
@@ -153,14 +153,14 @@ const helpers = {
    */
   testMetricsQuery: async config => {
     let URI = helpers.getMetricsURI(config);
-    if (config.mode === 'kubernetes') URI += 'up';
+    URI += 'up';
     try {
       const response = await axios.get(URI);
-      if (response.status !== 200) console.error('Invalid response from metrics server:', URI);
+      if (response.status !== 200) console.error('Invalid response from metrics server:', URI, response.status, response.data);
       else console.log('Successful initial response from metrics server:', URI);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw new Error('Unable to query metrics server: ' + URI);
     }
   },
@@ -226,38 +226,30 @@ const helpers = {
    */
   promMetricsQuery: async config => {
     const URI = helpers.getMetricsURI(config);
-    const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
+    let query;
+    if (config.mode === 'docker') {
+      query = URI + encodeURIComponent(`{__name__=~".+",name="${config.containerName}"}`);
+    } else {
+      query = URI + encodeURIComponent('{__name__=~".+",container=""}');
+    }
     try {
       const response = await axios.get(query);
-      //console.log("response is: ", response);
-      return helpers.parseProm(response.data.data.result);
+      //console.log('promMetricsQuery line 236:', response.data.data.result);
+      return helpers.parseProm(config, response.data.data.result);
     } catch (error) {
       return console.error(config.mode, '|', 'Error fetching from URI:', URI, '\n', error);
     }
   },
-
-  promMetrics: async config => {
-    const URI = `http://${config.promService}:${config.promPort}/api/v1/query?query=`;
-    const query = URI + encodeURIComponent('{__name__=~".+",container=""}');
-    try {
-      const response = await axios.get(query);
-      //console.log("response is: ", response);
-      return response.data.data.result;
-    } catch (error) {
-      return console.error('Error fetching from URI:', URI, '\n', error);
-    }
-  },
-
 
   /**
    * Parses response from Prometheus request and returns object with
    * @param {*} data
    * @returns bject with the gathered metric, value, time gathered, and category of event
    */
-  parseProm: data => {
+  parseProm: (config, data) => {
     const res = [];
     const time = Date.now();
-    const category = 'Event';
+    const category = config.mode === 'docker' ? `${config.containerName}`: 'Event';
 
     /**
      * Opportunity for improvement: Prometheus may query metrics that have the same job + instance + metric
@@ -272,10 +264,18 @@ const helpers = {
     const names = new Set();
 
     for (const info of data) {
-      if (!info.metric.job) continue;
-      // Set the base name using the job, IP, and metric __name__
-      let wholeName = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
-      let name = wholeName.replace(/.*\/.*\//g, '');
+      let wholeName;
+      let name;
+      if (config.mode === 'docker'){
+        if (!info.metric.name) continue;
+        wholeName = info.metric['__name__'];
+        name = wholeName.replace(/.*\/.*\//g, '');
+      } else {
+        if (!info.metric.job) continue;
+        // Set the base name using the job, IP, and metric __name__
+        wholeName = info.metric.job + '/' + info.metric.instance + '/' + info.metric['__name__'];
+        name = wholeName.replace(/.*\/.*\//g, '');
+      }
       if (names.has(name)) continue;
       else {
         names.add(name);
@@ -302,6 +302,8 @@ const helpers = {
     //console.log("!res is: ", res);
     return res;
   },
+
+  
 
   createGrafanaDashboard: async (
     metric,

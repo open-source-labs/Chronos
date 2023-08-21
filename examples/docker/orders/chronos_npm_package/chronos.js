@@ -108,7 +108,9 @@ class Chronos {
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.serverQuery(this.config);
-    } else if (this.config.database.type === 'PostgreSQL') {
+    }
+
+    else if (this.config.database.type === 'PostgreSQL') {
       postgres.connect(this.config);
       postgres.serverQuery(this.config);
     } else {
@@ -120,6 +122,24 @@ class Chronos {
     // Test metrics server connection
     await utilities.testMetricsQuery(this.config);
 
+    if (this.config.database.type === 'MongoDB') {
+      await mongo.connect(this.config);
+      await mongo.storeGrafanaAPIKey(this.config);
+      //await mongo.createGrafanaDashboards(this.config);
+      mongo.serverQuery(this.config);
+      // return mongo.modifyMetrics(this.config);
+    }
+
+    else if (this.config.database.type === 'PostgreSQL') {
+      postgres.connect(this.config);
+      postgres.serverQuery(this.config);
+    } else {
+      throw new Error('The only allowed database types are MongoDB and PostgreSQL');
+    }
+  }
+
+  async docker () {
+    await utilities.testMetricsQuery(this.config);
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.serverQuery(this.config);
