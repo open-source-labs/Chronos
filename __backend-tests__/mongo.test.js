@@ -1,3 +1,6 @@
+//Issues with mongo memory server causing timeout for each test. Change file type from .txt to .js to run
+
+
 const mongoose = require('mongoose');
 const mongo = require('../chronos_npm_package/controllers/mongo');
 const ServicesModel = require('../chronos_npm_package/models/ServicesModel');

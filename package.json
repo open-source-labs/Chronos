@@ -85,6 +85,7 @@
     "dev:electron": "tsc && cross-env NODE_ENV=development electron .",
     "package": "electron-packager ./dist chronos --overwrite --prune=true --out=release-builds",
     "test": "nyc jest",
+    "backend-test": "npx jest --config __backend-tests__/jest.config.js --verbose",
     "start:selenium": "node e2e/seleniumTest.js",
     "start:e2e": "nyc npm run dev:electron & npm run start:selenium"
   },
