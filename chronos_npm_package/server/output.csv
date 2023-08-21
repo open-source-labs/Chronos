@@ -2,10 +2,10 @@ size,path
 "",Namespace: default
 "",Namespace: default/Service: grafana/Pod: grafana-85d768d55b-jkr84
 "",Namespace: default/Service: grafana
-"",Namespace: default/Service: frontend/Pod: nginx-frontend-55b44fbc7-q4glh
-"",Namespace: default/Service: frontend/Pod: nginx-frontend-55b44fbc7-s47v4
+"",Namespace: default/Service: frontend/Pod: nginx-frontend-55b44fbc7-45xp7
+"",Namespace: default/Service: frontend/Pod: nginx-frontend-55b44fbc7-5n2dh
 "",Namespace: default/Service: frontend
-"",Namespace: default/Service: backend/Pod: node-backend-d597768c-rtwwx
+"",Namespace: default/Service: backend/Pod: node-backend-d597768c-z7mkw
 "",Namespace: default/Service: backend
-"",Namespace: default/Service: prometheus-service/Pod: prometheus-deployment-96898bbc9-km5cf
+"",Namespace: default/Service: prometheus-service/Pod: prometheus-deployment-96898bbc9-qg7tl
 "",Namespace: default/Service: prometheus-service
