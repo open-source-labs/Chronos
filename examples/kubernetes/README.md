@@ -39,7 +39,7 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in step 3]
 ```
 docker build -t frontend:1.0 .
 ```
-**Mac Users:** Alternative to running the above command, `cd` into the scripts folder and run the `buildClient.sh` script
+**Mac Users:** Alternative to running the above command, `cd` into the scripts folder and run the `./buildClient.sh` script
 
 
 ## Build the Server
@@ -66,6 +66,11 @@ CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save heal
 docker build -t backend:1.0 .
 ```
 
+## Start the npm Server
+1. `cd` into the `server` folder inside `chronos_npm_package`, then run `npm install` to install all dependencies.
+
+2. run `npm start` to start npm server.
+
 
 ## Deploy the Cluster
 1. `cd` into the launch folder and run the following commands to start the services and deployments described in the YAML files:
@@ -76,10 +81,7 @@ kubectl apply -f frontend.yml
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `startKuber.sh` script.
 
-
-2. `cd` into the `server` folder inside `chronos_npm_package`, then run `npm install` and `npm start`
-
-3. Check in Docker desktop if your containers have been created. You should see something similar to the following:
+2. Check in Docker desktop if your containers have been created. You should see something similar to the following:
 
 <p align="center">
   <img alt="Kubernetes containers created" src="../../assets/examples_kubernetes_created.png">
