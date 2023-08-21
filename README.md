@@ -52,7 +52,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
     - Enables distributed tracing enabled across microservices applications
     - Displays real-time temperature, speed, latency, and memory statistics for local services
     - Displays and compares multiple microservice metrics in a single graph
-    - Allow Kubernetes monitoring via Prometheus server
+    - Allow Kubernetes and Docker monitoring via Prometheus server and Grafana visualization.
     - Compatible with <img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
     - Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
     - Supports <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
