@@ -91,7 +91,7 @@ kubectl apply -f frontend.yml
   <img alt="dashboards created" src="../../assets/kubernetes-example2.png">
 </p>
 
-The second image is inside **k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0** container, it may take a while to show up in Docker desktop based on the scraping interval
+The second image is inside **k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0** container, it may take a while to show up in Docker desktop based on the scraping interval.
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
 
