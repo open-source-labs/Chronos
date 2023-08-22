@@ -40,7 +40,6 @@ class Chronos {
     this.config = config;
   }
 
-
   propagate() {
     /**
      * Places an unique x-correlating-id into the headers of each request/response.
@@ -48,7 +47,6 @@ class Chronos {
      */
     hpropagate({ propagateInResponses: true });
   }
-
 
   track() {
     /**
@@ -74,54 +72,48 @@ class Chronos {
     if (database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.services(this.config);
+      console.log('dockerized really? chronos.js LN 75', dockerized, this.config)
       dockerized ? mongo.docker(this.config) : mongo.health(this.config);
       if (database.connection === 'REST') {
         return mongo.communications(this.config);
       }
-    }
-
-    /**
-     * If the provided database is PostgreSQL
-     * - Connection is made to the postgres client via the provided URI by the user.
-     *
-     * - 'services' table will be created if not already and stores every microservice
-     * that is apart of the application.
-     *
-     * - Information is collected if the microservice is containerized
-     *
-     * - 'communications' table will be created which creates a new row entry for every
-     * endpoint that the user Request travels through (tracked with hpropograte)
-     */
-    else if (database.type === 'PostgreSQL') {
+    } else if (database.type === 'PostgreSQL') {
+      /**
+       * If the provided database is PostgreSQL
+       * - Connection is made to the postgres client via the provided URI by the user.
+       *
+       * - 'services' table will be created if not already and stores every microservice
+       * that is apart of the application.
+       *
+       * - Information is collected if the microservice is containerized
+       *
+       * - 'communications' table will be created which creates a new row entry for every
+       * endpoint that the user Request travels through (tracked with hpropograte)
+       */
       postgres.connect(this.config);
       postgres.services(this.config);
-      dockerized ? postgres.docker(this.config) : postgres.health(this.config)
+      dockerized ? postgres.docker(this.config) : postgres.health(this.config);
       if (database.connection === 'REST') {
         return postgres.communications(this.config);
       }
-    }
-
-    else {
+    } else {
       throw new Error('The only allowed database types are MongoDB and PostgreSQL');
     }
   }
 
-
   async kafka() {
     // Test metrics server connection
     await utilities.testMetricsQuery(this.config);
-  
+
     if (this.config.database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.serverQuery(this.config);
     }
-  
+
     else if (this.config.database.type === 'PostgreSQL') {
       postgres.connect(this.config);
       postgres.serverQuery(this.config);
-    }
-
-    else {
+    } else {
       throw new Error('The only allowed database types are MongoDB and PostgreSQL');
     }
   }
@@ -129,23 +121,37 @@ class Chronos {
   async kubernetes() {
     // Test metrics server connection
     await utilities.testMetricsQuery(this.config);
-  
+
     if (this.config.database.type === 'MongoDB') {
-      mongo.connect(this.config);
+      await mongo.connect(this.config);
+      await mongo.storeGrafanaAPIKey(this.config);
+      //await mongo.createGrafanaDashboards(this.config);
       mongo.serverQuery(this.config);
       // return mongo.modifyMetrics(this.config);
     }
-  
+
     else if (this.config.database.type === 'PostgreSQL') {
       postgres.connect(this.config);
       postgres.serverQuery(this.config);
-    }
-
-    else {
+    } else {
       throw new Error('The only allowed database types are MongoDB and PostgreSQL');
     }
   }
 
+  async docker () {
+    await utilities.testMetricsQuery(this.config);
+    if (this.config.database.type === 'MongoDB') {
+      await mongo.connect(this.config);
+      await mongo.storeGrafanaAPIKey(this.config);
+      mongo.serverQuery(this.config);
+      // return mongo.modifyMetrics(this.config);
+    } else if (this.config.database.type === 'PostgreSQL') {
+      postgres.connect(this.config);
+      postgres.serverQuery(this.config);
+    } else {
+      throw new Error('The only allowed database types are MongoDB and PostgreSQL');
+    }
+  }
 
   ServerWrapper(server, proto, methods) {
     /**
@@ -164,7 +170,6 @@ class Chronos {
     return null;
   }
 
-
   ClientWrapper(client, service) {
     /**
      * Wraps the gRPC client to automatically write logs to provided DB
@@ -182,7 +187,6 @@ class Chronos {
     return null;
   }
 
-
   link(client, server) {
     /**
      * Allows the passthrough of metadata from gRPC server to gRPC client
@@ -192,7 +196,6 @@ class Chronos {
      */
     client.metadata = server.metadataHolder;
   }
-
 }
 
 module.exports = Chronos;

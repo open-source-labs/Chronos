@@ -11,6 +11,7 @@
     "sourceMap": true,
     "module": "commonjs",
     "allowJs": true,
+    "checkJs": false,
     "jsx": "react",
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -23,5 +24,5 @@
     "node_modules",
     "dist"
   ],
-  "include": ["./electron/**/*", "./electron/**/*.json", "jest.config.ts"]
+  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json"]
 }

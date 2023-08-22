@@ -14,7 +14,7 @@ chronos.propagate();
 const app = express();
 
 app.use(express.json());
-app.use('/', chronos.track());
+chronos.docker();
 
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
@@ -53,5 +53,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(8888, () => {
-  console.log(`Book server running on port 8888...`);
+  console.log(`Book server running on port 8888...BookServer.js Line 56`);
 });

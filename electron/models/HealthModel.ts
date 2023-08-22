@@ -17,6 +17,10 @@ const HealthSchema = new Schema({
     type: String,
     default: '',
   },
+  token: {
+    type: String,
+    default: '',
+  },
 });
 
 const HealthModelFunc = (serviceName: string) => mongoose.model<any>(serviceName, HealthSchema);

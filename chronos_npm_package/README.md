@@ -2,6 +2,8 @@
 - Bug Fixes
 - Refactored code for additional modularity and customization
 - Ability for developers to increase number of metrics monitored for microservices
+- Connected to Grafana interface.
+- Ability to select graph type and process kubernetes resource data
 #
 
 ## Features 
@@ -10,7 +12,7 @@
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
 - Monitor an Apache Kafka cluster via the JMX Prometheus Exporter
-- Monitor a Kubernetes cluster via a Prometheus monitoring server
+- Monitor Docker and Kubernetes cluster via a Prometheus monitoring server and display charts using Grafana
 
 #
 
@@ -205,6 +207,8 @@ Chronos can monitor an Kubernetes clusters by saving metric data from instant qu
 
 In `chronos-config.js`, set the `mode` to `kubernetes` and pass it both the name of the port the Prometheus server is listening on INSIDE the cluster, and the name of the Prometheus service so that its IP address can be resolved using KubeDNS.
 
+Also add a `grafanaAPIKey` section, this API key will grant chronos access to create and update dashboards in Grafana.
+
 ```js
 // Excerpt from a chronos-config.js
 
@@ -214,6 +218,8 @@ module.exports = {
   mode: 'kubernetes',
   promService: 'prometheus-service',
   promPort: 8080,
+
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
 
   // ...
 }
