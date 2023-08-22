@@ -37,7 +37,6 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     console.log("uid: ", uid)
     console.log("parsedName: ", parsedName)
 
-    // make request to update dashboard
     const handleSelectionChange = async (event) => {
         setType([...type, graphType]);
         await fetch('http://localhost:1111/api/updateDashboard', {
@@ -108,51 +107,30 @@ const TimeSeries = (uid, parsedName, graphType, timeFrame) => {
 }
 
 const BarChart = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 
 const Stat = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 
 const Gauge = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 
 const Table = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 
 const Histogram = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 
 const PieChart = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 
 const AlertList = (uid, parsedName, graphType, timeFrame) => {
-    <>
-        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
-        <hr />
-    </>
+    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
 }
 export default GrafanaEventChart;
