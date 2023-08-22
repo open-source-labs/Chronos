@@ -122,7 +122,7 @@ grafana-datasource-config.yml
 grafanaService.yml
 grafana.yml
 ```
-Then configute Prometheus and Grafana with your own application's deployments.
+Then configure Prometheus and Grafana with your own application's deployments using images.
 
 ## Contributing
 
