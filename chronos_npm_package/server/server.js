@@ -60,13 +60,6 @@ app.get('/api/kuberData', kuberControllers.getResources, fileControllers.saveCSV
 });
 
 
-
-
-
-
-
-
-
 app.use('*', (req, res) => {
     res.status(404).send('Not Found');
 });
@@ -83,4 +76,4 @@ app.use((err, req, res, next) => {
     return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}! chronos_npm_package Server Loaded`))
+app.listen(port, () => console.log(`🤖 Example app listening on port ${port}! chronos_npm_package Server Loaded 🎉`))

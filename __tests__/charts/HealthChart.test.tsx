@@ -1,3 +1,5 @@
+//BELOW test cases are only for instances of REACT Plotly, which is currently on microservices, gRPC and AWS.  Change file from .txt to .tsx to run test
+
 import React from 'react';
 import HealthChart from '../../app/charts/HealthChart';
 import { render, screen } from '@testing-library/react';

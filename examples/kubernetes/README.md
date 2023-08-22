@@ -39,7 +39,7 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in step 3]
 ```
 docker build -t frontend:1.0 .
 ```
-**Mac Users:** Alternative to running the above command, `cd` into the scripts folder and run the `buildClient.sh` script
+**Mac Users:** Alternative to running the above command, `cd` into the scripts folder and run the `buildClient.sh` script by running `./buildClient.sh` in the terminal.
 
 
 ## Build the Server
@@ -66,6 +66,12 @@ CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save heal
 docker build -t backend:1.0 .
 ```
 
+## Start the npm Server
+1. `cd` into the `server` folder inside `chronos_npm_package`, then run `npm install` to install all dependencies.
+
+2. run `npm start` to start npm server.
+
+3. You should see `🤖 Example app listening on port 1111! chronos_npm_package Server Loaded 🎉` in the terminal.
 
 ## Deploy the Cluster
 1. `cd` into the launch folder and run the following commands to start the services and deployments described in the YAML files:
@@ -76,14 +82,15 @@ kubectl apply -f frontend.yml
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `startKuber.sh` script.
 
-
-2. `cd` into the `server` folder inside `chronos_npm_package`, then run `npm install` and `npm start`
-
-3. Check in Docker desktop if your containers have been created. You should see something similar to the following:
+2. Check in Docker desktop if your containers have been created. You should see something similar to the following:
 
 <p align="center">
   <img alt="Kubernetes containers created" src="../../assets/examples_kubernetes_created.png">
 </p>
+<p align="center">
+  <img alt="dashboards created" src="../../assets/kubernetes-example2.png">
+</p>
+(The second image is inside k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0 container, it may take a while to show up in Docker desktop based on the scraping interval)
 
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
@@ -101,15 +108,26 @@ kubectl delete -f frontend.yml
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `stopKuber.sh` script
 
-**Note**: The above part only teardown Prometheus and Kubernetes, it leaves Grafana running. This is because if you teardown Grafana, the next time you redeploy you will be login with a new account, the access token and dashboard you created within this account will lose.
+**Note**: The above part only teardown Prometheus and Kubernetes, it leaves Grafana running. This is because if you teardown Grafana, the next time you redeploy you will be login with a new account, the access token and dashboard you created within this account will be lost.
 
 To teardown grafana, run the following commands:
 ```
-kubectl delete -f ../launch/grafana-datasource-config.yml
-kubectl delete -f ../launch/grafanaService.yml
-kubectl delete -f ../launch/grafana.yml
+kubectl delete -f launch/grafana-datasource-config.yml
+kubectl delete -f launch/grafanaService.yml
+kubectl delete -f launch/grafana.yml
 ```
 
+## Insight for how to migrate this example to your own app
+To configure Prometheus and Grafana, you can simply copy the below yaml files to your own app.
+```
+clusterRole.yml
+promConfig.yml
+prometheus.yml
+grafana-datasource-config.yml
+grafanaService.yml
+grafana.yml
+```
+Then configure Prometheus and Grafana with your own application's deployments using images.
 
 ## Contributing
 

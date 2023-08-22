@@ -23,15 +23,22 @@ Docker also ensures that the versions that worked well on dev are bundled up and
 
 For additional details on how Chronos works this example, please review the Docker section in the [Chronos NPM Package README](../../chronos_npm_package/README.md).
 
-## Steps to Run Example
 
+
+## Grafana API KEY
+
+1. Run docker compose command below (LN 61) to start your Grafana container before you can access your service account token.
+
+2. In your browser, go to `localhost:32000`, which will be the login page of grafana. Use `admin` as both username and password to login. You can change the password after login.
+
+3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create an service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
+
+## Steps to Run Example
 Peform the following steps in each of the _books_, _customers_, _frontend_, and _orders_ directories
 
-1. Add a `.env` file to _each_ folder with the following key/value pairs:
+1. Add a `.env` file to each of _books_, _customers_, _frontend_, and _orders_ folders with the following key/value pairs:
 
 - **NOTE**: Ensure that there are no quotes surrounding any of the keys and values.
-
-> > > New collaboration group - testing all 5 url added to each .env// --> testing now...<<<
 
 ```
 CHRONOS_DB = MongoDB or PostgreSQL
@@ -39,26 +46,25 @@ CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save heal
 BOOK_URI = A MongoDB URI for the bookserver microservice to use
 CUSTOMER_URI = A MongoDB URI for the customerserver microservice to use
 ORDER_URI = A MongoDB URI for the orderserver microservice to use
+CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section (Grafana API Key)]
 ```
 
 2.  Verify that `@chronosmicro/tracker` is a dependency in each of the _books_, _customers_, _frontend_, and _orders_ folders (see the `package.json` in each folder).
 
-    - If the @chronosmicro/tracker dependency is listed as a **remote** npm package (i.e. `"@chronosmicro/tracker": "^11.0.1"`) and you've ran `npm install`, no further work is needed continue to step 3.
+    - If the @chronosmicro/tracker dependency is listed as a **remote** npm package (i.e. `"@chronosmicro/tracker": "^12.0.1"`) and you've ran `npm install`, no further work is needed continue to step 3.  **However, confirm that the "@chronosmicro/tracker" you've installed from npm has the correct information which you will query later because the database automation will build from the npm installed version NOT the root directory level "chronos_npm_package"**
 
-    - If you have the dependency as
-      `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^11.0.1"` and run npm install.
+    - If you have the dependency as `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^12.0.1"` and run npm install.  **Unless you are wanting to test local copies of the "Chronos_npm_package" file**
 
 3.  With the terminal navigated to the the _examples/docker_ folder, run the command:
-
-> > > No working, installing VSC docker ext<<< --must have docker installed for this command to run
 
 ```
 docker-compose -f docker-compose.yml up
 ```
 
-4. If you run into any issues regarding 'linux/amd64,linux/arm/v7,linux/arm64/v8' for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary. Change "platform" to linux/arm64/v8 for M1 Chips and linux/amd64 for Intel Chips.
-
-If you run into any issues regarding versions/images cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary. Change "image" to `image: gcr.io/cadvisor/cadvisor:latest` to `image: gcr.io/cadvisor/cadvisor:v0.47.0`
+4. If you run into any issues regarding `linux/amd64,linux/arm/v7,linux/arm64/v8` for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary and try the below solutions. 
+  1. Change `platform` to `linux/arm64/v8` for M1 Chips and `linux/amd64` for Intel Chips.
+  2. Change "image" to `image: gcr.io/cadvisor/cadvisor:latest` to `image: gcr.io/cadvisor/cadvisor:v0.47.0` 
+  3. Alternatively, use Docker Buildx to specify multi-platform.
 
 ###
 
@@ -90,12 +96,19 @@ Use `docker compose down` to remove.
   <img alt="docker containers removed" src="../../assets/examples_docker_removed.png">
 </p>
 
-## Contributing
+## Insight for how to migrate this example to your own app
+To configure Prometheus and Grafana, you can simply copy the below yaml files to your own app.
+```
 
-Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
-
-Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
+prometheus.yml
+datasource.yml
+dashboard.yml
+10619_rev1.json 
+**(Please note dashboard.yml and 10619_rev1.json is just one of many dashboards available on https://grafana.com/grafana/dashboards/)**
+```
+Then configure Prometheus and Grafana with your own application's deployments using images.
 
 ## License
 
 [MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
+.
