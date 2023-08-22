@@ -3,6 +3,7 @@
 - Refactored code for additional modularity and customization
 - Ability for developers to increase number of metrics monitored for microservices
 - Connected to Grafana interface.
+- Ability to select graph type and process kubernetes resource data
 #
 
 ## Features 
