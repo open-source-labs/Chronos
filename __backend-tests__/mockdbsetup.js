@@ -2,14 +2,20 @@ const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 
 let mongo = null;
+let uri;
  
 const connectDB = async () => {
   mongo = await MongoMemoryServer.create();
-  const uri = mongo.getUri();
+  uri = await mongo.getUri();
  
   await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+  }).then((result) => {
+    console.log(result.connection.readyState)
+    console.log(result.connection.host)
+  }).catch((err) => {
+    console.log('Unable to connect to MongoMemoryServer')
   });
 };
 
@@ -31,4 +37,4 @@ const dropCollections = async () => {
   };
 
 
-module.exports = { connectDB, dropDB, dropCollections}
+module.exports = { connectDB, dropDB, dropCollections, uri }

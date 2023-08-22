@@ -12,14 +12,4 @@ const connectMongoose = async (i:number, URI: string) => {
   }
 };
 
-// const connectMongoose = async (i: number, URI: string) => {
-//   try {
-//     const db2 = mongoose.createConnection(testURL);
-//     console.log('connection to user provided db established..');
-//     return db2;
-//   } catch (error) {
-//     console.log('Error connecting to second db... ', error);
-//   }
-// }
-
 export default connectMongoose;
