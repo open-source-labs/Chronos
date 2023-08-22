@@ -11,7 +11,6 @@ import Header from '../components/Header';
 import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
-import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 import LogsTable from '../charts/LogsTable';
 import EventContainer from './EventContainer';
