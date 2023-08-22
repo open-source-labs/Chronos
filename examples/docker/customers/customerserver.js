@@ -13,7 +13,7 @@ chronos.propagate();
 const app = express();
 
 app.use(express.json());
-app.use('/', chronos.track());
+chronos.docker();
 
 app.use(cors());
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));

@@ -1,5 +1,8 @@
 ## People
-
+[Tyler Coryell](https://github.com/Tcoryell),
+[Edwin Leong](https://github.com/edwinlny),
+[Eisha Kaushal](https://github.com/eishakaushal),
+[Haoyu Liu](https://github.com/HaoyL666),
 [Snow X. Bai](https://github.com/xueapp),
 [Taylor Zhang](https://github.com/taylrzhang),
 [Tim Lee](https://github.com/timlee12),

@@ -11,7 +11,6 @@ import Header from '../components/Header';
 import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
 import TrafficChart from '../charts/TrafficChart';
-import DockerChart from '../charts/DockerChart';
 import RouteChart from '../charts/RouteChart';
 import LogsTable from '../charts/LogsTable';
 import EventContainer from './EventContainer';
@@ -20,8 +19,11 @@ import HealthContainer from './HealthContainer';
 import ModifyMetrics from './ModifyMetricsContainer';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from '../components/Styling';
+import DockerHealthContainer from './DockerHealthContainer';
 
 import '../stylesheets/GraphsContainer.scss';
+import { Link } from 'react-router-dom';
+import Inspect from './Inspect';
 
 interface Params {
   app: any;
@@ -44,12 +46,14 @@ const GraphsContainer: React.FC = React.memo(props => {
   const [chart, setChart] = useState<string>('all');
   const [prevRoute, setPrevRoute] = useState<string>('');
   const { mode } = useContext(DashboardContext.DashboardContext);
+  let [inspect, setInspect] = useState<boolean>(false);
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it
-    // not work correctly, so it has been omitted
-    const healthServiceArray = serviceArray.filter((value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics');
+    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it  not work correctly, so it has been omitted
+    const healthServiceArray = serviceArray.filter(
+      (value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics'
+    );
     if (live) {
       setIntervalID(
         setInterval(() => {
@@ -87,6 +91,7 @@ const GraphsContainer: React.FC = React.memo(props => {
     };
   }, [service, live]);
 
+  //random variable to hold the light or dark mode of the display?..ok....sure
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   const routing = (route: string) => {
@@ -128,7 +133,14 @@ const GraphsContainer: React.FC = React.memo(props => {
     if (selectedMetrics) {
       selectedMetrics.forEach((element, id) => {
         const categoryName = Object.keys(element)[0];
-        const prefix = categoryName === 'Event' ? 'event_' : 'health_';
+        let prefix;
+        if (categoryName === 'Event') {
+          prefix = 'event_';
+        } else if (categoryName === 'books' || categoryName === 'customers' || categoryName === 'frontend' || categoryName === 'orders'){
+          prefix = 'docker_';
+        } else {
+          prefix = 'health_';
+        }
         buttonList.push(
           <button
             id={`${prefix}${categoryName}-button`}
@@ -192,8 +204,21 @@ const GraphsContainer: React.FC = React.memo(props => {
         >
           Modify Metrics
         </button>
+        {/* <Link className="sidebar-link" to="/Inspect" id="Inspect" >
+          <SettingsIcon
+              style={{
+                WebkitBoxSizing: 'content-box',
+                boxShadow: 'none',
+                width: '35px',
+                height: '35px',
+              }}
+            />
+          &emsp;Inspect
+        </Link> */}
+        <button onClick={() => { setInspect(!inspect) }}>Inspect</button>
       </nav>
       <Header app={app} service={service} live={live} setLive={setLive} />
+      {inspect && <Inspect />}
       <div className="graphs-container">
         {chart === 'communications' ? (
           <div className="graphs">
@@ -220,9 +245,18 @@ const GraphsContainer: React.FC = React.memo(props => {
               />
             )}
             {chart.startsWith('event_') && (
-              <EventContainer colourGenerator={stringToColour} sizing="solo" />
+              <>
+                <EventContainer colourGenerator={stringToColour} sizing="solo" />
+              </>
+
             )}
-            {chart === 'docker' && <DockerChart />}
+           {/* docker charts */}
+            {chart.startsWith('docker_') && (
+              <>
+                <DockerHealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)} />
+              </>
+
+            )}
             {chart === 'modifyMetrics' && <ModifyMetrics />}
           </div>
         )}

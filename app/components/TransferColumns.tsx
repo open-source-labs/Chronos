@@ -121,6 +121,7 @@ const TransferColumns = React.memo(() => {
   const createSelectedMetricsList = () => {
     const temp: any[] = [];
     const categorySet = new Set();
+    console.log('Inside TransferColumns.txs line 124 targetKeys: ', targetKeys)
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -140,12 +141,13 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
+    console.log('temp', temp)
     setSelectedMetrics(temp);
   };
 
   // makes the column titles for the selection grid
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'id', headerName: 'ID', flex: 1 },
     {
       field: 'tag',
       headerName: 'Category',
@@ -166,7 +168,7 @@ const TransferColumns = React.memo(() => {
     const row = {
       id: index,
       tag: el.tag,
-      title: el.title.split(' | ')[1].replace('kubernetes-cadvisor/docker-desktop/', ''),
+      title: el.title.split(' | ')[1].replace(/.*\/.*\//g, ''),
     }; // gets rid of the full path
     rows.push(row);
   });

@@ -169,7 +169,6 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
     generateHealthCharts(typeSortedHealthData);
   }, [category]);
 
-  // JJ-ADDITION
   return (
     <div>
       {service !== 'kafkametrics' && service !== 'kubernetesmetrics' ? healthChartsArr : []}
