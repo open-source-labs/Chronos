@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   // General configuration
   microservice: 'kubernetesmetrics',
-  interval: 25000,
+  interval: 40000,
 
   // Mode Specific
   mode: 'kubernetes',

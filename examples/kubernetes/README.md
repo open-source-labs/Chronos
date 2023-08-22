@@ -71,7 +71,6 @@ docker build -t backend:1.0 .
 
 2. run `npm start` to start npm server.
 
-
 ## Deploy the Cluster
 1. `cd` into the launch folder and run the following commands to start the services and deployments described in the YAML files:
 ```
@@ -86,6 +85,10 @@ kubectl apply -f frontend.yml
 <p align="center">
   <img alt="Kubernetes containers created" src="../../assets/examples_kubernetes_created.png">
 </p>
+<p align="center">
+  <img alt="dashboards created" src="../../assets/kubernetes-example2.png">
+</p>
+(The second image is inside k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0, it may take a while to show up in Docker desktop based on the scraping interval)
 
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
@@ -103,7 +106,7 @@ kubectl delete -f frontend.yml
 
 **Mac Users:** Alternative to running the above commands, `cd` into the *scripts* folder and run the `stopKuber.sh` script
 
-**Note**: The above part only teardown Prometheus and Kubernetes, it leaves Grafana running. This is because if you teardown Grafana, the next time you redeploy you will be login with a new account, the access token and dashboard you created within this account will lose.
+**Note**: The above part only teardown Prometheus and Kubernetes, it leaves Grafana running. This is because if you teardown Grafana, the next time you redeploy you will be login with a new account, the access token and dashboard you created within this account will be lost.
 
 To teardown grafana, run the following commands:
 ```
