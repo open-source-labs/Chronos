@@ -99,3 +99,4 @@ Read our [contributing README](../../CONTRIBUTING.md) to further learn how you c
 ## License
 
 [MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
+.
