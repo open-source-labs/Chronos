@@ -1,9 +1,3 @@
-/** From Version 5.2 Team:
- * This file does not seem to be showing any data.
- * Hope a future team figures it out.
- * Best of luck!
- */
-
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import Graph from 'react-graph-vis';
@@ -154,12 +148,6 @@ const RouteChart = React.memo(() => {
     },
   };
 
-  // const events = {
-  //   select(event) {
-  //     const { nodes, edges } = event;
-  //   },
-  // };
-
   if (communicationsData.length > 0 && communicationsData[0].endpoint !== '/') {
     return (
       <div className="traceContainer">
@@ -168,7 +156,6 @@ const RouteChart = React.memo(() => {
           className={classes.paper}
           graph={graph}
           options={options}
-          // events={events}
           style={{
             fontFamily: 'Roboto',
             boxShadow: '3px 3px 6px 1px rgb(175, 175, 175)',

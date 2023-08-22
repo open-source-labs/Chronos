@@ -14,7 +14,7 @@ const About: React.FC = React.memo(() => {
    * Feel free to change the header for the list of names.
    * 
    */
-  const nameArray: JSX.Element[] = ['Haoyu', 'Edwin', 'Tyler', 'Eisha'].map(name => {
+  const nameArray: JSX.Element[] = ['Haoyu', 'Eisha', 'Edwin', 'Tyler'].map(name => {
     return (
       <span style={currentMode} className="text">
         <p>{`${name}`}</p>
@@ -49,7 +49,7 @@ const About: React.FC = React.memo(() => {
         <p style={currentMode} className="text">
           Snow, Taylor, Tim, Roberto, Nachiket, Tiffany, Bruno, Danny, Vince, Matt, Derek, Kit,
           Grace, Jen, Patty, Stella, Michael, Ronelle, Todd, Greg, Brianna, Brian, Alon, Alan,
-          Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander, Elisa, Josh, Troy, Gahl,
+          Ousman, Ben, Chris, Jenae, Tim, Kirk, Jess, William, Alexander, Elisa, Josh, Troy, Gahl, 
           Brisa, Kelsi, Lucie, Jeffrey, Justin
         </p>
         <br />

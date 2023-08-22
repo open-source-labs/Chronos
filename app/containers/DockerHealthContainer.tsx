@@ -9,7 +9,6 @@ interface HealthContainerProps {
   sizing: string;
   colourGenerator: Function;
   category: string;
-  //currentService: string;
 }
 
 interface Params {
@@ -38,10 +37,6 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
   const [currChunk, setCurrChunk] = useState<JSX.Element[]>([]);
   const chunkSize = 7;
   let [isGrafana, setIsGrafana] = useState(false);
-  /**
-   * This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
-   * Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.
-  */
 
   function nextChunk() {
     const nextChunk = healthChartsArr.slice(currIndex, currIndex + chunkSize);
@@ -55,7 +50,7 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
   }
 
   const filterSelectedMetricsAndHealthData = (): DockerDataObject => {
-    // define a filtered health data object for output
+    // define a filtered docker data object for output
     // define an array of filteredMetricNames for later use
     const filteredHealthData = {};
     const filteredMetricNames: string[] = [];
@@ -79,7 +74,7 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
       filteredHealthData[service] = {};
       const categoryObjects = healthData[service];
       for (const categoryName in categoryObjects) {
-        // if the category in healthData matches the category passed down to this HealthContainer, iterate over the related metrics
+        // if the category in healthData matches the category passed down to this DockerHealthContainer, iterate over the related metrics
         if (categoryName === category) {
           const metricObjects = categoryObjects[categoryName];
           for (const metric in metricObjects) {
@@ -107,9 +102,7 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
 
   // function to generate charts using the type-sorted data
   const generateHealthCharts = (sortedData: DockerDataObject): void => {
-    //onst chartsArray: JSX.Element[] = [];
     const grafanaChartsArray: JSX.Element[] = [];
-    //let parsedName: string = '';
     const keymaker = () => {
       return Math.floor(Math.random() * 1000);
     };
@@ -120,17 +113,7 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
         // pass down the value of the current data type and service
         const chartData = metricObjects[metricName];
         const token = chartData.token;
-        // chartsArray.push(
-        //   <HealthChart
-        //     key={'H' + keymaker()}
-        //     dataType={dataType}
-        //     serviceName={serviceName}
-        //     chartData={chartData}
-        //     categoryName={category}
-        //     sizing={sizing}
-        //     colourGenerator={colourGenerator}
-        //   />
-        // );
+       
         console.log("plotting grafana")
         grafanaChartsArray.push(
           <GrafanaEventChart metricName={metricName} token={token} />);
@@ -146,16 +129,12 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
   useEffect(() => {
     // returns an object containing only the healthData for the current category and the metrics the User selected
     const filteredHealthData = filterSelectedMetricsAndHealthData();
-    // returns an object containing the filtered data sorted by data type
-    //const typeSortedHealthData = healthDataGroupedByDataType(filteredHealthData);
     // invoking generateCharts with the sorted data will update healthChartsArr in state with the list of charts to be rendered
     generateHealthCharts(filteredHealthData);
   }, [category]);
 
-  // JJ-ADDITION
   return (
     <div>
-      {/* <div id="grafana" onClick={() => { setIsGrafana(!isGrafana) }}>Grafana</div> */}
       {service.includes('kafkametrics') || service.includes('kubernetesmetrics') || service.includes('books') || service.includes('customers') || service.includes('frontend') || service.includes('orders')? currChunk : []}
       {healthChartsArr.length > chunkSize && (
         <>
