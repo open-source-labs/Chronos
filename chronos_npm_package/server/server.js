@@ -60,13 +60,6 @@ app.get('/api/kuberData', kuberControllers.getResources, fileControllers.saveCSV
 });
 
 
-
-
-
-
-
-
-
 app.use('*', (req, res) => {
     res.status(404).send('Not Found');
 });
