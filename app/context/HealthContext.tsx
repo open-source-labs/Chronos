@@ -96,42 +96,6 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
         }
       ))
     } , []);
-  // const fetchHealthData = useCallback(serv => {
-  //   ipcRenderer.removeAllListeners('healthResponse');
-
-  //   let temp: HealthDataObject[] = [];
-  //   //Promise.all(
-  //     const promises = serv.map((service: string) => {
-  //       return new Promise((resolve, reject) => {
-  //         ipcRenderer.send('healthRequest', `${service}-containerinfos`);
-  //         ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
-  //           let result: object[];
-  //           if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
-  //             result = JSON.parse(data);
-  //             console.log('HealthContext.tsx line 68 result: ', result, 'service', service, 'Obj key', Object.keys(result[0])[0]);
-  //             if (result && result.length && service === Object.keys(result[0])[0]) {
-  //               resolve(result[0]);
-  //             }
-  //           }
-  //         });
-  //       }).then((dt: any) => {
-  //         console.log('HealthContext.tsx line 75 dt: ', dt);
-  //         temp.push(dt);
-  //         if (checkServicesComplete(temp, serv)) {
-  //           setServices(serv);
-  //           let transformedData: any = {};
-  //           console.log('original healthData before transformation: ', temp);
-  //           transformedData = healthTransformer(temp);
-  //           console.log('healthData after tranformation: ', transformedData);
-  //           setHealthData(transformedData);
-  //         }
-  //       }).catch ((err) => {
-  //         console.log("healthcontext.tsx ERROR: ", err);
-  //       });
-  //     })
-  //   Promise.all(promises).then((results) => {console.log('results from promiseALL: ', results)});
-  //   //);
-  // }, []);
 
   const checkServicesComplete = (temp: any[], serv: string[]) => {
     if (temp.length !== serv.length) {
