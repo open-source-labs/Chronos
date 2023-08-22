@@ -27,7 +27,7 @@ For additional details on how Chronos works this example, please review the Dock
 
 ## Grafana API KEY
 
-1. Run docker compose command below (LN 64) to start your Grafana container before you can access your service account token.
+1. Run docker compose command below (LN 61) to start your Grafana container before you can access your service account token.
 
 2. In your browser, go to `localhost:32000`, which will be the login page of grafana. Use `admin` as both username and password to login. You can change the password after login.
 
@@ -51,14 +51,11 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section 
 
 2.  Verify that `@chronosmicro/tracker` is a dependency in each of the _books_, _customers_, _frontend_, and _orders_ folders (see the `package.json` in each folder).
 
-    - If the @chronosmicro/tracker dependency is listed as a **remote** npm package (i.e. `"@chronosmicro/tracker": "^12.0.1"`) and you've ran `npm install`, no further work is needed continue to step 3.  **However, confirm that the "@chronosmicro/tracker" you've installed from npm has the correct database names you will query later because the database automation will build from the npm installed version
+    - If the @chronosmicro/tracker dependency is listed as a **remote** npm package (i.e. `"@chronosmicro/tracker": "^12.0.1"`) and you've ran `npm install`, no further work is needed continue to step 3.  **However, confirm that the "@chronosmicro/tracker" you've installed from npm has the correct information which you will query later because the database automation will build from the npm installed version NOT the root directory level "chronos_npm_package"**
 
-    - If you have the dependency as
-      `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^12.0.1"` and run npm install.
+    - If you have the dependency as `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^12.0.1"` and run npm install.  **Unless you are wanting to test local copies of the "Chronos_npm_package" file**
 
 3.  With the terminal navigated to the the _examples/docker_ folder, run the command:
-
-> > > No working, installing VSC docker ext<<< --must have docker installed for this command to run
 
 ```
 docker-compose -f docker-compose.yml up
@@ -99,11 +96,17 @@ Use `docker compose down` to remove.
   <img alt="docker containers removed" src="../../assets/examples_docker_removed.png">
 </p>
 
-## Contributing
+## Insight for how to migrate this example to your own app
+To configure Prometheus and Grafana, you can simply copy the below yaml files to your own app.
+```
 
-Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
-
-Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
+prometheus.yml
+datasource.yml
+dashboard.yml
+10619_rev1.json 
+**(Please note dashboard.yml and 10619_rev1.json is just one of many dashboards available on https://grafana.com/grafana/dashboards/)**
+```
+Then configure Prometheus and Grafana with your own application's deployments using images.
 
 ## License
 

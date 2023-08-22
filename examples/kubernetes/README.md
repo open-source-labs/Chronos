@@ -39,7 +39,7 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in step 3]
 ```
 docker build -t frontend:1.0 .
 ```
-**Mac Users:** Alternative to running the above command, `cd` into the scripts folder and run the `./buildClient.sh` script
+**Mac Users:** Alternative to running the above command, `cd` into the scripts folder and run the `buildClient.sh` script by running `./buildClient.sh` in the terminal.
 
 
 ## Build the Server
@@ -71,6 +71,8 @@ docker build -t backend:1.0 .
 
 2. run `npm start` to start npm server.
 
+3. You should see `🤖 Example app listening on port 1111! chronos_npm_package Server Loaded 🎉` in the terminal.
+
 ## Deploy the Cluster
 1. `cd` into the launch folder and run the following commands to start the services and deployments described in the YAML files:
 ```
@@ -88,7 +90,7 @@ kubectl apply -f frontend.yml
 <p align="center">
   <img alt="dashboards created" src="../../assets/kubernetes-example2.png">
 </p>
-(The second image is inside k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0, it may take a while to show up in Docker desktop based on the scraping interval)
+(The second image is inside k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0 container, it may take a while to show up in Docker desktop based on the scraping interval)
 
 
 Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
@@ -116,7 +118,7 @@ kubectl delete -f launch/grafana.yml
 ```
 
 ## Insight for how to migrate this example to your own app
-To configure Prometheus and Grafana, you can simply copy those yaml files to your own app.
+To configure Prometheus and Grafana, you can simply copy the below yaml files to your own app.
 ```
 clusterRole.yml
 promConfig.yml

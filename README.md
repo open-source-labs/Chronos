@@ -27,14 +27,14 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ### With Chronos 12.0:
 
-- Improved metrics visualization by embedding more interactive and flexible Grafana charts for Docker and Kubernetes examples.
-- Increased test coverage up to 80% by crafting comprehensive unit, integration, and end-to-end tests using Jest and Selenium.
-- Fixed Docker example for not being able to display metrics correctly.
-- Designed an interactive 3D visualization showcasing the infrastructure of Kubernetes clusters (Namespace, Service, Pod), providing enhanced insights into the intricate resource distribution and configuration within the cluster for developers and users.
-- Engineered workflow efficiencies by orchestrating CI/CD pipelines, automating testing, and establishing deployment procedures, resulting in accelerated development cycles and higher reliability.
-- Increased Typescript coverage for better code quality and application robustness.
-- Updated README instructions within the provided Docker and Kubernetes examples for how to configure Prometheus and Grafana in a smooth and easy way. 
-- Revised README instructions for the `@chronosmicro/tracker` NPM package for how to use this package to monitor their own applications.
+- Enhanced metrics visualization by integrating more interactive and adaptable Grafana charts, particularly for Docker and Kubernetes use cases.
+- Achieved an 80% boost in test coverage by formulating comprehensive unit, integration, and end-to-end tests employing Jest and Selenium.
+- Rectified issues with the Docker example, ensuring accurate metric display.
+- Devised an immersive 3D visualization that effectively illustrates the Kubernetes cluster infrastructure, encompassing Namespace, Service, and Pod entities. This dynamic visualization provides developers and users with heightened insights into intricate resource allocation and configuration within the cluster.
+- Streamlined operational effectiveness by coordinating CI/CD pipelines, automating testing workflows, and establishing deployment protocols, ultimately leading to accelerated development cycles and heightened dependability.
+- Expanded Typescript coverage to enhance code quality and bolster application resilience.
+- Updated the Docker and Kubernetes example READMEs with detailed instructions on configuring Prometheus and Grafana seamlessly.
+- Enhanced clarity of instructions in the `@chronosmicro/tracker` NPM package's README, offering comprehensive guidance on utilizing the package to monitor individual applications effectively.
 
 
 **Previously implemented updates:**
