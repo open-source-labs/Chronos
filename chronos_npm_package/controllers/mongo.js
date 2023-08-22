@@ -234,24 +234,28 @@ mongo.setQueryOnInterval = async config => {
           ///////
           length = await mongo.addMetrics(parsedArray, config.mode, currentMetricNames, model);
         }
-        const documents = [];
-        for (const metric of parsedArray) {
-          /**
-           * This will check if the current metric in the parsed array
-           * evaluates to true within the currentMetricNames object
-           * which is updated by the user when they select/deselect metrics on the electron app
-           * helping to avoid overloading the db with unnecessary data.
-           */
 
-          if (currentMetricNames[metric.metric]) documents.push(model(metric));
-        }
-        await model.insertMany(parsedArray, err => {
-          if (err) {
-            console.error(err)
-          } else {
-            console.log(`${config.mode} metrics recorded in MongoDB`)
+        if (config.mode === 'docker') {
+          const documents = [];
+          for (const metric of parsedArray) {
+            /**
+             * This will check if the current metric in the parsed array
+             * evaluates to true within the currentMetricNames object
+             * which is updated by the user when they select/deselect metrics on the electron app
+             * helping to avoid overloading the db with unnecessary data.
+             */
+
+            if (currentMetricNames[metric.metric]) documents.push(model(metric));
           }
-        });
+          await model.insertMany(parsedArray, err => {
+            if (err) {
+              console.error(err)
+            } else {
+              console.log(`${config.mode} metrics recorded in MongoDB`)
+            }
+          });
+        }
+
 
         let allMetrics = await model.find({});
         console.log('allMetrics.length: ', allMetrics.length);
@@ -263,7 +267,7 @@ mongo.setQueryOnInterval = async config => {
       //   console.log(`${config.mode} metrics recorded in MongoDB`)
       // })
       .catch(err => console.log(`Error inserting ${config.mode} documents in MongoDB: `, err));
-  }, config.interval);
+  }, 40000);
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
