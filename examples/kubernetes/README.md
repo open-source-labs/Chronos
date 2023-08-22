@@ -112,6 +112,17 @@ kubectl delete -f launch/grafanaService.yml
 kubectl delete -f launch/grafana.yml
 ```
 
+## Insight for how to migrate this example to your own app
+To configure Prometheus and Grafana, you can simply copy those yaml files to your own app.
+```
+clusterRole.yml
+promConfig.yml
+prometheus.yml
+grafana-datasource-config.yml
+grafanaService.yml
+grafana.yml
+```
+Then configute Prometheus and Grafana with your own application's deployments.
 
 ## Contributing
 
