@@ -1,7 +1,6 @@
  /** From Version 5.2 Team:
  * We only fixed linting issues regarding Notifications.
  * Otherwise, Notifications still does not function properly.
- * Good luck!
  */
 
 /* eslint-disable jsx-a11y/label-has-associated-control */

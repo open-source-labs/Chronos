@@ -144,9 +144,6 @@ mongo.docker = ({ microservice, interval, mode }) => { //:config file, interval 
           .then(data => {
             return containerInfo.create(data);
           })
-          // .then(_ => {
-          //   console.log(`TESTING TESTING Docker data recorded in MongoDB collection ${microservice}`)
-          // })
           .catch(err => {
             throw new Error(err);
           });
