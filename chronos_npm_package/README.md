@@ -207,6 +207,8 @@ Chronos can monitor an Kubernetes clusters by saving metric data from instant qu
 
 In `chronos-config.js`, set the `mode` to `kubernetes` and pass it both the name of the port the Prometheus server is listening on INSIDE the cluster, and the name of the Prometheus service so that its IP address can be resolved using KubeDNS.
 
+Also add a `grafanaAPIKey` section, this API key will grant chronos access to create and update dashboards in Grafana.
+
 ```js
 // Excerpt from a chronos-config.js
 
@@ -216,13 +218,6 @@ module.exports = {
   mode: 'kubernetes',
   promService: 'prometheus-service',
   promPort: 8080,
-
-    database: {
-    connection: 'REST',
-    type: process.env.CHRONOS_DB,
-    URI: process.env.CHRONOS_URI,
-  },
-
 
   grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
 
