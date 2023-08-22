@@ -7,10 +7,6 @@ interface EventChartProps {
     token: string;
 }
 
-// interface SoloStyles {
-//     height: number;
-//     width: number;
-// }
 
 type TimeFrame = '5m' | '15m' | '30m' | '1h' | '2h' | '1d' | '2d';
 
@@ -27,16 +23,10 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     const [type, setType] = useState(['timeserie']);
     const [timeFrame, setTimeFrame] = useState('5m');
 
-    // const [solo, setSolo] = useState<SoloStyles | null>(null);
     console.log("graphType: ", graphType)
     console.log("type: ", type)
     console.log("inside GrafanaEventChart")
 
-    // setInterval(() => {
-    //     if (solo !== soloStyle) {
-    //         setSolo(soloStyle);
-    //     }
-    // }, 20);
     console.log("metricName: ", metricName)
     let uid = metricName.replace(/.*\/.*\//g, '')
     if (uid.length >= 40) {
@@ -47,8 +37,8 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     console.log("uid: ", uid)
     console.log("parsedName: ", parsedName)
 
+    // make request to update dashboard
     const handleSelectionChange = async (event) => {
-        //setGraphType(event.target.value);
         setType([...type, graphType]);
         await fetch('http://localhost:1111/api/updateDashboard', {
             method: 'POST',

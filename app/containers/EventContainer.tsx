@@ -135,6 +135,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         // }
       }
     }
+    // currently, we only display graph using grafana. It can be implement as a option to choose between ploty and grafana for future iterations
     // if (isGrafana) {
     console.log(grafanaChartsArray)
     setEventChartsArr(grafanaChartsArray);
