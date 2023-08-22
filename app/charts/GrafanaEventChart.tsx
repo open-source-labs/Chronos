@@ -108,30 +108,51 @@ const TimeSeries = (uid, parsedName, graphType, timeFrame) => {
 }
 
 const BarChart = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 
 const Stat = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 
 const Gauge = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 
 const Table = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 
 const Histogram = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 
 const PieChart = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 
 const AlertList = (uid, parsedName, graphType, timeFrame) => {
-    return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+    <>
+        return <iframe src={`http://localhost:32000/d-solo/${uid}/${parsedName}?orgId=1&refresh=10s&from=now-${timeFrame}&to=now&panelId=1${graphType}`} width="800" height="500" ></iframe>
+        <hr />
+    </>
 }
 export default GrafanaEventChart;
