@@ -315,7 +315,6 @@ mongo.createGrafanaDashboards = async (config, parsedArray) => {
     console.log('In mongo.createGrafanaDashboards!!!')
     console.log('Calling utilities.getGrafanaDatasource()');
     const datasource = await utilities.getGrafanaDatasource(config.grafanaAPIKey);
-    console.log('mongo.createGrafanaDashboards line 318:', datasource);
     //console.log('Calling utilities.promMetricsQuery()');
     //const parsedArray = await utilities.promMetricsQuery(config);
     //const datasource = await utilities.getGrafanaDatasource();

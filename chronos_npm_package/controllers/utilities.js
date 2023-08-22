@@ -249,7 +249,7 @@ const helpers = {
   parseProm: (config, data) => {
     const res = [];
     const time = Date.now();
-    const category = config.mode === 'docker' ? `${config.containerName}`: 'Event';
+    const category = config.mode === 'docker' ? `${config.containerName}` : 'Event';
 
     /**
      * Opportunity for improvement: Prometheus may query metrics that have the same job + instance + metric
@@ -266,7 +266,7 @@ const helpers = {
     for (const info of data) {
       let wholeName;
       let name;
-      if (config.mode === 'docker'){
+      if (config.mode === 'docker') {
         if (!info.metric.name) continue;
         wholeName = info.metric['__name__'];
         name = wholeName.replace(/.*\/.*\//g, '');
@@ -303,7 +303,7 @@ const helpers = {
     return res;
   },
 
-  
+
 
   createGrafanaDashboard: async (
     metric,
@@ -337,7 +337,6 @@ const helpers = {
 
     // push panel into dashboard object with a line for each metric in promQLQueries object
     dashboard.dashboard.panels.push(createGrafanaPanelObject(metric, datasource, graphType));
-    console.log('utilities.createGrafanaDashboard line 340:', dashboard.dashboard.panels);
     try {
       // POST request to Grafana Dashboard API to create a dashboard
       const dashboardResponse = await axios.post(
@@ -350,7 +349,6 @@ const helpers = {
           },
         }
       );
-      console.log("utilities.createGrafanaDashboard line 353 dashboardResponse is: ", dashboardResponse)
 
       // Descriptive error log for developers
       if (dashboardResponse.status >= 400) {
@@ -376,14 +374,14 @@ const helpers = {
         'Authorization': token
       },
     });
-    console.log('utilities.getGrafanaDatasource line 379:', datasourceResponse);
+    // console.log('utilities.getGrafanaDatasource line 379:', datasourceResponse);
     console.log("Successfully fetched datasource from Grafana API")
     // Create a datasource object to be used within panels.
     const datasource = {
       type: datasourceResponse.data[0].type,
       uid: datasourceResponse.data[0].uid,
     };
-    console.log('datasource is', datasource)
+    // console.log('datasource is', datasource)
 
     return datasource;
   },
@@ -391,7 +389,6 @@ const helpers = {
   updateGrafanaDatasource: async (token) => {
     // Fetch datasource information from grafana API.
     // This datasource is PRECONFIGURED on launch using grafana config.
-    console.log('In utilities.getGrafanaDatasource!!!');
     const datasourceResponse = await axios.get('http://localhost:32000/api/datasources', {
       headers: {
         'Content-Type': 'application/json',
