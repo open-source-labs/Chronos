@@ -5,29 +5,13 @@ const mongoose = require('mongoose');
 const mongo = require('../chronos_npm_package/controllers/mongo');
 const ServicesModel = require('../chronos_npm_package/models/ServicesModel');
 const CommunicationModel = require('../chronos_npm_package/models/CommunicationModel');
-const { connectDB, dropDB, dropCollections } = require('./mockdbsetup');
+const { connectDB, dropDB, dropCollections, uri } = require('./mockdbsetup');
 const alert = require('../chronos_npm_package/controllers/alert');
-const ContainerInfoFunc = require('../chronos_npm_package/models/ContainerInfo');
 const dockerHelper = require('../chronos_npm_package/controllers/dockerHelper');
 
-require('dotenv').config();
-
-const db = 'mongodb+srv://Ok:Ok@cluster0.axo7iyw.mongodb.net/?retryWrites=true&w=majority';
-
-beforeAll(async () => {
-  await connectDB();
-});
-
-afterAll(async () => {
-  await dropDB();
-});
-
 jest.spyOn(console, 'log').mockImplementation(() => {});
-
 jest.mock('../chronos_npm_package/controllers/alert');
-
 jest.useFakeTimers();
-
 jest.spyOn(global, 'setInterval');
 
 jest.mock('../chronos_npm_package/controllers/healthHelpers', () => {
@@ -56,6 +40,7 @@ jest.mock('../chronos_npm_package/controllers/mongo', () => ({
 const HealthModel = {
   insertMany: jest.fn(() => Promise.resolve()),
 };
+const HealthModelFunc = jest.fn(() => HealthModel);
 
 jest.mock('../chronos_npm_package/controllers/dockerHelper', () => ({
   ...jest.requireActual('../chronos_npm_package/controllers/dockerHelper'),
@@ -63,27 +48,17 @@ jest.mock('../chronos_npm_package/controllers/dockerHelper', () => ({
   readDockerContainer: jest.fn(),
 }));
 
-// jest.mock('../../chronos_npm_package/models/ContainerInfo', () => {
-//     const mockContainerInfoInstance = {
-//       create: jest.fn(),
-//     };
-//     return jest.fn(() => mockContainerInfoInstance);
-// });
-
-const HealthModelFunc = jest.fn(() => HealthModel);
-
 describe('mongo.connect', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test('should connect to MongoDB database', async () => {
-    await mongo.connect({ database: { URI: db } });
+    await mongo.connect({ database: { URI: uri } });
 
-    expect(mongoose.connect).toHaveBeenCalledWith(db);
-    // expect(console.log).toHaveBeenCalledWith(
-    //   expect.stringContaining('MongoDB database connected at')
-    // );
+    expect(console.log).toHaveBeenCalledWith(
+      expect.stringContaining('MongoDB database connected at')
+    );
   });
 
   test('should handle connection errors', async () => {
@@ -98,12 +73,14 @@ describe('mongo.connect', () => {
 });
 
 describe('mongo.services', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
+    await connectDB();
   });
 
   afterEach(async () => {
     await dropCollections();
+    await dropDB();
   });
 
   test('should create a new document', async () => {
@@ -114,12 +91,14 @@ describe('mongo.services', () => {
 });
 
 describe('mongo.communications', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
+    await connectDB();
   });
 
   afterEach(async () => {
     await dropCollections();
+    await dropDB();
   });
 
   test('should record request cycle and save communication to the database', async () => {
@@ -137,7 +116,7 @@ describe('mongo.communications', () => {
     const middleware = mongo.communications({ microservice: 'test3', slack: null, email: null });
     await middleware(req, res, () => {});
     const savedCommunication = await CommunicationModel.findOne({ microservice: 'test3' });
-    expect(savedCommunication).toBeDefined(); // The document should be defined if it exists
+    expect(savedCommunication).toBeDefined();
   });
 
   test('should send an alert', async () => {
@@ -166,13 +145,16 @@ describe('mongo.communications', () => {
 });
 
 describe('mongo.health', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+    await connectDB();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     jest.clearAllTimers();
+    await dropCollections();
+    await dropDB();
   });
 
   test('should collect data after the set interval', async () => {
@@ -209,11 +191,12 @@ describe('mongo.docker', () => {
   beforeEach(async () => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+    await connectDB();
   });
 
   afterEach(async () => {
     await dropCollections();
-    jest.clearAllTimers();
+    await dropDB();
   });
 
   test('should collect docker container information', async () => {
@@ -244,6 +227,5 @@ describe('mongo.docker', () => {
     expect(dockerHelper.getDockerContainer).toHaveBeenCalledWith(microservice);
     jest.advanceTimersByTime(1000);
     expect(dockerHelper.readDockerContainer).toHaveBeenCalledWith(mockContainerData);
-    //expect(mockContainerInfoInstance.create).toHaveBeenCalledWith(mockReadDockerContainerData);
   });
 });

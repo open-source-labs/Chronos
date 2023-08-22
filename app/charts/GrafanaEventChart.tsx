@@ -14,7 +14,7 @@ type TimeFrame = '5m' | '15m' | '30m' | '1h' | '2h' | '1d' | '2d';
 
 /** 
  * @params {EventChartProps} props - the props object containing relevant data.
- * @desc Handles k8s metrics. Memoized component to generate event chart with formatted data 
+ * @desc Handles k8s and container metrics. Memoized component to generate event chart with formatted data 
  * @returns {JSX.Element} The JSX element with the event chart.
  */
 const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
