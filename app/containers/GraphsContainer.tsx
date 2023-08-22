@@ -251,13 +251,13 @@ const GraphsContainer: React.FC = React.memo(props => {
               </>
 
             )}
+           {/* docker charts */}
             {chart.startsWith('docker_') && (
               <>
                 <DockerHealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)} />
               </>
 
             )}
-            {chart === 'docker' && <DockerChart />}
             {chart === 'modifyMetrics' && <ModifyMetrics />}
           </div>
         )}
