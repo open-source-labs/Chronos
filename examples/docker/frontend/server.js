@@ -11,6 +11,7 @@ chronos.propagate();
 const app = express();
 
 app.use(express.json());
+chronos.docker();
 
 app.use('/', express.static(path.resolve(__dirname, '../frontend')));
 app.get('/', (req, res) => {
@@ -21,7 +22,6 @@ const books = `http://localhost:8888`;
 const customers = `http://localhost:5555`;
 const orders = `http://localhost:7777`;
 
-app.use('/', chronos.track());
 
 app.use(cors());
 
