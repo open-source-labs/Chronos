@@ -2,7 +2,7 @@ name: Frontend and Backend testing
 
 on:
   pull_request:
-    branches: [devDocker_v2]
+    branches: [dev]
 
 jobs:
   frontend_testing:
