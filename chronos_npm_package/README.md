@@ -1,7 +1,7 @@
 ## What's New?
 - Enhanced Metrics Collection: Docker now supports Prometheus metrics scraping, offering improved monitoring capabilities
 - Streamlined Visualization: Docker and Kubernetes integrate with Grafana to provide dynamic visualization of collected metrics
-- Ability to select graph type and process kubernetes resource data
+- Kubernetes graph type customization and resource data processing 
 - Bug Fixes
 - Refactored code for additional modularity and customization
 
@@ -144,6 +144,7 @@ Chronos provides the option to send  emails. The properties that should be provi
 
 
 **NOTE: Email notification settings may require alternative security settings to work**
+#
 
 ### Chronos Tracker for "Microservices" Mode
 The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with Docker. If omitted, Chronos will assume this server is not running in a container, i.e. `dockerized` will default to _false_. 
@@ -278,12 +279,13 @@ When viewing your information in the Chronos Electron application the data will 
 
 **NOTE:** We provide a jmx_config.yaml file in the Chronos root folder for use with JMX prometheus that provides some useful baseline metrics to monitor.
 
-### Chronos Tracker for "docker" Mode
-Chronos can monitor Docker containers by saving metric data from instant queries to a Prometheus server in your Docker container. 
+#
+### Chronos Tracker for "Docker" Mode
+Chronos monitors Docker containers by storing metric data through instant Prometheus queries within your Docker container environment.
 
-In `chronos-config.js`, set the `mode` to `docker` and pass it both the name of the port the Prometheus server is listening on INSIDE the container, and the name of the Prometheus service so that its IP address can be resolved using DNS.
+In `chronos-config.js`, configure the `mode` parameter to `docker`. Additionally, provide the name of the port where the Prometheus server is actively listening inside the container, and specify the name of the Prometheus service to enable DNS-based resolution of its IP address.
 
-Also add a `grafanaAPIKey` section, this API key will grant chronos access to create and update dashboards in Grafana.
+Also add a `grafanaAPIKey` section, this API key will authorize Chronos for dashboard creation and updates in Grafana.
 
 ```js
 // Excerpt from a chronos-config.js
@@ -302,7 +304,7 @@ module.exports = {
 
 ```
 
-Then, insert the code below into a **SINGLE** microservice that will be deployed only as a **SINGLE** container, call `Chronos.docker`:
+Then, implement the subsequent code snippet within a **SINGLE** microservice that will be deployed only as a **SINGLE** container, and call `Chronos.docker`:
 
 ```js
 const chronosConfig = require('./chronos-config.js');
@@ -311,6 +313,7 @@ const chronos = new Chronos(chronosConfig);
 
 chronos.docker();
 ```
+
 
 ### Chronos Tracker for gRPC
 
