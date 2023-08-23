@@ -53,15 +53,58 @@ import bioLuciePic from '../../assets/Bio_picture_Lucie.jpg';
 import bioJeffPic from '../../assets/Bio_picture_Jeff.jpg';
 import bioJustinPPic from '../../assets/Bio_picture_JustinP.jpeg';
 import bioKelsiPic from '../../assets/Bio_picture_Kelsi.jpg';
-
+import bioHaoyuPic from '../../assets/Bio_picture_Haoyu.jpg';
+import bioEdwinPic from '../../assets/Bio_picture_Edwin.jpg';
+import bioEishaPic from '../../assets/Bio_picture_Eisha.jpg';
+import bioTylerPic from '../../assets/Bio_picture_Tyler.jpg';
 
 import '../../stylesheets/Team.scss';
 
 const bios = [
   {
+    name: 'Haoyu Liu',
+    bioParagraph:
+      'Haoyu, based in LA, is a dedicated full-stack engineer with a fervent passion for crafting user-friendly products optimized for distributed systems and the cloud. Outside of coding, he indulges in sports, loves to travel, and keeps abreast of the latest tech advancements.',
+    picture: bioHaoyuPic,
+    contact: {
+      gitHub: 'https://github.com/HaoyL666',
+      linkedIn: 'https://www.linkedin.com/in/haoyu-liu666/',
+    },
+  },
+  {
+    name: 'Edwin Leong',
+    bioParagraph:
+      'Edwin is a full-stack software engineer who takes pride in designing and building innovative and scablable products. He loves hiking, cats and discovering new foods.',
+    picture: bioEdwinPic,
+    contact: {
+      gitHub: 'https://github.com/edwinlny',
+      linkedIn: 'https://www.linkedin.com/in/edwin-leong1/',
+    },
+  },
+  {
+    name: 'Eisha Kaushal',
+    bioParagraph:
+      'Eisha is a software engineer based in Toronto who is committed to devising efficient solutions and developing innovative products.',
+    picture: bioEishaPic,
+    contact: {
+      gitHub: 'https://github.com/eishakaushal',
+      linkedIn: 'https://www.linkedin.com/in/eishakaushal/',
+    },
+  },
+  {
+    name: 'Tyler Coryell',
+    bioParagraph:
+      'Tyler is a full-stack software engineer based in Dallas, TX. He enjoys modularizing and deploying concise coding solutions to end users.  In his free time, he enjoys scuba diving and the beach life.',
+    picture: bioTylerPic,
+    contact: {
+      gitHub: 'https://github.com/Tcoryell',
+      linkedIn: 'https://www.linkedin.com/in/tyler-coryell/',
+    },
+  },
+  {
     name: 'Brisa Zhu',
     bioParagraph:
-      'Brisa is a software engineer based in New York that enjoys creating applications with minimalist and user-friendly features. When she\'s not coding, she enjoys playing with her foster cats and taking care of her houseplants.',
+      "Brisa is a software engineer based in New York that enjoys creating applications with minimalist and user-friendly features. When she's not coding, she enjoys playing with her foster cats and taking care of her houseplants.",
     picture: bioBrisaPic,
     contact: {
       gitHub: 'https://github.com/beezoo10',
@@ -111,7 +154,7 @@ const bios = [
   {
     name: 'Claire Tischuk',
     bioParagraph:
-      'Claire is a full stack engineer located in Tallahassee, Florida.  She is passionate about building useful products that make a difference in people\'s lives.',
+      "Claire is a full stack engineer located in Tallahassee, Florida.  She is passionate about building useful products that make a difference in people's lives.",
     picture: bioClairePic,
     contact: {
       gitHub: 'https://github.com/BoopdiBop',
@@ -210,7 +253,8 @@ const bios = [
   },
   {
     name: 'Gahl Peled',
-    bioParagraph:'Gahl is a full-stack software engineer based out of Los Angeles. He enjoys rock climbing, riding his motorcycle, and writing short snippets about himself in the third person.',
+    bioParagraph:
+      'Gahl is a full-stack software engineer based out of Los Angeles. He enjoys rock climbing, riding his motorcycle, and writing short snippets about himself in the third person.',
     picture: bioGahlPic,
     contact: {
       gitHub: 'https://github.com/GP3-RS',
@@ -260,7 +304,7 @@ const bios = [
   {
     name: 'Giovanni Flores-Lovo',
     bioParagraph:
-      'Gio is a full-stack software engineer based out of Los Angeles. Gio\'s passions include skateboarding and live music.',
+      "Gio is a full-stack software engineer based out of Los Angeles. Gio's passions include skateboarding and live music.",
     picture: bioGiovanniPic,
     contact: {
       gitHub: 'https://github.com/gfloresl',
@@ -310,7 +354,7 @@ const bios = [
   {
     name: 'William Owen',
     bioParagraph:
-      'William is a full-stack web developer building inspirational projects from the Puget Sound. When he\'s not coding, he\'s out kayaking.',
+      "William is a full-stack web developer building inspirational projects from the Puget Sound. When he's not coding, he's out kayaking.",
     picture: bioWilliamPic,
     contact: {
       gitHub: 'https://github.com/williamowen65',
@@ -340,7 +384,7 @@ const bios = [
   {
     name: 'Bruno Portela',
     bioParagraph:
-      'Bruno is a Software Engineer who takes pride on designing and building high quality products that makes people\'s life easier. He is a great team player and is always willing to coach new developers. He loves dogs, punk rock and video games.',
+      "Bruno is a Software Engineer who takes pride on designing and building high quality products that makes people's life easier. He is a great team player and is always willing to coach new developers. He loves dogs, punk rock and video games.",
     picture: bioBrunoPic,
     contact: {
       gitHub: 'https://github.com/brunoportela',
@@ -360,7 +404,7 @@ const bios = [
   {
     name: 'Vince Ho',
     bioParagraph:
-      'Vince is a full-stack software engineer based in San Diego. Beyond software development, Vince\'s passion includes taking care of his plants and lifting heavy weight off the ground.',
+      "Vince is a full-stack software engineer based in San Diego. Beyond software development, Vince's passion includes taking care of his plants and lifting heavy weight off the ground.",
     picture: bioVincePic,
     contact: {
       gitHub: 'https://github.com/hodesza',
@@ -390,7 +434,7 @@ const bios = [
   {
     name: 'Kit Loong Yee',
     bioParagraph:
-      'Kit is a full-stack software engineer who has a passion in building products to better peoples\' lives. He also enjoys classical music and spending time with his family.',
+      "Kit is a full-stack software engineer who has a passion in building products to better peoples' lives. He also enjoys classical music and spending time with his family.",
     picture: bioKitPic,
     contact: {
       gitHub: 'https://github.com/kitloong1',
@@ -529,8 +573,7 @@ const bios = [
   },
   {
     name: 'Duane McFarlane',
-    bioParagraph:
-      'Duane is a full-stack engineer based out of New York.',
+    bioParagraph: 'Duane is a full-stack engineer based out of New York.',
     picture: bioDuanePic,
     contact: {
       gitHub: 'https://github.com/Duane11003',
@@ -539,8 +582,7 @@ const bios = [
   },
   {
     name: 'Michelle Herrera',
-    bioParagraph:
-      'Michelle is a full-stack engineer based out of New York.',
+    bioParagraph: 'Michelle is a full-stack engineer based out of New York.',
     picture: bioMichellePic,
     contact: {
       gitHub: 'https://github.com/mesherrera',
@@ -549,8 +591,7 @@ const bios = [
   },
   {
     name: 'Mohtasim Chowdhury',
-    bioParagraph:
-      'Mohtasim is a full-stack engineer based out of New York.',
+    bioParagraph: 'Mohtasim is a full-stack engineer based out of New York.',
     picture: bioMohtasimPic,
     contact: {
       gitHub: 'https://github.com/mohtasim317',
@@ -559,15 +600,13 @@ const bios = [
   },
   {
     name: 'Natalie Umanzor',
-    bioParagraph:
-    'Natalie is a full-stack engineer based out of New York.',    
+    bioParagraph: 'Natalie is a full-stack engineer based out of New York.',
     picture: bioNataliePic,
     contact: {
       gitHub: 'https://github.com/nmczormick',
       linkedIn: 'https://www.linkedin.com/in/nmczormick/',
     },
   },
-
 ];
 
 const Team = () => (
@@ -590,7 +629,7 @@ const Team = () => (
             href={obj.contact.linkedIn}
             target="__blank"
           >
-            <ion-icon class ="icon" name="logo-linkedin"></ion-icon>
+            <ion-icon class="icon" name="logo-linkedin"></ion-icon>
           </a>
         </p>
       </div>
