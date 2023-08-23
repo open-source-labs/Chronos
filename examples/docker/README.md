@@ -68,10 +68,10 @@ docker-compose -f docker-compose.yml up
 
 ###
 
-You should now see the containers running in your terminal, each reporting `"Docker data recorded in..."`.
+You should now see the containers running in your terminal, each reporting `"docker metrics recorded in..."`.
 
 <p align="center">
-  <img alt="docker data being recorded" src="../../assets/examples_docker_data.png">
+  <img alt="docker data being recorded" src="../../assets/examples_docker_data.png" width="600" height="100">
 </p>
 
 If this is being displayed for the books, customers, frontend, and orders microservices then the example is successfully saving health metrics to your database of choice!
