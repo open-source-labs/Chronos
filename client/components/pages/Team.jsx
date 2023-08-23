@@ -54,9 +54,9 @@ import bioJeffPic from '../../assets/Bio_picture_Jeff.jpg';
 import bioJustinPPic from '../../assets/Bio_picture_JustinP.jpeg';
 import bioKelsiPic from '../../assets/Bio_picture_Kelsi.jpg';
 import bioHaoyuPic from '../../assets/Bio_picture_Haoyu.jpg';
-import bioEdwinPic from '../../assets/Bio_picture_Edwin.jpg';
-import bioEishaPic from '../../assets/Bio_picture_Eisha.jpg';
-import bioTylerPic from '../../assets/Bio_picture_Tyler.jpg';
+import bioEdwinPic from '../../assets/Bio_picture_Edwin.jpeg';
+import bioEishaPic from '../../assets/Bio_picture_Eisha.png';
+import bioTylerPic from '../../assets/Bio_picture_Tyler.jpeg';
 
 import '../../stylesheets/Team.scss';
 
