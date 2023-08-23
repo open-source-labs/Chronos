@@ -11,7 +11,7 @@
 ![Build Passing](https://img.shields.io/badge/build-awesome-brightgreen)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)
-![Release: 11.0](https://img.shields.io/badge/Release-11.0-brightgreen)
+![Release: 12.0](https://img.shields.io/badge/Release-12.0-brightgreen)
 
 
 # Chronos
