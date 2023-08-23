@@ -2,8 +2,8 @@ name: Frontend and Backend testing
 
 on:
   pull_request:
-    branches: [devDocker_v2]
-
+    branches: [master]
+##Branch name may need to be changed depending on name of your dev branch
 jobs:
   frontend_testing:
     runs-on: ubuntu-latest
