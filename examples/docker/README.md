@@ -27,11 +27,11 @@ For additional details on how Chronos works this example, please review the Dock
 
 ## Grafana API KEY
 
-1. Run docker compose command below (LN 61) to start your Grafana container before you can access your service account token.
+1. To initiate your Grafana container and prepare for accessing your service account token, execute the following command: `docker-compose -f docker-compose.yml up`
 
-2. In your browser, go to `localhost:32000`, which will be the login page of grafana. Use `admin` as both username and password to login. You can change the password after login.
+2. In your browser, go to `localhost:32000`, which will be the login page of Grafana. Use `admin` as both username and password to login. You can change the password after login.
 
-3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create an service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
+3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create a service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
 
 ## Steps to Run Example
 Peform the following steps in each of the _books_, _customers_, _frontend_, and _orders_ directories
@@ -55,7 +55,7 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section 
 
     - If you have the dependency as `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^12.0.1"` and run npm install.  **Unless you are wanting to test local copies of the "Chronos_npm_package" file**
 
-3.  With the terminal navigated to the the _examples/docker_ folder, run the command:
+3.  With the terminal navigated to the _examples/docker_ folder, run the command:
 
 ```
 docker-compose -f docker-compose.yml up

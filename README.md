@@ -27,9 +27,9 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ### With Chronos 12.0:
 
-- Enhanced metrics visualization by integrating more interactive and adaptable Grafana charts, particularly for Docker and Kubernetes use cases.
+- Enhanced metrics visualization by integrating more interactive and adaptable Grafana charts for Docker and Kubernetes use cases.
 - Achieved an 80% boost in test coverage by formulating comprehensive unit, integration, and end-to-end tests employing Jest and Selenium.
-- Rectified issues with the Docker example, ensuring accurate metric display.
+- Implemented Prometheus data scraping functionality for Docker containers, facilitating seamless metric collection and monitoring.
 - Devised an immersive 3D visualization that effectively illustrates the Kubernetes cluster infrastructure, encompassing Namespace, Service, and Pod entities. This dynamic visualization provides developers and users with heightened insights into intricate resource allocation and configuration within the cluster.
 - Streamlined operational effectiveness by coordinating CI/CD pipelines, automating testing workflows, and establishing deployment protocols, ultimately leading to accelerated development cycles and heightened dependability.
 - Expanded Typescript coverage to enhance code quality and bolster application resilience.

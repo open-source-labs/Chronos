@@ -1,9 +1,10 @@
 ## What's New?
+- Enhanced Metrics Collection: Docker now supports Prometheus metrics scraping, offering improved monitoring capabilities
+- Streamlined Visualization: Docker and Kubernetes integrate with Grafana to provide dynamic visualization of collected metrics
+- Kubernetes graph type customization and resource data processing 
 - Bug Fixes
 - Refactored code for additional modularity and customization
-- Ability for developers to increase number of metrics monitored for microservices
-- Connected to Grafana interface.
-- Ability to select graph type and process kubernetes resource data
+
 #
 
 ## Features 
@@ -12,7 +13,7 @@
 - Displays real-time temperature, speed, latency, and memory statistics
 - Display and compare multiple microservice metrics in a single graph
 - Monitor an Apache Kafka cluster via the JMX Prometheus Exporter
-- Monitor Docker and Kubernetes cluster via a Prometheus monitoring server and display charts using Grafana
+- Monitor Docker and Kubernetes clusters via a Prometheus monitoring server and display charts using Grafana
 
 #
 
@@ -54,10 +55,18 @@ module.exports = {
   mode: 'kubernetes',
   promService: 'prometheus-service',
   promPort: 8080,
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
 
   // (c) Apache Kafka
   mode: 'kafka',
   jmxuri: '<insert URI>',
+
+  // (d) Docker
+  mode: 'docker',
+  promService: 'docker.for.mac.localhost',
+  promPort: 9090,
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
+
   /*  USE ONE OF THE MODE-SPECIFIC CONFIGURATIONS ABOVE   */
 
   // Notifications
@@ -87,7 +96,7 @@ The `database` property is required and takes in the following:
 - `type` should be a string and only supports 'MongoDB' and 'PostgreSQL' at this time
 - `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation
 
-The `mode` property accepts a string that can either be 'microservices', 'kubernetes', or 'kafka'. There are other settings that depend on the mode choice, so these are broken down in the "Chronos Tracker for Microservices" section.
+The `mode` property accepts a string that can either be 'microservices', 'kubernetes', 'kafka', or 'docker'. There are other settings that depend on the mode choice, so these are broken down in the "Chronos Tracker for Microservices" section.
 
 The `notifications` property is an array that can be optionally left empty. It allows developers to be alerted when the server responds to requests with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects, each with a `type` and `settings` property. 
 
@@ -135,6 +144,7 @@ Chronos provides the option to send  emails. The properties that should be provi
 
 
 **NOTE: Email notification settings may require alternative security settings to work**
+#
 
 ### Chronos Tracker for "Microservices" Mode
 The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with Docker. If omitted, Chronos will assume this server is not running in a container, i.e. `dockerized` will default to _false_. 
@@ -268,6 +278,42 @@ chronos.kafka();
 When viewing your information in the Chronos Electron application the data will be available in the service "kafkametrics"
 
 **NOTE:** We provide a jmx_config.yaml file in the Chronos root folder for use with JMX prometheus that provides some useful baseline metrics to monitor.
+
+#
+### Chronos Tracker for "Docker" Mode
+Chronos monitors Docker containers by storing metric data through instant Prometheus queries within your Docker container environment.
+
+In `chronos-config.js`, configure the `mode` parameter to `docker`. Additionally, provide the name of the port where the Prometheus server is actively listening inside the container, and specify the name of the Prometheus service to enable DNS-based resolution of its IP address.
+
+Also add a `grafanaAPIKey` section, this API key will authorize Chronos for dashboard creation and updates in Grafana.
+
+```js
+// Excerpt from a chronos-config.js
+
+module.exports = {
+  // ...
+
+  mode: 'docker',
+  promService: 'docker.for.mac.localhost',
+  promPort: 8080,
+
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
+
+  // ...
+}
+
+```
+
+Then, implement the subsequent code snippet within a **SINGLE** microservice that will be deployed only as a **SINGLE** container, and call `Chronos.docker`:
+
+```js
+const chronosConfig = require('./chronos-config.js');
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+
+chronos.docker();
+```
+
 
 ### Chronos Tracker for gRPC
 
