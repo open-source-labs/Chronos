@@ -23,8 +23,6 @@ Docker also ensures that the versions that worked well on dev are bundled up and
 
 For additional details on how Chronos works this example, please review the Docker section in the [Chronos NPM Package README](../../chronos_npm_package/README.md).
 
-
-
 ## Grafana API KEY
 
 1. To initiate your Grafana container and prepare for accessing your service account token, execute the following command: `docker-compose -f docker-compose.yml up`
@@ -34,6 +32,7 @@ For additional details on how Chronos works this example, please review the Dock
 3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create a service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
 
 ## Steps to Run Example
+
 Peform the following steps in each of the _books_, _customers_, _frontend_, and _orders_ directories
 
 1. Add a `.env` file to each of _books_, _customers_, _frontend_, and _orders_ folders with the following key/value pairs:
@@ -51,9 +50,9 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section 
 
 2.  Verify that `@chronosmicro/tracker` is a dependency in each of the _books_, _customers_, _frontend_, and _orders_ folders (see the `package.json` in each folder).
 
-    - If the @chronosmicro/tracker dependency is listed as a **remote** npm package (i.e. `"@chronosmicro/tracker": "^12.0.1"`) and you've ran `npm install`, no further work is needed continue to step 3.  **However, confirm that the "@chronosmicro/tracker" you've installed from npm has the correct information which you will query later because the database automation will build from the npm installed version NOT the root directory level "chronos_npm_package"**
+    - If the @chronosmicro/tracker dependency is listed as a **remote** npm package (i.e. `"@chronosmicro/tracker": "^12.0.1"`) and you've ran `npm install`, no further work is needed continue to step 3. **However, confirm that the "@chronosmicro/tracker" you've installed from npm has the correct information which you will query later because the database automation will build from the npm installed version NOT the root directory level "chronos_npm_package"**
 
-    - If you have the dependency as `"@chronosmicro/tracker": "file:./chronos_npm_package"`, which is a **local** file, make sure to change the version from `"file:./chronos_npm_package"` to `"^12.0.1"` and run npm install.  **Unless you are wanting to test local copies of the "Chronos_npm_package" file**
+    - If you have the dependency as `"@chronosmicro/tracker": "^12.0.1"`, which is a **local** file, make sure to change the version from `"^12.0.1"` to `"^12.0.1"` and run npm install. **Unless you are wanting to test local copies of the "Chronos_npm_package" file**
 
 3.  With the terminal navigated to the _examples/docker_ folder, run the command:
 
@@ -61,10 +60,10 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section 
 docker-compose -f docker-compose.yml up
 ```
 
-4. If you run into any issues regarding `linux/amd64,linux/arm/v7,linux/arm64/v8` for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary and try the below solutions. 
-  1. Change `platform` to `linux/arm64/v8` for M1 Chips and `linux/amd64` for Intel Chips.
-  2. Change "image" to `image: gcr.io/cadvisor/cadvisor:latest` to `image: gcr.io/cadvisor/cadvisor:v0.47.0` 
-  3. Alternatively, use Docker Buildx to specify multi-platform.
+4. If you run into any issues regarding `linux/amd64,linux/arm/v7,linux/arm64/v8` for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary and try the below solutions.
+1. Change `platform` to `linux/arm64/v8` for M1 Chips and `linux/amd64` for Intel Chips.
+1. Change "image" to `image: gcr.io/cadvisor/cadvisor:latest` to `image: gcr.io/cadvisor/cadvisor:v0.47.0`
+1. Alternatively, use Docker Buildx to specify multi-platform.
 
 ###
 
@@ -97,15 +96,18 @@ Use `docker compose down` to remove.
 </p>
 
 ## Insight for how to migrate this example to your own app
+
 To configure Prometheus and Grafana, you can simply copy the below yaml files to your own app.
+
 ```
 
 prometheus.yml
 datasource.yml
 dashboard.yml
-10619_rev1.json 
+10619_rev1.json
 **(Please note dashboard.yml and 10619_rev1.json is just one of many dashboards available on https://grafana.com/grafana/dashboards/)**
 ```
+
 Then configure Prometheus and Grafana with your own application's deployments using images.
 
 ## License

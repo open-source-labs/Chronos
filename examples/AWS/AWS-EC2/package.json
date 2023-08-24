@@ -20,7 +20,7 @@
     "react-redux": "^5.0.7",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.0",
-    "@chronosmicro/tracker": "file:./chronos_npm_package"
+    "@chronosmicro/tracker": "^12.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
