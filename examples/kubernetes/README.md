@@ -27,15 +27,16 @@ This example has been developed and tested using the Kubernetes Engine packaged 
 
 **Note**: If you run into `Permission denied` error, try run this command: `chmod +x [the_file_name]` in the terminal and re-run `./setup.sh`.
 
-2. In your browser, go to `localhost:32000`, which will be the login page of grafana. Use `admin` as both username and password to login. You can change the password after login.
+2. Open your web browser and navigate to `localhost:32000`. If you've correctly completed step 1 of the setup, you'll be directed to the Grafana login page. Use `admin` for both the username and password to log in. You can update the password after logging in if needed.
 
-3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create an service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
+3. Go to `Home -> Administration -> Service accounts`, and select `Add service account` to establish a new service account. Make sure to designate `Admin` as the role. Then, click on `Add service account token`, press `generate`, and you're finished! Keep this token in mind as you'll utilize it for accessing Grafana HTTP API programmatically.
 
 4. Add a `.env` file to the _server_ folder that contains the following key/value pairs:
 
 ```
 CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in step 3]
 ```
+**Note**: If you are monitoring your own application, be sure to create a `.env` file as well.
 
 ## Build the Client
 
@@ -104,7 +105,7 @@ kubectl apply -f frontend.yml
 
 The second image is inside **k8s_node-backend_node-backend-d597768c-6zm5j_default_46da04f8-99c6-4522-9141-6c05f8d5141d_0** container, it may take a while to show up in Docker desktop based on the scraping interval.
 
-Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application.
+Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the `Chronos desktop app`.
 
 ## Teardown the Cluster
 

@@ -213,11 +213,11 @@ volumes:
 ```
 
 ### Chronos Tracker for "Kubernetes" Mode
-Chronos can monitor an Kubernetes clusters by saving metric data from instant queries to a Prometheus server in your Kubernetes cluster. 
+Chronos can monitor an Kubernetes clusters by saving metric data from instant queries to a Prometheus server in your Kubernetes cluster, and then display all metrics data through Grafana dashboards.
 
 In `chronos-config.js`, set the `mode` to `kubernetes` and pass it both the name of the port the Prometheus server is listening on INSIDE the cluster, and the name of the Prometheus service so that its IP address can be resolved using KubeDNS.
 
-Also add a `grafanaAPIKey` section, this API key will grant chronos access to create and update dashboards in Grafana.
+Also add a `grafanaAPIKey` section, this API key will grant chronos access to create and update dashboards in Grafana. Be sure to include `CHRONOS_GRAFANA_API_KEY` in your `.env` with `Bearer [the access token you get from Grafana]`. For more details, please check Kubernetes example.
 
 ```js
 // Excerpt from a chronos-config.js
