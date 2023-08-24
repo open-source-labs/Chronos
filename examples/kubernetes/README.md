@@ -60,7 +60,7 @@ CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save heal
 
 - If the @chronosmicro/tracker dependency is listed as a **remote npm package** (i.e. `"@chronosmicro/tracker": "^12.0.1"`), no further work is needed.
 
-- If the @chronosmicro/tracker dependency is listed as a **local npm package** (i.e. `"@chronosmicro/tracker": "file:./chronos_npm_package"`), the Docker build will require that the Chronos code is in this folder. Either:
+- If the @chronosmicro/tracker dependency is listed as a **local npm package** (i.e. `"@chronosmicro/tracker": "^12.0.1"`), the Docker build will require that the Chronos code is in this folder. Either:
   - Copy the _chronos_npm_package_ folder in manually, and **go to step 3**
   - **OR**
   - If you are a Mac user, you can use the `buildServer.sh` script to automate this process and **skip step 3**
