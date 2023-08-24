@@ -30,9 +30,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 - Updated the Docker and Kubernetes example READMEs with detailed instructions on configuring Prometheus and Grafana seamlessly.
 - Enhanced clarity of instructions in the `@chronosmicro/tracker` NPM package's README, offering comprehensive guidance on utilizing the package to monitor individual applications effectively.
 
-<br>
 
-**Demo:**
 <a href="https://chronoslany.com/">
     <img src="assets/demo.gif" alt="Chronos" title="Chronos" align="center" height="500" width="auto" />
 </a>
