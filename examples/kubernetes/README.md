@@ -27,7 +27,7 @@ This example has been developed and tested using the Kubernetes Engine packaged 
 
 **Note**: If you run into `Permission denied` error, try run this command: `chmod +x [the_file_name]` in the terminal and re-run `./setup.sh`.
 
-2. In your browser, go to `localhost:32000`. You can see the Grafana login page if you setup step 1 correctly. Use `admin` as both username and password to login. You can change the password after login.
+2. Open your web browser and navigate to `localhost:32000`. If you've correctly completed step 1 of the setup, you'll be directed to the Grafana login page. Use `admin` for both the username and password to log in. You can update the password after logging in if needed.
 
 3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create an service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
 
