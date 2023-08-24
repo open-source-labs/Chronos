@@ -116,7 +116,7 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
        
         console.log("plotting grafana")
         grafanaChartsArray.push(
-          <GrafanaEventChart metricName={metricName} token={token} label={'name'} value={service} />);
+          <GrafanaEventChart metricName={metricName} token={token} />);
 
       }
     }
