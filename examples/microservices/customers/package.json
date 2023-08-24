@@ -12,7 +12,7 @@
     "license": "ISC",
     "dependencies": {
         "body-parser": "^1.19.0",
-        "@chronosmicro/tracker": "^8.0.3",
+        "@chronosmicro/tracker": "^12.0.2",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
