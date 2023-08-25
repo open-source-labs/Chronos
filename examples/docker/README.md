@@ -33,6 +33,8 @@ For additional details on how Chronos works this example, please review the Dock
 
 3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create a service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically.
 
+4. Stop all containers and delete all images (except Grafana).
+
 ## Steps to Run Example
 Peform the following steps in each of the _books_, _customers_, _frontend_, and _orders_ directories
 
