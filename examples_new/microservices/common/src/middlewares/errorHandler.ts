@@ -6,7 +6,7 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   console.log(err.message);
   // check if incoming error extends the CustomError class
   if (err instanceof CustomError) {
-    return res.status(err.statusCode).send(err.formatError);
+    return res.status(err.statusCode).send(err.formatError());
   }
 
   // if not a custom error send default internal error message
