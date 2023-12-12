@@ -1,6 +1,6 @@
 {
   "name": "@chronosrx/common",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Common modules for Chronos Microservice",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
