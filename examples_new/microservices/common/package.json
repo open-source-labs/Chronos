@@ -1,10 +1,16 @@
 {
-  "name": "common",
+  "name": "@chronosrx/common",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Common modules for Chronos Microservice",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf ./build/*",
+    "build": "npm run clean && tsc",
+    "pub": "git add . && git commit -m \"Updates to common package\" && npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
