@@ -87,3 +87,7 @@ export const logout = async (req: Request, res: Response) => {
 
   res.status(200).send({ message: 'success' });
 };
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  res.send({});
+};
