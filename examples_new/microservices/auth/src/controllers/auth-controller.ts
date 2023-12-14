@@ -26,6 +26,8 @@ export const signup = async (req: Request, res: Response) => {
   // save newly created user document to the database
   await newUser.save();
 
+  // TODO PUBLISH AN EVENT TO THE EVENT BUS - type USER_CREATED, with data of user - user.id & username
+
   // create a JWT w/ userId store on it
   // note: createJwt method created on the userSchema
   const token = newUser.createJwt();
