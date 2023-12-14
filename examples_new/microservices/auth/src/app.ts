@@ -1,8 +1,13 @@
 import express from 'express';
+import 'express-async-errors';
+import dotenv from 'dotenv';
+dotenv.config();
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 import authRouter from './routes/auth-router';
 
 const app = express();
+
+app.use(express.json());
 
 // app.get('/', (req, res) => {
 //   console.log('💥 Test Route');
