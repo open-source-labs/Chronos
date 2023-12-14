@@ -1,4 +1,4 @@
-import { BadRequestError } from '@chronosrx/common';
+import { BadRequestError, CurrentUserRequest } from '@chronosrx/common';
 import { Request, Response } from 'express';
 import { User } from '../models/user';
 import { attachCookie } from '../util/attachCookie';
@@ -88,6 +88,16 @@ export const logout = async (req: Request, res: Response) => {
   res.status(200).send({ message: 'success' });
 };
 
-export const getCurrentUser = async (req: Request, res: Response) => {
-  res.send({});
+export const getCurrentUser = async (req: CurrentUserRequest, res: Response) => {
+  // check request object for currentUser property
+  if (!req.currentUser) {
+    // if it doesn't exist send back status 200 with object with currentUser property set to null
+    res.status(200).send({ currentUser: null });
+  }
+
+  // if it does exist - use req.currentUser to find user in database by id
+  const user = await User.findById(req.currentUser);
+  // send back 200 with object with property currentUser set to the user from the database
+  res.status(200).send({currentUser: user});
+
 };

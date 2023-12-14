@@ -30,7 +30,7 @@ it('responds with the correct user if cookie exists and is valid', async () => {
 // 2) responds with null if no valid cookie
 // -- send request to /current-user
 // -- expect null as resposne (response.body.currentUser)
-it('responds with the correct user if cookie exists and is valid', async () => {
+it('responds with currentUser of null when no cookie included in request', async () => {
   const response = await request(app)
     .get('/api/auth/current-user')
     .send({
