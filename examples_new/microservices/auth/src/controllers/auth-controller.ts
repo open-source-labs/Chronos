@@ -1,7 +1,7 @@
 import { BadRequestError } from '@chronosrx/common';
 import { Request, Response } from 'express';
 import { User } from '../models/user';
-import { attachCookie } from '../../util/attachCookie';
+import { attachCookie } from '../util/attachCookie';
 
 export const signup = async (req: Request, res: Response) => {
   // console.log('💥 authController signup');
