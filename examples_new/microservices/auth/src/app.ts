@@ -4,12 +4,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 import authRouter from './routes/auth-router';
+import eventRouter from './routes/event-router';
 import cookieParser from 'cookie-parser';
 
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 // app.get('/', (req, res) => {
 //   console.log('💥 Test Route');
@@ -17,6 +18,7 @@ app.use(cookieParser())
 // });
 
 app.use('/api/auth', authRouter);
+app.use('/events', eventRouter);
 
 app.use('*', (req, res) => {
   throw new NotFoundError();
