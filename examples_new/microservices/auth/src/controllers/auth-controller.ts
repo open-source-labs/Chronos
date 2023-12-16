@@ -1,5 +1,6 @@
-import { BadRequestError, CurrentUserRequest } from '@chronosrx/common';
 import { Request, Response } from 'express';
+import axios from 'axios';
+import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
 import { User } from '../models/user';
 import { attachCookie } from '../util/attachCookie';
 
@@ -27,6 +28,13 @@ export const signup = async (req: Request, res: Response) => {
   await newUser.save();
 
   // TODO PUBLISH AN EVENT TO THE EVENT BUS - type USER_CREATED, with data of user - user.id & username
+  // console.log('Publishing event USER_CREATED');
+  await axios.post('http://localhost:3005/', {
+    event: {
+      type: Events.USER_CREATED,
+      payload: newUser,
+    },
+  });
 
   // create a JWT w/ userId store on it
   // note: createJwt method created on the userSchema
@@ -98,6 +106,5 @@ export const getCurrentUser = async (req: CurrentUserRequest, res: Response) => 
   // if it does exist - use req.currentUser to find user in database by id
   const user = await User.findById(req.currentUser);
   // send back 200 with object with property currentUser set to the user from the database
-  res.status(200).send({currentUser: user});
-
+  res.status(200).send({ currentUser: user });
 };
