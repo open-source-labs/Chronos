@@ -2,20 +2,23 @@ import mongoose from 'mongoose';
 
 interface ItemAttrs {
   itemName: string;
-  buyerId: string; // some user's id)
+  sellerId: string; // some user's id)
   unitPrice: number;
 }
 
+// define item attributes
 interface ItemModel extends mongoose.Model<ItemDoc> {
   build(attrs: ItemAttrs): ItemDoc;
 }
 
+//create item data in the database with these types;
 interface ItemDoc extends mongoose.Document {
   itemName: string;
-  buyerId: string;
+  sellerId: string;
   unitPrice: number;
 }
 
+// create the Schema in mongoose with defines requirements
 const itemSchema = new mongoose.Schema(
   {
     itemName: {
@@ -23,9 +26,10 @@ const itemSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    buyerId: {
-      type: String,
+    sellerId: {
+      type: mongoose.Types.ObjectId,
       required: true,
+      ref: 'User',
     },
     unitPrice: {
       type: Number,
@@ -33,12 +37,12 @@ const itemSchema = new mongoose.Schema(
     },
   },
   {
+    //anytime we create JSON formatted data, transform item using following rules
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
-        delete ret.buyerId;
       },
     },
   }
@@ -46,7 +50,7 @@ const itemSchema = new mongoose.Schema(
 
 itemSchema.statics.build = (attrs: ItemAttrs) => {
   //returning item document with (attrs) passed in
-  return new Item(attrs);
+  return new Item({ attrs });
 };
 
 const Item = mongoose.model<ItemDoc, ItemModel>('Item', itemSchema);
