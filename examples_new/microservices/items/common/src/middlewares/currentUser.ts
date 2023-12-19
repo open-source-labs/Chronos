@@ -22,6 +22,7 @@ export const currentUser = (req: CurrentUserRequest, res: Response, next: NextFu
     req.currentUser = payload.userId;
     return next();
   } catch (err) {
+    console.log('WTF');
     throw new Error('🎃Internal Error');
   }
 };

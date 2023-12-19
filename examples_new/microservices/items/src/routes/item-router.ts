@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.use((req, res, next) => {
   console.log('🤯 We Are Here');
-  next();
+  return next();
 });
-// router.use(currentUser);
-// router.use(requireAuth);
+router.use(currentUser);
+router.use(requireAuth);
 router.post('/createItem', createItem);
 
 export default router;

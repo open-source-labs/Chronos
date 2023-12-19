@@ -34,7 +34,7 @@ export const createItem = async (req: CurrentUserRequest, res: Response) => {
   await newItem.save();
 
   try {
-    await axios.post('http:/localhost:3005/', {
+    await axios.post('http://localhost:3005/', {
       event: {
         type: Events.ITEM_CREATED,
         payload: newItem,
