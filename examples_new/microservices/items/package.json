@@ -9,13 +9,16 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@chronosrx/common": "^1.0.2",
+    "@chronosrx/common": "file:./common",
     "axios": "^1.6.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
