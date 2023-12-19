@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+//define type of objects that is being passed into build method
 interface InventoryAttrs {
   itemId: string;
   units: number;
@@ -39,7 +39,10 @@ const inventorySchema = new mongoose.Schema(
 );
 
 inventorySchema.statics.build = (attrs: InventoryAttrs) => {
-  return new Inventory(attrs);
+  return new Inventory({
+    itemId: attrs.itemId,
+    units: attrs.units,
+  });
 };
 
 const Inventory = mongoose.model<InventoryDoc, InventoryModel>('Inventory', inventorySchema);

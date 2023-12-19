@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import dotenv from 'dotenv';
 dotenv.config();
 import { NotFoundError, errorHandler } from '@chronosrx/common';
