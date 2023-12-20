@@ -10,7 +10,7 @@ type Action =
     }
   | {
       type: ActionType.LOGIN_USER;
-      payload: { username: string };
+      payload: { user: string };
     }
   | {
       type: ActionType.LOGOUT_USER;
@@ -31,13 +31,13 @@ const reducer = (state: StateInterface, action: Action) => {
     case ActionType.LOGIN_USER:
       return {
         ...state,
-        username: action.payload.username,
+        user: action.payload.user,
         isLoading: false,
       };
     case ActionType.LOGOUT_USER:
       return {
         ...state,
-        username: '',
+        user: '',
         isLoading: false,
       };
     default:

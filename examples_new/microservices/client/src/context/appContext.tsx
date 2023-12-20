@@ -1,7 +1,12 @@
-import { createContext, useReducer, useContext } from 'react';
+import { createContext, useReducer, useContext, useEffect } from 'react';
 import { ActionType } from './actions';
 import reducer from './reducer';
-import axios from 'axios';
+import { customFetch } from '../util/authFetch';
+
+const authFetch = customFetch(3000);
+// const itemFetch = customFetch(3001);
+// const inventoryFetch = customFetch(3002);
+// const orderFetch = customFetch(3003);
 
 interface Item {
   id: string;
@@ -13,14 +18,14 @@ interface Item {
 
 export interface StateInterface {
   isLoading: boolean;
-  username: string;
+  user: string;
   myItems: Item[];
   itemsForPurchase: Item[];
 }
 
 const initialState: StateInterface = {
   isLoading: false,
-  username: '',
+  user: '',
   myItems: [],
   itemsForPurchase: [],
 };
@@ -47,6 +52,11 @@ type Props = {
 const AppContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  useEffect(() => {
+    getCurrentUser();
+    // eslint-disable-next-line
+  }, []);
+
   const startLoading = () => {
     dispatch({ type: ActionType.START_LOADING });
   };
@@ -58,15 +68,12 @@ const AppContextProvider = ({ children }: Props) => {
   const loginUser = async (username: string, password: string, isLogin: boolean) => {
     startLoading();
     try {
-      const response = await axios.post(
-        `http://localhost:3000/api/auth/${isLogin ? 'login' : 'signup'}`,
-        {
-          username,
-          password,
-        }
-      );
+      const response = await authFetch.post(`/auth/${isLogin ? 'login' : 'signup'}`, {
+        username,
+        password,
+      });
       console.log(response);
-      dispatch({ type: ActionType.LOGIN_USER, payload: { username: response.data.username } });
+      dispatch({ type: ActionType.LOGIN_USER, payload: { user: response.data.username } });
     } catch (err) {
       console.log(err);
     }
@@ -76,9 +83,23 @@ const AppContextProvider = ({ children }: Props) => {
   const logoutUser = async () => {
     startLoading();
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/logout');
+      const response = await authFetch.post('http://localhost:3000/api/auth/logout');
       console.log(response);
       dispatch({ type: ActionType.LOGOUT_USER });
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
+  const getCurrentUser = async () => {
+    startLoading();
+    try {
+      const response = await authFetch('/auth/current-user');
+      const { currentUser } = response.data;
+      if (currentUser) {
+        dispatch({ type: ActionType.LOGIN_USER, payload: { user: currentUser } });
+      }
     } catch (err) {
       console.log(err);
     }

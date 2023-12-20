@@ -8,18 +8,19 @@ type Props = {
 };
 
 const Protected = ({ children }: Props) => {
-  const { username, isLoading } = useAppContext();
+  const { user, isLoading } = useAppContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+    // eslint-disable-next-line
+  }, [user]);
 
   if (isLoading) {
     return <Loading />;
   }
-
-  useEffect(() => {
-    if (!username) {
-      navigate('/login');
-    }
-  }, [username]);
 
   return children;
 };
