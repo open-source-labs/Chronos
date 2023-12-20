@@ -4,7 +4,6 @@ interface OrderAttrs {
   itemId: string;
   amount: number;
   totalPrice: number;
-  buyerId: string;
   sellerId: string;
 }
 
@@ -16,7 +15,6 @@ interface OrderDoc extends mongoose.Document {
   itemId: string;
   amount: number;
   totalPrice: number;
-  buyerId: string;
   sellerId: string;
 }
 
@@ -35,10 +33,6 @@ const OrderSchema = new mongoose.Schema(
     totalPrice: {
       type: Number,
       required: true,
-    },
-    buyerId: {
-      type: String,
-      require: true,
     },
     sellerId: {
       type: String,
@@ -62,7 +56,6 @@ OrderSchema.statics.build = (attrs: OrderAttrs) => {
     itemId: attrs.itemId,
     amount: attrs.amount,
     totalPrice: attrs.totalPrice,
-    buyerId: attrs.buyerId,
     sellerId: attrs.sellerId,
   });
 };
