@@ -1,14 +1,26 @@
-import { useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 const Login = () => {
-  const { loginUser } = useAppContext();
+  const { isLoading, user, loginUser } = useAppContext();
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: Event) => {
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
+  if (isLoading) return <Loading />;
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!username || !password) return;
     if (!isLogin && (!passwordConfirm || password !== passwordConfirm)) return;
@@ -63,7 +75,7 @@ const Login = () => {
           bg-lime-600"
         ></div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={e => handleSubmit(e)}
           className="flex flex-col justify-center items-center relative
           px-20 py-10 ring-1 ring-black/5 bg-white/20 backdrop-blur-lg
           rounded-md
