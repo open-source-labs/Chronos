@@ -1,6 +1,7 @@
 import { createContext, useReducer, useContext } from 'react';
 import { ActionType } from './actions';
 import reducer from './reducer';
+import axios from 'axios';
 
 interface Item {
   id: string;
@@ -27,12 +28,16 @@ const initialState: StateInterface = {
 interface AppContextInterface extends StateInterface {
   startLoading: () => void;
   stopLoading: () => void;
+  loginUser: (username: string, password: string, isLogin: boolean) => void;
+  logoutUser: () => void;
 }
 
 const AppContext = createContext<AppContextInterface>({
   ...initialState,
   startLoading: () => null,
   stopLoading: () => null,
+  loginUser: () => null,
+  logoutUser: () => null,
 });
 
 type Props = {
@@ -50,12 +55,44 @@ const AppContextProvider = ({ children }: Props) => {
     dispatch({ type: ActionType.STOP_LOADING });
   };
 
+  const loginUser = async (username: string, password: string, isLogin: boolean) => {
+    startLoading();
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/api/auth/${isLogin ? 'login' : 'signup'}`,
+        {
+          username,
+          password,
+        }
+      );
+      console.log(response);
+      dispatch({ type: ActionType.LOGIN_USER, payload: { username: response.data.username } });
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
+  const logoutUser = async () => {
+    startLoading();
+    try {
+      const response = await axios.post('http://localhost:3000/api/auth/logout');
+      console.log(response);
+      dispatch({ type: ActionType.LOGOUT_USER });
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
   return (
     <AppContext.Provider
       value={{
         ...state,
         startLoading,
         stopLoading,
+        loginUser,
+        logoutUser,
       }}
     >
       {children} {/* <App /> */}

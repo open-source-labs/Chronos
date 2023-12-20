@@ -10,7 +10,7 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route
-        path="/something"
+        path="/"
         element={
           <Protected>
             <SharedLayout />
@@ -19,7 +19,7 @@ function App() {
       >
         <Route index element={<Home />} />
       </Route>
-      <Route path='*' element={<NotFound/>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
