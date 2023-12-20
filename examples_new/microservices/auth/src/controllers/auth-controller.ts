@@ -108,7 +108,7 @@ export const getCurrentUser = async (req: CurrentUserRequest, res: Response) => 
   // check request object for currentUser property
   if (!req.currentUser) {
     // if it doesn't exist send back status 200 with object with currentUser property set to null
-    res.status(200).send({ currentUser: null });
+    return res.status(200).send({ currentUser: null });
   }
 
   // if it does exist - use req.currentUser to find user in database by id
