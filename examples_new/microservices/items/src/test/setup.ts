@@ -33,30 +33,25 @@ afterAll(async () => {
 });
 
 global.login = async () => {
+  // create a random MongoDB ID
   const testUserId = new mongoose.Types.ObjectId().toHexString();
+  // create a user with the random ID
   const testUser = User.build({
     userId: testUserId,
     username: 'test',
   });
   await testUser.save();
 
-  // Build a JWT payload.  { id, email }
+  console.log('🪪 TestUserId', testUserId);
+
+  // Build a JWT payload.  { userId }
   const payload = {
     userId: testUserId,
   };
 
-  // Create the JWT!
+  // Create the JWT
   const token = jwt.sign(payload, process.env.JWT_KEY!);
 
-  // Build session Object. { jwt: MY_JWT }
-  const session = { token };
-
-  // Turn that session into JSON
-  const tokenJSON = JSON.stringify(session);
-
-  // Take JSON and encode it as base64
-  const base64 = Buffer.from(tokenJSON).toString('base64');
-
-  // return a string thats the cookie with the encoded data
-  return [`token=${base64}`];
+  // return formatted cookie
+  return [`token=${token}`];
 };
