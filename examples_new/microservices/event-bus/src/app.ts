@@ -15,7 +15,7 @@ app.use('/', (req: Request, res: Response) => {
   // Auth
   axios.post('http://localhost:3000/events', { event });
   // Item
-  // axios.post('http://localhost:3001/events', {event});
+  axios.post('http://localhost:3001/events', { event });
   // Inventory
   // axios.post('http://localhost:3002/events', {event});
   // Order
