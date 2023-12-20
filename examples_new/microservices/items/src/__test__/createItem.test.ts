@@ -2,8 +2,10 @@ import request from 'supertest';
 import { app } from '../app';
 
 it('fails if no itemName or unitPrice are provided', async () => {
+  const cookie = await global.login();
   await request(app)
     .post('/api/items/createItem')
+    .set('Cookie', cookie)
     .send({
       itemName: 'missingThePrice',
     })
@@ -11,6 +13,7 @@ it('fails if no itemName or unitPrice are provided', async () => {
 
   await request(app)
     .post('/api/items/createItem')
+    .set('Cookie', cookie)
     .send({
       unitPrice: 3,
     })
@@ -18,8 +21,10 @@ it('fails if no itemName or unitPrice are provided', async () => {
 });
 
 it('fails if itemPrice is not a number', async () => {
+  const cookie = await global.login();
   await request(app)
     .post('/api/items/createItem')
+    .set('Cookie', cookie)
     .send({
       itemName: 'chicken',
       unitPrice: 'thisShouldBeANumber',
@@ -29,14 +34,13 @@ it('fails if itemPrice is not a number', async () => {
 
 it('creates a new item with the valid inputs', async () => {
   // LOG SAMPLE COOKIE FOR DEBUGGING global.login() helper fx
-  const cookie = global.login()
-  console.log('🍪 Sample Cookie', cookie);
-  
+  const cookie = await global.login();
+  console.log(cookie);
 
   await request(app)
     .post('/api/items/createItem')
     // TO SET COOKIE FOR AUTHENTICATED ROUTES
-    .set('Cookie', global.login())
+    .set('Cookie', cookie)
     .send({
       itemName: 'chicken',
       unitPrice: 5,

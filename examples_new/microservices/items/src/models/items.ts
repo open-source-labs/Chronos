@@ -24,7 +24,7 @@ const itemSchema = new mongoose.Schema(
     itemName: {
       type: String,
       required: true,
-      unique: true,
+      // unique: true,
     },
     sellerId: {
       type: mongoose.Types.ObjectId,
@@ -50,7 +50,7 @@ const itemSchema = new mongoose.Schema(
 
 itemSchema.statics.build = (attrs: ItemAttrs) => {
   //returning item document with (attrs) passed in
-  return new Item({ attrs });
+  return new Item(attrs);
 };
 
 const Item = mongoose.model<ItemDoc, ItemModel>('Item', itemSchema);

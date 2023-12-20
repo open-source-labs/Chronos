@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 app.use(express.json());
-// app.use(cookieParser());
+app.use(cookieParser());
 
 app.use('/api/items', itemsRouter);
 app.use('/events', eventRouter);

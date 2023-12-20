@@ -1,0 +1,128 @@
+import { createContext, useReducer, useContext, useEffect } from 'react';
+import { ActionType } from './actions';
+import reducer from './reducer';
+import { customFetch } from '../util/authFetch';
+
+const authFetch = customFetch(3000);
+// const itemFetch = customFetch(3001);
+// const inventoryFetch = customFetch(3002);
+// const orderFetch = customFetch(3003);
+
+interface Item {
+  id: string;
+  seller: string;
+  name: string;
+  unitPrice: number;
+  unitsAvailable: number;
+}
+
+export interface StateInterface {
+  isLoading: boolean;
+  user: string;
+  myItems: Item[];
+  itemsForPurchase: Item[];
+}
+
+const initialState: StateInterface = {
+  isLoading: false,
+  user: '',
+  myItems: [],
+  itemsForPurchase: [],
+};
+
+interface AppContextInterface extends StateInterface {
+  startLoading: () => void;
+  stopLoading: () => void;
+  loginUser: (username: string, password: string, isLogin: boolean) => void;
+  logoutUser: () => void;
+}
+
+const AppContext = createContext<AppContextInterface>({
+  ...initialState,
+  startLoading: () => null,
+  stopLoading: () => null,
+  loginUser: () => null,
+  logoutUser: () => null,
+});
+
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
+
+const AppContextProvider = ({ children }: Props) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    getCurrentUser();
+    // eslint-disable-next-line
+  }, []);
+
+  const startLoading = () => {
+    dispatch({ type: ActionType.START_LOADING });
+  };
+
+  const stopLoading = () => {
+    dispatch({ type: ActionType.STOP_LOADING });
+  };
+
+  const loginUser = async (username: string, password: string, isLogin: boolean) => {
+    startLoading();
+    try {
+      const response = await authFetch.post(`/auth/${isLogin ? 'login' : 'signup'}`, {
+        username,
+        password,
+      });
+      console.log(response);
+      dispatch({ type: ActionType.LOGIN_USER, payload: { user: response.data.username } });
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
+  const logoutUser = async () => {
+    startLoading();
+    try {
+      const response = await authFetch.post('http://localhost:3000/api/auth/logout');
+      console.log(response);
+      dispatch({ type: ActionType.LOGOUT_USER });
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
+  const getCurrentUser = async () => {
+    startLoading();
+    try {
+      const response = await authFetch('/auth/current-user');
+      const { currentUser } = response.data;
+      if (currentUser) {
+        dispatch({ type: ActionType.LOGIN_USER, payload: { user: currentUser } });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        ...state,
+        startLoading,
+        stopLoading,
+        loginUser,
+        logoutUser,
+      }}
+    >
+      {children} {/* <App /> */}
+    </AppContext.Provider>
+  );
+};
+
+const useAppContext = () => {
+  return useContext(AppContext) as AppContextInterface;
+};
+
+export { useAppContext, AppContextProvider };

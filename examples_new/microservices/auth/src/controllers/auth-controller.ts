@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
 import { User } from '../models/user';
 import { attachCookie } from '../util/attachCookie';
@@ -29,12 +29,20 @@ export const signup = async (req: Request, res: Response) => {
 
   // TODO PUBLISH AN EVENT TO THE EVENT BUS - type USER_CREATED, with data of user - user.id & username
   // console.log('Publishing event USER_CREATED');
-  await axios.post('http://localhost:3005/', {
-    event: {
-      type: Events.USER_CREATED,
-      payload: newUser,
-    },
-  });
+  try {
+    await axios.post('http://localhost:3005/', {
+      event: {
+        type: Events.USER_CREATED,
+        payload: newUser,
+      },
+    });
+  } catch (err) {
+    console.log(
+      `Failed to emit event USER_CREATED from auth: ${
+        (err as AxiosError).message || 'unknown error'
+      } `
+    );
+  }
 
   // create a JWT w/ userId store on it
   // note: createJwt method created on the userSchema
