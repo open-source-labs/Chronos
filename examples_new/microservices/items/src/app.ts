@@ -3,28 +3,16 @@ import 'express-async-errors';
 import dotenv from 'dotenv';
 dotenv.config();
 import { NotFoundError, errorHandler } from '@chronosrx/common';
-import authRouter from './routes/auth-router';
+import itemsRouter from './routes/item-router';
 import eventRouter from './routes/event-router';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
 
 const app = express();
 
-app.use(
-  cors({
-    credentials: true,
-    origin: 'http://localhost:8080',
-  })
-);
 app.use(express.json());
 app.use(cookieParser());
 
-// app.get('/', (req, res) => {
-//   console.log('💥 Test Route');
-//   res.status(200).send({ msg: '💥 Test route' });
-// });
-
-app.use('/api/auth', authRouter);
+app.use('/api/items', itemsRouter);
 app.use('/events', eventRouter);
 
 app.use('*', (req, res) => {
