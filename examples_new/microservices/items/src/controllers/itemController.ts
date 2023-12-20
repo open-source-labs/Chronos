@@ -76,20 +76,20 @@ export const deleteItem = async (req: CurrentUserRequest, res: Response) => {
     Item.deleteOne({ itemName });
   }
   // posting event to event bus
-  try {
-    await axios.post('http://localhost:3005/', {
-      event: {
-        type: Events.ITEM_DELETED,
-        payload: findItem,
-      },
-    });
-  } catch (err) {
-    console.log(
-      `❌ itemController.deleteItem: Failed to emit ITEM_DELETED to event-bus: ${
-        (err as AxiosError).message || 'unknown error'
-      }`
-    );
-  }
+  // try {
+  //   await axios.post('http://localhost:3005/', {
+  //     event: {
+  //       type: Events.ITEM_DELETED,
+  //       payload: findItem,
+  //     },
+  //   });
+  // } catch (err) {
+  //   console.log(
+  //     `❌ itemController.deleteItem: Failed to emit ITEM_DELETED to event-bus: ${
+  //       (err as AxiosError).message || 'unknown error'
+  //     }`
+  //   );
+  // }
   console.log(`${itemName} has been deleted`);
   res.status(201);
 };

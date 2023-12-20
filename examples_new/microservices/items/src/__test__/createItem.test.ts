@@ -34,7 +34,7 @@ it('fails if itemPrice is not a number', async () => {
 
 it('creates a new item with the valid inputs', async () => {
   // LOG SAMPLE COOKIE FOR DEBUGGING global.login() helper fx
-  const cookie = await global.login('test');
+  const cookie = await global.login('Hugh Jazz');
   console.log(cookie);
 
   await request(app)
