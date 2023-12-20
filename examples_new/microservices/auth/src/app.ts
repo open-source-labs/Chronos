@@ -6,9 +6,16 @@ import { NotFoundError, errorHandler } from '@chronosrx/common';
 import authRouter from './routes/auth-router';
 import eventRouter from './routes/event-router';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
 
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:8080',
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
