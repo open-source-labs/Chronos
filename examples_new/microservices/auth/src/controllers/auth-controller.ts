@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import axios, { AxiosDefaults, AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
 import { User } from '../models/user';
 import { attachCookie } from '../util/attachCookie';
