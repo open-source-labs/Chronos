@@ -8,6 +8,14 @@ export const createOrder = async (req: CurrentUserRequest, res: Response) => {
   const { itemId, amount } = req.body;
   //create Order document in the databse
   const newOrder = Order.build({ itemId, amount });
+import { Inventory } from '../models/Inventory';
+
+export const createOrder = async (req: CurrentUserRequest, res: Response) => {
+  //deconstruct req.body
+  const buyerId = req.currentUser;
+  const { itemId, amount, totalPrice, sellerId } = req.body;
+  //create Order document in the databse
+  const newOrder = Inventory.build({});
   await newOrder.save();
   //send created order to event bus
   await axios.post('http://localhost:3005/', {
@@ -18,6 +26,7 @@ export const createOrder = async (req: CurrentUserRequest, res: Response) => {
   });
   res.status(201).send(newOrder);
 };
+
 
 // export const getOrder = async (req: Request, res: Response) => {
 //   // check if order already exists
@@ -38,3 +47,5 @@ export const createOrder = async (req: CurrentUserRequest, res: Response) => {
 //   }
 //   res.status(200).send(deletedOrder);
 // };
+
+

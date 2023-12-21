@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 
 interface ItemAttrs {
   itemName: string;
-  sellerId: string; // some user's id)
-  unitPrice: number;
 }
 
 // define item attributes
@@ -14,8 +12,6 @@ interface ItemModel extends mongoose.Model<ItemDoc> {
 //create item data in the database with these types;
 interface ItemDoc extends mongoose.Document {
   itemName: string;
-  sellerId: string;
-  unitPrice: number;
 }
 
 // create the Schema in mongoose with defines requirements
@@ -24,16 +20,7 @@ const itemSchema = new mongoose.Schema(
     itemName: {
       type: String,
       required: true,
-      // unique: true,
-    },
-    sellerId: {
-      type: mongoose.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    unitPrice: {
-      type: Number,
-      required: true,
+      unique: true,
     },
   },
   {

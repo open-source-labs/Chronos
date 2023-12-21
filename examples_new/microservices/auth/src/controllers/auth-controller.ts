@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import axios, { AxiosError } from 'axios';
-import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
+import { BadRequestError, CurrentUserRequest, EventTypes, Events } from '@chronosrx/common';
 import { User } from '../models/user';
 import { attachCookie } from '../util/attachCookie';
 
@@ -29,12 +29,17 @@ export const signup = async (req: Request, res: Response) => {
 
   // TODO PUBLISH AN EVENT TO THE EVENT BUS - type USER_CREATED, with data of user - user.id & username
   // console.log('Publishing event USER_CREATED');
+
+  const event: Events = {
+    type: EventTypes.USER_CREATED,
+    payload: {
+      id: newUser.id,
+      username: newUser.username,
+    },
+  };
   try {
     await axios.post('http://localhost:3005/', {
-      event: {
-        type: Events.USER_CREATED,
-        payload: newUser,
-      },
+      event,
     });
   } catch (err) {
     console.log(

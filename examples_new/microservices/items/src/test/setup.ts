@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/users';
 
 declare global {
-  var login: () => Promise<string[]>;
+  var login: (username: string) => Promise<string[]>;
 }
 
 let mongo: any;
@@ -32,13 +32,13 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.login = async () => {
+global.login = async (username: string) => {
   // create a random MongoDB ID
   const testUserId = new mongoose.Types.ObjectId().toHexString();
   // create a user with the random ID
   const testUser = User.build({
     userId: testUserId,
-    username: 'test',
+    username,
   });
   await testUser.save();
 

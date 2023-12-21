@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import Header from '../components/Header';
 
 const SharedLayout = () => {
   return (
@@ -7,6 +8,7 @@ const SharedLayout = () => {
       flex flex-col justify-center items-center
       bg-dark text-light"
     >
+      <Header />
       <Outlet />
     </main>
   );

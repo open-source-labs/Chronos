@@ -1,5 +1,5 @@
 import { ActionType } from './actions';
-import { StateInterface } from './appContext';
+import { StateInterface, ItemInterface } from './appContext';
 
 type Action =
   | {
@@ -14,6 +14,12 @@ type Action =
     }
   | {
       type: ActionType.LOGOUT_USER;
+    }
+  | {
+      type: ActionType.RETRIEVED_ITEMS;
+      payload: {
+        items: ItemInterface[];
+      };
     };
 
 const reducer = (state: StateInterface, action: Action) => {
@@ -38,6 +44,12 @@ const reducer = (state: StateInterface, action: Action) => {
       return {
         ...state,
         user: '',
+        isLoading: false,
+      };
+    case ActionType.RETRIEVED_ITEMS:
+      return {
+        ...state,
+        items: action.payload.items,
         isLoading: false,
       };
     default:

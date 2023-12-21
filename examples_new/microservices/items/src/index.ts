@@ -1,6 +1,8 @@
 import { DbConnectionError } from '@chronosrx/common';
 import { app } from './app';
 import mongoose from 'mongoose';
+import { Item } from './models/items';
+import { User } from './models/users';
 
 const PORT = process.env.PORT || 3001;
 
@@ -11,6 +13,10 @@ const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {});
     console.log('🍃 Connected to MongoDB');
+
+    // reset DB's
+    await User.deleteMany();
+    await Item.deleteMany();
   } catch (err) {
     throw new DbConnectionError();
   }

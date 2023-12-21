@@ -1,22 +1,22 @@
 import mongoose from 'mongoose';
-//define type of objects that is being passed into build method
-interface InventoryAttrs {
-  itemId: string;
-  units: number;
-}
 
+interface InventoryAttrs {
+  id: string;
+  itemName: string;
+}
+// define item attributes
 interface InventoryModel extends mongoose.Model<InventoryDoc> {
   build(attrs: InventoryAttrs): InventoryDoc;
 }
-//create inventory data in the database in this shape
+//create item data in the database with these types;
 interface InventoryDoc extends mongoose.Document {
-  itemId: string;
+  itemName: string;
   units: number;
 }
-//create the Schema in mongoose with defined requirements
-const inventorySchema = new mongoose.Schema(
+// create the Schema in mongoose with defines requirements
+const InventorySchema = new mongoose.Schema(
   {
-    itemId: {
+    itemName: {
       type: String,
       required: true,
       unique: true,
@@ -24,10 +24,11 @@ const inventorySchema = new mongoose.Schema(
     units: {
       type: Number,
       required: true,
+      default: 1,
     },
   },
   {
-    //anytime we create Json formatted data, transform the user document as following
+    //anytime we create JSON formatted data, transform item using following rules
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
@@ -37,14 +38,12 @@ const inventorySchema = new mongoose.Schema(
     },
   }
 );
-
-inventorySchema.statics.build = (attrs: InventoryAttrs) => {
+InventorySchema.statics.build = (attrs: InventoryAttrs) => {
+  //returning item document with (attrs) passed in
   return new Inventory({
-    itemId: attrs.itemId,
-    units: attrs.units,
+    _id: new mongoose.Types.ObjectId(attrs.id),
+    itemName: attrs.itemName,
   });
 };
-
-const Inventory = mongoose.model<InventoryDoc, InventoryModel>('Inventory', inventorySchema);
-
+const Inventory = mongoose.model<InventoryDoc, InventoryModel>('Inventory', InventorySchema);
 export { Inventory };

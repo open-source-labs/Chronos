@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Protected from './pages/Protected';
 import SharedLayout from './pages/SharedLayout';
 import NotFound from './pages/NotFound';
+import About from './pages/About';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         }
       >
         <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
