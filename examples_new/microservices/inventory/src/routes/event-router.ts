@@ -15,7 +15,10 @@ router.post('/', async (req, res) => {
       await newUser.save();
       break;
     case EventTypes.ITEM_CREATED:
-      const newInventory = Inventory.build(event.payload);
+      const newInventory = Inventory.build({
+        id: event.payload.id,
+        itemName: event.payload.itemName,
+      });
       await newInventory.save();
     default:
       res.send({});

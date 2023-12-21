@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 interface InventoryAttrs {
   id: string;
   itemName: string;
-  sellerId: string; // some user's id)
-  unitPrice: number;
 }
 // define item attributes
 interface InventoryModel extends mongoose.Model<InventoryDoc> {
@@ -13,8 +11,6 @@ interface InventoryModel extends mongoose.Model<InventoryDoc> {
 //create item data in the database with these types;
 interface InventoryDoc extends mongoose.Document {
   itemName: string;
-  sellerId: mongoose.Types.ObjectId;
-  unitPrice: number;
   units: number;
 }
 // create the Schema in mongoose with defines requirements
@@ -23,16 +19,7 @@ const InventorySchema = new mongoose.Schema(
     itemName: {
       type: String,
       required: true,
-      // unique: true,
-    },
-    sellerId: {
-      type: mongoose.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    unitPrice: {
-      type: Number,
-      required: true,
+      unique: true,
     },
     units: {
       type: Number,
@@ -56,8 +43,6 @@ InventorySchema.statics.build = (attrs: InventoryAttrs) => {
   return new Inventory({
     _id: new mongoose.Types.ObjectId(attrs.id),
     itemName: attrs.itemName,
-    sellerId: attrs.sellerId,
-    unitPrice: attrs.unitPrice,
   });
 };
 const Inventory = mongoose.model<InventoryDoc, InventoryModel>('Inventory', InventorySchema);
