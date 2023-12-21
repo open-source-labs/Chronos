@@ -2,32 +2,29 @@ import { createContext, useReducer, useContext, useEffect } from 'react';
 import { ActionType } from './actions';
 import reducer from './reducer';
 import { customFetch } from '../util/customFetch';
+import { Fruit } from '../util/types';
 
 const authFetch = customFetch(3000);
-// const itemFetch = customFetch(3001);
-// const inventoryFetch = customFetch(3002);
+const itemFetch = customFetch(3001);
+const inventoryFetch = customFetch(3002);
 // const orderFetch = customFetch(3003);
 
-interface Item {
+export interface ItemInterface {
   id: string;
-  seller: string;
   name: string;
-  unitPrice: number;
-  unitsAvailable: number;
+  units: number;
 }
 
 export interface StateInterface {
   isLoading: boolean;
   user: string;
-  myItems: Item[];
-  itemsForPurchase: Item[];
+  items: ItemInterface[];
 }
 
 const initialState: StateInterface = {
   isLoading: false,
   user: '',
-  myItems: [],
-  itemsForPurchase: [],
+  items: [],
 };
 
 interface AppContextInterface extends StateInterface {
@@ -35,8 +32,8 @@ interface AppContextInterface extends StateInterface {
   stopLoading: () => void;
   loginUser: (username: string, password: string) => void;
   logoutUser: () => void;
-  getItemsForSale: () => void;
-  getMyStoreItems: () => void;
+  createItem: (fruit: Fruit) => void;
+  adjustInventory: () => void;
 }
 
 const AppContext = createContext<AppContextInterface>({
@@ -45,8 +42,8 @@ const AppContext = createContext<AppContextInterface>({
   stopLoading: () => null,
   loginUser: () => null,
   logoutUser: () => null,
-  getItemsForSale: () => null,
-  getMyStoreItems: () => null,
+  createItem: () => null,
+  adjustInventory: () => null,
 });
 
 type Props = {
@@ -109,14 +106,28 @@ const AppContextProvider = ({ children }: Props) => {
     stopLoading();
   };
 
-  // TODO
-  const getItemsForSale = () => {
-    console.log('getItemsForSale');
+  const createItem = async (fruit: Fruit) => {
+    if (fruit !== 'bananas' && fruit !== 'strawberries' && fruit !== 'grapes') return;
+
+    try {
+      startLoading();
+      const response = await itemFetch.post('/items/createItem', {
+        itemName: fruit,
+      });
+      console.log(response.data);
+
+      setTimeout(async () => {
+        const allItemsResponse = await inventoryFetch('/inventory/getAllItems');
+        dispatch({ type: ActionType.RETRIEVED_ITEMS, payload: { items: allItemsResponse.data } });
+      }, 1500);
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
   };
 
-  // TODO
-  const getMyStoreItems = () => {
-    console.log('getMyStoreItems');
+  const adjustInventory = () => {
+    console.log('💥 Adjust Inventory');
   };
 
   return (
@@ -127,8 +138,8 @@ const AppContextProvider = ({ children }: Props) => {
         stopLoading,
         loginUser,
         logoutUser,
-        getItemsForSale,
-        getMyStoreItems,
+        createItem,
+        adjustInventory,
       }}
     >
       {children} {/* <App /> */}

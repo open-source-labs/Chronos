@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { GiGrapes, GiBananaBunch, GiStrawberry } from 'react-icons/gi';
-
-type Fruit = 'bananas' | 'strawberries' | 'grapes';
+import { Fruit } from '../util/types';
 
 const Home = () => {
   const [fruit, setFruit] = useState<Fruit>('bananas');
