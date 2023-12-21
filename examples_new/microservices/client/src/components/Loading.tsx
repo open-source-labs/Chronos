@@ -13,7 +13,11 @@ const Loading = () => {
     }, 500);
   }, [dots]);
 
-  return <div>Loading</div>;
+  return (
+    <div className="w-full h-screen flex flex-col justify-center items-center text-light bg-dark">
+      Loading{dots}
+    </div>
+  );
 };
 
 export default Loading;
