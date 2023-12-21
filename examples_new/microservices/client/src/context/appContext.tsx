@@ -1,11 +1,12 @@
 import { createContext, useReducer, useContext, useEffect } from 'react';
 import { ActionType } from './actions';
 import reducer from './reducer';
-import { customFetch } from '../util/authFetch';
+import { customFetch } from '../util/customFetch';
+import { ItemDetails } from '../util/types';
 
 const authFetch = customFetch(3000);
 // const itemFetch = customFetch(3001);
-// const inventoryFetch = customFetch(3002);
+const inventoryFetch = customFetch(3002);
 // const orderFetch = customFetch(3003);
 
 interface Item {
@@ -35,6 +36,9 @@ interface AppContextInterface extends StateInterface {
   stopLoading: () => void;
   loginUser: (username: string, password: string, isLogin: boolean) => void;
   logoutUser: () => void;
+  getItemsForSale: () => void;
+  getItemInventory: () => ItemDetails;
+  getMyStoreItems: () => void;
 }
 
 const AppContext = createContext<AppContextInterface>({
@@ -43,6 +47,9 @@ const AppContext = createContext<AppContextInterface>({
   stopLoading: () => null,
   loginUser: () => null,
   logoutUser: () => null,
+  getItemsForSale: () => null,
+  getItemInventory: () => null,
+  getMyStoreItems: () => null,
 });
 
 type Props = {
@@ -83,7 +90,7 @@ const AppContextProvider = ({ children }: Props) => {
   const logoutUser = async () => {
     startLoading();
     try {
-      const response = await authFetch.post('http://localhost:3000/api/auth/logout');
+      const response = await authFetch.post('/auth/logout');
       console.log(response);
       dispatch({ type: ActionType.LOGOUT_USER });
     } catch (err) {
@@ -106,6 +113,31 @@ const AppContextProvider = ({ children }: Props) => {
     stopLoading();
   };
 
+  // TODO
+  const getItemsForSale = () => {
+    console.log('getItemsForSale');
+  };
+
+  // TODO
+  const getItemInventory = async (itemId: string) => {
+    console.log('getItemInventory');
+    startLoading();
+    try {
+      const response = await inventoryFetch(`/inventory/getItemInventory/${itemId}`);
+      stopLoading();
+      return response.data;
+    } catch (err) {
+      stopLoading();
+      console.log(err);
+      return null;
+    }
+  };
+
+  // TODO
+  const getMyStoreItems = () => {
+    console.log('getMyStoreItems');
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -114,6 +146,9 @@ const AppContextProvider = ({ children }: Props) => {
         stopLoading,
         loginUser,
         logoutUser,
+        getItemsForSale,
+        getItemInventory,
+        getMyStoreItems,
       }}
     >
       {children} {/* <App /> */}
