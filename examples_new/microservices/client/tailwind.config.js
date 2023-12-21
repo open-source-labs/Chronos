@@ -10,6 +10,7 @@ export default {
       boxShadow: {
         blkSm: '2px 2px 6px rgba(0, 0, 0, 0.35), 3px 3px 6px rgba(0, 0, 0, 0.25)',
         blkLg: '6px 6px 10px rgba(0, 0, 0, 0.35), 8px 8px 10px rgba(0, 0, 0, 0.25)',
+        insetLight: 'inset 3px 3px 6px #ffffff, inset -3px -3px 3px #aeaeae;',
       },
       keyframes: {
         spin: {
