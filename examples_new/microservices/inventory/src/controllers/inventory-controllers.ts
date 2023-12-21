@@ -49,5 +49,7 @@ export const updateItemInventory = async (req: Request, res: Response) => {
     console.log(`failed to submit to eventbus`);
   }
 
-  res.status(200).send(newInventory);
+  const allInventory = await Inventory.find({});
+
+  res.status(200).send(allInventory);
 };

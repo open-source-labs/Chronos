@@ -15,6 +15,7 @@ export const createItem = async (req: CurrentUserRequest, res: Response) => {
   if (!itemName) {
     throw new BadRequestError('Invalid inputs');
   }
+
   // new item is created with the build method and then saved
   const newItem = Item.build({
     itemName,

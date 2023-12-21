@@ -1,17 +1,16 @@
 import { FormEvent, useState } from 'react';
-import { GiGrapes, GiBananaBunch, GiStrawberry } from 'react-icons/gi';
 import { Fruit } from '../util/types';
 import { useAppContext } from '../context/appContext';
 import { nanoid } from 'nanoid';
+import FruitIcon from './FruitIcon';
 
-const fruitOptions = ['bananas', 'strawberries', 'grapes'];
+const itemOptions = ['bananas', 'strawberries', 'grapes'];
 
 const CreateItemForm = () => {
   const { items, createItem } = useAppContext();
-  const itemOptions = fruitOptions.filter(fruit => {
-    return items.findIndex(item => item.itemName === fruit) < 0;
-  });
-  const [fruit, setFruit] = useState<Fruit>(itemOptions[0]);
+  const [fruit, setFruit] = useState<Fruit>('bananas');
+
+  console.log(items);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -21,31 +20,18 @@ const CreateItemForm = () => {
     createItem(fruit);
   };
 
-  const fruitIcon = () => {
-    const classes = 'text-6xl';
-
-    switch (fruit) {
-      case 'bananas':
-        return <GiBananaBunch className={`text-yellow-300 ${classes}`} />;
-      case 'strawberries':
-        return <GiStrawberry className={`text-red-300 ${classes}`} />;
-      case 'grapes':
-        return <GiGrapes className={`text-purple-400 ${classes}`} />;
-      default:
-        return <GiBananaBunch className={`text-yellow-300 ${classes}`} />;
-    }
-  };
-
   return (
     <form
       className="flex flex-col justify-center items-center bg-white/70 text-dark py-4 px-8 rounded-md"
       onSubmit={e => handleSubmit(e)}
     >
       <h1 className="text-2xl font-bold">Create an Item</h1>
-      <div className="bg-dark rounded-md p-2 mt-4 shadow-blkSm">{fruitIcon()}</div>
+      <div className="bg-dark rounded-md p-2 mt-4 shadow-blkSm">
+        <FruitIcon fruit={fruit} />
+      </div>
       <select
         className="text-dark mt-4 p-1 w-full text-center rounded-md"
-        defaultValue={itemOptions[0]}
+        value={fruit}
         onChange={e => {
           setFruit(e.target.value as Fruit);
         }}

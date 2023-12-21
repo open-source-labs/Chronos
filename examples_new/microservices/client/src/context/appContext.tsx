@@ -3,6 +3,7 @@ import { ActionType } from './actions';
 import reducer from './reducer';
 import { customFetch } from '../util/customFetch';
 import { Fruit } from '../util/types';
+import { AxiosError } from 'axios';
 
 const authFetch = customFetch(3000);
 const itemFetch = customFetch(3001);
@@ -33,7 +34,7 @@ interface AppContextInterface extends StateInterface {
   loginUser: (username: string, password: string) => void;
   logoutUser: () => void;
   createItem: (fruit: Fruit) => void;
-  adjustInventory: () => void;
+  adjustInventory: (itemId: string, newUnits: number) => void;
 }
 
 const AppContext = createContext<AppContextInterface>({
@@ -121,13 +122,31 @@ const AppContextProvider = ({ children }: Props) => {
         dispatch({ type: ActionType.RETRIEVED_ITEMS, payload: { items: allItemsResponse.data } });
       }, 1500);
     } catch (err) {
+      if (err instanceof AxiosError) {
+        window.alert(err.message);
+      }
       console.log(err);
     }
     stopLoading();
   };
 
-  const adjustInventory = () => {
+  const adjustInventory = async (itemId: string, newUnits: number) => {
     console.log('💥 Adjust Inventory');
+
+    try {
+      const response = await inventoryFetch.patch('/inventory/updateItemInventory', {
+        id: itemId,
+        units: newUnits,
+      });
+      dispatch({
+        type: ActionType.RETRIEVED_ITEMS,
+        payload: {
+          items: response.data,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

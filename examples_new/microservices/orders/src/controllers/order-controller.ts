@@ -1,32 +1,27 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import { Order } from '../models/Order';
-import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
+import { BadRequestError, CurrentUserRequest, EventTypes, Events } from '@chronosrx/common';
 
 export const createOrder = async (req: CurrentUserRequest, res: Response) => {
   //deconstruct req.body
+  // const buyerId = req.currentUser;
   const { itemId, amount } = req.body;
   //create Order document in the databse
-  const newOrder = Order.build({ itemId, amount });
-import { Inventory } from '../models/Inventory';
-
-export const createOrder = async (req: CurrentUserRequest, res: Response) => {
-  //deconstruct req.body
-  const buyerId = req.currentUser;
-  const { itemId, amount, totalPrice, sellerId } = req.body;
-  //create Order document in the databse
-  const newOrder = Inventory.build({});
+  const newOrder = Order.build({
+    itemId,
+    amount,
+  });
   await newOrder.save();
   //send created order to event bus
   await axios.post('http://localhost:3005/', {
     event: {
-      type: Events.ORDER_CREATED,
+      type: EventTypes.ORDER_CREATED,
       payload: newOrder,
     },
   });
   res.status(201).send(newOrder);
 };
-
 
 // export const getOrder = async (req: Request, res: Response) => {
 //   // check if order already exists
@@ -47,5 +42,3 @@ export const createOrder = async (req: CurrentUserRequest, res: Response) => {
 //   }
 //   res.status(200).send(deletedOrder);
 // };
-
-
