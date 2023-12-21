@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 interface OrderAttrs {
   itemId: string;
   amount: number;
-  totalPrice: number;
-  sellerId: string;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -14,8 +12,6 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 interface OrderDoc extends mongoose.Document {
   itemId: string;
   amount: number;
-  totalPrice: number;
-  sellerId: string;
 }
 
 //create the Schema in mongoose with defined requirements
@@ -29,14 +25,6 @@ const OrderSchema = new mongoose.Schema(
     amount: {
       type: Number,
       required: true,
-    },
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
-    sellerId: {
-      type: String,
-      require: true,
     },
   },
   {
@@ -55,8 +43,6 @@ OrderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order({
     itemId: attrs.itemId,
     amount: attrs.amount,
-    totalPrice: attrs.totalPrice,
-    sellerId: attrs.sellerId,
   });
 };
 
