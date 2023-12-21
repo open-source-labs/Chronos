@@ -1,14 +1,12 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 
 const Login = () => {
   const { isLoading, user, loginUser } = useAppContext();
-  const [isLogin, setIsLogin] = useState(true);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const username = 'ScrumLord';
+  const password = 'McKenzie';
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,13 +21,9 @@ const Login = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!username || !password) return;
-    if (!isLogin && (!passwordConfirm || password !== passwordConfirm)) return;
+    if (username !== 'ScrumLord' || password !== 'McKenzie') return;
 
-    loginUser(username, password, isLogin);
-
-    setUsername('');
-    setPassword('');
-    setPasswordConfirm('');
+    loginUser(username, password);
   };
 
   const makeLabel = (text: string, htmlFor: string) => {
@@ -40,12 +34,12 @@ const Login = () => {
     );
   };
 
-  const makeInput = (type: string, id: string, value: string, onChange: (e: string) => void) => {
+  const makeInput = (type: string, id: string, value: string) => {
     return (
       <input
         value={value}
-        onChange={e => onChange(e.target.value)}
-        className="text-dark mb-2 min-w-[250px] p-1 border-2 border-black"
+        readOnly
+        className="text-dark mb-2 min-w-[250px] p-1 border-2 border-black text-center"
         type={type}
         id={id}
       />
@@ -83,28 +77,16 @@ const Login = () => {
         >
           <div></div>
           {makeLabel('username', 'username')}
-          {makeInput('text', 'username', username, setUsername)}
+          {makeInput('text', 'username', 'ScrumLord')}
           {makeLabel('password', 'password')}
-          {makeInput('password', 'password', password, setPassword)}
-          {!isLogin && (
-            <>
-              {makeLabel('confirm password', 'passwordConfirm')}
-              {makeInput('password', 'passwordConfirm', passwordConfirm, setPasswordConfirm)}
-            </>
-          )}
+          {makeInput('password', 'password', 'McKenzie')}
           <button
             className="my-4 px-8 py-2
             rounded-md shadow-blkSm
             bg-blue-400/50 font-bold"
           >
-            {isLogin ? 'Login' : 'Signup'}
+            Login
           </button>
-          <p>
-            {isLogin ? 'Not' : 'Already'} a member?{' '}
-            <span className="text-blue-400" onClick={() => setIsLogin(!isLogin)}>
-              {isLogin ? 'Signup' : 'Login'}
-            </span>
-          </p>
         </form>
       </div>
     </div>

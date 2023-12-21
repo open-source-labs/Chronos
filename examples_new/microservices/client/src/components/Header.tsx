@@ -32,13 +32,13 @@ const Header = () => {
             className="bg-white/40 rounded-md p-6 absolute top-14 right-4
             flex flex-col justify-center items-center text-center min-w-[150px]"
           >
-            {pathname !== '/my-store' ? (
+            {pathname !== '/about' ? (
               <Link
                 className="w-full px-4 py-2 bg-blue-400 rounded-md"
-                to="/my-store"
+                to="/about"
                 onClick={() => setShowMenu(false)}
               >
-                My Store
+                About
               </Link>
             ) : (
               <Link

@@ -4,8 +4,7 @@ import Home from './pages/Home';
 import Protected from './pages/Protected';
 import SharedLayout from './pages/SharedLayout';
 import NotFound from './pages/NotFound';
-import MyStore from './pages/MyStore';
-import BuyItem from './components/BuyItem';
+import About from './pages/About';
 
 function App() {
   return (
@@ -20,8 +19,7 @@ function App() {
         }
       >
         <Route index element={<Home />} />
-        <Route path='/:itemId' element={<BuyItem />} />
-        <Route path="/my-store" element={<MyStore />} />
+        <Route path="/about" element={<About />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

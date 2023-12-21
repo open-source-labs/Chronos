@@ -2,11 +2,10 @@ import { createContext, useReducer, useContext, useEffect } from 'react';
 import { ActionType } from './actions';
 import reducer from './reducer';
 import { customFetch } from '../util/customFetch';
-import { ItemDetails } from '../util/types';
 
 const authFetch = customFetch(3000);
 // const itemFetch = customFetch(3001);
-const inventoryFetch = customFetch(3002);
+// const inventoryFetch = customFetch(3002);
 // const orderFetch = customFetch(3003);
 
 interface Item {
@@ -34,10 +33,9 @@ const initialState: StateInterface = {
 interface AppContextInterface extends StateInterface {
   startLoading: () => void;
   stopLoading: () => void;
-  loginUser: (username: string, password: string, isLogin: boolean) => void;
+  loginUser: (username: string, password: string) => void;
   logoutUser: () => void;
   getItemsForSale: () => void;
-  getItemInventory: () => ItemDetails;
   getMyStoreItems: () => void;
 }
 
@@ -48,7 +46,6 @@ const AppContext = createContext<AppContextInterface>({
   loginUser: () => null,
   logoutUser: () => null,
   getItemsForSale: () => null,
-  getItemInventory: () => null,
   getMyStoreItems: () => null,
 });
 
@@ -72,14 +69,13 @@ const AppContextProvider = ({ children }: Props) => {
     dispatch({ type: ActionType.STOP_LOADING });
   };
 
-  const loginUser = async (username: string, password: string, isLogin: boolean) => {
+  const loginUser = async (username: string, password: string) => {
     startLoading();
     try {
-      const response = await authFetch.post(`/auth/${isLogin ? 'login' : 'signup'}`, {
+      const response = await authFetch.post('/auth/login', {
         username,
         password,
       });
-      console.log(response);
       dispatch({ type: ActionType.LOGIN_USER, payload: { user: response.data.username } });
     } catch (err) {
       console.log(err);
@@ -119,21 +115,6 @@ const AppContextProvider = ({ children }: Props) => {
   };
 
   // TODO
-  const getItemInventory = async (itemId: string) => {
-    console.log('getItemInventory');
-    startLoading();
-    try {
-      const response = await inventoryFetch(`/inventory/getItemInventory/${itemId}`);
-      stopLoading();
-      return response.data;
-    } catch (err) {
-      stopLoading();
-      console.log(err);
-      return null;
-    }
-  };
-
-  // TODO
   const getMyStoreItems = () => {
     console.log('getMyStoreItems');
   };
@@ -147,7 +128,6 @@ const AppContextProvider = ({ children }: Props) => {
         loginUser,
         logoutUser,
         getItemsForSale,
-        getItemInventory,
         getMyStoreItems,
       }}
     >
