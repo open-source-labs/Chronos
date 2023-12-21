@@ -3,10 +3,10 @@ import axios from 'axios';
 import { Inventory } from '../models/Inventory';
 import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
 
-export const getItemInventory = async (req: Request, res: Response) => {
+export const getAllItems = async (req: Request, res: Response) => {
   console.log(req.body);
   const { itemId, units } = req.body;
-  const exsitingItem = await Inventory.findOne({ itemId });
+  const exsitingItem = await Inventory.find({ itemId });
   if (!exsitingItem) {
     throw new BadRequestError('Item with that ID does not exist');
   }
@@ -17,7 +17,16 @@ export const getItemInventory = async (req: Request, res: Response) => {
   //     payload: newInventory,
   //   },
   // });
+  res.status(200).send(exsitingItem);
+};
 
+export const getMyItems = async (req: Request, res: Response) => {
+  console.log(req.body);
+  const { sellerId } = req.body;
+  const exsitingItem = await Inventory.find({ sellerId });
+  if (!exsitingItem) {
+    throw new BadRequestError('Could not find items with that sellerId');
+  }
   res.status(200).send(exsitingItem);
 };
 

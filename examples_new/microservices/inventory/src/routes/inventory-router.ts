@@ -1,5 +1,5 @@
 import express from 'express';
-import { getItemInventory, updateItemInventory } from '../controllers/inventory-controllers';
+import { getAllItems, updateItemInventory, getMyItems } from '../controllers/inventory-controllers';
 
 const router = express.Router();
 
@@ -8,7 +8,8 @@ const router = express.Router();
 
 // });
 
-router.get('/getItemInventory', getItemInventory);
+router.get('/getAllItems', getAllItems);
+router.get('/getMyItems', getMyItems);
 router.patch('/updateItemInventory', updateItemInventory);
 
 export default router;

@@ -20,14 +20,15 @@ it('fails if item id or units are missing', async () => {
 });
 it('success if there is itemid and units', async () => {
   const itemId = '6581bbc692686e6e68d25d7d';
-  await global.createItem(itemId);
+  const sellerId = '6581bbc692686e6e68d25xxx';
+  await global.createItem(itemId, sellerId);
   const response = await request(app)
     .get('/api/inventory/getItemInventory')
     .send({
       itemId: itemId,
     })
     .expect(200);
-  // console.log(response);
+  console.log(response);
   expect(response.body.units).toEqual(50);
 });
 //testing updateItemInventory route, fail if id or units are missing
@@ -47,7 +48,8 @@ it('fails if item id or units are missing when trying to update', async () => {
 });
 it('successful updated the item with updated units', async () => {
   const itemId = '6581bbc692686e6e68d25d7d';
-  await global.createItem(itemId);
+  const sellerId = '6581bbc692686e6e68d25xxx';
+  await global.createItem(itemId, sellerId);
 
   const response = await request(app)
     .patch('/api/inventory/updateItemInventory')
