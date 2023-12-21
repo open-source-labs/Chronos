@@ -20,6 +20,7 @@ const itemSchema = new mongoose.Schema(
     itemName: {
       type: String,
       required: true,
+      unique: true,
     },
   },
   {
