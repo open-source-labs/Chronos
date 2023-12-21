@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { Item } from './models/items';
 import { User } from './models/users';
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 const start = async () => {
   if (!process.env.MONGO_URI) throw new Error('MONGO_URI must be defined');

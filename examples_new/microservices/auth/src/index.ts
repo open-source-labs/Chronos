@@ -3,7 +3,7 @@ import { app } from './app';
 import mongoose from 'mongoose';
 import { User } from './models/user';
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 const start = async () => {
   if (!process.env.MONGO_URI) throw new Error('MONGO_URI must be defined');
@@ -19,7 +19,7 @@ const start = async () => {
       username: 'ScrumLord',
       password: 'McKenzie',
     });
-    await testUser.save()
+    await testUser.save();
   } catch (err) {
     throw new DbConnectionError();
   }

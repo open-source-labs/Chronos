@@ -20,10 +20,9 @@ router.post('/', async (req, res) => {
         itemName: event.payload.itemName,
       });
       await newInventory.save();
-    default:
-      res.send({});
+      break;
   }
-  res.send({ message: 'Event received' });
+  return res.send({ message: 'Event received' });
 });
 
 // router.get('/events');

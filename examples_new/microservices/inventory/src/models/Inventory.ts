@@ -19,7 +19,6 @@ const InventorySchema = new mongoose.Schema(
     itemName: {
       type: String,
       required: true,
-      unique: true,
     },
     units: {
       type: Number,

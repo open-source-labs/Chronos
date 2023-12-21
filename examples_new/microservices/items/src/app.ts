@@ -1,7 +1,8 @@
+import path from 'path';
 import express from 'express';
 import 'express-async-errors';
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname + '../../.env') });
 import cors from 'cors'
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 import itemsRouter from './routes/item-router';
@@ -13,7 +14,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:8080',
+    origin: 'http://localhost:5000',
   })
 );
 app.use(express.json());

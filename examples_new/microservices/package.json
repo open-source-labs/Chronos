@@ -1,0 +1,21 @@
+{
+  "name": "microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "auth": "cd auth && npm start",
+    "items": "cd items && npm start",
+    "inventory": "cd inventory && npm start",
+    "orders": "cd orders && npm start",
+    "event-bus": "cd event-bus && npm start",
+    "start": "concurrently --kill-others-on-fail \" npm run auth\" \" npm run items\" \" npm run inventory\" \" npm run orders\" \" npm run event-bus\" \" npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
