@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { Inventory } from '../models/Inventory';
 
 declare global {
-  function createItem(itemId: string, sellerId: string): void;
+  function createItem(itemId: string): void;
 }
 
 let mongo: any;
@@ -33,13 +33,10 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.createItem = async (itemId, sellerId) => {
+global.createItem = async itemId => {
   const data = Inventory.build({
-    itemId: itemId,
+    id: itemId,
     itemName: 'crap',
-    sellerId: sellerId,
-    units: 50,
-    unitPrice: 5,
   });
   await data.save();
 };
