@@ -11,7 +11,7 @@ const inventoryFetch = customFetch(3002);
 
 export interface ItemInterface {
   id: string;
-  name: string;
+  itemName: string;
   units: number;
 }
 
