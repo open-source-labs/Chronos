@@ -6,7 +6,6 @@ const router = express.Router();
 router.use(currentUser);
 router.use(requireAuth);
 router.get('/getMyOrders', getOrder);
-router.get('/getMySales', getSale);
 router.post('/createOrder', createOrder);
 router.delete('/deleteOrder', deleteOrder);
 
