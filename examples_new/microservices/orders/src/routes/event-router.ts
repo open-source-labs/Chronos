@@ -1,23 +1,26 @@
+import { EventTypes, Events } from '@chronosrx/common';
 import express from 'express';
-import { Events } from '@chronosrx/common';
 import { Order } from '../models/Order';
-import { Inventory } from '../models/Inventory';
+
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  const { event } = req.body;
+  const event: Events = req.body.event;
   console.log(event);
-  switch (event.type) {
-    case Events.ITEM_CREATED:
-      const newOrder = Inventory.build(event.payload);
-      await newOrder.save();
-      break;
-    default:
-      res.send({});
-  }
-
-  res.send({ message: '🎃 Event received' });
+  // switch (event.type) {
+  //   case EventTypes.USER_CREATED:
+  //     // console.log(event);
+  //     const newUser = User.build(event.payload);
+  //     await newUser.save();
+  //     break;
+  // default:
+  //   res.send({});
+  // }
+  res.send({ message: 'Event received' });
 });
+
+// router.get('/events');
+
 
 export default router;
