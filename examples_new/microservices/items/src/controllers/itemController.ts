@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import axios, { AxiosError } from 'axios';
-import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
+import { BadRequestError, CurrentUserRequest, EventTypes, NotAuthorizedError } from '@chronosrx/common';
 import { Item } from '../models/items';
 import { User } from '../models/users';
 import { RemoveUserOptions } from 'mongodb';
 
 // current users can create items to sell
 export const createItem = async (req: CurrentUserRequest, res: Response) => {
+  
   // req.body consists of itemName and unitPrice
   const { itemName, unitPrice } = req.body;
   // sellerId will come from cookie assigned to authorized users
@@ -38,7 +39,7 @@ export const createItem = async (req: CurrentUserRequest, res: Response) => {
   try {
     await axios.post('http://localhost:3005/', {
       event: {
-        type: Events.ITEM_CREATED,
+        type: EventTypes.ITEM_CREATED,
         payload: newItem,
       },
     });
@@ -58,12 +59,12 @@ export const deleteItem = async (req: CurrentUserRequest, res: Response) => {
   const sellerId = req.currentUser!;
   // if sellerId doesn't exist, throw error as only authorized users can delete items
   if (!sellerId) {
-    throw new BadRequestError('Only registered users can delete items');
+    throw new NotAuthorizedError();
   }
   // if only item "owner" can delete item so sellerId must match
   const seller = User.findById(sellerId);
   if (!seller) {
-    throw new BadRequestError('Only registered users can delete items');
+    throw new NotAuthorizedError();
   }
   // search for itemName given by user
   const findItem = await Item.findOne({ itemName });
@@ -76,20 +77,20 @@ export const deleteItem = async (req: CurrentUserRequest, res: Response) => {
     Item.deleteOne({ itemName });
   }
   // posting event to event bus
-  // try {
-  //   await axios.post('http://localhost:3005/', {
-  //     event: {
-  //       type: Events.ITEM_DELETED,
-  //       payload: findItem,
-  //     },
-  //   });
-  // } catch (err) {
-  //   console.log(
-  //     `❌ itemController.deleteItem: Failed to emit ITEM_DELETED to event-bus: ${
-  //       (err as AxiosError).message || 'unknown error'
-  //     }`
-  //   );
-  // }
+  try {
+    await axios.post('http://localhost:3005/', {
+      event: {
+        type: EventTypes.ITEM_DELETED,
+        payload: findItem,
+      },
+    });
+  } catch (err) {
+    console.log(
+      `❌ itemController.deleteItem: Failed to emit ITEM_DELETED to event-bus: ${
+        (err as AxiosError).message || 'unknown error'
+      }`
+    );
+  }
   console.log(`${itemName} has been deleted`);
   res.status(201);
 };
