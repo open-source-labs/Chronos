@@ -3,11 +3,17 @@ import express from 'express';
 import 'express-async-errors';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname + '../../.env') });
-import cors from 'cors'
+import cors from 'cors';
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 import itemsRouter from './routes/item-router';
 import eventRouter from './routes/event-router';
 import cookieParser from 'cookie-parser';
+
+import chronosConfig from './chronos-config';
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+
+chronos.propagate();
 
 const app = express();
 

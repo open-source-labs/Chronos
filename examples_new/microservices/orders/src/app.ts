@@ -9,6 +9,12 @@ import cookieParser from 'cookie-parser';
 import orderRouter from './routes/order-router';
 import eventRouter from './routes/event-router';
 
+import chronosConfig from './chronos-config';
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+
+chronos.propagate();
+
 const app = express();
 
 app.use(
