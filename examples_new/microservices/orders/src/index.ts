@@ -21,7 +21,7 @@ const start = async () => {
   }
 
   app.listen(PORT, async () => {
-    console.log(`💥 App listening on ${PORT}`);
+    console.log(`💥 Orders listening on ${PORT}`);
   });
 };
 

@@ -25,7 +25,7 @@ const start = async () => {
   }
 
   app.listen(PORT, async () => {
-    console.log(`💥 App listening on ${PORT}`);
+    console.log(`💥 Auth listening on ${PORT}`);
   });
 };
 
