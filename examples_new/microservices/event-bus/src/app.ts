@@ -2,6 +2,12 @@ import express, { Request, Response } from 'express';
 import axios from 'axios';
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 
+import chronosConfig from './chronos-config';
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+
+chronos.propagate();
+
 const app = express();
 
 app.use(express.json());
