@@ -37,7 +37,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 ## Overview of the CodeBase
 
 - Instead of the typical folders & files view, a visual representation of the code is created. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
-  <img src="assets/Codebase Visulization.png" alt="codebase visulization" align="center" height="500"/>
+  <img src="assets/codebase_visulization.png" alt="codebase visulization" align="center" height="500"/>
 
 ## Features
 
