@@ -9,12 +9,6 @@ import eventRouter from './routes/event-router';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import chronosConfig from './chronos-config';
-const Chronos = require('@chronosmicro/tracker');
-const chronos = new Chronos(chronosConfig);
-
-chronos.propagate();
-
 const app = express();
 
 app.use(

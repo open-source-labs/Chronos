@@ -6,6 +6,11 @@ import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname + '../../.env') });
 
+import chronosConfig from './chronos-config';
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+chronos.propagate();
+
 const PORT = 3000;
 
 const start = async () => {
