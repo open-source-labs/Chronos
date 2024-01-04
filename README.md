@@ -1,11 +1,14 @@
 <a href="https://chronoslany.com/">
-    <img src="assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="500" />
+    <img src="assets/animated_logo.gif" alt="Chronos" title="Chronos" align="center" height="400" />
 </a>
+<div align="center">
 
 ![Build Passing](https://img.shields.io/badge/build-awesome-brightgreen)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/open-source-labs/Chronos)
 ![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)
-![Release: 12.0](https://img.shields.io/badge/Release-12.0-brightgreen)
+![Release: 13.0](https://img.shields.io/badge/Release-12.0-brightgreen)
+
+</div>
 
 # Chronos
 
@@ -54,7 +57,7 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 # Installation
 
-This is for the latest Chronos **version 12.0 release**.
+This is for the latest Chronos **version 13.0 release**.
 
 ## NPM Package
 
