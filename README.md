@@ -7,29 +7,19 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)
 ![Release: 12.0](https://img.shields.io/badge/Release-12.0-brightgreen)
 
-
 # Chronos
 
-
 ### ⭐️ Star us on GitHub! ⭐️
+
 **Visit our website at [chronoslany.com](https://chronoslany.com/).**
 
 Chronos is a comprehensive developer tool that monitors the health and web traffic for containerized (Docker & Kubernetes) and non-containerized microservices communicated via REST APIs or gRPC, whether hosted locally or on Amazon Web Services (AWS). Use Chronos to see real-time data monitoring and receive automated notifications over Slack or email.
 
-
 ## What's New?
 
-### With Chronos 12.0:
+- Updated microservices example with
 
-- Enhanced metrics visualization by integrating more interactive and adaptable Grafana charts for Docker and Kubernetes use cases.
-- Achieved an 80% boost in test coverage by formulating comprehensive unit, integration, and end-to-end tests employing Jest and Selenium.
-- Implemented Prometheus data scraping functionality for Docker containers, facilitating seamless metric collection and monitoring.
-- Devised an immersive 3D visualization that effectively illustrates the Kubernetes cluster infrastructure, encompassing Namespace, Service, and Pod entities. This dynamic visualization provides developers and users with heightened insights into intricate resource allocation and configuration within the cluster.
-- Streamlined operational effectiveness by coordinating CI/CD pipelines, automating testing workflows, and establishing deployment protocols, ultimately leading to accelerated development cycles and heightened dependability.
-- Expanded Typescript coverage to enhance code quality and bolster application resilience.
-- Updated the Docker and Kubernetes example READMEs with detailed instructions on configuring Prometheus and Grafana seamlessly.
-- Enhanced clarity of instructions in the `@chronosmicro/tracker` NPM package's README, offering comprehensive guidance on utilizing the package to monitor individual applications effectively.
-
+### With Chronos 13.0
 
 <a href="https://chronoslany.com/">
     <img src="assets/demo.gif" alt="Chronos" title="Chronos" align="center" height="500" width="auto" />
@@ -38,26 +28,29 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 <br>
 
 **Previously implemented updates:**
-- Added interactive charting to better visualize metrics and increase user engagement with their data
-- Followed best test-driven development practices and increased testing with React Testing and Jest for the front end
-- Overhauled user database security, mitigating database breaches and providing a safer experience
-- Bug fixes and UI tweaks, creating a more pleasant user experience
-- Updated outdated README instructions within the provided Docker, gRPC, Kubernetes, and microservices examples
-- Revised README instructions for the `@chronosmicro/tracker` NPM package
+
+- Enhanced metrics visualization by integrating more interactive and adaptable Grafana charts for Docker and Kubernetes use cases.
+- Achieved an 80% boost in test coverage by formulating comprehensive unit, integration, and end-to-end tests employing Jest and Selenium.
+- Streamlined operational effectiveness by coordinating CI/CD pipelines, automating testing workflows, and establishing deployment protocols, ultimately leading to accelerated development cycles and heightened dependability.
+- Updated the Docker and Kubernetes example READMEs with detailed instructions on configuring Prometheus and Grafana seamlessly.
+
+## Overview of the CodeBase
+
+- Instead of the typical folders & files view, a visual representation of the code is created. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
+  <img src="assets/Codebase Visulization.png" alt="codebase visulization" align="center" height="500"/>
 
 ## Features
 
 - Cloud-Based Instances:
-    - Option to choose between cloud hosted services and local services, giving Chronos the ability to monitor instances and clusters on AWS EC2, ECS, and EKS platforms <img src="assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="20" /></a>
+  - Option to choose between cloud hosted services and local services, giving Chronos the ability to monitor instances and clusters on AWS EC2, ECS, and EKS platforms <img src="assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="20" /></a>
 - Local instances utilitizing `@chronosmicro/tracker` NPM package:
-    - Enables distributed tracing enabled across microservices applications
-    - Displays real-time temperature, speed, latency, and memory statistics for local services
-    - Displays and compares multiple microservice metrics in a single graph
-    - Allow Kubernetes and Docker monitoring via Prometheus server and Grafana visualization.
-    - Compatible with <img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
-    - Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
-    - Supports <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
-
+  - Enables distributed tracing enabled across microservices applications
+  - Displays real-time temperature, speed, latency, and memory statistics for local services
+  - Displays and compares multiple microservice metrics in a single graph
+  - Allow Kubernetes and Docker monitoring via Prometheus server and Grafana visualization.
+  - Compatible with <img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="20" /></a>
+  - Monitor an <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="20" /></a> cluster via the JMX Prometheus Exporter
+  - Supports <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="20" /></a> and <img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="20" /></a> databases
 
 # Installation
 
@@ -83,6 +76,7 @@ For more details on the NPM package and instructions for how to use it, please v
 <!-- <br> -->
 
 ## Chronos Desktop Application
+
 ### WSL2 Environment
 
 If you wish to launch the Electron Application in an WSL2 envirronment(Ubuntu) you may need the following commands for an Electron window to appear
@@ -106,17 +100,22 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 **NOTE: You must create your own user database**
 
 1. Create a MongoDB database in which to store user information and insert it on line 2 within the [UserModel.ts](./electron/models/UserModel.ts) (_electron/models/UserModel.ts_) file.
-    - This database will privately store user information.
-3. Once this is set up, you can create new users, log in, and have your data persist between sessions.
+   - This database will privately store user information.
+2. Once this is set up, you can create new users, log in, and have your data persist between sessions.
+
 #
+
 ### Running the Chronos desktop app in development mode
 
 1. From the root directory, run `npm install`
 2. Run `npm run build`
-3. Open a new terminal and run `npm run dev:app` to start the Webpack development server
-4. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode
-.
+3. Depends on the environment, run `npm audit fix` or `npm audit fix --force` if prompted
+4. Open a new terminal and run `npm run dev:app` to start the Webpack development server
+5. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode
+   .
+
 #
+
 ### Packing the Chronos desktop app into an executable
 
 1. From the root directory, run `npm run build`
@@ -124,22 +123,23 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 3. Find the `chronos.app` executable inside the newly created `release-builds` folder in the root directory.
 
 #
+
 # Examples
 
 We provide eight example applications for you to test out both the Chronos NPM package and the Chronos desktop application:
 
 - AWS
-    - [EC2 README](./examples/AWS/AWS-EC2/README.md)
-    - [ECS README](./examples/AWS/AWS-ECS/README.md)
-    - [EKS README](./examples/AWS/AWS-EKS/README.md)
+  - [EC2 README](./examples/AWS/AWS-EC2/README.md)
+  - [ECS README](./examples/AWS/AWS-ECS/README.md)
+  - [EKS README](./examples/AWS/AWS-EKS/README.md)
 - Docker
-    - [Docker README](./examples/docker/README.md)
+  - [Docker README](./examples/docker/README.md)
 - gRPC
-    - [gRPC README](./examples/gRPC/README.md)
+  - [gRPC README](./examples/gRPC/README.md)
 - Kubernetes
-    - [Kubernetes README](./examples/kubernetes/README.md)
+  - [Kubernetes README](./examples/kubernetes/README.md)
 - Microservices
-    - [Microservices README](./examples/microservices/README.md)
+  - [Microservices README](./examples/microservices/README.md)
 
 Additional documentation on how Chronos is used **in each example** can be found in the [Chronos NPM Package README](./chronos_npm_package/README.md).
 
@@ -149,11 +149,12 @@ The `AWS` folder includes 3 example applications with instructions on how to dep
 
 - The ECS folder includes an web application ready to be containerized using Docker. The instruction shows how to deploy application to ECS using Docker CLI command, and it will be managed by Fargate services.
 - The EC2 folder includes a React/Redux/SQL web application ready to be containerized using Docker. The instruction shows how to deploy application using AWS Beanstalk and connect application to RDS database. Beanstalk service will generate EC2 instance.
-- The EKS folder includes a containerized note taking app that uses a Mongo database as its persistent volume.  The instructions show how to deploy this application on EKS, how to monitor with Prometheus & Opencost, and how to use Grafana to grab visualizations. 
+- The EKS folder includes a containerized note taking app that uses a Mongo database as its persistent volume. The instructions show how to deploy this application on EKS, how to monitor with Prometheus & Opencost, and how to use Grafana to grab visualizations.
 
 Refer to the [EC2 README](./examples/AWS/AWS-EC2/README.md), [ECS README](./examples/AWS/AWS-ECS/README.md), and [EKS README](./examples/AWS/AWS-EKS/README.md) example in the _AWS_ folder for more details.
 
 #
+
 #### _Docker_
 
 In the <a href="#"><img src="assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> folder within the `master` branch, we provide a sample _dockerized_ microservices application to test out Chronos and to apply distributed tracing across different containers for your testing convenience.
@@ -161,14 +162,15 @@ In the <a href="#"><img src="assets/docker-logo-color.png" alt="Docker" title="D
 The `docker` folder includes individual <a href="#"><img src="assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="20" /></a> files in their respective directories. A docker-compose.yml is in the root directory in case you'd like to deploy all services together.
 
 Refer to the [Docker README](./examples/docker/README.md) in the `docker` folder for more details.
-#
 
+#
 
 #### _gRPC_
 
 The `gRPC` folder includes an HTML frontend and an Express server backend, as well as proto files necessary to build package definitions and make gRPC calls. The _reverse_proxy_ folder contains the server that requires in the clients, which contain methods and services defined by proto files.
 
 Refer to the [gRPC README](./examples/gRPC/README.md) in the `gRPC` folder for more details.
+
 #
 
 #### _Kubernetes_
@@ -184,63 +186,68 @@ Refer to the [Kubernetes README](./examples/kubernetes/README.md) in the `kubern
 In the `microservices` folder, we provide a sample microservice application that successfully utilizes Chronos to apply all the powerful, built-in features of our monitoring tool. You can then visualize the data with the <img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="20" /></a> app.
 
 Refer to the [microservices README](./examples/microservices/README.md) in the `microservices` folder for more details.
+
 #
 
 # Testing
 
 We've created testing suites for Chronos with React Testing, Jest, and Selenium for unit, integration, and end-to-end tests - instructions on running them can be found in the [testing README](./__tests__/README.md).
+
 #
+
 ## Contributing
 
-Development of Chronos is open source on GitHub through the tech accelerator OS Labs, and we are grateful to the community for contributing bug fixes and improvements. 
+Development of Chronos is open source on GitHub through the tech accelerator OS Labs, and we are grateful to the community for contributing bug fixes and improvements.
 
 Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take part in improving Chronos.
 
 ### **Last Iterating Team**
 
-#### Chronos 12.0
-- [Tyler Coryell](https://github.com/Tcoryell)
-- [Edwin Leong](https://github.com/edwinlny)
-- [Eisha Kaushal](https://github.com/eishakaushal)
-- [Haoyu Liu](https://github.com/HaoyL666)
+#### Chronos 13.0
 
+- [Elsa Holmgren](https://github.com/ekh88)
+- [Mckenzie Morris](https://github.com/mckenzie-morris)
+- [Kelly Chandler](https://github.com/kchandler44)
+- [Sean Simson](https://github.com/seantokuzo)
+- [Zhongyan Liang](https://github.com/ZhongyanLiang)
 
 #### Past [Contributors](contributors.md)
+
 #
+
 ## Technologies
 
-- <a href="#"><img src="assets/electron-logo-color.png" alt="Electron" title="Electron" align="center" height="30" /></a>
-- <a href="#"><img src="assets/react-logo-color.png" alt="React" title="React" align="center" height="30" /></a>
-- <a href="#"><img src="assets/js-logo-color.png" alt="JavaScript" title="JavaScript" align="center" height="30" /></a>
-- <a href="#"><img src="assets/ts-logo-long-blue.png" alt="TypeScript" title="TypeScript" align="center" height="30" /></a>
-- <a href="#"><img src="assets/postgres-logo-color.png" alt="PostgreSQL" title="PostgreSQL" align="center" height="30" /></a>
-- <a href="#"><img src="assets/mongo-logo-color.png" alt="MongoDB" title="MongoDB" align="center" height="30" /></a>
-- <a href="#"><img src="assets/node-logo-color.png" alt="Node" title="Node" align="center" height="30" /></a>
-- <a href="#"><img src="assets/express-logo-color.png" alt="Express" title="Express" align="center" height="30" /></a>
-- <a href="#"><img src="assets/http-logo-color.png" alt="HTTP" title="HTTP" align="center" height="30" /></a>
-- <a href="#"><img src="assets/grpc-logo-color.png" alt="gRPC" title="gRPC" align="center" height="30" /></a>
-- <a href="#"><img src="assets/graphql-logo-color.png" alt="GraphQL" title="GraphQL" align="center" height="30" /></a>
-- <a href="#"><img src="assets/docker-logo-color.png" alt="Docker" title="Docker" align="center" height="30" /></a>
-- <a href="#"><img src="assets/aws-logo-color.png" alt="AWS" title="AWS" align="center" height="30" /></a>
-- <a href="#"><img src="assets/jest-logo-color.png" alt="Jest" title="Jest" align="center" height="30" /></a>
-- <a href="#"><img src="assets/webpack-logo-color.png" alt="Webpack" title="Webpack" align="center" height="30" /></a>
-- <a href="#"><img src="assets/material-ui-logo-color.png" alt="Material-UI" title="Material-UI" align="center" height="30" /></a>
-- <a href="#"><img src="assets/vis-logo-color.png" alt="Vis.js" title="Vis.js" align="center" height="30" /></a>
-- <a href="#"><img src="assets/plotly-logo-color.png" alt="Plotly.js" title="Plotly.js" align="center" height="30" /></a>
-- <a href="#"><img src="assets/pngwing.com.png" alt="Apache Kafka" title="Apache Kafka" align="center" height="30" /></a>
-- <a href="#"><img src="assets/grafana-logo.png" alt="Grafana" title="Grafana" align="center" height="40" /></a>
-- <a href="#"><img src="assets/selenium-logo.png" alt="Selenium" title="Selenium" align="center" height="30" /></a>
-- <a href="#"><img src="assets/prometheus-logo.png" alt="Prometheus" title="Prometheus" align="center" height="40" /></a>
-- <a href="#"><img src="assets/github-action-logo.png" alt="Github Action" title="Github Action" align="center" height="40" /></a>
-- <a href="#"><img src="assets/threeJS-logo.png" alt="Github Action" title="Github Action" align="center" height="40" /></a>
-- <a href="#"><img src="assets/kubernetes-log.png" alt="Kubernetes" title="Kubernetes" align="center" height="40" /></a>
-
-
-
+![Electron.js](https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=Electron&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![HTTP](https://img.shields.io/badge/HTTP-394EFF?style=for-the-badge)
+![gRPC](https://img.shields.io/badge/gRPC-394EFF?style=for-the-badge)
+![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+![vis.js](https://img.shields.io/badge/vis.js-3578E5?style=for-the-badge)
+![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka)
+![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
+![Selenium](https://img.shields.io/badge/-selenium-%43B02A?style=for-the-badge&logo=selenium&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=Prometheus&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+![Threejs](https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 ## License
 
 [MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
+
 #
 
 ###### Return to [Top](#chronos)
