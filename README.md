@@ -204,15 +204,218 @@ Development of Chronos is open source on GitHub through the tech accelerator OS 
 
 Read our [contributing README](CONTRIBUTING.md) to learn how you can take part in improving Chronos.
 
-### **Last Iterating Team**
+### **Iteration Log**
 
-#### Chronos 13.0
+<details><summary>Chronos 13.0</summary>
+    <ul>
+<div>
 
-- [Elsa Holmgren](https://github.com/ekh88)
-- [Mckenzie Morris](https://github.com/mckenzie-morris)
-- [Kelly Chandler](https://github.com/kchandler44)
-- [Sean Simson](https://github.com/seantokuzo)
-- [Zhongyan Liang](https://github.com/ZhongyanLiang)
+Contributors:
+[Elsa Holmgren](https://github.com/ekh88),
+[Mckenzie Morris](https://github.com/mckenzie-morris),
+[Kelly Chandler](https://github.com/kchandler44),
+[Sean Simson](https://github.com/seantokuzo),
+[Zhongyan Liang](https://github.com/ZhongyanLiang)
+
+</div>
+Updates:
+    <ul>
+    <li>TBD</li>
+    </ul>
+
+<a href=''>Version 13.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos 12.0</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Haoyu Liu](https://github.com/HaoyL666),
+[Edwin Leong](https://github.com/edwinlny),
+[Eisha Kaushal](https://github.com/eishakaushal),
+[Tyler Coryell](https://github.com/Tcoryell)
+
+</div>
+Updates:
+    <ul>
+    <li>Grafana charting and visualizer</li>
+    <li>Increase in Prometheus and cAdvisor integration span</li>
+    <li>Increased testing coverage to include unit testing and Selenium-based, end-to-end testing</li>
+    <li>Integrated CI/CD which automates GitHub Action to run testing suites in order and create a publishing action to NPM Registry</li>
+    </ul>
+
+<a href='https://medium.com/@coryelltyler/grafana-charting-improved-testing-and-ci-cd-with-chronos-12-0-6a1156cae456'>Version 12.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos 11.0</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Brisa Zhu](https://github.com/beezoo10),
+[Lucie Seidler](https://github.com/LucieSeidler),
+[Justin Poirier](https://github.com/jcpoirier20),
+[Jeffrey Na](https://github.com/jeffreyNa),
+[Kelsi Webb](https://github.com/kelsicw)
+
+</div>
+Updates:
+    <ul>
+    <li>Interactive charting which can display and compare metrics in rendered graphs</li>
+    <li>Increased user database security with user authorization to connect multiple</li>
+    <li>services and databases and have instances persist without having to reconnect</li>
+    <li>Improved documentation by adding ReadMes about how to initialize the app, how to use the given examples, and how to update config files</li>
+    <li>Updated NPM Package to ‘increase reliability and ease of navigation</li>
+    <li>Fixed bugs and improved test coverage</li>
+    </ul>
+
+<a href='https://medium.com/@zhu.brisa/interactive-charting-increases-user-engagement-with-chronos-11-0-61b6b8b7399b'>Version 11.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos 10.0</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Brian Lim](https://github.com/brianlim89),
+[Claire Tischuk](https://github.com/BoopdiBop),
+[Lennon Stewart](https://github.com/noahoo7),
+[Victor Ye](https://github.com/vctorye),
+
+</div>
+Updates:
+    <ul>
+    <li>Full user authentication integrating with a functional database which enables users to securely save their profile and data</li>
+    <li>Updated microservices, gRPC, and Dockerized app examples</li>
+    </ul>
+
+<a href='https://medium.com/@br.lim89/taking-chronos-to-the-next-level-with-eks-monitoring-c9102a450b3c'>Version 10.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos 9.0</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Brian Lim](https://github.com/brianlim89),
+[Claire Tischuk](https://github.com/BoopdiBop),
+[Lennon Stewart](https://github.com/eishakaushal),
+[Victor Ye](https://github.com/vctorye)
+
+</div>
+Updates:
+    <ul>
+    <li>Added AWS - Users of Chronos are now able to monitor and visualize containers running in Amazon’s Elastic Kubernetes Service (EKS)~Medium</li>
+    <li>Ability to monitor cost metrics through Opencast integration</li>
+    </ul>
+
+<a href='https://medium.com/@br.lim89/taking-chronos-to-the-next-level-with-eks-monitoring-c9102a450b3c'>Version 9.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos 8.0</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Vince Ho](https://github.com/brianlim89),
+[Matt Giant](https://github.com/BoopdiBop),
+[Derek Lam](https://github.com/eishakaushal),
+[Kit Loong Yee](https://github.com/vctorye)
+
+</div>
+Updates:
+    <ul>
+    <li>Rewrite microservice in a language with a higher level of support such as GO or Java</li>
+    <li>Use packages such as OpenTelementry to record data and export said data to an additional application like Zipkin or Prometheus</li>
+    <li>Purchase a license to one of the few monitoring tools that support gRPC and Node.js.</li>
+    </ul>
+
+<a href='https://derekquoc.medium.com/monitoring-node-js-grpc-microservices-with-chronos-deac9b227122'>Version 8.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos 7.0</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Yang Song](https://github.com/curiousyang),
+[Giovanni Floreslovo](https://github.com/gfloresl),
+[James Edwards](https://github.com/Fredwards),
+[Alex Kolb](https://github.com/alexkolb1)
+
+</div>
+Updates:
+    <ul>
+    <li>Ability to filter out specific metrics using a query tool</li>
+    <li>Increased the number of metrics available from 12 to 100+</li>
+    <li>Options to filter metrics by category</li>
+    <li>Apache Kafka monitoring capabilities</li>
+    <li>Bug fixes and UI improvements</li>
+    </ul>
+
+<a href='https://medium.com/@hannahsantoyo/introducing-chronos-7-a-complete-health-monitoring-tool-for-microservices-apache-kafka-clusters-f1ebad038074'>Version 7.0 Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos ??</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Tim Lee](https://github.com/timlee12),
+[Taylor Zhang](https://github.com/taylrzhang),
+[Snow Bai](https://github.com/xueapp),
+[Roberto Meloni](https://github.com/RobertoRueMeloni)
+
+</div>
+Updates:
+    <ul>
+    <li>Created npm package to allow use of AWS services to be monitored with the application</li>
+    </ul>
+
+<a href='https://derekquoc.medium.com/monitoring-node-js-grpc-microservices-with-chronos-deac9b227122'>Medium Article</a>
+
+</ul>
+</details>
+
+<details><summary>Chronos ??</summary>
+    <ul>
+    <div>
+
+Contributors:
+[Gahl Peled](https://github.com/GP3-RS),
+[Josh James](https://github.com/joshjames289),
+[Elisa Nie](https://github.com/elisanie),
+Troy Prejusa
+
+</div>
+Updates:
+    <ul>
+    <li>Distributed tracing across microservice example application</li>
+    <li>Compatible with GraphQL</li>
+    <li>Cross-Platform desktop application</li>
+    <li>Supports PostgresQL and MongoDB databases</li>
+    <li>Displays real-time metrics</li>
+    </ul>
+
+<a href='https://medium.com/@jj289_55613/chronos-application-health-monitoring-for-the-modern-era-3b9d93b59ff'>Medium Article</a>
+
+</ul>
+</details>
 
 #### Past [Contributors](contributors.md)
 
