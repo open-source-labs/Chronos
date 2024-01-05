@@ -1,0 +1,12 @@
+version: '3'
+services:
+  auth:
+    build: './auth'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'users'
+
+    ports:
+      - '5000:5000'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
