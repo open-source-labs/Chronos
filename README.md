@@ -114,8 +114,8 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 2. Run `npm run build`
 3. Depends on the environment, run `npm audit fix` or `npm audit fix --force` if prompted
 4. Open a new terminal and run `npm run dev:app` to start the Webpack development server
-5. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode
-   .
+5. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode.
+6. Refer to `Examples` sections below to spin up example applications.
 
 #
 
@@ -202,7 +202,7 @@ We've created testing suites for Chronos with React Testing, Jest, and Selenium 
 
 Development of Chronos is open source on GitHub through the tech accelerator OS Labs, and we are grateful to the community for contributing bug fixes and improvements.
 
-Read our [contributing README](../../CONTRIBUTING.md) to learn how you can take part in improving Chronos.
+Read our [contributing README](CONTRIBUTING.md) to learn how you can take part in improving Chronos.
 
 ### **Last Iterating Team**
 
