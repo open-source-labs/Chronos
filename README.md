@@ -20,7 +20,9 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-- Updated microservices example with
+- new microservices app
+- updated version history with past iteration changes
+- Added codebase overview visulization
 
 ### With Chronos 13.0
 
@@ -80,7 +82,8 @@ For more details on the NPM package and instructions for how to use it, please v
 
 ## Chronos Desktop Application
 
-### WSL2 Environment
+<!-- v13 notes : WSL environment does not work ----------------------------------->
+<!-- ### WSL2 Environment
 
 If you wish to launch the Electron Application in an WSL2 envirronment(Ubuntu) you may need the following commands for an Electron window to appear
 
@@ -96,19 +99,9 @@ sudo apt install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 
 
 ```
 export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
-```
+``` -->
 
-### Creating User Database
-
-**NOTE: You must create your own user database**
-
-1. Create a MongoDB database in which to store user information and insert it on line 2 within the [UserModel.ts](./electron/models/UserModel.ts) (_electron/models/UserModel.ts_) file.
-   - This database will privately store user information.
-2. Once this is set up, you can create new users, log in, and have your data persist between sessions.
-
-#
-
-### Running the Chronos desktop app in development mode
+### Running the Chronos desktop app in development mode (WSL Incompatible)
 
 1. From the root directory, run `npm install`
 2. Run `npm run build`
@@ -124,6 +117,16 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 1. From the root directory, run `npm run build`
 2. Run `npm run package`
 3. Find the `chronos.app` executable inside the newly created `release-builds` folder in the root directory.
+
+#
+
+### Creating User Database
+
+**NOTE: You must create your own user database for extended features**
+
+1. Create a MongoDB database in which to store user information and insert it on line 2 within the [UserModel.ts](./electron/models/UserModel.ts) (_electron/models/UserModel.ts_) file.
+   - This database will privately store user information.
+2. Once this is set up, you can create new users, log in, and have your data persist between sessions.
 
 #
 
@@ -367,52 +370,6 @@ Updates:
     </ul>
 
 <a href='https://medium.com/@hannahsantoyo/introducing-chronos-7-a-complete-health-monitoring-tool-for-microservices-apache-kafka-clusters-f1ebad038074'>Version 7.0 Medium Article</a>
-
-</ul>
-</details>
-
-<details><summary>Chronos ??</summary>
-    <ul>
-    <div>
-
-Contributors:
-[Tim Lee](https://github.com/timlee12),
-[Taylor Zhang](https://github.com/taylrzhang),
-[Snow Bai](https://github.com/xueapp),
-[Roberto Meloni](https://github.com/RobertoRueMeloni)
-
-</div>
-Updates:
-    <ul>
-    <li>Created npm package to allow use of AWS services to be monitored with the application</li>
-    </ul>
-
-<a href='https://derekquoc.medium.com/monitoring-node-js-grpc-microservices-with-chronos-deac9b227122'>Medium Article</a>
-
-</ul>
-</details>
-
-<details><summary>Chronos ??</summary>
-    <ul>
-    <div>
-
-Contributors:
-[Gahl Peled](https://github.com/GP3-RS),
-[Josh James](https://github.com/joshjames289),
-[Elisa Nie](https://github.com/elisanie),
-Troy Prejusa
-
-</div>
-Updates:
-    <ul>
-    <li>Distributed tracing across microservice example application</li>
-    <li>Compatible with GraphQL</li>
-    <li>Cross-Platform desktop application</li>
-    <li>Supports PostgresQL and MongoDB databases</li>
-    <li>Displays real-time metrics</li>
-    </ul>
-
-<a href='https://medium.com/@jj289_55613/chronos-application-health-monitoring-for-the-modern-era-3b9d93b59ff'>Medium Article</a>
 
 </ul>
 </details>
