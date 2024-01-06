@@ -5,7 +5,7 @@ require('dotenv').config({
 
 const chronosConfig = {
   // General configuration
-  microservice: 'auth',
+  microservice: 'orders',
   interval: 5000,
 
   // Mode Specific
