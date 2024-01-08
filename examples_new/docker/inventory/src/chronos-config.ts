@@ -5,12 +5,12 @@ require('dotenv').config({
 
 const chronosConfig = {
   // General configuration
-  microservice: 'auth',
+  microservice: 'inventory',
   interval: 5000,
 
   // Mode Specific
-  mode: 'docker',
-  promService: 'docker.for.mac.localhost',
+  mode: 'microservices',
+  dockerized: false,
 
   database: {
     connection: 'REST',
