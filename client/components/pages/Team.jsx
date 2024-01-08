@@ -55,6 +55,11 @@ import bioHaoyuPic from "../../assets/Bio_picture_Haoyu.jpg"
 import bioEdwinPic from "../../assets/Bio_picture_Edwin.jpeg"
 import bioEishaPic from "../../assets/Bio_picture_Eisha.png"
 import bioTylerPic from "../../assets/Bio_picture_Tyler.jpeg"
+import bioZhongyanPic from "../../assets/Bio_picture_Zhongyan.jpg"
+import bioElsaPic from "../../assets/Bio_picture_Elsa.jpg"
+import bioSeanPic from "../../assets/Bio_picture_Sean.png"
+import bioMcKenziePic from "../../assets/Bio_picture_McKenzie.jpg"
+import bioKellyPic from "../../assets/Bio_picture_Kelly.png"
 import bioDude from "../../assets/Bio_picture__v13.png"
 
 import "../../stylesheets/Team.scss"
@@ -63,7 +68,7 @@ const bios = [
   {
     name: "McKenzie Morris",
     bioParagraph: "Consumate Bad Ass",
-    picture: bioDude,
+    picture: bioMcKenziePic,
     contact: {
       gitHub: "https://github.com/mckenzie-morris",
       linkedIn: "https://www.linkedin.com/in/mckenzie-morris-4082b5295/",
@@ -73,7 +78,7 @@ const bios = [
     name: "Elsa Holmgren",
     bioParagraph:
       "Elsa is a full-stack engineer from Minneapolis, MN who specializes in designing highly reliable systems and obsesses over efficiency in large-scale data environments. She also has a deep commitment to integrating accessibility features. If she’s not at her desk she’s probably out plane spotting or seasoning her cast iron skillet…again.",
-    picture: bioDude,
+    picture: bioElsaPic,
     contact: {
       gitHub: "https://github.com/ekh88",
       linkedIn: "https://www.linkedin.com/in/elsa-holmgren/",
@@ -82,8 +87,8 @@ const bios = [
   {
     name: "Kelly Chandler",
     bioParagraph:
-      "Consumate Bad Ass Consumate Bad Ass Consumate Bad Ass Consumate Bad Ass Consumate Bad Ass Consumate Bad Ass Consumate Bad Ass Consumate Bad Ass",
-    picture: bioDude,
+      "Kelly is a full-stack developer living in Colorado. She finds true joy in creating innovative and reliable products. When not coding, Kelly enjoys hiking the Colorado mountains, reading, and making quilts.",
+    picture: bioKellyPic,
     contact: {
       gitHub: "",
       linkedIn: "",
@@ -93,7 +98,7 @@ const bios = [
     name: "Daniel Liang",
     bioParagraph:
       "Zhongyan, based in Washington DC, is a full-stack engineer who is passionate about cloud computing and database technologies. Outside of coding, he loves traveling and discovering new restaurants.",
-    picture: bioDude,
+    picture: bioZhongyanPic,
     contact: {
       gitHub: "https://github.com/ZhongyanLiang",
       linkedIn: "https://www.linkedin.com/in/zhongyan-liang-5571a1128/",
@@ -103,7 +108,7 @@ const bios = [
     name: "Sean Simpson",
     bioParagraph:
       "Sean is a full-stack software engineer based in Los Angeles, CA. He has a passion for developing and testing dynamic, scalable applications and products. Outside of engineering he loves playing guitar, traveling and hanging out with his dog Steve",
-    picture: bioDude,
+    picture: bioSeanPic,
     contact: {
       gitHub: "https://github.com/seantokuzo",
       linkedIn: "https://www.linkedin.com/in/sean-tokuzo/",
