@@ -16,7 +16,7 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  // background: #ed683c;
+  background: linear-gradient(rgba($darkblue, 0.5), rgba($darkblue, 0.75));
   border-radius: 10px;
 }
 
