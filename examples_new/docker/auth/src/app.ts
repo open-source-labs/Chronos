@@ -16,9 +16,6 @@ chronos.propagate();
 
 const app = express();
 
-const trackingMiddleware = chronos.track();
-app.use(trackingMiddleware);
-
 app.use(
   cors({
     credentials: true,
@@ -27,6 +24,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+chronos.docker();
 
 // app.get('/', (req, res) => {
 //   console.log('💥 Test Route');

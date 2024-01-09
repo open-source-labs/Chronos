@@ -10,10 +10,8 @@ chronos.propagate();
 
 const app = express();
 
-const trackingMiddleware = chronos.track();
-app.use(trackingMiddleware);
-
 app.use(express.json());
+chronos.docker();
 
 app.use('/', async (req: Request, res: Response) => {
   // console.log(req.body);
