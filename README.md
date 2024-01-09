@@ -22,7 +22,6 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ### Chronos 13.0
 
-  <ul>
 <div>
 
 Contributors:
@@ -34,13 +33,9 @@ Contributors:
 
 </div>
 Updates:
-    <ul>
-    <li>TBD</li>
-    </ul>
+  <li>TBD</li>
 
 <a href=''>Version 13.0 Medium Article</a>
-
-</ul>
 
 ### **Iteration Log**
 
