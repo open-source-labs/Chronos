@@ -20,7 +20,7 @@ export const updateItemInventory = async (req: Request, res: Response) => {
   newInventory.units = units;
   await newInventory.save();
   try {
-    await axios.post('http://localhost:3005/', {
+    await axios.post('http://event-bus:3005/', {
       event: {
         type: EventTypes.INVENTORY_UPDATED,
         payload: newInventory,

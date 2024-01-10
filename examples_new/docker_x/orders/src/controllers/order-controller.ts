@@ -17,7 +17,7 @@ export const createOrder = async (req: CurrentUserRequest, res: Response) => {
   await newOrder.save();
 
   //send created order to event bus
-  await axios.post('http://localhost:3005/', {
+  await axios.post('http://event-bus:3005/', {
     event: {
       type: EventTypes.ORDER_CREATED,
       payload: newOrder,

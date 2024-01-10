@@ -9,9 +9,12 @@ import { NotFoundError, errorHandler } from '@chronosrx/common';
 import chronosConfig from './chronos-config';
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
+
 chronos.propagate();
 
 const app = express();
+
+chronos.docker();
 
 app.use(
   cors({
@@ -21,7 +24,6 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-chronos.docker();
 
 app.use('/api/auth', authRouter);
 app.use('/events', eventRouter);

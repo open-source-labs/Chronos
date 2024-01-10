@@ -9,6 +9,7 @@ import { NotFoundError, errorHandler } from '@chronosrx/common';
 import chronosConfig from './chronos-config';
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
+
 chronos.propagate();
 
 const app = express();
