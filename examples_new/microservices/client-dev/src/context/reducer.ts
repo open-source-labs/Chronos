@@ -1,5 +1,5 @@
 import { ActionType } from './actions';
-import { StateInterface, ItemInterface } from './appContext';
+import { StateInterface, ItemInterface, OrderInterface } from './appContext';
 
 type Action =
   | {
@@ -19,6 +19,12 @@ type Action =
       type: ActionType.RETRIEVED_ITEMS;
       payload: {
         items: ItemInterface[];
+      };
+    }
+  | {
+      type: ActionType.RETRIEVED_ORDERS;
+      payload: {
+        orders: OrderInterface[];
       };
     };
 
@@ -50,6 +56,12 @@ const reducer = (state: StateInterface, action: Action) => {
       return {
         ...state,
         items: action.payload.items,
+        isLoading: false,
+      };
+    case ActionType.RETRIEVED_ORDERS:
+      return {
+        ...state,
+        orders: action.payload.orders,
         isLoading: false,
       };
     default:

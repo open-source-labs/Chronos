@@ -16,11 +16,8 @@ app.use(trackingMiddleware);
 app.use(express.json());
 
 app.use('/', async (req: Request, res: Response) => {
-  // console.log(req.body);
   const { event } = req.body;
-  // console.log('Event Received');
-
-  console.log('Event Bus Publishing event:', event);
+  console.log('📫 Event Bus Publishing event:', event);
   // Auth
   try {
     await axios.post('http://localhost:3000/events', { event });

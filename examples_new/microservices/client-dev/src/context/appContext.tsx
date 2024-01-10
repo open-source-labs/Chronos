@@ -8,7 +8,7 @@ import { AxiosError } from 'axios';
 const authFetch = customFetch(3000);
 const itemFetch = customFetch(3001);
 const inventoryFetch = customFetch(3002);
-// const orderFetch = customFetch(3003);
+const orderFetch = customFetch(3003);
 
 export interface ItemInterface {
   id: string;
@@ -16,16 +16,24 @@ export interface ItemInterface {
   units: number;
 }
 
+export interface OrderInterface {
+  id: string;
+  item: string;
+  amount: number;
+}
+
 export interface StateInterface {
   isLoading: boolean;
   user: string;
   items: ItemInterface[];
+  orders: OrderInterface[];
 }
 
 const initialState: StateInterface = {
-  isLoading: false,
+  isLoading: true,
   user: '',
   items: [],
+  orders: [],
 };
 
 interface AppContextInterface extends StateInterface {
@@ -34,7 +42,11 @@ interface AppContextInterface extends StateInterface {
   loginUser: (username: string, password: string) => void;
   logoutUser: () => void;
   createItem: (fruit: Fruit) => void;
+  getAllItems: () => void;
   adjustInventory: (itemId: string, newUnits: number) => void;
+  createOrder: (item: string, amount: number) => void;
+  getAllOrders: () => void;
+  throw404: () => void;
 }
 
 const AppContext = createContext<AppContextInterface>({
@@ -44,7 +56,11 @@ const AppContext = createContext<AppContextInterface>({
   loginUser: () => null,
   logoutUser: () => null,
   createItem: () => null,
+  getAllItems: () => null,
   adjustInventory: () => null,
+  createOrder: () => null,
+  getAllOrders: () => null,
+  throw404: () => null,
 });
 
 type Props = {
@@ -56,6 +72,12 @@ const AppContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     getCurrentUser();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    getAllItems();
+    getAllOrders();
     // eslint-disable-next-line
   }, []);
 
@@ -74,23 +96,23 @@ const AppContextProvider = ({ children }: Props) => {
         username,
         password,
       });
-      dispatch({ type: ActionType.LOGIN_USER, payload: { user: response.data.username } });
+      setTimeout(() => {
+        dispatch({ type: ActionType.LOGIN_USER, payload: { user: response.data.username } });
+        stopLoading();
+      }, 1000);
     } catch (err) {
       console.log(err);
+      stopLoading();
     }
-    stopLoading();
   };
 
   const logoutUser = async () => {
-    startLoading();
     try {
-      const response = await authFetch.post('/auth/logout');
-      console.log(response);
+      await authFetch.post('/auth/logout');
       dispatch({ type: ActionType.LOGOUT_USER });
     } catch (err) {
       console.log(err);
     }
-    stopLoading();
   };
 
   const getCurrentUser = async () => {
@@ -109,22 +131,29 @@ const AppContextProvider = ({ children }: Props) => {
 
   const createItem = async (fruit: Fruit) => {
     if (fruit !== 'bananas' && fruit !== 'strawberries' && fruit !== 'grapes') return;
-
     try {
       startLoading();
-      const response = await itemFetch.post('/items/createItem', {
+      await itemFetch.post('/items/createItem', {
         itemName: fruit,
       });
-      console.log(response.data);
-
-      setTimeout(async () => {
-        const allItemsResponse = await inventoryFetch('/inventory/getAllItems');
-        dispatch({ type: ActionType.RETRIEVED_ITEMS, payload: { items: allItemsResponse.data } });
-      }, 1500);
+      await getAllItems();
     } catch (err) {
       if (err instanceof AxiosError) {
         window.alert(err.message);
       }
+      console.log(err);
+      stopLoading();
+    }
+  };
+
+  const getAllItems = async () => {
+    startLoading();
+    try {
+      const allItemsResponse = await inventoryFetch('/inventory/getAllItems');
+      setTimeout(() => {
+        dispatch({ type: ActionType.RETRIEVED_ITEMS, payload: { items: allItemsResponse.data } });
+      }, 1500);
+    } catch (err) {
       console.log(err);
     }
     stopLoading();
@@ -149,6 +178,52 @@ const AppContextProvider = ({ children }: Props) => {
     }
   };
 
+  const createOrder = async (item: string, amount: number) => {
+    if (item !== 'hat' && item !== 'shirt' && item !== 'pants') return;
+    if (amount < 0 || amount > 9) return;
+    try {
+      startLoading();
+      await orderFetch.post('/orders/createOrder', {
+        item,
+        amount,
+      });
+      await getAllOrders();
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        window.alert(err.message);
+      }
+      console.log(err);
+      stopLoading();
+    }
+  };
+
+  const getAllOrders = async () => {
+    startLoading();
+    try {
+      const allOrdersResponse = await orderFetch('/orders/getAllOrders');
+      setTimeout(() => {
+        dispatch({
+          type: ActionType.RETRIEVED_ORDERS,
+          payload: { orders: allOrdersResponse.data },
+        });
+      }, 1000);
+    } catch (err) {
+      console.log(err);
+    }
+    stopLoading();
+  };
+
+  const throw404 = async () => {
+    startLoading();
+    try {
+      await itemFetch('/items/nonExistentRoute');
+    } catch (err) {
+      setTimeout(() => {}, 1000);
+      window.alert(err);
+      stopLoading();
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -158,7 +233,11 @@ const AppContextProvider = ({ children }: Props) => {
         loginUser,
         logoutUser,
         createItem,
+        getAllItems,
+        createOrder,
+        getAllOrders,
         adjustInventory,
+        throw404,
       }}
     >
       {children} {/* <App /> */}
