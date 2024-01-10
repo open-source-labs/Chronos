@@ -19,7 +19,12 @@ const Protected = ({ children }: Props) => {
   }, [user]);
 
   if (isLoading) {
-    return <Loading />;
+    return (
+      <>
+        <Loading />
+        {children}
+      </>
+    );
   }
 
   return children;

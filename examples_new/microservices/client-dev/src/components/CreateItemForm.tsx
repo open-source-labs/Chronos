@@ -7,22 +7,20 @@ import FruitIcon from './FruitIcon';
 const itemOptions = ['bananas', 'strawberries', 'grapes'];
 
 const CreateItemForm = () => {
-  const { items, createItem } = useAppContext();
+  const { createItem, isLoading } = useAppContext();
   const [fruit, setFruit] = useState<Fruit>('bananas');
-
-  console.log(items);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    // TODO
-    // SEND REQUEST TO CREATE ITEM
+    if (isLoading) return;
+
     createItem(fruit);
   };
 
   return (
     <form
-      className="flex flex-col justify-center items-center bg-white/70 text-dark py-4 px-8 rounded-md"
+      className="flex flex-col justify-center items-center bg-white/70 text-dark py-4 px-8 rounded-md mx-4 w-[250px]"
       onSubmit={e => handleSubmit(e)}
     >
       <h1 className="text-2xl font-bold">Create an Item</h1>
@@ -44,7 +42,7 @@ const CreateItemForm = () => {
           );
         })}
       </select>
-      <button className="bg-blue-400 py-2 px-4 rounded-md hover:shadow-blkSm hover:scale-110 mt-4 w-full">
+      <button className="bg-blue-400 py-2 px-4 rounded-md hover:shadow-blkSm hover:scale-110 transition-all mt-4 w-full">
         Create Item
       </button>
     </form>

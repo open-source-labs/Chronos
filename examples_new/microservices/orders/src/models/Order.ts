@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 //define type of objects that is being passed into build method
 interface OrderAttrs {
-  itemId: string;
+  item: string;
   amount: number;
 }
 
@@ -10,21 +10,21 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 }
 //create inventory data in the database in this shape
 interface OrderDoc extends mongoose.Document {
-  itemId: string;
+  item: string;
   amount: number;
 }
 
 //create the Schema in mongoose with defined requirements
 const OrderSchema = new mongoose.Schema(
   {
-    itemId: {
+    item: {
       type: String,
       required: true,
-      unique: true,
     },
     amount: {
       type: Number,
       required: true,
+      default: 1,
     },
   },
   {
@@ -41,7 +41,7 @@ const OrderSchema = new mongoose.Schema(
 
 OrderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order({
-    itemId: attrs.itemId,
+    item: attrs.item,
     amount: attrs.amount,
   });
 };
