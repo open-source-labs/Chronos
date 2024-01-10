@@ -20,7 +20,7 @@
 ## Using Chronos
 The following steps should be performed in each microservice you want to track unless otherwise noted.
 
-### Install Chronos Tracker
+### 1. Install Chronos Tracker
 Install the package as a dependency in each of the microservices you want to track:
 
 ```
@@ -28,76 +28,56 @@ npm install @chronosmicro/tracker
 ```
 
 
-### Configuring Chronos Tracker
-Create a `.js` Chronos configuration file (hereby referred to as `chronos-config.js`), which exports a JavaScript object with required Chronos configuration parameters. This object will be used as the sole Chronos class constructor argument. Feel free to use a `.env` file to hold sensitive parameters like the database URI, for example.
+### 2. Configuring Chronos Tracker
+Create a `chronos-config.js` file, which exports a JavaScript object with required Chronos configuration parameters. Use this configuration to customize Chronos for your specific microservice environment. 
 
 ```js
 // A sample `chronos-config.js` file
+//replace the values with your specific configuration
 
 module.exports = {
   // General Configuration
-  microservice: 'my-service',
-  interval: 10000,
+  microservice: 'my-service', //Name of your microservice. For **Dockerized** microservices, this field **must** match the container_name of the corresponding Docker container.
+  interval: 10000, //monitoring interval in milliseconds, if ommitted, Chronos will default to recording server health every 60000 ms.
 
   // Database Information
   database: {
-  connection: 'REST',   // 'REST' or 'gRPC'
-  type: 'MongoDB',      // 'MongoDB' or 'PostgreSQL'
-  URI: '<insert URI>',  // <insert URI>
+  connection: 'REST',   // Choose 'REST' or 'gRPC' for your connection type
+  type: 'MongoDB',      // Choose 'MongoDB' or 'PostgreSQL'
+  URI: '<insert URI>',  // should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation
   },
 
-  /*  USE ONE OF THE MODE-SPECIFIC CONFIGURATIONS BELOW   */
-  // (a) Microservices
+  /*  USE ONLY ONE OF THE CONFIGURATIONS BELOW:   */
+  // (a) Microservices Mode
   mode: 'microservices',
-  dockerized: false,  // false or true
+  dockerized: false,  // set to true if your service is Dockerized
 
   // (b) Kubernetes
   mode: 'kubernetes',
-  promService: 'prometheus-service',
-  promPort: 8080,
-  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
+  promService: 'prometheus-service', // Prometheus service name
+  promPort: 8080, //Prometheus service port
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,//API for Grafana
 
   // (c) Apache Kafka
   mode: 'kafka',
-  jmxuri: '<insert URI>',
+  jmxuri: '<insert URI>', //URI for JMX to Prometheus Exporter
 
   // (d) Docker
   mode: 'docker',
-  promService: 'docker.for.mac.localhost',
-  promPort: 9090,
-  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY,
+  promService: 'docker.for.mac.localhost', //Prometheus service for Docker
+  promPort: 9090, //Prometheus service port
+  grafanaAPIKey: process.env.CHRONOS_GRAFANA_API_KEY, //API key for Grafana
 
-  /*  USE ONE OF THE MODE-SPECIFIC CONFIGURATIONS ABOVE   */
+
 
   // Notifications
+  //Add notification configurations here
   notifications: [],
 }
 ```
+Note: Consider using a `.env` file to securely store sensitive parameters like database URIs.
 
-Then utilize the `chronos-config.js` file into your application by importing it and using it as the Chronos class constructor argument:
-```js
-const chronosConfig = require('./chronos-config.js');
-const Chronos = require('@chronosmicro/tracker');
-const chronos = new Chronos(chronosConfig);
-```
-
-
-#### Chronos Configuration Parameters
-_See mode-specific configuration descriptions in the "Chronos Tracker for Microservices" section_
-
-The `microservice` property takes in a string. This should be a descriptive name for your microservice.
-
-- <img src="../assets/important.png" alt="Important" title="Important" align="center" height="20" /> For **Dockerized** microservices, this field **must** match the _container_name_ of the corresponding Docker container.
-
-The `interval` property is optional and takes in an integer. This controls the Chronos monitoring frequency. If this is omitted, Chronos will default to recording server health every 60000 ms or 60 seconds.
-
-The `database` property is required and takes in the following:
-- `connection` is a string that should should be either 'REST' or 'gRPC'
-- `type` should be a string and only supports 'MongoDB' and 'PostgreSQL' at this time
-- `URI` should be a connection string to the database where you intend Chronos to write and record data regarding health, HTTP route tracing, and container infomation
-
-The `mode` property accepts a string that can either be 'microservices', 'kubernetes', 'kafka', or 'docker'. There are other settings that depend on the mode choice, so these are broken down in the "Chronos Tracker for Microservices" section.
-
+### 3. Configuring notifications
 The `notifications` property is an array that can be optionally left empty. It allows developers to be alerted when the server responds to requests with status codes >= 400. To set up notifications, set the value of the `notifications` property to an array of objects, each with a `type` and `settings` property. 
 
 Chronos only supports **Slack** and **email** notifications at this time.
@@ -124,32 +104,48 @@ notifications: [
   {
     type: 'email',
     settings: {
-      emails: 'foobar@email.com, bizbaz@email.edu',
-      emailHost: 'smpt@gmail.com',
-      emailPort: 465,
-      user: process.env.SENDER_EMAIL,
-      password: process.env.SENDER_PASSWORD
+      emails: 'foobar@email.com, bizbaz@email.edu', //can be single or multiple, separated by a comma
+      emailHost: 'smpt@gmail.com',// the smtp host of your email server
+      emailPort: 465, // the email port is either **465** or **587** depending on the sender email security settings. Learn more about email ports by reading the [nodemailer docs](https://nodemailer.com/smtp/)
+      user: process.env.SENDER_EMAIL, //email address of the sender
+      password: process.env.SENDER_PASSWORD //password of the sender's email 
     }
   }
 ]
-// ...
 ```
 
-Chronos provides the option to send  emails. The properties that should be provided are the following
-- `emails` - The recipient list (string) can be a single email address or multiple as comma seprated values. 
-- `emailHost` - The smtp host (string) of your email server
-- `emailPort` - The email port (integer) is either **465** or **587** depending on the sender email security settings. Learn more about email ports by reading the [nodemailer docs](https://nodemailer.com/smtp/)
-- `user` - The email address (string) of the sender
-- `password` - The password (string) of the sender email
 
 
-**NOTE: Email notification settings may require alternative security settings to work**
+### 4. Utilize `chronos-config.js` in your application
+To integrate the `chronos-config.js` file into your application, follow these steps: 
+  1. importing the `chronos-config.js` file 
+```js
+const chronosConfig = require('./chronos-config.js');
+```
+  2. importing the Chronos class
+```js
+const Chronos = require('@chronosmicro/tracker');
+```
+  3. creating a new instance of the Chronos class
+```js
+const chronos = new Chronos(chronosConfig);
+```
+
 #
+### Mode Specific Configurations
 
-### Chronos Tracker for "Microservices" Mode
-The mode `microservices` uses the additional setting `dockerized`, which indicates whether or not the microservice has been containerized with Docker. If omitted, Chronos will assume this server is not running in a container, i.e. `dockerized` will default to _false_. 
 
-Setting the flag to `false` will collect metrics from the host computer directly, while `true` indicates for Chronos to pull metrics from the Docker daemon.
+
+### A. Chronos Tracker for "Microservices" Mode
+In the `microservices` mode, Chronos employs the `dockerized` setting to determine the operational environment of the microservice. 
+  
+  * `dockerized`: This setting is crucial for specifying the nature of the service deployment. 
+    * Default Setting: If `dockerized` is not explicitly set to true, Chronos defaults to assuming that the service is not operating in a Docker container environment. Hence, the default value of `dockerized` is false. 
+    * When `dockerized` is `false`: This configuration tells Chronos to collect metrics directly from the host system. It's applicable for services running outside of Docker containers. 
+    * When `dockerized` is `true`: This configuration directs Chronos to retrieve metrics from the Docker daemon, aligning with services deployed within Docker containers for accurate monitoring. 
+
+
+
 
 ```js
 // Excerpt from a chronos-config.js
@@ -173,7 +169,7 @@ const chronos = new Chronos(chronosConfig);
 chronos.track()
 ```
 
-If you are using an Express.js REST API, calling `Chronos.track()` returns middleware that allows users to track incoming network requests and outgoing their corresponding outgoing responses by marking them with unique IDs using `Chronos.propagate`.
+If you are using an Express.js REST API, calling `Chronos.track()` returns middleware that allows users to track incoming network requests and their corresponding outgoing responses by marking them with unique IDs using `Chronos.propagate`.
 
 If you want to utilize this feature, setup a catchall route that will serve as a pass through for tracking and chain in the middleware from `Chronos.track`.
 
@@ -212,8 +208,11 @@ volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
-### Chronos Tracker for "Kubernetes" Mode
-Chronos can monitor an Kubernetes clusters by saving metric data from instant queries to a Prometheus server in your Kubernetes cluster, and then display all metrics data through Grafana dashboards.
+Check out the [**Microservices Readme**](../examples_new/README.md).
+#
+
+### B. Chronos Tracker for "Kubernetes" Mode
+Chronos monitors Kubernetes clusters in two steps. First, it saves metric data from instant queries to a Prometheus server in your Kubernetes cluster. Then, it displays all metrics data through Grafana dashboards.
 
 In `chronos-config.js`, set the `mode` to `kubernetes` and pass it both the name of the port the Prometheus server is listening on INSIDE the cluster, and the name of the Prometheus service so that its IP address can be resolved using KubeDNS.
 
@@ -245,9 +244,10 @@ const chronos = new Chronos(chronosConfig);
 
 chronos.kubernetes();
 ```
+Check out the [**Kubernetes Readme**](../examples/kubernetes/README.md).
+#
 
-
-### Chronos Tracker for "Kafka" Mode
+### C. Chronos Tracker for "Kafka" Mode
 Chronos can monitor an Apache Kafka cluster via JMX to Prometheus Exporter. In order for this feature to work you must be running [JMX to Prometheus
 Exporter](https://github.com/prometheus/jmx_exporter) either as a Java Agent with your cluster or as a standalone HTTP server. Then, use `chronos-config.js` to specifiy where to retrieve the metrics.
 
@@ -280,7 +280,7 @@ When viewing your information in the Chronos Electron application the data will 
 **NOTE:** We provide a jmx_config.yaml file in the Chronos root folder for use with JMX prometheus that provides some useful baseline metrics to monitor.
 
 #
-### Chronos Tracker for "Docker" Mode
+### D. Chronos Tracker for "Docker" Mode
 Chronos monitors Docker containers by storing metric data through instant Prometheus queries within your Docker container environment.
 
 In `chronos-config.js`, configure the `mode` parameter to `docker`. Additionally, provide the name of the port where the Prometheus server is actively listening inside the container, and specify the name of the Prometheus service to enable DNS-based resolution of its IP address.
@@ -313,8 +313,8 @@ const chronos = new Chronos(chronosConfig);
 
 chronos.docker();
 ```
-
-
+Check out the [**Docker Readme**](../examples/docker/README.md).
+#
 ### Chronos Tracker for gRPC
 
 To monitor your gRPC server, setup `chronos-config.js` as if it was a standard microservices example, but be sure to set the `connection` type to `gRPC`.
@@ -432,17 +432,18 @@ Finally, on all servers that will be involved in the request path, invoke `chron
 ```js
 chronos.link(client, ServerWrapper);
 ```
+Check out the [**gRPC README**](../examples/gRPC/README.md).
 
 #
 
 ### Viewing Chronos Data
 Once you have configured and intialized Chronos Tracker, it will automatically record monitoring data when your servers are running. The data will be saved into your database of choice, and then start the Chronos desktop app to view by cloning our [GitHub repo](https://github.com/open-source-labs/Chronos). Folow the ReadMe in that repo to setup the Chronos desktop app. 
 
-
+#
 ## Examples
 
 We provide working example microservice applications in Chronos desktop app repo in the [**examples**](../chronos_npm_package/README.md) folder.
-
+#
 ## Technologies
 - Electron
 - JavaScript
@@ -458,16 +459,16 @@ We provide working example microservice applications in Chronos desktop app repo
 - Docker
 - Kubernetes
 
-
+#
 ## Contributing
 
 Chronos hopes to inspire an active community of both users and developers. For questions, comments, or contributions, please submit a pull request.
 
 Read our [contributing README](../../CONTRIBUTING.md) to further learn how you can take part in improving Chronos.
 
-
+#
 ## License
 
 [MIT](https://github.com/oslabs-beta/Chronos/blob/master/LICENSE.md)
 #
-###### Return to [Top](#chronos)
+###### Return to [Top](#whats-new)
