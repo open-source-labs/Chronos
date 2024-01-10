@@ -13,8 +13,8 @@ chronos.propagate();
 
 const app = express();
 
-// const trackingMiddleware = chronos.track();
-// app.use(trackingMiddleware);
+const trackingMiddleware = chronos.track();
+app.use(trackingMiddleware);
 
 app.use(
   cors({

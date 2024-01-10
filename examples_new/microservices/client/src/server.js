@@ -1,11 +1,17 @@
 const path = require('path');
 const express = require('express');
-const dotenv = require('dotenv');
-dotenv.config({ path: path.resolve(__dirname, '/../../.env') });
 
 const PORT = 5000;
 
+const chronosConfig = require('./chronos-config');
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+chronos.propagate();
+
 const app = express();
+
+const trackingMiddleware = chronos.track();
+app.use(trackingMiddleware);
 
 app.use('/assets', express.static(path.resolve(__dirname, './assets')));
 
