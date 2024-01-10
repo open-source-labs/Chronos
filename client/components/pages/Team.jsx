@@ -60,14 +60,14 @@ import bioElsaPic from "../../assets/Bio_picture_Elsa.jpg"
 import bioSeanPic from "../../assets/Bio_picture_Sean.png"
 import bioMcKenziePic from "../../assets/Bio_picture_McKenzie.jpg"
 import bioKellyPic from "../../assets/Bio_picture_Kelly.png"
-import bioDude from "../../assets/Bio_picture__v13.png"
 
 import "../../stylesheets/Team.scss"
 
 const bios = [
   {
     name: "McKenzie Morris",
-    bioParagraph: "Consumate Bad Ass",
+    bioParagraph:
+      "McKenzie is a full-stack engineer living in Portland, Oregon. Having been a certified personal trainer, McKenzie found something uniquely satisfying about devising and executing a well-thought-out block of code, which is why he decided to pursue it as a full-time career. In his free time he enjoys snowboarding, lifting weights, and indulging in a craft beer (or two) on the weekends!",
     picture: bioMcKenziePic,
     contact: {
       gitHub: "https://github.com/mckenzie-morris",
