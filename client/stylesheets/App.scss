@@ -1,8 +1,27 @@
-@import './constants.scss';
+@import "./constants.scss";
 
 .container {
-  width: 100vw;
-
+  width: 100%;
   // @include background-theme('dark');
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #bbbbbb;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(rgba($darkblue, 0.5), rgba($darkblue, 0.75));
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  // background: #f3903f;
+  background: linear-gradient(rgba($darkblue, 1), rgba($darkblue, 0.75));
+}
