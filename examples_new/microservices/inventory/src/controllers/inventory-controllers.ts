@@ -4,9 +4,7 @@ import { Inventory } from '../models/Inventory';
 import { BadRequestError, CurrentUserRequest, EventTypes, Events } from '@chronosrx/common';
 
 export const getAllItems = async (req: Request, res: Response) => {
-  console.log('get all items');
   const exsitingItems = await Inventory.find({});
-  console.log('ExistingItems', exsitingItems);
 
   res.status(200).send(exsitingItems);
 };

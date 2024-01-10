@@ -1,24 +1,20 @@
-import path from 'path';
 import express from 'express';
 import 'express-async-errors';
-import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname + '../../.env') });
 import cors from 'cors';
-import { NotFoundError, errorHandler } from '@chronosrx/common';
-import inventoryRouter from './routes/inventory-router';
 import cookieParser from 'cookie-parser';
+import inventoryRouter from './routes/inventory-router';
 import eventRouter from './routes/event-router';
-
-const app = express();
+import { NotFoundError, errorHandler } from '@chronosrx/common';
 
 import chronosConfig from './chronos-config';
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 chronos.propagate();
-const trackingMiddleware = chronos.track();
-app.use(trackingMiddleware);
 
+const app = express();
 
+// const trackingMiddleware = chronos.track();
+// app.use(trackingMiddleware);
 
 app.use(
   cors({

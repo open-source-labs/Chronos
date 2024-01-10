@@ -1,17 +1,10 @@
-import { useEffect } from 'react';
 import ItemList from '../components/ItemList';
 import { useAppContext } from '../context/appContext';
 import { Link } from 'react-router-dom';
 import { IoCaretBackCircle } from 'react-icons/io5';
 
 const Items = () => {
-  const { items, getAllItems, isLoading } = useAppContext();
-  console.log(isLoading);
-
-  useEffect(() => {
-    // getAllItems();
-    // eslint-disable-next-line
-  }, []);
+  const { items } = useAppContext();
 
   if (!items.length) {
     return (
