@@ -84,7 +84,7 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     privileged: true
-    # platform: linux/arm64/v8
+    platform: linux/arm64/v8
     ports:
       - 8081:8081
     command:
