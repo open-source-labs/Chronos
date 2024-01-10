@@ -1,7 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { app } from '../app';
-import request from 'supertest';
 import { Inventory } from '../models/Inventory';
 
 declare global {
@@ -37,8 +35,8 @@ afterAll(async () => {
 
 global.createItem = async itemId => {
   const data = Inventory.build({
-    itemId: itemId,
-    units: 50,
+    id: itemId,
+    itemName: 'crap',
   });
   await data.save();
 };

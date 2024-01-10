@@ -1,6 +1,6 @@
 import express from 'express';
 import { signup, login, logout, getCurrentUser } from '../controllers/auth-controller';
-import { currentUser } from '@chronosrx/common';
+import { currentUser } from '@chronosrx/common'
 
 const router = express.Router();
 

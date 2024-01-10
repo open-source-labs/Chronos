@@ -1,24 +1,24 @@
-import { Events } from '@chronosrx/common';
 import express from 'express';
 import { Inventory } from '../models/Inventory';
+import { EventTypes, Events } from '@chronosrx/common';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  const { event } = req.body;
-  // console.log('Event received:', event);
+  const event: Events = req.body.event;
+  console.log('🎃 Inventory - Event Received: , ', event);
+
   switch (event.type) {
-    case Events.ITEM_CREATED:
-      console.log(event);
-      const newInventory = Inventory.build(event.payload);
+    // Duplicate item created
+    case EventTypes.ITEM_CREATED:
+      const newInventory = Inventory.build({
+        id: event.payload.id,
+        itemName: event.payload.itemName,
+      });
       await newInventory.save();
       break;
-    default:
-      res.send({});
   }
-  res.send({ message: 'Event received' });
+  return res.send({ message: 'Event received' });
 });
-
-// router.get('/events');
 
 export default router;

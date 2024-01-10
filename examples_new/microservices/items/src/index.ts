@@ -1,22 +1,32 @@
-import { DbConnectionError } from '@chronosrx/common';
-import { app } from './app';
+import path from 'path';
 import mongoose from 'mongoose';
+import { app } from './app';
+import { DbConnectionError } from '@chronosrx/common';
+import { Item } from './models/items';
+import { User } from './models/users';
+import dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname + '../../.env') });
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 const start = async () => {
-  if (!process.env.MONGO_URI) throw new Error('MONGO_URI must be defined');
+  // check environmental variable are defined
+  if (!process.env.MONGO_URI_ITEMS) throw new Error('MONGO_URI_ITEMS must be defined');
   if (!process.env.JWT_KEY) throw new Error('JWT_KEY must be defined');
 
   try {
-    await mongoose.connect(process.env.MONGO_URI, {});
+    await mongoose.connect(process.env.MONGO_URI_ITEMS, {});
     console.log('🍃 Connected to MongoDB');
+
+    // reset DB's
+    await User.deleteMany();
+    await Item.deleteMany();
   } catch (err) {
     throw new DbConnectionError();
   }
 
   app.listen(PORT, async () => {
-    console.log(`App listening on ${PORT}`);
+    console.log(`💥 Items listening on ${PORT}`);
   });
 };
 

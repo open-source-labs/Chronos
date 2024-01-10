@@ -1,5 +1,6 @@
 import express from 'express';
-import { getItemInventory, updateItemInventory } from '../controllers/inventory-controllers';
+import { getAllItems, updateItemInventory } from '../controllers/inventory-controllers';
+import { currentUser } from '@chronosrx/common';
 
 const router = express.Router();
 
@@ -7,8 +8,10 @@ const router = express.Router();
 //     const { event } = req.body;
 
 // });
+router.use(currentUser);
+router.get('/getAllItems', getAllItems);
+// router.get('/getMyItems', getMyItems);
 
-router.get('/getItemInventory', getItemInventory);
 router.patch('/updateItemInventory', updateItemInventory);
 
 export default router;

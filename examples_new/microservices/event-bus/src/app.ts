@@ -2,16 +2,22 @@ import express, { Request, Response } from 'express';
 import axios from 'axios';
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 
+import chronosConfig from './chronos-config';
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+
+chronos.propagate();
+
 const app = express();
+
+const trackingMiddleware = chronos.track();
+app.use(trackingMiddleware);
 
 app.use(express.json());
 
 app.use('/', async (req: Request, res: Response) => {
-  // console.log(req.body);
   const { event } = req.body;
-  // console.log('Event Received');
-
-  console.log('Event Bus Publishing event:', event);
+  console.log('📫 Event Bus Publishing event:', event);
   // Auth
   try {
     await axios.post('http://localhost:3000/events', { event });
