@@ -1,22 +1,14 @@
 import { Response } from 'express';
 import axios, { AxiosError } from 'axios';
-import {
-  BadRequestError,
-  CurrentUserRequest,
-  EventTypes,
-  NotAuthorizedError,
-} from '@chronosrx/common';
+import { BadRequestError, CurrentUserRequest, EventTypes } from '@chronosrx/common';
 import { Item } from '../models/items';
 
-// current users can create items to sell
 export const createItem = async (req: CurrentUserRequest, res: Response) => {
-  // req.body consists of itemName and unitPrice
   const { itemName } = req.body;
   if (!itemName) {
     throw new BadRequestError('Invalid inputs');
   }
 
-  // new item is created with the build method and then saved
   const newItem = Item.build({
     itemName,
   });

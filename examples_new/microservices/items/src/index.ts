@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { app } from './app';
 import { DbConnectionError } from '@chronosrx/common';
 import { Item } from './models/items';
-import { User } from './models/users';
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname + '../../.env') });
 
@@ -19,7 +18,6 @@ const start = async () => {
     console.log('🍃 Connected to MongoDB');
 
     // reset DB's
-    await User.deleteMany();
     await Item.deleteMany();
   } catch (err) {
     throw new DbConnectionError();
