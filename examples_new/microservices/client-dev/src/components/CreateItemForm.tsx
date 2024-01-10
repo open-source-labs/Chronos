@@ -7,10 +7,8 @@ import FruitIcon from './FruitIcon';
 const itemOptions = ['bananas', 'strawberries', 'grapes'];
 
 const CreateItemForm = () => {
-  const { items, createItem } = useAppContext();
+  const { createItem } = useAppContext();
   const [fruit, setFruit] = useState<Fruit>('bananas');
-
-  console.log(items);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

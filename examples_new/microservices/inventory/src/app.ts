@@ -9,16 +9,16 @@ import inventoryRouter from './routes/inventory-router';
 import cookieParser from 'cookie-parser';
 import eventRouter from './routes/event-router';
 
+const app = express();
+
 import chronosConfig from './chronos-config';
 const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
-
 chronos.propagate();
-
-const app = express();
-
 const trackingMiddleware = chronos.track();
 app.use(trackingMiddleware);
+
+
 
 app.use(
   cors({

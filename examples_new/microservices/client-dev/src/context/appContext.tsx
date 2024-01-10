@@ -34,6 +34,7 @@ interface AppContextInterface extends StateInterface {
   loginUser: (username: string, password: string) => void;
   logoutUser: () => void;
   createItem: (fruit: Fruit) => void;
+  getAllItems: () => void;
   adjustInventory: (itemId: string, newUnits: number) => void;
 }
 
@@ -44,6 +45,7 @@ const AppContext = createContext<AppContextInterface>({
   loginUser: () => null,
   logoutUser: () => null,
   createItem: () => null,
+  getAllItems: () => null,
   adjustInventory: () => null,
 });
 
@@ -84,8 +86,7 @@ const AppContextProvider = ({ children }: Props) => {
   const logoutUser = async () => {
     startLoading();
     try {
-      const response = await authFetch.post('/auth/logout');
-      console.log(response);
+      await authFetch.post('/auth/logout');
       dispatch({ type: ActionType.LOGOUT_USER });
     } catch (err) {
       console.log(err);
@@ -109,23 +110,31 @@ const AppContextProvider = ({ children }: Props) => {
 
   const createItem = async (fruit: Fruit) => {
     if (fruit !== 'bananas' && fruit !== 'strawberries' && fruit !== 'grapes') return;
-
     try {
       startLoading();
-      const response = await itemFetch.post('/items/createItem', {
+      await itemFetch.post('/items/createItem', {
         itemName: fruit,
       });
-      console.log(response.data);
-
-      setTimeout(async () => {
-        const allItemsResponse = await inventoryFetch('/inventory/getAllItems');
-        dispatch({ type: ActionType.RETRIEVED_ITEMS, payload: { items: allItemsResponse.data } });
-      }, 1500);
+      stopLoading();
     } catch (err) {
       if (err instanceof AxiosError) {
         window.alert(err.message);
       }
       console.log(err);
+      stopLoading();
+    }
+  };
+
+  const getAllItems = async () => {
+    try {
+      startLoading();
+      const allItemsResponse = await inventoryFetch('/inventory/getAllItems');
+      console.log('All Item Response', allItemsResponse.data);
+      dispatch({ type: ActionType.RETRIEVED_ITEMS, payload: { items: allItemsResponse.data } });
+      stopLoading();
+    } catch (err) {
+      console.log(err);
+      stopLoading();
     }
     stopLoading();
   };
@@ -158,6 +167,7 @@ const AppContextProvider = ({ children }: Props) => {
         loginUser,
         logoutUser,
         createItem,
+        getAllItems,
         adjustInventory,
       }}
     >
