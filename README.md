@@ -28,12 +28,16 @@ Contributors:
 [Elsa Holmgren](https://github.com/ekh88),
 [Mckenzie Morris](https://github.com/mckenzie-morris),
 [Kelly Chandler](https://github.com/kchandler44),
-[Sean Simson](https://github.com/seantokuzo),
+[Sean Simpson](https://github.com/seantokuzo),
 [Zhongyan Liang](https://github.com/ZhongyanLiang)
 
 </div>
 Updates:
-  <li>TBD</li>
+<li>Created new and improved microservices application with updated syntax to better demonstrate Chronos' capabilities</li>
+<li>Dockerized microservices application to demonstrate Chronos within a containerized environment</li>
+<li>Added visulization of Chronos' codebase to illustrate overall structure</li>
+<li>Simplified installation and startup instructions in the root directory README file</li>
+<li>Improved documentation in chronos_npm_package README file for easier on-boarding </li>
 
 <a href=''>Version 13.0 Medium Article</a>
 
@@ -256,7 +260,7 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 
 1. From the root directory, run `npm install`
 2. Run `npm run build`
-3. Depends on the environment, run `npm audit fix` or `npm audit fix --force` if prompted
+3. For Windows users, run `npm audit fix` or `npm audit fix --force` if prompted
 4. Open a new terminal and run `npm run dev:app` to start the Webpack development server
 5. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode.
 6. Refer to `Examples` sections below to spin up example applications.

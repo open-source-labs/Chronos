@@ -3,7 +3,7 @@
 [Elsa Holmgren](https://github.com/ekh88),
 [Mckenzie Morris](https://github.com/mckenzie-morris),
 [Kelly Chandler](https://github.com/kchandler44),
-[Sean Simson](https://github.com/seantokuzo),
+[Sean Simpson](https://github.com/seantokuzo),
 [Zhongyan Liang](https://github.com/ZhongyanLiang),
 [Tyler Coryell](https://github.com/Tcoryell),
 [Edwin Leong](https://github.com/edwinlny),
