@@ -1,0 +1,35 @@
+import express from 'express';
+import 'express-async-errors';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import authRouter from './routes/auth-router';
+import eventRouter from './routes/event-router';
+import { NotFoundError, errorHandler } from '@chronosrx/common';
+
+import chronosConfig from './chronos-config';
+const Chronos = require('@chronosmicro/tracker');
+const chronos = new Chronos(chronosConfig);
+chronos.propagate();
+
+const app = express();
+
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:5000',
+  })
+);
+app.use(express.json());
+app.use(cookieParser());
+chronos.docker();
+
+app.use('/api/auth', authRouter);
+app.use('/events', eventRouter);
+
+app.use('*', (_req, _res) => {
+  throw new NotFoundError();
+});
+
+app.use(errorHandler);
+
+export { app };
