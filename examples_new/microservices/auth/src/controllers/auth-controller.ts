@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
-import { BadRequestError, CurrentUserRequest, Events } from '@chronosrx/common';
+import axios, { AxiosError } from 'axios';
+import { BadRequestError, CurrentUserRequest, EventTypes, Events } from '@chronosrx/common';
 import { User } from '../models/user';
 import { attachCookie } from '../util/attachCookie';
 
@@ -29,12 +29,25 @@ export const signup = async (req: Request, res: Response) => {
 
   // TODO PUBLISH AN EVENT TO THE EVENT BUS - type USER_CREATED, with data of user - user.id & username
   // console.log('Publishing event USER_CREATED');
-  await axios.post('http://localhost:3005/', {
-    event: {
-      type: Events.USER_CREATED,
-      payload: newUser,
+
+  const event: Events = {
+    type: EventTypes.USER_CREATED,
+    payload: {
+      id: newUser.id,
+      username: newUser.username,
     },
-  });
+  };
+  try {
+    await axios.post('http://localhost:3005/', {
+      event,
+    });
+  } catch (err) {
+    console.log(
+      `Failed to emit event USER_CREATED from auth: ${
+        (err as AxiosError).message || 'unknown error'
+      } `
+    );
+  }
 
   // create a JWT w/ userId store on it
   // note: createJwt method created on the userSchema
@@ -100,7 +113,7 @@ export const getCurrentUser = async (req: CurrentUserRequest, res: Response) => 
   // check request object for currentUser property
   if (!req.currentUser) {
     // if it doesn't exist send back status 200 with object with currentUser property set to null
-    res.status(200).send({ currentUser: null });
+    return res.status(200).send({ currentUser: null });
   }
 
   // if it does exist - use req.currentUser to find user in database by id
