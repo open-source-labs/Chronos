@@ -1,4 +1,4 @@
-@import './constants.scss';
+@import "./constants.scss";
 
 .team-container {
   justify-content: center;
@@ -7,7 +7,7 @@
   padding-top: 250px;
   display: flex;
   flex-wrap: wrap;
-  @include background-theme('dark');
+  @include background-theme("dark");
 
   .bio-card {
     justify-content: center;
@@ -35,6 +35,8 @@
       line-height: 25px;
       padding: 10px 0;
       flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
     .member-contact .icon {
       color: $white;
