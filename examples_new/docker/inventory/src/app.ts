@@ -1,13 +1,10 @@
-import path from 'path';
 import express from 'express';
 import 'express-async-errors';
-import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname + '../../.env') });
 import cors from 'cors';
-import { NotFoundError, errorHandler } from '@chronosrx/common';
-import inventoryRouter from './routes/inventory-router';
 import cookieParser from 'cookie-parser';
+import inventoryRouter from './routes/inventory-router';
 import eventRouter from './routes/event-router';
+import { NotFoundError, errorHandler } from '@chronosrx/common';
 
 import chronosConfig from './chronos-config';
 const Chronos = require('@chronosmicro/tracker');
@@ -17,6 +14,8 @@ chronos.propagate();
 
 const app = express();
 
+chronos.docker();
+
 app.use(
   cors({
     credentials: true,
@@ -25,7 +24,6 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-chronos.docker();
 
 app.use('/api/inventory', inventoryRouter);
 app.use('/events', eventRouter);

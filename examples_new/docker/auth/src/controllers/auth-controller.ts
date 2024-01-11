@@ -38,7 +38,7 @@ export const signup = async (req: Request, res: Response) => {
     },
   };
   try {
-    await axios.post('http://localhost:3005/', {
+    await axios.post('http://event-bus:3005/', {
       event,
     });
   } catch (err) {

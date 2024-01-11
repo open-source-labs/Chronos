@@ -60,31 +60,11 @@ services:
 
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-  nginx:
-    # Use latest version of the public nginx image.
-    image: nginx:latest
-
-    container_name: 'production_nginx'
-
-    ports:
-      - '8000:8000'
-
-    volumes:
-      - './client:/srv/www/static'
-      - './default.conf:/etc/nginx/conf.d/default.conf'
-
-    depends_on:
-      - client
-      - auth
-      - items
-      - inventory
-      - orders
-      - event-bus
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     privileged: true
-    platform: linux/arm64/v8
+    platform: linux/amd64/v8
     ports:
       - 8081:8081
     command:

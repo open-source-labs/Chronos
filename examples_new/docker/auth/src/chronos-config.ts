@@ -23,4 +23,3 @@ const chronosConfig = {
   notifications: [],
 };
 export default chronosConfig;
-``
