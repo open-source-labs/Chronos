@@ -95,7 +95,7 @@ const bios = [
     },
   },
   {
-    name: "Daniel Liang",
+    name: "Zhongyan Liang",
     bioParagraph:
       "Zhongyan, based in Washington DC, is a full-stack engineer who is passionate about cloud computing and database technologies. Outside of coding, he loves traveling and discovering new restaurants.",
     picture: bioZhongyanPic,
