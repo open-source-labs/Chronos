@@ -39,7 +39,7 @@ Updates:
 <li>Simplified installation and startup instructions in the root directory README file</li>
 <li>Improved documentation in chronos_npm_package README file for easier on-boarding </li>
 
-<a href=''>Version 13.0 Medium Article</a>
+<a href='https://medium.com/@holmgren.e/crisis-averted-chronos-guards-against-development-disasters-8f3653f3c136'>Version 13.0 Medium Article</a>
 
 ### **Iteration Log**
 
