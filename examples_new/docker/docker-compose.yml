@@ -1,0 +1,114 @@
+version: '3'
+services:
+  auth:
+    build: './auth'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'auth'
+
+    ports:
+      - '3000:3000'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  client:
+    build: './client'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'client'
+
+    ports:
+      - '5000:5000'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  items:
+    build: './items'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'items'
+
+    ports:
+      - '3001:3001'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  inventory:
+    build: './inventory'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'inventory'
+
+    ports:
+      - '3002:3002'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  orders:
+    build: './orders'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'orders'
+
+    ports:
+      - '3003:3003'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  event-bus:
+    build: './event-bus'
+    #Use image built from the Dockfile in /auth dir
+    container_name: 'event-bus'
+
+    ports:
+      - '3005:3005'
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    privileged: true
+    platform: linux/amd64/v8
+    ports:
+      - 8081:8081
+    command:
+      - '-port=8081'
+    volumes:
+      - /:/rootfs:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - client
+      - auth
+      - items
+      - inventory
+      - orders
+      - event-bus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+    depends_on:
+      - cadvisor
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 32000:3000
+    volumes:
+      # Share the named volume with the grafana container
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+      GF_SECURITY_ALLOW_EMBEDDING: 'true'
+    depends_on:
+      - prometheus
+
+volumes:
+  grafana-dir: {}
