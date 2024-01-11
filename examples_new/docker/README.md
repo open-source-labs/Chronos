@@ -39,18 +39,22 @@ For additional details on how Chronos works this example, please review the Dock
 
 Peform the following steps in each of the _Auth_, _Items_, _Inventory_, _Orders_, _Client_, and _Event-Bus_ directories
 
-1. Add a `.env` file to each of _Auth_, _Items_, _Inventory_, _Orders_, _Event-Bus_, and _Client_ folders with the following key/value pairs:
+1. Add a `.env` file to each of _Auth_, _Items_, _Inventory_, _Orders_, _Event-Bus_, and _Client_ folders with the following key/value pairs (a `sample.env` file is provided in the `/examples/docker` directory):
 
 - **NOTE**: Ensure that there are no quotes surrounding any of the keys and values.
 
 ```
 CHRONOS_DB = MongoDB or PostgreSQL
 CHRONOS_URI = The URI to the desired MongoDB or PostgreSQL database to save health metrics via Chronos
-AUTH_URI = A MongoDB URI for the auth server microservice to use
-ITEMS_URI = A MongoDB URI for the items server microservice to use
-INVENTORY_URI = A MongoDB URI for the inventory server microservice to use
-ORDERS_URI = A MongoDB URI for the orders server microservice to use
 CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section (Grafana API Key)]
+
+MONGO_URI_AUTH = A MongoDB URI for the auth server microservice to use
+MONGO_URI_ITEMS = A MongoDB URI for the items server microservice to use
+MONGO_URI_INVENTORY = A MongoDB URI for the inventory server microservice to use
+MONGO_URI_ORDERS = A MongoDB URI for the orders server microservice to use
+
+JWT_KEY = A random string used to sign and verify JSON Web Tokens used by the auth service - the random string provided in **sample.env** will work
+JWT_LIFETIME = The time-to-expiration of the JSON Web Token used by the auth service - this is set to `1d` in `sample.env` meaning user authentication is valid for 1 day
 ```
 
 2.  Verify that `@chronosmicro/tracker` is a dependency in each of the _Auth_, _Items_, _Inventory_, _Orders_, and _Event-Bus_ folders (see the `package.json` in each folder).
@@ -65,8 +69,8 @@ CHRONOS_GRAFANA_API_KEY = Bearer [the access token you created in above section 
 docker-compose -f docker-compose.yml up
 ```
 
-4. If you run into any issues regarding `linux/amd64,linux/arm/v7,linux/arm64/v8` for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary and try the below solutions.
-1. Change `platform` to `linux/arm64/v8` for M1 Chips and `linux/amd64` for Intel Chips.
+4. If you run into any issues regarding `linux/amd64/v8,linux/arm/v7,linux/arm64/v8` for cadvisor, navigate to the docker-compose.yml and find the cadvisor dictionary and try the below solutions.
+1. Change `platform` to `linux/arm64/v8` for M1 Chips and `linux/amd64/v8` for Intel Chips.
 1. Change "image" to `image: gcr.io/cadvisor/cadvisor:latest` to `image: gcr.io/cadvisor/cadvisor:v0.47.0`
 1. Alternatively, use Docker Buildx to specify multi-platform.
 
@@ -75,7 +79,7 @@ docker-compose -f docker-compose.yml up
 You should now see the containers running in your terminal, each reporting `"docker metrics recorded in..."`.
 
 <p align="center">
-  <img alt="docker data being recorded" src="../../assets/examples_docker_data.png" width="600" height="100">
+  <img alt="docker data being recorded" src="../../assets/docker_example_logs.png" width="450">
 </p>
 
 If this is being displayed for the `Auth`, `Items`, `Inventory`, `Orders` microservices then the example is successfully saving health metrics to your database of choice!
