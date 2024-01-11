@@ -1,6 +1,6 @@
-FROM node:16
+FROM node:20-alpine
 WORKDIR /app
 COPY . .
 RUN npm install
-EXPOSE 7777
-CMD ["node", "orderserver.js"]
+EXPOSE 3003
+CMD ["npm","start"]
