@@ -37,6 +37,7 @@ settings.json
 *.log
 *.sql
 *.sqlite
+.nyc_output
 
 # OS generated files #
 ######################
