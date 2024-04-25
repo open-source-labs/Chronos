@@ -205,6 +205,7 @@ const Occupied = React.memo(() => {
                   classes={classes}
                 />
           ))}
+          
           <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
             <EnvModal
               setOpen={setEnvModalOpen}
