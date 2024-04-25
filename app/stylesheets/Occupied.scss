@@ -136,31 +136,6 @@
   }
 }
 
-.dashboardIconArea {
-  position: relative;
-  display: inline-block;
-}
-
-.dashboardIconArea:hover .dashboardTooltip {
-  visibility: visible;
-}
-
-.dashboardIconArea .dashboardTooltip {
-  visibility: hidden;
-  width: 80px;
-  background-color: $background;
-  color: $ggreen;
-  text-align: center;
-  border-radius: 6px;
-  // padding: 5px 0;
-  font-size: 12px;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: 50px;
-  right: -14px;
-}
-
 .dashboardIconArea .dashboardTooltip::after {
   content: '';
   position: absolute;
@@ -273,9 +248,9 @@
 //   border-color: transparent transparent $background transparent;
 // }
 
-.dashboardIconWrapper {
-  margin-right: 37px;
-}
+// .dashboardIconWrapper {
+//   margin-right: 37px;
+// }
 
 .btns {
   display: flex;
@@ -310,30 +285,6 @@ button {
     color: $warningred;
     filter: none;
     cursor: pointer;
-  }
-}
-
-.form {
-  height: 30px;
-  font-weight: 100;
-  font-size: inherit;
-  color: inherit;
-  display: flex;
-  text-align: center;
-  vertical-align: middle;
-  justify-items: center;
-  align-items: center;
-}
-
-.inputContainer {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  .searchIconSvg {
-    transform: scale(0.1) translate(758.9px, -720px);
-    position: absolute;
-    fill: white;
   }
 }
 
