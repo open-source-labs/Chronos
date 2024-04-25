@@ -48,6 +48,10 @@ import { CommsContext } from '../context/CommsContext';
 import { AwsContext } from '../context/AwsContext';
 import { useNavigate } from 'react-router-dom';
 
+//Components
+
+import SearchBar from './SearchBar';
+
 // TYPESCRIPT
 interface StyleProps {
   root: BaseCSSProperties;
@@ -259,20 +263,9 @@ const Occupied = React.memo(() => {
       <div className="dashboardArea">
         <header className="mainHeader">
           <section className="header" id="rightHeader">
-            <form className="form" onSubmit={e => e.preventDefault()}>
-              <label className="inputContainer">
-                <input
-                  className="form"
-                  id="textInput"
-                  placeholder="Search..."
-                  onChange={e => setSearchTerm(e.target.value)}
-                  type="text"
-                  name="search"
-                />
-                <Search />
-                <hr />
-              </label>
-            </form>
+            <SearchBar
+              setSearchTerm={setSearchTerm}
+            />
 
             <div className="dashboardIconWrapper">
               <div className="dashboardIconArea">
