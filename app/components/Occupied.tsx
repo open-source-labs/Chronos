@@ -51,6 +51,7 @@ import { useNavigate } from 'react-router-dom';
 //Components
 
 import SearchBar from './SearchBar';
+import DashboardIcons from './DashboardIcons/DashboardIcons';
 
 // TYPESCRIPT
 interface StyleProps {
@@ -261,36 +262,15 @@ const Occupied = React.memo(() => {
   return (
     <div className="entireArea">
       <div className="dashboardArea">
+        
         <header className="mainHeader">
           <section className="header" id="rightHeader">
             <SearchBar
               setSearchTerm={setSearchTerm}
             />
-
-            <div className="dashboardIconWrapper">
-              <div className="dashboardIconArea">
-                <span className="dashboardTooltip">
-                  You have {applications ? applications.length : 0} active databases
-                </span>
-                <DashboardIcon className="navIcon" id="dashboardIcon" />
-              </div>
-              <div className="notificationsIconArea">
-                <span className="notificationsTooltip">
-                  You have {notification ? notification.length : 0} new alerts
-                </span>
-                <NotificationsIcon className="navIcon" id="notificationsIcon" />
-                <Badge
-                  overlap="rectangular"
-                  badgeContent={notification ? notification.length : 0}
-                  color="secondary"
-                />
-              </div>
-              <div className="personIconArea">
-                <Button className="personTooltip" onClick={() => setPersonModalOpen(true)}>
-                  <PersonIcon className="navIcon" id="personIcon" />
-                </Button>
-              </div>
-            </div>
+            <DashboardIcons
+              setPersonModalOpen={setPersonModalOpen}
+            />
           </section>
         </header>
 
