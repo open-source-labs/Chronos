@@ -1,5 +1,6 @@
 import React from "react"
 import Search from "../icons/Search"
+import './styles.scss'
 
 const SearchBar = (props) => {
   const { setSearchTerm } = props
