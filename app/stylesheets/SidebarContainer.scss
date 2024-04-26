@@ -229,3 +229,14 @@
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+.example-button {
+  height:100px;
+  width:100px;
+  color:yellow;
+  cursor:pointer;
+}
+
+.example-button:hover {
+  color:blue;
+}

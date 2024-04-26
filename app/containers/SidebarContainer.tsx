@@ -10,12 +10,17 @@ import '../stylesheets/SidebarContainer.scss';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { AwsContext } from '../context/AwsContext';
 
-const SidebarContainer = React.memo(props => {
+interface SidebarContainerProps {
+  setExample:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const SidebarContainer = React.memo((props:SidebarContainerProps) => {
+  const { setExample } = props;
+
   // Extract invervalID from ApplicationContext. Initival value: intervalID = null
   const { intervalID } = useContext(ApplicationContext);
   // Extract isLoading and setLoading state from AwsContext. Initial value: isLoading = true
   const { isLoading, setLoadingState } = useContext(AwsContext);
-
   // clear interval and set loading state to true when leaving graph containers
 
   /**
@@ -85,6 +90,15 @@ const SidebarContainer = React.memo(props => {
             />
             &emsp;Contact
           </Link>
+          <Link className="sidebar-link" to="/applications/:Mike/:service" id="dash" onClick={handleClick}>
+            <button 
+              className="example-button"
+              onClick={() => setExample(true)}
+            >
+                EXAMPLE
+            </button>
+          </Link>
+
         </div>
       </div>
     </div>

@@ -1,0 +1,206 @@
+
+@import '../../stylesheets/constants.scss';
+
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 20px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  &:after,
+  &:before {
+    content: ' ';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    transition: all 0.5s;
+  }
+
+  &:hover {
+    position: relative;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    &:before,
+    &:after {
+      width: 25%;
+      height: 25%;
+    }
+  }
+}
+
+.card {
+  &:hover .databaseIconHeader {
+    visibility: hidden;
+    // background-color: $gblue;
+    // opacity: 0.7;
+    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
+  }
+
+  &:hover p {
+    color: $background;
+    font-weight: 400;
+  }
+
+  &:hover .cardFooter {
+    color: $background;
+  }
+
+  &:hover .cardLine {
+    background-color: $background;
+  }
+
+  &:hover #cardFooterText {
+    color: $background;
+  }
+
+  &:hover .cardFooterIcon {
+    color: $background;
+  }
+
+  &:hover #databaseName {
+    color: $background;
+  }
+}
+
+
+#card-MongoDB {
+  &:hover .databaseIconHeader {
+    visibility: hidden;
+    // background-color: $gblue;
+    // opacity: 0.7;
+    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
+  }
+
+  .databaseIconContainer {
+    display: inline-block;
+    overflow: visible;
+  }
+
+  .databaseIconHeader {
+    position: absolute;
+    background-color: $ggreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    padding: 15px;
+    float: left;
+    top: -20px;
+    left: 180px;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 255, 42, 0.4);
+    background-image: url('../../assets/mongo-icon-white.png');
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+
+    .databaseIcon {
+      width: 55px;
+      height: 55px;
+      visibility: hidden;
+    }
+  }
+}
+
+#card-SQL {
+  &:hover .databaseIconHeader {
+    visibility: hidden;
+    // background-color: $gblue;
+    // opacity: 0.7;
+    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
+  }
+
+  .databaseIconContainer {
+    display: inline-block;
+    overflow: visible;
+  }
+
+  .databaseIconHeader {
+    position: absolute;
+    background-color: $gyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    padding: 15px;
+    float: left;
+    top: -20px;
+    left: 180px;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+    background-image: url('../../assets/postgres-icon-white.png');
+    background-size: cover;
+
+    .databaseIcon {
+      visibility: hidden;
+    }
+  }
+}
+
+#card-AWS {
+  &:hover .databaseIconHeader {
+    visibility: hidden;
+    // background-color: $gblue;
+    // opacity: 0.7;
+    // box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 255, 255, 0.4);
+  }
+
+  .databaseIconContainer {
+    display: inline-block;
+    overflow: visible;
+  }
+
+  .databaseIconHeader {
+    position: absolute;
+    background-color: $gorange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 90px;
+    padding: 15px;
+    float: left;
+    top: -20px;
+    left: 180px;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+    background-image: url('../../assets/aws-icon-white.png');
+    background-size: cover;
+
+    .databaseIcon {
+      visibility: hidden;
+    }
+  }
+}
+
+.databaseIconContainer {
+  display: inline-block;
+  overflow: visible;
+}
+
+.databaseIconHeader {
+  position: absolute;
+  background-color: $ggreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 90px;
+  padding: 15px;
+  float: left;
+  top: -20px;
+  left: 180px;
+  border-radius: 3px;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 255, 42, 0.4);
+
+  .databaseIcon {
+    width: 55px;
+    height: 55px;
+  }
+}
