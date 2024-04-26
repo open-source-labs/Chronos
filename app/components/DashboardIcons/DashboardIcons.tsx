@@ -32,6 +32,7 @@ const DashboardIcons = (props) => {
         </span>
         <DashboardIcon className="navIcon" id="dashboardIcon" />
       </div>
+
       <div className="notificationsIconArea">
         <span className="notificationsTooltip">
           You have {notification ? notification.length : 0} new alerts
@@ -43,6 +44,7 @@ const DashboardIcons = (props) => {
           color="secondary"
         />
       </div>
+      
       <div className="personIconArea">
         <Button className="personTooltip" onClick={() => setPersonModalOpen(true)}>
           <PersonIcon className="navIcon" id="personIcon" />
