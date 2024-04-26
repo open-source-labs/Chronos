@@ -15,6 +15,7 @@ import '../stylesheets/Dashboard.scss';
 const DashboardContainer = React.memo(() => {
 
   const [visible, setVisible] = useState(false);
+  const [ example,setExample ] = useState(false);
 
   /**
    * When DashBoard Container first mounted, visible is default to false, so that the Splash component can be stay visible.
@@ -42,7 +43,9 @@ const DashboardContainer = React.memo(() => {
                       <EventContextProvider>
                         <QueryContextProvider>
                           <AwsContextProvider>
-                            <SidebarContainer />
+                            <SidebarContainer 
+                              setExample={setExample}
+                            />
                             <MainContainer />
                           </AwsContextProvider>
                         </QueryContextProvider>
