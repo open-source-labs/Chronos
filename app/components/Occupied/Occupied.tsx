@@ -39,11 +39,7 @@ import { useStylesLight, useStylesDark } from './helpers/muiHelper'
 const Occupied = React.memo(() => {
   const { setServicesData, app } = useContext(ApplicationContext);
   const { user, applications, getApplications, mode } = useContext(DashboardContext);
-  const [serviceModalOpen, setServiceModalOpen] = useState<boolean>(false);
-  const [personModalOpen, setPersonModalOpen] = useState<boolean>(false);
-  const [envModalOpen, setEnvModalOpen] = useState<boolean>(false);
-  const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
-  const [awsModalOpen, setAwsModalOpen] = useState<boolean>(false);
+  const [ modal,setModal ] = useState({isOpen:false,type:''})
   const { appIndex } = useContext(ApplicationContext);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -56,9 +52,6 @@ const Occupied = React.memo(() => {
 
   const classes = mode === 'light' ? useStylesLight({}) : useStylesDark({});
 
-  // const classes = useStylesTest({})
-  console.log(classes)
-
   return (
     <div className="entireArea">
       <div className="dashboardArea">
@@ -69,7 +62,7 @@ const Occupied = React.memo(() => {
               setSearchTerm={setSearchTerm}
             />
             <DashboardIcons
-              setPersonModalOpen={setPersonModalOpen}
+              setModal={setModal}
             />
           </section>
         </header>
@@ -77,7 +70,9 @@ const Occupied = React.memo(() => {
         <div className="cardContainer">
 
           <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => setEnvModalOpen(true)}>
+            <Button className={classes.paper} onClick={() => {
+              setModal({isOpen:true,type:'envModal'})
+            }}>
               <AddCircleOutlineTwoToneIcon className={classes.icon} />
             </Button>
           </div>
@@ -89,12 +84,40 @@ const Occupied = React.memo(() => {
                 <ApplicationsCard
                   application={application}
                   i={i}
-                  setServiceModalOpen={setServiceModalOpen}
+                  setModal={setModal}
                   classes={classes}
                 />
           ))}
-          
-          <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
+
+          <Modal 
+            open={modal.isOpen} 
+            onClose={() => setModal({isOpen:false,type:''})}
+          >
+            {
+              modal.type === 'envModal' ? 
+                <EnvModal setModal={setModal} />
+              :
+              modal.type === 'awsModal' ?
+                <AwsModal setModal={setModal} />
+              :
+              modal.type === 'addModal' ?
+                <AddModal setModal={setModal} />
+              :
+              modal.type === 'personalModal' ?
+                <ProfileContainer setModal={setModal}/>
+              :
+              modal.type === 'serviceModal' ?
+                <ServicesModal 
+                  key={`key-${appIndex}`} 
+                  i={appIndex} 
+                  app={app}
+                />
+              :
+              <></>
+            }
+          </Modal>
+
+          {/* <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
             <EnvModal
               setOpen={setEnvModalOpen}
               setAwsModalOpen={setAwsModalOpen}
@@ -116,7 +139,7 @@ const Occupied = React.memo(() => {
 
           <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
             <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
-          </Modal>
+          </Modal> */}
         </div>
       </div>
     </div>
