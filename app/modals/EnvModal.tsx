@@ -2,24 +2,17 @@ import React from 'react';
 import { Button, Typography } from '@material-ui/core';
 import '../stylesheets/EnvModal.scss';
 import { CloudQueue, Computer } from '@material-ui/icons';
+import { TModalSetter } from '../components/Occupied/types/Occupied';
 
-interface EnvModalProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAwsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const EnvModal: React.FC<TModalSetter> = React.memo(
+  ({ setModal}) => {
 
-const EnvModal: React.FC<EnvModalProps> = React.memo(
-  ({ setOpen, setAddModalOpen, setAwsModalOpen }) => {
     return (
       <div className="add-container">
         <div className="card" id="card-env">
           <button
             className="env-button"
-            onClick={() => {
-              setOpen(false);
-              setAwsModalOpen(true);
-            }}
+            onClick={() => setModal({isOpen:true,type:'awsModal'})}
           >
             <Typography>
               <CloudQueue fontSize="large" />
@@ -28,10 +21,7 @@ const EnvModal: React.FC<EnvModalProps> = React.memo(
           </button>
           <button
             className="env-button2"
-            onClick={() => {
-              setOpen(false);
-              setAddModalOpen(true);
-            }}
+            onClick={() => setModal({isOpen:true,type:'addModal'})}
           >
             <Typography>
               <Computer fontSize="large" />

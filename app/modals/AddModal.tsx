@@ -3,6 +3,8 @@ import React, { useState, useContext, useCallback } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AddModal.scss';
 
+import { TModalSetter } from '../components/Occupied/types/Occupied';
+
 interface IFields {
   typeOfService: string;
   database: string;
@@ -16,14 +18,10 @@ interface IDashboard {
   setApplications: any;
 }
 
-interface AddModalProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
 type FormElement = React.FormEvent<HTMLFormElement>;
 
-const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
+const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { addApp, setApplications }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
@@ -40,7 +38,9 @@ const AddModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
     // const newApp = [name, database, URI, description, typeOfService];
     // setApplications(prev => [...prev, ...newApp])
     addApp(fields);
-    setOpen(false); // Close modal on submit
+    // setOpenModal(false); // Close modal on submit
+    // setModalType('')
+    setModal({isOpen:false,type:''})
   };
 
   // Handle form changes

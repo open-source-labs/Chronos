@@ -6,6 +6,7 @@ import { DashboardContext } from '../context/DashboardContext';
 import { guestUser } from '../context/helpers';
 import '../stylesheets/UserModal.scss';
 import { Button } from '@material-ui/core';
+import { TModalSetter } from '../components/Occupied/types/Occupied';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -13,7 +14,7 @@ interface UserModalProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
+const UserModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { user, setUser, setApplications, setMode } = useContext(DashboardContext);
 
   const navigate = useNavigate();
@@ -38,7 +39,12 @@ const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
         </>
 
         }
-        <Button variant='outlined' onClick={() => setOpen(false)}>Close</Button>
+        <Button 
+          variant='outlined' 
+          onClick={() => setModal({isOpen:false,type:''})}
+        >
+          Close
+        </Button>
       </div>
     </div>
   );
@@ -48,7 +54,7 @@ const UserModal: React.FC<UserModalProps> = React.memo(({ setOpen }) => {
     setApplications(guestUser.services);
     setMode(guestUser.mode);
     ipcRenderer.sendSync('signOut');
-    setOpen(false);
+    setModal({isOpen:false,type:''})
   }
 });
 
