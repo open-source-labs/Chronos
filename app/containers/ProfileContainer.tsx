@@ -2,16 +2,13 @@ import React, { useContext } from 'react';
 import UserModal from '../modals/UserModal';
 import SetAuth from '../modals/SetAuth';
 import { DashboardContext } from '../context/DashboardContext';
+import { TModalSetter } from '../components/Occupied/types/Occupied';
 
-interface Props {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const ProfileContainer: React.FC<Props> = React.memo(({ setOpen }) => {
+const ProfileContainer: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { landingPage } = useContext(DashboardContext);
 
-  if (landingPage === 'dashBoard') return <SetAuth setOpen={setOpen} />;
-  return <UserModal setOpen={setOpen} />;
+  if (landingPage === 'dashBoard') return <SetAuth  setModal={setModal} />;
+  return <UserModal setModal={setModal} />;
 });
 
 export default ProfileContainer;

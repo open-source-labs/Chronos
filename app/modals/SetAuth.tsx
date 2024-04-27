@@ -1,11 +1,8 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
+import { TModalSetter } from '../components/Occupied/types/Occupied';
 
-interface Props {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const SetAuthModal: React.FC<Props> = React.memo(({ setOpen }) => {
+const SetAuthModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { updateLandingPage } = useContext(DashboardContext);
   const handleClick = () => {
     updateLandingPage('createAdmin');
@@ -21,7 +18,11 @@ const SetAuthModal: React.FC<Props> = React.memo(({ setOpen }) => {
         <form onSubmit={e => e.preventDefault()}>
           <br />
           <div />
-          <button onClick={() => setOpen(false)}>Cancel</button>
+          <button 
+            onClick={() => setModal({isOpen:false,type:''})}
+          >
+            Cancel
+          </button>
           <br />
           <button className="link" onClick={handleClick}>
             Add Authentication

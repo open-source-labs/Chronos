@@ -12,7 +12,7 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 
 const ApplicationsCard = (props) => {
 
-  const { application, i, setServiceModalOpen, classes } = props
+  const { application, i, setModal, classes } = props
   const { deleteApp } = useContext(DashboardContext)
   const { setAppIndex, setApp, setServicesData, app } = useContext(ApplicationContext)
 
@@ -45,7 +45,7 @@ const ApplicationsCard = (props) => {
         setAppIndex(i);
         setApp(selectedApp);
         setServicesData([]);
-        setServiceModalOpen(true);
+        setModal({isOpen:true,type:'serviceModal'})
       }
     }
   };

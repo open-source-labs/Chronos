@@ -3,6 +3,8 @@ import React, { useState, useContext, useCallback } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import '../stylesheets/AwsModal.scss';
 
+import { TModalSetter } from '../components/Occupied/types/Occupied';
+
 interface AwsFields {
   typeOfService: string;
   instance: string;
@@ -25,7 +27,7 @@ interface AddModalProps {
 type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>;
 type FormElement = React.FormEvent<HTMLFormElement>;
 
-const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
+const AwsModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { addAwsApp }: IDashboard = useContext(DashboardContext);
 
   // instance is instanceID
@@ -44,7 +46,7 @@ const AwsModal: React.FC<AddModalProps> = React.memo(({ setOpen }) => {
   const handleSubmit = (event: FormElement) => {
     event.preventDefault();
     addAwsApp(awsFields);
-    setOpen(false); // Close modal on submit
+    setModal({isOpen:false,type:''})
   };
 
   // Handle form changes
