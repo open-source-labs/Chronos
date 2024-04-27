@@ -10,7 +10,7 @@ import './styles.scss'
 
 const DashboardIcons = (props) => {
 
-  const { setPersonModalOpen } = props
+  const { setModal } = props
   const { applications } = useContext(DashboardContext)
   const { commsData } = useContext(CommsContext)
 
@@ -46,7 +46,7 @@ const DashboardIcons = (props) => {
       </div>
       
       <div className="personIconArea">
-        <Button className="personTooltip" onClick={() => setPersonModalOpen(true)}>
+        <Button className="personTooltip" onClick={() => setModal({isOpen:true,type:'personalModal'})}>
           <PersonIcon className="navIcon" id="personIcon" />
         </Button>
       </div>
