@@ -4,6 +4,14 @@
   height: 100%;
 }
 
+// MAIN DASHBOARD
+.dashboardArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+
 // HEADER
 .mainHeader {
   display: flex;
@@ -17,13 +25,6 @@
   margin-top: $logoPositionTop - 18px;
   font-size: $headerFontSize;
   color: $header;
-}
-
-#leftHeader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: $logoPositionLeft - 30px;
 }
 
 #rightHeader {
@@ -50,38 +51,6 @@
   }
 }
 
-#dashboard {
-  position: absolute;
-  top: 43px;
-  left: 300px;
-  margin-left: $logoPositionLeft - 34px;
-
-  &:hover {
-    color: $gblue;
-    font-weight: 500;
-    cursor: pointer;
-  }
-}
-
-.icon {
-  vertical-align: middle;
-  text-align: center;
-  color: $icon;
-  // background-color: $background;
-  box-sizing: content-box;
-  border-radius: 50%;
-  box-shadow: $boxshadow1;
-  line-height: 1.5;
-  white-space: nowrap;
-  display: inline-flex;
-  outline: 0;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  min-height: auto;
-  white-space: nowrap;
-}
-
 .navIcon {
   font-size: 34px;
   vertical-align: middle;
@@ -92,7 +61,6 @@
   border-radius: 50%;
   line-height: 1.5;
   white-space: nowrap;
-  // display: inline-block;
   outline: 0;
   border: none;
   cursor: pointer;
@@ -105,7 +73,6 @@
 }
 
 #searchIcon {
-  // background-color: $background;
   font-size: 26px;
   font-weight: 400px;
   padding: 8px;
@@ -317,14 +284,6 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #000 inset;
   transition: background-color 5000s ease-in-out 0s;
 }
-
-// MAIN DASHBOARD
-.dashboardArea {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-
 // DATABASE CARDS
 .cardContainer {
   display: flex;
