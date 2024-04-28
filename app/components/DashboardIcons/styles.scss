@@ -20,11 +20,127 @@
   color: $ggreen;
   text-align: center;
   border-radius: 6px;
-  // padding: 5px 0;
+  font-size: 12px;
+  position: absolute;
+  z-index: 1;
+  top: 50px;
+  right: -14px;
+}
+
+.dashboardIconArea .dashboardTooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 50px;
+  left: 35px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent $background transparent;
+}
+
+.navIcon {
+  font-size: 34px;
+  vertical-align: middle;
+  text-align: center;
+  color: $icon;
+  background-color: transparent;
+  box-sizing: content-box;
+  border-radius: 50%;
+  line-height: 1.5;
+  white-space: nowrap;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  min-height: auto;
+  white-space: nowrap;
+  margin: 5px;
+  margin-top: 15px;
+  padding: 5px;
+}
+
+#dashboardIcon {
+  margin-top: 4px;
+  margin-left: -35px;
+  font-size: 26px;
+  padding: 8px;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: $background;
+    color: $ggreen;
+  }
+}
+
+.notificationsIconArea {
+  position: relative;
+  display: inline-block;
+}
+
+.notificationsIconArea:hover .notificationsTooltip {
+  visibility: visible;
+}
+
+.notificationsIconArea .notificationsTooltip {
+  visibility: hidden;
+  width: 80px;
+  background-color: $background;
+  color: $gred;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
   font-size: 12px;
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
   top: 50px;
   right: -14px;
+}
+
+.notificationsIconArea .notificationsTooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 37px;
+  left: 35px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent $background transparent;
+}
+
+#notificationsIcon {
+  margin-top: 4px;
+  margin-left: 2px;
+  font-size: 26px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: $background;
+    color: $gred;
+  }
+}
+
+#personIcon {
+  margin-top: 4px;
+  margin-left: 2px;
+  font-size: 26px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    background-color: $background;
+    color: $gyellow;
+  }
+}
+
+.personIconArea {
+  position: relative;
+  display: inline-block;
+}
+
+.personIconArea:hover .personTooltip {
+  visibility: visible;
+}
+
+.personIconArea .personTooltip {
+  color: $gyellow;
+  text-align: center;
 }
