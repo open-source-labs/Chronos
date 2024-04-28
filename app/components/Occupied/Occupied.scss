@@ -1,16 +1,12 @@
 @import '../../stylesheets/constants.scss';
 
-.entireArea {
-  height: 100%;
-}
-
 // MAIN DASHBOARD
 .dashboardArea {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  padding-top:2rem;
 }
-
 
 // HEADER
 .mainHeader {
