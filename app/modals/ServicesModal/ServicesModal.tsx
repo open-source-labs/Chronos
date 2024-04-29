@@ -4,9 +4,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { DashboardContext } from '../context/DashboardContext'
-import { ApplicationContext } from '../context/ApplicationContext';
-import '../stylesheets/ServicesModal.scss';
+import { DashboardContext } from '../../context/DashboardContext'
+import { ApplicationContext } from '../../context/ApplicationContext';
+import './ServicesModal.scss';
 
 interface ServicesModalProps {
   i: number;

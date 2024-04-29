@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useCallback } from 'react';
-import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/AddModal.scss';
+import { DashboardContext } from '../../context/DashboardContext';
+import './AddModal.scss';
 
-import { TModalSetter } from '../components/Occupied/types/Occupied';
+import { TModalSetter } from '../../components/Occupied/types/Occupied';
 
 interface IFields {
   typeOfService: string;
