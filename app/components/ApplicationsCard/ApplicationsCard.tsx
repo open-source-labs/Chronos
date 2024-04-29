@@ -45,6 +45,7 @@ const ApplicationsCard = (props) => {
         setAppIndex(i);
         setApp(selectedApp);
         setServicesData([]);
+        //When we open the service modal a connection is made to the db in a useEffect inside of the service modal component
         setModal({isOpen:true,type:'serviceModal'})
       }
     }
