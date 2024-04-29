@@ -53,97 +53,108 @@ const Occupied = React.memo(() => {
   const classes = mode === 'light' ? useStylesLight({}) : useStylesDark({});
 
   return (
-    <div className="entireArea">
-      <div className="dashboardArea">
+    <div 
+      className="dashboardArea"
+    >
 
-        <header className="mainHeader">
-          <section className="header" id="rightHeader">
-            <SearchBar
-              setSearchTerm={setSearchTerm}
-            />
-            <DashboardIcons
-              setModal={setModal}
-            />
-          </section>
-        </header>
+      <header className="mainHeader">
+        <section 
+          className="header" 
+          id="rightHeader"
+        >
+          <SearchBar
+            setSearchTerm={setSearchTerm}
+          />
+          <DashboardIcons
+            setModal={setModal}
+          />
+        </section>
+      </header>
 
-          {/* is the card with the + in the middle */}
-        <div className="cardContainer">
+      <div 
+        className="cardContainer"
+      >
 
-          <div className="card" id="card-add">
-            <Button className={classes.paper} onClick={() => {
-              setModal({isOpen:true,type:'envModal'})
-            }}>
-              <AddCircleOutlineTwoToneIcon className={classes.icon} />
-            </Button>
-          </div>
-
-          {applications &&
-            applications
-              .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
-              .map((application: string[], i: any) => (
-                <ApplicationsCard
-                  application={application}
-                  i={i}
-                  setModal={setModal}
-                  classes={classes}
-                />
-          ))}
-
-          <Modal 
-            open={modal.isOpen} 
-            onClose={() => setModal({isOpen:false,type:''})}
+        <div 
+          className="card" 
+          id="card-add"
+        >
+          <Button 
+            className={classes.paper} 
+            onClick={() => setModal({isOpen:true,type:'envModal'})}
           >
-            {
-              modal.type === 'envModal' ? 
-                <EnvModal setModal={setModal} />
-              :
-              modal.type === 'awsModal' ?
-                <AwsModal setModal={setModal} />
-              :
-              modal.type === 'addModal' ?
-                <AddModal setModal={setModal} />
-              :
-              modal.type === 'personalModal' ?
-                <ProfileContainer setModal={setModal}/>
-              :
-              modal.type === 'serviceModal' ?
-                <ServicesModal 
-                  key={`key-${appIndex}`} 
-                  i={appIndex} 
-                  app={app}
-                />
-              :
-              <></>
-            }
-          </Modal>
-
-          {/* <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
-            <EnvModal
-              setOpen={setEnvModalOpen}
-              setAwsModalOpen={setAwsModalOpen}
-              setAddModalOpen={setAddModalOpen}
+            <AddCircleOutlineTwoToneIcon 
+              className={classes.icon} 
             />
-          </Modal>
-
-          <Modal open={awsModalOpen} onClose={() => setAwsModalOpen(false)}>
-            <AwsModal setOpen={setAwsModalOpen} />
-          </Modal>
-
-          <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
-            <AddModal setOpen={setAddModalOpen} />
-          </Modal>
-
-          <Modal open={personModalOpen} onClose={() => setPersonModalOpen(false)}>
-            <ProfileContainer setOpen={setPersonModalOpen} />
-          </Modal>
-
-          <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
-            <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
-          </Modal> */}
+          </Button>
         </div>
+
+        {applications
+          .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+          .map((application: string[], i: any) => (
+            <ApplicationsCard
+              key={crypto.randomUUID()}
+              application={application}
+              i={i}
+              setModal={setModal}
+              classes={classes}
+            />
+        ))}
+
+        <Modal 
+          open={modal.isOpen} 
+          onClose={() => setModal({isOpen:false,type:''})}
+        >
+          {
+            modal.type === 'envModal' ? 
+              <EnvModal setModal={setModal} />
+            :
+            modal.type === 'awsModal' ?
+              <AwsModal setModal={setModal} />
+            :
+            modal.type === 'addModal' ?
+              <AddModal setModal={setModal} />
+            :
+            modal.type === 'personalModal' ?
+              <ProfileContainer setModal={setModal}/>
+            :
+            modal.type === 'serviceModal' ?
+              <ServicesModal 
+                key={`key-${appIndex}`} 
+                i={appIndex} 
+                app={app}
+              />
+            :
+            <></>
+          }
+        </Modal>
+
+        {/* <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
+          <EnvModal
+            setOpen={setEnvModalOpen}
+            setAwsModalOpen={setAwsModalOpen}
+            setAddModalOpen={setAddModalOpen}
+          />
+        </Modal>
+
+        <Modal open={awsModalOpen} onClose={() => setAwsModalOpen(false)}>
+          <AwsModal setOpen={setAwsModalOpen} />
+        </Modal>
+
+        <Modal open={addModalOpen} onClose={() => setAddModalOpen(false)}>
+          <AddModal setOpen={setAddModalOpen} />
+        </Modal>
+
+        <Modal open={personModalOpen} onClose={() => setPersonModalOpen(false)}>
+          <ProfileContainer setOpen={setPersonModalOpen} />
+        </Modal>
+
+        <Modal open={serviceModalOpen} onClose={() => setServiceModalOpen(false)}>
+          <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
+        </Modal> */}
       </div>
     </div>
+
   );
 });
 

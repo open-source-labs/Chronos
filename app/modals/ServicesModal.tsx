@@ -26,6 +26,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   const { user, applications } = useContext(DashboardContext);
   const { servicesData, connectToDB } = useContext(ApplicationContext);
   const [services, setServices] = useState<Array<string>>([]);
+  const [ cardName,dbType,dbURI,description,serviceType ] = applications[i]
 
   const toggleService = service => {
     if (services.includes(service)) {
@@ -42,7 +43,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   // adding database type to make connection and fetchServiceNames more efficient
   useEffect(() => {
     console.log('Hi, inside useEffect in ServicesModal. Calling connectToDB function.');
-    connectToDB(user, i, app, applications[i][2], applications[i][1]);
+    connectToDB(user, i, app, dbURI, dbType);
   }, [i]);
 
 
