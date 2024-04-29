@@ -22,7 +22,7 @@ type InputElement = React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTM
 type FormElement = React.FormEvent<HTMLFormElement>;
 
 const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
-  const { addApp, setApplications }: IDashboard = useContext(DashboardContext);
+  const { addApp }: IDashboard = useContext(DashboardContext);
 
   const [fields, setFields] = useState<IFields>({
     typeOfService: 'Docker',
@@ -38,8 +38,6 @@ const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
     // const newApp = [name, database, URI, description, typeOfService];
     // setApplications(prev => [...prev, ...newApp])
     addApp(fields);
-    // setOpenModal(false); // Close modal on submit
-    // setModalType('')
     setModal({isOpen:false,type:''})
   };
 

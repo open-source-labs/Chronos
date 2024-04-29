@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { DashboardContext } from '../context/DashboardContext';
+import { DashboardContext } from '../../context/DashboardContext';
+import './FirstLaunch.scss'
 
 //  THIS FILE IS NOT DOING ANYTHING RIGHT NOW
 const FirstLaunch: React.FC = React.memo(() => {
@@ -8,7 +9,7 @@ const FirstLaunch: React.FC = React.memo(() => {
   return (
     <div className="home">
       <div className="welcome" data-testid="FirstLaunch">
-        <h1 className="welcomeMessage">Welcome to Chronos!</h1>
+        <h1>Welcome to Chronos!</h1>
         <h2>Would you like authentication?</h2>
         <div className="btns">
           <button className="link" onClick={() => updateLandingPage('createAdmin')}>

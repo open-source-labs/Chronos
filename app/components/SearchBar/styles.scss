@@ -21,3 +21,16 @@
     fill: white;
   }
 }
+
+#textInput {
+  background-color: transparent;
+  font-family: 'Roboto';
+  font-size: 16px;
+  outline: none;
+  border: 0;
+  padding: 2px;
+  transition: all 0.25s ease;
+  pointer-events: none;
+  text-align: left;
+  margin-top: 5px;
+}
