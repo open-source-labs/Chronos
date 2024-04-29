@@ -67,6 +67,7 @@ const Occupied = React.memo(() => {
           </section>
         </header>
 
+          {/* is the card with the + in the middle */}
         <div className="cardContainer">
 
           <div className="card" id="card-add">
