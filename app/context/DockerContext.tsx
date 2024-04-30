@@ -38,11 +38,11 @@ const DockerContextProvider: React.FC<Props> = React.memo((props) => {
     ipcRenderer.on('dockerResponse', (data: any) => {
       let result;
       if (tryParseJSON(data)) {
-        console.log('DockerContext.tsx line 41 result: ', result)
+        // console.log('DockerContext.tsx line 41 result: ', result)
         result = JSON.parse(data);
       }
       const newDockerData = result[0] || {};
-      console.log(newDockerData);
+      // console.log(newDockerData);
       setDockerData(newDockerData);
     });
   }, []);

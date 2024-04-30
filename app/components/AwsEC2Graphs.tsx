@@ -27,7 +27,7 @@ const AwsEC2Graphs: React.FC = React.memo(props => {
         colour += `00${value.toString(16)}`.substring(-2);
       }
 
-      console.log(colour);
+      // console.log(colour);
       return colour;
     }
   };

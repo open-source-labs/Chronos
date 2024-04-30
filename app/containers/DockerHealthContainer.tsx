@@ -114,13 +114,13 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
         const chartData = metricObjects[metricName];
         const token = chartData.token;
        
-        console.log("plotting grafana")
+        // console.log("plotting grafana")
         grafanaChartsArray.push(
           <GrafanaEventChart metricName={metricName} token={token} />);
 
       }
     }
-    console.log(grafanaChartsArray)
+    // console.log(grafanaChartsArray)
     setHealthChartsArr(grafanaChartsArray);
     setCurrChunk(grafanaChartsArray.slice(currIndex, currIndex + chunkSize));
     setCurrIndex(currIndex + chunkSize);

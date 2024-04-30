@@ -26,7 +26,7 @@ const GrafanaIFrame: React.FC<Props> = ({ awsUrl }) => {
 
   useEffect(() => {
     const url = `${awsUrl}/api/search?folderIds=0`
-    console.log(awsUrl)
+    // console.log(awsUrl)
     const fetchDashboards = async () => {
       const response = await fetch(url, {
         method: 'GET',
