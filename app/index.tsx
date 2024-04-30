@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import './stylesheets/index.scss';
 import { createTheme, ThemeProvider } from '@material-ui/core/';
 import App from './App';
-import WindowBar from './components/WindowBar';
+import WindowBar from './components/WindowBar/WindowBar';
 
 const theme = createTheme({
   typography: {
