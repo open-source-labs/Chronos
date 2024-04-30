@@ -3,19 +3,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DashboardContext } from '../context/DashboardContext'
-import { ApplicationContext } from '../context/ApplicationContext';
-import '../stylesheets/ServicesModal.scss';
+// import { Link } from 'react-router-dom';
+import { DashboardContext } from '../../context/DashboardContext'
+import { ApplicationContext } from '../../context/ApplicationContext';
+import './ServicesModal.scss';
+
+import ServicesLink from './ServicesLink';
 
 interface ServicesModalProps {
   i: number;
   app: string;
 }
 
-interface IService {
-  microservice: string;
-}
+
 
 // v10: Seems to never have been updated for cloud-based info...
 // servicesModal is re-rendered depending on i and application passed in...
@@ -28,14 +28,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   const [services, setServices] = useState<Array<string>>([]);
   const [ cardName,dbType,dbURI,description,serviceType ] = applications[i]
 
-  const toggleService = service => {
-    if (services.includes(service)) {
-      setServices(services.filter(el => el !== service));
-    } else {
-      if (service !== 'communications' && services.includes('communications')) setServices([]);
-      setServices(services.concat(service));
-    }
-  };
+
 
   // v10: connectToDB function definition in Application Context.
   // parameters for connectToDB call: user, i (index), app (card title), app URL (url on card)
@@ -60,7 +53,8 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
             <h2>{app}</h2>
             <p>Select a server to monitor</p>
           </div>
-          <div className="services-links">
+          <ServicesLink servicesData={servicesData} services={services} setServices={setServices}/>
+          {/* <div className="services-links">
             {servicesData.map((service: IService, index: number) => (
               <div
                 key={`${index}servicesData`}
@@ -78,7 +72,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
               {services.length === 1 && 'Display Service'}
               {services.length > 1 && 'Compare Services'}
             </Link>
-          </div>
+          </div> */}
         </>
       )}
     </div>
