@@ -44,6 +44,7 @@ const DashboardContextProvider = React.memo((props: any) => {
   // Initial user will always be the guest
   const [user, setUser] = useState<string>('guest');
   const [applications, setApplications] = useState<string[][]>([]);
+  console.log({applications})
   const [mode, setMode] = useState<string>('light');
 
 
@@ -54,16 +55,12 @@ const DashboardContextProvider = React.memo((props: any) => {
 
   const addApp = useCallback((fields: IFields) => {
     const { typeOfService, database, URI, name, description } = fields;
-    const newApp = [name, database, URI, description, typeOfService];
-    console.log('what is the service that was passed into add app: ', typeOfService)
+    
     const result = ipcRenderer.sendSync(
       'addApp',
       JSON.stringify([name, database, URI, description, typeOfService])
     );
     setApplications(result);
-    // console.log('applications: ', applications);
-    // console.log('new app to add: ', newApp);
-    // setApplications([...applications, newApp]);
     console.log('the current application that was added is : ', result);
   }, []);
 
@@ -101,7 +98,7 @@ const DashboardContextProvider = React.memo((props: any) => {
         deleteApp,
         mode,
         setMode,
-        changeMode,
+        changeMode
       }}
     >
       {children}
