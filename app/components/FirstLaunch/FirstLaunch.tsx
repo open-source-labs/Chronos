@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../../context/DashboardContext';
-import './FirstLaunch.scss'
+import './styles.scss'
 
 //  THIS FILE IS NOT DOING ANYTHING RIGHT NOW
 const FirstLaunch: React.FC = React.memo(() => {

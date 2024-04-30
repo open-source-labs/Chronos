@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import UserModal from '../modals/UserModal';
-import SetAuth from '../modals/SetAuth';
+import UserModal from '../modals/UserModal/UserModal';
+import SetAuth from '../modals/SetAuth/SetAuth';
 import { DashboardContext } from '../context/DashboardContext';
 import { TModalSetter } from '../components/Occupied/types/Occupied';
 

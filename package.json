@@ -21,6 +21,7 @@
     "aws-sdk": "^2.1317.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "concurrently": "^8.2.2",
     "d3": "^7.8.5",
     "dat.gui": "^0.7.9",
     "docker": "^0.2.14",
@@ -88,7 +89,8 @@
     "test": "nyc jest",
     "backend-test": "npx jest --config __backend-tests__/jest.config.js --verbose",
     "start:selenium": "node e2e/seleniumTest.js",
-    "start:e2e": "npm run dev:electron & npm run start:selenium"
+    "start:e2e": "npm run dev:electron & npm run start:selenium",
+    "start": "concurrently \"npm:build\" \"npm:dev:app\" \"npm:dev:electron\""
   },
   "repository": {
     "type": "git",

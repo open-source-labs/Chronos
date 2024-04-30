@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Splash from './components/Splash';
+import Splash from './components/Splash/Splash';
 import DashboardContainer from './containers/DashboardContainer';
 import './stylesheets/scrollBar.scss';
 
