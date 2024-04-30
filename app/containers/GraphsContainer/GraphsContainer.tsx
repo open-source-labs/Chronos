@@ -33,7 +33,7 @@ interface Params {
 const GraphsContainer: React.FC = React.memo(() => {
 
   const { app, service } = useParams<keyof Params>() as Params;
-  const [live, setLive] = useState<boolean>(false);
+  const [ live, setLive ] = useState<boolean>(false);
   const { intervalID, setIntervalID } = useContext(ApplicationContext);
   const { getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
@@ -42,9 +42,7 @@ const GraphsContainer: React.FC = React.memo(() => {
   // const { fetchKafkaEventData, setKafkaEventData } = useContext(EventContext);
   // const { fetchKubernetesEventData, setKubernetesEventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
-  // const { selectedMetrics } = useContext(QueryContext);
   const [chart, setChart] = useState<string>('all');
-  // const [prevRoute, setPrevRoute] = useState<string>('');
   const { mode } = useContext(DashboardContext.DashboardContext);
   let [inspect, setInspect] = useState<boolean>(false);
 
@@ -130,7 +128,8 @@ const GraphsContainer: React.FC = React.memo(() => {
                 <TransferColumns />
               </div>
             )}
-            {chart.startsWith('health_') ?
+            {
+            chart.startsWith('health_') ?
               <HealthContainer
                 sizing="solo"
                 category={chart.substring(7)}
@@ -143,15 +142,17 @@ const GraphsContainer: React.FC = React.memo(() => {
               :
             chart.startsWith('docker_') ?
               
-                <DockerHealthContainer 
-                  sizing="solo"
-                  category={chart.substring(7)} 
-                />
+              <DockerHealthContainer 
+                sizing="solo"
+                category={chart.substring(7)} 
+              />
               :
-              <>
-              </>
+              <></>
               }
-            {chart === 'modifyMetrics' && <ModifyMetrics />}
+            {
+            chart === 'modifyMetrics' && 
+              <ModifyMetrics />
+            }
           </div>
         )}
       </div>
