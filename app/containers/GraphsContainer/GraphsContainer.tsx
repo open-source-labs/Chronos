@@ -1,29 +1,29 @@
 /* eslint-disable no-bitwise */
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { ApplicationContext } from '../context/ApplicationContext';
-import { HealthContext } from '../context/HealthContext';
-import { CommsContext } from '../context/CommsContext';
-import { DockerContext } from '../context/DockerContext';
-import { EventContext } from '../context/EventContext';
-import Header from '../components/Header';
-import RequestTypesChart from '../charts/RequestTypesChart';
-import ResponseCodesChart from '../charts/ResponseCodesChart';
-import TrafficChart from '../charts/TrafficChart';
-import RouteChart from '../charts/RouteChart';
-import LogsTable from '../charts/LogsTable';
-import EventContainer from './EventContainer';
-import TransferColumns from '../components/TransferColumns';
-import HealthContainer from './HealthContainer';
-import ModifyMetrics from './ModifyMetricsContainer';
-import * as DashboardContext from '../context/DashboardContext';
-import lightAndDark from '../components/Styling';
-import DockerHealthContainer from './DockerHealthContainer';
+import { ApplicationContext } from '../../context/ApplicationContext';
+import { HealthContext } from '../../context/HealthContext';
+import { CommsContext } from '../../context/CommsContext';
+import { DockerContext } from '../../context/DockerContext';
+import { EventContext } from '../../context/EventContext';
+import Header from '../../components/Header';
+import RequestTypesChart from '../../charts/RequestTypesChart';
+import ResponseCodesChart from '../../charts/ResponseCodesChart';
+import TrafficChart from '../../charts/TrafficChart';
+import RouteChart from '../../charts/RouteChart';
+import LogsTable from '../../charts/LogsTable';
+import EventContainer from '../EventContainer';
+import TransferColumns from '../../components/TransferColumns';
+import HealthContainer from '../HealthContainer';
+import ModifyMetrics from '../ModifyMetricsContainer';
+import * as DashboardContext from '../../context/DashboardContext';
+import lightAndDark from '../../components/Styling';
+import DockerHealthContainer from '../DockerHealthContainer';
 
-import GraphNavBar from '../components/GraphNavBar';
+import GraphNavBar from '../../components/GraphNavBar';
 
-import '../stylesheets/GraphsContainer.scss';
-import Inspect from './Inspect';
+import '../../stylesheets/GraphsContainer.scss';
+import Inspect from '../Inspect';
 
 interface Params {
   app: any;
@@ -94,34 +94,9 @@ const GraphsContainer: React.FC = React.memo(() => {
   //random variable to hold the light or dark mode of the display?..ok....sure
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
-  const stringToColour = (string: string, recurses = 0) => {
-    if (recurses > 20) return string;
-    function hashString(str: string) {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      let colour = '#';
-      for (let i = 0; i < 3; i++) {
-        const value = (hash >> (i * 8)) & 0xff;
-        colour += `00${value.toString(16)}`.substring(-2);
-      }
-      return colour;
-    }
-    function contrastYiq(color: string) {
-      const num = parseInt(color.slice(1), 16);
-      const r = (num >>> 16) & 0xff;
-      const g = (num >>> 8) & 0xff;
-      const b = num & 0xff;
-      const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-      return yiq <= 50 ? stringToColour(color, recurses + 1) : color;
-    }
-    for (let salt = 0; salt < 5; salt++) string = hashString(string);
-    return contrastYiq(string);
-  };
-
   return (
     <>
+
       <GraphNavBar
         chart={chart}
         setChart={setChart}
@@ -129,13 +104,15 @@ const GraphsContainer: React.FC = React.memo(() => {
         inspect={inspect}
         setInspect={setInspect}
       />
-      <Header 
+      <Header
         app={app} 
         service={service} 
         live={live} 
         setLive={setLive} 
       />
+
       {inspect && <Inspect />}
+      
       <div className="graphs-container">
         {chart === 'communications' ? (
           <div className="graphs">
@@ -155,22 +132,25 @@ const GraphsContainer: React.FC = React.memo(() => {
             )}
             {chart.startsWith('health_') && (
               <HealthContainer
-                colourGenerator={stringToColour}
                 sizing="solo"
                 category={chart.substring(7)}
-                currentService={service}
               />
             )}
             {chart.startsWith('event_') && (
               <>
-                <EventContainer colourGenerator={stringToColour} sizing="solo" />
+                <EventContainer 
+                  sizing="solo" 
+                />
               </>
 
             )}
            {/* docker charts */}
             {chart.startsWith('docker_') && (
               <>
-                <DockerHealthContainer colourGenerator={stringToColour} sizing="solo" category={chart.substring(7)} />
+                <DockerHealthContainer 
+                  sizing="solo"
+                  category={chart.substring(7)} 
+                />
               </>
 
             )}

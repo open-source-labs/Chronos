@@ -4,10 +4,10 @@ import { QueryContext } from '../context/QueryContext';
 import GrafanaEventChart from '../charts/GrafanaEventChart';
 import { Button } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
 
 interface HealthContainerProps {
   sizing: string;
-  colourGenerator: Function;
   category: string;
 }
 
@@ -32,7 +32,7 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
   const { selectedMetrics } = useContext(QueryContext);
   const { service } = useParams<keyof Params>() as Params;
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
-  const { sizing, colourGenerator, category } = props;
+  const { sizing, category } = props;
   const [currIndex, setCurrIndex] = useState(0);
   const [currChunk, setCurrChunk] = useState<JSX.Element[]>([]);
   const chunkSize = 7;
