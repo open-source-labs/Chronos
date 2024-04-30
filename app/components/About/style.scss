@@ -11,6 +11,31 @@
   height: 100%;
 }
 
+.sprout {
+  margin: 0;
+}
+
+.mainTitle {
+  font-size: 36px;
+  color: $background;
+  text-align: left;
+  font-weight: 600;
+}
+
+.title {
+  font-size: 18px;
+  color: $background;
+  text-align: left;
+  font-weight: 600;
+}
+
+.text {
+  font-size: 18px;
+  color: $background;
+  text-align: left;
+  font-weight: 100;
+}
+
 .blurb {
   width: 100%;
   margin: auto;
@@ -21,33 +46,30 @@
   border: none;
   box-shadow: $boxshadow2;
   padding: 30px;
-  background-color: $background; // Use your theme's background variable
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
 }
 
-.mainTitle, .title {
-  font-size: 18px;
-  color: $textColor; 
-  text-align: left;
-  font-weight: 600;
+#sproutSpan {
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  margin-right: 10px;
+  height: $sproutSize;
+  width: $sproutSize;
+  background-color: transparent;
+  border-radius: 50%;
+  background-size: scale-down;
+  &:hover {
+    background-color: $hover;
+    opacity: 0.85;
+    animation: none;
+  }
 }
 
-.mainTitle {
-  font-size: 36px; // Larger font for the main title
-}
-
-.text {
-  font-size: 16px;
-  color: $textColor;
-  text-align: left;
-  font-weight: 400;
-  margin-bottom: 20px; // Add some space after paragraphs
-}
-
-#OSPNames {
-  margin-top: 10px;
-  margin-bottom: 20px; // Space before the past contributors section
+p {
+  padding-left: 10px;
 }

@@ -88,7 +88,8 @@
     "test": "nyc jest",
     "backend-test": "npx jest --config __backend-tests__/jest.config.js --verbose",
     "start:selenium": "node e2e/seleniumTest.js",
-    "start:e2e": "npm run dev:electron & npm run start:selenium"
+    "start:e2e": "npm run dev:electron & npm run start:selenium",
+    "start": "concurrently \"npm:build\" \"npm:dev:app\" \"npm:dev:electron\""
   },
   "repository": {
     "type": "git",
