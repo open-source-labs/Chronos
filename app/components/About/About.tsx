@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.scss';
+import './styles.scss';
 import TeamMembers from './TeamMembers';
 import PastContributors from './PastContributors';
 import { useStylingContext } from './StylingContext';

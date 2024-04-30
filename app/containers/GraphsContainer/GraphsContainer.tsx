@@ -20,7 +20,7 @@ import * as DashboardContext from '../../context/DashboardContext';
 import lightAndDark from '../../components/Styling';
 import DockerHealthContainer from '../DockerHealthContainer';
 
-import GraphNavBar from '../../components/GraphNavBar';
+import GraphNavBar from '../../components/GraphNavBar/GraphNavBar';
 
 import '../../stylesheets/GraphsContainer.scss';
 import Inspect from '../Inspect';

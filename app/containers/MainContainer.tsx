@@ -1,7 +1,7 @@
 import React, { useContext,useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import About from '../components/About/About';
-import Contact from '../components/Contact';
+import Contact from '../components/Contact/Contact';
 import Settings from '../components/Settings';
 import Occupied from '../components/Occupied/Occupied';
 import lightAndDark from '../components/Styling';
