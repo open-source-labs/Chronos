@@ -2,12 +2,11 @@ import React from 'react';
 import Close from '@material-ui/icons/Close';
 import Maximize from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 import Minimize from '@material-ui/icons/RemoveSharp';
-
-import '../stylesheets/WindowBar.scss';
+import './styles.scss'; 
 
 const { ipcRenderer } = window.require('electron');
 
-export default function WindowBar() {
+const WindowBar = () => {
   return (
     <div id="titleBar">
       <Minimize className="button" id="min-btn" onClick={() => ipcRenderer.send('min')} />
@@ -16,3 +15,5 @@ export default function WindowBar() {
     </div>
   );
 }
+
+export default WindowBar;

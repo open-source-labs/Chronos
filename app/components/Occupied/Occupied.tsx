@@ -21,7 +21,7 @@ import ProfileContainer from '../../containers/ProfileContainer';
 import ServicesModal from '../../modals/ServicesModal/ServicesModal';
 
 // STYLESHEETS
-import './Occupied.scss';
+import './styles.scss';
 
 // // CONTEXT
 import { DashboardContext } from '../../context/DashboardContext';
@@ -29,7 +29,7 @@ import { ApplicationContext } from '../../context/ApplicationContext';
 
 //Components
 
-import SearchBar from '../SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import DashboardIcons from '../DashboardIcons/DashboardIcons';
 import ApplicationsCard from '../ApplicationsCard/ApplicationsCard';
 
