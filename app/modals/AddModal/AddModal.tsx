@@ -4,6 +4,8 @@ import { DashboardContext } from '../../context/DashboardContext';
 import './AddModal.scss';
 
 import { TModalSetter } from '../../components/Occupied/types/Occupied';
+import ServiceDBType from './ServiceDBType';
+import ServicesDescription from'./ServicesDescription';
 
 interface IFields {
   typeOfService: string;
@@ -60,7 +62,8 @@ const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
       </div>
       <form onSubmit={handleSubmit}>
         <p>Required*</p>
-        <div>
+        <ServiceDBType typeOfService={typeOfService} handleChange={handleChange} database={database}/>
+        {/* <div>
           <label htmlFor="serv-type">
             Type of Service<span>*</span>
           </label>
@@ -84,8 +87,9 @@ const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
             <option value="SQL">SQL</option>
             <option value="MongoDB">MongoDB</option>
           </select>
-        </div>
-        <div>
+        </div> */}
+        <ServicesDescription URI={URI} name={name} description={description}/>
+        {/* <div>
           <label htmlFor="db-uri">
             URI<span>*</span>
           </label>
@@ -121,7 +125,7 @@ const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
             onChange={e => handleChange(e)}
             placeholder="Add a short description"
           />
-        </div>
+        </div> */}
         <button>Submit</button>
       </form>
     </div>
