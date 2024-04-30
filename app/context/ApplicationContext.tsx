@@ -60,7 +60,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    * @params application - is the name of the card taht was clicked on
    */
   const connectToDB = useCallback((username: string, index: number, application: string, URI: string, databaseType: string) => {
-    console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
+    // console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
     /* ipcRenderer is referring to electron. The connect string is processed in data.ts inside of the electron folder at the root of the project */
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI, databaseType);
@@ -84,6 +84,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       data.forEach(el => {
         store[el.metric] = el;
       });
+      console.log({store})
       // console.log('result from getSavedMetrics is: ', store);
       setSavedMetrics(store);
     });

@@ -56,13 +56,13 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     const filteredEventData = {};
     // use this array of selected metrics to filter the eventData down to only the metrics we want to see
     const selectedArr = selectedMetrics[0].Event;
-    console.log('selectedArr IS: ', selectedArr)
+    // console.log('selectedArr IS: ', selectedArr)
     // only one service... 'Event'
     for (const service in eventDataObj) {
       filteredEventData[service] = {};
       // define the object of all the metrics
       const serviceMetricsObject = eventDataObj[service];
-      console.log('serviceMetricsObject IS: ', serviceMetricsObject)
+      // console.log('serviceMetricsObject IS: ', serviceMetricsObject)
       // iterate through all the metrics
       for (const metricName in serviceMetricsObject) {
         // if the metric name matches a string in the selectedArr, we add it to our filtered object
@@ -71,7 +71,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         }
       };
     };
-    console.log('filteredEventData IS: ', filteredEventData)
+    // console.log('filteredEventData IS: ', filteredEventData)
     return filteredEventData;
   };
 
@@ -97,11 +97,11 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     for (const service in filteredEventDataObj) {
       const metricObject = filteredEventDataObj[service];
       for (const metricName in metricObject) {
-        console.log('metricName IS: ', metricName)
+        // console.log('metricName IS: ', metricName)
         const chartData = metricObject[metricName];
-        console.log('chartData IS: ', chartData)
+        // console.log('chartData IS: ', chartData)
         const token = chartData.token;
-        console.log('token IS: ', token);
+        // console.log('token IS: ', token);
         // plotting using plotly
         // if (!isGrafana) {
         // console.log("plotting plotly")
@@ -117,7 +117,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         // } else {
 
         // plotting using grafana
-        console.log("plotting grafana")
+        // console.log("plotting grafana")
         grafanaChartsArray.push(
           <GrafanaEventChart metricName={metricName} token={token} />);
 
@@ -126,7 +126,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     }
     // currently, we only display graph using grafana. It can be implement as a option to choose between ploty and grafana for future iterations
     // if (isGrafana) {
-    console.log(grafanaChartsArray)
+    // console.log(grafanaChartsArray)
     setEventChartsArr(grafanaChartsArray);
     setCurrChunk(grafanaChartsArray.slice(currIndex, currIndex + chunkSize));
     setCurrIndex(currIndex + chunkSize);

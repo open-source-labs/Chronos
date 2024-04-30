@@ -25,8 +25,8 @@ const Login = React.memo(() => {
     // inputFields.forEach(input => (input.value = ''));
     const response: boolean | string = ipcRenderer.sendSync('login', { username, password });
     if (typeof (response) === 'string') {
-      console.log('Hi, login successful and response string (mode) is:', response);
-      console.log('Redirected to Occupied from Login.');
+      // console.log('Hi, login successful and response string (mode) is:', response);
+      // console.log('Redirected to Occupied from Login.');
       setUser(username);
       setMode(response);
       navigate('/');
