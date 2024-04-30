@@ -14,11 +14,11 @@ import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoT
 
 // // MODALS
 // import AddModal from '../modals/AddModal';
-import EnvModal from '../../modals/EnvModal';
-import AddModal from '../../modals/AddModal';
-import AwsModal from '../../modals/AwsModal';
+import EnvModal from '../../modals/EnvModal/EnvModal';
+import AddModal from '../../modals/AddModal/AddModal';
+import AwsModal from '../../modals/AwsModal/AwsModal';
 import ProfileContainer from '../../containers/ProfileContainer';
-import ServicesModal from '../../modals/ServicesModal';
+import ServicesModal from '../../modals/ServicesModal/ServicesModal';
 
 // STYLESHEETS
 import './Occupied.scss';

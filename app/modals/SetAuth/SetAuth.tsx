@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { DashboardContext } from '../context/DashboardContext';
-import { TModalSetter } from '../components/Occupied/types/Occupied';
+import { DashboardContext } from '../../context/DashboardContext';
+import { TModalSetter } from '../../components/Occupied/types/Occupied';
 
 const SetAuthModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { updateLandingPage } = useContext(DashboardContext);
