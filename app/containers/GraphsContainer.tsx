@@ -30,7 +30,7 @@ interface Params {
   service: string;
 }
 
-const GraphsContainer: React.FC = React.memo(props => {
+const GraphsContainer: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
