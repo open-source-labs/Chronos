@@ -45,7 +45,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
     if (awsLive) {
       setIntervalID(
         setInterval(() => {
-          console.log('intervalId after click live', intervalID);
+          // console.log('intervalId after click live', intervalID);
           fetchAwsAppInfo(user, appIndex);
 
           if (typeOfService === 'AWS/EC2') fetchAwsData(user, appIndex) ;

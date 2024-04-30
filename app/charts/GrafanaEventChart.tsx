@@ -23,19 +23,19 @@ const GrafanaEventChart: React.FC<EventChartProps> = React.memo(props => {
     const [type, setType] = useState(['timeserie']);
     const [timeFrame, setTimeFrame] = useState('5m');
 
-    console.log("graphType: ", graphType)
-    console.log("type: ", type)
-    console.log("inside GrafanaEventChart")
+    // console.log("graphType: ", graphType)
+    // console.log("type: ", type)
+    // console.log("inside GrafanaEventChart")
 
-    console.log("metricName: ", metricName)
+    // console.log("metricName: ", metricName)
     let uid = metricName.replace(/.*\/.*\//g, '')
     if (uid.length >= 40) {
         uid = metricName.slice(metricName.length - 39);
     }
 
     let parsedName = metricName.replace(/.*\/.*\//g, '')
-    console.log("uid: ", uid)
-    console.log("parsedName: ", parsedName)
+    // console.log("uid: ", uid)
+    // console.log("parsedName: ", parsedName)
 
     const handleSelectionChange = async (event) => {
         setType([...type, graphType]);

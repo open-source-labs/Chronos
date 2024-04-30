@@ -42,7 +42,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   // applications[i][2] refers to the user provided URI
   // adding database type to make connection and fetchServiceNames more efficient
   useEffect(() => {
-    console.log('Hi, inside useEffect in ServicesModal. Calling connectToDB function.');
+    // console.log('Hi, inside useEffect in ServicesModal. Calling connectToDB function.');
     connectToDB(user, i, app, dbURI, dbType);
   }, [i]);
 

@@ -33,17 +33,15 @@ const mongoFetch = async (
   serviceName: string
 ): Promise<Array<{ [key: string]: any[] }> | undefined> => {
   try {
-    console.log('in mongoFetch line 35 dataHelpers.ts: ', serviceName)
+    //We are creating models to populate with data for each service
     const testModel = HealthModelFunc(serviceName);
-    console.log('testModel: ', testModel);
     const grafanaAPIKey = await GrafanaAPIKeyModel.find({});
-    console.log('grafanaAPIKey: ', grafanaAPIKey)
     let result = await testModel.aggregate(aggregator);
+    console.log({result})
     for (let i = 0; i < result.length; i++) {
       result[i].token = grafanaAPIKey[0].token;
     }
     result = [{ [serviceName]: result }];
-    console.log('result: ', result)
     return result;
   } catch (error) {
     console.log('Aggregation error in mongoFetch(): ', error);

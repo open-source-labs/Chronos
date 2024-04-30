@@ -56,7 +56,7 @@ const EventContextProvider: React.FC<Props> = React.memo(({ children }) => {
       if (tryParseJSON(data)) {
         const result: object[] = JSON.parse(data);
         if (result && result.length > 0) {
-          console.log('EventContext ln 59 result data: ', result)
+          // console.log('EventContext ln 59 result data: ', result)
           const transformedData: object = eventTransformer(result[0][arg]);
           setEventData(transformedData);
         }

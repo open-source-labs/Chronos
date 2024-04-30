@@ -29,12 +29,12 @@ function hashPassword(password: string) {
  * @desc    adds a new user to the user database
  */
 function addUser(username, password, email) {
-  console.log('Creating new User', username);
+  // console.log('Creating new User', username);
   const newUser = new User({ username: username, password: hashPassword(password), email: email });
 
   // Saving new User into DB
   newUser.save().then(data => {
-    console.log('data saved', data);
+    // console.log('data saved', data);
   });
 }
 
@@ -58,8 +58,8 @@ function clearGuestSettings() {
  */
 ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
   const newApp = JSON.parse(application);
-  console.log('parsed newApp: ', newApp);
-  console.log('currentUser', currentUser);
+  // console.log('parsed newApp: ', newApp);
+  // console.log('currentUser', currentUser);
   const createdOn = moment().format('lll');
   newApp.push(createdOn);
 
@@ -90,7 +90,7 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
     )
 
       .then(data => {
-        console.log('User updated', data);
+        // console.log('User updated', data);
         message.returnValue = data.services.map(arr => [...arr]);
       })
 
@@ -109,8 +109,8 @@ ipcMain.on('addApp', (message: IpcMainEvent, application: any) => {
  */
 ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
   const newAwsApp = JSON.parse(application);
-  console.log('parsed newApp: ', newAwsApp);
-  console.log('currentUser', currentUser);
+  // console.log('parsed newApp: ', newAwsApp);
+  // console.log('currentUser', currentUser);
   const createdOn = moment().format('lll');
   newAwsApp.push(createdOn);
 
@@ -124,7 +124,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
       { new: true }
     )
       .then(data => {
-        console.log('User updated', data);
+        // console.log('User updated', data);
         // returning each array element name, 'AWS', region, 'AWS/(instance)', Date
         message.returnValue = data.services.map((arr: string[]) => [
           arr[0],
@@ -139,7 +139,7 @@ ipcMain.on('addAwsApp', (message: IpcMainEvent, application: any) => {
       });
   } else {
     // if user is not logged in, should not have to pull info from settings.json file
-    console.log('current user is a guest, data will be saved locally...');
+    // console.log('current user is a guest, data will be saved locally...');
     // Retrieves file contents from settings.json
     const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
     const services = settings[currentUser].services;
@@ -180,14 +180,14 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
     //Find and return services listed under logged in user
     return User.findOne({ username: currentUser })
       .then(data => {
-        console.log('User found', data);
+        // console.log('User found', data);
         services = data.services;
         const dashboardList: string[][] = services.map((arr: string[]) => [...arr]);
         message.returnValue = dashboardList;
       })
 
       .catch(error => {
-        console.log(`checkUser failed : ${error}`);
+        // console.log(`checkUser failed : ${error}`);
       });
   }
 });
@@ -222,7 +222,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
     return User.findOne({ username: currentUser })
 
       .then(data => {
-        console.log('User found', data);
+        // console.log('User found', data);
         const service = data.services[index];
 
         // Delete service from services array in corresponding user's document in mongoDB
@@ -235,7 +235,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
         )
 
           .then(data => {
-            console.log('Service deleted', data);
+            // console.log('Service deleted', data);
             message.returnValue = data.services.map(arr => [...arr]);
           })
 
@@ -268,7 +268,7 @@ ipcMain.on('changeMode', async (message: IpcMainEvent, currMode: string) => {
     fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'));
   } else {
     try {
-      console.log('Should be in here when logged in');
+      // console.log('Should be in here when logged in');
       await User.findOneAndUpdate({ userName: currentUser }, { $set: { mode: currMode } });
     } catch (err) {
       console.log('Error in changeMode ', err);
@@ -289,13 +289,13 @@ ipcMain.handle(
   'addUser',
   (message: IpcMainEvent, user: { username: string; password: string; email: string }) => {
     const { username, password, email } = user;
-    console.log('in ipcMainhandle', user);
+    // console.log('in ipcMainhandle', user);
 
     // checks if username exist in DB, if not, addUser is invoked
     return User.findOne({ username: username })
 
       .then(data => {
-        console.log('User found', data);
+        // console.log('User found', data);
 
         if (data) {
           message.returnValue = false;
@@ -325,13 +325,13 @@ ipcMain.on('login', (message: IpcMainEvent, user: { username: string; password: 
   //Checks if user exists in DB
   return User.findOne({ username: username })
     .then(data => {
-      console.log(data.username, ' is being logged in...');
+      // console.log(data.username, ' is being logged in...');
 
       //Checks if user is found and password matches
       if (data !== null && bcrypt.compareSync(password, data.password)) {
-        console.log('Login was successful.');
-        console.log('returned data: ', data);
-        console.log('found data', data.mode);
+        // console.log('Login was successful.');
+        // console.log('returned data: ', data);
+        // console.log('found data', data.mode);
         currentUser = username;
 
         // returnValue being set to mode, returned as string.
