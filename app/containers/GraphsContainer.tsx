@@ -1,12 +1,11 @@
 /* eslint-disable no-bitwise */
 import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ApplicationContext } from '../context/ApplicationContext';
 import { HealthContext } from '../context/HealthContext';
 import { CommsContext } from '../context/CommsContext';
 import { DockerContext } from '../context/DockerContext';
 import { EventContext } from '../context/EventContext';
-import { QueryContext } from '../context/QueryContext';
 import Header from '../components/Header';
 import RequestTypesChart from '../charts/RequestTypesChart';
 import ResponseCodesChart from '../charts/ResponseCodesChart';
@@ -21,8 +20,9 @@ import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from '../components/Styling';
 import DockerHealthContainer from './DockerHealthContainer';
 
+import GraphNavBar from '../components/GraphNavBar';
+
 import '../stylesheets/GraphsContainer.scss';
-import { Link } from 'react-router-dom';
 import Inspect from './Inspect';
 
 interface Params {
@@ -31,20 +31,20 @@ interface Params {
 }
 
 const GraphsContainer: React.FC = React.memo(() => {
-  const navigate = useNavigate();
+
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
   const { intervalID, setIntervalID } = useContext(ApplicationContext);
-  const { servicesData, getSavedMetrics } = useContext(ApplicationContext);
-  const { fetchHealthData, setHealthData, services } = useContext(HealthContext);
+  const { getSavedMetrics } = useContext(ApplicationContext);
+  const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
   const { fetchEventData, setEventData } = useContext(EventContext);
   // const { fetchKafkaEventData, setKafkaEventData } = useContext(EventContext);
   // const { fetchKubernetesEventData, setKubernetesEventData } = useContext(EventContext);
-  const { fetchCommsData, commsData } = useContext(CommsContext);
-  const { selectedMetrics } = useContext(QueryContext);
+  const { fetchCommsData } = useContext(CommsContext);
+  // const { selectedMetrics } = useContext(QueryContext);
   const [chart, setChart] = useState<string>('all');
-  const [prevRoute, setPrevRoute] = useState<string>('');
+  // const [prevRoute, setPrevRoute] = useState<string>('');
   const { mode } = useContext(DashboardContext.DashboardContext);
   let [inspect, setInspect] = useState<boolean>(false);
 
@@ -94,14 +94,6 @@ const GraphsContainer: React.FC = React.memo(() => {
   //random variable to hold the light or dark mode of the display?..ok....sure
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
-  const routing = (route: string) => {
-    if (location.href.includes('communications')) {
-      if (prevRoute === '') navigate(`${servicesData[0].microservice}`);
-      else navigate(prevRoute);
-    }
-    setChart(route);
-  };
-
   const stringToColour = (string: string, recurses = 0) => {
     if (recurses > 20) return string;
     function hashString(str: string) {
@@ -128,96 +120,21 @@ const GraphsContainer: React.FC = React.memo(() => {
     return contrastYiq(string);
   };
 
-  const getHealthAndEventComponents = () => {
-    const buttonList: JSX.Element[] = [];
-    if (selectedMetrics) {
-      selectedMetrics.forEach((element, id) => {
-        const categoryName = Object.keys(element)[0];
-        let prefix;
-        if (categoryName === 'Event') {
-          prefix = 'event_';
-        } else if (categoryName === 'books' || categoryName === 'customers' || categoryName === 'frontend' || categoryName === 'orders'){
-          prefix = 'docker_';
-        } else {
-          prefix = 'health_';
-        }
-        buttonList.push(
-          <button
-            id={`${prefix}${categoryName}-button`}
-            className={chart === `${prefix}${categoryName}` ? 'selected' : undefined}
-            onClick={() => routing(`${prefix}${categoryName}`)}
-            key={`1-${id}`}
-          >
-            {categoryName}
-          </button>
-        );
-      });
-    }
-
-    return buttonList;
-  };
-
-  const HealthAndEventButtons: JSX.Element[] = getHealthAndEventComponents();
-
   return (
     <>
-      <nav id="navigationBar">
-        <button
-          className={chart === 'all' ? 'selected' : undefined}
-          id="all-button"
-          onClick={() => routing('all')}
-          key="0"
-        >
-          Metrics Query
-        </button>
-        {HealthAndEventButtons}
-        {dockerData.containername && (
-          <button
-            id="docker-button"
-            className={chart === 'docker' ? 'selected' : undefined}
-            onClick={() => routing('docker')}
-            key="2"
-          >
-            Docker
-          </button>
-        )}
-        {commsData.length > 0 && (
-          <button
-            id="communication-button"
-            className={chart === 'communications' ? 'selected' : undefined}
-            onClick={() => {
-              if (!location.href.includes('communications')) setPrevRoute(services.join(' '));
-              setChart('communications');
-            }}
-            key="3"
-          >
-            Communication
-          </button>
-        )}
-        <button
-          id="modify-metrics-button"
-          className={chart === 'modifyMetrics' ? 'selected' : undefined}
-          onClick={() => {
-            routing('modifyMetrics');
-          }}
-          key="4"
-        >
-          Modify Metrics
-        </button>
-        {/* <Link className="sidebar-link" to="/Inspect" id="Inspect" >
-          <SettingsIcon
-              style={{
-                WebkitBoxSizing: 'content-box',
-                boxShadow: 'none',
-                width: '35px',
-                height: '35px',
-              }}
-            />
-          &emsp;Inspect
-        </Link> */}
-        <button onClick={() => { setInspect(!inspect) }}>Inspect</button>
-      </nav>
-      <Header app={app} service={service} live={live} setLive={setLive} />
+      <GraphNavBar
+        chart={chart}
+        setChart={setChart}
+        dockerData={dockerData}
+        inspect={inspect}
+        setInspect={setInspect}
+      />
+      <Header 
+        app={app} 
+        service={service} 
+        live={live} 
+        setLive={setLive} 
+      />
       {inspect && <Inspect />}
       <div className="graphs-container">
         {chart === 'communications' ? (
