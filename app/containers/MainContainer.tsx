@@ -1,11 +1,11 @@
 import React, { useContext,useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import About from '../components/About';
+import About from '../components/About/About';
 import Contact from '../components/Contact';
 import Settings from '../components/Settings';
 import Occupied from '../components/Occupied/Occupied';
 import lightAndDark from '../components/Styling';
-import GraphsContainer from './GraphsContainer';
+import GraphsContainer from './GraphsContainer/GraphsContainer';
 import { DashboardContext } from '../context/DashboardContext';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
@@ -13,10 +13,11 @@ import AwsGraphsContainer from '../containers/AWSGraphsContainer';
 
 import '../stylesheets/MainContainer.scss';
 
-const MainContainer = React.memo(() => {
+const MainContainer = React.memo((props) => {
   const { mode, applications } = useContext(DashboardContext);
   const currentModeCSS = mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
   
+
   return (
     <>
       <div className="main-container" style={currentModeCSS}>

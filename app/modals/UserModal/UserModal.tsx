@@ -2,11 +2,11 @@
 import React, { useContext, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@material-ui/icons/Person';
-import { DashboardContext } from '../context/DashboardContext';
-import { guestUser } from '../context/helpers';
-import '../stylesheets/UserModal.scss';
+import { DashboardContext } from '../../context/DashboardContext';
+import { guestUser } from '../../context/helpers';
+import './UserModal.scss';
 import { Button } from '@material-ui/core';
-import { TModalSetter } from '../components/Occupied/types/Occupied';
+import { TModalSetter } from '../../components/Occupied/types/Occupied';
 
 const { ipcRenderer } = window.require('electron');
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Typography } from '@material-ui/core';
-import '../stylesheets/EnvModal.scss';
+import './EnvModal.scss';
 import { CloudQueue, Computer } from '@material-ui/icons';
-import { TModalSetter } from '../components/Occupied/types/Occupied';
+import { TModalSetter } from '../../components/Occupied/types/Occupied';
 
 const EnvModal: React.FC<TModalSetter> = React.memo(
   ({ setModal}) => {
