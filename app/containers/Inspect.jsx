@@ -48,7 +48,7 @@ const Inspect = () => {
             .then(r => r.text())
             .then(d3.csvParse)
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 const nodes = [], links = [];
                 data.forEach(({ size, path }) => {
                     const levels = path.split('/'),

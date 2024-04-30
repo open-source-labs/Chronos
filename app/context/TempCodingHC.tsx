@@ -15,21 +15,21 @@ const fetchHealthData = useCallback(async (serv) => {
                 let result: object[];
                 if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
                   result = JSON.parse(data);
-                  console.log('HealthContext.tsx line 68 result: ', result, 'service', service, 'Obj key', Object.keys(result[0])[0]);
+                  // console.log('HealthContext.tsx line 68 result: ', result, 'service', service, 'Obj key', Object.keys(result[0])[0]);
                   if (result && result.length && service === Object.keys(result[0])[0]) {
                     resolve(result[0]);
                   }
                 }
               });
             })
-          console.log('HealthContext.tsx line 75 newPromise: ', newPromise);
+          // console.log('HealthContext.tsx line 75 newPromise: ', newPromise);
           temp.push(newPromise);
           if (checkServicesComplete(temp, serv)) {
             setServices(serv);
             let transformedData: any = {};
-            console.log('original healthData before transformation: ', temp);
+            // console.log('original healthData before transformation: ', temp);
             transformedData = healthTransformer(temp);
-            console.log('healthData after tranformation: ', transformedData);
+            // console.log('healthData after tranformation: ', transformedData);
             setHealthData(transformedData);
           }
           } catch (err) {

@@ -44,7 +44,7 @@ const DashboardContextProvider = React.memo((props: any) => {
   // Initial user will always be the guest
   const [user, setUser] = useState<string>('guest');
   const [applications, setApplications] = useState<string[][]>([]);
-  console.log({applications})
+  // console.log({applications})
   const [mode, setMode] = useState<string>('light');
 
 
@@ -61,7 +61,7 @@ const DashboardContextProvider = React.memo((props: any) => {
       JSON.stringify([name, database, URI, description, typeOfService])
     );
     setApplications(result);
-    console.log('the current application that was added is : ', result);
+    // console.log('the current application that was added is : ', result);
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {
@@ -72,7 +72,7 @@ const DashboardContextProvider = React.memo((props: any) => {
       JSON.stringify([name, 'AWS', region, description, typeOfService, instance, accessKey, secretAccessKey, awsUrl])
     );
     setApplications(result);
-    console.log('the current application that was added is : ', result)
+    // console.log('the current application that was added is : ', result)
   }, []);
 
   const deleteApp = useCallback((index: number) => {

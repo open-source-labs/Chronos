@@ -72,7 +72,7 @@ class Chronos {
     if (database.type === 'MongoDB') {
       mongo.connect(this.config);
       mongo.services(this.config);
-      console.log('dockerized really? chronos.js LN 75', dockerized, this.config)
+      // console.log('dockerized really? chronos.js LN 75', dockerized, this.config)
       dockerized ? mongo.docker(this.config) : mongo.health(this.config);
       if (database.connection === 'REST') {
         return mongo.communications(this.config);
