@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import '../stylesheets/EnvModal.scss';
 import { CloudQueue, Computer } from '@material-ui/icons';
 import { TModalSetter } from '../components/Occupied/types/Occupied';
