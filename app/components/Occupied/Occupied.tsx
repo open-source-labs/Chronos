@@ -56,7 +56,6 @@ const Occupied = React.memo(() => {
     <div 
       className="dashboardArea"
     >
-
       <header className="mainHeader">
         <section 
           className="header" 

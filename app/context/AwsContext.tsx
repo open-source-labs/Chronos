@@ -23,6 +23,7 @@ interface AwsAppInfo {
 }
 
 const AwsContextProvider: React.FC<Props> = React.memo(({ children }) => {
+
   const [awsData, setAwsData] = useState<AwsData>({ CPUUtilization: [], NetworkIn: [], NetworkOut: [], DiskReadBytes: [] })
   const [awsEcsData, setAwsEcsData] = useState<any>({});
   const [awsEksData, setAwsEksData] = useState<any>({});

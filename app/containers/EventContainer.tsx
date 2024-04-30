@@ -6,10 +6,10 @@ import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
 import GrafanaEventChart from '../charts/GrafanaEventChart';
+import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
 
 interface EventContainerProps {
   sizing: string;
-  colourGenerator: Function;
 }
 
 interface Params {
@@ -32,7 +32,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
   const { eventData } = useContext(EventContext);
   const { selectedMetrics } = useContext(QueryContext);
   const { service } = useParams<keyof Params>() as Params;
-  const { sizing, colourGenerator } = props;
+  const { sizing } = props;
   // eventChartsArr contains all charts of all metrics
   const [eventChartsArr, setEventChartsArr] = useState<JSX.Element[]>([]);
   const [currIndex, setCurrIndex] = useState(0);
