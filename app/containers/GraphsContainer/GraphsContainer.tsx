@@ -6,7 +6,7 @@ import { HealthContext } from '../../context/HealthContext';
 import { CommsContext } from '../../context/CommsContext';
 import { DockerContext } from '../../context/DockerContext';
 import { EventContext } from '../../context/EventContext';
-import Header from '../../components/Header';
+import Header from '../../components/Header/Header';
 import RequestTypesChart from '../../charts/RequestTypesChart';
 import ResponseCodesChart from '../../charts/ResponseCodesChart';
 import TrafficChart from '../../charts/TrafficChart';
