@@ -130,30 +130,27 @@ const GraphsContainer: React.FC = React.memo(() => {
                 <TransferColumns />
               </div>
             )}
-            {chart.startsWith('health_') && (
+            {chart.startsWith('health_') ?
               <HealthContainer
                 sizing="solo"
                 category={chart.substring(7)}
               />
-            )}
-            {chart.startsWith('event_') && (
-              <>
-                <EventContainer 
-                  sizing="solo" 
-                />
-              </>
-
-            )}
-           {/* docker charts */}
-            {chart.startsWith('docker_') && (
-              <>
+              :
+            chart.startsWith('event_') ?
+              <EventContainer 
+                sizing="solo" 
+              />
+              :
+            chart.startsWith('docker_') ?
+              
                 <DockerHealthContainer 
                   sizing="solo"
                   category={chart.substring(7)} 
                 />
+              :
+              <>
               </>
-
-            )}
+              }
             {chart === 'modifyMetrics' && <ModifyMetrics />}
           </div>
         )}
