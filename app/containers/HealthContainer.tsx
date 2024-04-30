@@ -3,12 +3,11 @@ import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import HealthChart from '../charts/HealthChart';
 import { useParams } from 'react-router-dom';
+import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
 
 interface HealthContainerProps {
   sizing: string;
-  colourGenerator: Function;
   category: string;
-  currentService: string;
 }
 
 interface Params {
@@ -24,7 +23,7 @@ const HealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
   const { selectedMetrics } = useContext(QueryContext);
   const { service } = useParams<keyof Params>() as Params;
   const [healthChartsArr, setHealthChartsArr] = useState<JSX.Element[]>([]);
-  const { category, sizing, colourGenerator } = props;
+  const { category, sizing } = props;
   /**
    * This function filters the selectedMetrics array down to only metrics that match the category of this instance of HealthContainer.
    * Once that has finished, it then filters the healthData down to the current category and the filteredMetrics.

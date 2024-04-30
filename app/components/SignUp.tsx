@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/Home.scss';
+import '../';
 
 const { ipcRenderer } = window.require('electron');
 
