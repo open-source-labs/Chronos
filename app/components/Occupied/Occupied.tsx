@@ -97,7 +97,7 @@ const Occupied = React.memo(() => {
             return (
               <Link 
                 to={services.length > 0 ? `/applications/example/${services.join(' ')}` : '#'}
-              >
+               className=''>
                 <ApplicationsCard
                   key={crypto.randomUUID()}
                   application={application}

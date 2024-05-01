@@ -6,7 +6,9 @@ import { EventContext } from '../context/EventContext';
 import { DataGrid } from '@material-ui/data-grid';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
+import SearchBar from './SearchBar/SearchBar';
+
 
 interface Params {
   service: string;
@@ -26,6 +28,7 @@ const TransferColumns = React.memo(() => {
   const { eventData } = useContext(EventContext);
   const { service } = useParams<keyof Params>() as Params;
   const { mode } = useContext(DashboardContext.DashboardContext);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
@@ -197,6 +200,7 @@ const TransferColumns = React.memo(() => {
       </div>
       <div id="transferTest">
         <div style={{ height: '500px', width: '100%' }}>
+        
           <DataGrid
             style={currentMode}
             rows={rows}
@@ -212,6 +216,7 @@ const TransferColumns = React.memo(() => {
               setTargetKeys(metrics);
             }}
           />
+          
         </div>
         {selectedRows.length > 0 && (
           <h3 style={{ marginTop: '20px', color: currentMode.color }}>Selected Rows:</h3>

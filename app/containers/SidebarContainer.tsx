@@ -14,7 +14,7 @@ import { DashboardContext } from '../context/DashboardContext';
 const SidebarContainer = React.memo(() => {
 
   // Extract invervalID from ApplicationContext. Initival value: intervalID = null
-  const { intervalID,setExample } = useContext(ApplicationContext);
+  const { intervalID } = useContext(ApplicationContext);
   // Extract isLoading and setLoading state from AwsContext. Initial value: isLoading = true
   const { isLoading, setLoadingState } = useContext(AwsContext);
   // clear interval and set loading state to true when leaving graph containers
@@ -29,9 +29,6 @@ const SidebarContainer = React.memo(() => {
   };
 
   const handleExample = () => {
-    
-    setExample(true)
-
     const fields = {
       typeOfService: 'Microservices',
       database: 'MongoDB',

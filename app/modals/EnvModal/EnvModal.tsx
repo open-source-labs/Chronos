@@ -9,6 +9,7 @@ const EnvModal: React.FC<TModalSetter> = React.memo(
 
     return (
       <div className="add-container">
+
         <div className="card" id="card-env">
           <button
             className="env-button"
@@ -19,6 +20,8 @@ const EnvModal: React.FC<TModalSetter> = React.memo(
             </Typography>
             <Typography>Cloud-Based</Typography>
           </button>
+
+          
           <button
             className="env-button2"
             onClick={() => setModal({isOpen:true,type:'addModal'})}

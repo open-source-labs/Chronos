@@ -26,17 +26,17 @@ const UserModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
           <h2>Hello {user}</h2> <PersonIcon className="navIcon" id="personIcon" />
         </div>
         {user === 'guest' ?
-        <>
-          <Button variant='contained' color='primary' onClick={() => navigate('/login')}>Log In</Button>
-          <br></br><br></br>
-          <Button variant="outlined" color='primary' onClick={() => navigate('/signup')}>Sign Up</Button>
-          <br></br><br></br>
-        </>
-        :
-        <>
-          <Button variant='outlined' color='primary' onClick={handleSignout}>Log Out</Button>
-          <br></br><br></br>
-        </>
+          <>
+            <Button variant='contained' color='primary' onClick={() => navigate('/login')}>Log In</Button>
+            <br></br><br></br>
+            <Button variant="outlined" color='primary' onClick={() => navigate('/signup')}>Sign Up</Button>
+            <br></br><br></br>
+          </>
+          :
+          <>
+            <Button variant='outlined' color='primary' onClick={handleSignout}>Log Out</Button>
+            <br></br><br></br>
+          </>
 
         }
         <Button 
