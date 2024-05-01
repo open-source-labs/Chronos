@@ -20,6 +20,9 @@ export const ApplicationContext = React.createContext<any>(null);
 
 const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props => {
   const children = props.children;
+  const [ example,setExample ] = useState(false)
+  const [chart, setChart] = useState<string>('all');
+
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
@@ -84,7 +87,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       data.forEach(el => {
         store[el.metric] = el;
       });
-      console.log({store})
+      // console.log({store})
       // console.log('result from getSavedMetrics is: ', store);
       setSavedMetrics(store);
     });
@@ -106,6 +109,10 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
         setAppIndex,
         intervalID,
         setIntervalID,
+        example,
+        setExample,
+        chart,
+        setChart
       }}
     >
       {children}
