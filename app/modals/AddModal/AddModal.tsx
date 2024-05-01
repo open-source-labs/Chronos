@@ -5,7 +5,7 @@ import './AddModal.scss';
 
 import { TModalSetter } from '../../components/Occupied/types/Occupied';
 import ServiceDBType from './ServiceDBType';
-import ServicesDescription from'./ServicesDescription';
+import ServicesDescription from './ServicesDescription';
 
 interface IFields {
   typeOfService: string;
