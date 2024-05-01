@@ -34,7 +34,7 @@ const GraphsContainer: React.FC = React.memo(() => {
 
   const { app, service } = useParams<keyof Params>() as Params;
   const [ live, setLive ] = useState<boolean>(false);
-  const { intervalID, setIntervalID } = useContext(ApplicationContext);
+  const { intervalID, setIntervalID,example,chart,setChart } = useContext(ApplicationContext);
   const { getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
@@ -42,7 +42,7 @@ const GraphsContainer: React.FC = React.memo(() => {
   // const { fetchKafkaEventData, setKafkaEventData } = useContext(EventContext);
   // const { fetchKubernetesEventData, setKubernetesEventData } = useContext(EventContext);
   const { fetchCommsData } = useContext(CommsContext);
-  const [chart, setChart] = useState<string>('all');
+  // const [chart, setChart] = useState<string>('all');
   const { mode } = useContext(DashboardContext.DashboardContext);
   let [inspect, setInspect] = useState<boolean>(false);
 
