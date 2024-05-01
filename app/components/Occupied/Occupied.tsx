@@ -34,10 +34,11 @@ import DashboardIcons from '../DashboardIcons/DashboardIcons';
 import ApplicationsCard from '../ApplicationsCard/ApplicationsCard';
 
 import { useStylesLight, useStylesDark } from './helpers/muiHelper'
+import { Link } from 'react-router-dom';
 
 //v10: Memoized function, without any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
-  const { setServicesData, app } = useContext(ApplicationContext);
+  const { setServicesData, app,example } = useContext(ApplicationContext);
   const { user, applications, getApplications, mode } = useContext(DashboardContext);
   const [ modal,setModal ] = useState({isOpen:false,type:''})
   const { appIndex } = useContext(ApplicationContext);
@@ -90,15 +91,23 @@ const Occupied = React.memo(() => {
 
         {applications
           .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
-          .map((application: string[], i: any) => (
-            <ApplicationsCard
-              key={crypto.randomUUID()}
-              application={application}
-              i={i}
-              setModal={setModal}
-              classes={classes}
-            />
-        ))}
+          .map((application: string[], i: any) => {
+            const services = ['auth','client','event-bus','items','inventory','orders']
+            console.log({app,services})
+            return (
+              <Link 
+                to={services.length > 0 ? `/applications/example/${services.join(' ')}` : '#'}
+              >
+                <ApplicationsCard
+                  key={crypto.randomUUID()}
+                  application={application}
+                  i={i}
+                  setModal={setModal}
+                  classes={classes}
+                />
+            </Link>
+            )
+          })}
 
         <Modal 
           open={modal.isOpen} 
