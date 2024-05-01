@@ -33,7 +33,6 @@ interface Params {
 const GraphsContainer: React.FC = React.memo(() => {
 
   const { app, service } = useParams<keyof Params>() as Params;
-  // console.log({app,service})
   const [ live, setLive ] = useState<boolean>(false);
   const { intervalID, setIntervalID } = useContext(ApplicationContext);
   const { getSavedMetrics } = useContext(ApplicationContext);
@@ -48,7 +47,6 @@ const GraphsContainer: React.FC = React.memo(() => {
   let [inspect, setInspect] = useState<boolean>(false);
 
   useEffect(() => {
-    // console.log({service})
     const serviceArray = service.split(' ');
     // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it  not work correctly, so it has been omitted
     const healthServiceArray = serviceArray.filter(
@@ -71,16 +69,15 @@ const GraphsContainer: React.FC = React.memo(() => {
       );
     } else {
       if (intervalID) clearInterval(intervalID);
-      //this function fetches all the server data from our database
       fetchCommsData(app, live);
       fetchHealthData(healthServiceArray);
-      // if (service.includes('kafkametrics')) {
-      //   fetchEventData('kafkametrics');
-      // }
-      // // JJ-ADDITION
-      // if (service.includes('kubernetesmetrics')) {
-      //   fetchEventData('kubernetesmetrics');
-      // }
+      if (service.includes('kafkametrics')) {
+        fetchEventData('kafkametrics');
+      }
+      // JJ-ADDITION
+      if (service.includes('kubernetesmetrics')) {
+        fetchEventData('kubernetesmetrics');
+      }
       getSavedMetrics();
     }
 

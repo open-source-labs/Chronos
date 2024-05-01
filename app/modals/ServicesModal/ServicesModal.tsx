@@ -53,26 +53,12 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
             <h2>{app}</h2>
             <p>Select a server to monitor</p>
           </div>
-          <ServicesLink servicesData={servicesData} services={services} setServices={setServices}/>
-          {/* <div className="services-links">
-            {servicesData.map((service: IService, index: number) => (
-              <div
-                key={`${index}servicesData`}
-                className={services.includes(service.microservice) ? 'link selected' : 'link'}
-                onClick={() => toggleService(service.microservice)}
-              >
-                {service.microservice}
-              </div>
-            ))}
-            <Link id='selectLink'
-              className="router link"
-              to={services.length > 0 ? `/applications/${app}/${services.join(' ')}` : '#'}
-            >
-              {services.length === 0 && 'Select Services'}
-              {services.length === 1 && 'Display Service'}
-              {services.length > 1 && 'Compare Services'}
-            </Link>
-          </div> */}
+          <ServicesLink 
+            app={app} 
+            servicesData={servicesData} 
+            services={services} 
+            setServices={setServices}
+          />
         </>
       )}
     </div>
