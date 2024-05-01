@@ -31,7 +31,7 @@ const SidebarContainer = React.memo(() => {
   const handleExample = () => {
     
     setExample(true)
-
+    console.log('test')
     const fields = {
       typeOfService: 'Microservices',
       database: 'MongoDB',
