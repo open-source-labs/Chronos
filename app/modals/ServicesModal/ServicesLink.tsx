@@ -20,24 +20,24 @@ const ServicesLink = (props) => {
   return (
 
     <div className="services-links">
-            {props.servicesData.map((service: IService, index: number) => (
-              <div
-                key={`${index}servicesData`}
-                className={props.services.includes(service.microservice) ? 'link selected' : 'link'}
-                onClick={() => toggleService(service.microservice)}
-              >
-                {service.microservice}
-              </div>
-            ))}
-            <Link id='selectLink'
-              className="router link"
-              to={props.services.length > 0 ? `/applications/${props.app}/${props.services.join(' ')}` : '#'}
-            >
-              {props.services.length === 0 && 'Select Services'}
-              {props.services.length === 1 && 'Display Service'}
-              {props.services.length > 1 && 'Compare Services'}
-            </Link>
-          </div>
+      {props.servicesData.map((service: IService, index: number) => (
+        <div
+          key={`${index}servicesData`}
+          className={props.services.includes(service.microservice) ? 'link selected' : 'link'}
+          onClick={() => toggleService(service.microservice)}
+        >
+          {service.microservice}
+        </div>
+      ))}
+      <Link id='selectLink'
+        className="router link"
+        to={props.services.length > 0 ? `/applications/${props.app}/${props.services.join(' ')}` : '#'}
+      >
+        {props.services.length === 0 && 'Select Services'}
+        {props.services.length === 1 && 'Display Service'}
+        {props.services.length > 1 && 'Compare Services'}
+      </Link>
+    </div>
   )
 }
 
