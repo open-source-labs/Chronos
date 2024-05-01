@@ -55,7 +55,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
    */
 
   const fetchHealthData = useCallback(async servers => {
-    console.log({servers})
+    // console.log({servers})
     ipcRenderer.removeAllListeners('healthResponse');
 
     let temp: HealthDataObject[] = [];
@@ -67,7 +67,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
               ipcRenderer.send('healthRequest', `${service}`);
               ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
                 let result: object[];
-                console.log({data})
+                // console.log({data})
                 if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
                   result = JSON.parse(data);
                   // console.log('HealthContext.tsx line 68 result: ', result, 'service', service, 'Obj key', Object.keys(result[0])[0]);

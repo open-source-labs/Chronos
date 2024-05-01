@@ -92,7 +92,7 @@ const AwsGraphsContainer: React.FC = React.memo(props => {
     }
   };
  
-  console.log(awsUrl)
+  // console.log(awsUrl)
 
   return (
     <div className="AWS-container">
