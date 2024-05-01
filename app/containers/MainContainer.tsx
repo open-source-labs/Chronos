@@ -2,7 +2,7 @@ import React, { useContext,useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import About from '../components/About/About';
 import Contact from '../components/Contact/Contact';
-import Settings from '@material-ui/icons/Settings';
+import Settings from '../components/Setting/Setting';
 import Occupied from '../components/Occupied/Occupied';
 import lightAndDark from '../components/Styling';
 import GraphsContainer from './GraphsContainer/GraphsContainer';
