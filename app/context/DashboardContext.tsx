@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
+import { ApplicationContext } from './ApplicationContext';
 const { ipcRenderer } = window.require('electron');
 
 interface IFields {
@@ -27,6 +28,7 @@ interface AwsFields {
 
 export const DashboardContext = createContext<any>(null);
 
+
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
  * @property  {Array} applications List of all applications, their description, database type and creation date
@@ -42,6 +44,7 @@ const DashboardContextProvider = React.memo((props: any) => {
   const children = props.children;
 
   // Initial user will always be the guest
+
   const [user, setUser] = useState<string>('guest');
   const [applications, setApplications] = useState<string[][]>([]);
   // console.log({applications})
@@ -61,6 +64,7 @@ const DashboardContextProvider = React.memo((props: any) => {
       JSON.stringify([name, database, URI, description, typeOfService])
     );
     setApplications(result);
+    console.log({result})
     // console.log('the current application that was added is : ', result);
   }, []);
 

@@ -16,7 +16,7 @@ import '../stylesheets/MainContainer.scss';
 const MainContainer = React.memo((props) => {
   const { mode, applications } = useContext(DashboardContext);
   const currentModeCSS = mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
-  
+
 
   return (
     <>

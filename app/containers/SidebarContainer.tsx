@@ -39,6 +39,7 @@ const SidebarContainer = React.memo(() => {
       name: 'Example',
       description: 'Microservices'
     }
+
     addApp(fields)
   }
 
