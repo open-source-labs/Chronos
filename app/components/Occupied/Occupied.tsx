@@ -91,8 +91,10 @@ const Occupied = React.memo(() => {
         }
 
         {applications
-          .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
+          
+          // .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
           .map((application: string[], i: any) => {
+
             const description = application[3]
             if(!example && description === "Example") return <></>
             return (
