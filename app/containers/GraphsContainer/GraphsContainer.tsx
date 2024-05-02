@@ -22,7 +22,7 @@ import DockerHealthContainer from '../DockerHealthContainer';
 
 import GraphNavBar from '../../components/GraphNavBar/GraphNavBar';
 
-import '../../stylesheets/GraphsContainer.scss';
+import './styles.scss';
 import Inspect from '../Inspect';
 
 interface Params {

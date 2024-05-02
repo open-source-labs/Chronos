@@ -9,7 +9,7 @@ import GraphsContainer from './GraphsContainer/GraphsContainer';
 import { DashboardContext } from '../context/DashboardContext';
 import SignUp from '../components/SignUp';
 import Login from '../components/Login';
-import AwsGraphsContainer from '../containers/AWSGraphsContainer';
+import AwsGraphsContainer from './AwsGraphsContainer/AwsGraphsContainer';
 
 import '../stylesheets/MainContainer.scss';
 
