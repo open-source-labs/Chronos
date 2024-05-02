@@ -32,34 +32,39 @@ const SidebarContainer = React.memo(() => {
 
     setExample(true)
 
-    // const examplesData = {
-    //   microServicesFields: {
-    //     typeOfService: 'Microservices',
-    //     database: 'MongoDB',
-    //     URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-    //     name: 'Microservices',
-    //     description: 'Example'
-    //   },
-      
-    //   ,
-    //   dockerData: {
-    //     typeOfService: 'Docker',
-    //     database: 'MongoDB',
-    //     URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-    //     name: 'Docker',
-    //     description: 'Example'
-    //   }
-    // }
-    
-    const fields = {
-      typeOfService: 'Microservices',
-      database: 'MongoDB',
-      URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-      name: 'Microservices',
-      description: 'Example'
+    const examplesData = {
+      microServicesMongoFields: {
+        typeOfService: 'Microservices',
+        database: 'MongoDB',
+        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
+        name: 'Microservices-Mongo',
+        description: 'Mongo Microservices Example'
+      },
+      microServicesSQLFields: {
+        typeOfService: 'Microservices',
+        database: 'SQL',
+        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
+        name: 'Microservices-SQL',
+        description: 'SQL Microservices Example'
+      }
+      ,
+      dockerMongoData: {
+        typeOfService: 'Docker',
+        database: 'MongoDB',
+        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
+        name: 'Docker-Mongo',
+        description: 'Docker Example'
+      },
+      dockerSQLData: {
+        typeOfService: 'Docker',
+        database: 'SQL',
+        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
+        name: 'Docker-SQL',
+        description: 'Docker Example'
+      }
     }
 
-    addApp(fields)
+    addApp(examplesData)
   }
 
   const handleExitExample = () => {

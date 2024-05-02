@@ -57,15 +57,19 @@ const DashboardContextProvider = React.memo((props: any) => {
   }, []);
 
   const addApp = useCallback((fields: IFields) => {
-    const { typeOfService, database, URI, name, description } = fields;
     
-    const result = ipcRenderer.sendSync(
-      'addApp',
-      JSON.stringify([name, database, URI, description, typeOfService])
-    );
-    setApplications(result);
-    // console.log({result})
-    // console.log('the current application that was added is : ', result);
+    for(let field of Object.keys(fields)) {
+      const { typeOfService, database, URI, name, description } = fields[field];
+      const result = ipcRenderer.sendSync(
+        'addApp',
+        JSON.stringify([name, database, URI, description, typeOfService])
+      );
+      setApplications(result);
+      // console.log({result})
+      // console.log('the current application that was added is : ', result);
+    }
+    
+    
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {

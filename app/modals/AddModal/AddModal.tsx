@@ -39,7 +39,7 @@ const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
     event.preventDefault();
     // const newApp = [name, database, URI, description, typeOfService];
     // setApplications(prev => [...prev, ...newApp])
-    addApp(fields);
+    addApp({fields});
     setModal({isOpen:false,type:''})
   };
 
