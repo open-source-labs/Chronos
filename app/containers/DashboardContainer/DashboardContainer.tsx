@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
-import MainContainer from './MainContainer';
-import SidebarContainer from './SidebarContainer';
-import HealthContextProvider from '../context/HealthContext';
-import CommsContextProvider from '../context/CommsContext';
-import ApplicationContextProvider from '../context/ApplicationContext';
-import DashboardContextProvider from '../context/DashboardContext';
-import DockerContextProvider from '../context/DockerContext';
-import EventContextProvider from '../context/EventContext';
-import QueryContextProvider from '../context/QueryContext';
-import AwsContextProvider from '../context/AwsContext';
-import '../stylesheets/Dashboard.scss';
+import MainContainer from '../MainContainer';
+import SidebarContainer from '../SidebarContainer';
+import HealthContextProvider from '../../context/HealthContext';
+import CommsContextProvider from '../../context/CommsContext';
+import ApplicationContextProvider from '../../context/ApplicationContext';
+import DashboardContextProvider from '../../context/DashboardContext';
+import DockerContextProvider from '../../context/DockerContext';
+import EventContextProvider from '../../context/EventContext';
+import QueryContextProvider from '../../context/QueryContext';
+import AwsContextProvider from '../../context/AwsContext';
+import './styles.scss';
 
 const DashboardContainer = React.memo(() => {
 

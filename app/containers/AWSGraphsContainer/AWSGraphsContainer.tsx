@@ -12,7 +12,8 @@ import EKSGraphsComponent from './EKSGraphsComponent';
 const AwsGraphsContainer = () => {
   const { app, appIndex, setIntervalID, intervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
-  const { awsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsEksData, fetchAwsAppInfo } = useContext(AwsContext);
+  const { awsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsEksData, fetchAwsAppInfo } =
+    useContext(AwsContext);
   const { state } = useLocation();
   const { typeOfService } = state;
   const [awsLive, setAwsLive] = React.useState(false);
@@ -43,7 +44,18 @@ const AwsGraphsContainer = () => {
         clearInterval(intervalID);
       }
     };
-  }, [awsLive, user, appIndex, typeOfService, fetchAwsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsEksData, intervalID, setIntervalID]);
+  }, [
+    awsLive,
+    user,
+    appIndex,
+    typeOfService,
+    fetchAwsAppInfo,
+    fetchAwsData,
+    fetchAwsEcsData,
+    fetchAwsEksData,
+    intervalID,
+    setIntervalID,
+  ]);
 
   return (
     <div className="AWS-container">
@@ -54,7 +66,9 @@ const AwsGraphsContainer = () => {
           {awsLive ? 'Stop Live Update' : 'Start Live Update'}
         </button>
       </div>
-      {typeOfService === 'AWS/ECS' && <ECSGraphsComponent region={awsAppInfo.region} typeOfService={typeOfService} />}
+      {typeOfService === 'AWS/ECS' && (
+        <ECSGraphsComponent region={awsAppInfo.region} typeOfService={typeOfService} />
+      )}
       {typeOfService === 'AWS/EC2' && <EC2GraphsComponent />}
       {typeOfService === 'AWS/EKS' && <EKSGraphsComponent awsEksData={awsAppInfo.awsUrl} />}
     </div>
