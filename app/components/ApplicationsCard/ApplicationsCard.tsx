@@ -31,6 +31,7 @@ const ApplicationsCard = (props) => {
     selectedService: string,
     i: number
   ) => {
+    const services = ['auth','client','event-bus','items','inventory','orders']
     //delRef refers to the delete button
     if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
       if (
@@ -50,6 +51,7 @@ const ApplicationsCard = (props) => {
         setChart('communications')
 
         connectToDB(user, i, app, dbURI, dbType)
+        navigate(`/applications/example/${services.join(' ')}`)
       }
       else {
         setAppIndex(i);

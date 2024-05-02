@@ -38,7 +38,7 @@ import { Link } from 'react-router-dom';
 
 //v10: Memoized function, without any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
-  const { setServicesData, app,example } = useContext(ApplicationContext);
+  const { setServicesData, app, example } = useContext(ApplicationContext);
   const { user, applications, getApplications, mode } = useContext(DashboardContext);
   const [ modal,setModal ] = useState({isOpen:false,type:''})
   const { appIndex } = useContext(ApplicationContext);
@@ -74,7 +74,7 @@ const Occupied = React.memo(() => {
       <div 
         className="cardContainer"
       >
-
+        {!example &&
         <div 
           className="card" 
           id="card-add"
@@ -88,26 +88,22 @@ const Occupied = React.memo(() => {
             />
           </Button>
         </div>
+        }
 
         {applications
           .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
           .map((application: string[], i: any) => {
-            const services = ['auth','client','event-bus','items','inventory','orders']
-            console.log({app,services})
+            const description = application[3]
+            if(!example && description === "Example") return <></>
             return (
-              <Link 
-                to={services.length > 0 ? `/applications/example/${services.join(' ')}` : '#'}
-               className=''>
-                <ApplicationsCard
-                  key={crypto.randomUUID()}
-                  application={application}
-                  i={i}
-                  setModal={setModal}
-                  classes={classes}
-                />
-            </Link>
-            )
-          })}
+              <ApplicationsCard
+                key={crypto.randomUUID()}
+                application={application}
+                i={i}
+                setModal={setModal}
+                classes={classes}
+              />
+            )})}
 
         <Modal 
           open={modal.isOpen} 

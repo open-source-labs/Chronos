@@ -64,7 +64,7 @@ const DashboardContextProvider = React.memo((props: any) => {
       JSON.stringify([name, database, URI, description, typeOfService])
     );
     setApplications(result);
-    console.log({result})
+    // console.log({result})
     // console.log('the current application that was added is : ', result);
   }, []);
 
