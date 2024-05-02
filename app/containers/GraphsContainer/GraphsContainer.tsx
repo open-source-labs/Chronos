@@ -15,7 +15,7 @@ import LogsTable from '../../charts/LogsTable';
 import EventContainer from '../EventContainer';
 import TransferColumns from '../../components/TransferColumns';
 import HealthContainer from '../HealthContainer';
-import ModifyMetrics from '../ModifyMetricsContainer';
+import ModifyMetrics from '../ModifyMetricsContainer/ModifyMetricsContainer';
 import * as DashboardContext from '../../context/DashboardContext';
 import lightAndDark from '../../components/Styling';
 import DockerHealthContainer from '../DockerHealthContainer';
@@ -31,10 +31,9 @@ interface Params {
 }
 
 const GraphsContainer: React.FC = React.memo(() => {
-
   const { app, service } = useParams<keyof Params>() as Params;
-  const [ live, setLive ] = useState<boolean>(false);
-  const { intervalID, setIntervalID,example,chart,setChart } = useContext(ApplicationContext);
+  const [live, setLive] = useState<boolean>(false);
+  const { intervalID, setIntervalID, example, chart, setChart } = useContext(ApplicationContext);
   const { getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
@@ -94,7 +93,6 @@ const GraphsContainer: React.FC = React.memo(() => {
 
   return (
     <>
-
       <GraphNavBar
         chart={chart}
         setChart={setChart}
@@ -102,15 +100,10 @@ const GraphsContainer: React.FC = React.memo(() => {
         inspect={inspect}
         setInspect={setInspect}
       />
-      <Header
-        app={app} 
-        service={service} 
-        live={live} 
-        setLive={setLive} 
-      />
+      <Header app={app} service={service} live={live} setLive={setLive} />
 
       {inspect && <Inspect />}
-      
+
       <div className="graphs-container">
         {chart === 'communications' ? (
           <div className="graphs">
@@ -128,31 +121,16 @@ const GraphsContainer: React.FC = React.memo(() => {
                 <TransferColumns />
               </div>
             )}
-            {
-            chart.startsWith('health_') ?
-              <HealthContainer
-                sizing="solo"
-                category={chart.substring(7)}
-              />
-              :
-            chart.startsWith('event_') ?
-              <EventContainer 
-                sizing="solo" 
-              />
-              :
-            chart.startsWith('docker_') ?
-              
-              <DockerHealthContainer 
-                sizing="solo"
-                category={chart.substring(7)} 
-              />
-              :
+            {chart.startsWith('health_') ? (
+              <HealthContainer sizing="solo" category={chart.substring(7)} />
+            ) : chart.startsWith('event_') ? (
+              <EventContainer sizing="solo" />
+            ) : chart.startsWith('docker_') ? (
+              <DockerHealthContainer sizing="solo" category={chart.substring(7)} />
+            ) : (
               <></>
-              }
-            {
-            chart === 'modifyMetrics' && 
-              <ModifyMetrics />
-            }
+            )}
+            {chart === 'modifyMetrics' && <ModifyMetrics />}
           </div>
         )}
       </div>

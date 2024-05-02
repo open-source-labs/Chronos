@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
-import MainContainer from '../MainContainer';
+import MainContainer from '../MainContainer/MainContainer';
 import SidebarContainer from '../SidebarContainer';
 import HealthContextProvider from '../../context/HealthContext';
 import CommsContextProvider from '../../context/CommsContext';
@@ -13,7 +13,6 @@ import AwsContextProvider from '../../context/AwsContext';
 import './styles.scss';
 
 const DashboardContainer = React.memo(() => {
-
   const [visible, setVisible] = useState(false);
   /**
    * When DashBoard Container first mounted, visible is default to false, so that the Splash component can be stay visible.
@@ -42,7 +41,7 @@ const DashboardContainer = React.memo(() => {
                         <QueryContextProvider>
                           <AwsContextProvider>
                             <SidebarContainer />
-                            <MainContainer/>
+                            <MainContainer />
                           </AwsContextProvider>
                         </QueryContextProvider>
                       </EventContextProvider>
