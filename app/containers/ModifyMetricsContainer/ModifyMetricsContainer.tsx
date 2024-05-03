@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { JsxElement } from 'typescript';
-import { ApplicationContext } from '../context/ApplicationContext';
-import * as DashboardContext from '../context/DashboardContext';
-import lightAndDark from '../components/Styling';
-import '../stylesheets/ModifyMetrics.scss';
+import { ApplicationContext } from '../../context/ApplicationContext';
+import * as DashboardContext from '../../context/DashboardContext';
+import lightAndDark from '../../components/Styling';
+import './styles.scss';
 import { Button } from '@material-ui/core';
 const { ipcRenderer } = window.require('electron');
 
@@ -40,7 +40,7 @@ const MetricsContainer: React.FC = React.memo(props => {
     // ipcRenderer.on('updateResponse')
   };
 
-  /** 
+  /**
    * @desc Toggle functionality to deselect and select all metrics.
    */
   const toggleCheckbox = () => {
