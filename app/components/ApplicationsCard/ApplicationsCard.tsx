@@ -79,11 +79,6 @@ const ApplicationsCard = (props) => {
       >
         <div className="databaseIconContainer">
           <div className="databaseIconHeader">
-            {/* {application[1] === 'SQL' ? (
-              <img className="databaseIcon" alt="SQL" />
-            ) : (
-              <img className="databaseIcon" alt="MongoDB" />
-            )} */}
           </div>
         </div>
 

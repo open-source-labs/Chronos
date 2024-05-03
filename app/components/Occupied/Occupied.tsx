@@ -34,7 +34,6 @@ import DashboardIcons from '../DashboardIcons/DashboardIcons';
 import ApplicationsCard from '../ApplicationsCard/ApplicationsCard';
 
 import { useStylesLight, useStylesDark } from './helpers/muiHelper'
-import { Link } from 'react-router-dom';
 
 //v10: Memoized function, without any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
@@ -91,12 +90,12 @@ const Occupied = React.memo(() => {
         }
 
         {applications
-          
-          // .filter((db: any) => db[0].toLowerCase().includes(searchTerm.toLowerCase()))
           .map((application: string[], i: any) => {
-
             const description = application[3]
-            if(!example && description === "Example") return <></>
+            const cardName = application[0]
+            const isFiltered = cardName.toLowerCase().includes(searchTerm.toLowerCase())
+
+            if((!example && description === "Example") || !isFiltered) return <></>
             return (
               <ApplicationsCard
                 key={crypto.randomUUID()}
