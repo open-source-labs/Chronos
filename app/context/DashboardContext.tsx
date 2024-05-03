@@ -47,16 +47,15 @@ const DashboardContextProvider = React.memo((props: any) => {
 
   const [user, setUser] = useState<string>('guest');
   const [applications, setApplications] = useState<string[][]>([]);
-  // console.log({applications})
+  console.log({applications})
   const [mode, setMode] = useState<string>('light');
-
 
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
   }, []);
 
-  const addApp = useCallback((fields: IFields) => {
+  const addApp = useCallback((fields: any) => {
     
     for(let field of Object.keys(fields)) {
       const { typeOfService, database, URI, name, description } = fields[field];
@@ -65,8 +64,6 @@ const DashboardContextProvider = React.memo((props: any) => {
         JSON.stringify([name, database, URI, description, typeOfService])
       );
       setApplications(result);
-      // console.log({result})
-      // console.log('the current application that was added is : ', result);
     }
     
     

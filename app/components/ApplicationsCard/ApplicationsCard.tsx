@@ -26,27 +26,23 @@ const ApplicationsCard = (props) => {
   // v10 info: when card is clicked (not on the delete button) if the service is an AWS instance,
   // you are redirected to AWSGraphsContainer passing in the state object containing typeOfService
   const handleClick = (
-    event: ClickEvent,
     selectedApp: string,
     selectedService: string,
     i: number
   ) => {
     const services = ['auth','client','event-bus','items','inventory','orders']
-    //delRef refers to the delete button
-    if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
+    // if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
+      setAppIndex(i);
+      setApp(selectedApp);
       if (
         selectedService === 'AWS' ||
         selectedService === 'AWS/EC2' ||
         selectedService === 'AWS/ECS' ||
         selectedService === 'AWS/EKS'
       ) {
-        setAppIndex(i);
-        setApp(selectedApp);
         navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
       } 
       else if(example) {
-        setAppIndex(i);
-        setApp(selectedApp);
         setServicesData([]);
         setChart('communications')
 

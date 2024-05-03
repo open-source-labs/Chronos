@@ -16,7 +16,7 @@ interface IFields {
 }
 
 interface IDashboard {
-  addApp: (fields: IFields) => void;
+  addApp: (fields:any) => void;
   setApplications: any;
 }
 
@@ -26,7 +26,7 @@ type FormElement = React.FormEvent<HTMLFormElement>;
 const AddModal: React.FC<TModalSetter> = React.memo(({ setModal }) => {
   const { addApp }: IDashboard = useContext(DashboardContext);
 
-  const [fields, setFields] = useState<IFields>({
+  const [fields, setFields] = useState<any>({
     typeOfService: 'Docker',
     database: 'SQL',
     URI: '',
