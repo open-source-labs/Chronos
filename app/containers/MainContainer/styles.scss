@@ -1,4 +1,4 @@
-@import './constants.scss';
+@import '../../index.scss';
 
 .main-container {
   background-color: $grey;
@@ -9,7 +9,6 @@
   padding-left: $sidebarWidth;
   transition: padding-left, 200ms;
   max-width: 100%;
-
 
   .main-routes {
     width: 100%;

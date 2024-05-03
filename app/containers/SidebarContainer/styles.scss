@@ -1,4 +1,4 @@
-@import './constants.scss';
+@import '../../index.scss';
 
 .sidebar-container {
   color: $background;
@@ -78,7 +78,7 @@
 #sprout2:active,
 #sprout3:active,
 #sprout4:active {
-  background-image: url('../assets/mountain.png');
+  background-image: url('../../assets/mountain.png');
   background-size: contain;
 }
 
@@ -231,13 +231,13 @@
 }
 
 .example-button {
-  height:100px;
-  width:100px;
-  color:whitesmoke;
-  cursor:pointer;
+  height: 100px;
+  width: 100px;
+  color: whitesmoke;
+  cursor: pointer;
   font-weight: 600;
 }
 
 .example-button:hover {
-  color:blue;
+  color: blue;
 }

@@ -1,11 +1,11 @@
-@import '../../stylesheets/constants.scss';
+@import '../../index.scss';
 
 // MAIN DASHBOARD
 .dashboardArea {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top:2rem;
+  padding-top: 2rem;
 }
 
 // HEADER
@@ -103,6 +103,6 @@ select:-webkit-autofill:focus {
   text-decoration: none;
 }
 
-a{
+a {
   text-decoration: none;
 }

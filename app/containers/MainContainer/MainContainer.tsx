@@ -1,22 +1,21 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import About from '../components/About/About';
-import Contact from '../components/Contact/Contact';
-import Settings from '../components/Setting/Setting';
-import Occupied from '../components/Occupied/Occupied';
-import lightAndDark from '../components/Styling';
-import GraphsContainer from './GraphsContainer/GraphsContainer';
-import { DashboardContext } from '../context/DashboardContext';
-import SignUp from '../components/SignUp';
-import Login from '../components/Login';
-import AwsGraphsContainer from '../containers/AWSGraphsContainer';
+import About from '../../components/About/About';
+import Contact from '../../components/Contact/Contact';
+import Settings from '../../components/Setting/Setting';
+import Occupied from '../../components/Occupied/Occupied';
+import lightAndDark from '../../components/Styling';
+import GraphsContainer from '../GraphsContainer/GraphsContainer';
+import { DashboardContext } from '../../context/DashboardContext';
+import SignUp from '../../components/SignUp';
+import Login from '../../components/Login';
+import AwsGraphsContainer from '../AwsGraphsContainer/AwsGraphsContainer';
 
-import '../stylesheets/MainContainer.scss';
+import './styles.scss';
 
-const MainContainer = React.memo((props) => {
+const MainContainer = React.memo(props => {
   const { mode, applications } = useContext(DashboardContext);
   const currentModeCSS = mode === 'light' ? lightAndDark.lightModeMain : lightAndDark.darkModeMain;
-
 
   return (
     <>
