@@ -1,4 +1,4 @@
-@import './constants.scss';
+@import '../../stylesheets/index.scss';
 
 .sidebar-container {
   color: $background;
@@ -78,7 +78,7 @@
 #sprout2:active,
 #sprout3:active,
 #sprout4:active {
-  background-image: url('../assets/mountain.png');
+  background-image: url('../../assets/mountain.png');
   background-size: contain;
 }
 

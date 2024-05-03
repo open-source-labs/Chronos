@@ -1,6 +1,135 @@
 @import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Open+Sans&family=Inter:wght@100&family=Inter:wght@100&family=Lexend+Peta&family=Nunito+Sans:wght@300;400;600&family=Quicksand:wght@300&display=swap');
-@import './constants.scss';
+
+
+// sass constants
+
+// Chronos 6.0 colors
+$darkblue: #000314;
+$white: #ffffff;
+$black: #000000;
+$blue: #224281;
+$lightblue: #4267b2;
+$yellowwhite: #ffffe5;
+$gray: #c2c2c2;
+
+$yellow: #fce356;
+$navy: #040819;
+$background: #ffffff;
+$grey: #eeeeee;
+$icon: #999999;
+$header: #888888;
+$darkgrey: #444d56;
+$hover: rgba(255, 255, 255, 0.1);
+$warningred: rgb(255, 0, 0); // #cc0000
+// $lightblue: #b5d3e9;
+
+// Primary colors:
+$gblue: #3788fc;
+$gred: #fc4039;
+$gyellow: #febc2c;
+$ggreen: #32b44f;
+$gorange: #ffa500;
+
+// Graph colors:
+$purple: #4b54ea;
+$lightpurple: #5e84fb;
+$bluishred: #f7215b;
+$popgreen: #27eba2;
+$teal: #24d3f0;
+$lightteal: #2cfef1;
+
+// Material UI colors:
+$orange: #ff9800;
+$fire: #f44336;
+$grass: #4caf50;
+$aqua: #00bcd4;
+$deepaqua: #00acc1;
+$plum: #9c27b0;
+
+$boxshadow: 2px 2px 6px rgb(187, 187, 187);
+$boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2),
+  0 1px 5px 0 rgba(153, 153, 153, 0.12);
+$boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+$logoPositionLeft: 55px;
+$cardColorHover: #b2b4b5;
+$logoPositionTop: 40px;
+$logoSize: 25px;
+$logoTransition: 100ms;
+$sproutSize: 50px;
+$originalSproutLeftOffset: -12px;
+$sproutLeftOffset: -26px;
+$sproutTopOffset: 67px;
+$sproutLeftOffsetIncrement: 64px;
+$headerFontSize: 18px;
+
+$sidebarWidth: 140px;
+
+@mixin centerWithFlex($justify: center, $direction: row, $align: center) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+}
+
+@mixin centerModal($width: auto, $minwidth: 400px) {
+  @include centerWithFlex(center, column);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  width: $width;
+  min-width: $minwidth;
+  min-height: 100px;
+  background-color: $background;
+}
+
+@mixin modalHeader() {
+  font-weight: 700;
+  font-size: 200%;
+  color: $darkgrey;
+  &:hover {
+    color: $gblue;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+@keyframes blink {
+  0%,
+  65% {
+    background-color: $warningred;
+  }
+  66%,
+  100% {
+    background-color: $warningred;
+  }
+}
+
+@keyframes twirl {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: $navy;
+  }
+  66% {
+    background-color: lighten($navy, 35%);
+  }
+  100% {
+    background-color: $navy;
+  }
+}
+
+
 
 * {
   margin: 0;
@@ -24,7 +153,7 @@ body {
 button {
   font-size: 90%;
   padding: 6px;
-  border: thin solid #24262f;
+  // border: thin solid #24262f;
   border-radius: 3px;
   background-color: #484e63;
   color: #fff;
@@ -35,4 +164,188 @@ button {
 
 button:hover {
   background-color: #24262f;
+}
+
+// scrollBar styling
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+body {
+  height: 100vh;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  #app {
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+  }
+}
+
+// Home sass
+
+.btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.home {
+  background: $darkblue;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  justify-items: center;
+  position: absolute;
+  margin-left: 50px;
+  padding-top: 160px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+
+  .logo-container {
+    height: auto;
+    width: 40%;
+    max-width: 650px;
+
+    img {
+      width: 100%;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        filter: brightness(0.7);
+      }
+    }
+  }
+
+  h1 {
+    font-size: 325%;
+    letter-spacing: 2px;
+  }
+
+  p {
+    margin: 15px 0;
+    color: white;
+  }
+
+  // Get Started Button
+  .link {
+    font-size: 88%;
+    padding: 10px 17px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 30px;
+    background-color: $navy;
+    color: #fff;
+    @include centerWithFlex();
+    transition: 1s;
+    animation: glow linear 4s infinite;
+
+    &:hover {
+      background-color: $hover;
+      opacity: 0.85;
+      animation: none;
+    }
+  }
+}
+
+.welcome {
+  color: rgba(255, 255, 255, 0.801);
+  text-align: center;
+  h1 {
+    margin-bottom: 90px;
+  }
+  h2 {
+    margin-bottom: 33px;
+  }
+  .btns {
+    display: flex;
+    justify-content: space-around;
+  }
+  form {
+    flex-direction: column;
+    label {
+      width: 50%;
+      input {
+        padding: 5px 7px;
+        margin: 2px 0;
+        width: 100%;
+      }
+    }
+    button.needAccount {
+      all: initial;
+      font-family: 'Roboto';
+      color: rgba(255, 255, 255, 0.801);
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import MainContainer from '../MainContainer/MainContainer';
-import SidebarContainer from '../SidebarContainer';
+import SidebarContainer from '../SidebarContainer/SidebarContainer';
 import HealthContextProvider from '../../context/HealthContext';
 import CommsContextProvider from '../../context/CommsContext';
 import ApplicationContextProvider from '../../context/ApplicationContext';
