@@ -198,15 +198,17 @@ ipcMain.on('getApps', (message: IpcMainEvent) => {
  *          If user is logged in, makes an update query request to mongoDB to delete the desired application in services array
  * @return  Returns the new list of applications
  */
-ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
+ipcMain.on('deleteApp', (message: IpcMainEvent, index:number, action:string) => {
   //If user is not logged in
   if (currentUser === 'guest') {
     // Retrives file contents from settings.json
     const settings = JSON.parse(fs.readFileSync(settingsLocation).toString('utf8'));
-    const userServices = settings[currentUser].services;
+    let guestServices = settings[currentUser].services;
 
     // Remove application from settings.json
-    userServices.splice(index, 1);
+    console.log({action})
+    if(action === 'all') guestServices.splice(0);
+    else guestServices.splice(index, 1);
 
     // Update settings.json with new list
     fs.writeFileSync(settingsLocation, JSON.stringify(settings, null, '\t'), {
@@ -214,7 +216,7 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index) => {
     });
 
     // Sync event - return new applications list
-    message.returnValue = userServices.map((arr: string[]) => [arr[0], arr[1], arr[3], arr[4]]);
+    message.returnValue = guestServices.map((arr: string[]) => [...arr]);
   }
 
   //If user is logged in

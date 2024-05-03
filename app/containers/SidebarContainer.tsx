@@ -18,7 +18,7 @@ const SidebarContainer = React.memo(() => {
   // Extract isLoading and setLoading state from AwsContext. Initial value: isLoading = true
   const { isLoading, setLoadingState } = useContext(AwsContext);
   // clear interval and set loading state to true when leaving graph containers
-  const { addApp,setApplications } = useContext(DashboardContext)
+  const { addApp,setApplications,deleteApp } = useContext(DashboardContext)
   /**
    * @function handleCLick - check if the 'intervalID' exists. If so, theres a timer running and the fuunction clears the timer using @function clearInterval - function.
    * Checks if variable 'isLoading' is false and if so the content is not loading and therefore, sets it to true using the setLoadingState function.
@@ -69,11 +69,12 @@ const SidebarContainer = React.memo(() => {
 
   const handleExitExample = () => {
     setExample(false)
-    setApplications([])
+    // setApplications([])
     setAppIndex(0);
     setApp('');
     setServicesData([]);
     setChart('communications')
+    deleteApp(0,'all')
   }
 
   return (

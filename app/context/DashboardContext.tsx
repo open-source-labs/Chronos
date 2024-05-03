@@ -83,8 +83,8 @@ const DashboardContextProvider = React.memo((props: any) => {
     // console.log('the current application that was added is : ', result)
   }, []);
 
-  const deleteApp = useCallback((index: number) => {
-    const result = ipcRenderer.sendSync('deleteApp', index);
+  const deleteApp = useCallback((index: number,action:string) => {
+    const result = ipcRenderer.sendSync('deleteApp', index,action);
     setApplications(result);
   }, []);
 

@@ -15,10 +15,10 @@ const ApplicationsCard = (props) => {
   const { application, i, setModal, classes } = props
   const { deleteApp,user,applications } = useContext(DashboardContext)
   const { setAppIndex, setApp, setServicesData, app,example,connectToDB,setChart } = useContext(ApplicationContext)
-  const [ cardName,dbType,dbURI,description,serviceType ] = applications[i]
+  const [ cardName,dbType,dbURI,description,serviceType ] = application
 
   //dynamic refs
-  const delRef = useRef<any>([]);
+  // const delRef = useRef<any>([]);
 
   const navigate = useNavigate();
 
@@ -54,19 +54,18 @@ const ApplicationsCard = (props) => {
         navigate(`/applications/example/${services.join(' ')}`)
       }
       else {
-        setAppIndex(i);
-        setApp(selectedApp);
         setServicesData([]);
         //When we open the service modal a connection is made to the db in a useEffect inside of the service modal component
         setModal({isOpen:true,type:'serviceModal'})
       }
-    }
+    // }
   };
 
   // Asks user to confirm deletion
-  const confirmDelete = (event: ClickEvent, application: string, i: number) => {
+  const confirmDelete = (event: ClickEvent, i: number) => {
+    event.stopPropagation()
     const message = `The application '${app}' will be permanently deleted. Continue?`;
-    if (confirm(message)) deleteApp(i);
+    if (confirm(message)) deleteApp(i,"");
   };
 
   return (
@@ -75,7 +74,7 @@ const ApplicationsCard = (props) => {
         key={`card-${i}`}
         className={classes.paper}
         variant="outlined"
-        onClick={event => handleClick(event, application[0], application[3], i)}
+        onClick={() => handleClick(application[0], application[3], i)}
       >
         <div className="databaseIconContainer">
           <div className="databaseIconHeader">
@@ -86,25 +85,18 @@ const ApplicationsCard = (props) => {
           avatar={
             <IconButton
               id="iconButton"
-              ref={element => {
-                delRef.current[i] = element;
-              }}
               className={classes.iconbutton}
               aria-label="Delete"
-              onClick={event => confirmDelete(event, application[0], i)}
+              onClick={event => confirmDelete(event, i)}
             >
               <HighlightOffIcon
                 className={classes.btnStyle}
                 id="deleteIcon"
-                ref={element => {
-                  delRef.current[i] = element;
-                }}
               />
             </IconButton>
           }
         />
         <CardContent>
-          {/* <p id="databaseName">Name:</p> */}
           <Typography noWrap id="databaseName" className={classes.fontStyles}>
             {application[0]}
           </Typography>
