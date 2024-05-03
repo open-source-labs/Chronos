@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import * as d3 from 'd3'; // Import D3 libraries here
 import ForceGraph3D from '3d-force-graph'; // Import 3d-force-graph library here
 import dat from 'dat.gui'; // Import dat.gui library here
-import '../stylesheets/Inspect.scss';
+import './styles.scss';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
 
