@@ -1,4 +1,4 @@
-@import '../../stylesheets/index.scss';
+@import '../../index.scss';
 
 .sidebar-container {
   color: $background;
@@ -231,13 +231,13 @@
 }
 
 .example-button {
-  height:100px;
-  width:100px;
-  color:whitesmoke;
-  cursor:pointer;
+  height: 100px;
+  width: 100px;
+  color: whitesmoke;
+  cursor: pointer;
   font-weight: 600;
 }
 
 .example-button:hover {
-  color:blue;
+  color: blue;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Splash from './components/Splash/Splash';
 import DashboardContainer from './containers/DashboardContainer/DashboardContainer';
-import './stylesheets/scrollBar.scss';
+import './index.scss';
 
 
 // this is the fitness gram pacer test

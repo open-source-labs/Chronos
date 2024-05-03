@@ -1,5 +1,4 @@
-
-@import '../../stylesheets/index.scss';
+@import '../../index.scss';
 
 .card {
   display: flex;
@@ -65,7 +64,6 @@
     color: $background;
   }
 }
-
 
 #card-MongoDB {
   &:hover .databaseIconHeader {

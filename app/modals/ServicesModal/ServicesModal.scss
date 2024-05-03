@@ -1,9 +1,8 @@
-@import '../../stylesheets/index.scss';
+@import '../../index.scss';
 
 .servicesContainer {
   width: 100px;
   @include centerModal(375px);
-  
 
   // Header
   .services-header {
@@ -35,7 +34,6 @@
     gap: 1em;
 
     .link {
-
       display: block;
       width: 80%;
       font-size: 90%;
@@ -54,8 +52,8 @@
       &#selectLink {
         background-color: #fbdca3;
       }
-      
-      &:hover { 
+
+      &:hover {
         cursor: pointer;
         font-weight: 460;
         color: #fff;
@@ -75,7 +73,6 @@
     }
   }
 }
-
 
 .loadingMessage {
   max-width: 80px;

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
 import { CommsContext } from '../context/CommsContext';
-import '../stylesheets/index.scss';
+import '../index.scss';
 
 const RequestTypesChart: React.FC = React.memo(() => {
   const { commsData } = useContext(CommsContext);
