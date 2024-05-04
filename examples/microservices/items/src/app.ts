@@ -20,7 +20,7 @@ app.use(trackingMiddleware);
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:5000',
+    origin: 'http://localhost:5001',
   })
 );
 app.use(express.json());
