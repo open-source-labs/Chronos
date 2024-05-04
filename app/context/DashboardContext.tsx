@@ -61,7 +61,7 @@ const DashboardContextProvider = React.memo((props: any) => {
       JSON.stringify([name, database, URI, description, typeOfService])
     );
     setApplications(result);
-    // console.log('the current application that was added is : ', result);
+    console.log('the current application that was added is : ', result);
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {

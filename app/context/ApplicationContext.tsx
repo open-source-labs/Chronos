@@ -40,6 +40,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    */
   // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
+
+    console.log({application});
     // console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
     // console.log('app when fetch services name: ', application);
     ipcRenderer.send('servicesRequest');
@@ -68,6 +70,7 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
+      console.log({data});
       if(data === true) {
         fetchServicesNames(application);
       } else {
