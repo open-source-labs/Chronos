@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AwsChart from '../charts/AwsChart';
 import { AwsContext } from '../context/AwsContext';
-import { CircularProgress } from '@material-ui/core';
-import zIndex from '@material-ui/core/styles/zIndex';
+import { CircularProgress } from '@mui/material';
+// import zIndex from '@mui/styles/zIndex';
 
 const AwsEC2Graphs: React.FC = React.memo(props => {
   const { awsData, setAwsData, isLoading, setLoadingState } = useContext(AwsContext);

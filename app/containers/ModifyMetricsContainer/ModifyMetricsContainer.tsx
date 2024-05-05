@@ -4,7 +4,7 @@ import { ApplicationContext } from '../../context/ApplicationContext';
 import * as DashboardContext from '../../context/DashboardContext';
 import lightAndDark from '../../components/Styling';
 import './styles.scss';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 const { ipcRenderer } = window.require('electron');
 
 const MetricsContainer: React.FC = React.memo(props => {

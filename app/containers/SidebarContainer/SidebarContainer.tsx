@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import ListIcon from '@material-ui/icons/List';
-import InfoIcon from '@material-ui/icons/Info';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
-import SettingsIcon from '@material-ui/icons/Settings';
+import ListIcon from '@mui/icons-material/List';
+import InfoIcon from '@mui/icons-material/Info';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import './styles.scss';
 import { ApplicationContext } from '../../context/ApplicationContext';

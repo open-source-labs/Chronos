@@ -1,10 +1,10 @@
 import { CommsContext } from "../../context/CommsContext"
 import { DashboardContext } from "../../context/DashboardContext"
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
-import PersonIcon from '@material-ui/icons/Person';
-import { Button } from '@material-ui/core';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
+import PersonIcon from '@mui/icons-material/Person';
+import { Button } from '@mui/material';
 import React, { useContext,useState } from "react"
 import './styles.scss'
 
