@@ -1,11 +1,11 @@
 
 import { makeStyles } from '@mui/styles';
-import { AliasesCSSProperties } from '@mui/system/';
+// import { BaseCSSProperties } from '@mui/system';
 
  // Conditional Rendering of UI Modals for Light and Dark Mode
 // Theme, StyleProps
 
-export const useStylesDark = makeStyles<AliasesCSSProperties>(theme => ({
+export const useStylesDark = makeStyles(theme => ({
   // ALL CARDS
   paper: {
     display: 'flex',
@@ -59,7 +59,7 @@ export const useStylesDark = makeStyles<AliasesCSSProperties>(theme => ({
   },
 }));
 
-export const useStylesLight = makeStyles<AliasesCSSProperties>(theme => ({
+export const useStylesLight = makeStyles(theme => ({
   // ALL CARDS
   paper: {
     display: 'flex',
