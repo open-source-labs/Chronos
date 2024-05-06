@@ -206,7 +206,6 @@ ipcMain.on('deleteApp', (message: IpcMainEvent, index:number, action:string) => 
     let guestServices = settings[currentUser].services;
 
     // Remove application from settings.json
-    console.log({action})
     if(action === 'all') guestServices.splice(0);
     else guestServices.splice(index, 1);
 
