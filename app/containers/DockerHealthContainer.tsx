@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import GrafanaEventChart from '../charts/GrafanaEventChart/GrafanaEventChart';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
 

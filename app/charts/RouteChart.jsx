@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import React, { useContext } from 'react';
 import Graph from 'react-graph-vis';
 import { CommsContext } from '../context/CommsContext';

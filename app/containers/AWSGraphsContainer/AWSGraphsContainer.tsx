@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { ApplicationContext } from '../../context/ApplicationContext';
 import { DashboardContext } from '../../context/DashboardContext';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { AwsContext } from '../../context/AwsContext';
 import './styles.scss';
 import { useLocation } from 'react-router-dom';
