@@ -5,7 +5,7 @@ import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
 import { Button } from '@material-ui/core';
-import GrafanaEventChart from '../charts/GrafanaEventChart';
+import GrafanaEventChart from '../charts/GrafanaEventChart/GrafanaEventChart';
 import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
 
 interface EventContainerProps {
@@ -17,15 +17,15 @@ interface Params {
 }
 interface MetricObject {
   [key: string]: {
-    value: string[],
-    time: string[],
-    id: string,
-    token: string
-  }
+    value: string[];
+    time: string[];
+    id: string;
+    token: string;
+  };
 }
 
 interface EventDataObject {
-  [key: string]: MetricObject
+  [key: string]: MetricObject;
 }
 
 const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
@@ -69,8 +69,8 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
         if (selectedArr.includes(metricName)) {
           filteredEventData[service][metricName] = serviceMetricsObject[metricName];
         }
-      };
-    };
+      }
+    }
     // console.log('filteredEventData IS: ', filteredEventData)
     return filteredEventData;
   };
@@ -84,7 +84,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
       if (i < 0) break;
     }
     return i;
-  }
+  };
 
   // iterate over the filtered event data to build an array of charts, then set the event charts array state
   const generateEventCharts = (filteredEventDataObj: EventDataObject): void => {
@@ -118,8 +118,7 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
 
         // plotting using grafana
         // console.log("plotting grafana")
-        grafanaChartsArray.push(
-          <GrafanaEventChart metricName={metricName} token={token} />);
+        grafanaChartsArray.push(<GrafanaEventChart metricName={metricName} token={token} />);
 
         // }
       }
@@ -139,26 +138,35 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
     // }
   };
 
-
   // invoke the filter and generate functions to render charts
   useEffect(() => {
     const filteredEventData = filterSelectedEventMetricsandData(eventData);
     generateEventCharts(filteredEventData);
-
   }, [eventData, service]);
 
   return (
-
     <div>
       {/* <div id="grafana" onClick={() => { setIsGrafana(!isGrafana) }}>Grafana</div> */}
       <button>Inspect</button>
       {service.includes('kafkametrics') || service.includes('kubernetesmetrics') ? currChunk : []}
       {eventChartsArr.length > chunkSize && (
         <>
-          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize}>
+          <Button
+            id="prevCharts"
+            onClick={prevChunk}
+            variant="contained"
+            color="primary"
+            disabled={currIndex <= chunkSize}
+          >
             Prev
           </Button>
-          <Button id="nextCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= eventChartsArr.length}>
+          <Button
+            id="nextCharts"
+            onClick={nextChunk}
+            variant="contained"
+            color="primary"
+            disabled={currIndex >= eventChartsArr.length}
+          >
             Next
           </Button>
         </>
@@ -168,4 +176,3 @@ const EventContainer: React.FC<EventContainerProps> = React.memo(props => {
 });
 
 export default EventContainer;
-

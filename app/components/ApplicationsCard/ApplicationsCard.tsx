@@ -15,10 +15,10 @@ const ApplicationsCard = (props) => {
   const { application, i, setModal, classes } = props
   const { deleteApp,user,applications } = useContext(DashboardContext)
   const { setAppIndex, setApp, setServicesData, app,example,connectToDB,setChart } = useContext(ApplicationContext)
-  const [ cardName,dbType,dbURI,description,serviceType ] = applications[i]
+  const [ cardName,dbType,dbURI,description,serviceType ] = application
 
   //dynamic refs
-  const delRef = useRef<any>([]);
+  // const delRef = useRef<any>([]);
 
   const navigate = useNavigate();
 
@@ -26,45 +26,42 @@ const ApplicationsCard = (props) => {
   // v10 info: when card is clicked (not on the delete button) if the service is an AWS instance,
   // you are redirected to AWSGraphsContainer passing in the state object containing typeOfService
   const handleClick = (
-    event: ClickEvent,
     selectedApp: string,
     selectedService: string,
     i: number
   ) => {
-    //delRef refers to the delete button
-    if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
+    const services = ['auth','client','event-bus','items','inventory','orders']
+    // if (delRef.current[i] && !delRef.current[i].contains(event.target)) {
+      setAppIndex(i);
+      setApp(selectedApp);
       if (
         selectedService === 'AWS' ||
         selectedService === 'AWS/EC2' ||
         selectedService === 'AWS/ECS' ||
         selectedService === 'AWS/EKS'
       ) {
-        setAppIndex(i);
-        setApp(selectedApp);
         navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
       } 
       else if(example) {
-        setAppIndex(i);
-        setApp(selectedApp);
         setServicesData([]);
         setChart('communications')
 
         connectToDB(user, i, app, dbURI, dbType)
+        navigate(`/applications/example/${services.join(' ')}`)
       }
       else {
-        setAppIndex(i);
-        setApp(selectedApp);
         setServicesData([]);
         //When we open the service modal a connection is made to the db in a useEffect inside of the service modal component
         setModal({isOpen:true,type:'serviceModal'})
       }
-    }
+    // }
   };
 
   // Asks user to confirm deletion
-  const confirmDelete = (event: ClickEvent, application: string, i: number) => {
+  const confirmDelete = (event: ClickEvent, i: number) => {
+    event.stopPropagation()
     const message = `The application '${app}' will be permanently deleted. Continue?`;
-    if (confirm(message)) deleteApp(i);
+    if (confirm(message)) deleteApp(i,"");
   };
 
   return (
@@ -73,15 +70,10 @@ const ApplicationsCard = (props) => {
         key={`card-${i}`}
         className={classes.paper}
         variant="outlined"
-        onClick={event => handleClick(event, application[0], application[3], i)}
+        onClick={() => handleClick(application[0], application[3], i)}
       >
         <div className="databaseIconContainer">
           <div className="databaseIconHeader">
-            {/* {application[1] === 'SQL' ? (
-              <img className="databaseIcon" alt="SQL" />
-            ) : (
-              <img className="databaseIcon" alt="MongoDB" />
-            )} */}
           </div>
         </div>
 
@@ -89,25 +81,18 @@ const ApplicationsCard = (props) => {
           avatar={
             <IconButton
               id="iconButton"
-              ref={element => {
-                delRef.current[i] = element;
-              }}
               className={classes.iconbutton}
               aria-label="Delete"
-              onClick={event => confirmDelete(event, application[0], i)}
+              onClick={event => confirmDelete(event, i)}
             >
               <HighlightOffIcon
                 className={classes.btnStyle}
                 id="deleteIcon"
-                ref={element => {
-                  delRef.current[i] = element;
-                }}
               />
             </IconButton>
           }
         />
         <CardContent>
-          {/* <p id="databaseName">Name:</p> */}
           <Typography noWrap id="databaseName" className={classes.fontStyles}>
             {application[0]}
           </Typography>

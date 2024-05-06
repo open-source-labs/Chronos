@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
-import GrafanaEventChart from '../charts/GrafanaEventChart';
+import GrafanaEventChart from '../charts/GrafanaEventChart/GrafanaEventChart';
 import { Button } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
@@ -17,14 +17,14 @@ interface Params {
 
 interface DataObject {
   [key: string]: {
-    value: string[],
-    time: string[],
-    id: string,
-    token: string
+    value: string[];
+    time: string[];
+    id: string;
+    token: string;
   };
 }
 interface DockerDataObject {
-    [key: string]: DataObject
+  [key: string]: DataObject;
 }
 
 const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props => {
@@ -89,16 +89,16 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
     return filteredHealthData;
   };
 
-    // helper function for geting only the names of the metrics
-    const getIndex = (str: string, substr: string, ind: number): number => {
-        let Len = str.length,
-          i = -1;
-        while (ind-- && i++ < Len) {
-          i = str.indexOf(substr, i);
-          if (i < 0) break;
-        }
-        return i;
-      }
+  // helper function for geting only the names of the metrics
+  const getIndex = (str: string, substr: string, ind: number): number => {
+    let Len = str.length,
+      i = -1;
+    while (ind-- && i++ < Len) {
+      i = str.indexOf(substr, i);
+      if (i < 0) break;
+    }
+    return i;
+  };
 
   // function to generate charts using the type-sorted data
   const generateHealthCharts = (sortedData: DockerDataObject): void => {
@@ -113,11 +113,9 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
         // pass down the value of the current data type and service
         const chartData = metricObjects[metricName];
         const token = chartData.token;
-       
-        // console.log("plotting grafana")
-        grafanaChartsArray.push(
-          <GrafanaEventChart metricName={metricName} token={token} />);
 
+        // console.log("plotting grafana")
+        grafanaChartsArray.push(<GrafanaEventChart metricName={metricName} token={token} />);
       }
     }
     // console.log(grafanaChartsArray)
@@ -135,13 +133,32 @@ const DockerHealthContainer: React.FC<HealthContainerProps> = React.memo(props =
 
   return (
     <div>
-      {service.includes('kafkametrics') || service.includes('kubernetesmetrics') || service.includes('books') || service.includes('customers') || service.includes('frontend') || service.includes('orders')? currChunk : []}
+      {service.includes('kafkametrics') ||
+      service.includes('kubernetesmetrics') ||
+      service.includes('books') ||
+      service.includes('customers') ||
+      service.includes('frontend') ||
+      service.includes('orders')
+        ? currChunk
+        : []}
       {healthChartsArr.length > chunkSize && (
         <>
-          <Button id="prevCharts" onClick={prevChunk} variant="contained" color="primary" disabled={currIndex <= chunkSize}>
+          <Button
+            id="prevCharts"
+            onClick={prevChunk}
+            variant="contained"
+            color="primary"
+            disabled={currIndex <= chunkSize}
+          >
             Prev
           </Button>
-          <Button id="nextCharts" onClick={nextChunk} variant="contained" color="primary" disabled={currIndex >= healthChartsArr.length}>
+          <Button
+            id="nextCharts"
+            onClick={nextChunk}
+            variant="contained"
+            color="primary"
+            disabled={currIndex >= healthChartsArr.length}
+          >
             Next
           </Button>
         </>
