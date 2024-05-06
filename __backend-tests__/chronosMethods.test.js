@@ -1,4 +1,4 @@
-const { EcoTwoTone } = require('@material-ui/icons');
+const { EcoTwoTone } = require('@mui/icons-material');
 const Chronos = require('../chronos_npm_package/chronos.js');
 const helpers = require('../chronos_npm_package/controllers/utilities.js');
 const hpropagate = require('hpropagate');

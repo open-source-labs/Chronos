@@ -7,10 +7,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 // MATERIAL UI METHODS
-import { Modal, Button } from '@material-ui/core';
+import { Modal, Button } from '@mui/material';
 
 // MATERIAL UI ICONS
-import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
+import AddCircleOutlineTwoToneIcon from '@mui/icons-material/AddCircleOutlineTwoTone';
 
 // // MODALS
 // import AddModal from '../modals/AddModal';

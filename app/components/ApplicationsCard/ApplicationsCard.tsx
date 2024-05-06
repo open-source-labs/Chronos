@@ -1,11 +1,11 @@
 
 import React, { useContext, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import { Card,CardHeader,IconButton,CardContent,Typography } from "@material-ui/core";
+import { Card,CardHeader,IconButton,CardContent,Typography } from "@mui/material";
 import { DashboardContext } from "../../context/DashboardContext";
 import { ApplicationContext } from "../../context/ApplicationContext";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import UpdateIcon from '@material-ui/icons/Update';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import UpdateIcon from '@mui/icons-material/Update';
 import './styles.scss'
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
@@ -84,7 +84,7 @@ const ApplicationsCard = (props) => {
               className={classes.iconbutton}
               aria-label="Delete"
               onClick={event => confirmDelete(event, i)}
-            >
+              size="large">
               <HighlightOffIcon
                 className={classes.btnStyle}
                 id="deleteIcon"
@@ -109,7 +109,7 @@ const ApplicationsCard = (props) => {
         </div>
       </Card>
     </div>
-  )
+  );
 }
 
 export default ApplicationsCard
