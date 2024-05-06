@@ -115,6 +115,7 @@ mongo.health = async ({ microservice, interval, mode }) => {
   setInterval(() => {
     collectHealthData()
       .then(async healthMetrics => {
+        console.log("HEALTH METRICS",healthMetrics)
         if (l !== healthMetrics.length) {
           l = await mongo.addMetrics(healthMetrics, mode, currentMetricNames);
         }
@@ -271,7 +272,9 @@ mongo.setQueryOnInterval = async config => {
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
+  console.log('mongo.getSavedMetricsLength',{mode,currentMetricNames})
   let currentMetrics = await MetricsModel.find({ mode: mode });
+  console.log("CURRENT METRICS",currentMetrics)
   if (currentMetrics.length > 0) {
     currentMetrics.forEach(el => {
       const { metric, selected } = el;
