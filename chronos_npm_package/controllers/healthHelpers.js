@@ -67,6 +67,7 @@ healthHelpers.collectHealthData = () => {
    */
   si.cpu()
     .then(data => {
+      // console.log(data)
       const siMethodName = 'cpu';
       for (let metricName in collectedMetrics[siMethodName]) {
         healthDataCollection.push({
@@ -76,6 +77,7 @@ healthHelpers.collectHealthData = () => {
           time,
         });
       }
+      // console.log('CPU HEALTH METRICS',healthDataCollection)
     })
     .catch(err => {
       if (err) {
@@ -203,6 +205,8 @@ healthHelpers.collectHealthData = () => {
         category: 'Latency',
         time,
       });
+  console.log("HEALTH METRICS PRE PROMISE",healthDataCollection)
+
     })
     .catch(err => {
       if (err) {
@@ -213,11 +217,13 @@ healthHelpers.collectHealthData = () => {
   /** Return a promise that resolves to an array of all of the data points
    * and removes any empty strings, NaN, or "NaN" from values prevent database errors
    */
-  return Promise.all(healthDataCollection).then(array =>
-    array.filter(metric => {
+  return Promise.all(healthDataCollection).then(array => {
+    // console.log("PROMISE ARRAY",array)
+    return array.filter(metric => {
       if (isNaN(metric.value) || metric.value === 'NaN' || metric.value === '') return false;
       else return true;
     })
+  }
   );
 };
 
