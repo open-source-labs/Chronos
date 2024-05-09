@@ -58,14 +58,15 @@ const collectedMetrics = {
  * @returns Promise array with each metric in an object
  */
 
-healthHelpers.collectHealthData = () => {
+healthHelpers.collectHealthData = async() => {
+
   const healthDataCollection = [];
   const time = Date.now();
 
   /** obtains core CPU metrics and creates and pushes object with
    *  metric name and value to the healthDataCollection array
    */
-  si.cpu()
+  await si.cpu()
     .then(data => {
       // console.log(data)
       const siMethodName = 'cpu';
@@ -88,7 +89,7 @@ healthHelpers.collectHealthData = () => {
   /** obtains CPU speed metrics and creates and pushes object with
    *  metric name and value to the healthDataCollection array
    */
-  si.cpuCurrentSpeed()
+  await si.cpuCurrentSpeed()
     .then(data => {
       const siMethodName = 'cpuCurrentSpeed';
       for (let metricName in collectedMetrics[siMethodName]) {
@@ -110,7 +111,7 @@ healthHelpers.collectHealthData = () => {
    *  metric name and value to the healthDataCollection array
    */
 
-  si.cpuTemperature()
+  await si.cpuTemperature()
     .then(data => {
       const siMethodName = 'cpuTemperature';
       for (let metricName in collectedMetrics[siMethodName]) {
@@ -132,7 +133,7 @@ healthHelpers.collectHealthData = () => {
    * obtains metrics relating to current load and creates and pushes object with
    * metric name and value to the healthDataCollection array
    */
-  si.currentLoad()
+  await si.currentLoad()
     .then(data => {
       const siMethodName = 'currentLoad';
       for (let metricName in collectedMetrics[siMethodName]) {
@@ -154,7 +155,7 @@ healthHelpers.collectHealthData = () => {
    * obtains metrics relating to memory and creates and pushes object with
    * metric name and value to the healthDataCollection array
    */
-  si.mem()
+  await si.mem()
     .then(data => {
       const siMethodName = 'mem';
       for (let metricName in collectedMetrics[siMethodName]) {
@@ -175,7 +176,7 @@ healthHelpers.collectHealthData = () => {
   /** obtains metrics relating to current processes and creates and pushes object with
    *  metric name and value to the healthDataCollection array
    */
-  si.processes()
+  await si.processes()
     .then(data => {
       const siMethodName = 'processes';
       for (let metricName in collectedMetrics[siMethodName]) {
@@ -196,7 +197,7 @@ healthHelpers.collectHealthData = () => {
   /** obtains latency and creates and pushes object with
    *  metric name and value to the healthDataCollection array
    */
-  si.inetLatency()
+  await si.inetLatency()
     .then(data => {
       const siMethodName = 'inetLatency';
       healthDataCollection.push({
@@ -205,7 +206,6 @@ healthHelpers.collectHealthData = () => {
         category: 'Latency',
         time,
       });
-  console.log("HEALTH METRICS PRE PROMISE",healthDataCollection)
 
     })
     .catch(err => {
