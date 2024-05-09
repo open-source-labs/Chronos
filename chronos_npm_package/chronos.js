@@ -71,11 +71,12 @@ class Chronos {
      */
     if (database.type === 'MongoDB') {
       //MONGO IS NOT ACTUAL MONGO, its a separate function imported from the controllers file
-      console.log("MIKE YOOOOOOOOOOO",this.config)
+      console.log("MIKE YOOOOOOOOOOO",this.config);
       mongo.connect(this.config);
       mongo.services(this.config);
       // console.log('dockerized really? chronos.js LN 75', dockerized, this.config)
       dockerized ? mongo.docker(this.config) : mongo.health(this.config);
+      
       if (database.connection === 'REST') {
         return mongo.communications(this.config);
       }
