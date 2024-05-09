@@ -111,7 +111,9 @@ const GraphNavBar = (props) => {
           />
         &emsp;Inspect
       </Link> */}
-      <button onClick={() => { setInspect(!inspect) }}>Inspect</button>
+      {/* <button onClick={() => { setInspect(!inspect) }}>Inspect</button> 
+        this button was commented out because it didn't work. It was supposed to have different data visualizers but gave an error anytime it was clicked.
+      */}
     </nav>
   )
 }
