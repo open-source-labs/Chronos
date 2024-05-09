@@ -71,6 +71,7 @@ mongo.communications = ({ microservice, slack, email }) => {
       request: req.method,
       correlatingid: res.getHeaders()['x-correlation-id'],
     };
+    console.log("NEW COMMS",newComms)
 
     res.on('finish', () => {
       /**
@@ -107,26 +108,35 @@ mongo.communications = ({ microservice, slack, email }) => {
  * @param {number} interval Interval for continuous data collection
  */
 mongo.health = async ({ microservice, interval, mode }) => {
-  let l = 0;
-  const currentMetricNames = {};
 
-  l = await mongo.getSavedMetricsLength(mode, currentMetricNames);
-
+  const getCurrentMets = async () => await MetricsModel.find({ mode });
+  const currentMetrics = async () => await getCurrentMets()
+  currentMetrics()
+  // const currentMetrics = await MetricsModel.find({mode})
+  // const getCurrentMetsLength = async() => 
+  // console.log("CURR METS",currentMetrics.length)
   setInterval(() => {
     collectHealthData()
       .then(async healthMetrics => {
-        console.log("HEALTH METRICS",healthMetrics)
-        if (l !== healthMetrics.length) {
-          l = await mongo.addMetrics(healthMetrics, mode, currentMetricNames);
-        }
+        // console.log("HEALTH METRICS",healthMetrics)
+
+        // if (l !== healthMetrics.length) {
+        //   l = await mongo.addMetrics(healthMetrics, mode, currentMetricNames);
+        // }
+        // if(currentMetrics.length !== healthMetrics.length) {
+        //   const test = await mongo.mikesAdd(healthMetrics,currentMetrics,mode)
+        //   console.log("FIRST DB",test)
+        // }
         const HealthModel = HealthModelFunc(`${microservice}`);
-        return HealthModel.insertMany(healthMetrics);
+        // await HealthModel.insertMany(healthMetrics);
+        // return
+        
       })
       .then(() => {
         console.log('Health data recorded in MongoDB');
       })
       .catch(err => console.log('Error inserting health documents: ', err));
-  }, interval);
+  }, 10000);
 };
 
 /**
@@ -272,9 +282,9 @@ mongo.setQueryOnInterval = async config => {
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
-  console.log('mongo.getSavedMetricsLength',{mode,currentMetricNames})
+  // console.log('mongo.getSavedMetricsLength',{mode,currentMetricNames})
   let currentMetrics = await MetricsModel.find({ mode: mode });
-  console.log("CURRENT METRICS",currentMetrics)
+  // console.log("CURRENT METRICS",currentMetrics)
   if (currentMetrics.length > 0) {
     currentMetrics.forEach(el => {
       const { metric, selected } = el;
@@ -284,22 +294,41 @@ mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
   return currentMetrics.length ? currentMetrics.length : 0;
 };
 
-mongo.addMetrics = async (arr, mode, obj, model) => {
+mongo.addMetrics = async (healthMetrics, mode, currentMetricNames) => {
+  //This function adds only the new metrics from metrics model to the metrics database
   const metrics = [];
   const newMets = [];
-  for (let metric of arr) {
-    if (!(metric.metric in obj)) {
+  for (let metric of healthMetrics) {
+    // console.log("OUR METRICS",metric)
+    if (!(metric.metric in currentMetricNames)) {
       const name = metric.metric;
       newMets.push({ metric: name, mode: mode });
       metrics.push(metric);
-      obj[metric.metric] = true;
+      currentMetricNames[metric.metric] = true;
     }
   };
-  await MetricsModel.create(newMets);
-  await model.create(metrics);
-  return arr.length;
+  // console.log("NEW METS",newMets)
+  await MetricsModel.create({newMets});
+  // await model.create(metrics);
+  return healthMetrics.length;
 };
 
+mongo.mikesAdd = async(healthMetrics,currentMetrics,mode) => {
+  // console.log("INSIDE MIKES ADD")
+  const metricMetaData = []
+  for(let healthMetric of healthMetrics) {
+    if(!currentMetrics[healthMetric]) {
+      const newMetric = {
+        metric: healthMetric.metric,
+        mode:mode
+      }
+      metricMetaData.push(newMetric)
+    }
+  }
+  // console.log("META DATA",metricMetaData)
+  const mikesTest = await MetricsModel.create({metricMetaData})
+  return mikesTest
+}
 // This middleware could be used if the user would like to update their chronos data in real time (immediately after updating saved metrics on the Chronos desktop app), but they would have to expose a URL/port to be queried for the Electron front end.
 //
 // mongo.modifyMetrics = (config) => {
