@@ -26,6 +26,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
   const { user, applications } = useContext(DashboardContext);
   const { servicesData, connectToDB } = useContext(ApplicationContext);
   const [services, setServices] = useState<Array<string>>([]);
+  console.log(services);
   const [ cardName,dbType,dbURI,description,serviceType ] = applications[i]
 
 
