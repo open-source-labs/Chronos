@@ -37,6 +37,19 @@ if (!fse.existsSync(destDir)) {
 }
 fse.copySync(sourceDir, destDir);
 
+// Create build 
+
+// Copy React Dev Tools from /dist to /build;
+reactDevToolsSourceDir = path.resolve(__dirname, '../node_modules');
+reactDevToolsDestDir = path.resolve(__dirname, '../build/node_modules');
+
+if (!fse.existsSync(reactDevToolsDestDir)) {
+  fse.mkdirSync(reactDevToolsDestDir);
+}
+fse.ensureDirSync(reactDevToolsDestDir);
+fse.copySync(reactDevToolsSourceDir, reactDevToolsDestDir);
+
+
 // Copy settings.json from root directory into the dist folder
 fse.copyFileSync(
   path.resolve(__dirname, '../settings.json'),

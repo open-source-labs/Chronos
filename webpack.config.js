@@ -56,7 +56,7 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, 'node_modules/react-devtools'), // Path to the React DevTools directory in node_modules
-          to: path.resolve(__dirname, 'dist/react-devtools'), // Output directory in your webpack build
+          to: 'react-devtools', // Output directory in your webpack build
         },
       ],
     })

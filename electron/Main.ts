@@ -12,7 +12,7 @@ let win: Electron.BrowserWindow;
 app.commandLine.appendSwitch('remote-debugging-port', '9222');
 
 // Path to reactDevTools
-const reactDevToolsPath = path.join(__dirname, '../node_modules/react-devtools');
+const reactDevToolsPath = path.resolve(__dirname, '../node_modules/react-devtools');
 
 /**
  * @desc createWindow sets up the environment of the window (dimensions, port, initial settings)
@@ -64,17 +64,21 @@ const addDevTools = async () => {
   // await installExtension(REACT_DEVELOPER_TOOLS, { loadExtensionOptions: { allowFileAccess: true }})
   //     .then((name) => console.log(`Added Extension:  ${name}`))
   //     .catch((err) => console.log('An error occurred: ', err));
-
+  // await installExtension(reactDevToolsPath)
+  //   .then((name) => console.log(`Added Extension:  ${name}`))
+  //   .catch((err) => console.log('An error occurred: ', err));
+  
   await installExtension(REDUX_DEVTOOLS)
       .then((name) => console.log(`Added Extension:  ${name}`))
       .catch((err) => console.log('An error occurred: ', err));
+
+  await session.defaultSession.loadExtension(reactDevToolsPath);
 };
 
 app.whenReady().then(async () => {
   await addDevTools();
   
-  await session.defaultSession.loadExtension(reactDevToolsPath);
-  // devtools extensions
+  // await session.defaultSession.loadExtension(reactDevToolsPath);
 });
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);
