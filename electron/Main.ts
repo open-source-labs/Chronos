@@ -1,14 +1,18 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
 import './routes/dashboard';
 import { clearGuestSettings } from './routes/dashboard';
 import './routes/data';
 import './routes/cloudbased';
 import path from 'path';
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
 
 // Declare variable to be used as the application window
 let win: Electron.BrowserWindow;
 
 app.commandLine.appendSwitch('remote-debugging-port', '9222');
+
+// Path to reactDevTools
+const reactDevToolsPath = path.resolve(__dirname, '../node_modules/react-devtools');
 
 /**
  * @desc createWindow sets up the environment of the window (dimensions, port, initial settings)
@@ -56,8 +60,35 @@ const createWindow = () => {
   });
 };
 
+const addDevTools = async () => {
+  // await installExtension(REACT_DEVELOPER_TOOLS, { loadExtensionOptions: { allowFileAccess: true }})
+  //     .then((name) => console.log(`Added Extension:  ${name}`))
+  //     .catch((err) => console.log('An error occurred: ', err));
+  // await installExtension(reactDevToolsPath)
+  //   .then((name) => console.log(`Added Extension:  ${name}`))
+  //   .catch((err) => console.log('An error occurred: ', err));
+  
+  await installExtension(REDUX_DEVTOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err));
+
+  await session.defaultSession.loadExtension(reactDevToolsPath);
+};
+
+app.whenReady().then(async () => {
+  await addDevTools();
+  
+  // await session.defaultSession.loadExtension(reactDevToolsPath);
+});
 // Invoke the createWindow function when Electron application loads
 app.on('ready', createWindow);
+
+// Loads reactDevTools extension
+// app.whenReady().then(async () => {
+//   console.log(reactDevToolsPath);
+//   await session.defaultSession.loadExtension(reactDevToolsPath);
+//   console.log({reactDevToolsPath})
+// });
 
 // Quits application when all windows are closed
 app.on('window-all-closed', () => {
