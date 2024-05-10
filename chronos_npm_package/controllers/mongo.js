@@ -113,9 +113,6 @@ mongo.health = async ({ microservice, interval, mode }) => {
   const getCurrentMets = async () => await MetricsModel.find({ mode });
   const currentMetrics = async () => await getCurrentMets()
   currentMetrics()
-  // let currentMetricNames = {}
-  
-  // l = await mongo.getSavedMetricsLength(mode, currentMetricNames);
 
   setInterval(() => {
     collectHealthData()
@@ -302,23 +299,6 @@ mongo.addMetrics = async (healthMetrics, mode, currentMetricNames) => {
   await MetricsModel.create(newMets);
   return healthMetrics.length;
 };
-
-mongo.mikesAdd = async(healthMetrics,mode,currentMetrics) => {
-  // console.log("INSIDE MIKES ADD")
-  const metricMetaData = []
-  for(let healthMetric of healthMetrics) {
-    if(!currentMetrics[healthMetric]) {
-      const newMetric = {
-        metric: healthMetric.metric,
-        mode:mode
-      }
-      metricMetaData.push(newMetric)
-    }
-  }
-  // console.log("META DATA",metricMetaData)
-  const mikesTest = await MetricsModel.create({metricMetaData})
-  return mikesTest
-}
 // This middleware could be used if the user would like to update their chronos data in real time (immediately after updating saved metrics on the Chronos desktop app), but they would have to expose a URL/port to be queried for the Electron front end.
 //
 // mongo.modifyMetrics = (config) => {
