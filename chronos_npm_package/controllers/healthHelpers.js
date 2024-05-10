@@ -220,7 +220,7 @@ healthHelpers.collectHealthData = async() => {
   return Promise.all(healthDataCollection).then(array => {
     // console.log("PROMISE ARRAY",array)
     return array.filter(metric => {
-      if (isNaN(metric.value) || metric.value === 'NaN' || metric.value === '') return false;
+      if (isNaN(metric.value) || metric.value === 'NaN' || metric.value === '' || metric.value === null) return false;
       else return true;
     })
   }
