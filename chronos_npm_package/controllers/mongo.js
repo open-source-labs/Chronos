@@ -108,28 +108,25 @@ mongo.communications = ({ microservice, slack, email }) => {
  * @param {number} interval Interval for continuous data collection
  */
 mongo.health = async ({ microservice, interval, mode }) => {
-
+  //MetricsModel tracks which metrics are selected in the MetricsContainer component
+  //HealthModel tracks all the cpu health data in each of the services databases
   const getCurrentMets = async () => await MetricsModel.find({ mode });
   const currentMetrics = async () => await getCurrentMets()
   currentMetrics()
-  // const currentMetrics = await MetricsModel.find({mode})
-  // const getCurrentMetsLength = async() => 
-  // console.log("CURR METS",currentMetrics.length)
+  // let currentMetricNames = {}
+  
+  // l = await mongo.getSavedMetricsLength(mode, currentMetricNames);
+
   setInterval(() => {
     collectHealthData()
       .then(async healthMetrics => {
-        // console.log("HEALTH METRICS",healthMetrics)
-
-        // if (l !== healthMetrics.length) {
-        //   l = await mongo.addMetrics(healthMetrics, mode, currentMetricNames);
-        // }
-        // if(currentMetrics.length !== healthMetrics.length) {
-        //   const test = await mongo.mikesAdd(healthMetrics,currentMetrics,mode)
-        //   console.log("FIRST DB",test)
-        // }
+        
+        if (currentMetrics.length !== healthMetrics.length) {
+          await mongo.addMetrics(healthMetrics, mode, currentMetrics);
+        }
         const HealthModel = HealthModelFunc(`${microservice}`);
-        // await HealthModel.insertMany(healthMetrics);
-        // return
+        await HealthModel.insertMany(healthMetrics);
+        return
         
       })
       .then(() => {
@@ -282,9 +279,7 @@ mongo.setQueryOnInterval = async config => {
 };
 
 mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
-  // console.log('mongo.getSavedMetricsLength',{mode,currentMetricNames})
   let currentMetrics = await MetricsModel.find({ mode: mode });
-  // console.log("CURRENT METRICS",currentMetrics)
   if (currentMetrics.length > 0) {
     currentMetrics.forEach(el => {
       const { metric, selected } = el;
@@ -296,24 +291,19 @@ mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
 
 mongo.addMetrics = async (healthMetrics, mode, currentMetricNames) => {
   //This function adds only the new metrics from metrics model to the metrics database
-  const metrics = [];
   const newMets = [];
   for (let metric of healthMetrics) {
-    // console.log("OUR METRICS",metric)
     if (!(metric.metric in currentMetricNames)) {
       const name = metric.metric;
       newMets.push({ metric: name, mode: mode });
-      metrics.push(metric);
       currentMetricNames[metric.metric] = true;
     }
   };
-  // console.log("NEW METS",newMets)
-  await MetricsModel.create({newMets});
-  // await model.create(metrics);
+  await MetricsModel.create(newMets);
   return healthMetrics.length;
 };
 
-mongo.mikesAdd = async(healthMetrics,currentMetrics,mode) => {
+mongo.mikesAdd = async(healthMetrics,mode,currentMetrics) => {
   // console.log("INSIDE MIKES ADD")
   const metricMetaData = []
   for(let healthMetric of healthMetrics) {
