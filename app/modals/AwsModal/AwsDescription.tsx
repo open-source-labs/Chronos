@@ -1,6 +1,7 @@
 import React from 'react';
 
 const AwsDescription = (props) => {
+  const { name, handleChange, description } = props;
   return (
     <>
       <div>
@@ -11,8 +12,8 @@ const AwsDescription = (props) => {
           id="aws-name"
           type="text"
           name="name"
-          value={props.name}
-          onChange={e => props.handleChange(e)}
+          value={name}
+          onChange={e => handleChange(e)}
           placeholder="Add a name for your new service"
           required
         />
@@ -22,8 +23,8 @@ const AwsDescription = (props) => {
         <textarea
           id="db-desc"
           name="description"
-          value={props.description}
-          onChange={e => props.handleChange(e)}
+          value={description}
+          onChange={e => handleChange(e)}
           placeholder="Add a short description"
         />
       </div>
