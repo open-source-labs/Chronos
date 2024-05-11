@@ -31,13 +31,18 @@ const ServicesLink = (props) => {
           {service.microservice}
         </div>
       ))}
-      <Link id='selectLink'
-        className="router link"
+      <Link
+        className="selectLink router link"
         to={services.length > 0 ? `/applications/${app}/${services.join(' ')}` : '#'}
       >
         {services.length === 0 && 'Select Services'}
         {services.length === 1 && 'Display Service'}
         {services.length > 1 && 'Compare Services'}
+      </Link>
+      <Link
+        className="selectLink router link"
+        to={`/applications/${app}/client event-bus items inventory orders auth`}>
+        Select All Services
       </Link>
     </div>
   )

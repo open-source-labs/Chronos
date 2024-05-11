@@ -44,13 +44,13 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     console.log({application});
     // console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
     console.log('app when fetch services name: ', application);
-    console.log(application)
+
     ipcRenderer.send('servicesRequest');
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       //data here refers to the data coming the services document of the database
       let result: any;
       result = JSON.parse(data);
-      console.log('result from ipcrenderer services response is: ', result);
+
       // console.log('Calling setServicesData passing in above result. Current servicesData is the following: ', servicesData);
       setServicesData(result);
       ipcRenderer.removeAllListeners('servicesResponse');
@@ -71,7 +71,6 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
-      console.log({data});
       if(data === true) {
         fetchServicesNames(application);
       } else {
