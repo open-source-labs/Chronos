@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ServicesDescription = (props) => {
+  const { URI, handleChange, name, description } = props;
   return (
     <>
       <div>
@@ -10,8 +11,8 @@ const ServicesDescription = (props) => {
           <input
             id="db-uri"
             name="URI"
-            value={props.URI}
-            onChange={e => props.handleChange(e)}
+            value={URI}
+            onChange={e => handleChange(e)}
             placeholder="Database URI"
             required
           />
@@ -24,8 +25,8 @@ const ServicesDescription = (props) => {
             id="db-name"
             type="text"
             name="name"
-            value={props.name}
-            onChange={e => props.handleChange(e)}
+            value={name}
+            onChange={e => handleChange(e)}
             placeholder="Add a name for your new service"
             required
           />
@@ -35,8 +36,8 @@ const ServicesDescription = (props) => {
           <textarea
             id="db-desc"
             name="description"
-            value={props.description}
-            onChange={e => props.handleChange(e)}
+            value={description}
+            onChange={e => handleChange(e)}
             placeholder="Add a short description"
           />
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 
 
 const ServiceDBType = (props) => {
+  const { typeOfService, handleChange, database } = props
   return (
     <>
       <div>
@@ -11,8 +12,8 @@ const ServiceDBType = (props) => {
           <select
             id="serv-type"
             name="typeOfService"
-            value={props.typeOfService}
-            onChange={e => props.handleChange(e)}
+            value={typeOfService}
+            onChange={e => handleChange(e)}
           >
             <option value="Docker">Docker</option>
             <option value="gRPC">gRPC</option>
@@ -24,7 +25,7 @@ const ServiceDBType = (props) => {
           <label htmlFor="db-type">
             Type of Database<span>*</span>
           </label>
-          <select id="db-type" name="database" value={props.database} onChange={e => props.handleChange(e)}>
+          <select id="db-type" name="database" value={database} onChange={e => handleChange(e)}>
             <option value="SQL">SQL</option>
             <option value="MongoDB">MongoDB</option>
           </select>
