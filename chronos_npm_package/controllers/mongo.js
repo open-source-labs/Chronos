@@ -27,10 +27,8 @@ mongo.connect = async ({ database }) => {
   console.log('Attemping to connect to database...');
   try {
     await mongoose.connect(`${database.URI}`);
-    // Print success message
     console.log(`MongoDB database connected at ${database.URI.slice(0, 20)}...`);
   } catch ({ message }) {
-    // Print error message
     console.log('Error connecting to MongoDB:', message);
   }
 };
@@ -71,7 +69,7 @@ mongo.communications = ({ microservice, slack, email }) => {
       request: req.method,
       correlatingid: res.getHeaders()['x-correlation-id'],
     };
-    console.log("NEW COMMS",newComms)
+    // console.log("NEW COMMS",newComms)
 
     res.on('finish', () => {
       /**
