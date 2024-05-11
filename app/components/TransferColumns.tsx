@@ -7,8 +7,6 @@ import { DataGrid } from '@material-ui/data-grid';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
 import { Button, TextField } from '@material-ui/core';
-import SearchBar from './SearchBar/SearchBar';
-
 
 interface Params {
   service: string;

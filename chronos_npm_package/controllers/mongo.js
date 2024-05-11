@@ -122,7 +122,6 @@ mongo.health = async ({ microservice, interval, mode }) => {
         const HealthModel = HealthModelFunc(`${microservice}`);
         await HealthModel.insertMany(healthMetrics);
         return
-        
       })
       .then(() => {
         console.log('Health data recorded in MongoDB');
