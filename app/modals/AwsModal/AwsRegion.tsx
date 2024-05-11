@@ -1,6 +1,7 @@
 import React from 'react';
 
 const AwsRegion = (props) => {
+  const { region, handleChange } = props;
   return (
     <div>
       <label htmlFor="region">
@@ -9,8 +10,8 @@ const AwsRegion = (props) => {
       <select
         id="aws-region"
         name="region"
-        value={props.region}
-        onChange={e => props.handleChange(e)}
+        value={region}
+        onChange={e => handleChange(e)}
         placeholder="AWS Region"
         required
       >

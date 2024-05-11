@@ -4,7 +4,7 @@ import { EventContext } from '../context/EventContext';
 import { HealthContext } from '../context/HealthContext';
 import { QueryContext } from '../context/QueryContext';
 import EventChart from '../charts/EventChart';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import GrafanaEventChart from '../charts/GrafanaEventChart/GrafanaEventChart';
 import { stringToColour as colourGenerator } from './GraphsContainer/helpers';
 

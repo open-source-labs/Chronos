@@ -84,7 +84,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
     // console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
 
     // Mongo Database
-    // console.log('data.ts line 100 CurrentDataBase TYPE:', currentDatabaseType);
+    console.log('data.ts line 100 CurrentDataBase TYPE:', currentDatabaseType);
     if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
       //>>>>>

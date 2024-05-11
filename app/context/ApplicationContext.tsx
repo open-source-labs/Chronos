@@ -38,13 +38,12 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    */
   // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
-   
+
     ipcRenderer.send('servicesRequest');
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
       //data here refers to the services coming the services document of the database
       let result: any;
       result = JSON.parse(data);
-      // console.log({result})
       setServicesData(result);
       ipcRenderer.removeAllListeners('servicesResponse');
     });
