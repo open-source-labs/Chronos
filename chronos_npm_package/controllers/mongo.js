@@ -108,13 +108,11 @@ mongo.communications = ({ microservice, slack, email }) => {
 mongo.health = async ({ microservice, interval, mode }) => {
   //MetricsModel tracks which metrics are selected in the MetricsContainer component
   //HealthModel tracks all the cpu health data in each of the services databases
-  const getCurrentMets = async () => await MetricsModel.find({ mode });
-  const currentMetrics = async () => await getCurrentMets()
-  currentMetrics()
 
   setInterval(() => {
     collectHealthData()
       .then(async healthMetrics => {
+        const currentMetrics = await MetricsModel.find({mode})
         
         if (currentMetrics.length !== healthMetrics.length) {
           await mongo.addMetrics(healthMetrics, mode, currentMetrics);
