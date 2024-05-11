@@ -84,7 +84,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
     // console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
 
     // Mongo Database
-    // console.log('data.ts line 100 CurrentDataBase TYPE:', currentDatabaseType);
+    console.log('data.ts line 100 CurrentDataBase TYPE:', currentDatabaseType);
     if (currentDatabaseType === 'MongoDB' ) {
       // Get all documents from the services collection
       //>>>>>
@@ -115,10 +115,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-
-    // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get all documents
       result = await CommunicationModel.find().exec();
       // console.log({result})
     }
@@ -147,9 +144,7 @@ ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: stri
 
   try {
     let result: any;
-    // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      //NOT WORKING CULPRIT IS HERE
       result = await mongoFetch(service);
     }
 
@@ -211,27 +206,22 @@ ipcMain.on('dockerRequest', async (message, service) => {
   }
 });
 
-// This event allows the user to change which metrics are saved by the database, so that their database doesn't get bloated with unnecessary data that they don't actually want.
+// This event grabs the metric data from the metric database. 
+// Storing the metrics is done to allow the user to select which metrics
+// they want to see in the metrics container component
 ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any = {};
-    // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get all documents from the services collection
       result = await MetricsModel.find().lean();
     }
 
-    // SQL Database
     if (currentDatabaseType === 'SQL') {
-      // Get all rows from the metrics table
       const query = `SELECT * FROM metrics;`;
       result = await pool.query(query);
       result = result.rows;
     }
-
-    // Async event emitter - send response
     message.sender.send('savedMetricsResponse', result);
-    // eslint-disable-next-line no-shadow
   } catch (err) {
     if (err) console.log('Error in "metricsRequest" event :', err.message);
   }

@@ -33,7 +33,7 @@ interface Params {
 const GraphsContainer: React.FC = React.memo(() => {
   const { app, service } = useParams<keyof Params>() as Params;
   const [live, setLive] = useState<boolean>(false);
-  const { intervalID, setIntervalID, example, chart, setChart } = useContext(ApplicationContext);
+  const { intervalID, setIntervalID, chart, setChart } = useContext(ApplicationContext);
   const { getSavedMetrics } = useContext(ApplicationContext);
   const { fetchHealthData, setHealthData } = useContext(HealthContext);
   const { setDockerData, dockerData } = useContext(DockerContext);
@@ -47,7 +47,6 @@ const GraphsContainer: React.FC = React.memo(() => {
 
   useEffect(() => {
     const serviceArray = service.split(' ');
-    // You would think you should add "kubernetesmetrics" into the below for consistency's sake but it makes it  not work correctly, so it has been omitted
     const healthServiceArray = serviceArray.filter(
       (value: string) => value !== 'kafkametrics' && value !== 'kubernetesmetrics'
     );
@@ -60,23 +59,27 @@ const GraphsContainer: React.FC = React.memo(() => {
           if (service.includes('kafkametrics')) {
             fetchEventData('kafkametrics');
           }
-          // JJ-ADDITION
           if (service.includes('kubernetesmetrics')) {
             fetchEventData('kubernetesmetrics');
           }
         }, 10000)
       );
     } else {
+      //This block gets data from the metrics db, the health data from each of the services respective dbs and the communcations logs in the communications db
+      //The respective states are commsData, healthData and savedMetrics
       if (intervalID) clearInterval(intervalID);
+      // gets all the communication logs from the communications database and sets the communications data state
       fetchCommsData(app, live);
+      // gets all health data stored in each of the services databases
       fetchHealthData(healthServiceArray);
+      //kafka and kubernetes are currently not hooked up so these blocks will never fire
       if (service.includes('kafkametrics')) {
         fetchEventData('kafkametrics');
       }
-      // JJ-ADDITION
       if (service.includes('kubernetesmetrics')) {
         fetchEventData('kubernetesmetrics');
       }
+      // gets all metric data (cpu related metrics)
       getSavedMetrics();
     }
 
@@ -88,7 +91,6 @@ const GraphsContainer: React.FC = React.memo(() => {
     };
   }, [service, live]);
 
-  //random variable to hold the light or dark mode of the display?..ok....sure
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
 
   return (

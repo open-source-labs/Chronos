@@ -8,34 +8,41 @@ interface IService {
 
 
 const ServicesLink = (props) => {
+  const { services, setServices, servicesData, app} = props;
+
   const toggleService = service => {
-    if (props.services.includes(service)) {
-      props.setServices(props.services.filter(el => el !== service));
+    if (services.includes(service)) {
+      setServices(services.filter(el => el !== service));
     } else {
-      if (service !== 'communications' && props.services.includes('communications')) props.setServices([]);
-      props.setServices(props.services.concat(service));
+      if (service !== 'communications' && services.includes('communications')) setServices([]);
+      setServices(services.concat(service));
     }
   };
 
   return (
 
     <div className="services-links">
-      {props.servicesData.map((service: IService, index: number) => (
+      {servicesData.map((service: IService, index: number) => (
         <div
           key={`${index}servicesData`}
-          className={props.services.includes(service.microservice) ? 'link selected' : 'link'}
+          className={services.includes(service.microservice) ? 'link selected' : 'link'}
           onClick={() => toggleService(service.microservice)}
         >
           {service.microservice}
         </div>
       ))}
-      <Link id='selectLink'
-        className="router link"
-        to={props.services.length > 0 ? `/applications/${props.app}/${props.services.join(' ')}` : '#'}
+      <Link
+        className="selectLink router link"
+        to={services.length > 0 ? `/applications/${app}/${services.join(' ')}` : '#'}
       >
-        {props.services.length === 0 && 'Select Services'}
-        {props.services.length === 1 && 'Display Service'}
-        {props.services.length > 1 && 'Compare Services'}
+        {services.length === 0 && 'Select Services'}
+        {services.length === 1 && 'Display Service'}
+        {services.length > 1 && 'Compare Services'}
+      </Link>
+      <Link
+        className="selectLink router link"
+        to={`/applications/${app}/client event-bus items inventory orders auth`}>
+        Select All Services
       </Link>
     </div>
   )

@@ -22,13 +22,11 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
   const children = props.children;
   const [ example,setExample ] = useState(false)
   const [chart, setChart] = useState<string>('all');
-
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-
 
   /**
    * @function fetchServicesNames - a function that will take an application name and update the state of `serviceData` based on backend response
@@ -40,16 +38,12 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    */
   // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
-    // console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
-    console.log('app when fetch services name: ', application);
-    console.log(application)
+
     ipcRenderer.send('servicesRequest');
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
-      //data here refers to the data coming the services document of the database
+      //data here refers to the services coming the services document of the database
       let result: any;
       result = JSON.parse(data);
-      console.log('result from ipcrenderer services response is: ', result);
-      // console.log('Calling setServicesData passing in above result. Current servicesData is the following: ', servicesData);
       setServicesData(result);
       ipcRenderer.removeAllListeners('servicesResponse');
     });
@@ -88,8 +82,6 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       data.forEach(el => {
         store[el.metric] = el;
       });
-      // console.log({store})
-      // console.log('result from getSavedMetrics is: ', store);
       setSavedMetrics(store);
     });
   }, []);
