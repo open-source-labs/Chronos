@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DashboardContext } from "../../context/DashboardContext";
-import { ApplicationContext } from "../../context/ApplicationContext";
+import { DashboardContext } from '../../context/DashboardContext';
+import { ApplicationContext } from '../../context/ApplicationContext';
 
 type ClickEvent = React.MouseEvent<HTMLElement>;
 
@@ -10,9 +10,10 @@ interface EventHandlersProps {
   setModal: (modalState: { isOpen: boolean; type: string }) => void;
 }
 
-export const useEventHandlers = ({ application, setModal }: EventHandlersProps) => {
+export const getEventHandlers = ({ application, setModal }: EventHandlersProps) => {
   const { deleteApp, user } = useContext(DashboardContext);
-  const { setAppIndex, setApp, setServicesData, app, example, connectToDB, setChart } = useContext(ApplicationContext);
+  const { setAppIndex, setApp, setServicesData, app, example, connectToDB, setChart } =
+    useContext(ApplicationContext);
   const navigate = useNavigate();
 
   const handleClick = (selectedApp: string, selectedService: string, i: number) => {
@@ -35,7 +36,7 @@ export const useEventHandlers = ({ application, setModal }: EventHandlersProps) 
   const confirmDelete = (event: ClickEvent, i: number) => {
     event.stopPropagation();
     const message = `The application '${app}' will be permanently deleted. Continue?`;
-    if (confirm(message)) deleteApp(i, "");
+    if (confirm(message)) deleteApp(i, '');
   };
 
   return { handleClick, confirmDelete };
