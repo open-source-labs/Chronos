@@ -6,9 +6,9 @@ import { EventContext } from '../context/EventContext';
 import { DataGrid } from '@material-ui/data-grid';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
+
 import { Button, TextField } from '@mui/material';
 import SearchBar from './SearchBar/SearchBar';
-
 
 interface Params {
   service: string;

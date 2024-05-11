@@ -1,10 +1,10 @@
 const path = require('path');
 const express = require('express');
 
-const PORT = 5000;
+const PORT = 5001;
 
 const chronosConfig = require('./chronos-config');
-const Chronos = require('@chronosmicro/tracker');
+const Chronos = require('../../../../chronos_npm_package/chronos.js');
 const chronos = new Chronos(chronosConfig);
 chronos.propagate();
 

@@ -35,12 +35,12 @@ const mongoFetch = async (
   try {
     //We are creating models to populate with data for each service
     const testModel = HealthModelFunc(serviceName);
-    const grafanaAPIKey = await GrafanaAPIKeyModel.find({});
+    // const grafanaAPIKey = await GrafanaAPIKeyModel.find({});
     let result = await testModel.aggregate(aggregator);
-    console.log({result})
-    for (let i = 0; i < result.length; i++) {
-      result[i].token = grafanaAPIKey[0].token;
-    }
+    // console.log({result})
+    // for (let i = 0; i < result.length; i++) {
+      // result[i].token = grafanaAPIKey[0].token;
+    // }
     result = [{ [serviceName]: result }];
     return result;
   } catch (error) {

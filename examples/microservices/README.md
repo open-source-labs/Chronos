@@ -61,7 +61,7 @@ To spin up the example application:
 2. Run `npm run pkg:install` to install all necessary dependencies
 3. Run `npm start`
 
-Open a web browser to `localhost:5000` to send requests from the client
+Open a web browser to `localhost:5001` to send requests from the client
 
 Your microservice health metrics may be viewed in the given `CHRONOS_URI` database, or in the Electron.js desktop application.
 
