@@ -56,48 +56,30 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
    */
 
   const fetchHealthData = useCallback(async servers => {
-    // ipcRenderer.removeAllListeners('healthResponse');
 
     let temp: HealthDataObject[] = [];
-    await Promise.all(servers.map( async (service: string) => {
-      ipcRenderer.removeAllListeners('healthResponse');
+    servers.map( async (service: string) => {
       
-      try {
-        const newPromise: any = await new Promise((resolve, reject) => {
-          ipcRenderer.send('healthRequest', `${service}`);
-          ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
-            //V14: the line does not appear necessary, leaving it here commented out in case another group runs into a problem
-            // if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
-              const response = JSON.parse(data);
-              // console.log({response})
-              const [ dbName ] = Object.keys(response[0])
-              //result exists, has a length prop, and the service name and database name are same
-              console.log({service,dbName})
-              //V14: this block is needed here because of unecessary calls for each service
-              //a prior group was getting the dbName from the response object and since objects dont remember
-              //insertion order they are running all the calls for each service in the array
-              if (response && response.length && `${service}` === dbName) {
-                resolve(response[0]);
-              }
-            // }
-          });
-        })
-        temp.push(newPromise);
-        if (checkServicesComplete(temp, [`${service}`])) {
-          console.log({temp})
+    try {
 
+      ipcRenderer.removeAllListeners('healthResponse');
+      ipcRenderer.send('healthRequest', `${service}`);
+      ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
+        
+        const response = JSON.parse(data);
+        temp.push(response[0]);
+
+        if(temp.length === servers.length) {
+          console.log(temp.length,servers.length)
           setServices([`${service}`]);
           let transformedData: any = {};
           transformedData = healthTransformer(temp); //must match the setHealthData STATE format
           setHealthData(transformedData);
         }
-        } catch (err) {
-        console.log("healthcontext.tsx ERROR: ", err);
-      };
-    }
-   
-    ))
-    } , []);
+      });
+    } catch (err) {
+    console.log("healthcontext.tsx ERROR: ", err);
+  }})} , []);
 
   const checkServicesComplete = (temp: any[], servers: string[]) => {
     if (temp.length !== servers.length) {

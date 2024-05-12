@@ -38,6 +38,7 @@ interface HealthDataObject {
 
 export function healthTransformer(healthData: HealthDataObject[]) {
   // make an object for storing different services' metrics data
+  console.log({healthData})
   const serviceMetricsObject = {};
   // loop through the services in the healthData array
   healthData.forEach(serviceObj => {
