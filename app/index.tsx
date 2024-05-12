@@ -11,11 +11,6 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import App from './App';
 import WindowBar from './components/WindowBar/WindowBar';
 
-// declare module '@mui/styles/defaultTheme' {
-//   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-//   interface DefaultTheme extends Theme {}
-// }
-
 
 const theme = createTheme(adaptV4Theme({
   // v4 theme
@@ -23,11 +18,6 @@ const theme = createTheme(adaptV4Theme({
     fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
 }));
-// const theme = createTheme(adaptV4Theme({
-//   typography: {
-//     fontFamily: ['Roboto', 'sans-serif'].join(','),
-//   },
-// }));
 
 // React 17 Syntax below
 ReactDOM.render(
