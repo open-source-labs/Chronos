@@ -4,7 +4,6 @@ import { ApplicationContext } from '../../context/ApplicationContext'
 import { QueryContext } from '../../context/QueryContext'
 import { CommsContext } from '../../context/CommsContext'
 import { HealthContext } from '../../context/HealthContext'
-import { Link } from 'react-router-dom';
 
 const GraphNavBar = (props) => {
 
@@ -18,6 +17,7 @@ const GraphNavBar = (props) => {
   const navigate = useNavigate();
 
   const routing = (route: string) => {
+    console.log({servicesData})
     if (location.href.includes('communications')) {
       if (prevRoute === '') navigate(`${servicesData[0].microservice}`);
       else navigate(prevRoute);
@@ -50,7 +50,8 @@ const GraphNavBar = (props) => {
         );
       });
     }
-
+    // console.log(selectedMetrics)
+    // console.log(buttonList)
     return buttonList;
   };
 

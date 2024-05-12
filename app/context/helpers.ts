@@ -44,6 +44,7 @@ export function healthTransformer(healthData: HealthDataObject[]) {
     // grab the key string from the current service object
     const serviceName = Object.keys(serviceObj)[0];
     const serviceElements = serviceObj[serviceName];
+    console.log(serviceObj)
     // console.log('serviceElements: ', serviceElements);
     // add the serviceName as a key on the serviceMetricsObject and assign it an empty object
     serviceMetricsObject[serviceName] = {};

@@ -34,6 +34,7 @@ interface HealthDataObject {
 const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [healthData, setHealthData] = useState<any>({ healthDataList: [], healthTimeList: [] });
   const [services, setServices] = useState<Array<string>>([]);
+  console.log({services})
 
   function tryParseJSON(jsonString: any) {
     try {
@@ -55,46 +56,46 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
    */
 
   const fetchHealthData = useCallback(async servers => {
-    ipcRenderer.removeAllListeners('healthResponse');
+    // ipcRenderer.removeAllListeners('healthResponse');
 
     let temp: HealthDataObject[] = [];
     await Promise.all(servers.map( async (service: string) => {
-      //NOT WORKING HERE
+      ipcRenderer.removeAllListeners('healthResponse');
+      
       try {
         const newPromise: any = await new Promise((resolve, reject) => {
           ipcRenderer.send('healthRequest', `${service}`);
           ipcRenderer.on('healthResponse', (event: Electron.Event, data: string) => {
-            let result: object[];
-            // console.log({data})
-            if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
-              result = JSON.parse(data);
-              // console.log({result})
-              // console.log('HealthContext.tsx line 68 result: ', result, 'service', service, 'Obj key', Object.keys(result[0])[0]);
+            //V14: the line does not appear necessary, leaving it here commented out in case another group runs into a problem
+            // if (JSON.stringify(data) !== '{}' && tryParseJSON(data)) {
+              const response = JSON.parse(data);
+              // console.log({response})
+              const [ dbName ] = Object.keys(response[0])
               //result exists, has a length prop, and the service name and database name are same
-              if (result && result.length && `${service}` === Object.keys(result[0])[0]) {
-                resolve(result[0]);
+              console.log({service,dbName})
+              //V14: this block is needed here because of unecessary calls for each service
+              //a prior group was getting the dbName from the response object and since objects dont remember
+              //insertion order they are running all the calls for each service in the array
+              if (response && response.length && `${service}` === dbName) {
+                resolve(response[0]);
               }
-            }
+            // }
           });
         })
         temp.push(newPromise);
-        // console.log('HealthContext.tsx line 80 temp populates?: ', temp, serv)
         if (checkServicesComplete(temp, [`${service}`])) {
+          console.log({temp})
+
           setServices([`${service}`]);
           let transformedData: any = {};
-          // console.log('original healthData before transformation: ', temp);
-          // transformedData = {
-          //   healthDataList: [1,2,3,4,5],
-          //   healthTimeList: [1,2,3,4,5]
-          // } //testing typescript, transformedDATA of type 2 arrays with basic entries?
           transformedData = healthTransformer(temp); //must match the setHealthData STATE format
-          // console.log('healthData after tranformation: ', transformedData);
           setHealthData(transformedData);
         }
         } catch (err) {
-        // console.log("healthcontext.tsx ERROR: ", err);
+        console.log("healthcontext.tsx ERROR: ", err);
       };
     }
+   
     ))
     } , []);
 
@@ -104,9 +105,9 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
     }
     const arr1: string[] = [];
     for (let i = 0; i < temp.length; i++) {
-      arr1.push(Object.keys(temp[i])[0]);
+      const [ serviceName ] = Object.keys(temp[i])
+      arr1.push(serviceName);
     }
-    // console.log('in checkServicesComplete line 139: ', arr1);
     return arr1.sort().toString() === servers.sort().toString();
   };
 

@@ -102,7 +102,12 @@ const GraphsContainer: React.FC = React.memo(() => {
         inspect={inspect}
         setInspect={setInspect}
       />
-      <Header app={app} service={service} live={live} setLive={setLive} />
+      <Header 
+        app={app} 
+        service={service} 
+        live={live} 
+        setLive={setLive} 
+      />
 
       {inspect && <Inspect />}
 

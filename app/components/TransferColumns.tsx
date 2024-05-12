@@ -16,7 +16,9 @@ interface Params {
 
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState<any[]>([]);
+  // console.log({targetKeys})
   const [metricsPool, setMetricsPool] = useState<any[]>([]);
+  // console.log({metricsPool})
   const [healthMetricsReady, setHealthMetricsReady] = useState(false);
   const [healthMetrics, setHealthMetrics] = useState<any[]>([]);
   const [eventMetricsReady, setEventMetricsReady] = useState(false);
@@ -34,6 +36,7 @@ const TransferColumns = React.memo(() => {
 
   useEffect(() => {
     if (healthData) {
+      console.log({healthData})
       setHealthMetricsReady(true);
     }
   }, [healthData]);
@@ -122,9 +125,10 @@ const TransferColumns = React.memo(() => {
   };
 
   const createSelectedMetricsList = () => {
+
     const temp: any[] = [];
     const categorySet = new Set();
-    // console.log('Inside TransferColumns.txs line 124 targetKeys: ', targetKeys)
+
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -209,6 +213,7 @@ const TransferColumns = React.memo(() => {
             checkboxSelection
             disableSelectionOnClick
             onSelectionModelChange={metricIndeces => {
+              console.log({metricIndeces})
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
                 metrics.push(metricsPool[el].key);
