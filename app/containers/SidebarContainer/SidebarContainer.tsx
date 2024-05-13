@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 
 import ListIcon from '@mui/icons-material/List';
 import InfoIcon from '@mui/icons-material/Info';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CallIcon from '@mui/icons-material/Call';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import { Typography } from '@mui/material';
 
 import './styles.scss';
 import { ApplicationContext } from '../../context/ApplicationContext';
@@ -125,7 +127,7 @@ const SidebarContainer = React.memo(() => {
             &emsp;About
           </Link>
           <Link className="sidebar-link" to="/contact" id="contact" onClick={handleClick}>
-            <ContactSupportIcon
+            <CallIcon
               style={{
                 WebkitBoxSizing: 'content-box',
                 boxShadow: 'none',
@@ -136,23 +138,31 @@ const SidebarContainer = React.memo(() => {
             &emsp;Contact
           </Link>
           <Link className="sidebar-link" to="/" id="dash" onClick={handleClick}>
+          <LightbulbIcon
+              style={{
+                WebkitBoxSizing: 'content-box',
+                boxShadow: 'none',
+                width: '35px',
+                height: '35px',
+              }}
+            />
             {!example ?
             
               <button 
                 className="example-button"
                 onClick={() => handleExample()}
               >
-                  EXAMPLE
+                  Example
               </button>
               :
               <button
                 className="example-button"
                 onClick={() => handleExitExample()}
               >
-                EXIT EXAMPLE
+                Exit Example
               </button>
-            
             }       
+            
           </Link>
         </div>
       </div>
