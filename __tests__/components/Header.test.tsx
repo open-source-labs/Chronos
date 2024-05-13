@@ -2,7 +2,7 @@
 /* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Header from '../../app/components/Header';
+import Header from '../../app/components/Header/Header';
 import { DashboardContext } from '../../app/context/DashboardContext';
 import { ApplicationContext } from '../../app/context/ApplicationContext';
 import { HashRouter as Router } from 'react-router-dom';

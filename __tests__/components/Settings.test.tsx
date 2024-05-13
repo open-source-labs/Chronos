@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Settings from '../../app/components/Settings';
+import Settings from '../../app/components/Setting/Setting';
 import { DashboardContext } from '../../app/context/DashboardContext';
 import '@testing-library/jest-dom';
 
