@@ -73,6 +73,7 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
           console.log(temp.length,servers.length)
           setServices([`${service}`]);
           let transformedData: any = {};
+          console.log({temp})
           transformedData = healthTransformer(temp); //must match the setHealthData STATE format
           setHealthData(transformedData);
         }
