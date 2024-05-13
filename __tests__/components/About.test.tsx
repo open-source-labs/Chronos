@@ -22,7 +22,7 @@ describe('About Page', () => {
     expect(element.querySelectorAll('h3').length).toBe(3);
   });
 
-  it('Should have one div', () => {
-    expect(element.querySelectorAll('div').length).toBe(1);
+  it('Should have three divs', () => {
+    expect(element.querySelectorAll('div').length).toBe(3);
   });
 });

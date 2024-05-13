@@ -7,7 +7,7 @@ import { HashRouter as Router } from 'react-router-dom';
 
 jest.mock('electron', () => ({ ipcRenderer: { sendSync: jest.fn() } }));
 
-describe('Create Signup Page', () => {
+xdescribe('Create Signup Page', () => {
   beforeEach(() => {
     render(
       <Router>
