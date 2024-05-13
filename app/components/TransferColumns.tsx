@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+import { GridToolbar } from '@mui/x-data-grid/components';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
 
 import { Button, TextField } from '@mui/material';
-import SearchBar from './SearchBar/SearchBar';
+
 
 interface Params {
   service: string;
@@ -205,16 +206,23 @@ const TransferColumns = React.memo(() => {
             style={currentMode}
             rows={rows}
             columns={columns}
-            pageSize={10}
+            slots={{ toolbar: GridToolbar }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+            pageSizeOptions ={[10]}
             checkboxSelection
-            disableSelectionOnClick
-            onSelectionModelChange={metricIndeces => {
+            disableRowSelectionOnClick
+            onRowSelectionModelChange={metricIndeces => {
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
                 metrics.push(metricsPool[el].key);
               });
               setTargetKeys(metrics);
             }}
+            
           />
           
         </div>
