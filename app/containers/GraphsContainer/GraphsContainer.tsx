@@ -120,7 +120,8 @@ const GraphsContainer: React.FC = React.memo(() => {
             <RouteChart />
             <LogsTable />
           </div>
-        ) : (
+        ) : 
+        (
           <div className="graphs">
             {chart === 'all' && (
               <div className="transferColumns">
