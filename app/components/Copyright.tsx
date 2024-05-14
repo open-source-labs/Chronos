@@ -10,7 +10,7 @@ const Copyright: React.FC = React.memo(() => {
     copyright: {
       fontFamily: 'Roboto',
       position: 'fixed',
-      color: '#ffffff',
+      color: '#FAFDF9',
     },
   }));
   const classes = useStyles();
