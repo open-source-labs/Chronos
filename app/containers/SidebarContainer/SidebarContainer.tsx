@@ -43,13 +43,6 @@ const SidebarContainer = React.memo(() => {
         URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
         name: 'Microservices-Mongo',
         description: 'Mongo Microservices Example'
-      },
-      microServicesSQLFields: {
-        typeOfService: 'Microservices',
-        database: 'SQL',
-        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-        name: 'Microservices-SQL',
-        description: 'SQL Microservices Example'
       }
       ,
       dockerMongoData: {
@@ -57,13 +50,6 @@ const SidebarContainer = React.memo(() => {
         database: 'MongoDB',
         URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
         name: 'Docker-Mongo',
-        description: 'Docker Example'
-      },
-      dockerSQLData: {
-        typeOfService: 'Docker',
-        database: 'SQL',
-        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-        name: 'Docker-SQL',
         description: 'Docker Example'
       }
     }
