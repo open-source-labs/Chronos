@@ -206,9 +206,10 @@ const TransferColumns = React.memo(() => {
         <div style={{ height: '500px', width: '100%' }}>
         
           <DataGrid
-            style={currentStyle }
+            // style={currentStyle }
             rows={rows}
             columns={columns}
+            style={currentStyle}
             slots={{ toolbar: GridToolbar }}
               slotProps={{
                 toolbar: {
@@ -230,7 +231,8 @@ const TransferColumns = React.memo(() => {
           
         </div>
         {selectedRows.length > 0 && (
-          <h3 style={{ marginTop: '20px', color: currentStyle.color }}>Selected Rows:</h3>
+          <h3 style={{ marginTop: '20px', color: 'currentStyle',}}
+          >Selected Rows:</h3>
         )}
         <ol id="selectedRows">{selectedRows}</ol>
       </div>
