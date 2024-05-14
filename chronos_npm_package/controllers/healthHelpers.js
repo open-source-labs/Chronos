@@ -199,7 +199,6 @@ healthHelpers.collectHealthData = async() => {
    */
   await si.inetLatency()
     .then(data => {
-      const siMethodName = 'inetLatency';
       healthDataCollection.push({
         metric: 'latency',
         value: data,
