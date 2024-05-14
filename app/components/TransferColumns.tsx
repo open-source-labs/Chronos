@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { ApplicationContext } from '../context/ApplicationContext';
 import { useParams } from 'react-router-dom';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
@@ -17,7 +18,9 @@ interface Params {
 
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState<any[]>([]);
+  // console.log({targetKeys})
   const [metricsPool, setMetricsPool] = useState<any[]>([]);
+  // console.log({metricsPool})
   const [healthMetricsReady, setHealthMetricsReady] = useState(false);
   const [healthMetrics, setHealthMetrics] = useState<any[]>([]);
   const [eventMetricsReady, setEventMetricsReady] = useState(false);
@@ -31,11 +34,14 @@ const TransferColumns = React.memo(() => {
   const { mode } = useContext(DashboardContext.DashboardContext);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
+  const { savedMetrics } = useContext(ApplicationContext)
+
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
   const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
 
   useEffect(() => {
     if (healthData) {
+      console.log({healthData})
       setHealthMetricsReady(true);
     }
   }, [healthData]);
@@ -103,7 +109,7 @@ const TransferColumns = React.memo(() => {
         }
       }
     } else {
-      // iterate throught the healthData object to populate the `Metrics Query` tab with metrics options
+      // iterate throughout the healthData object to populate the `Metrics Query` tab with metrics options
       // The pool array wants an object with a specific format in order to populate the selection table
       for (const service in dataObject) {
         const categoryObjects = dataObject[service];
@@ -124,9 +130,10 @@ const TransferColumns = React.memo(() => {
   };
 
   const createSelectedMetricsList = () => {
+
     const temp: any[] = [];
     const categorySet = new Set();
-    // console.log('Inside TransferColumns.txs line 124 targetKeys: ', targetKeys)
+
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -170,21 +177,31 @@ const TransferColumns = React.memo(() => {
   ];
 
   // makes the rows needed for the selection grid
-  const rows: any[] = [];
-  metricsPool.forEach((el, index) => {
-    const row = {
-      id: index,
-      tag: el.tag,
-      title: el.title.split(' | ')[1].replace(/.*\/.*\//g, ''),
-    }; // gets rid of the full path
-    rows.push(row);
-  });
+  const rows:any[] = []
+  let id = 0
+  for(let savedMetric of Object.keys(savedMetrics)) {
+   
+    const { metric,category } = savedMetrics[savedMetric]
+    rows.push({
+      id:id++,
+      tag:category,
+      title:metric
+    })
+  }
 
   // makes the Printed list of 'currently selected rows' on the page using targetKeys array
   const selectedRows: any[] = [];
   targetKeys.forEach(el => {
     selectedRows.push(
-      <li style={{ marginLeft: '30px', marginTop: '5px', color: currentMode.color }}>{el}</li>
+      <li 
+        style={{ 
+          marginLeft: '30px', 
+          marginTop: '5px', 
+          color: currentMode.color 
+          }}
+      >
+        {el}
+      </li>
     );
   });
 
@@ -222,7 +239,8 @@ const TransferColumns = React.memo(() => {
             onRowSelectionModelChange={metricIndeces => {
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
-                metrics.push(metricsPool[el].key);
+                console.log({rows})
+                metrics.push(`${rows[el].tag} | ${rows[el].title}`);
               });
               setTargetKeys(metrics);
             }}
@@ -231,10 +249,20 @@ const TransferColumns = React.memo(() => {
           
         </div>
         {selectedRows.length > 0 && (
-          <h3 style={{ marginTop: '20px', color: 'currentStyle',}}
-          >Selected Rows:</h3>
+          <h3 
+            style={{ 
+              marginTop: '20px', 
+              color: 'currentStyle'
+            }}
+          >
+            Selected Rows:
+          </h3>
         )}
-        <ol id="selectedRows">{selectedRows}</ol>
+        <ol 
+          id="selectedRows"
+        >
+            {selectedRows}
+        </ol>
       </div>
     </>
   );

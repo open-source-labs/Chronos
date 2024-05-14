@@ -1,5 +1,6 @@
-import React from 'react';
-import { Card, CardHeader, IconButton, CardContent, Typography } from '@mui/material';
+
+import React from "react";
+import { Card,CardHeader,IconButton,CardContent,Typography } from "@mui/material";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import UpdateIcon from '@mui/icons-material/Update';
 import './styles.scss';
@@ -12,8 +13,11 @@ interface ApplicationCardProps {
   classes: any;
 }
 
-const ApplicationsCard: React.FC<ApplicationCardProps> = (props: ApplicationCardProps) => {
-  const { application, i, setModal, classes } = props;
+import './styles.scss'
+
+const ApplicationsCard:React.FC<ApplicationCardProps> = (props) => {
+
+  const { application, i, setModal, classes } = props
   const { handleClick, confirmDelete } = getEventHandlers({ application, setModal });
 
   return (

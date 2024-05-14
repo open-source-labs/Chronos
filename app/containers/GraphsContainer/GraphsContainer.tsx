@@ -102,7 +102,12 @@ const GraphsContainer: React.FC = React.memo(() => {
         inspect={inspect}
         setInspect={setInspect}
       />
-      <Header app={app} service={service} live={live} setLive={setLive} />
+      <Header 
+        app={app} 
+        service={service} 
+        live={live} 
+        setLive={setLive} 
+      />
 
       {inspect && <Inspect />}
 
@@ -115,11 +120,16 @@ const GraphsContainer: React.FC = React.memo(() => {
             <RouteChart />
             <LogsTable />
           </div>
-        ) : (
-          <div className="graphs" style= {currentStyle}>
+        ) : 
+        (
+          <div className="graphs">
             {chart === 'all' && (
               <div className="transferColumns">
-                <h2 style={currentMode}>Search Your Metrics to Display</h2>
+                <h2 
+                  style={currentMode}
+                >
+                  Search Your Metrics to Display
+                </h2>
                 <TransferColumns />
               </div>
             )}

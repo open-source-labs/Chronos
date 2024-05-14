@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 import ListIcon from '@mui/icons-material/List';
 import InfoIcon from '@mui/icons-material/Info';
@@ -12,6 +12,7 @@ import './styles.scss';
 import { ApplicationContext } from '../../context/ApplicationContext';
 import { AwsContext } from '../../context/AwsContext';
 import { DashboardContext } from '../../context/DashboardContext';
+import { QueryContext } from '../../context/QueryContext';
 
 const SidebarContainer = React.memo(() => {
   // Extract invervalID from ApplicationContext. Initival value: intervalID = null
@@ -20,6 +21,9 @@ const SidebarContainer = React.memo(() => {
   const { isLoading, setLoadingState } = useContext(AwsContext);
   // clear interval and set loading state to true when leaving graph containers
   const { addApp,setApplications,deleteApp } = useContext(DashboardContext)
+  const { setSelectedMetrics } = useContext(QueryContext)
+
+  const navigate = useNavigate();
 
   /**
    * @function handleCLick - check if the 'intervalID' exists. If so, theres a timer running and the fuunction clears the timer using @function clearInterval - function.
@@ -41,13 +45,6 @@ const SidebarContainer = React.memo(() => {
         URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
         name: 'Microservices-Mongo',
         description: 'Mongo Microservices Example'
-      },
-      microServicesSQLFields: {
-        typeOfService: 'Microservices',
-        database: 'SQL',
-        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-        name: 'Microservices-SQL',
-        description: 'SQL Microservices Example'
       }
       ,
       dockerMongoData: {
@@ -56,13 +53,6 @@ const SidebarContainer = React.memo(() => {
         URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
         name: 'Docker-Mongo',
         description: 'Docker Example'
-      },
-      dockerSQLData: {
-        typeOfService: 'Docker',
-        database: 'SQL',
-        URI: "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5",
-        name: 'Docker-SQL',
-        description: 'Docker Example'
       }
     }
 
@@ -70,13 +60,15 @@ const SidebarContainer = React.memo(() => {
   }
 
   const handleExitExample = () => {
+
     setExample(false)
-    // setApplications([])
     setAppIndex(0);
     setApp('');
     setServicesData([]);
-    setChart('communications')
+    setChart('all')
     deleteApp(0,'all')
+    setSelectedMetrics([])
+    navigate("/")
   }
 
   return (
