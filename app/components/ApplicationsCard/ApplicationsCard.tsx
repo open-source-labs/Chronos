@@ -44,7 +44,7 @@ const ApplicationsCard = (props) => {
       } 
       else if(example) {
         setServicesData([]);
-        setChart('communications')
+        setChart('all')
 
         connectToDB(user, i, app, dbURI, dbType)
         navigate(`/applications/example/${services.join(' ')}`)
