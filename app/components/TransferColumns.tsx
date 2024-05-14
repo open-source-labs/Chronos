@@ -225,10 +225,10 @@ const TransferColumns = React.memo(() => {
             checkboxSelection
             disableSelectionOnClick
             onSelectionModelChange={metricIndeces => {
-              console.log({metricIndeces})
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
-                metrics.push(metricsPool[el].key);
+                console.log({rows})
+                metrics.push(`${rows[el].tag} | ${rows[el].title}`);
               });
               setTargetKeys(metrics);
             }}
@@ -236,7 +236,8 @@ const TransferColumns = React.memo(() => {
           
         </div>
         {selectedRows.length > 0 && (
-          <h3 style={{ 
+          <h3 
+            style={{ 
             marginTop: '20px', 
             color: currentMode.color 
           }}
@@ -244,7 +245,11 @@ const TransferColumns = React.memo(() => {
             Selected Rows:
           </h3>
         )}
-        <ol id="selectedRows">{selectedRows}</ol>
+        <ol 
+          id="selectedRows"
+        >
+            {selectedRows}
+        </ol>
       </div>
     </>
   );
