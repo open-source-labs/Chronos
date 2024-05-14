@@ -5,32 +5,32 @@
 }
 
 .env-button {
-  background-color: transparent;
+  background-color: rgb(201, 198, 198);
   border: 0;
   outline: none;
   white-space: nowrap;
   margin: 10px;
   // padding: 0px;
-  color: $gblue !important;
+  color: white;
   box-shadow: $boxshadow;
   padding: 2rem;
   &:hover {
-    background-color: $lightpurple;
+    background-color: $gblue;
   }
 }
 
 .env-button2 {
-  background-color: transparent;
+  background-color: rgb(201, 198, 198);
   border: 0;
   outline: none;
   white-space: nowrap;
   margin: 10px;
   // padding: 0px;
-  color: $gblue !important;
+  color: white;
   box-shadow: $boxshadow;
   padding: 2rem;
   &:hover {
-    background-color: $lightpurple;
+    background-color: $gblue;
   }
 }
 
@@ -41,3 +41,4 @@ p {
 #card-env {
   margin: 40px 20px;
 }
+
