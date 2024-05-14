@@ -17,7 +17,6 @@ const GraphNavBar = (props) => {
   const navigate = useNavigate();
 
   const routing = (route: string) => {
-    console.log({servicesData})
     if (location.href.includes('communications')) {
       if (prevRoute === '') navigate(`${servicesData[0].microservice}`);
       else navigate(prevRoute);
@@ -50,8 +49,6 @@ const GraphNavBar = (props) => {
         );
       });
     }
-    // console.log(selectedMetrics)
-    // console.log(buttonList)
     return buttonList;
   };
 
