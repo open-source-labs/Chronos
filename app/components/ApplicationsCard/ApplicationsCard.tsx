@@ -13,12 +13,9 @@ type ClickEvent = React.MouseEvent<HTMLElement>;
 const ApplicationsCard = (props) => {
 
   const { application, i, setModal, classes } = props
-  const { deleteApp,user,applications } = useContext(DashboardContext)
+  const { deleteApp,user } = useContext(DashboardContext)
   const { setAppIndex, setApp, setServicesData, app,example,connectToDB,setChart } = useContext(ApplicationContext)
   const [ cardName,dbType,dbURI,description,serviceType ] = application
-
-  //dynamic refs
-  // const delRef = useRef<any>([]);
 
   const navigate = useNavigate();
 
