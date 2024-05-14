@@ -11,26 +11,27 @@ const EnvModal: React.FC<TModalSetter> = React.memo(
       <div className="add-container">
 
         <div className="card" id="card-env">
-          <button
+          <Button
             className="env-button"
             onClick={() => setModal({isOpen:true,type:'awsModal'})}
+            
           >
             <Typography>
               <CloudQueue fontSize="large" />
             </Typography>
-            <Typography>Cloud-Based</Typography>
-          </button>
+            <Typography>&emsp;Cloud-Based</Typography>
+          </Button>
 
           
-          <button
+          <Button
             className="env-button2"
             onClick={() => setModal({isOpen:true,type:'addModal'})}
           >
             <Typography>
               <Computer fontSize="large" />
             </Typography>
-            <Typography>Local Hosted</Typography>
-          </button>
+            <Typography>&emsp;Local Hosted</Typography>
+          </Button>
         </div>
       </div>
     );

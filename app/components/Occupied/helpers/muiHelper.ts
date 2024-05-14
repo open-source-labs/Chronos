@@ -1,9 +1,8 @@
 
 import { makeStyles } from '@mui/styles';
-// import { BaseCSSProperties } from '@mui/system';
 
  // Conditional Rendering of UI Modals for Light and Dark Mode
-// Theme, StyleProps
+//  StyleProps
 
 export const useStylesDark = makeStyles(theme => ({
   // ALL CARDS

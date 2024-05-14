@@ -17,7 +17,7 @@ const Contact: React.FC = React.memo(() => {
             <h1>Contact Us</h1>
             <br />
             <p>Please feel free to provide any feedback, concerns, or comments.</p>
-            <p>You can find issues the team is currently working on
+            <p>You can find issues the team is currently working on  <span></span>
               <a id="issueLink" href="https://github.com/open-source-labs/Chronos/issues" target="_blank" rel="noreferrer">
                 here
               </a>.
