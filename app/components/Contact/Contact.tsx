@@ -8,10 +8,11 @@ const Contact: React.FC = React.memo(() => {
   const { mode } = useContext(DashboardContext);
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
 
   return (
     <div className="contact" style={currentMode}>
-      <div className="contact-border" data-testid="contactPage">
+      <div className="contact-border" data-testid="contactPage" style={currentStyle}>
         <div className="contact-container">
           <div className="contact-blurb">
             <h1>Contact Us</h1>

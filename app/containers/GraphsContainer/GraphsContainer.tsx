@@ -92,7 +92,7 @@ const GraphsContainer: React.FC = React.memo(() => {
   }, [service, live]);
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
-
+  const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
   return (
     <>
       <GraphNavBar
@@ -116,7 +116,7 @@ const GraphsContainer: React.FC = React.memo(() => {
             <LogsTable />
           </div>
         ) : (
-          <div className="graphs">
+          <div className="graphs" style= {currentStyle}>
             {chart === 'all' && (
               <div className="transferColumns">
                 <h2 style={currentMode}>Search Your Metrics to Display</h2>

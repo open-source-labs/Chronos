@@ -7,6 +7,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { DashboardContext } from '../../context/DashboardContext'
 import { ApplicationContext } from '../../context/ApplicationContext';
 import './ServicesModal.scss';
+import lightAndDark from '../../components/Styling';
+
 
 import ServicesLink from './ServicesLink';
 
@@ -20,6 +22,8 @@ interface ServicesModalProps {
 // v10: Seems to never have been updated for cloud-based info...
 // servicesModal is re-rendered depending on i and application passed in...
 const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
+  const { mode } = useContext(DashboardContext);
+    const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
   //console.log('Hi, inside ServicesModal. Memoize function invoked in ServicesModal.');
   //console.log('ServicesModal current props (index, app): ', i, ' ', app);
 
@@ -44,7 +48,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
 
 
   return (
-    <div className="servicesContainer">
+    <div className="servicesContainer" style={currentStyle}>
       {!servicesData.length ? (
         <div className="loadingMessageModal">
           <h2 id="loadingMessage">Loading...</h2>
@@ -56,6 +60,7 @@ const ServicesModal: React.FC<ServicesModalProps> = React.memo(({ i, app }) => {
             <p>Select a server to monitor</p>
           </div>
           <ServicesLink 
+            
             app={app} 
             servicesData={servicesData} 
             services={services} 
