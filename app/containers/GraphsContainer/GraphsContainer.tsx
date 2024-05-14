@@ -124,7 +124,11 @@ const GraphsContainer: React.FC = React.memo(() => {
           <div className="graphs">
             {chart === 'all' && (
               <div className="transferColumns">
-                <h2 style={currentMode}>Search Your Metrics to Display</h2>
+                <h2 
+                  style={currentMode}
+                >
+                  Search Your Metrics to Display
+                </h2>
                 <TransferColumns />
               </div>
             )}
