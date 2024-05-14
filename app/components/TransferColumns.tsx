@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
-import { DataGrid } from '@mui/x-data-grid';
+import { GridColDef, DataGrid } from '@mui/x-data-grid';
 import { GridToolbar } from '@mui/x-data-grid/components';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
@@ -37,6 +37,7 @@ const TransferColumns = React.memo(() => {
   const { savedMetrics } = useContext(ApplicationContext)
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
 
   useEffect(() => {
     if (healthData) {
@@ -157,22 +158,25 @@ const TransferColumns = React.memo(() => {
   };
 
   // makes the column titles for the selection grid
-  const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', flex: 1, headerClassName: 'style',},
     {
       field: 'tag',
       headerName: 'Category',
       flex: 1,
       editable: true,
+      headerClassName: 'style',
     },
     {
       field: 'title',
       headerName: 'Metric',
       flex: 3,
       editable: true,
+      headerClassName: 'style',
     },
   ];
 
+  // makes the rows needed for the selection grid
   const rows:any[] = []
   let id = 0
   for(let savedMetric of Object.keys(savedMetrics)) {
@@ -219,9 +223,10 @@ const TransferColumns = React.memo(() => {
         <div style={{ height: '500px', width: '100%' }}>
         
           <DataGrid
-            style={currentMode}
+            // style={currentStyle }
             rows={rows}
             columns={columns}
+            style={currentStyle}
             slots={{ toolbar: GridToolbar }}
               slotProps={{
                 toolbar: {
@@ -240,15 +245,15 @@ const TransferColumns = React.memo(() => {
               setTargetKeys(metrics);
             }}
             
-            />
+          />
           
         </div>
         {selectedRows.length > 0 && (
           <h3 
             style={{ 
-            marginTop: '20px', 
-            color: currentMode.color 
-          }}
+              marginTop: '20px', 
+              color: 'currentStyle'
+            }}
           >
             Selected Rows:
           </h3>

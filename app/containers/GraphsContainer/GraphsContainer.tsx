@@ -92,7 +92,7 @@ const GraphsContainer: React.FC = React.memo(() => {
   }, [service, live]);
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
-
+  const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
   return (
     <>
       <GraphNavBar
