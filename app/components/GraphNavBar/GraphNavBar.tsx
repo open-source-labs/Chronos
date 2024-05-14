@@ -108,8 +108,8 @@ const GraphNavBar = (props) => {
             }}
           />
         &emsp;Inspect
-      </Link> */}
-      <button onClick={() => { setInspect(!inspect) }}>Inspect</button>
+      </Link>
+      <button onClick={() => { setInspect(!inspect) }}>Inspect</button> */}
     </nav>
   )
 }

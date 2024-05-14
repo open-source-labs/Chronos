@@ -26,7 +26,7 @@ const ContactForm = ({ currentMode }) => {
 };
 
 const FormInput: React.FC<FormInputProps> = ({ label, name, placeholder, type = "text", isTextarea = false, accept }) => (
-  <label htmlFor={name}>
+  <label htmlFor={name} style={{ fontWeight: 300 }}>
     {label}:
     {isTextarea ? (
       <textarea id={name} name={name} placeholder={placeholder} />
