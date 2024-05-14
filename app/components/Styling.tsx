@@ -1,30 +1,30 @@
 const lightAndDark = {
   lightModeMain: {
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#f3f3f7',
     flex: '1',
     minHeight: '100vh',
     FlexDirection: 'column',
   },
   lightModeHeader: {
-    backgroundColor: '#eeeeee',
-    color: '#444d56',
+    backgroundColor: '#f3f3f7',
+    color: '#181818',
   },
   darkModeHeader: {
-    backgroundColor: '#181818',
+    backgroundColor: '#161b22',
     color: 'white',
   },
   darkModeMain: {
-    backgroundColor: '#181818',
+    backgroundColor: '#161b22',
     backgroundSize: 'contain',
     flex: '1',
     minHeight: '100vh',
     FlexDirection: 'column',
   },
   lightModeText: {
-    color: '#36454F',
+    color: '#181818',
   },
   darkModeText: {
-    color: 'gainsboro',
+    color: '#fcfefb',
   },
 };
 
