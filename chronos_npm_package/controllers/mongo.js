@@ -284,10 +284,10 @@ mongo.getSavedMetricsLength = async (mode, currentMetricNames) => {
 mongo.addMetrics = async (healthMetrics, mode, currentMetricNames) => {
   //This function adds only the new metrics from metrics model to the metrics database
   const newMets = [];
-  for (let metric of healthMetrics) {
-    if (!(metric.metric in currentMetricNames)) {
-      const name = metric.metric;
-      newMets.push({ metric: name, mode: mode });
+  for (let healthMetric of healthMetrics) {
+    const { metric, category} = healthMetric
+    if (!(metric in currentMetricNames)) {
+      newMets.push({ metric, mode,category });
       currentMetricNames[metric.metric] = true;
     }
   };
