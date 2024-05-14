@@ -32,7 +32,16 @@ const lightAndDark = {
     borderColor: 'transparent',
   },
   lightModeData: {
-    backgroundColor: '#E7E7F2',
+    backgroundColor: '#F7F8F8',
+    color: '#24272A',
+  },
+  darkModal: {
+    backgroundColor: '#262837',
+    color: '#fafdf9',
+    borderColor: 'transparent',
+  },
+  lightModal: {
+    backgroundColor: '#F7F8F8',
     color: '#24272A',
   },
 };
