@@ -373,7 +373,7 @@ const helpers = {
       headers: {
         'Accept':'application/json',
         // 'Content-Type': 'application/json',
-        'Authorization': 'Bearer glsa_BjlCNL11BPPDzZIwOlK5w9698getAOIa_2409eafb'
+        'Authorization': token
       },
     });
     // console.log('utilities.getGrafanaDatasource line 379:', datasourceResponse);
