@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import { AwsContext } from '../../context/AwsContext';
 import './styles.scss';
 import { useLocation } from 'react-router-dom';
-import AwsEC2Graphs from '../../components/AwsEC2Graphs';
+import AwsEC2Graphs from '../../components/AwsEC2Graphs/AwsEC2Graphs';
 import ClusterTable from '../../components/ClusterTable';
 import AwsECSClusterGraphs from '../../components/AwsECSClusterGraphs';
 

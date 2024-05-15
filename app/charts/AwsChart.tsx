@@ -26,6 +26,7 @@ interface SoloStyles {
 const AwsChart: React.FC<any> = React.memo(props => {
   const { renderService, metric, timeList, valueList, colourGenerator, sizing } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
+  
   setInterval(() => {
     if (solo !== soloStyle) {
       setSolo(soloStyle);
