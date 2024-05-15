@@ -12,22 +12,25 @@ interface EventHandlersProps {
 
 export const getEventHandlers = ({ application, setModal }: EventHandlersProps) => {
   const { deleteApp, user } = useContext(DashboardContext);
-  const { setAppIndex, setApp, setServicesData, app, example, connectToDB, setChart } =
-    useContext(ApplicationContext);
+  const { setAppIndex, setApp, setServicesData, app, example, connectToDB, setChart } = useContext(ApplicationContext);
   const navigate = useNavigate();
 
   const handleClick = (selectedApp: string, selectedService: string, i: number) => {
-    const services = ['auth', 'client', 'event-bus', 'items', 'inventory', 'orders'];
+    // const services = ['auth', 'client', 'event-bus', 'items', 'inventory', 'orders'];
+    const services = [ 'client', 'items','event-bus'];
+
     setAppIndex(i);
     setApp(selectedApp);
     if (['AWS', 'AWS/EC2', 'AWS/ECS', 'AWS/EKS'].includes(selectedService)) {
       navigate(`/aws/:${app}`, { state: { typeOfService: selectedService } });
-    } else if (example) {
+    } 
+    else if (example) {
       setServicesData([]);
-      setChart('communications');
+      setChart('all');
       connectToDB(user, i, app, application[2], application[1]);
       navigate(`/applications/example/${services.join(' ')}`);
-    } else {
+    } 
+    else {
       setServicesData([]);
       setModal({ isOpen: true, type: 'serviceModal' });
     }
