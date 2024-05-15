@@ -8,6 +8,7 @@ import { GridColDef, DataGrid } from '@mui/x-data-grid';
 import { GridToolbar } from '@mui/x-data-grid/components';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
+import Box from '@mui/material/Box';
 
 import { Button, TextField } from '@mui/material';
 
@@ -38,6 +39,7 @@ const TransferColumns = React.memo(() => {
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
   const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
+  const buttonStyle = mode === 'light' ? lightAndDark.lightModeButtons : lightAndDark.darkModeButtons;
 
   useEffect(() => {
     if (healthData) {
@@ -159,20 +161,20 @@ const TransferColumns = React.memo(() => {
 
   // makes the column titles for the selection grid
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 1, headerClassName: 'style',},
+    { field: 'id', headerName: 'ID', flex: 1, headerClassName: 'grid-header',},
     {
       field: 'tag',
       headerName: 'Category',
       flex: 1,
       editable: true,
-      headerClassName: 'style',
+      headerClassName: 'grid-header',
     },
     {
       field: 'title',
       headerName: 'Metric',
       flex: 3,
       editable: true,
-      headerClassName: 'style',
+      headerClassName: 'grid-header',
     },
   ];
 
@@ -220,8 +222,32 @@ const TransferColumns = React.memo(() => {
         </Button>
       </div>
       <div id="transferTest">
-        <div style={{ height: '500px', width: '100%' }}>
-        
+      
+        <Box
+        sx={{
+          height: '500px',
+          width: '100%',
+          '& .grid-header': {
+            backgroundColor: currentStyle.backgroundColor,
+            color: currentStyle.color,
+          },
+          '& .MuiDataGrid-root .MuiDataGrid-cell': {
+            color: currentStyle.color,
+          },
+          '& .MuiInputBase-input': {
+            color: currentStyle.color, // Change text color of the search input
+          },
+          '& .MuiSvgIcon-root': {
+            backgroundColor: '#E3E3F0', // Change color of the search icon
+          },
+          '& .MuiDataGrid-columnHeaderTitleContainer': {
+            backgroundColor: currentStyle.backgroundColor,
+          },
+          '& .MuiTablePagination-displayedRows': {
+            color: currentStyle.color,
+          },
+        }}
+        >
           <DataGrid
             // style={currentStyle }
             rows={rows}
@@ -231,6 +257,8 @@ const TransferColumns = React.memo(() => {
               slotProps={{
                 toolbar: {
                   showQuickFilter: true,
+                  
+                  
                 },
               }}
             pageSizeOptions ={[10]}
@@ -246,6 +274,7 @@ const TransferColumns = React.memo(() => {
             }}
             
           />
+          </Box>
           
         </div>
         {selectedRows.length > 0 && (
@@ -263,7 +292,6 @@ const TransferColumns = React.memo(() => {
         >
             {selectedRows}
         </ol>
-      </div>
     </>
   );
 });

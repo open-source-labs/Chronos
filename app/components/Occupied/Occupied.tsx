@@ -82,7 +82,6 @@ const Occupied = React.memo(() => {
           
         >
           <Button 
-            style={currentStyle}
             className={classes.paper} 
             onClick={() => setModal({isOpen:true,type:'envModal'})}
           >

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ServiceDropdown = ({ servicesData, selectedServices, setSelectedServices, isOpen, toggleDropdown }) => {
+const   ServiceDropdown = ({ servicesData, selectedServices, setSelectedServices, isOpen, toggleDropdown }) => {
   const handleCheckbox = (e) => {
     const service = e.target.value;
     if (e.target.checked) {
@@ -12,7 +12,7 @@ const ServiceDropdown = ({ servicesData, selectedServices, setSelectedServices, 
 
   return (
     <div className={isOpen ? 'dropdown active' : 'dropdown'}>
-      <div className={isOpen ? 'select disabled' : 'select'} onClick={toggleDropdown}>
+      <div className={isOpen ? 'select disabled' : 'select'} onClick={toggleDropdown} data-testid="ssButton">
         Select Services
       </div>
       {isOpen && (
@@ -21,6 +21,7 @@ const ServiceDropdown = ({ servicesData, selectedServices, setSelectedServices, 
             <label key={service.microservice} className="select">
               {service.microservice}
               <input
+                data-testid="checkbox"
                 type="checkbox"
                 value={service.microservice}
                 checked={selectedServices.includes(service.microservice)}
