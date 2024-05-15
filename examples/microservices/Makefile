@@ -1,7 +1,5 @@
 # Define directories
-DIRS := examples/microservices/auth examples/microservices/client examples/microservices/client-dev \
-        examples/microservices/common examples/microservices/event-bus \
-        examples/microservices/inventory examples/microservices/items
+DIRS := auth client client-dev common event-bus inventory items
 
 # Define the content of the .env file
 define ENV_CONTENT
