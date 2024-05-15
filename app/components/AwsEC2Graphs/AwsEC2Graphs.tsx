@@ -3,8 +3,6 @@ import AwsChart from '../../charts/AwsChart';
 import { AwsContext } from '../../context/AwsContext';
 import { stringToColor } from '../../utils';
 import './styles.scss'
-import { CircularProgress } from '@mui/material';
-
 
 const AwsEC2Graphs: React.FC = React.memo(props => {
   const { awsData, setAwsData, isLoading, setLoadingState } = useContext(AwsContext);
