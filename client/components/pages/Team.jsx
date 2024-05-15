@@ -60,10 +60,50 @@ import bioElsaPic from "../../assets/Bio_picture_Elsa.jpg"
 import bioSeanPic from "../../assets/Bio_picture_Sean.png"
 import bioMcKenziePic from "../../assets/Bio_picture_McKenzie.jpg"
 import bioKellyPic from "../../assets/Bio_picture_Kelly.png"
+import bioTedPic from "../../assets/Bio_picture_Ted.png"
+import bioSofiaPic from "../../assets/Bio_picture_Sofia.jpg"
+import bioMikePic from "../../assets/Bio_picture_Mike.png"
+import bioStephenPic from "../../assets/Bio_picture_Stephen.png"
 
 import "../../stylesheets/Team.scss"
 
 const bios = [
+  {
+    name: 'Michael Tagg',
+    bioParagraph: 'bioparagraphtext',
+    picture: bioMikePic,
+    contact: {
+        gitHub: 'https://github.com/mdtagg ',
+        linkedIn: 'https://www.linkedin.com/in/miketagg/',
+    },
+  },
+  {
+    name: 'Ted Pham',
+    bioParagraph: 'bioparagraphtext',
+    picture: bioTedPic,
+    contact: {
+        gitHub: 'https://github.com/TedPham397',
+        linkedIn: 'https://www.linkedin.com/in/tphm3/',
+    },
+  },
+  {
+    name: 'Stephen Yang',
+    bioParagraph: 'bioparagraphtext',
+    picture: bioStephenPic,
+    contact: {
+        gitHub: 'https://github.com/stephenhyang',
+        linkedIn: 'https://www.linkedin.com/in/stephen-h-yang/',
+    },
+  },
+  {
+    name: 'Sofia Sarhiri',
+    bioParagraph: 'bioparagraphtext',
+    picture: bioSofiaPic,
+    contact: {
+        gitHub: 'https://github.com/sarhiri',
+        linkedIn: 'https://www.linkedin.com/in/sofia-sarhiri/',
+    },
+  },
   {
     name: "McKenzie Morris",
     bioParagraph:
