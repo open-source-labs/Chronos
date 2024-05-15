@@ -259,11 +259,11 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 ### Running the Chronos desktop app in development mode (WSL Incompatible)
 
 1. From the root directory, run `npm install`
-2. Run `npm run build`
-3. For Windows users, run `npm audit fix` or `npm audit fix --force` if prompted
-4. Open a new terminal and run `npm run dev:app` to start the Webpack development server
-5. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode.
-6. Refer to `Examples` sections below to spin up example applications.
+2. Run `npm run start:electron` to start the electron app.
+3. Run `npm audit fix` or `npm audit fix --force` if prompted
+4. Refer to `Examples` sections below to spin up example applications. 
+(Recommended):
+If you have mongo community edition running locally just run `npm run start:microservices` to start populating database with server data(more detail in Microservices Example section).
 
 #
 

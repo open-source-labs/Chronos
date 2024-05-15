@@ -57,9 +57,12 @@ Note: You may run out of space in your database if the services run for an exten
 
 To spin up the example application:
 
-1. `cd` into the `examples/microservices` folder
-2. Run `npm run pkg:install` to install all necessary dependencies
-3. Run `npm start`
+1. Run `npm run start:microservices`
+2. Click on the Example Button
+3. Click on the Microservices card
+
+<img src="../../assets/example-microservices-tracker.png" alt="Chronos" title="Chronos" align="center" />\
+
 
 Open a web browser to `localhost:5001` to send requests from the client
 
