@@ -38,6 +38,7 @@ interface HeaderProps {
         setSelectedServices={setSelectedServices}
         isOpen={selectModal}
         toggleDropdown={toggleDropdown}
+        data-testid="ServiceDropdownToggle"
       />
        <LiveToggle live={live} toggleLive={() => setLive && setLive(!live)} />
     </div>
