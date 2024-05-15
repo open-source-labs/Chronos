@@ -22,3 +22,18 @@ JWT_LIFETIME=1d
 endef
 
 export ENV_CONTENT
+
+# Default target
+all: create_dirs create_env_files
+
+# Create directories
+create_dirs:
+	@$(foreach dir,$(DIRS),mkdir -p $(dir);)
+
+# Create .env files
+create_env_files:
+	@$(foreach dir,$(DIRS),echo "$$ENV_CONTENT" > $(dir)/.env;)
+
+# Clean up .env files
+clean:
+	@$(foreach dir,$(DIRS),rm -f $(dir)/.env;)
