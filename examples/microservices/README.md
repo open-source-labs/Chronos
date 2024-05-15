@@ -57,13 +57,20 @@ Note: You may run out of space in your database if the services run for an exten
 
 To spin up the example application:
 
-1. `cd` into the `examples/microservices` folder
-2. Run `npm run pkg:install` to install all necessary dependencies
-3. Run `npm start`
+1. Run `npm run start:microservices`
+2. Click on the Example Button
+3. Click on the Microservices card
+
+<img src="../../assets/example_microservices_card.gif" alt="Chronos" title="Chronos" align="center" />\
+
 
 Open a web browser to `localhost:5001` to send requests from the client
 
 Your microservice health metrics may be viewed in the given `CHRONOS_URI` database, or in the Electron.js desktop application.
+## Notes
+
+Plotly utilizes WebGL to render graphs, but WebGL can support only 8-16 layers simultaneously. Therefore, it is recommended to selectively choose a limited number of layers for optimal performance.
+
 
 ## Additional Documentation
 
