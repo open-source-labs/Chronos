@@ -29,9 +29,12 @@
 
 1. Run `npm run build` so webpack bundles the new code.
 2. Log into the Amazon S3 bucket using the credentials in our Chronos credientials sheet.
-3. Open the S3 bucket, then click the **chronoslany.com** bucket (should be listed with an Access of **Public**)
-   - Save a copy of the existing `bundle.js` and `index.html` just in case.
-4. Delete existing `bundle.js` and `index.html` from the bucket.
-5. Upload the new bundled `bundle.js` and `index.html` (located in `./dist`), as well as your photos with the uglified names.
+3. On the main aws page, in console home, click on the green S3 logo. 
+4. In the amazon S3 page, click the **chronoslany.com** bucket (should be listed with an Access of **Public**). Make sure you use the bucket labeled 'chronoslany.com' or else the website will not update. It has a creation date of May, 26, 2020. YOU DO NOT NEED TO MAKE A NEW BUCKET. 
+5. Select all, click on the actions dropdown and click copy. Save a copy of the existing `bundle.js` and `index.html` just in case. Follow the naming rules directed by amazon, but don't change any of the settings. Save the copy. 
+4. After saving the copy, go back to the S3 home, select **chronoslany.com** again.
+5. select all objects and delete from the bucket.
+5. Upload the new bundled `bundle.js` and `index.html` (located in `./dist`), as well as your photos with the uglified names. Basically open the folders in a GUI and copy paste all the files in './dist' into the aws upload module. 
+6. You should be good to go!!!! However, because the website caches, you may need to visit from another browser or incognito mode to see changes. 
 
 _Note: The website will take around 24 hours to update with your changes._
