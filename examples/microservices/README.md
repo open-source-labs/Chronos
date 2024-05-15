@@ -61,7 +61,7 @@ To spin up the example application:
 2. Click on the Example Button
 3. Click on the Microservices card
 
-<img src="../../assets/example-microservices-tracker.png" alt="Chronos" title="Chronos" align="center" />\
+<img src="../../assets/example_microservices_card.gif" alt="Chronos" title="Chronos" align="center" />\
 
 
 Open a web browser to `localhost:5001` to send requests from the client
