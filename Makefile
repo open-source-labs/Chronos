@@ -26,7 +26,7 @@ export ENV_CONTENT
 # Default target
 all: create_dirs create_env_files
 
-# Create directories
+# Create directoriesgit
 create_dirs:
 	@$(foreach dir,$(DIRS),mkdir -p $(dir);)
 
