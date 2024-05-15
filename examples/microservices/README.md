@@ -67,6 +67,10 @@ To spin up the example application:
 Open a web browser to `localhost:5001` to send requests from the client
 
 Your microservice health metrics may be viewed in the given `CHRONOS_URI` database, or in the Electron.js desktop application.
+## Notes
+
+Plotly utilizes WebGL to render graphs, but WebGL can support only 8-16 layers simultaneously. Therefore, it is recommended to selectively choose a limited number of layers for optimal performance.
+
 
 ## Additional Documentation
 
