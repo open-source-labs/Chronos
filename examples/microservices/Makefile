@@ -6,7 +6,6 @@ define ENV_CONTENT
 CHRONOS_DB=MongoDB
 # Database connection string for Chronos to write metric to
 CHRONOS_URI=mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5
-
 # Database connection strings for each microservice
 MONGO_URI_AUTH=mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5
 MONGO_URI_ITEMS=mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5

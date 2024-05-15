@@ -4,7 +4,7 @@ const express = require('express');
 const PORT = 5001;
 
 const chronosConfig = require('./chronos-config');
-const Chronos = require('../chronos_npm_package/chronos.js');
+const Chronos = require('@chronosmicro/tracker');
 const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();
