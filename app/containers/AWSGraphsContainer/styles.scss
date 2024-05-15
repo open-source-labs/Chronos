@@ -24,16 +24,16 @@
   }
 }
 
-.charts {
-  display: grid;
-  grid-template-columns: auto auto;
-  padding: 10px;
-}
+// .charts {
+//   display: grid;
+//   grid-template-columns: auto auto;
+//   padding: 10px;
+// }
 
-.chart {
-  margin: 10px;
-  text-align: center;
-}
+// .chart {
+//   margin: 10px;
+//   text-align: center;
+// }
 
 .js-plotly-plot {
   box-shadow: $boxshadow;

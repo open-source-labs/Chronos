@@ -19,9 +19,7 @@ interface Params {
 
 const TransferColumns = React.memo(() => {
   const [targetKeys, setTargetKeys] = useState<any[]>([]);
-  // console.log({targetKeys})
   const [metricsPool, setMetricsPool] = useState<any[]>([]);
-  // console.log({metricsPool})
   const [healthMetricsReady, setHealthMetricsReady] = useState(false);
   const [healthMetrics, setHealthMetrics] = useState<any[]>([]);
   const [eventMetricsReady, setEventMetricsReady] = useState(false);
@@ -155,7 +153,6 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
-    // console.log('temp', temp)
     setSelectedMetrics(temp);
   };
 
@@ -182,7 +179,6 @@ const TransferColumns = React.memo(() => {
   const rows:any[] = []
   let id = 0
   for(let savedMetric of Object.keys(savedMetrics)) {
-   
     const { metric,category } = savedMetrics[savedMetric]
     rows.push({
       id:id++,
@@ -206,8 +202,6 @@ const TransferColumns = React.memo(() => {
       </li>
     );
   });
-
-  //! BZ: creates metrics query page in Chronos
 
   return (
     <>
@@ -249,7 +243,6 @@ const TransferColumns = React.memo(() => {
         }}
         >
           <DataGrid
-            // style={currentStyle }
             rows={rows}
             columns={columns}
             style={currentStyle}
@@ -257,22 +250,18 @@ const TransferColumns = React.memo(() => {
               slotProps={{
                 toolbar: {
                   showQuickFilter: true,
-                  
-                  
                 },
               }}
-            pageSizeOptions ={[10]}
+            pageSizeOptions={[10]}
             checkboxSelection
             disableRowSelectionOnClick
             onRowSelectionModelChange={metricIndeces => {
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
-                console.log({rows})
                 metrics.push(`${rows[el].tag} | ${rows[el].title}`);
               });
               setTargetKeys(metrics);
             }}
-            
           />
           </Box>
           
