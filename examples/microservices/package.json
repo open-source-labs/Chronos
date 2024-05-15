@@ -11,7 +11,7 @@
     "orders": "cd orders && npm start",
     "event-bus": "cd event-bus && npm start",
     "pkg:install": "npm install && cd auth && npm install && cd .. && cd client && npm install && cd .. && cd event-bus && npm install && cd .. && cd inventory && npm install && cd .. && cd items && npm install && cd .. && cd orders && npm install && cd ..",
-    "start": "concurrently --kill-others-on-fail \" npm run auth\" \" npm run items\" \" npm run inventory\" \" npm run orders\" \" npm run event-bus\" \" npm run client\"",
+    "start:electron": "concurrently --kill-others-on-fail \" npm run auth\" \" npm run items\" \" npm run inventory\" \" npm run orders\" \" npm run event-bus\" \" npm run client\"",
     "start:microservices": "cd examples/microservices && make all && npm run pkg:install && npm start"
   },
   "keywords": [],
