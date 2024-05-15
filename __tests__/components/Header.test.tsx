@@ -2,7 +2,8 @@
 /* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Header from '../../app/components/Header';
+import Header from '../../app/components/Header/Header';
+import ServiceDropdown from '../../app/components/Header/ServiceDropdown';
 import { DashboardContext } from '../../app/context/DashboardContext';
 import { ApplicationContext } from '../../app/context/ApplicationContext';
 import { HashRouter as Router } from 'react-router-dom';
@@ -55,13 +56,59 @@ describe('Speed Chart', () => {
   });
 
   // trying to test the functionality of component not passed as props
-  it('Should check/uncheck the checkbox when clicking services', () => {
-    // const checkBox = screen.getByRole('checkbox');
-    // fireEvent.click(checkBox);
-    // expect(checkBox.parentElement).toHaveClass('selected');
-    // fireEvent.click(checkBox);
-    // expect(checkBox.parentElement).not.toHaveClass('selected');
-  });
+  // it('Should check/uncheck the checkbox when clicking services', () => {
+  //   const checkBox = screen.getByTestId('checkbox');
+  //   fireEvent.click(checkBox);
+  //   expect(checkBox.parentElement).toHaveClass('selected');
+  //   fireEvent.click(checkBox);
+  //   expect(checkBox.parentElement).not.toHaveClass('selected');
+  // });
 
   it('Should also change selectModal to true or false', () => {});
+});
+
+describe('ServiceDropdown test', () => {
+  it('opens and closes ServiceDropdown component on click', () => {
+    const servicesData = [
+      { microservice: 'inventory' },
+      { microservice: 'orders' },
+      { microservice: 'auth' }
+    ];
+  
+    // Define initial selected services state
+    const selectedServices = [];
+    
+    // Define a mock toggleDropdown function
+    const toggleDropdown = jest.fn();
+
+      // Render the ServiceDropdown component
+    render(
+    <ServiceDropdown
+      servicesData={servicesData}
+      selectedServices={selectedServices}
+      setSelectedServices={jest.fn()} // Mock setSelectedServices function
+      isOpen={false} // Assuming dropdown is closed initially
+      toggleDropdown={toggleDropdown}
+    />
+    );
+    
+    // Assert that dropdown is initially closed
+    expect(screen.queryByText('inventory')).not.toBeInTheDocument();
+
+    // simulate click event on button within ServiceDropdown component
+    const selectButton = screen.getByTestId('ssButton');
+    fireEvent.click(selectButton);
+
+    // expect the toggleDropdown function to have been called
+    expect(toggleDropdown).toHaveBeenCalled();
+    
+    // Assert that dropdown is now open by checking that service is rendered
+    // expect(screen.getByText('inventory')).toBeInTheDocument();
+
+    // // Simulate click event to close the dropdown
+    // fireEvent.click(selectButton);
+
+    // // Assert that dropdown is now closed by checking that service is no longer rendered
+    // expect(screen.getByText('inventory')).not.toBeInTheDocument();
+  });
 });

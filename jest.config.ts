@@ -19,6 +19,7 @@ const config: Config.InitialOptions = {
     '/__backend-tests__',
   ],
   // Specify the test path files/patterns to ignore
+  
 };
 
 export default config;

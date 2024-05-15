@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.form :hover{
+  cursor: pointer;
+}
+
 .inputContainer {
   position: relative;
   display: flex;
@@ -18,9 +22,10 @@
   .searchIconSvg {
     transform: scale(0.1) translate(758.9px, -720px);
     position: absolute;
-    fill: white;
+    fill: rgb(131, 129, 133);
   }
 }
+
 
 #textInput {
   background-color: transparent;

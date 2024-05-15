@@ -30,7 +30,7 @@ interface HeaderProps {
   };
 
   return (
-    <div className="microservice-header">
+    <div className="microservice-header" data-testid="Header">
       <h1 className="microserviceTitle">{app}</h1>
       <ServiceDropdown
         servicesData={servicesData}
@@ -38,6 +38,7 @@ interface HeaderProps {
         setSelectedServices={setSelectedServices}
         isOpen={selectModal}
         toggleDropdown={toggleDropdown}
+        data-testid="ServiceDropdownToggle"
       />
        <LiveToggle live={live} toggleLive={() => setLive && setLive(!live)} />
     </div>

@@ -44,6 +44,14 @@ const lightAndDark = {
     backgroundColor: '#F7F8F8',
     color: '#24272A',
   },
+  darkModeButtons:{
+    backgroundColor: '#F3F3F7',
+    color: '#1C202D',
+  },
+  lightModeButtons:{
+    backgroundColor: '#1C202D',
+    color: '#1C202D',
+  }
 };
 
 export default lightAndDark;
