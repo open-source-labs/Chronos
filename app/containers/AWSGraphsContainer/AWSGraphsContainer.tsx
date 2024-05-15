@@ -5,15 +5,14 @@ import { Typography } from '@mui/material';
 import { AwsContext } from '../../context/AwsContext';
 import './styles.scss';
 import { useLocation } from 'react-router-dom';
-import EC2GraphsComponent from './EC2GraphsComponent';
-import ECSGraphsComponent from './ECSGraphsComponent';
-import EKSGraphsComponent from './EKSGraphsComponent';
+import AwsEC2Graphs from '../../components/AwsEC2Graphs/AwsEC2Graphs';
+import ClusterTable from '../../components/ClusterTable';
+import AwsECSClusterGraphs from '../../components/AwsECSClusterGraphs';
 
 const AwsGraphsContainer = () => {
   const { app, appIndex, setIntervalID, intervalID } = useContext(ApplicationContext);
   const { user } = useContext(DashboardContext);
-  const { awsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsEksData, fetchAwsAppInfo } =
-    useContext(AwsContext);
+  const { awsAppInfo, fetchAwsData, fetchAwsEcsData, fetchAwsEksData, fetchAwsAppInfo } = useContext(AwsContext);
   const { state } = useLocation();
   const { typeOfService } = state;
   const [awsLive, setAwsLive] = React.useState(false);
@@ -59,18 +58,44 @@ const AwsGraphsContainer = () => {
 
   return (
     <div className="AWS-container">
+
       <div className="AWS-header">
-        <Typography variant="h3">{app}</Typography>
+        <Typography 
+          variant="h3"
+        >
+          {app}
+        </Typography>
         <p>Metrics for AWS Service</p>
-        <button onClick={() => setAwsLive(!awsLive)}>
+        <button 
+          onClick={() => setAwsLive(!awsLive)}
+        >
           {awsLive ? 'Stop Live Update' : 'Start Live Update'}
         </button>
       </div>
+
       {typeOfService === 'AWS/ECS' && (
-        <ECSGraphsComponent region={awsAppInfo.region} typeOfService={typeOfService} />
+        <div className="cluster-table">
+          <ClusterTable 
+            typeOfService={typeOfService} 
+            region={awsAppInfo.region} 
+          />
+          <AwsECSClusterGraphs />
+        </div>
       )}
-      {typeOfService === 'AWS/EC2' && <EC2GraphsComponent />}
-      {typeOfService === 'AWS/EKS' && <EKSGraphsComponent awsEksData={awsAppInfo.awsUrl} />}
+
+      {typeOfService === 'AWS/EC2' && 
+        <div className="cluster-table">
+          <AwsEC2Graphs />
+        </div>
+      }
+
+      {typeOfService === 'AWS/EKS' && 
+        <iframe 
+          src={`${awsAppInfo.awsUrl}?orgId=1&refresh=10s&theme=light&kiosk`} 
+          width="1300" 
+          height="1300"
+        ></iframe>
+        }
     </div>
   );
 };
