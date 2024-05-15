@@ -33,6 +33,7 @@ interface HealthDataObject {
 
 const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
   const [healthData, setHealthData] = useState<any>({ healthDataList: [], healthTimeList: [] });
+  console.log({healthData})
   const [services, setServices] = useState<Array<string>>([]);
   console.log({services})
 
@@ -59,7 +60,6 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
 
     let temp: HealthDataObject[] = [];
     servers.map( async (service: string) => {
-      
     try {
 
       ipcRenderer.removeAllListeners('healthResponse');
@@ -70,7 +70,6 @@ const HealthContextProvider: React.FC<Props> = React.memo(({ children }) => {
         temp.push(response[0]);
 
         if(temp.length === servers.length) {
-          console.log(temp.length,servers.length)
           setServices([`${service}`]);
           let transformedData: any = {};
           console.log({temp})
