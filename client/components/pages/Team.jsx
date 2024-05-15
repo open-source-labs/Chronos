@@ -60,10 +60,50 @@ import bioElsaPic from "../../assets/Bio_picture_Elsa.jpg"
 import bioSeanPic from "../../assets/Bio_picture_Sean.png"
 import bioMcKenziePic from "../../assets/Bio_picture_McKenzie.jpg"
 import bioKellyPic from "../../assets/Bio_picture_Kelly.png"
+import bioTedPic from "../../assets/Bio_picture_Ted.png"
+import bioSofiaPic from "../../assets/Bio_picture_Sofia.jpeg"
+import bioMikePic from "../../assets/Bio_picture_Mike.png"
+import bioStephenPic from "../../assets/Bio_picture_Stephen.png"
 
 import "../../stylesheets/Team.scss"
 
 const bios = [
+  {
+    name: 'Michael Tagg',
+    bioParagraph: " Mike, a full-stack engineer from Thousand Oaks, California, excels in both front-end and back-end development. With an adventurous spirit, Mike enjoys building apps that integrate real-life functionality with beautifully written code.  In his free time, you can find Mike hiking, rock climbing or skydiving.",
+    picture: bioMikePic,
+    contact: {
+        gitHub: 'https://github.com/mdtagg ',
+        linkedIn: 'https://www.linkedin.com/in/miketagg/',
+    },
+  },
+  {
+    name: 'Ted Pham',
+    bioParagraph: "Ted, a full stack-engineer living in Seattle, Washington. With a background in mechanical engineering, Ted can make any concept a reality. When he's not immersed in coding, you can find him playing guitar, going to the gym or playing badminton.",
+    picture: bioTedPic,
+    contact: {
+        gitHub: 'https://github.com/TedPham397',
+        linkedIn: 'https://www.linkedin.com/in/tphm3/',
+    },
+  },
+  {
+    name: 'Stephen Yang',
+    bioParagraph: "Stephen is a full-stack software engineer based in the Bay Area.  He has a passion for database management and design in applications. Outside of coding he enjoys sports and strategy games.",
+    picture: bioStephenPic,
+    contact: {
+        gitHub: 'https://github.com/stephenhyang',
+        linkedIn: 'https://www.linkedin.com/in/stephen-h-yang/',
+    },
+  },
+  {
+    name: 'Sofia Sarhiri',
+    bioParagraph: "Sofia, a dedicated full-stack engineer based in Dallas, TX, seamlessly integrates psychology into her UI designs. Sofia transforms functional interfaces into beautiful, intuitive designs. When she’s not coding, you’ll find her experimenting with new ingredients in her kitchen or exploring the world.",
+    picture: bioSofiaPic,
+    contact: {
+        gitHub: 'https://github.com/sarhiri',
+        linkedIn: 'https://www.linkedin.com/in/sofia-sarhiri/',
+    },
+  },
   {
     name: "McKenzie Morris",
     bioParagraph:

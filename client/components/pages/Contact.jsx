@@ -12,7 +12,7 @@ const Contact = () => (
         </h3>
         <p>
           If you would like your voice heard, send us an e-mail at
-          chronosnyla@gmail.com!
+          chronoschild15@gmail.com!
         </p>
       </div>
     </div>
