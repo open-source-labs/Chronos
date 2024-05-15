@@ -47,7 +47,6 @@ const DashboardContextProvider = React.memo((props: any) => {
 
   const [user, setUser] = useState<string>('guest');
   const [applications, setApplications] = useState<string[][]>([]);
-  console.log({applications})
   const [mode, setMode] = useState<string>('light');
 
   const getApplications = useCallback(() => {

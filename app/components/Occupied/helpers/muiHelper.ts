@@ -1,9 +1,8 @@
 
 import { makeStyles } from '@mui/styles';
-// import { BaseCSSProperties } from '@mui/system';
 
  // Conditional Rendering of UI Modals for Light and Dark Mode
-// Theme, StyleProps
+//  StyleProps
 
 export const useStylesDark = makeStyles(theme => ({
   // ALL CARDS
@@ -17,15 +16,15 @@ export const useStylesDark = makeStyles(theme => ({
     height: 280,
     width: 280,
     textAlign: 'center',
-    color: '#888888',
+    color: '#fafdf9',
     whiteSpace: 'nowrap',
-    backgroundColor: 'lightgray',
+    backgroundColor: '#262837',
     borderRadius: 3,
     border: '0',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     '&:hover, &.Mui-focusVisible': {
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
-      color: '#ffffff',
+      color: '#fafdf9',
       fontWeight: 600,
     },
   },
@@ -55,7 +54,7 @@ export const useStylesDark = makeStyles(theme => ({
     fontSize: '18px',
     fontFamily: 'Roboto',
     fontWeight: 300,
-    color: '#444d56',
+    color: '#fafdf9',
   },
 }));
 
@@ -71,9 +70,9 @@ export const useStylesLight = makeStyles(theme => ({
     height: 280,
     width: 280,
     textAlign: 'center',
-    color: '#888888',
+    color: '#E3E3F0',
     whiteSpace: 'nowrap',
-    backgroundColor: 'white',
+    backgroundColor: '#F7F8F8',
     borderRadius: 3,
     border: '0',
     boxShadow:

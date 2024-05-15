@@ -19,7 +19,7 @@ const DashboardContainer = React.memo(() => {
    * After 4 seconds, set the DashBoard Container visibility to true
    */
   useEffect(() => {
-    setTimeout(() => setVisible(true), 4000);
+    setTimeout(() => setVisible(true), 2000);
   }, []);
 
   /**

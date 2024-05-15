@@ -9,16 +9,20 @@ import { useTable, useGroupBy, useExpanded } from 'react-table';
 
 import { CommsContext } from '../context/CommsContext';
 
+
 /**
  * Styling for the Logs Table
  */
 
 const Styles = styled.div`
   padding: 1rem;
+  
 
   table {
     border-spacing: 0;
     border: 1px solid black;
+    background-color: #D7D7DC;
+    
 
     tr {
       :last-child {
@@ -158,10 +162,10 @@ const LogsTable = () => {
   );
 
   const data = useContext(CommsContext).commsData;
-
+ 
   return (
-    <Styles>
-      <Table columns={columns} data={data} />
+    <Styles >
+      <Table columns={columns} data={data}  />
     </Styles>
   );
 };

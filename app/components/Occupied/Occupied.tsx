@@ -22,7 +22,7 @@ import ServicesModal from '../../modals/ServicesModal/ServicesModal';
 
 // STYLESHEETS
 import './styles.scss';
-
+import lightAndDark from '../Styling';
 // // CONTEXT
 import { DashboardContext } from '../../context/DashboardContext';
 import { ApplicationContext } from '../../context/ApplicationContext';
@@ -38,7 +38,7 @@ import { useStylesLight, useStylesDark } from './helpers/muiHelper'
 //v10: Memoized function, without any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
   const { setServicesData, app, example } = useContext(ApplicationContext);
-  const { user, applications, getApplications, mode } = useContext(DashboardContext);
+  const { user, applications, getApplications, mode, } = useContext(DashboardContext);
   const [ modal,setModal ] = useState({isOpen:false,type:''})
   const { appIndex } = useContext(ApplicationContext);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -51,6 +51,7 @@ const Occupied = React.memo(() => {
   }, [user]);
 
   const classes = mode === 'light' ? useStylesLight({}) : useStylesDark({});
+  const currentStyle = mode === 'light' ? lightAndDark.lightModal : lightAndDark.darkModal;
 
   return (
     <div 
@@ -75,8 +76,10 @@ const Occupied = React.memo(() => {
       >
         {!example &&
         <div 
+        
           className="card" 
           id="card-add"
+          
         >
           <Button 
             className={classes.paper} 

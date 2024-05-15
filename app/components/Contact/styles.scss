@@ -16,6 +16,7 @@
   justify-content: center;
   align-items: center;
   color: $background;
+  
 }
 .contact-border {
   display: flex;
@@ -102,12 +103,12 @@
 
 #myfile {
   font-size: 16px;
-  color: $background;
+  color: $header;
 }
 
 #contact-submit {
   border: none;
-  color: $background;
+  color: $header;
 
   &:hover {
     border: none;
@@ -147,9 +148,9 @@ input[type='file'] {
   margin-top: 20px;
   margin-left: -4px;
   padding: 10px;
-  border: 1px dotted $background;
+  border: 1px dotted $header;
   outline: none;
-  color: $background;
+  color: $header;
   background-color: transparent;
   border-radius: 8px;
   &:hover {
@@ -164,4 +165,8 @@ input[type='file'] {
   &:hover {
     color: blue !important;
   }
+}
+
+.contact-blurb p{
+  font-weight: 300;
 }

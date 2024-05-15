@@ -1,4 +1,6 @@
 @import '../../index.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 
 .sidebar-container {
   color: $background;
@@ -11,7 +13,7 @@
 }
 
 .sidebar-container:hover .sidebar-link {
-  width: 150px;
+  width: 160px;
 }
 
 .sidebar-container:hover .sidebar {
@@ -204,7 +206,7 @@
   overflow: hidden;
   z-index: 1;
   margin: 30px 15px;
-  padding: 30px 5px;
+  padding: 30px;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -230,14 +232,11 @@
   }
 }
 
-.example-button {
-  height: 100px;
-  width: 100px;
-  color: whitesmoke;
-  cursor: pointer;
-  font-weight: 600;
+.example-button{
+  font-size: 18px;
+  font-family: roboto;
+  font-weight: 100;
+  font-size: medium;
 }
 
-.example-button:hover {
-  color: blue;
-}
+

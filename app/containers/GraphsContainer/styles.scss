@@ -19,7 +19,7 @@
 
 .graphs-container {
   width: 100%;
-  padding: 0 5%;
+  padding: 5%;
 
   .graphs {
     @include centerWithFlex();
@@ -46,12 +46,13 @@
         }
 
         h2 {
-          padding-top: 4px;
+          padding-top: 15px;
           margin-bottom: 37px;
           align-self: center;
           font-size: 100%;
           margin-top: 20px;
           font-weight: 400;
+          padding-bottom: 10px;
         }
       }
     }
@@ -73,6 +74,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 20px;
 
     #getCharts:hover {
       font-weight: 580;

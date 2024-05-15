@@ -1,5 +1,5 @@
 // Insert the MongoDB URI for your private User database in place of the example URI provided below.
-const MONGO_URI = 'mongodb+srv://msofiasarhiri:89l3un6TQvGJOGh8@axo-cluster.uazpijv.mongodb.net/';
+const MONGO_URI = '';
 
 const mongoose = require('mongoose');
 

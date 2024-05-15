@@ -12,10 +12,10 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@jest/types": "^29.6.1",
-    "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
     "@mui/styles": "^5.15.16",
+    "@mui/x-data-grid": "^7.4.0",
     "@types/node": "^18.17.1",
     "3d-force-graph": "^1.72.2",
     "aws-sdk": "^2.1317.0",
@@ -93,7 +93,8 @@
     "backend-test": "npx jest --config __backend-tests__/jest.config.js --verbose",
     "start:selenium": "node e2e/seleniumTest.js",
     "start:e2e": "npm run dev:electron & npm run start:selenium",
-    "start": "concurrently \"npm:build\" \"npm:dev:app\" \"npm:dev:electron\""
+    "start:electron": "concurrently \"npm:build\" \"npm:dev:app\" \"npm:dev:electron\"",
+    "start:microservices": "cd examples/microservices && make all && npm run pkg:install && npm start"
   },
   "repository": {
     "type": "git",

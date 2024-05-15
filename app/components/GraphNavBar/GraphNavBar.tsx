@@ -4,7 +4,6 @@ import { ApplicationContext } from '../../context/ApplicationContext'
 import { QueryContext } from '../../context/QueryContext'
 import { CommsContext } from '../../context/CommsContext'
 import { HealthContext } from '../../context/HealthContext'
-import { Link } from 'react-router-dom';
 
 const GraphNavBar = (props) => {
 
@@ -50,7 +49,6 @@ const GraphNavBar = (props) => {
         );
       });
     }
-
     return buttonList;
   };
 
@@ -110,8 +108,8 @@ const GraphNavBar = (props) => {
             }}
           />
         &emsp;Inspect
-      </Link> */}
-      <button onClick={() => { setInspect(!inspect) }}>Inspect</button>
+      </Link>
+      <button onClick={() => { setInspect(!inspect) }}>Inspect</button> */}
     </nav>
   )
 }

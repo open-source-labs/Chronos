@@ -13,6 +13,9 @@ const MetricsSchema = new Schema({
   },
   mode: {
     type: String
+  },
+  category: {
+    type:String
   }
 });
 
