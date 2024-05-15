@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Contact from '../../app/components/Contact';
+import Contact from '../../app/components/Contact/Contact';
 import DashboardContextProvider from '../../app/context/DashboardContext';
 
 describe('Contact Page', () => {
