@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography, Link } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Typography, Link } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import '../stylesheets/Applications.scss';
 
 export interface CopyrightProps {}
@@ -10,7 +10,7 @@ const Copyright: React.FC = React.memo(() => {
     copyright: {
       fontFamily: 'Roboto',
       position: 'fixed',
-      color: '#ffffff',
+      color: '#FAFDF9',
     },
   }));
   const classes = useStyles();

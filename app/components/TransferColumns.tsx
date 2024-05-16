@@ -1,12 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { ApplicationContext } from '../context/ApplicationContext';
 import { useParams } from 'react-router-dom';
 import { QueryContext } from '../context/QueryContext';
 import { HealthContext } from '../context/HealthContext';
 import { EventContext } from '../context/EventContext';
-import { DataGrid } from '@material-ui/data-grid';
+import { GridColDef, DataGrid } from '@mui/x-data-grid';
+import { GridToolbar } from '@mui/x-data-grid/components';
 import * as DashboardContext from '../context/DashboardContext';
 import lightAndDark from './Styling';
-import { Button } from '@material-ui/core';
+import Box from '@mui/material/Box';
+
+import { Button, TextField } from '@mui/material';
+
 
 interface Params {
   service: string;
@@ -26,11 +31,17 @@ const TransferColumns = React.memo(() => {
   const { eventData } = useContext(EventContext);
   const { service } = useParams<keyof Params>() as Params;
   const { mode } = useContext(DashboardContext.DashboardContext);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const { savedMetrics } = useContext(ApplicationContext)
 
   const currentMode = mode === 'light' ? lightAndDark.lightModeText : lightAndDark.darkModeText;
+  const currentStyle = mode === 'light' ? lightAndDark.lightModeData : lightAndDark.darkModeData;
+  const buttonStyle = mode === 'light' ? lightAndDark.lightModeButtons : lightAndDark.darkModeButtons;
 
   useEffect(() => {
     if (healthData) {
+      console.log({healthData})
       setHealthMetricsReady(true);
     }
   }, [healthData]);
@@ -98,7 +109,7 @@ const TransferColumns = React.memo(() => {
         }
       }
     } else {
-      // iterate throught the healthData object to populate the `Metrics Query` tab with metrics options
+      // iterate throughout the healthData object to populate the `Metrics Query` tab with metrics options
       // The pool array wants an object with a specific format in order to populate the selection table
       for (const service in dataObject) {
         const categoryObjects = dataObject[service];
@@ -119,9 +130,10 @@ const TransferColumns = React.memo(() => {
   };
 
   const createSelectedMetricsList = () => {
+
     const temp: any[] = [];
     const categorySet = new Set();
-    console.log('Inside TransferColumns.txs line 124 targetKeys: ', targetKeys)
+
     for (let i = 0; i < targetKeys.length; i++) {
       const str: string = targetKeys[i];
       const strArr: string[] = str.split(' | ');
@@ -141,47 +153,55 @@ const TransferColumns = React.memo(() => {
         temp.push(newCategory);
       }
     }
-    console.log('temp', temp)
     setSelectedMetrics(temp);
   };
 
   // makes the column titles for the selection grid
-  const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', flex: 1, headerClassName: 'grid-header',},
     {
       field: 'tag',
       headerName: 'Category',
       flex: 1,
       editable: true,
+      headerClassName: 'grid-header',
     },
     {
       field: 'title',
       headerName: 'Metric',
       flex: 3,
       editable: true,
+      headerClassName: 'grid-header',
     },
   ];
 
   // makes the rows needed for the selection grid
-  const rows: any[] = [];
-  metricsPool.forEach((el, index) => {
-    const row = {
-      id: index,
-      tag: el.tag,
-      title: el.title.split(' | ')[1].replace(/.*\/.*\//g, ''),
-    }; // gets rid of the full path
-    rows.push(row);
-  });
+  const rows:any[] = []
+  let id = 0
+  for(let savedMetric of Object.keys(savedMetrics)) {
+    const { metric,category } = savedMetrics[savedMetric]
+    rows.push({
+      id:id++,
+      tag:category,
+      title:metric
+    })
+  }
 
   // makes the Printed list of 'currently selected rows' on the page using targetKeys array
   const selectedRows: any[] = [];
   targetKeys.forEach(el => {
     selectedRows.push(
-      <li style={{ marginLeft: '30px', marginTop: '5px', color: currentMode.color }}>{el}</li>
+      <li 
+        style={{ 
+          marginLeft: '30px', 
+          marginTop: '5px', 
+          color: currentMode.color 
+          }}
+      >
+        {el}
+      </li>
     );
   });
-
-  //! BZ: creates metrics query page in Chronos
 
   return (
     <>
@@ -196,28 +216,71 @@ const TransferColumns = React.memo(() => {
         </Button>
       </div>
       <div id="transferTest">
-        <div style={{ height: '500px', width: '100%' }}>
+      
+        <Box
+        sx={{
+          height: '500px',
+          width: '100%',
+          '& .grid-header': {
+            backgroundColor: currentStyle.backgroundColor,
+            color: currentStyle.color,
+          },
+          '& .MuiDataGrid-root .MuiDataGrid-cell': {
+            color: currentStyle.color,
+          },
+          '& .MuiInputBase-input': {
+            color: currentStyle.color, // Change text color of the search input
+          },
+          '& .MuiSvgIcon-root': {
+            backgroundColor: '#E3E3F0', // Change color of the search icon
+          },
+          '& .MuiDataGrid-columnHeaderTitleContainer': {
+            backgroundColor: currentStyle.backgroundColor,
+          },
+          '& .MuiTablePagination-displayedRows': {
+            color: currentStyle.color,
+          },
+        }}
+        >
           <DataGrid
-            style={currentMode}
             rows={rows}
             columns={columns}
-            pageSize={10}
+            style={currentStyle}
+            slots={{ toolbar: GridToolbar }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+            pageSizeOptions={[10]}
             checkboxSelection
-            disableSelectionOnClick
-            onSelectionModelChange={metricIndeces => {
+            disableRowSelectionOnClick
+            onRowSelectionModelChange={metricIndeces => {
               const metrics: any[] = [];
               metricIndeces.forEach(el => {
-                metrics.push(metricsPool[el].key);
+                metrics.push(`${rows[el].tag} | ${rows[el].title}`);
               });
               setTargetKeys(metrics);
             }}
           />
+          </Box>
+          
         </div>
         {selectedRows.length > 0 && (
-          <h3 style={{ marginTop: '20px', color: currentMode.color }}>Selected Rows:</h3>
+          <h3 
+            style={{ 
+              marginTop: '20px', 
+              color: 'currentStyle'
+            }}
+          >
+            Selected Rows:
+          </h3>
         )}
-        <ol id="selectedRows">{selectedRows}</ol>
-      </div>
+        <ol 
+          id="selectedRows"
+        >
+            {selectedRows}
+        </ol>
     </>
   );
 });

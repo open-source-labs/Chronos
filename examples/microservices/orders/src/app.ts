@@ -7,7 +7,7 @@ import eventRouter from './routes/event-router';
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 
 import chronosConfig from './chronos-config';
-const Chronos = require('@chronosmicro/tracker');
+const Chronos = require('../../../../chronos_npm_package/chronos.js');
 const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();
@@ -20,7 +20,7 @@ app.use(trackingMiddleware);
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:5000',
+    origin: 'http://localhost:5001',
   })
 );
 

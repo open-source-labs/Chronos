@@ -1,6 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: './app/index.tsx',
   output: {
@@ -50,6 +52,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.html',
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'node_modules/react-devtools'), // Path to the React DevTools directory in node_modules
+          to: 'react-devtools', // Output directory in your webpack build
+        },
+      ],
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.gif', '.png', '.svg'],

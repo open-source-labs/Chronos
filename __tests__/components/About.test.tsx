@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import About from '../../app/components/About';
+import About from '../../app/components/About/About';
 import DashboardContextProvider from '../../app/context/DashboardContext';
 
 describe('About Page', () => {
@@ -22,7 +22,7 @@ describe('About Page', () => {
     expect(element.querySelectorAll('h3').length).toBe(3);
   });
 
-  it('Should have one div', () => {
-    expect(element.querySelectorAll('div').length).toBe(1);
+  it('Should have three divs', () => {
+    expect(element.querySelectorAll('div').length).toBe(3);
   });
 });

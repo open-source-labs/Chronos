@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-throw-literal */
 import React, { useState, createContext, useCallback } from 'react';
+import { ApplicationContext } from './ApplicationContext';
 const { ipcRenderer } = window.require('electron');
 
 interface IFields {
@@ -27,6 +28,7 @@ interface AwsFields {
 
 export const DashboardContext = createContext<any>(null);
 
+
 /**
  * MANAGES THE FOLLOWING DATA AND ACTIONS:
  * @property  {Array} applications List of all applications, their description, database type and creation date
@@ -42,29 +44,28 @@ const DashboardContextProvider = React.memo((props: any) => {
   const children = props.children;
 
   // Initial user will always be the guest
+
   const [user, setUser] = useState<string>('guest');
   const [applications, setApplications] = useState<string[][]>([]);
   const [mode, setMode] = useState<string>('light');
-
 
   const getApplications = useCallback(() => {
     const result = ipcRenderer.sendSync('getApps');
     setApplications(result);
   }, []);
 
-  const addApp = useCallback((fields: IFields) => {
-    const { typeOfService, database, URI, name, description } = fields;
-    const newApp = [name, database, URI, description, typeOfService];
-    console.log('what is the service that was passed into add app: ', typeOfService)
-    const result = ipcRenderer.sendSync(
-      'addApp',
-      JSON.stringify([name, database, URI, description, typeOfService])
-    );
-    setApplications(result);
-    // console.log('applications: ', applications);
-    // console.log('new app to add: ', newApp);
-    // setApplications([...applications, newApp]);
-    console.log('the current application that was added is : ', result);
+  const addApp = useCallback((fields: any) => {
+    
+    for(let field of Object.keys(fields)) {
+      const { typeOfService, database, URI, name, description } = fields[field];
+      const result = ipcRenderer.sendSync(
+        'addApp',
+        JSON.stringify([name, database, URI, description, typeOfService])
+      );
+      setApplications(result);
+    }
+    
+    
   }, []);
 
   const addAwsApp = useCallback((awsFields: AwsFields) => {
@@ -75,11 +76,11 @@ const DashboardContextProvider = React.memo((props: any) => {
       JSON.stringify([name, 'AWS', region, description, typeOfService, instance, accessKey, secretAccessKey, awsUrl])
     );
     setApplications(result);
-    console.log('the current application that was added is : ', result)
+    // console.log('the current application that was added is : ', result)
   }, []);
 
-  const deleteApp = useCallback((index: number) => {
-    const result = ipcRenderer.sendSync('deleteApp', index);
+  const deleteApp = useCallback((index: number,action:string) => {
+    const result = ipcRenderer.sendSync('deleteApp', index,action);
     setApplications(result);
   }, []);
 
@@ -101,7 +102,7 @@ const DashboardContextProvider = React.memo((props: any) => {
         deleteApp,
         mode,
         setMode,
-        changeMode,
+        changeMode
       }}
     >
       {children}

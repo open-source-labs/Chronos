@@ -12,10 +12,10 @@ const connectDB = async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).then((result) => {
-    console.log(result.connection.readyState)
-    console.log(result.connection.host)
+    // console.log(result.connection.readyState)
+    // console.log(result.connection.host)
   }).catch((err) => {
-    console.log('Unable to connect to MongoMemoryServer')
+    // console.log('Unable to connect to MongoMemoryServer')
   });
 };
 

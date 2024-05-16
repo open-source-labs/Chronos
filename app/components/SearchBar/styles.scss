@@ -1,0 +1,41 @@
+.form {
+  height: 30px;
+  font-weight: 100;
+  font-size: inherit;
+  color: inherit;
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+  justify-items: center;
+  align-items: center;
+}
+
+.form :hover{
+  cursor: pointer;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .searchIconSvg {
+    transform: scale(0.1) translate(758.9px, -720px);
+    position: absolute;
+    fill: rgb(131, 129, 133);
+  }
+}
+
+
+#textInput {
+  background-color: transparent;
+  font-family: 'Roboto';
+  font-size: 16px;
+  outline: none;
+  border: 0;
+  padding: 2px;
+  transition: all 0.25s ease;
+  pointer-events: none;
+  text-align: left;
+  margin-top: 5px;
+}

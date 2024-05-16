@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardContext } from '../context/DashboardContext';
-import '../stylesheets/Home.scss';
+import '../';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -43,11 +43,11 @@ const SignUp:React.FC = React.memo(() => {
 
     ipcRenderer.invoke('addUser', { username, email, password})
       .then((message) => {
-        console.log('message', message)
+        // console.log('message', message)
         if (message === false) {
           setFailedSignUp(<p>Sorry, your sign up failed. Please try a different username or email</p>)
         } else {
-          console.log('in frontend', username)
+          // console.log('in frontend', username)
           // setUser(username);
           navigate('/login');
           alert('USER CREATED: PLEASE LOG IN')
