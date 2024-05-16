@@ -20,4 +20,6 @@ const chronosConfig = {
 
   notifications: [],
 };
+console.log(process.env.CHRONOS_DB)
+console.log(process.env.CHRONOS_URI)
 export default chronosConfig;

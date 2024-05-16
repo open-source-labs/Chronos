@@ -1,25 +1,31 @@
 import React from 'react';
+// import { adaptV4Theme } from '@mui/styles';
+import { createTheme, adaptV4Theme } from '@mui/material/styles'
 import ReactDOM from 'react-dom';
 
 // REACT 18 Syntax below
 // import { createRoot } from 'react-dom/client';
 
-import './stylesheets/index.scss';
-import { createTheme, ThemeProvider } from '@material-ui/core/';
+import './index.scss';
+import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import App from './App';
-import WindowBar from './components/WindowBar';
+import WindowBar from './components/WindowBar/WindowBar';
 
-const theme = createTheme({
+
+const theme = createTheme(adaptV4Theme({
+  // v4 theme
   typography: {
     fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
-});
+}));
 
 // React 17 Syntax below
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <WindowBar />
-    <App />
-  </ThemeProvider>,
+  <StyledEngineProvider injectFirst>
+    <ThemeProvider theme={theme}>
+      <WindowBar />
+      <App />
+    </ThemeProvider>
+  </StyledEngineProvider>,
   document.getElementById('app')
 );

@@ -6,29 +6,13 @@ import path from 'path';
 import connectPostgres from '../databases/postgres';
 import connectMongo from '../databases/mongo';
 import CommunicationModel from '../models/CommunicationsModel';
-import HealthModelFunc from '../models/HealthModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
-import KafkaModel from '../models/KafkaModel';
-import fetch, { FetchError } from 'electron-fetch';
-//import { postgresFetch, mongoFetch }  from './dataHelpers';
+import fetch from 'electron-fetch';
 import { fetchData } from './dataHelpers';
 import MetricsModel from '../models/MetricsModel';
 const log = require('electron-log');
-
-const mongoose = require('mongoose');
 const User = require('../models/UserModel');
-
-// const testURL = 'mongodb+srv://seconddbtest:seconddbtest@cluster0.yhztme0.mongodb.net/?retryWrites=true&w=majority';
-// const connectMongoose = async (i: number, URI: string) => {
-//   try {
-//     const db2 = mongoose.createConnection(testURL);
-//     console.log('connection to user provided db established..');
-//     return db2;
-//   } catch (error) {
-//     console.log('Error connecting to second db... ', error);
-//   }
-// }
 
 const mongoFetch = fetchData.mongoFetch;
 const postgresFetch = fetchData.postgresFetch;
@@ -70,20 +54,20 @@ ipcMain.on(
     if (currentDatabaseType === 'MongoDB') {
       connectMongo(index, URI).then(data => {
         if (data) {
-          console.log('Connected to user provided MongoDB database "data.ts"');
+          // console.log('Connected to user provided MongoDB database "data.ts"');
           message.sender.send('databaseConnected', true);
         } else {
-          console.log('Failed to connect to database "data.ts"');
+          // console.log('Failed to connect to database "data.ts"');
           message.sender.send('databaseConnected', false);
         }
       });
     } else if (currentDatabaseType === 'SQL') {
       pool = await connectPostgres(index, URI);
       if (pool) {
-        console.log('Connected to user provided PostgreSQL database');
+        // console.log('Connected to user provided PostgreSQL database');
         message.sender.send('databaseConnected', true);
       } else {
-        console.log('Failed to connect to database');
+        // console.log('Failed to connect to database');
         message.sender.send('databaseConnected', false);
       }
     }
@@ -97,7 +81,7 @@ ipcMain.on(
 ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-    console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
+    // console.log('Hi, inside data.ts line 97 - servicesRequest. Fetching services...');
 
     // Mongo Database
     console.log('data.ts line 100 CurrentDataBase TYPE:', currentDatabaseType);
@@ -115,7 +99,7 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
       result = result.rows;
     }
 
-    console.log('Sending servicesResponse to frontend with the following result:', result);
+    // console.log('Sending servicesResponse to frontend with the following result:', result);
     // Async event emitter - send response
     message.sender.send('servicesResponse', JSON.stringify(result));
     // eslint-disable-next-line no-shadow
@@ -131,11 +115,9 @@ ipcMain.on('servicesRequest', async (message: Electron.IpcMainEvent) => {
 ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any;
-
-    // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get all documents
       result = await CommunicationModel.find().exec();
+      // console.log({result})
     }
 
     // SQL Database
@@ -159,32 +141,25 @@ ipcMain.on('commsRequest', async (message: Electron.IpcMainEvent) => {
  * @desc    Query for health data for a particular microservice (last 50 data points)
  */
 ipcMain.on('healthRequest', async (message: Electron.IpcMainEvent, service: string) => {
+
   try {
     let result: any;
-    // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      console.log('data.ts ln 164: database', currentDatabaseType, 'service', service)
       result = await mongoFetch(service);
-      console.log('data.ts ln 166 result:', result, result[0][`${service}`][0])
     }
 
     // SQL Database
     if (currentDatabaseType === 'SQL') {
-      console.log('inside healthRequest call');
-      // Get last 50 documents. If less than 50 get all
       result = await postgresFetch(service, pool);
       // const query = `SELECT * FROM services`;
       // result = await pool.query(query);
       // result = result.rows;
     }
-    console.log('result data.ts line 177', result)
     // Async event emitter - send response'
-
-    console.log('Hi, inside data.ts line 183 - healthRequest. sending health response...');
     message.sender.send('healthResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('error sending result to healthresponse in healthrequest', error)
+    // console.log('error sending result to healthresponse in healthrequest', error)
     // console.log(' event', message);
     // message.sender.send('healthResponse', {});
   }
@@ -200,7 +175,7 @@ ipcMain.on('dockerRequest', async (message, service) => {
     // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
       // Get document count
-      console.log('Hi, inside data.ts line 203 - dockerRequest. Fetching data...');
+      // console.log('Hi, inside data.ts line 203 - dockerRequest. Fetching data...');
       let num = await DockerModelFunc(service).countDocuments();
       // Get last 50 documents. If less than 50 documents, get all
       num = Math.max(num, 50);
@@ -226,32 +201,27 @@ ipcMain.on('dockerRequest', async (message, service) => {
     message.sender.send('dockerResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "dockerRequest" event', message);
+    // console.log('Error in "dockerRequest" event', message);
     message.sender.send('dockerResponse', {});
   }
 });
 
-// This event allows the user to change which metrics are saved by the database, so that their database doesn't get bloated with unnecessary data that they don't actually want.
+// This event grabs the metric data from the metric database. 
+// Storing the metrics is done to allow the user to select which metrics
+// they want to see in the metrics container component
 ipcMain.on('savedMetricsRequest', async (message: Electron.IpcMainEvent) => {
   try {
     let result: any = {};
-    // Mongo Database
     if (currentDatabaseType === 'MongoDB') {
-      // Get all documents from the services collection
       result = await MetricsModel.find().lean();
     }
 
-    // SQL Database
     if (currentDatabaseType === 'SQL') {
-      // Get all rows from the metrics table
       const query = `SELECT * FROM metrics;`;
       result = await pool.query(query);
       result = result.rows;
     }
-
-    // Async event emitter - send response
     message.sender.send('savedMetricsResponse', result);
-    // eslint-disable-next-line no-shadow
   } catch (err) {
     if (err) console.log('Error in "metricsRequest" event :', err.message);
   }
@@ -327,7 +297,7 @@ ipcMain.on('kafkaRequest', async message => {
     message.sender.send('kafkaResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "kakfaRequest" event', message);
+    // console.log('Error in "kakfaRequest" event', message);
     message.sender.send('kafkaResponse', {});
   }
 });
@@ -348,7 +318,7 @@ ipcMain.on('kubernetesRequest', async message => {
     message.sender.send('kubernetesResponse', JSON.stringify(result));
   } catch (error) {
     // Catch errors
-    console.log('Error in "kubernetesRequest" event', message);
+    // console.log('Error in "kubernetesRequest" event', message);
     message.sender.send('kubernetesResponse', {});
   }
 });
@@ -436,7 +406,7 @@ ipcMain.on(
         message.sender.send('ec2MetricsResponse', JSON.stringify(data)); // send data to frontend
       });
     } catch (err) {
-      console.log('Error in "ec2MetricsRequest" event', message);
+      // console.log('Error in "ec2MetricsRequest" event', message);
       message.sender.send('ec2MetricsResponse', {
         CPUUtilization: [],
         NetworkIn: [],
@@ -485,7 +455,7 @@ ipcMain.on(
 
       cloudwatch.listMetrics(listMetricsParams, (err, data) => {
         if (err) {
-          console.log('Error', err);
+          // console.log('Error', err);
         } else {
           for (let i = 0; i < data.Metrics.length; i++) {
             const dimensions: any[] = data.Metrics[i].Dimensions;
@@ -599,12 +569,12 @@ ipcMain.on(
 ipcMain.on(
   'awsAppInfoRequest',
   async (message: Electron.IpcMainEvent, username: string, appIndex: number) => {
-    console.log('Hi, inside data.ts - awsAppInfoRequest');
+    // console.log('Hi, inside data.ts - awsAppInfoRequest');
     if (username !== 'guest') {
-      console.log('inside awsAppInfoRequest, not a guest');
+      // console.log('inside awsAppInfoRequest, not a guest');
       return User.findOne({ username: username })
         .then(data => {
-          console.log('DB returned user data: ', data);
+          // console.log('DB returned user data: ', data);
           const { services } = data;
           const [typeOfService, region, awsUrl] = [services[4], services[2], services[9]];
           const response = {
@@ -635,7 +605,7 @@ ipcMain.on(
 
         message.sender.send('awsAppInfoResponse', JSON.stringify(response));
       } catch (err) {
-        console.log('Error in awsAppInfoRequest', message);
+        // console.log('Error in awsAppInfoRequest', message);
         message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '', awsUrl: '' });
       }
     }
@@ -653,7 +623,7 @@ ipcMain.on(
       userAwsService[9],
     ];
     const url = `${awsUrl}/api/search?folderIds=0`;
-    console.log('hi');
+    // console.log('hi');
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -666,8 +636,8 @@ ipcMain.on(
     });
     log.info(response);
     const data = await response.json();
-    console.log(data);
-    console.log(awsUrl);
+    // console.log(data);
+    // console.log(awsUrl);
     message.sender.send('eksMetricsResponse', JSON.stringify(data));
   }
 );
@@ -731,7 +701,7 @@ ipcMain.on(
 
       message.sender.send('awsAppInfoResponse', JSON.stringify(response));
     } catch (err) {
-      console.log('Error in awsAppInfoRequest', message);
+      // console.log('Error in awsAppInfoRequest', message);
       message.sender.send('awsAppInfoResponse', { typeOfService: '', region: '' });
     }
   }

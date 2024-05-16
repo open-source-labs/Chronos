@@ -88,7 +88,7 @@ If there is any error when running the applications and the underlying files for
 
 - If you do not, the above docker compose command will not know to rebuild the image and the code changes meant to fix any issues will not be rolled into the existing Docker image!
 
-Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application. You can go to `http://localhost:5000/` to log into `Client` to create item, inventory, orders and these requests will be tracked by Chronos.
+Your microservice health metrics can now be viewed at the given `CHRONOS_URI` or, preferrably, in the Electron.js desktop application. You can go to `http://localhost:5001/` to log into `Client` to create item, inventory, orders and these requests will be tracked by Chronos.
 
 ## To stop and remove containers
 

@@ -1,0 +1,108 @@
+@import '../../index.scss';
+
+// MAIN DASHBOARD
+.dashboardArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 2rem;
+}
+
+// HEADER
+.mainHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.header {
+  margin-top: $logoPositionTop - 18px;
+  font-size: $headerFontSize;
+  color: $header;
+}
+
+#rightHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin: 0;
+  margin-top: 40px;
+}
+
+#listIcon {
+  position: absolute;
+  top: 20px;
+  left: 250px;
+  font-size: 42px;
+  margin: 10px;
+  padding: 5px;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    color: $gblue;
+  }
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  white-space: nowrap;
+  margin: 10px 0;
+  color: transparent;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+#deleteIcon {
+  background: none;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  transform: translateX(-40px);
+  filter: none;
+
+  &:hover {
+    background: none;
+    background-color: none;
+    color: $warningred;
+    filter: none;
+    cursor: pointer;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid green;
+  box-shadow: $boxshadow1;
+  -webkit-text-fill-color: green;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+// DATABASE CARDS
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: center;
+  width: 80%;
+  margin-top: 50px;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}

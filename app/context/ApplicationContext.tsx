@@ -20,12 +20,13 @@ export const ApplicationContext = React.createContext<any>(null);
 
 const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props => {
   const children = props.children;
+  const [ example,setExample ] = useState(false)
+  const [chart, setChart] = useState<string>('all');
   const [servicesData, setServicesData] = useState([]);
   const [app, setApp] = useState<string>('');
   const [savedMetrics, setSavedMetrics] = useState({});
   const [appIndex, setAppIndex] = useState<number>(0);
   const [intervalID, setIntervalID] = useState<NodeJS.Timeout | null>(null);
-
 
   /**
    * @function fetchServicesNames - a function that will take an application name and update the state of `serviceData` based on backend response
@@ -37,16 +38,13 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    */
   // v10: Invoked by connectToDB, passing in app (card title)
   const fetchServicesNames = useCallback((application: string) => {
-    // console.log('Hi, inside ApplicationConext - fetchServicesNames callback. Sending servicesRequest to ipcMain.');
-    // console.log('app when fetch services name: ', application);
+
     ipcRenderer.send('servicesRequest');
     ipcRenderer.on('servicesResponse', (event: Electron.Event, data: any) => {
+      //data here refers to the services coming the services document of the database
       let result: any;
       result = JSON.parse(data);
-      console.log('result from ipcrenderer services response is: ', result);
-      // console.log('Calling setServicesData passing in above result. Current servicesData is the following: ', servicesData);
       setServicesData(result);
-      // console.log('Leaving fetchedServicesNames function.');
       ipcRenderer.removeAllListeners('servicesResponse');
     });
 
@@ -60,7 +58,8 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
    * @params application - is the name of the card taht was clicked on
    */
   const connectToDB = useCallback((username: string, index: number, application: string, URI: string, databaseType: string) => {
-    console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
+    // console.log('Hi, inside ApplicationContext, connectToDB function was invoked.');
+    /* ipcRenderer is referring to electron. The connect string is processed in data.ts inside of the electron folder at the root of the project */
     ipcRenderer.removeAllListeners('databaseConnected');
     ipcRenderer.send('connect', username, index, URI, databaseType);
     ipcRenderer.on('databaseConnected', (event: Electron.Event, data: any) => {
@@ -83,7 +82,6 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
       data.forEach(el => {
         store[el.metric] = el;
       });
-      // console.log('result from getSavedMetrics is: ', store);
       setSavedMetrics(store);
     });
   }, []);
@@ -104,6 +102,10 @@ const ApplicationContextProvider: React.FC<AppContextProps> = React.memo(props =
         setAppIndex,
         intervalID,
         setIntervalID,
+        example,
+        setExample,
+        chart,
+        setChart
       }}
     >
       {children}

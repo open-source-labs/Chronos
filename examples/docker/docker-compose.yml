@@ -16,7 +16,7 @@ services:
     container_name: 'client'
 
     ports:
-      - '5000:5000'
+      - '5001:5001'
 
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
@@ -61,10 +61,10 @@ services:
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor:v0.47.0
     container_name: cadvisor
     privileged: true
-    platform: linux/amd64/v8
+    platform: linux/arm64/v8
     ports:
       - 8081:8081
     command:

@@ -3,19 +3,18 @@ import React, { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { all, solo as soloStyle } from './sizeSwitch';
 
-// interface AwsCpuChartProps {
-//   key: string;
-//   renderService: string;
-//   metric: string;
-//   timeList: any;
-//   valueList: any;
-//   sizing: string;
-//   colourGenerator: Function;
-// }
-
 interface SoloStyles {
   height: number;
   width: number;
+}
+
+interface IPlotlyData {
+  name: any;
+  x: any;
+  y: any;
+  type: any;
+  mode: any;
+  marker: { color: string };
 }
 
 /** 
@@ -26,34 +25,31 @@ interface SoloStyles {
 const AwsChart: React.FC<any> = React.memo(props => {
   const { renderService, metric, timeList, valueList, colourGenerator, sizing } = props;
   const [solo, setSolo] = useState<SoloStyles | null>(null);
+
   setInterval(() => {
     if (solo !== soloStyle) {
       setSolo(soloStyle);
     }
   }, 20);
 
-  const createChart = () => {
-    const timeArr = timeList?.map((el: any) => moment(el).format('kk:mm:ss'));
-    // const hashedColour = colourGenerator(renderService);
-    let plotlyData: {
-      name: any;
-      x: any;
-      y: any;
-      type: any;
-      mode: any;
-      marker: { color: string };
-    };
-    plotlyData = {
-      name: metric,
-      x: timeArr,
-      y: valueList,
-      type: 'scattergl',
-      mode: 'lines',
-      marker: { color: colourGenerator() },
-    };
-    const sizeSwitch = sizing === 'all' ? all : solo;
+  const timeArr = timeList?.map((el: any) => moment(el).format('kk:mm:ss'));
 
-    return (
+  let plotlyData:IPlotlyData= {
+    name: metric,
+    x: timeArr,
+    y: valueList,
+    type: 'scattergl',
+    mode: 'lines',
+    marker: { color: colourGenerator() },
+  };
+
+  const sizeSwitch = sizing === 'all' ? all : solo;
+
+  return (
+    <div 
+      className="chart" 
+      data-testid="Health Chart"
+    >
       <Plot
         data={[plotlyData]}
         config={{ displayModeBar: false }}
@@ -90,12 +86,6 @@ const AwsChart: React.FC<any> = React.memo(props => {
           },
         }}
       />
-    );
-  };
-
-  return (
-    <div className="chart" data-testid="Health Chart">
-      {createChart()}
     </div>
   );
 });

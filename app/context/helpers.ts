@@ -38,13 +38,15 @@ interface HealthDataObject {
 
 export function healthTransformer(healthData: HealthDataObject[]) {
   // make an object for storing different services' metrics data
+  console.log({healthData})
   const serviceMetricsObject = {};
   // loop through the services in the healthData array
   healthData.forEach(serviceObj => {
     // grab the key string from the current service object
     const serviceName = Object.keys(serviceObj)[0];
     const serviceElements = serviceObj[serviceName];
-    console.log('serviceElements: ', serviceElements);
+    console.log(serviceObj)
+    // console.log('serviceElements: ', serviceElements);
     // add the serviceName as a key on the serviceMetricsObject and assign it an empty object
     serviceMetricsObject[serviceName] = {};
     // loop through the elements of the current service
@@ -83,7 +85,7 @@ export function eventTransformer(eventData: MetricObject[]) {
   // make an object for storing the metrics data
   const eventMetricsObject = {};
   // loop through the services in the eventData array
-  console.log('eventData: ', eventData);
+  // console.log('eventData: ', eventData);
   eventData.forEach((metricObj: MetricObject) => {
     // destructure the category, metric name, time stamp, and metric value from the metricObj
     const { category, metric, time, value, _id, token } = metricObj
@@ -105,8 +107,8 @@ export function eventTransformer(eventData: MetricObject[]) {
 
   });
   // return the eventMetricsObject
-  console.log('eventMetricsObject.Event.length: ', Object.keys(eventMetricsObject["Event"]).length);
-  console.log('eventMetricsObject: ', eventMetricsObject)
+  // console.log('eventMetricsObject.Event.length: ', Object.keys(eventMetricsObject["Event"]).length);
+  // console.log('eventMetricsObject: ', eventMetricsObject)
   //console.log('eventMetricsObject.length', eventMetricsObject);
   return eventMetricsObject;
 };

@@ -20,9 +20,36 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-### Chronos 13.0
+### Chronos 14.0
 
 <div>
+
+Contributors:
+[Michael Tagg](https://github.com/mdtagg),
+[Ted Pham](https://github.com/TedPham397),
+[Sofia Sarhiri](https://github.com/sarhiri),
+[Stephen Yang](https://github.com/stephenhyang),
+
+</div>
+Updates:
+<li>Implemented a new visualization button (example) to expedite data rendering processes.</li>
+<li>Refactored microservices example, switched over to community version of MongoDB for easier URI implementation.</li>
+<li>Modularized cluttered components into modular units to improve code readability and reusability.</li>
+<li>Optimized startup scripts to reduce application load time and streamline environment configuration.</li>
+<li>Upgraded Material-UI from version 4 to version 5, adapting to new API changes and improving UI responsiveness. </li>
+<li>Refactored portions of the electron app </li>
+<li>Refactored data parsing logic to reduce unnecessary rerenders and improve app performance</li>
+<li>Fixed data bottle necks in the local npm packages, data is now able to flow to microservices for data visualization</li>
+
+
+<a href='link here'>Version 14.0 Medium Article</a>
+
+### **Iteration Log**
+
+<details><summary>Chronos 13.0</summary>
+    <ul>
+    <div>
+
 
 Contributors:
 [Elsa Holmgren](https://github.com/ekh88),
@@ -33,15 +60,18 @@ Contributors:
 
 </div>
 Updates:
-<li>Created new and improved microservices application with updated syntax to better demonstrate Chronos' capabilities</li>
-<li>Dockerized microservices application to demonstrate Chronos within a containerized environment</li>
-<li>Added visulization of Chronos' codebase to illustrate overall structure</li>
-<li>Simplified installation and startup instructions in the root directory README file</li>
-<li>Improved documentation in chronos_npm_package README file for easier on-boarding </li>
+    <ul>
+    <li>Created new and improved microservices application with updated syntax to better demonstrate Chronos' capabilities</li>
+    <li>Dockerized microservices application to demonstrate Chronos within a containerized environment</li>
+    <li>Added visulization of Chronos' codebase to illustrate overall structure</li>
+    <li>Simplified installation and startup instructions in the root directory README file</li>
+    <li>Improved documentation in chronos_npm_package README file for easier on-boarding </li>
+    </ul>
 
 <a href='https://medium.com/@holmgren.e/crisis-averted-chronos-guards-against-development-disasters-8f3653f3c136'>Version 13.0 Medium Article</a>
 
-### **Iteration Log**
+</ul>
+</details>
 
 <details><summary>Chronos 12.0</summary>
     <ul>
@@ -186,7 +216,7 @@ Updates:
 </ul>
 </details>
 
-### With Chronos 13.0
+### With Chronos 14.0
 
 <a href="https://chronoslany.com/">
     <img src="assets/demo.gif" alt="Chronos" title="Chronos" align="center" height="500" width="auto" />
@@ -196,7 +226,8 @@ Updates:
 
 ## Overview of the CodeBase
 
-- Instead of the typical folders & files view, a visual representation of the code is created. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
+- If you want to visualize the way the files in the app are connected, we suggest using this data visualizer. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo
+  <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
   <img src="assets/codebase_visulization.png" alt="codebase visulization" align="center" height="500"/>
 
 ## Features
@@ -259,11 +290,11 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 ### Running the Chronos desktop app in development mode (WSL Incompatible)
 
 1. From the root directory, run `npm install`
-2. Run `npm run build`
-3. For Windows users, run `npm audit fix` or `npm audit fix --force` if prompted
-4. Open a new terminal and run `npm run dev:app` to start the Webpack development server
-5. Open a new terminal and run `npm run dev:electron` to start the Electron UI in development mode.
-6. Refer to `Examples` sections below to spin up example applications.
+2. Run `npm run start:electron` to start the electron app.
+3. Run `npm audit fix` or `npm audit fix --force` if prompted
+4. Refer to `Examples` sections below to spin up example applications.
+   (Recommended):
+   If you have mongo community edition running locally just run `npm run start:microservices` to start populating database with server data(more detail in Microservices Example section).
 
 #
 

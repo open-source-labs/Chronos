@@ -18,7 +18,11 @@ const config: Config.InitialOptions = {
     '/__tests__/charts/HealthChart.test.tsx',
     '/__backend-tests__',
   ],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/(?!d3|internmap|delaunator|robust-predicates|three-forcegraph|three|three-render-objects|3d-force-graph)'
+  ],
   // Specify the test path files/patterns to ignore
+  
 };
 
 export default config;

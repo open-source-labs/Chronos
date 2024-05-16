@@ -111,6 +111,7 @@ const helpers = {
 
   addNotifications: config => {
     const { notifications } = config;
+    //POTENTIAL BUG: notifications defaults to an empty array so it should always be truthy. I think code will fire regardless
     if (notifications) {
       // Current notification methods supported
       const features = ['slack', 'email', 'sms'];
