@@ -29,8 +29,10 @@ create_dirs:
 
 # Create .env files
 create_env_files:
+	@echo "$$ENV_CONTENT" > .env
 	@$(foreach dir,$(DIRS),echo "$$ENV_CONTENT" > $(dir)/.env;)
 
 # Clean up .env files
 clean:
+	@rm -f .env
 	@$(foreach dir,$(DIRS),rm -f $(dir)/.env;)

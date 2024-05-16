@@ -35,13 +35,14 @@ The Event Bus serves as the intermediary between the backend services, facilitat
 
 The common folder maintains code snippets used across each microservice, and is distributed by way of a common NPM package.
 
-## To Set Up Database for Storing/Retrieving Metrics
 ## Database and .env setup
 
-A `sample.env` file, located in the `examples/microservices` folder, has been provided with the necessary enivronmental variables to spin-up the application.
+A `Makefile` file, located in the `examples/microservices` folder, has been provided with the necessary environmental variables to spin-up the application.
 
-Create your own `.env` file in the `examples/microservices` folder with the following key/value pairs:
+This file used the community version of  `MongoDB`, make sure it's connected before running `npm run start:microservices`.
+It can be replaced by any Mongo_URI.
 
+Example:
 - `CHRONOS_DB`: `MongoDB` or `PostgreSQL`
 - `CHRONOS_URI`: The URI to the desired MongoDB or PostgreSQL database where the **Chronos NPM Package** will store recorded metrics. The **Chronos desktop application** retrieves and displays metrics from this database
 - `MONGO_URI_AUTH`: A **MongoDB** URI for the `auth` microservice to use
@@ -53,7 +54,7 @@ Create your own `.env` file in the `examples/microservices` folder with the foll
 
 Note: You may run out of space in your database if the services run for an extended period of time. You can temporarily solve this by manually deleting the collection from the database regularly using a UI such as MongoDB Compass.
 
-## Start the Microservices
+## Start the example
 
 To spin up the example application:
 
@@ -63,14 +64,13 @@ To spin up the example application:
 
 <img src="../../assets/example_microservices_card.gif" alt="Chronos" title="Chronos" align="center" />\
 
-
 Open a web browser to `localhost:5001` to send requests from the client
 
 Your microservice health metrics may be viewed in the given `CHRONOS_URI` database, or in the Electron.js desktop application.
+
 ## Notes
 
 Plotly utilizes WebGL to render graphs, but WebGL can support only 8-16 layers simultaneously. Therefore, it is recommended to selectively choose a limited number of layers for optimal performance.
-
 
 ## Additional Documentation
 
