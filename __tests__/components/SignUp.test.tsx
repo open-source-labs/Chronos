@@ -18,11 +18,11 @@ xdescribe('Create Signup Page', () => {
     );
   });
 
-  it('should render', () => {
+  xit('should render', () => {
     expect(screen).toBeTruthy();
   });
 
-  it('Should contain an h1, h2, form, two buttons, and three inputs', () => {
+  xit('Should contain an h1, h2, form, two buttons, and three inputs', () => {
     const element = screen.getByTestId('SignUp');
     expect(element.querySelectorAll('h1').length).toBe(1);
     expect(element.querySelectorAll('h2').length).toBe(1);
@@ -31,7 +31,7 @@ xdescribe('Create Signup Page', () => {
     expect(element.querySelectorAll('input').length).toBe(4);
   });
 
-  it('Sign up button should submit email, username, and password to addUser', async () => {
+  xit('Sign up button should submit email, username, and password to addUser', async () => {
     screen.debug();
 
     const username = screen.getByPlaceholderText('enter username');
