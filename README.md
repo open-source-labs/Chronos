@@ -20,9 +20,30 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-### Chronos 14.0
+### Chronos 15.0
 
 <div>
+
+Contributors:
+[Arnold Pinkhasov](https://github.com/apinkhasov101),
+[Ashley Bisram](https://github.com/ashleybisram),
+[Peter Toussaint](https://github.com/Peter2oussaint),
+[Rich Chery](https://github.com/Gitfrich)
+
+</div>
+
+Updates:
+<li>Bullet 1.</li>
+
+
+<a href='#'>Version 15.0 Medium Article</a>
+
+
+### **Iteration Log**
+
+<details><summary>Chronos 14.0</summary>
+    <ul>
+    <div>
 
 Contributors:
 [Michael Tagg](https://github.com/mdtagg),
@@ -32,6 +53,7 @@ Contributors:
 
 </div>
 Updates:
+<ul>
 <li>Implemented a new visualization button (example) to expedite data rendering processes.</li>
 <li>Refactored microservices example, switched over to community version of MongoDB for easier URI implementation.</li>
 <li>Modularized cluttered components into modular units to improve code readability and reusability.</li>
@@ -44,7 +66,9 @@ Updates:
 
 <a href='link here'>Version 14.0 Medium Article</a>
 
-### **Iteration Log**
+</ul>
+</details>
+
 
 <details><summary>Chronos 13.0</summary>
     <ul>
