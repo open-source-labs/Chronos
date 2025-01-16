@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@use '../../index.scss' as *;
 
 .metricsSelector {
   max-width: 90%;
