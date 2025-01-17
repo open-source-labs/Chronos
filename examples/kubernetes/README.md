@@ -81,7 +81,7 @@ docker build -t backend:1.0 .
 
 2. run `npm start` to start npm server.
 
-3. You should see `🤖 Example app listening on port 1111! chronos_npm_package Server Loaded 🎉` in the terminal.
+3. You should see `Example app listening on port 3000! Kubernetes Example Server Loaded` in the terminal.
 
 ## Deploy the Cluster
 
