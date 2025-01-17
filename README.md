@@ -49,7 +49,7 @@ Contributors:
 [Michael Tagg](https://github.com/mdtagg),
 [Ted Pham](https://github.com/TedPham397),
 [Sofia Sarhiri](https://github.com/sarhiri),
-[Stephen Yang](https://github.com/stephenhyang),
+[Stephen Yang](https://github.com/stephenhyang)
 
 </div>
 Updates:

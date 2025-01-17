@@ -1,5 +1,13 @@
 ## People
 
+[Arnold Pinkhasov](https://github.com/apinkhasov101),
+[Ashley Bisram](https://github.com/ashleybisram),
+[Peter Toussaint](https://github.com/Peter2oussaint),
+[Rich Chery](https://github.com/Gitfrich),
+[Michael Tagg](https://github.com/mdtagg),
+[Ted Pham](https://github.com/TedPham397),
+[Sofia Sarhiri](https://github.com/sarhiri),
+[Stephen Yang](https://github.com/stephenhyang),
 [Elsa Holmgren](https://github.com/ekh88),
 [Mckenzie Morris](https://github.com/mckenzie-morris),
 [Kelly Chandler](https://github.com/kchandler44),

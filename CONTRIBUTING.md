@@ -26,7 +26,7 @@ Chronos welcomes all pull requests.
 The `chronosWebsite` branch holds the code for the website. Edit the website by checking out the branch, modifying the website, and then updating the AWS S3 bucket with the changes.
 ## Issues
 
-Please do not hesitate to file issues that detail bugs or offer ways to enhace Chronos.
+Please do not hesitate to file issues that detail bugs or offer ways to enhance Chronos.
 
 Chronos is based off of community feedback and is  always looking for ways to get better. The team behind Chronos is interested to hear about your experience and how we can improve it.
 
