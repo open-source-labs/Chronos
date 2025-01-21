@@ -4,10 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  stats: {
+    warningsFilter: (warning) => warning.includes('Deprecation'), // ignores SCSS deprecation warnings
+  },
   entry: './app/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[contenthash].js',
   },
   devtool: 'eval-source-map',
   module: {
@@ -24,6 +27,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env', '@babel/preset-react'],
+              cacheDirectory: true,
             },
           },
         ],
@@ -31,7 +35,14 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', "sass-loader",
+{
+  loader: 'sass-loader',
+  options: {
+    implementation: require('sass') // Use Dart Sass
+  },
+}
+ ],
         exclude: /node_modules/,
       },
       {

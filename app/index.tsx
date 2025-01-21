@@ -1,6 +1,6 @@
 import React from 'react';
 // import { adaptV4Theme } from '@mui/styles';
-import { createTheme, adaptV4Theme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import ReactDOM from 'react-dom';
 
 // REACT 18 Syntax below
@@ -12,12 +12,12 @@ import App from './App';
 import WindowBar from './components/WindowBar/WindowBar';
 
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   // v4 theme
   typography: {
     fontFamily: ['Roboto', 'sans-serif'].join(','),
   },
-}));
+});
 
 // React 17 Syntax below
 ReactDOM.render(

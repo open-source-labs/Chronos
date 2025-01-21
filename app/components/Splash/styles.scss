@@ -1,4 +1,4 @@
-@import '../../index.scss'; // Update the import path according to your project structure
+@use '../../index.scss' as *; // Update the import path according to your project structure
 
 #splash {
   display: flex;
