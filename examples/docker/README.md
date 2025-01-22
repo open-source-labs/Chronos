@@ -39,7 +39,7 @@ For additional details on how Chronos works this example, please review the Dock
 
 Peform the following steps in each of the _Auth_, _Items_, _Inventory_, _Orders_, _Client_, and _Event-Bus_ directories
 
-1. Add a `.env` file to each of _Auth_, _Items_, _Inventory_, _Orders_, _Event-Bus_, and _Client_ folders with the following key/value pairs (a `sample.env` file is provided in the `/examples/docker` directory):
+1. Add a `.env` file to each of _Auth_, _Items_, _Inventory_, _Orders_, _Event-Bus_, and _Client_ folders with the following key/value pairs (a `.env.example` file is provided in the `/examples/docker` directory):
 
 - **NOTE**: Ensure that there are no quotes surrounding any of the keys and values.
 
