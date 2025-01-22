@@ -16,21 +16,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.js$|jsx/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env', '@babel/preset-react'],
-              cacheDirectory: true,
-            },
-          },
-        ],
+        test: /\.[jt]sx?$/,
+        loader: 'esbuild-loader',
+        options: {
+          // JavaScript version to compile to
+          target: 'es2015',
+        },
         exclude: /node_modules/,
       },
       {
