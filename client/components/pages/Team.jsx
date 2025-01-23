@@ -66,6 +66,8 @@ import bioMikePic from "../../assets/Bio_picture_Mike.png"
 import bioStephenPic from "../../assets/Bio_picture_Stephen.png"
 import bioAshleyPic from "../../assets/Bio_picture_Ashley_Bisram.jpg"
 import bioArnoldPic from "../../assets/Bio_picture_Arnold_Pinkhasov.jpeg"
+// import bioPeterPic from "#"
+// import bioRichPic from "#"
 
 
 import "../../stylesheets/Team.scss"
@@ -89,6 +91,24 @@ const bios = [
         linkedIn: 'https://www.linkedin.com/in/arnold-pinkhasov/',
     },
   },
+//   {
+//     name: 'Peter Toussaint',
+//     bioParagraph: 'bioparagraphtext',
+//     picture: bioPeterPic,
+//     contact: {
+//         gitHub: 'https://github.com/Peter2oussaint',
+//         linkedIn: 'https://www.linkedin.com/in/petertoussaint/',
+//     },
+// },
+//   {
+//     name: 'Rich Chery',
+//     bioParagraph: 'bioparagraphtext',
+//     picture: bioRichPic,
+//     contact: {
+//         gitHub: 'https://github.com/Gitfrich',
+//         linkedIn: 'https://www.linkedin.com/in/fridchard-chery/',
+//     },
+// },
   {
     name: 'Michael Tagg',
     bioParagraph: " Mike, a full-stack engineer from Thousand Oaks, California, excels in both front-end and back-end development. With an adventurous spirit, Mike enjoys building apps that integrate real-life functionality with beautifully written code.  In his free time, you can find Mike hiking, rock climbing or skydiving.",
