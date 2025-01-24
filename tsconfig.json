@@ -17,6 +17,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmitOnError": false,
+    "allowSyntheticDefaultImports": true,
     // "types": ["jest", "node", "@testing-library/jest-dom"],
     "types": ["jest", "node"]
   },
