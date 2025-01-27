@@ -84,7 +84,7 @@ const bios = [
   },
   {
     name: 'Arnold Pinkhasov',
-    bioParagraph: 'Arnold is a software developer specializing in React and Express Node. He has a passion for debugging and optimizing codebases, and designing modular full-stack applications that assist developers connect communities through tech.',
+    bioParagraph: `Arnold is a software developer specializing in React and Express Node, with a passion for debugging, optimizing codebases, and designing modular full-stack applications that empower developers to connect communities through technology. When his fingers aren’t flying across the keyboard, they’re tearing up guitar strings—because creativity is the reward.`,
     picture: bioArnoldPic,
     contact: {
         gitHub: 'https://github.com/apinkhasov101',
