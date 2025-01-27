@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const KafkaSchema = new Schema({
+const KubernetesSchema = new Schema({
   time: {
     type: Date,
     default: Date.now(),
@@ -19,4 +19,4 @@ const KafkaSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('kafkametrics', KafkaSchema);
+module.exports = mongoose.model('kubernetesmetrics', KubernetesSchema);

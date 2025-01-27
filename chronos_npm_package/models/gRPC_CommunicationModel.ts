@@ -1,12 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-/**
- * This model is used for storing alerts and communications to developers
- */
-
-const CommunicationsSchema = new Schema({
+const gRPC_CommunicationsSchema = new Schema({
   microservice: {
     type: String,
     required: true,
@@ -21,7 +17,6 @@ const CommunicationsSchema = new Schema({
   },
   responsestatus: {
     type: Number,
-    required: true,
   },
   responsemessage: {
     type: String,
@@ -37,4 +32,4 @@ const CommunicationsSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('communications', CommunicationsSchema);
+module.exports = mongoose.model('grpc_communications', gRPC_CommunicationsSchema);
