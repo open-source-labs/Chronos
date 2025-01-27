@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: [
         // entry point of our app
-        './client/index.js'
+        './client/index.tsx'
       ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -41,8 +41,16 @@ module.exports = {
       },
     },
   },
+  resolve: {  
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'], // Add .ts and .tsx extensions  
+  },  
   module: {
     rules: [
+      {  
+        test: /\.tsx?$/, // Handle .ts and .tsx files  
+        use: 'ts-loader',  
+        exclude: /node_modules/,  
+       },  
       {
         test: /.(js|jsx)$/,
         exclude: /node_modules/,
