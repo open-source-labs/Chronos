@@ -21,7 +21,7 @@
     }
 ```
 
-5. Test to see if your photos and bios are rendering correctly by running `npm start` in the root directory and navigating to `localhost:8081` in your browser.
+5. Test to see if your photos and bios are rendering correctly by running `npm start` in the root directory and navigating to `localhost:8080` in your browser.
 
 #
 
