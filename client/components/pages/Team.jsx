@@ -101,8 +101,8 @@ const bios = [
     },
 },
   {
-    name: 'Rich Chery',
-    bioParagraph: 'Fridchard Chery is a software engineer based in New York City with a deep interest in creating and learning new technologies. When he’s not coding he enjoys songwriting, watching movies and working out.',
+    name: 'Fridchard Chery',
+    bioParagraph: 'Fridchard (Rich) Chery is a software engineer based in New York City with a deep interest in creating and learning new technologies. When he’s not coding he enjoys songwriting, watching movies and working out.',
     picture: bioRichPic,
     contact: {
         gitHub: 'https://github.com/Gitfrich',
