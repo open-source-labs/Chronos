@@ -66,7 +66,7 @@ import bioMikePic from "../../assets/Bio_picture_Mike.png"
 import bioStephenPic from "../../assets/Bio_picture_Stephen.png"
 import bioAshleyPic from "../../assets/Bio_picture_Ashley_Bisram.jpg"
 import bioArnoldPic from "../../assets/Bio_picture_Arnold_Pinkhasov.jpeg"
-// import bioPeterPic from "#"
+import bioPeterPic from "../../assets/Bio_picture_Pete.png"
 // import bioRichPic from "#"
 
 
@@ -91,15 +91,15 @@ const bios = [
         linkedIn: 'https://www.linkedin.com/in/arnold-pinkhasov/',
     },
   },
-//   {
-//     name: 'Peter Toussaint',
-//     bioParagraph: 'bioparagraphtext',
-//     picture: bioPeterPic,
-//     contact: {
-//         gitHub: 'https://github.com/Peter2oussaint',
-//         linkedIn: 'https://www.linkedin.com/in/petertoussaint/',
-//     },
-// },
+  {
+    name: 'Peter Toussaint',
+    bioParagraph: `Peter Toussaint is a full-stack developer from New York City who thrives on building dynamic web applications and crafting sleek, user-friendly interfaces. He combines his technical expertise with a creative passion for delivering impactful digital experiences. When he’s not coding, Peter enjoys skateboarding, breakdancing, DJing.`,
+    picture: bioPeterPic,
+    contact: {
+        gitHub: 'https://github.com/Peter2oussaint',
+        linkedIn: 'https://www.linkedin.com/in/petertoussaint/',
+    },
+},
 //   {
 //     name: 'Rich Chery',
 //     bioParagraph: 'bioparagraphtext',
