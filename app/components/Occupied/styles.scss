@@ -16,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   margin-left: 50px;
+
 }
 
 .header {
@@ -33,20 +34,19 @@
   margin-top: 40px;
 }
 
-#listIcon {
-  position: absolute;
-  top: 20px;
-  left: 250px;
-  font-size: 42px;
-  margin: 10px;
-  padding: 5px;
-
-  &:hover {
-    cursor: pointer;
-    box-shadow: $boxshadow3;
-    color: $gblue;
-  }
-}
+// #listIcon {
+//   position: absolute;
+//   top: 20px;
+//   left: 250px;
+//   font-size: 42px;
+//   margin: 10px;
+//   padding: 5px;
+//   &:hover {
+//     cursor: pointer;
+//     box-shadow: $boxshadow3;
+//     color: $gblue;
+//   }
+// }
 
 button {
   background-color: transparent;
@@ -91,7 +91,7 @@ select:-webkit-autofill:focus {
   box-shadow: $boxshadow1;
   -webkit-text-fill-color: green;
   -webkit-box-shadow: 0 0 0px 1000px #000 inset;
-  transition: background-color 5000s ease-in-out 0s;
+   transition: background-color 5000s ease-in-out 0s;
 }
 // DATABASE CARDS
 .cardContainer {
@@ -102,8 +102,86 @@ select:-webkit-autofill:focus {
   width: 80%;
   margin-top: 50px;
   text-decoration: none;
+
 }
 
 a {
   text-decoration: none;
+}
+
+#choose-application{
+  font-weight: 400;
+  pointer-events: none;
+color: white;
+
+}
+
+
+.env-button {
+  background-color: $gblue;
+  // background-color: rgb(201, 198, 198);
+border: 3px solid rgb(240,153,70);
+border-radius: 10px;
+  // border: 0;
+  // outline: none;
+  // white-space: nowrap;
+  margin-top: 70px;
+  // padding: 0px;
+height: 60px;
+ width: 350px;
+  color: white;
+  box-shadow: $boxshadow;
+  padding: 1rem 10.75rem;
+  &:hover {
+    background-color: lightgrey;
+  }
+}
+
+.env-button2 {
+  background-color: $gblue;
+border: 3px solid rgb(240,153,70);
+border-radius: 10px;
+  // border: 0;
+  // outline: none;
+  // white-space: nowrap;
+  // margin: 10px;
+  // padding: 0px;
+  width: 350px;
+margin-top: 30px;
+height: 60px;
+  color: white;
+  box-shadow: $boxshadow;
+  padding: 0.5rem 0.5rem;
+  &:hover {
+    background-color: lightgrey;
+  }
+}
+
+p {
+margin-top: 100px;
+  // padding: 0 !important;
+font-size: 20px;
+
+}
+
+#card-env {
+  // margin: 40px 20px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+// padding: 250px;
+width: 1900px;
+height: 700px;
+background-color: black;
+border: 10px solid rgb(240,153,70);
+border-radius: 50px;
+}
+#chronos-Logo{
+
+width: 500px;
+height: auto;
+border-radius: 20px;
+// padding: 10px;
+//  border: 1px solid white;
 }

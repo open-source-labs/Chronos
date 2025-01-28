@@ -1,27 +1,30 @@
- /** From Version 5.2 Team:
+/** From Version 5.2 Team:
  * We only fixed linting issues regarding Notifications.
  * Otherwise, Notifications still does not function properly.
  */
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext, useEffect, useState } from 'react';
 
+import React, { useContext, useEffect, useState } from 'react';
+import chronosLogo from '/app/assets/logo.svg';
+// import chronosLogo from '../../assets/logo.svg';
 // MATERIAL UI METHODS
-import { Modal, Button } from '@mui/material';
+import { Modal, Button, Typography } from '@mui/material';
 
 // MATERIAL UI ICONS
-import AddCircleOutlineTwoToneIcon from '@mui/icons-material/AddCircleOutlineTwoTone';
+// import AddCircleOutlineTwoToneIcon from '@mui/icons-material/AddCircleOutlineTwoTone';
+import { CloudQueue, Computer } from '@mui/icons-material';
 
 // // MODALS
 // import AddModal from '../modals/AddModal';
-import EnvModal from '../../modals/EnvModal/EnvModal';
+// import EnvModal from '../../modals/EnvModal/EnvModal';
 import AddModal from '../../modals/AddModal/AddModal';
 import AwsModal from '../../modals/AwsModal/AwsModal';
 import ProfileContainer from '../../containers/ProfileContainer';
 import ServicesModal from '../../modals/ServicesModal/ServicesModal';
 
 // STYLESHEETS
-import './styles.scss';
+ import './styles.scss';
 import lightAndDark from '../Styling';
 // // CONTEXT
 import { DashboardContext } from '../../context/DashboardContext';
@@ -33,13 +36,13 @@ import SearchBar from '../SearchBar/SearchBar';
 import DashboardIcons from '../DashboardIcons/DashboardIcons';
 import ApplicationsCard from '../ApplicationsCard/ApplicationsCard';
 
-import { useStylesLight, useStylesDark } from './helpers/muiHelper'
+import { useStylesLight, useStylesDark } from './helpers/muiHelper';
 
 //v10: Memoized function, without any props. Should theoretically be called only once.
 const Occupied = React.memo(() => {
   const { setServicesData, app, example } = useContext(ApplicationContext);
-  const { user, applications, getApplications, mode, } = useContext(DashboardContext);
-  const [ modal,setModal ] = useState({isOpen:false,type:''})
+  const { user, applications, getApplications, mode } = useContext(DashboardContext);
+  const [modal, setModal] = useState({ isOpen: false, type: '' });
   const { appIndex } = useContext(ApplicationContext);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -54,88 +57,96 @@ const Occupied = React.memo(() => {
   const currentStyle = mode === 'light' ? lightAndDark.lightModal : lightAndDark.darkModal;
 
   return (
-    <div 
-      className="dashboardArea"
-    >
+    <div className="dashboardArea">
       <header className="mainHeader">
-        <section 
-          className="header" 
-          id="rightHeader"
-        >
-          <SearchBar
-            setSearchTerm={setSearchTerm}
-          />
-          <DashboardIcons
-            setModal={setModal}
-          />
+        <section className="header" id="rightHeader">
+          <SearchBar setSearchTerm={setSearchTerm} />
+          <DashboardIcons setModal={setModal} />
         </section>
       </header>
 
-      <div 
-        className="cardContainer"
-      >
-        {!example &&
-        <div 
-        
-          className="card" 
-          id="card-add"
-          
-        >
-          <Button 
-            className={classes.paper} 
-            onClick={() => setModal({isOpen:true,type:'envModal'})}
+      <div className="cardContainer">
+        <div className="card" id="card-env">
+          <img src={chronosLogo} id="chronos-Logo"></img>
+          <p id="choose-application">Choose Your Application</p>
+          <Button
+            className="env-button"
+            onClick={() => setModal({ isOpen: true, type: 'awsModal' })}
           >
-            <AddCircleOutlineTwoToneIcon 
-              className={classes.icon} 
-            />
+            <Typography>
+              <CloudQueue fontSize="large" />
+            </Typography>
+            <Typography>&emsp;Cloud-Based</Typography>
+          </Button>
+
+          <Button
+            className="env-button2"
+            onClick={() => setModal({ isOpen: true, type: 'addModal' })}
+          >
+            <Typography>
+              <Computer fontSize="large" />
+            </Typography>
+            <Typography>&emsp;Local Hosted</Typography>
           </Button>
         </div>
-        }
 
-        {applications
-          .map((application: string[], i: any) => {
-            const description = application[3]
-            const cardName = application[0]
-            const isFiltered = cardName.toLowerCase().includes(searchTerm.toLowerCase())
+        {/* {!example && (
+          <div className="card" id="card-add">
+            <Button
+              className={classes.paper}
+              onClick={() => setModal({ isOpen: true, type: 'envModal' })}
+            >
+              <AddCircleOutlineTwoToneIcon className={classes.icon} />
+            </Button>
+          </div>
+        )} */}
 
-            if((!example && description === "Example") || !isFiltered) return <></>
-            return (
-              <ApplicationsCard
-                key={crypto.randomUUID()}
-                application={application}
-                i={i}
-                setModal={setModal}
-                classes={classes}
-              />
-            )})}
+        {applications.map((application: string[], i: any) => {
+          const description = application[3];
+          const cardName = application[0];
+          const isFiltered = cardName.toLowerCase().includes(searchTerm.toLowerCase());
 
-        <Modal 
-          open={modal.isOpen} 
-          onClose={() => setModal({isOpen:false,type:''})}
-        >
-          {
-            modal.type === 'envModal' ? 
-              <EnvModal setModal={setModal} />
-            :
-            modal.type === 'awsModal' ?
-              <AwsModal setModal={setModal} />
-            :
-            modal.type === 'addModal' ?
-              <AddModal setModal={setModal} />
-            :
-            modal.type === 'personalModal' ?
-              <ProfileContainer setModal={setModal}/>
-            :
-            modal.type === 'serviceModal' ?
-              <ServicesModal 
-                key={`key-${appIndex}`} 
-                i={appIndex} 
-                app={app}
-              />
-            :
+          if ((!example && description === 'Example') || !isFiltered) return <></>;
+          return (
+            <ApplicationsCard
+              key={crypto.randomUUID()}
+              application={application}
+              i={i}
+              setModal={setModal}
+              classes={classes}
+            />
+          );
+        })}
+
+        <Modal open={modal.isOpen} onClose={() => setModal({ isOpen: false, type: '' })}>
+          {modal.type === 'awsModal' ? (
+            <AwsModal setModal={setModal} />
+          ) : modal.type === 'addModal' ? (
+            <AddModal setModal={setModal} />
+          ) : modal.type === 'personalModal' ? (
+            <ProfileContainer setModal={setModal} />
+          ) : modal.type === 'serviceModal' ? (
+            <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
+          ) : (
             <></>
-          }
+          )}
         </Modal>
+
+        {/* <Modal open={modal.isOpen} onClose={() => setModal({ isOpen: false, type: '' })}>
+          {modal.type === 'envModal' ? (
+            <EnvModal setModal={setModal} />
+          ) : modal.type === 'awsModal' ? (
+            <AwsModal setModal={setModal} />
+          ) : modal.type === 'addModal' ? (
+            <AddModal setModal={setModal} />
+          ) : modal.type === 'personalModal' ? (
+            <ProfileContainer setModal={setModal} />
+          ) : modal.type === 'serviceModal' ? (
+            <ServicesModal key={`key-${appIndex}`} i={appIndex} app={app} />
+          ) : (
+            <></>
+          )}
+        </Modal> */}
 
         {/* <Modal open={envModalOpen} onClose={() => setEnvModalOpen(false)}>
           <EnvModal
@@ -162,7 +173,6 @@ const Occupied = React.memo(() => {
         </Modal> */}
       </div>
     </div>
-
   );
 });
 
