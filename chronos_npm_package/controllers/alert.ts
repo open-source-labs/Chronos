@@ -11,7 +11,7 @@ import nodemailer from 'nodemailer';
  * @param {string} message Response message
  * @param {Object} slackSettings User provided slack settings
  */
-alert.sendSlack = (code: number, message: string, slackSettings: Object) => {
+alert.sendSlack = (code: number, message: string, slackSettings: any) => {
   const { webhook } = slackSettings;
 
   // Data for POST request
@@ -38,7 +38,7 @@ alert.sendSlack = (code: number, message: string, slackSettings: Object) => {
  * @param {string} message Response message
  * @param {Object} emailSettings User provided email settings
  */
-alert.sendEmail = (code: number, message: string, emailSettings) => {
+alert.sendEmail = (code: number, message: string, emailSettings: any) => {
   const { emails, emailHost, emailPort, user, password } = emailSettings;
 
   // Message object contains recipient email list and email text body

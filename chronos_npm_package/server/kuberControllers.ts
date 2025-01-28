@@ -1,4 +1,4 @@
-const k8s = require('@kubernetes/client-node');
+import k8s from '@kubernetes/client-node';
 const kuberControllers = {};
 
 kuberControllers.getPods = async (req, res, next) => {
@@ -45,7 +45,7 @@ kuberControllers.getNamespace = async (req, res, next) => {
                 // console.log('New namespace created: ', createNamespaceRes.body);
 
                 const readNamespaceRes = await k8sApi.readNamespace(namespace.metadata.name);
-                console.log('Namespcace: ', readNamespaceRes.body);
+                console.log('Namespace: ', readNamespaceRes.body);
 
             } catch (err) {
                 console.error(err);
@@ -147,4 +147,4 @@ kuberControllers.getResources = async (req, res, next) => {
     }
 }
 
-module.exports = kuberControllers;
+export default kuberControllers;

@@ -1,11 +1,11 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
 const app = express()
 const port = 1111;
-const utilities = require('../controllers/utilities');
-const fs = require('fs');
-const kuberControllers = require('./kuberControllers');
-const fileControllers = require('./fileControllers');
+import utilities from '../controllers/utilities';
+import fs from 'fs';
+import kuberControllers from './kuberControllers';
+import fileControllers from'./fileControllers';
 
 
 app.use(cors());
