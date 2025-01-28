@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const HealthSchema = new Schema({
+const KafkaSchema = new Schema({
   time: {
     type: Date,
     default: Date.now(),
@@ -18,4 +18,5 @@ const HealthSchema = new Schema({
     default: '',
   },
 });
-module.exports = MicroSrvName => mongoose.model(MicroSrvName, HealthSchema);
+
+module.exports = mongoose.model('kafkametrics', KafkaSchema);

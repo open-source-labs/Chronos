@@ -17,6 +17,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmitOnError": false,
+    "allowSyntheticDefaultImports": true,
     // "types": ["jest", "node", "@testing-library/jest-dom"],
     "types": ["jest", "node"]
   },
@@ -24,5 +25,5 @@
     "node_modules",
     "dist"
   ],
-  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json"]
+  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json", "./chronos_npm_package/**/*.ts"]
 }
