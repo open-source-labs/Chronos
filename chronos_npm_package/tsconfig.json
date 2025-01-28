@@ -14,7 +14,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "moduleResolution": "node", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
-    // "resolveJsonModule": true, //! Error: Option '--resolveJsonModule' cannot be specified when 'moduleResolution' is set to 'classic'.ts
+    "resolveJsonModule": true, //! Error: Option '--resolveJsonModule' cannot be specified when 'moduleResolution' is set to 'classic'.ts
     "skipLibCheck": true,
     "noEmitOnError": false,
     "allowSyntheticDefaultImports": true,

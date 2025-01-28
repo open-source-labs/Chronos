@@ -1,5 +1,5 @@
-import axios from 'axios';
-import nodemailer from 'nodemailer';
+import * as axios from 'axios';
+import * as nodemailer from 'nodemailer';
 
 // const alert = {};
 
@@ -29,7 +29,7 @@ const alert: Alert = {
 //  * @param {Object} slackSettings User provided slack settings
  */
 
-sendSlack = (code: number, message: string, slackSettings: any) => {
+sendSlack : (code: number, message: string, slackSettings: any) => {
   const { webhook } = slackSettings;
 
   // Data for POST request
