@@ -1,7 +1,7 @@
-const axios = require('axios').default;
+// const axios = require('axios').default;
+import axios from 'axios';
 
-const { createGrafanaPanelObject, updateGrafanaPanelObject } = require('./GrafanaPanel.js');
-
+import { createGrafanaPanelObject, updateGrafanaPanelObject }from './GrafanaPanel';
 /**
  * User Config object {
   microservice: string - Name of the microservice. Will be used as a table name in the chronos's db
@@ -465,4 +465,6 @@ const helpers = {
   }
 };
 
-module.exports = helpers;
+// module.exports = helpers;
+
+export default {helpers};

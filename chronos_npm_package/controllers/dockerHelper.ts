@@ -1,4 +1,5 @@
-const si = require('systeminformation');
+// importing systeminformation
+import * as si from 'systeminformation';
 
 /**
  * Finds the data pt with containerName that matches microservice and extracts container ID, name, platform, and start time.
@@ -57,4 +58,4 @@ async function readDockerContainer(input) {
     }
 }
 
-module.exports = { getDockerContainer, readDockerContainer};
+export default { getDockerContainer, readDockerContainer};

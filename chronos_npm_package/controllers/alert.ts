@@ -1,5 +1,5 @@
-const axios = require('axios').default;
-const nodemailer = require('nodemailer');
+import axios from 'axios';
+import nodemailer from 'nodemailer';
 
 const alert = {};
 
@@ -67,4 +67,4 @@ alert.sendEmail = (code, message, emailSettings) => {
   });
 };
 
-module.exports = alert;
+export default alert;

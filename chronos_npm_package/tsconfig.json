@@ -25,5 +25,5 @@
     "node_modules",
     "dist"
   ],
-  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json", "./chronos_npm_package/**/*.ts", "chronos_npm_package/models/HealthModel.ts"]
+  "include": ["./**/*.ts", "./models/*.ts"] //updated the include to have any .ts extensions in this folder
 }

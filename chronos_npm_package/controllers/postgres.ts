@@ -3,8 +3,7 @@ const { Client } = require('pg');
 const alert = require('./alert');
 const { collectHealthData } = require('./healthHelpers');
 const dockerHelper = require('./dockerHelper')
-// const utilities = require('./utilities');
-import utilities from './utilities.js';
+const utilities = require('./utilities');
 
 let client;
 

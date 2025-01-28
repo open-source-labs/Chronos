@@ -226,4 +226,4 @@ healthHelpers.collectHealthData = async() => {
   );
 };
 
-module.exports = healthHelpers;
+export default healthHelpers;

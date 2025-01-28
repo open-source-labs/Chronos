@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
-import alert from './alert.js';
-import CommunicationModel from '../models/CommunicationModel.ts';
+import alert from './alert';
+import CommunicationModel from '../models/CommunicationModel';
 // const ServicesModel = require('../models/ServicesModel.ts');
-import ServicesModel from '../models/ServicesModel.ts';
-import HealthModelFunc from'../models/HealthModel.ts';
-import ContainerInfoFunc from'../models/ContainerInfo.ts';
-import KafkaModel  from'../models/KafkaModel.ts';
-import KubernetesModel from'../models/KubernetesModel.ts';
-import { collectHealthData } from'./healthHelpers.js';
-import MetricsModel from '../models/MetricsModel.ts';
+import ServicesModel from '../models/ServicesModel';
+import HealthModelFunc from'../models/HealthModel';
+import ContainerInfoFunc from'../models/ContainerInfo';
+import KafkaModel  from'../models/KafkaModel';
+import KubernetesModel from'../models/KubernetesModel';
+import { collectHealthData } from'./healthHelpers';
+import MetricsModel from '../models/MetricsModel';
 import dockerHelper from './dockerHelper';
-import utilities from './utilities';
+import utilities from './utilities.js';
 // require('../models/ContainerInfo');
-import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel.ts';
+import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel';
 
 mongoose.set('strictQuery', true);
 

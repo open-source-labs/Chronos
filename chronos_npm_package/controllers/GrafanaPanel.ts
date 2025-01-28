@@ -195,4 +195,4 @@ function updateGrafanaPanelObject(
     return panel;
 }
 
-module.exports = { createGrafanaPanelObject, updateGrafanaPanelObject };
+export default { createGrafanaPanelObject, updateGrafanaPanelObject };
