@@ -5,7 +5,6 @@
 
   /* Header */
   .add-header {
-
     width: 100%;
     padding: 20px 30px;
 
@@ -21,15 +20,14 @@
       font-size: 26px;
       font-weight: 300;
       color: $darkgrey;
- margin: 0; /* Removes top/bottom margins */
-  padding: 0;
-border:2px red solid;
+      margin: 0; /* Removes top/bottom margins */
+      padding: 0;
     }
 
-p{
- margin: 0; /* Removes top/bottom margins */
-  padding: 0;
-}
+    p {
+      margin: 0; /* Removes top/bottom margins */
+      padding: 0;
+    }
   }
 
   /* Form */
