@@ -1,6 +1,6 @@
-const grpc = require('@grpc/grpc-js');
-const mongoose = require('mongoose');
-const ComModel = require('../models/CommunicationModel.ts');
+import mongoose from 'mongoose';
+import grpc from '@grpc/grpc-js';
+import ComModel from '../models/CommunicationModel';
 
 async function connect(URI) {
   try {
@@ -54,4 +54,4 @@ class ServerWrapper {
   }
 }
 
-module.exports = ServerWrapper;
+export default ServerWrapper;

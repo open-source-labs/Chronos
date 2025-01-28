@@ -1,6 +1,6 @@
 /* eslint-disable no-loop-func */
-const { Client } = require('pg');
-const grpc = require('@grpc/grpc-js');
+import { Client } from 'pg';
+import grpc from '@grpc/grpc-js';
 
 
 async function connect(URI, client) {
@@ -77,4 +77,4 @@ class ClientWrapper {
   }
 }
 
-module.exports = ClientWrapper;
+export default ClientWrapper;

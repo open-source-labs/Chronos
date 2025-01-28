@@ -1,5 +1,5 @@
-const { Client } = require('pg');
-const grpc = require('@grpc/grpc-js');
+import { Client } from 'pg';
+import grpc from '@grpc/grpc-js';
 
 let SQLclient;
 
@@ -68,4 +68,4 @@ class ServerWrapper {
   }
 }
 
-module.exports = ServerWrapper;
+export default ServerWrapper;
