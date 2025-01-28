@@ -52,9 +52,12 @@ sendSlack = (code: number, message: string, slackSettings: any) => {
 /**
  * Sends email notifications using the provided email information with the
  * status code and message via an axios POST request
-    
+//  * @param {integer} code Response status code
+//  * @param {string} message Response message
+//  * @param {Object} emailSettings User provided email settings
+//  */
 
-sendEmail = (code: number, message: string, emailSettings: any) => {
+sendEmail : (code: number, message: string, emailSettings: any) => {
   const { emails, emailHost, emailPort, user, password } = emailSettings;
 
   // Message object contains recipient email list and email text body
@@ -82,6 +85,7 @@ sendEmail = (code: number, message: string, emailSettings: any) => {
       console.log(info);
     }
   });
+},
 };
 
-export default alert;
+export default alert

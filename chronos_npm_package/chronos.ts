@@ -1,11 +1,11 @@
-const hpropagate = require('hpropagate');
-const postgres = require('./controllers/postgres.js');
-const mongo = require('./controllers/mongo.js');
-const MongoClientWrapper = require('./wrappers/MongoClientWrapper.js');
-const MongoServerWrapper = require('./wrappers/MongoServerWrapper.js');
-const PostgresClientWrapper = require('./wrappers/PostgresClientWrapper.js');
-const PostgresServerWrapper = require('./wrappers/PostgresServerWrapper.js');
-const utilities = require('./controllers/utilities');
+import hpropagate from 'hpropagate';  
+import postgres from './controllers/postgres';  
+import mongo from './controllers/mongo';  
+import MongoClientWrapper from './wrappers/MongoClientWrapper';  
+import MongoServerWrapper from './wrappers/MongoServerWrapper';  
+import PostgresClientWrapper from './wrappers/PostgresClientWrapper';  
+import PostgresServerWrapper from './wrappers/PostgresServerWrapper';  
+import utilities from './controllers/utilities';
 
 /**
  * **********************************
@@ -199,4 +199,4 @@ class Chronos {
   }
 }
 
-module.exports = Chronos;
+export default Chronos;
