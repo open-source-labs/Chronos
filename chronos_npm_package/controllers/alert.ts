@@ -3,6 +3,22 @@ import nodemailer from 'nodemailer';
 
 // const alert = {};
 
+interface SlackSettings {
+  webhook: any; // possibly 'string'?
+}
+
+interface EmailSettings {
+  emails: string;
+  emailHost: string;
+  emailPort: string | number;
+  user: string;
+  password: string;
+}
+
+interface Alert {
+  sendSlack: (code: number, message: string, slackSettings: SlackSettings) => void;
+  sendEmail: (code: number, message: string, emailSettings: EmailSettings) => void;
+}
 
 /**
  * Sends slack notifications to the provided slackurl with the status code
