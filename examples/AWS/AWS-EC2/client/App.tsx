@@ -12,10 +12,19 @@
 import React, { Component } from 'react';
 import MainContainer from './containers/MainContainer.jsx';
 
-class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+interface AppProps {  
+  //! Define your props type here, if any  
+}  
+
+interface AppState {  
+  //! Define your state type here, if any  
+}  
+
+class App extends Component<AppProps, AppState> {  
+  // constructor(props: AppProps) {  
+  //   super(props);  
+  //!  Initialize state here if needed  
+  // } 
 
   render() {
     return(
