@@ -1,4 +1,4 @@
-const si = require('systeminformation');
+import * as si from 'systeminformation';
 
 const healthHelpers = {};
 

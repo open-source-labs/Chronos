@@ -1,17 +1,15 @@
 import mongoose from 'mongoose';
 import alert from './alert';
 import CommunicationModel from '../models/CommunicationModel';
-// const ServicesModel = require('../models/ServicesModel.ts');
 import ServicesModel from '../models/ServicesModel';
 import HealthModelFunc from'../models/HealthModel';
 import ContainerInfoFunc from'../models/ContainerInfo';
 import KafkaModel  from'../models/KafkaModel';
 import KubernetesModel from'../models/KubernetesModel';
-import { collectHealthData } from'./healthHelpers';
+import collectHealthData from'./healthHelpers';
 import MetricsModel from '../models/MetricsModel';
 import dockerHelper from './dockerHelper';
 import utilities from './utilities.js';
-// require('../models/ContainerInfo');
 import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel';
 
 mongoose.set('strictQuery', true);
@@ -25,7 +23,7 @@ const mongo = {};
  * @param {Object} database Contains DB type and DB URI
  */
 mongo.connect = async ({ database }) => {
-  console.log('Attemping to connect to database...');
+  console.log('Attempting to connect to database...');
   try {
     await mongoose.connect(`${database.URI}`);
     console.log(`MongoDB database connected at ${database.URI.slice(0, 20)}...`);

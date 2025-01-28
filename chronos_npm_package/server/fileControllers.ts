@@ -1,7 +1,7 @@
-const { Parser } = require('@json2csv/plainjs');
-const fs = require('fs');
-const { convertArrayToCSV } = require('convert-array-to-csv');
-const converter = require('convert-array-to-csv');
+import { Parser } from '@json2csv/plainjs';
+import fs from 'fs';
+import { convertArrayToCSV } from 'convert-array-to-csv';
+import converter from 'convert-array-to-csv';
 
 const fileControllers = {};
 
@@ -32,4 +32,4 @@ fileControllers.saveCSV = (req, res, next) => {
 
 
 
-module.exports = fileControllers;
+export default fileControllers;

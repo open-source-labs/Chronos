@@ -1,7 +1,8 @@
 import axios from 'axios';
 import nodemailer from 'nodemailer';
 
-const alert = {};
+// const alert = {};
+
 
 /**
  * Sends slack notifications to the provided slackurl with the status code
@@ -10,7 +11,7 @@ const alert = {};
  * @param {string} message Response message
  * @param {Object} slackSettings User provided slack settings
  */
-alert.sendSlack = (code, message, slackSettings) => {
+alert.sendSlack = (code: number, message: string, slackSettings: Object) => {
   const { webhook } = slackSettings;
 
   // Data for POST request
@@ -37,17 +38,17 @@ alert.sendSlack = (code, message, slackSettings) => {
  * @param {string} message Response message
  * @param {Object} emailSettings User provided email settings
  */
-alert.sendEmail = (code, message, emailSettings) => {
+alert.sendEmail = (code: number, message: string, emailSettings) => {
   const { emails, emailHost, emailPort, user, password } = emailSettings;
 
-  // Message object contains receipent email list and email text body
+  // Message object contains recipient email list and email text body
   const data = {
     to: `${emails}`,
     subject: 'Error from Middleware',
     text: `${code}, ${message}`,
   };
 
-  // Configuartion settings for email notifications
+  // Configuration settings for email notifications
   const config = {
     host: `${emailHost}`,
     port: `${emailPort}`,
