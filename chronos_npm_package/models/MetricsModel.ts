@@ -19,4 +19,10 @@ const MetricsSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('metrics', MetricsSchema);
+// module.exports = mongoose.model('metrics', MetricsSchema);
+
+
+const MetricsModel = mongoose.model('MetricsModel', MetricsSchema);
+
+// Export the model
+export default MetricsModel;

@@ -1,17 +1,18 @@
-const mongoose = require('mongoose');
-const alert = require('./alert.js');
-const CommunicationModel = require('../models/CommunicationModel');
-const ServicesModel = require('../models/ServicesModel');
-const HealthModelFunc = require('../models/HealthModel');
-const ContainerInfoFunc = require('../models/ContainerInfo');
-const KafkaModel = require('../models/KafkaModel');
-const KubernetesModel = require('../models/KubernetesModel.js');
-const { collectHealthData } = require('./healthHelpers.js');
-const MetricsModel = require('../models/MetricsModel');
-const dockerHelper = require('./dockerHelper');
-const utilities = require('./utilities');
-require('../models/ContainerInfo');
-const GrafanaAPIKeyModel = require('../models/GrafanaAPIKeyModel');
+import mongoose from 'mongoose';
+import alert from './alert.js';
+import CommunicationModel from '../models/CommunicationModel.ts';
+// const ServicesModel = require('../models/ServicesModel.ts');
+import ServicesModel from '../models/ServicesModel.ts';
+import HealthModelFunc from'../models/HealthModel.ts';
+import ContainerInfoFunc from'../models/ContainerInfo.ts';
+import KafkaModel  from'../models/KafkaModel.ts';
+import KubernetesModel from'../models/KubernetesModel.ts';
+import { collectHealthData } from'./healthHelpers.js';
+import MetricsModel from '../models/MetricsModel.ts';
+import dockerHelper from './dockerHelper';
+import utilities from './utilities';
+// require('../models/ContainerInfo');
+import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel.ts';
 
 mongoose.set('strictQuery', true);
 

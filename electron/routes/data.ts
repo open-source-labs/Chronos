@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import connectPostgres from '../databases/postgres';
 import connectMongo from '../databases/mongo';
-import CommunicationModel from '../models/CommunicationsModel';
+import CommunicationModel from '../models/CommunicationModel';
 import ServicesModel from '../models/ServicesModel';
 import DockerModelFunc from '../models/DockerModel';
 import fetch from 'electron-fetch';

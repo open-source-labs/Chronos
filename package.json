@@ -37,6 +37,7 @@
     "mongodb": "^5.4.0",
     "mongoose": "^6.11.5",
     "pg": "^8.8.0",
+    "punycode": "^2.3.1",
     "react": "^17.0.0",
     "react-devtools": "^4.25.0",
     "react-dom": "^17.0.0",

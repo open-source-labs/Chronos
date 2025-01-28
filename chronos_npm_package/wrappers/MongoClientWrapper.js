@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const grpc = require('@grpc/grpc-js');
-const ComModel = require('../models/CommunicationModel');
+const ComModel = require('../models/CommunicationModel.ts');
 
 async function connect(URI) {
   try {

@@ -37,4 +37,10 @@ const CommunicationsSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('communications', CommunicationsSchema);
+// module.exports = mongoose.model('communications', CommunicationsSchema); //invalid format for TS
+
+// Define the model
+const CommunicationModel = mongoose.model('communications', CommunicationsSchema);
+
+// Export the model
+export default CommunicationModel;

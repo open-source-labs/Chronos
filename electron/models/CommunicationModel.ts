@@ -38,6 +38,6 @@ const CommunicationsSchema = new Schema({
   },
 });
 
-const CommunicationsModel = mongoose.model<IComms>('communications', CommunicationsSchema);
+const CommunicationModel = mongoose.model<IComms>('communications', CommunicationsSchema);
 
-export default CommunicationsModel;
+export default CommunicationModel;

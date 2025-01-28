@@ -9,4 +9,9 @@ const GrafanaAPIKeySchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('grafanaAPI', GrafanaAPIKeySchema);
+// module.exports = mongoose.model('grafanaAPI', GrafanaAPIKeySchema);
+
+const GrafanaAPIKeyModel = mongoose.model('GrafanaAPIKeyModel', GrafanaAPIKeySchema);
+
+// Export the model
+export default GrafanaAPIKeyModel;
