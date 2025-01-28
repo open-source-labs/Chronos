@@ -1,5 +1,8 @@
 import { Response } from 'express';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+
+import type {AxiosError} from 'axios/index.d.ts';
+
 import { BadRequestError, CurrentUserRequest, EventTypes } from '@chronosrx/common';
 import { Item } from '../models/items';
 
