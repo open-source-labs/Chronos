@@ -9,10 +9,13 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 0;
+
 }
 
 .sprout {
   margin: 0;
+  
 }
 
 .mainTitle {
@@ -20,6 +23,7 @@
   color: $background;
   text-align: left;
   font-weight: 600;
+    margin: 0;
 }
 
 .title {
@@ -27,6 +31,8 @@
   color: $background;
   text-align: left;
   font-weight: 600;
+  padding: 0;
+  margin: 0;
 }
 
 .text {
@@ -34,6 +40,8 @@
   color: $background;
   text-align: left;
   font-weight: 300;
+  padding: 0;
+  margin: 0;
 }
 
 .blurb {
@@ -46,7 +54,7 @@
   border: none;
   box-shadow: $boxshadow2;
   padding: 30px;
-
+  margin: 0;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
@@ -63,13 +71,19 @@
   background-color: transparent;
   border-radius: 50%;
   background-size: scale-down;
+  padding: 0;
+  margin: 0;
   &:hover {
     background-color: $hover;
     opacity: 0.85;
     animation: none;
   }
 }
-
+#OSPNames p{
+  margin: 10px 0px;
+}
 p {
   padding-left: 10px;
+  margin: 0;
+  // border:2px green solid;
 }

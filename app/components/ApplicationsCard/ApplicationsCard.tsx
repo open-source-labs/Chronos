@@ -26,7 +26,7 @@ const ApplicationsCard:React.FC<ApplicationCardProps> = (props) => {
         key={`card-${i}`}
         className={classes.paper}
         variant="outlined"
-        onClick={() => handleClick(application[0], application[3], i)}
+         onClick={() => handleClick(application[0], application[3], i)}
       >
         <div className="databaseIconContainer">
           <div className="databaseIconHeader"></div>
