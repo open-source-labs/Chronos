@@ -1,31 +1,35 @@
-@use '../../index.scss' as *;
+@use '../../index' as *;
 
 .add-container {
   @include centerModal(30%, 500px);
-
+margin-left: 68px;
   /* Header */
   .add-header {
     width: 100%;
-    padding: 20px 30px;
-    text-align: center;
+    padding: 0px;
+    margin: 0;
+     text-align: center;
     border-bottom: thin solid $grey;
     background-color: $grey;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     color: $darkgrey;
-
     h2 {
       @include modalHeader();
       font-size: 26px;
       font-weight: 300;
       color: $darkgrey;
+      margin-top: 0px;
+     
     }
+
   }
 
   /* Form */
   form {
     @include centerWithFlex($direction: column);
-    padding: 20px 30px;
+    // padding: 10px 30px;
+    padding: 0;
     width: 100%;
     font-size: 12px;
     font-family: 'Roboto';
@@ -34,6 +38,7 @@
     p,
     span {
       color: rgb(211, 0, 0);
+
     }
 
     span {
@@ -45,19 +50,19 @@
       align-self: flex-start;
     }
 
-    div {
-      @include centerWithFlex();
+    // // div {
+    // //   @include centerWithFlex();
 
-      // <select /> margins
-      &:first-of-type {
-        margin-top: 20px;
-      }
+    // //   // <select /> margins
+    // //   &:first-of-type {
+    // //     margin-top: 80px;
+    // //   }
 
-      // <textarea>
-      &:last-of-type {
-        @include centerWithFlex($justify: flex-start, $align: flex-start);
-      }
-    }
+    //   // <textarea>
+    //   &:last-of-type {
+    //     @include centerWithFlex($justify: flex-start, $align: flex-start);
+    //   }
+    // }
 
     /* Submit button */
     button {

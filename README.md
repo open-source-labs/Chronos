@@ -310,7 +310,7 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 
 **NOTE: You must create your own user database for extended features**
 
-1. Create a MongoDB database in which to store user information and insert it on line 2 within the [UserModel.ts](./electron/models/UserModel.ts) (_electron/models/UserModel.ts_) file.
+1. Create a MongoDB database in which to store user information and insert it within a root .env file based on .env.example [.env.example](./.env.example) (_.env.example_) file.
    - This database will privately store user information.
 2. Once this is set up, you can create new users, log in, and have your data persist between sessions.
 

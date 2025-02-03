@@ -25,5 +25,9 @@
     "node_modules",
     "dist"
   ],
+<<<<<<< HEAD
   "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json"]
+=======
+  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json", "./chronos_npm_package/**/*.ts", "./examples/**/**/**/*"]
+>>>>>>> dev
 }
