@@ -20,31 +20,52 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-### Chronos 14.0
+### Chronos 15.0
 
 <div>
+
+Contributors:
+[Arnold Pinkhasov](https://github.com/apinkhasov101),
+[Ashley Bisram](https://github.com/ashleybisram),
+[Fridchard Chery](https://github.com/Gitfrich),
+[Peter Toussaint](https://github.com/Peter2oussaint)
+
+</div>
+Updates:
+<li>Forthcoming</li>
+
+
+<a href='link here'>Version 15.0 Medium Article</a>
+
+### **Iteration Log**
+<details><summary>Chronos 14.0</summary>
+    <ul>
+    <div>
+
 
 Contributors:
 [Michael Tagg](https://github.com/mdtagg),
 [Ted Pham](https://github.com/TedPham397),
 [Sofia Sarhiri](https://github.com/sarhiri),
-[Stephen Yang](https://github.com/stephenhyang),
+[Stephen Yang](https://github.com/stephenhyang)
 
 </div>
 Updates:
-<li>Implemented a new visualization button (example) to expedite data rendering processes.</li>
-<li>Refactored microservices example, switched over to community version of MongoDB for easier URI implementation.</li>
-<li>Modularized cluttered components into modular units to improve code readability and reusability.</li>
-<li>Optimized startup scripts to reduce application load time and streamline environment configuration.</li>
-<li>Upgraded Material-UI from version 4 to version 5, adapting to new API changes and improving UI responsiveness. </li>
-<li>Refactored portions of the electron app </li>
-<li>Refactored data parsing logic to reduce unnecessary rerenders and improve app performance</li>
-<li>Fixed data bottle necks in the local npm packages, data is now able to flow to microservices for data visualization</li>
+    <ul>
+    <li>Implemented a new visualization button (example) to expedite data rendering processes.</li>
+    <li>Refactored microservices example, switched over to community version of MongoDB for easier URI implementation.</li>
+    <li>Modularized cluttered components into modular units to improve code readability and reusability.</li>
+    <li>Optimized startup scripts to reduce application load time and streamline environment configuration.</li>
+    <li>Upgraded Material-UI from version 4 to version 5, adapting to new API changes and improving UI responsiveness. </li>
+    <li>Refactored portions of the electron app </li>
+    <li>Refactored data parsing logic to reduce unnecessary rerenders and improve app performance</li>
+    <li>Fixed data bottle necks in the local npm packages, data is now able to flow to microservices for data visualization</li>
+    </ul>
 
+<a href='https://medium.com/@m.sofiasarhiri/a-tale-as-old-as-time-for-the-modern-developer-chronos-v-14-f84733fd4f93'>Version 14.0 Medium Article</a>
 
-<a href='link here'>Version 14.0 Medium Article</a>
-
-### **Iteration Log**
+</ul>
+</details>
 
 <details><summary>Chronos 13.0</summary>
     <ul>
