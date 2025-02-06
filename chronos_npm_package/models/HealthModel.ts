@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const KubernetesSchema = new Schema({
+const HealthSchema = new Schema({
   time: {
     type: Date,
     default: Date.now(),
@@ -18,5 +18,4 @@ const KubernetesSchema = new Schema({
     default: '',
   },
 });
-
-module.exports = mongoose.model('kubernetesmetrics', KubernetesSchema);
+module.exports = MicroSrvName => mongoose.model(MicroSrvName, HealthSchema);

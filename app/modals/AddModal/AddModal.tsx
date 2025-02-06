@@ -2,7 +2,6 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { DashboardContext } from '../../context/DashboardContext';
 import './AddModal.scss';
-
 import { TModalSetter } from '../../components/Occupied/types/Occupied';
 import ServiceDBType from './ServiceDBType';
 import ServicesDescription from './ServicesDescription';

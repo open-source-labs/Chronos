@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useCallback } from 'react';
 import { DashboardContext } from '../../context/DashboardContext';
-import './AwsModal.scss';
+
 
 import { TModalSetter } from '../../components/Occupied/types/Occupied';
 import AwsServiceInstance from './AwsServiceInstance';
 import AwsRegion from './AwsRegion';
 import AwsKeyUrl from './AwsKeyUrl';
 import AwsDescription from './AwsDescription';
-
+import './AwsModal.scss';
 interface AwsFields {
   typeOfService: string;
   instance: string;

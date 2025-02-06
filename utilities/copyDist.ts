@@ -5,13 +5,13 @@ The electron packager will be called such that it will build off
 of the /dist folder, so copy the required code into this folder
 */
 
-const fse = require('fs-extra');
-const path = require('path');
+import * as path from 'path';
+import * as fse from 'fs-extra';
 
 console.log('Copying files into the /dist folder prior to electron packaging');
 
-let sourceDir;
-let destDir;
+let sourceDir: string;
+let destDir: string;
 
 // Copy assets from app/assets into dist
 // so that assets load in package build
@@ -40,8 +40,8 @@ fse.copySync(sourceDir, destDir);
 // Create build 
 
 // Copy React Dev Tools from /dist to /build;
-reactDevToolsSourceDir = path.resolve(__dirname, '../node_modules');
-reactDevToolsDestDir = path.resolve(__dirname, '../build/node_modules');
+let reactDevToolsSourceDir = path.resolve(__dirname, '../node_modules');
+let reactDevToolsDestDir = path.resolve(__dirname, '../build/node_modules');
 
 if (!fse.existsSync(reactDevToolsDestDir)) {
   fse.mkdirSync(reactDevToolsDestDir);
