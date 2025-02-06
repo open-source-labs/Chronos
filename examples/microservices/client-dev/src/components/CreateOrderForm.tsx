@@ -1,3 +1,4 @@
+import React from 'react';
 import { FormEvent, useState } from 'react';
 import { Clothes } from '../util/types';
 import { useAppContext } from '../context/appContext';

@@ -37,7 +37,7 @@ afterAll(async () => {
 
 global.createOrder = async (itemId, sellerId) => {
   const data = Order.build({
-    itemId: itemId,
+    item: itemId,
     amount: 50,
     totalPrice: 5000,
     sellerId: sellerId,

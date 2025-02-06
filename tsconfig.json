@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2020",
     "noImplicitAny": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "strict": false,
+    "strict": true,
     "pretty": true,
     "outDir": "./build",
     "sourceMap": true,
-    "module": "ES2022", //updating module from CommonJS. Olivia suggested at a previous time to use "NodeNext" as CommonJS is outdated
+    "module": "NodeNext", //updating module from CommonJS. Olivia suggested at a previous time to use "NodeNext" as CommonJS is outdated
     "allowJs": true,
     "checkJs": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
-    "moduleResolution": "node", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
+    "moduleResolution": "nodenext", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
     // "resolveJsonModule": true, //! Error: Option '--resolveJsonModule' cannot be specified when 'moduleResolution' is set to 'classic'.ts
     "skipLibCheck": true,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
     // "types": ["jest", "node", "@testing-library/jest-dom"],
     "types": ["jest", "node"]
@@ -25,9 +25,7 @@
     "node_modules",
     "dist"
   ],
-<<<<<<< HEAD
-  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json"]
-=======
-  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json", "./chronos_npm_package/**/*.ts", "./examples/**/**/**/*"]
->>>>>>> dev
+
+  "include": ["./electron/**/*", "./electron/**/*.json", "__tests__/jest.config.ts", "./settings.json", "./chronos_npm_package/**/*.ts", "./examples/**/**/**/*","src", "src/types"]
+
 }

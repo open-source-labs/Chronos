@@ -1,9 +1,13 @@
+import React from 'react';
+import { ReactNode } from 'react';
+
 import { createContext, useReducer, useContext, useEffect } from 'react';
 import { ActionType } from './actions';
 import reducer from './reducer';
 import { customFetch } from '../util/customFetch';
 import { Fruit } from '../util/types';
-import { AxiosError } from 'axios';
+
+import axios, { AxiosError } from 'axios';
 
 const authFetch = customFetch(3000);
 const itemFetch = customFetch(3001);
@@ -64,7 +68,7 @@ const AppContext = createContext<AppContextInterface>({
 });
 
 type Props = {
-  children: JSX.Element | JSX.Element[];
+  children: ReactNode;
 };
 
 const AppContextProvider = ({ children }: Props) => {

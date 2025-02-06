@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 interface OrderAttrs {
   item: string;
   amount: number;
+
+  totalPrice: number; // Add this line
+  sellerId: string;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -26,6 +29,9 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       default: 1,
     },
+totalPrice: { type: Number, required: true }, // Ensure it's included
+  sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+
   },
   {
     //anytime we create Json formatted data, transform the user document as following

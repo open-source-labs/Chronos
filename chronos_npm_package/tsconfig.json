@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2020",
     "noImplicitAny": false,
     "noImplicitThis": true,
     "strictNullChecks": true,
@@ -8,12 +8,12 @@
     "pretty": true,
     "outDir": "./build",
     "sourceMap": true,
-    "module": "ES2022", //updating module from CommonJS. Olivia suggested at a previous time to use "NodeNext" as CommonJS is outdated
+    "module": "NodeNext", //updating module from CommonJS. Olivia suggested at a previous time to use "NodeNext" as CommonJS is outdated
     "allowJs": true,
     "checkJs": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
-    "moduleResolution": "node", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
+    "moduleResolution": "nodenext", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
     "resolveJsonModule": true, //! Error: Option '--resolveJsonModule' cannot be specified when 'moduleResolution' is set to 'classic'.ts
     "skipLibCheck": true,
     "noEmitOnError": false,
@@ -25,5 +25,5 @@
     "node_modules",
     "dist"
   ],
-  "include": ["./**/*.ts", "./models/*.ts"] //updated the include to have any .ts extensions in this folder
+  "include": ["./**/*.ts", "./models/*.ts","src/types/hpropagate.d.ts"] //updated the include to have any .ts extensions in this folder
 }

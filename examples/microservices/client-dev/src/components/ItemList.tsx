@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { useAppContext } from '../context/appContext';
 import { nanoid } from 'nanoid';
 import FruitIcon from './FruitIcon';

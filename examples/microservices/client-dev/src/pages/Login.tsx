@@ -1,5 +1,7 @@
+
+import React from 'react';
 import { FormEvent, useEffect } from 'react';
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/appContext.tsx';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 
