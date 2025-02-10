@@ -13,4 +13,10 @@ const ServicesSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('services', ServicesSchema);
+// module.exports = mongoose.model('services', ServicesSchema); // invalid format when converted to TS
+
+// Define the model
+const ServicesModel = mongoose.model('services', ServicesSchema);
+
+// Export the model
+export default ServicesModel;

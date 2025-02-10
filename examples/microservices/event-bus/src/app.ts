@@ -3,7 +3,7 @@ import axios from 'axios';
 import { NotFoundError, errorHandler } from '@chronosrx/common';
 
 import chronosConfig from './chronos-config';
-const Chronos = require('../../../../chronos_npm_package/chronos.js');
+const Chronos = require('../../../../chronos_npm_package/chronos');
 const chronos = new Chronos(chronosConfig);
 
 chronos.propagate();

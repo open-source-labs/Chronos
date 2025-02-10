@@ -33,3 +33,5 @@ const gRPC_CommunicationsSchema = new Schema({
 });
 
 module.exports = mongoose.model('grpc_communications', gRPC_CommunicationsSchema);
+
+

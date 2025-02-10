@@ -19,4 +19,12 @@ const KubernetesSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('kubernetesmetrics', KubernetesSchema);
+// module.exports = mongoose.model('kubernetesmetrics', KubernetesSchema);  // invalid format for TS files
+
+
+
+
+const KubernetesModel = mongoose.model('KubernetesModel', KubernetesSchema);
+
+// Export the model
+export default KubernetesModel;

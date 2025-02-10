@@ -1,12 +1,13 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Home from './pages/Home';
-import Protected from './pages/Protected';
-import SharedLayout from './pages/SharedLayout';
-import NotFound from './pages/NotFound';
-import About from './pages/About';
-import Items from './pages/Items';
-import Orders from './pages/Orders';
+import Login from './pages/Login.js';
+import Home from './pages/Home.js';
+import Protected from './pages/Protected.js';
+import SharedLayout from './pages/SharedLayout.js';
+import NotFound from './pages/NotFound.js';
+import About from './pages/About.js';
+import Items from './pages/Items.js';
+import Orders from './pages/Orders.js';
 
 function App() {
   return (

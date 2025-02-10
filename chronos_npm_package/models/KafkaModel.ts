@@ -19,4 +19,9 @@ const KafkaSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('kafkametrics', KafkaSchema);
+// module.exports = mongoose.model('kafkametrics', KafkaSchema); // invalid format for TS files
+
+const KafkaModel = mongoose.model('KafkaModel', KafkaSchema);
+
+// Export the model
+export default KafkaModel;

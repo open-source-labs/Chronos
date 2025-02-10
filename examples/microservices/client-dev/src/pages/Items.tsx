@@ -1,5 +1,7 @@
-import ItemList from '../components/ItemList';
-import { useAppContext } from '../context/appContext';
+import React from 'react';
+
+import ItemList from '../components/ItemList.js';
+import { useAppContext } from '../context/appContext.js';
 import { Link } from 'react-router-dom';
 import { IoCaretBackCircle } from 'react-icons/io5';
 

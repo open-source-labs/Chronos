@@ -2,7 +2,8 @@
   "name": "microservices",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
+"type": "module",
   "scripts": {
     "client": "cd client && npm start",
     "auth": "cd auth && npm start",

@@ -1,8 +1,9 @@
+import React from 'react';
 import { FormEvent, useState } from 'react';
-import { Clothes } from '../util/types';
-import { useAppContext } from '../context/appContext';
+import { Clothes } from '../util/types.js';
+import { useAppContext } from '../context/appContext.js';
 import { nanoid } from 'nanoid';
-import ClothesIcon from './ClothesIcon';
+import ClothesIcon from './ClothesIcon.js';
 
 const itemOptions = ['hat', 'shirt', 'pants'];
 
