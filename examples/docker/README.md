@@ -31,7 +31,7 @@ For additional details on how Chronos works this example, please review the Dock
 
 2. In your browser, go to `localhost:32000`, which will be the login page of Grafana. Use `admin` as both username and password to login. You can change the password after login.
 
-3. Navigate to `Home -> Administration -> Service accounts`, then click `Add service account` to create a service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically, which is defined in `chronos-config.ts` file in each microservices application.
+3. Navigate to `Home -> Administration -> Users and access -> Service accounts`, then click `Add service account` to create a service account. Be sure to choose `Admin` as the role. Then click `Add service account token`, hit `generate`, you are done! Remember this token, you will be using this token to access Grafana HTTP API programmatically, which is defined in `chronos-config.ts` file in each microservices application.
 
 4. Stop all containers and delete all images (except Grafana).
 
