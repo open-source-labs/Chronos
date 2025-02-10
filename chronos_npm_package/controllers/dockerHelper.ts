@@ -63,7 +63,7 @@
 // importing systeminformation
 import * as si from 'systeminformation';
 // Remove the file extension in your import:
-import { createGrafanaPanelObject } from '../controllers/GrafanaPanel';
+import { createGrafanaPanelObject } from '../controllers/GrafanaPanel.js';
 
 // Define your interfaces
 interface DockerContainer {

@@ -53,7 +53,7 @@
 
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { app } from '../app';
+import { app } from '../app.js';
 import request from 'supertest';
 
 let mongo: any;

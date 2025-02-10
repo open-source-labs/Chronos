@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { FormEvent, useEffect } from 'react';
-import { useAppContext } from '../context/appContext.tsx';
+import { useAppContext } from '../context/appContext.js';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../components/Loading';
+import Loading from '../components/Loading.js';
 
 const Login = () => {
   const { isLoading, user, loginUser } = useAppContext();

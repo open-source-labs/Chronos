@@ -4,7 +4,7 @@ import { FaRedhat } from 'react-icons/fa';
 import { IoShirtOutline } from 'react-icons/io5';
 import { PiPants } from 'react-icons/pi';
 
-import { Clothes } from '../util/types';
+import { Clothes } from '../util/types.js';
 
 type Props = {
   clothes: Clothes;

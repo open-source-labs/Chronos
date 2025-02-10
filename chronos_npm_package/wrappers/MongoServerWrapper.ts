@@ -57,7 +57,7 @@
 // export default ServerWrapper;
 import mongoose from 'mongoose';
 import grpc from '@grpc/grpc-js';
-import ComModel from '../models/CommunicationModel';
+import ComModel from '../models/CommunicationModel.js';
 
 async function connect(URI: string) {
   try {

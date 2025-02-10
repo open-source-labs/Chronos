@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { GiBananaBunch, GiGrapes, GiStrawberry } from 'react-icons/gi';
-import { Fruit } from '../util/types';
+import { Fruit } from '../util/types.js';
 
 type Props = {
   fruit: Fruit;

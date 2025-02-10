@@ -1,5 +1,5 @@
-import { ActionType } from './actions';
-import { StateInterface, ItemInterface, OrderInterface } from './appContext';
+import { ActionType } from './actions.js';
+import { StateInterface, ItemInterface, OrderInterface } from './appContext.js';
 
 type Action =
   | {

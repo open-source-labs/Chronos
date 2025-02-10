@@ -112,7 +112,7 @@
 // //     collectHealthData()
 // //       .then(async healthMetrics => {
 // //         const currentMetrics = await MetricsModel.find({mode})
-        
+
 // //         if (currentMetrics.length !== healthMetrics.length) {
 // //           await mongo.addMetrics(healthMetrics, mode, currentMetrics);
 // //         }
@@ -255,7 +255,6 @@
 // //           });
 // //         }
 
-
 // //         let allMetrics = await model.find({});
 // //         console.log('allMetrics.length: ', allMetrics.length);
 // //         console.log("🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 start creating dashboards 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡")
@@ -342,8 +341,6 @@
 // //   }
 // // }
 
-
-
 // // module.exports = mongo;
 
 // import mongoose from 'mongoose';
@@ -355,7 +352,7 @@
 // import KafkaModel from '../models/KafkaModel';
 // import KubernetesModel from '../models/KubernetesModel';
 // // Change the import to a named import if collectHealthData is exported that way.
-// import { collectHealthData } from './healthHelpers';  
+// import { collectHealthData } from './healthHelpers';
 // import MetricsModel from '../models/MetricsModel';
 // import dockerHelper from './dockerHelper';
 // // If utilities exports an object with a property `helpers`, leave the import as-is.
@@ -1535,21 +1532,21 @@
 
 // export default mongo;
 import mongoose from 'mongoose';
-import alert from './alert';
-import CommunicationModel from '../models/CommunicationModel';
-import ServicesModel from '../models/ServicesModel';
-import HealthModelFunc from '../models/HealthModel';
-import ContainerInfoFunc from '../models/ContainerInfo';
-import KafkaModel from '../models/KafkaModel';
-import KubernetesModel from '../models/KubernetesModel';
+import alert from './alert.js';
+import CommunicationModel from '../models/CommunicationModel.js';
+import ServicesModel from '../models/ServicesModel.js';
+import HealthModelFunc from '../models/HealthModel.js';
+import ContainerInfoFunc from '../models/ContainerInfo.js';
+import KafkaModel from '../models/KafkaModel.js';
+import KubernetesModel from '../models/KubernetesModel.js';
 
 // 👇 Import the *object* from healthHelpers, not a direct function
-import healthHelpers from './healthHelpers';
+import healthHelpers from './healthHelpers.js';
 
-import MetricsModel from '../models/MetricsModel';
-import dockerHelper from './dockerHelper';
-import utilities from './utilities';
-import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel';
+import MetricsModel from '../models/MetricsModel.js';
+import dockerHelper from './dockerHelper.js';
+import utilities from './utilities.js';
+import GrafanaAPIKeyModel from '../models/GrafanaAPIKeyModel.js';
 
 mongoose.set('strictQuery', true);
 
@@ -1613,15 +1610,18 @@ mongo.health = async ({ microservice, interval, mode }: any) => {
 
   setInterval(() => {
     // 👇 Call the object's method
-    healthHelpers.collectHealthData() 
+    healthHelpers
+      .collectHealthData()
       .then(async (healthMetrics: any[]) => {
         // Insert your logic for storing metrics
         const currentMetrics = await MetricsModel.find({ mode });
         if (currentMetrics.length !== healthMetrics.length) {
           await mongo.addMetrics(healthMetrics, mode, currentMetrics);
         }
-        const HealthModel = HealthModelFunc(`${microservice}`);
-        await HealthModel.insertMany(healthMetrics);
+        // const HealthModel = HealthModelFunc(`${microservice}`);
+        // await HealthModel.insertMany(healthMetrics);
+ await HealthModelFunc.insertMany(healthMetrics);
+
       })
       .then(() => {
         console.log('Health data recorded in MongoDB');
@@ -1634,14 +1634,14 @@ mongo.health = async ({ microservice, interval, mode }: any) => {
 mongo.docker = ({ microservice, interval, mode }: any) => {
   const pollInterval = interval || 10000;
 
-  const containerInfo = ContainerInfoFunc(`${microservice}`);
+  // const containerInfo = ContainerInfoFunc(`${microservice}`);
   dockerHelper
     .getDockerContainer(microservice)
     .then(containerData => {
       setInterval(() => {
         dockerHelper
           .readDockerContainer(containerData)
-          .then(data => containerInfo.create(data))
+          .then(data => ContainerInfoFunc.create(data))
           .catch(err => {
             throw new Error(err);
           });
@@ -1692,12 +1692,13 @@ mongo.setQueryOnInterval = async (config: any) => {
 
   if (config.mode === 'kafka') {
     model = KafkaModel;
-    metricsQuery = utilities.helpers.kafkaMetricsQuery;   
+    metricsQuery = utilities.helpers.kafkaMetricsQuery;
   } else if (config.mode === 'kubernetes') {
     model = KubernetesModel;
     metricsQuery = utilities.helpers.promMetricsQuery;
   } else if (config.mode === 'docker') {
-    model = ContainerInfoFunc(`${config.containerName}`);
+    model = ContainerInfoFunc;
+    // model = ContainerInfoFunc(`${config.containerName}`);
     metricsQuery = utilities.helpers.promMetricsQuery;
   } else {
     throw new Error('Unrecognized mode');
@@ -1750,7 +1751,11 @@ mongo.getSavedMetricsLength = async (mode: string, currentMetricNames: Record<st
 };
 
 /** Insert newly discovered metrics into the Metrics collection */
-mongo.addMetrics = async (healthMetrics: any[], mode: string, currentMetricNames: Record<string, boolean>) => {
+mongo.addMetrics = async (
+  healthMetrics: any[],
+  mode: string,
+  currentMetricNames: Record<string, boolean>
+) => {
   const newMets: any[] = [];
   for (let healthMetric of healthMetrics) {
     const { metric, category } = healthMetric;
@@ -1772,7 +1777,12 @@ mongo.createGrafanaDashboards = async (config: any, parsedArray: any[]) => {
     const datasource = await utilities.helpers.getGrafanaDatasource(config.grafanaAPIKey);
     for (let metric of parsedArray) {
       console.log(`🎉 creating dashboard 🎉`);
-      await utilities.helpers.createGrafanaDashboard(metric, datasource, 'timeseries', config.grafanaAPIKey);
+      await utilities.helpers.createGrafanaDashboard(
+        metric,
+        datasource,
+        'timeseries',
+        config.grafanaAPIKey
+      );
     }
   } catch (err) {
     console.error('error in mongo.createGrafanaDashboards: ', err);

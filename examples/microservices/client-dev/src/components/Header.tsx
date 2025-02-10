@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AiFillHome } from 'react-icons/ai';
 import { FiMenu } from 'react-icons/fi';
 import { useState } from 'react';
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/appContext.js';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);

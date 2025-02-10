@@ -207,7 +207,7 @@
 // }
 import axios from 'axios';
 // Import the default export from GrafanaPanel.ts as an object.
-import { createGrafanaPanelObject } from '../controllers/GrafanaPanel';
+import { createGrafanaPanelObject } from '../controllers/GrafanaPanel.js';
 
 // Example interfaces (adjust to suit your actual data shape)
 interface Metrix {

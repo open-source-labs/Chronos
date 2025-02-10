@@ -402,7 +402,8 @@
 // };
 
 // export default kuberControllers;
-import k8s from '@kubernetes/client-node';
+// import k8s from '@kubernetes/client-node';
+import * as k8s from '@kubernetes/client-node';
 import { Request, Response, NextFunction } from 'express';
 
 const kuberControllers: any = {};

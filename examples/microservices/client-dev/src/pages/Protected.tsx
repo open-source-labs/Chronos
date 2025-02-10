@@ -36,8 +36,8 @@
 import React, { ReactNode } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../context/appContext";
-import Loading from "../components/Loading";
+import { useAppContext } from "../context/appContext.js";
+import Loading from "../components/Loading.js";
 
 type Props = {
   children: ReactNode;

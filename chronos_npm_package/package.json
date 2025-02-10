@@ -2,8 +2,14 @@
   "name": "@chronosmicro/tracker",
   "version": "12.0.4",
   "description": "Chronos microservice metrics tracker",
-  "main": "chronos.ts",
+  "main": "dist/chronos.js",
+  "type": "module",
   "scripts": {
+    "start": "ts-node-dev ./src/index.ts",
+   "dev": "ts-node-dev ./src/index.ts",
+    "auth": "ts-node-dev ./src/auth.ts",
+    "client": "ts-node-dev ./src/server.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

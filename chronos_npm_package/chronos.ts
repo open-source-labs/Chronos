@@ -1,10 +1,10 @@
-// // import hpropagate from 'hpropagate';  
-// // import postgres from './controllers/postgres';  
-// // import mongo from './controllers/mongo';  
-// // import MongoClientWrapper from './wrappers/MongoClientWrapper';  
-// // import MongoServerWrapper from './wrappers/MongoServerWrapper';  
-// // import PostgresClientWrapper from './wrappers/PostgresClientWrapper';  
-// // import PostgresServerWrapper from './wrappers/PostgresServerWrapper';  
+// // import hpropagate from 'hpropagate';
+// // import postgres from './controllers/postgres';
+// // import mongo from './controllers/mongo';
+// // import MongoClientWrapper from './wrappers/MongoClientWrapper';
+// // import MongoServerWrapper from './wrappers/MongoServerWrapper';
+// // import PostgresClientWrapper from './wrappers/PostgresClientWrapper';
+// // import PostgresServerWrapper from './wrappers/PostgresServerWrapper';
 // // import utilities from './controllers/utilities';
 
 // // /**
@@ -74,7 +74,7 @@
 // //       mongo.connect(this.config);
 // //       mongo.services(this.config);
 // //       dockerized ? mongo.docker(this.config) : mongo.health(this.config);
-      
+
 // //       if (database.connection === 'REST') {
 // //         return mongo.communications(this.config);
 // //       }
@@ -366,29 +366,29 @@
 // export default Chronos;
 // chronos.ts
 
-// 
+//
 import hpropagate from 'hpropagate';
 
-import postgres from './controllers/postgres';
-import mongo from './controllers/mongo';
-import MongoClientWrapper from './wrappers/MongoClientWrapper';
-import MongoServerWrapper from './wrappers/MongoServerWrapper';
-import PostgresClientWrapper from './wrappers/PostgresClientWrapper';
-import PostgresServerWrapper from './wrappers/PostgresServerWrapper';
-import utilities from './controllers/utilities';
+
+import postgres from './controllers/postgres.js';
+import mongo from './controllers/mongo.js';
+import MongoClientWrapper from './wrappers/MongoClientWrapper.js';
+import MongoServerWrapper from './wrappers/MongoServerWrapper.js';
+import PostgresClientWrapper from './wrappers/PostgresClientWrapper.js';
+import PostgresServerWrapper from './wrappers/PostgresServerWrapper.js';
+import utilities from './controllers/utilities.js';
 
 // Define interfaces for your configuration.
 interface DatabaseConfig {
   type: 'MongoDB' | 'PostgreSQL';
   URI: string;
-  connection?:'REST' | 'gRPC';
-
+  connection?: 'REST' | 'gRPC';
 }
 
 interface ChronosConfig {
   microservice: string;
   interval: number;
-  mode:'kubernetes' | 'kafka' | 'microservices' | 'docker'; // <-- Added mode property
+  mode: 'kubernetes' | 'kafka' | 'microservices' | 'docker'; // <-- Added mode property
   dockerized?: boolean;
   database: DatabaseConfig;
   notifications?: any; // Update this type as needed.
@@ -498,7 +498,11 @@ class Chronos {
   /**
    * Wraps the gRPC server to automatically write logs to the provided DB.
    */
-  ServerWrapper(server: any, proto: any, methods: any): MongoServerWrapper | PostgresServerWrapper | null {
+  ServerWrapper(
+    server: any,
+    proto: any,
+    methods: any
+  ): MongoServerWrapper | PostgresServerWrapper | null {
     const { database } = this.config;
     if (database.type === 'MongoDB') {
       return new MongoServerWrapper(server, proto, methods, this.config);

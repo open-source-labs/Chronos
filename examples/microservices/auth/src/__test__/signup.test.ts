@@ -181,8 +181,8 @@
 //   expect(response.get('Set-Cookie')[0].split('=')[0]).toEqual('token');
 // });
 import request from 'supertest';
-import { app } from '../app';
-import { User } from '../models/user';
+import { app } from '../app.js';
+import { User } from '../models/user.js';
 
 it('fails with 400 if no username/password provided', async () => {
   await (request(app)

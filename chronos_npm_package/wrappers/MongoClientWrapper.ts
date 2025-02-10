@@ -63,7 +63,7 @@
 // export default ClientWrapper;
 import mongoose from 'mongoose';
 import grpc from '@grpc/grpc-js';
-import ComModel from '../models/CommunicationModel';
+import CommunicationModel from '../models/CommunicationModel.js';
 
 async function connect(URI: string) {
   try {
@@ -100,7 +100,7 @@ function makeMethods(clientWrapper: ClientWrapper, client: any, metadata: any, n
         if (error) {
           newComm.responsestatus = error.code;
         }
-        const responseCom = new ComModel(newComm);
+        const responseCom = new CommunicationModel(newComm);
         responseCom
           .save()
           .then(() => {

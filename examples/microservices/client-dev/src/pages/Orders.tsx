@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import OrderList from '../components/OrderList';
+import OrderList from '../components/OrderList.js';
 import { IoCaretBackCircle } from 'react-icons/io5';
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/appContext.js';
 
 const Orders = () => {
   const { orders } = useAppContext();

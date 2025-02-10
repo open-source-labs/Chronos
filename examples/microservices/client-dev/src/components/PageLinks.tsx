@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/appContext.js';
 
 const PageLinks = () => {
   const { items, orders } = useAppContext();

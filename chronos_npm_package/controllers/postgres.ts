@@ -2,421 +2,16 @@
 // File: postgres.ts
 
 // You can either keep these require() statements or convert them to ES module imports
-import { Client } from 'pg';
-// Rename alert to avoid conflict with the DOM/global alert function
-const alertModule = require('./alert');
-const { collectHealthData } = require('./healthHelpers');
-const dockerHelper = require('./dockerHelper');
-const utilities = require('./utilities');
-
-let client: any;
-
-// In this example we type postgres as any. Later you might define a proper interface.
-const postgres: any = {};
-
-/**
- * Initializes connection to PostgreSQL database using provided URI
- * @param database Contains DB type and DB URI
- */
-postgres.connect = async ({ database }: { database: { URI: string } }): Promise<void> => {
-  try {
-    // Connect to user's database
-    client = new Client({ connectionString: database.URI });
-    await client.connect();
-
-    // Print success message
-    console.log('PostgreSQL database connected at ', database.URI.slice(0, 24), '...');
-  } catch (error: any) {
-    // Print error message
-    console.log('Error connecting to PostgreSQL DB:', error.message);
-  }
-};
-
-/**
- * Create services table with each entry representing a microservice.
- * @param microservice Microservice name
- * @param interval Interval to collect data
- */
-postgres.services = ({ microservice, interval }: { microservice: string; interval: number }): void => {
-  // Create services table if it does not exist
-  client.query(
-    `CREATE TABLE IF NOT EXISTS services (
-      _id SERIAL PRIMARY KEY NOT NULL,
-      microservice VARCHAR(248) NOT NULL UNIQUE,
-      interval INTEGER NOT NULL)`,
-    (err: any, results: any) => {
-      if (err) throw err;
-    }
-  );
-
-  client.query(
-    `CREATE TABLE IF NOT EXISTS metrics (
-      _id SERIAL PRIMARY KEY NOT NULL,
-      metric TEXT NOT NULL UNIQUE,
-      selected BOOLEAN,
-      mode TEXT NOT NULL)`,
-    (err: any, results: any) => {
-      if (err) throw err;
-    }
-  );
-
-  // Insert microservice name and interval into services table
-  const queryString = `
-    INSERT INTO services (microservice, interval)
-    VALUES ($1, $2)
-    ON CONFLICT (microservice) DO NOTHING;`;
-
-  const values = [microservice, interval];
-
-  client.query(queryString, values, (err: any, result: any) => {
-    if (err) throw err;
-    console.log(`Microservice "${microservice}" recorded in services table`);
-  });
-};
-
-/**
- * Creates a communications table if one does not yet exist and
- * traces the request throughout its life cycle. Will send a notification
- * to the user if contact information is provided.
- * @param microservice Microservice name
- * @param slack Slack settings (optional)
- * @param email Email settings (optional)
- */
-postgres.communications = ({ microservice, slack, email }: { microservice: string; slack?: any; email?: any }) => {
-  // Create communications table if one does not exist
-  client.query(
-    `CREATE TABLE IF NOT EXISTS communications(
-      _id serial PRIMARY KEY,
-      microservice VARCHAR(248) NOT NULL,
-      endpoint varchar(248) NOT NULL,
-      request varchar(16) NOT NULL,
-      responsestatus INTEGER NOT NULL,
-      responsemessage varchar(500) NOT NULL,
-      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      correlatingId varchar(500)
-    )`,
-    (err: any, results: any) => {
-      if (err) throw err;
-    }
-  );
-
-  return (req: any, res: any, next: any) => {
-    // ID persists throughout request lifecycle
-    const correlatingId = res.getHeaders()['x-correlation-id'];
-
-    // Target endpoint
-    const endpoint = req.originalUrl;
-    // HTTP Request Method
-    const request = req.method;
-
-    const queryString = `
-      INSERT INTO communications (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
-      VALUES ($1, $2, $3, $4, $5, $6);`;
-
-    // Wait for the response to finish before inserting the record
-    res.on('finish', () => {
-      if (res.statusCode >= 400) {
-        if (slack) alertModule.sendSlack(res.statusCode, res.statusMessage, slack);
-        if (email) alertModule.sendEmail(res.statusCode, res.statusMessage, email);
-      }
-      const responsestatus = res.statusCode;
-      const responsemessage = res.statusMessage;
-      const values = [microservice, endpoint, request, responsestatus, responsemessage, correlatingId];
-      client.query(queryString, values, (err: any, result: any) => {
-        if (err) throw err;
-        console.log('Request cycle saved');
-      });
-    });
-    next();
-  };
-};
-
-/**
- * Constructs a parameterized query string for inserting multiple data points.
- * @param numRows Number of rows to insert
- * @param serviceName Table name to insert into
- * @returns The constructed query string
- */
-function createQueryString(numRows: number, serviceName: string): string {
-  let query = `
-    INSERT INTO
-      ${serviceName} (metric, value, category, time)
-    VALUES
-  `;
-  for (let i = 0; i < numRows; i++) {
-    const newRow = `($${4 * i + 1}, $${4 * i + 2}, $${4 * i + 3}, TO_TIMESTAMP($${4 * i + 4}))`;
-    query = query.concat(newRow);
-    if (i !== numRows - 1) query = query.concat(',');
-  }
-  query = query.concat(';');
-  return query;
-}
-
-/**
- * Constructs an array of values to be used with the parameterized query.
- * @param dataPointsArray Array of data point objects
- * @returns Array of values
- */
-function createQueryArray(dataPointsArray: any[]): (string | number)[] {
-  const queryArray: (string | number)[] = [];
-  for (const element of dataPointsArray) {
-    queryArray.push(element.metric);
-    queryArray.push(element.value);
-    queryArray.push(element.category);
-    queryArray.push(element.time / 1000); // Convert milliseconds to seconds for PostgreSQL
-  }
-  return queryArray;
-}
-
-/**
- * Reads and stores microservice health information in the PostgreSQL database at every interval.
- * @param microservice Microservice name
- * @param interval Interval (ms) for continuous data collection
- * @param mode The mode (e.g. "kafka", "kubernetes")
- */
-postgres.health = async ({ microservice, interval, mode }: { microservice: string; interval: number; mode: string }): Promise<void> => {
-  let l = 0;
-  const currentMetricNames: { [key: string]: boolean } = {};
-
-  l = await postgres.getSavedMetricsLength(mode, currentMetricNames);
-
-  // Create table for the microservice if it doesn't exist yet
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS ${microservice} (
-      _id SERIAL PRIMARY KEY,
-      metric VARCHAR(200),
-      value FLOAT DEFAULT 0.0,
-      category VARCHAR(200) DEFAULT 'event',
-      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );`;
-
-  client.query(createTableQuery).catch((err: any) =>
-    console.log('Error creating health table in PostgreSQL:\n', err)
-  );
-
-  // Save data point at every interval (ms)
-  setInterval(() => {
-    collectHealthData()
-      .then(async (data: any[]) => {
-        if (l !== data.length) {
-          l = await postgres.addMetrics(data, mode, currentMetricNames);
-        }
-        const documents = data.filter(el => el.metric in currentMetricNames);
-        const numRows = documents.length;
-        const queryString = createQueryString(numRows, microservice);
-        const queryArray = createQueryArray(documents);
-        return client.query(queryString, queryArray);
-      })
-      .then(() => console.log('Health data recorded in PostgreSQL'))
-      .catch((err: any) => console.log('Error inserting health data into PostgreSQL:\n', err));
-  }, interval);
-};
-
-/**
- * Runs instead of health when dockerized.
- * Collects container information.
- * @param microservice Microservice name
- * @param interval Interval (ms) to collect docker data
- */
-postgres.docker = function ({ microservice, interval }: { microservice: string; interval: number }): void {
-  // Create containerInfo table if it does not exist
-  client.query(
-    `CREATE TABLE IF NOT EXISTS containerInfo( 
-      _id serial PRIMARY KEY,
-      microservice varchar(500) NOT NULL,
-      containerName varchar(500) NOT NULL,
-      containerId varchar(500) NOT NULL,
-      containerPlatform varchar(500),
-      containerStartTime varchar(500),
-      containerMemUsage real DEFAULT 0,
-      containerMemLimit real DEFAULT 0,
-      containerMemPercent real DEFAULT 0,
-      containerCpuPercent real DEFAULT 0,
-      networkReceived real DEFAULT 0,
-      networkSent real DEFAULT 0,
-      containerProcessCount integer DEFAULT 0, 
-      containerRestartCount integer DEFAULT 0
-    )`,
-    (err: any, results: any) => {
-      if (err) throw err;
-    }
-  );
-
-  dockerHelper
-    .getDockerContainer(microservice)
-    .then((containerData: any) => {
-      setInterval(() => {
-        dockerHelper
-          .readDockerContainer(containerData)
-          .then((data: any) => {
-            const queryString = `
-              INSERT INTO containerInfo(
-                microservice,
-                containerName,
-                containerId,
-                containerPlatform,
-                containerStartTime,
-                containerMemUsage,
-                containerMemLimit,
-                containerMemPercent,
-                containerCpuPercent,
-                networkReceived,
-                networkSent,
-                containerProcessCount,
-                containerRestartCount
-              )
-              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
-            const values = [
-              microservice,
-              data.containername,
-              data.containerid,
-              data.platform,
-              data.starttime,
-              data.memoryusage,
-              data.memorylimit,
-              data.memorypercent,
-              data.cpupercent,
-              data.networkreceived,
-              data.networksent,
-              data.processcount,
-              data.restartcount,
-            ];
-
-            client.query(queryString, values, (err: any, results: any) => {
-              if (err) throw err;
-              console.log(`Docker data recorded in SQL table containerInfo`);
-            });
-          })
-          .catch((err: any) => console.log('Error reading docker container:', err));
-      }, interval);
-    })
-    .catch((error: any) => {
-      if (error.constructor.name === 'Error') throw error;
-      else throw new Error(error);
-    });
-};
-
-postgres.serverQuery = (config: any): void => {
-  postgres.saveService(config);
-  postgres.setQueryOnInterval(config);
-};
-
-postgres.saveService = (config: any): void => {
-  let service: string;
-  if (config.mode === 'kakfa') service = 'kafkametrics';
-  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
-  else throw new Error('Unrecognized mode');
-
-  postgres.services({ microservice: service, interval: config.interval });
-
-  // Create service table if it does not exist
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS ${service} (
-      _id SERIAL PRIMARY KEY,
-      metric VARCHAR(200),
-      value FLOAT DEFAULT 0.0,
-      category VARCHAR(200) DEFAULT 'event',
-      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );`;
-
-  client.query(createTableQuery).catch((err: any) =>
-    console.log(`Error creating ${service} table in PostgreSQL:\n`, err)
-  );
-};
-
-postgres.setQueryOnInterval = async (config: any): Promise<void> => {
-  let service: string;
-  let metricsQuery: any;
-  let currentMetrics: any;
-  let l = 0;
-  const currentMetricNames: { [key: string]: boolean } = {};
-
-  if (config.mode === 'kakfa') {
-    service = 'kafkametrics';
-    metricsQuery = utilities.kafkaMetricsQuery;
-  } else if (config.mode === 'kubernetes') {
-    service = 'kubernetesmetrics';
-    metricsQuery = utilities.promMetricsQuery;
-  } else {
-    throw new Error('Unrecognized mode');
-  }
-
-  currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${config.mode}';`);
-  currentMetrics = currentMetrics.rows;
-  if (currentMetrics.length > 0) {
-    currentMetrics.forEach((el: any) => {
-      const { metric, selected } = el;
-      currentMetricNames[metric] = selected;
-      l = currentMetrics.length;
-    });
-  }
-
-  setInterval(() => {
-    metricsQuery(config)
-      .then(async (parsedArray: any[]) => {
-        if (l !== parsedArray.length) {
-          l = await postgres.addMetrics(parsedArray, config.mode, currentMetricNames);
-        }
-        const documents: any[] = [];
-        for (const metric of parsedArray) {
-          if (currentMetricNames[metric.metric]) documents.push(metric);
-        }
-        const numRows = documents.length;
-        const queryString = createQueryString(numRows, service);
-        const queryArray = createQueryArray(documents);
-        return client.query(queryString, queryArray);
-      })
-      .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
-      .catch((err: any) =>
-        console.log(`Error inserting ${config.mode} metrics into PostgreSQL:\n`, err)
-      );
-  }, config.interval);
-};
-
-postgres.getSavedMetricsLength = async (
-  mode: string,
-  currentMetricNames: { [key: string]: boolean }
-): Promise<number> => {
-  let currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${mode}';`);
-  if (currentMetrics.rows.length > 0) {
-    currentMetrics.rows.forEach((el: any) => {
-      const { metric, selected } = el;
-      currentMetricNames[metric] = selected;
-    });
-  }
-  return currentMetrics.rows.length || 0;
-};
-
-postgres.addMetrics = async (
-  arr: any[],
-  mode: string,
-  currentMetricNames: { [key: string]: boolean }
-): Promise<number> => {
-  let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
-  arr.forEach((el: any) => {
-    if (!(el.metric in currentMetricNames)) {
-      currentMetricNames[el.metric] = true;
-      metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${mode}'), `);
-    }
-  });
-  metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
-  await client.query(metricsQueryString);
-  return arr.length;
-};
-
-export default postgres;
-
-
-
-// // File: postgres.ts
-
-// // You can either keep these require() statements or convert them to ES module imports
-// import { Client } from 'pg';
-// // Rename alert to avoid conflict with the DOM/global alert function
-// const alertModule = require('./alert');
-// const { collectHealthData } = require('./healthHelpers');
-// const dockerHelper = require('./dockerHelper');
-// const utilities = require('./utilities');
+//  import { Client } from 'pg';
+// import pkg from 'pg';
+// const { Client } = pkg;
+// // import * as pg from 'pg'; const { Client } = pg
+// // // Rename alert to avoid conflict with the DOM/global alert function
+// const alertModule = require('./alert.js');
+// const { collectHealthData } = require('./healthHelpers.js');
+// const dockerHelper = require('./dockerHelper.js');
+// // const dockerHelper = require('./.js');
+// const utilities = require('./utilities.js');
 
 // let client: any;
 
@@ -435,9 +30,9 @@ export default postgres;
 
 //     // Print success message
 //     console.log('PostgreSQL database connected at ', database.URI.slice(0, 24), '...');
-//   } catch ({ message }: { message: string }) {
+//   } catch (error: any) {
 //     // Print error message
-//     console.log('Error connecting to PostgreSQL DB:', message);
+//     console.log('Error connecting to PostgreSQL DB:', error.message);
 //   }
 // };
 
@@ -602,6 +197,826 @@ export default postgres;
 //   client.query(createTableQuery).catch((err: any) =>
 //     console.log('Error creating health table in PostgreSQL:\n', err)
 //   );
+
+//   // Save data point at every interval (ms)
+//   setInterval(() => {
+//     collectHealthData()
+//       .then(async (data: any[]) => {
+//         if (l !== data.length) {
+//           l = await postgres.addMetrics(data, mode, currentMetricNames);
+//         }
+//         const documents = data.filter(el => el.metric in currentMetricNames);
+//         const numRows = documents.length;
+//         const queryString = createQueryString(numRows, microservice);
+//         const queryArray = createQueryArray(documents);
+//         return client.query(queryString, queryArray);
+//       })
+//       .then(() => console.log('Health data recorded in PostgreSQL'))
+//       .catch((err: any) => console.log('Error inserting health data into PostgreSQL:\n', err));
+//   }, interval);
+// };
+
+// /**
+//  * Runs instead of health when dockerized.
+//  * Collects container information.
+//  * @param microservice Microservice name
+//  * @param interval Interval (ms) to collect docker data
+//  */
+// postgres.docker = function ({ microservice, interval }: { microservice: string; interval: number }): void {
+//   // Create containerInfo table if it does not exist
+//   client.query(
+//     `CREATE TABLE IF NOT EXISTS containerInfo( 
+//       _id serial PRIMARY KEY,
+//       microservice varchar(500) NOT NULL,
+//       containerName varchar(500) NOT NULL,
+//       containerId varchar(500) NOT NULL,
+//       containerPlatform varchar(500),
+//       containerStartTime varchar(500),
+//       containerMemUsage real DEFAULT 0,
+//       containerMemLimit real DEFAULT 0,
+//       containerMemPercent real DEFAULT 0,
+//       containerCpuPercent real DEFAULT 0,
+//       networkReceived real DEFAULT 0,
+//       networkSent real DEFAULT 0,
+//       containerProcessCount integer DEFAULT 0, 
+//       containerRestartCount integer DEFAULT 0
+//     )`,
+//     (err: any, results: any) => {
+//       if (err) throw err;
+//     }
+//   );
+
+//   dockerHelper
+//     .getDockerContainer(microservice)
+//     .then((containerData: any) => {
+//       setInterval(() => {
+//         dockerHelper
+//           .readDockerContainer(containerData)
+//           .then((data: any) => {
+//             const queryString = `
+//               INSERT INTO containerInfo(
+//                 microservice,
+//                 containerName,
+//                 containerId,
+//                 containerPlatform,
+//                 containerStartTime,
+//                 containerMemUsage,
+//                 containerMemLimit,
+//                 containerMemPercent,
+//                 containerCpuPercent,
+//                 networkReceived,
+//                 networkSent,
+//                 containerProcessCount,
+//                 containerRestartCount
+//               )
+//               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+//             const values = [
+//               microservice,
+//               data.containername,
+//               data.containerid,
+//               data.platform,
+//               data.starttime,
+//               data.memoryusage,
+//               data.memorylimit,
+//               data.memorypercent,
+//               data.cpupercent,
+//               data.networkreceived,
+//               data.networksent,
+//               data.processcount,
+//               data.restartcount,
+//             ];
+
+//             client.query(queryString, values, (err: any, results: any) => {
+//               if (err) throw err;
+//               console.log(`Docker data recorded in SQL table containerInfo`);
+//             });
+//           })
+//           .catch((err: any) => console.log('Error reading docker container:', err));
+//       }, interval);
+//     })
+//     .catch((error: any) => {
+//       if (error.constructor.name === 'Error') throw error;
+//       else throw new Error(error);
+//     });
+// };
+
+// postgres.serverQuery = (config: any): void => {
+//   postgres.saveService(config);
+//   postgres.setQueryOnInterval(config);
+// };
+
+// postgres.saveService = (config: any): void => {
+//   let service: string;
+//   if (config.mode === 'kakfa') service = 'kafkametrics';
+//   else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
+//   else throw new Error('Unrecognized mode');
+
+//   postgres.services({ microservice: service, interval: config.interval });
+
+//   // Create service table if it does not exist
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS ${service} (
+//       _id SERIAL PRIMARY KEY,
+//       metric VARCHAR(200),
+//       value FLOAT DEFAULT 0.0,
+//       category VARCHAR(200) DEFAULT 'event',
+//       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//     );`;
+
+//   client.query(createTableQuery).catch((err: any) =>
+//     console.log(`Error creating ${service} table in PostgreSQL:\n`, err)
+//   );
+// };
+
+// postgres.setQueryOnInterval = async (config: any): Promise<void> => {
+//   let service: string;
+//   let metricsQuery: any;
+//   let currentMetrics: any;
+//   let l = 0;
+//   const currentMetricNames: { [key: string]: boolean } = {};
+
+//   if (config.mode === 'kakfa') {
+//     service = 'kafkametrics';
+//     metricsQuery = utilities.kafkaMetricsQuery;
+//   } else if (config.mode === 'kubernetes') {
+//     service = 'kubernetesmetrics';
+//     metricsQuery = utilities.promMetricsQuery;
+//   } else {
+//     throw new Error('Unrecognized mode');
+//   }
+
+//   currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${config.mode}';`);
+//   currentMetrics = currentMetrics.rows;
+//   if (currentMetrics.length > 0) {
+//     currentMetrics.forEach((el: any) => {
+//       const { metric, selected } = el;
+//       currentMetricNames[metric] = selected;
+//       l = currentMetrics.length;
+//     });
+//   }
+
+//   setInterval(() => {
+//     metricsQuery(config)
+//       .then(async (parsedArray: any[]) => {
+//         if (l !== parsedArray.length) {
+//           l = await postgres.addMetrics(parsedArray, config.mode, currentMetricNames);
+//         }
+//         const documents: any[] = [];
+//         for (const metric of parsedArray) {
+//           if (currentMetricNames[metric.metric]) documents.push(metric);
+//         }
+//         const numRows = documents.length;
+//         const queryString = createQueryString(numRows, service);
+//         const queryArray = createQueryArray(documents);
+//         return client.query(queryString, queryArray);
+//       })
+//       .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
+//       .catch((err: any) =>
+//         console.log(`Error inserting ${config.mode} metrics into PostgreSQL:\n`, err)
+//       );
+//   }, config.interval);
+// };
+
+// postgres.getSavedMetricsLength = async (
+//   mode: string,
+//   currentMetricNames: { [key: string]: boolean }
+// ): Promise<number> => {
+//   let currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${mode}';`);
+//   if (currentMetrics.rows.length > 0) {
+//     currentMetrics.rows.forEach((el: any) => {
+//       const { metric, selected } = el;
+//       currentMetricNames[metric] = selected;
+//     });
+//   }
+//   return currentMetrics.rows.length || 0;
+// };
+
+// postgres.addMetrics = async (
+//   arr: any[],
+//   mode: string,
+//   currentMetricNames: { [key: string]: boolean }
+// ): Promise<number> => {
+//   let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
+//   arr.forEach((el: any) => {
+//     if (!(el.metric in currentMetricNames)) {
+//       currentMetricNames[el.metric] = true;
+//       metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${mode}'), `);
+//     }
+//   });
+//   metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
+//   await client.query(metricsQueryString);
+//   return arr.length;
+// };
+
+// export default postgres;
+
+// // File: postgres.ts
+
+// // Use Node's createRequire to load CommonJS modules in this ES module file.
+// import { createRequire } from 'module';
+// const require = createRequire(import.meta.url);
+
+// // Use createRequire to import the 'pg' package
+// const { Client } = require('pg');
+
+// // Import local modules using require
+// const alertModule = require('./alert.js');
+// const { collectHealthData } = require('./healthHelpers.js');
+// const dockerHelper = require('./dockerHelper.js');
+// const utilities = require('./utilities.js');
+
+// let client: any;
+
+// // In this example we type postgres as any. Later you might define a proper interface.
+// const postgres: any = {};
+
+// /**
+//  * Initializes connection to PostgreSQL database using provided URI
+//  * @param database Contains DB type and DB URI
+//  */
+// postgres.connect = async ({ database }: { database: { URI: string } }): Promise<void> => {
+//   try {
+//     // Connect to user's database
+//     client = new Client({ connectionString: database.URI });
+//     await client.connect();
+
+//     // Print success message
+//     console.log('PostgreSQL database connected at ', database.URI.slice(0, 24), '...');
+//   } catch (error: any) {
+//     // Print error message
+//     console.log('Error connecting to PostgreSQL DB:', error.message);
+//   }
+// };
+
+// /**
+//  * Create services table with each entry representing a microservice.
+//  * @param microservice Microservice name
+//  * @param interval Interval to collect data
+//  */
+// postgres.services = ({ microservice, interval }: { microservice: string; interval: number }): void => {
+//   // Create services table if it does not exist
+//   client.query(
+//     `CREATE TABLE IF NOT EXISTS services (
+//       _id SERIAL PRIMARY KEY NOT NULL,
+//       microservice VARCHAR(248) NOT NULL UNIQUE,
+//       interval INTEGER NOT NULL)`,
+//     (err: any, results: any) => {
+//       if (err) throw err;
+//     }
+//   );
+
+//   client.query(
+//     `CREATE TABLE IF NOT EXISTS metrics (
+//       _id SERIAL PRIMARY KEY NOT NULL,
+//       metric TEXT NOT NULL UNIQUE,
+//       selected BOOLEAN,
+//       mode TEXT NOT NULL)`,
+//     (err: any, results: any) => {
+//       if (err) throw err;
+//     }
+//   );
+
+//   // Insert microservice name and interval into services table
+//   const queryString = `
+//     INSERT INTO services (microservice, interval)
+//     VALUES ($1, $2)
+//     ON CONFLICT (microservice) DO NOTHING;`;
+
+//   const values = [microservice, interval];
+
+//   client.query(queryString, values, (err: any, result: any) => {
+//     if (err) throw err;
+//     console.log(`Microservice "${microservice}" recorded in services table`);
+//   });
+// };
+
+// /**
+//  * Creates a communications table if one does not yet exist and
+//  * traces the request throughout its life cycle. Will send a notification
+//  * to the user if contact information is provided.
+//  * @param microservice Microservice name
+//  * @param slack Slack settings (optional)
+//  * @param email Email settings (optional)
+//  */
+// postgres.communications = ({ microservice, slack, email }: { microservice: string; slack?: any; email?: any }) => {
+//   // Create communications table if one does not exist
+//   client.query(
+//     `CREATE TABLE IF NOT EXISTS communications(
+//       _id serial PRIMARY KEY,
+//       microservice VARCHAR(248) NOT NULL,
+//       endpoint varchar(248) NOT NULL,
+//       request varchar(16) NOT NULL,
+//       responsestatus INTEGER NOT NULL,
+//       responsemessage varchar(500) NOT NULL,
+//       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//       correlatingId varchar(500)
+//     )`,
+//     (err: any, results: any) => {
+//       if (err) throw err;
+//     }
+//   );
+
+//   return (req: any, res: any, next: any) => {
+//     // ID persists throughout request lifecycle
+//     const correlatingId = res.getHeaders()['x-correlation-id'];
+
+//     // Target endpoint
+//     const endpoint = req.originalUrl;
+//     // HTTP Request Method
+//     const request = req.method;
+
+//     const queryString = `
+//       INSERT INTO communications (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
+//       VALUES ($1, $2, $3, $4, $5, $6);`;
+
+//     // Wait for the response to finish before inserting the record
+//     res.on('finish', () => {
+//       if (res.statusCode >= 400) {
+//         if (slack) alertModule.sendSlack(res.statusCode, res.statusMessage, slack);
+//         if (email) alertModule.sendEmail(res.statusCode, res.statusMessage, email);
+//       }
+//       const responsestatus = res.statusCode;
+//       const responsemessage = res.statusMessage;
+//       const values = [microservice, endpoint, request, responsestatus, responsemessage, correlatingId];
+//       client.query(queryString, values, (err: any, result: any) => {
+//         if (err) throw err;
+//         console.log('Request cycle saved');
+//       });
+//     });
+//     next();
+//   };
+// };
+
+// /**
+//  * Constructs a parameterized query string for inserting multiple data points.
+//  * @param numRows Number of rows to insert
+//  * @param serviceName Table name to insert into
+//  * @returns The constructed query string
+//  */
+// function createQueryString(numRows: number, serviceName: string): string {
+//   let query = `
+//     INSERT INTO
+//       ${serviceName} (metric, value, category, time)
+//     VALUES
+//   `;
+//   for (let i = 0; i < numRows; i++) {
+//     const newRow = `($${4 * i + 1}, $${4 * i + 2}, $${4 * i + 3}, TO_TIMESTAMP($${4 * i + 4}))`;
+//     query = query.concat(newRow);
+//     if (i !== numRows - 1) query = query.concat(',');
+//   }
+//   query = query.concat(';');
+//   return query;
+// }
+
+// /**
+//  * Constructs an array of values to be used with the parameterized query.
+//  * @param dataPointsArray Array of data point objects
+//  * @returns Array of values
+//  */
+// function createQueryArray(dataPointsArray: any[]): (string | number)[] {
+//   const queryArray: (string | number)[] = [];
+//   for (const element of dataPointsArray) {
+//     queryArray.push(element.metric);
+//     queryArray.push(element.value);
+//     queryArray.push(element.category);
+//     queryArray.push(element.time / 1000); // Convert milliseconds to seconds for PostgreSQL
+//   }
+//   return queryArray;
+// }
+
+// /**
+//  * Reads and stores microservice health information in the PostgreSQL database at every interval.
+//  * @param microservice Microservice name
+//  * @param interval Interval (ms) for continuous data collection
+//  * @param mode The mode (e.g. "kafka", "kubernetes")
+//  */
+// postgres.health = async ({ microservice, interval, mode }: { microservice: string; interval: number; mode: string }): Promise<void> => {
+//   let l = 0;
+//   const currentMetricNames: { [key: string]: boolean } = {};
+
+//   l = await postgres.getSavedMetricsLength(mode, currentMetricNames);
+
+//   // Create table for the microservice if it doesn't exist yet
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS ${microservice} (
+//       _id SERIAL PRIMARY KEY,
+//       metric VARCHAR(200),
+//       value FLOAT DEFAULT 0.0,
+//       category VARCHAR(200) DEFAULT 'event',
+//       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//     );`;
+
+//   client.query(createTableQuery).catch((err: any) =>
+//     console.log('Error creating health table in PostgreSQL:\n', err)
+//   );
+
+//   // Save data point at every interval (ms)
+//   setInterval(() => {
+//     collectHealthData()
+//       .then(async (data: any[]) => {
+//         if (l !== data.length) {
+//           l = await postgres.addMetrics(data, mode, currentMetricNames);
+//         }
+//         const documents = data.filter(el => el.metric in currentMetricNames);
+//         const numRows = documents.length;
+//         const queryString = createQueryString(numRows, microservice);
+//         const queryArray = createQueryArray(documents);
+//         return client.query(queryString, queryArray);
+//       })
+//       .then(() => console.log('Health data recorded in PostgreSQL'))
+//       .catch((err: any) => console.log('Error inserting health data into PostgreSQL:\n', err));
+//   }, interval);
+// };
+
+// /**
+//  * Runs instead of health when dockerized.
+//  * Collects container information.
+//  * @param microservice Microservice name
+//  * @param interval Interval (ms) to collect docker data
+//  */
+// postgres.docker = function ({ microservice, interval }: { microservice: string; interval: number }): void {
+//   // Create containerInfo table if it does not exist
+//   client.query(
+//     `CREATE TABLE IF NOT EXISTS containerInfo( 
+//       _id serial PRIMARY KEY,
+//       microservice varchar(500) NOT NULL,
+//       containerName varchar(500) NOT NULL,
+//       containerId varchar(500) NOT NULL,
+//       containerPlatform varchar(500),
+//       containerStartTime varchar(500),
+//       containerMemUsage real DEFAULT 0,
+//       containerMemLimit real DEFAULT 0,
+//       containerMemPercent real DEFAULT 0,
+//       containerCpuPercent real DEFAULT 0,
+//       networkReceived real DEFAULT 0,
+//       networkSent real DEFAULT 0,
+//       containerProcessCount integer DEFAULT 0, 
+//       containerRestartCount integer DEFAULT 0
+//     )`,
+//     (err: any, results: any) => {
+//       if (err) throw err;
+//     }
+//   );
+
+//   dockerHelper
+//     .getDockerContainer(microservice)
+//     .then((containerData: any) => {
+//       setInterval(() => {
+//         dockerHelper
+//           .readDockerContainer(containerData)
+//           .then((data: any) => {
+//             const queryString = `
+//               INSERT INTO containerInfo(
+//                 microservice,
+//                 containerName,
+//                 containerId,
+//                 containerPlatform,
+//                 containerStartTime,
+//                 containerMemUsage,
+//                 containerMemLimit,
+//                 containerMemPercent,
+//                 containerCpuPercent,
+//                 networkReceived,
+//                 networkSent,
+//                 containerProcessCount,
+//                 containerRestartCount
+//               )
+//               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+//             const values = [
+//               microservice,
+//               data.containername,
+//               data.containerid,
+//               data.platform,
+//               data.starttime,
+//               data.memoryusage,
+//               data.memorylimit,
+//               data.memorypercent,
+//               data.cpupercent,
+//               data.networkreceived,
+//               data.networksent,
+//               data.processcount,
+//               data.restartcount,
+//             ];
+
+//             client.query(queryString, values, (err: any, results: any) => {
+//               if (err) throw err;
+//               console.log(`Docker data recorded in SQL table containerInfo`);
+//             });
+//           })
+//           .catch((err: any) => console.log('Error reading docker container:', err));
+//       }, interval);
+//     })
+//     .catch((error: any) => {
+//       if (error.constructor.name === 'Error') throw error;
+//       else throw new Error(error);
+//     });
+// };
+
+// postgres.serverQuery = (config: any): void => {
+//   postgres.saveService(config);
+//   postgres.setQueryOnInterval(config);
+// };
+
+// postgres.saveService = (config: any): void => {
+//   let service: string;
+//   if (config.mode === 'kakfa') service = 'kafkametrics';
+//   else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
+//   else throw new Error('Unrecognized mode');
+
+//   postgres.services({ microservice: service, interval: config.interval });
+
+//   // Create service table if it does not exist
+//   const createTableQuery = `
+//     CREATE TABLE IF NOT EXISTS ${service} (
+//       _id SERIAL PRIMARY KEY,
+//       metric VARCHAR(200),
+//       value FLOAT DEFAULT 0.0,
+//       category VARCHAR(200) DEFAULT 'event',
+//       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//     );`;
+
+//   client.query(createTableQuery).catch((err: any) =>
+//     console.log(`Error creating ${service} table in PostgreSQL:\n`, err)
+//   );
+// };
+
+// postgres.setQueryOnInterval = async (config: any): Promise<void> => {
+//   let service: string;
+//   let metricsQuery: any;
+//   let currentMetrics: any;
+//   let l = 0;
+//   const currentMetricNames: { [key: string]: boolean } = {};
+
+//   if (config.mode === 'kakfa') {
+//     service = 'kafkametrics';
+//     metricsQuery = utilities.kafkaMetricsQuery;
+//   } else if (config.mode === 'kubernetes') {
+//     service = 'kubernetesmetrics';
+//     metricsQuery = utilities.promMetricsQuery;
+//   } else {
+//     throw new Error('Unrecognized mode');
+//   }
+
+//   currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${config.mode}';`);
+//   currentMetrics = currentMetrics.rows;
+//   if (currentMetrics.length > 0) {
+//     currentMetrics.forEach((el: any) => {
+//       const { metric, selected } = el;
+//       currentMetricNames[metric] = selected;
+//       l = currentMetrics.length;
+//     });
+//   }
+
+//   setInterval(() => {
+//     metricsQuery(config)
+//       .then(async (parsedArray: any[]) => {
+//         if (l !== parsedArray.length) {
+//           l = await postgres.addMetrics(parsedArray, config.mode, currentMetricNames);
+//         }
+//         const documents: any[] = [];
+//         for (const metric of parsedArray) {
+//           if (currentMetricNames[metric.metric]) documents.push(metric);
+//         }
+//         const numRows = documents.length;
+//         const queryString = createQueryString(numRows, service);
+//         const queryArray = createQueryArray(documents);
+//         return client.query(queryString, queryArray);
+//       })
+//       .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
+//       .catch((err: any) =>
+//         console.log(`Error inserting ${config.mode} metrics into PostgreSQL:\n`, err)
+//       );
+//   }, config.interval);
+// };
+
+// postgres.getSavedMetricsLength = async (
+//   mode: string,
+//   currentMetricNames: { [key: string]: boolean }
+// ): Promise<number> => {
+//   let currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${mode}';`);
+//   if (currentMetrics.rows.length > 0) {
+//     currentMetrics.rows.forEach((el: any) => {
+//       const { metric, selected } = el;
+//       currentMetricNames[metric] = selected;
+//     });
+//   }
+//   return currentMetrics.rows.length || 0;
+// };
+
+// postgres.addMetrics = async (
+//   arr: any[],
+//   mode: string,
+//   currentMetricNames: { [key: string]: boolean }
+// ): Promise<number> => {
+//   let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
+//   arr.forEach((el: any) => {
+//     if (!(el.metric in currentMetricNames)) {
+//       currentMetricNames[el.metric] = true;
+//       metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${mode}'), `);
+//     }
+//   });
+//   metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
+//   await client.query(metricsQueryString);
+//   return arr.length;
+// };
+
+// export default postgres;
+
+
+// // // File: postgres.ts
+
+// // // You can either keep these require() statements or convert them to ES module imports
+// // import { Client } from 'pg';
+// // // Rename alert to avoid conflict with the DOM/global alert function
+// // const alertModule = require('./alert');
+// // const { collectHealthData } = require('./healthHelpers');
+// // const dockerHelper = require('./dockerHelper');
+// // const utilities = require('./utilities');
+
+// // let client: any;
+
+// // // In this example we type postgres as any. Later you might define a proper interface.
+// // const postgres: any = {};
+
+// // /**
+// //  * Initializes connection to PostgreSQL database using provided URI
+// //  * @param database Contains DB type and DB URI
+// //  */
+// // postgres.connect = async ({ database }: { database: { URI: string } }): Promise<void> => {
+// //   try {
+// //     // Connect to user's database
+// //     client = new Client({ connectionString: database.URI });
+// //     await client.connect();
+
+// //     // Print success message
+// //     console.log('PostgreSQL database connected at ', database.URI.slice(0, 24), '...');
+// //   } catch ({ message }: { message: string }) {
+// //     // Print error message
+// //     console.log('Error connecting to PostgreSQL DB:', message);
+// //   }
+// // };
+
+// // /**
+// //  * Create services table with each entry representing a microservice.
+// //  * @param microservice Microservice name
+// //  * @param interval Interval to collect data
+// //  */
+// // postgres.services = ({ microservice, interval }: { microservice: string; interval: number }): void => {
+// //   // Create services table if it does not exist
+// //   client.query(
+// //     `CREATE TABLE IF NOT EXISTS services (
+// //       _id SERIAL PRIMARY KEY NOT NULL,
+// //       microservice VARCHAR(248) NOT NULL UNIQUE,
+// //       interval INTEGER NOT NULL)`,
+// //     (err: any, results: any) => {
+// //       if (err) throw err;
+// //     }
+// //   );
+
+// //   client.query(
+// //     `CREATE TABLE IF NOT EXISTS metrics (
+// //       _id SERIAL PRIMARY KEY NOT NULL,
+// //       metric TEXT NOT NULL UNIQUE,
+// //       selected BOOLEAN,
+// //       mode TEXT NOT NULL)`,
+// //     (err: any, results: any) => {
+// //       if (err) throw err;
+// //     }
+// //   );
+
+// //   // Insert microservice name and interval into services table
+// //   const queryString = `
+// //     INSERT INTO services (microservice, interval)
+// //     VALUES ($1, $2)
+// //     ON CONFLICT (microservice) DO NOTHING;`;
+
+// //   const values = [microservice, interval];
+
+// //   client.query(queryString, values, (err: any, result: any) => {
+// //     if (err) throw err;
+// //     console.log(`Microservice "${microservice}" recorded in services table`);
+// //   });
+// // };
+
+// // /**
+// //  * Creates a communications table if one does not yet exist and
+// //  * traces the request throughout its life cycle. Will send a notification
+// //  * to the user if contact information is provided.
+// //  * @param microservice Microservice name
+// //  * @param slack Slack settings (optional)
+// //  * @param email Email settings (optional)
+// //  */
+// // postgres.communications = ({ microservice, slack, email }: { microservice: string; slack?: any; email?: any }) => {
+// //   // Create communications table if one does not exist
+// //   client.query(
+// //     `CREATE TABLE IF NOT EXISTS communications(
+// //       _id serial PRIMARY KEY,
+// //       microservice VARCHAR(248) NOT NULL,
+// //       endpoint varchar(248) NOT NULL,
+// //       request varchar(16) NOT NULL,
+// //       responsestatus INTEGER NOT NULL,
+// //       responsemessage varchar(500) NOT NULL,
+// //       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+// //       correlatingId varchar(500)
+// //     )`,
+// //     (err: any, results: any) => {
+// //       if (err) throw err;
+// //     }
+// //   );
+
+// //   return (req: any, res: any, next: any) => {
+// //     // ID persists throughout request lifecycle
+// //     const correlatingId = res.getHeaders()['x-correlation-id'];
+
+// //     // Target endpoint
+// //     const endpoint = req.originalUrl;
+// //     // HTTP Request Method
+// //     const request = req.method;
+
+// //     const queryString = `
+// //       INSERT INTO communications (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
+// //       VALUES ($1, $2, $3, $4, $5, $6);`;
+
+// //     // Wait for the response to finish before inserting the record
+// //     res.on('finish', () => {
+// //       if (res.statusCode >= 400) {
+// //         if (slack) alertModule.sendSlack(res.statusCode, res.statusMessage, slack);
+// //         if (email) alertModule.sendEmail(res.statusCode, res.statusMessage, email);
+// //       }
+// //       const responsestatus = res.statusCode;
+// //       const responsemessage = res.statusMessage;
+// //       const values = [microservice, endpoint, request, responsestatus, responsemessage, correlatingId];
+// //       client.query(queryString, values, (err: any, result: any) => {
+// //         if (err) throw err;
+// //         console.log('Request cycle saved');
+// //       });
+// //     });
+// //     next();
+// //   };
+// // };
+
+// // /**
+// //  * Constructs a parameterized query string for inserting multiple data points.
+// //  * @param numRows Number of rows to insert
+// //  * @param serviceName Table name to insert into
+// //  * @returns The constructed query string
+// //  */
+// // function createQueryString(numRows: number, serviceName: string): string {
+// //   let query = `
+// //     INSERT INTO
+// //       ${serviceName} (metric, value, category, time)
+// //     VALUES
+// //   `;
+// //   for (let i = 0; i < numRows; i++) {
+// //     const newRow = `($${4 * i + 1}, $${4 * i + 2}, $${4 * i + 3}, TO_TIMESTAMP($${4 * i + 4}))`;
+// //     query = query.concat(newRow);
+// //     if (i !== numRows - 1) query = query.concat(',');
+// //   }
+// //   query = query.concat(';');
+// //   return query;
+// // }
+
+// // /**
+// //  * Constructs an array of values to be used with the parameterized query.
+// //  * @param dataPointsArray Array of data point objects
+// //  * @returns Array of values
+// //  */
+// // function createQueryArray(dataPointsArray: any[]): (string | number)[] {
+// //   const queryArray: (string | number)[] = [];
+// //   for (const element of dataPointsArray) {
+// //     queryArray.push(element.metric);
+// //     queryArray.push(element.value);
+// //     queryArray.push(element.category);
+// //     queryArray.push(element.time / 1000); // Convert milliseconds to seconds for PostgreSQL
+// //   }
+// //   return queryArray;
+// // }
+
+// // /**
+// //  * Reads and stores microservice health information in the PostgreSQL database at every interval.
+// //  * @param microservice Microservice name
+// //  * @param interval Interval (ms) for continuous data collection
+// //  * @param mode The mode (e.g. "kafka", "kubernetes")
+// //  */
+// // postgres.health = async ({ microservice, interval, mode }: { microservice: string; interval: number; mode: string }): Promise<void> => {
+// //   let l = 0;
+// //   const currentMetricNames: { [key: string]: boolean } = {};
+
+// //   l = await postgres.getSavedMetricsLength(mode, currentMetricNames);
+
+// //   // Create table for the microservice if it doesn't exist yet
+// //   const createTableQuery = `
+// //     CREATE TABLE IF NOT EXISTS ${microservice} (
+// //       _id SERIAL PRIMARY KEY,
+// //       metric VARCHAR(200),
+// //       value FLOAT DEFAULT 0.0,
+// //       category VARCHAR(200) DEFAULT 'event',
+// //       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+// //     );`;
+
+// //   client.query(createTableQuery).catch((err: any) =>
+// //     console.log('Error creating health table in PostgreSQL:\n', err)
+// //   );
 
 //   // Save data point at every interval (ms)
 //   setInterval(() => {
@@ -1640,3 +2055,420 @@ export default postgres;
 // }
 
 // module.exports = postgres;
+// File: Postgres.ts
+
+// Import the pg package as a default export and destructure Client
+import pkg from 'pg';
+const { Client } = pkg;
+
+// Import local modules using require (if these modules haven't been migrated to ESM)
+// If you later migrate these to ESM, you can update these imports accordingly.
+// const alertModule = require('./alert.js');
+// const { collectHealthData } = require('./healthHelpers.js');
+// const dockerHelper = require('./dockerHelper.js');
+// const utilities = require('./utilities.js');
+
+import alertModule from './alert.js';
+// import { collectHealthData } from './healthHelpers.js';
+import healthHelpers from './healthHelpers.js';
+// then use healthHelpers.collectHealthData()
+
+import dockerHelper from './dockerHelper.js';
+import utilities from './utilities.js';
+
+let client: any;
+
+// In this example we type postgres as any. Later you might define a proper interface.
+const postgres: any = {};
+
+/**
+ * Initializes connection to PostgreSQL database using provided URI
+ * @param database Contains DB type and DB URI
+ */
+postgres.connect = async ({ database }: { database: { URI: string } }): Promise<void> => {
+  try {
+    // Connect to user's database
+    client = new Client({ connectionString: database.URI });
+    await client.connect();
+
+    // Print success message
+    console.log('PostgreSQL database connected at ', database.URI.slice(0, 24), '...');
+  } catch (error: any) {
+    // Print error message
+    console.log('Error connecting to PostgreSQL DB:', error.message);
+  }
+};
+
+/**
+ * Create services table with each entry representing a microservice.
+ * @param microservice Microservice name
+ * @param interval Interval to collect data
+ */
+postgres.services = ({ microservice, interval }: { microservice: string; interval: number }): void => {
+  // Create services table if it does not exist
+  client.query(
+    `CREATE TABLE IF NOT EXISTS services (
+      _id SERIAL PRIMARY KEY NOT NULL,
+      microservice VARCHAR(248) NOT NULL UNIQUE,
+      interval INTEGER NOT NULL)`,
+    (err: any, results: any) => {
+      if (err) throw err;
+    }
+  );
+
+  client.query(
+    `CREATE TABLE IF NOT EXISTS metrics (
+      _id SERIAL PRIMARY KEY NOT NULL,
+      metric TEXT NOT NULL UNIQUE,
+      selected BOOLEAN,
+      mode TEXT NOT NULL)`,
+    (err: any, results: any) => {
+      if (err) throw err;
+    }
+  );
+
+  // Insert microservice name and interval into services table
+  const queryString = `
+    INSERT INTO services (microservice, interval)
+    VALUES ($1, $2)
+    ON CONFLICT (microservice) DO NOTHING;`;
+
+  const values = [microservice, interval];
+
+  client.query(queryString, values, (err: any, result: any) => {
+    if (err) throw err;
+    console.log(`Microservice "${microservice}" recorded in services table`);
+  });
+};
+
+/**
+ * Creates a communications table if one does not yet exist and
+ * traces the request throughout its life cycle. Will send a notification
+ * to the user if contact information is provided.
+ * @param microservice Microservice name
+ * @param slack Slack settings (optional)
+ * @param email Email settings (optional)
+ */
+postgres.communications = ({ microservice, slack, email }: { microservice: string; slack?: any; email?: any }) => {
+  // Create communications table if one does not exist
+  client.query(
+    `CREATE TABLE IF NOT EXISTS communications(
+      _id serial PRIMARY KEY,
+      microservice VARCHAR(248) NOT NULL,
+      endpoint varchar(248) NOT NULL,
+      request varchar(16) NOT NULL,
+      responsestatus INTEGER NOT NULL,
+      responsemessage varchar(500) NOT NULL,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      correlatingId varchar(500)
+    )`,
+    (err: any, results: any) => {
+      if (err) throw err;
+    }
+  );
+
+  return (req: any, res: any, next: any) => {
+    // ID persists throughout request lifecycle
+    const correlatingId = res.getHeaders()['x-correlation-id'];
+
+    // Target endpoint
+    const endpoint = req.originalUrl;
+    // HTTP Request Method
+    const request = req.method;
+
+    const queryString = `
+      INSERT INTO communications (microservice, endpoint, request, responsestatus, responsemessage, correlatingId)
+      VALUES ($1, $2, $3, $4, $5, $6);`;
+
+    // Wait for the response to finish before inserting the record
+    res.on('finish', () => {
+      if (res.statusCode >= 400) {
+        if (slack) alertModule.sendSlack(res.statusCode, res.statusMessage, slack);
+        if (email) alertModule.sendEmail(res.statusCode, res.statusMessage, email);
+      }
+      const responsestatus = res.statusCode;
+      const responsemessage = res.statusMessage;
+      const values = [microservice, endpoint, request, responsestatus, responsemessage, correlatingId];
+      client.query(queryString, values, (err: any, result: any) => {
+        if (err) throw err;
+        console.log('Request cycle saved');
+      });
+    });
+    next();
+  };
+};
+
+/**
+ * Constructs a parameterized query string for inserting multiple data points.
+ * @param numRows Number of rows to insert
+ * @param serviceName Table name to insert into
+ * @returns The constructed query string
+ */
+function createQueryString(numRows: number, serviceName: string): string {
+  let query = `
+    INSERT INTO
+      ${serviceName} (metric, value, category, time)
+    VALUES
+  `;
+  for (let i = 0; i < numRows; i++) {
+    const newRow = `($${4 * i + 1}, $${4 * i + 2}, $${4 * i + 3}, TO_TIMESTAMP($${4 * i + 4}))`;
+    query = query.concat(newRow);
+    if (i !== numRows - 1) query = query.concat(',');
+  }
+  query = query.concat(';');
+  return query;
+}
+
+/**
+ * Constructs an array of values to be used with the parameterized query.
+ * @param dataPointsArray Array of data point objects
+ * @returns Array of values
+ */
+function createQueryArray(dataPointsArray: any[]): (string | number)[] {
+  const queryArray: (string | number)[] = [];
+  for (const element of dataPointsArray) {
+    queryArray.push(element.metric);
+    queryArray.push(element.value);
+    queryArray.push(element.category);
+    queryArray.push(element.time / 1000); // Convert milliseconds to seconds for PostgreSQL
+  }
+  return queryArray;
+}
+
+/**
+ * Reads and stores microservice health information in the PostgreSQL database at every interval.
+ * @param microservice Microservice name
+ * @param interval Interval (ms) for continuous data collection
+ * @param mode The mode (e.g. "kafka", "kubernetes")
+ */
+postgres.health = async ({ microservice, interval, mode }: { microservice: string; interval: number; mode: string }): Promise<void> => {
+  let l = 0;
+  const currentMetricNames: { [key: string]: boolean } = {};
+
+  l = await postgres.getSavedMetricsLength(mode, currentMetricNames);
+
+  // Create table for the microservice if it doesn't exist yet
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS ${microservice} (
+      _id SERIAL PRIMARY KEY,
+      metric VARCHAR(200),
+      value FLOAT DEFAULT 0.0,
+      category VARCHAR(200) DEFAULT 'event',
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+  client.query(createTableQuery).catch((err: any) =>
+    console.log('Error creating health table in PostgreSQL:\n', err)
+  );
+
+  // Save data point at every interval (ms)
+  setInterval(() => {
+    healthHelpers.collectHealthData()
+      .then(async (data: any[]) => {
+        if (l !== data.length) {
+          l = await postgres.addMetrics(data, mode, currentMetricNames);
+        }
+        const documents = data.filter(el => el.metric in currentMetricNames);
+        const numRows = documents.length;
+        const queryString = createQueryString(numRows, microservice);
+        const queryArray = createQueryArray(documents);
+        return client.query(queryString, queryArray);
+      })
+      .then(() => console.log('Health data recorded in PostgreSQL'))
+      .catch((err: any) => console.log('Error inserting health data into PostgreSQL:\n', err));
+  }, interval);
+};
+
+/**
+ * Runs instead of health when dockerized.
+ * Collects container information.
+ * @param microservice Microservice name
+ * @param interval Interval (ms) to collect docker data
+ */
+postgres.docker = function ({ microservice, interval }: { microservice: string; interval: number }): void {
+  // Create containerInfo table if it does not exist
+  client.query(
+    `CREATE TABLE IF NOT EXISTS containerInfo( 
+      _id serial PRIMARY KEY,
+      microservice varchar(500) NOT NULL,
+      containerName varchar(500) NOT NULL,
+      containerId varchar(500) NOT NULL,
+      containerPlatform varchar(500),
+      containerStartTime varchar(500),
+      containerMemUsage real DEFAULT 0,
+      containerMemLimit real DEFAULT 0,
+      containerMemPercent real DEFAULT 0,
+      containerCpuPercent real DEFAULT 0,
+      networkReceived real DEFAULT 0,
+      networkSent real DEFAULT 0,
+      containerProcessCount integer DEFAULT 0, 
+      containerRestartCount integer DEFAULT 0
+    )`,
+    (err: any, results: any) => {
+      if (err) throw err;
+    }
+  );
+
+  dockerHelper
+    .getDockerContainer(microservice)
+    .then((containerData: any) => {
+      setInterval(() => {
+        dockerHelper
+          .readDockerContainer(containerData)
+          .then((data: any) => {
+            const queryString = `
+              INSERT INTO containerInfo(
+                microservice,
+                containerName,
+                containerId,
+                containerPlatform,
+                containerStartTime,
+                containerMemUsage,
+                containerMemLimit,
+                containerMemPercent,
+                containerCpuPercent,
+                networkReceived,
+                networkSent,
+                containerProcessCount,
+                containerRestartCount
+              )
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+            const values = [
+              microservice,
+              data.containername,
+              data.containerid,
+              data.platform,
+              data.starttime,
+              data.memoryusage,
+              data.memorylimit,
+              data.memorypercent,
+              data.cpupercent,
+              data.networkreceived,
+              data.networksent,
+              data.processcount,
+              data.restartcount,
+            ];
+
+            client.query(queryString, values, (err: any, results: any) => {
+              if (err) throw err;
+              console.log(`Docker data recorded in SQL table containerInfo`);
+            });
+          })
+          .catch((err: any) => console.log('Error reading docker container:', err));
+      }, interval);
+    })
+    .catch((error: any) => {
+      if (error.constructor.name === 'Error') throw error;
+      else throw new Error(error);
+    });
+};
+
+postgres.serverQuery = (config: any): void => {
+  postgres.saveService(config);
+  postgres.setQueryOnInterval(config);
+};
+
+postgres.saveService = (config: any): void => {
+  let service: string;
+  if (config.mode === 'kakfa') service = 'kafkametrics';
+  else if (config.mode === 'kubernetes') service = 'kubernetesmetrics';
+  else throw new Error('Unrecognized mode');
+
+  postgres.services({ microservice: service, interval: config.interval });
+
+  // Create service table if it does not exist
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS ${service} (
+      _id SERIAL PRIMARY KEY,
+      metric VARCHAR(200),
+      value FLOAT DEFAULT 0.0,
+      category VARCHAR(200) DEFAULT 'event',
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+  client.query(createTableQuery).catch((err: any) =>
+    console.log(`Error creating ${service} table in PostgreSQL:\n`, err)
+  );
+};
+
+postgres.setQueryOnInterval = async (config: any): Promise<void> => {
+  let service: string;
+  let metricsQuery: any;
+  let currentMetrics: any;
+  let l = 0;
+  const currentMetricNames: { [key: string]: boolean } = {};
+
+  if (config.mode === 'kakfa') {
+    service = 'kafkametrics';
+    metricsQuery = utilities.helpers.kafkaMetricsQuery;
+  } else if (config.mode === 'kubernetes') {
+    service = 'kubernetesmetrics';
+    metricsQuery = utilities.helpers.promMetricsQuery;
+  } else {
+    throw new Error('Unrecognized mode');
+  }
+
+  currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${config.mode}';`);
+  currentMetrics = currentMetrics.rows;
+  if (currentMetrics.length > 0) {
+    currentMetrics.forEach((el: any) => {
+      const { metric, selected } = el;
+      currentMetricNames[metric] = selected;
+      l = currentMetrics.length;
+    });
+  }
+
+  setInterval(() => {
+    metricsQuery(config)
+      .then(async (parsedArray: any[]) => {
+        if (l !== parsedArray.length) {
+          l = await postgres.addMetrics(parsedArray, config.mode, currentMetricNames);
+        }
+        const documents: any[] = [];
+        for (const metric of parsedArray) {
+          if (currentMetricNames[metric.metric]) documents.push(metric);
+        }
+        const numRows = documents.length;
+        const queryString = createQueryString(numRows, service);
+        const queryArray = createQueryArray(documents);
+        return client.query(queryString, queryArray);
+      })
+      .then(() => console.log(`${config.mode} metrics recorded in PostgreSQL`))
+      .catch((err: any) =>
+        console.log(`Error inserting ${config.mode} metrics into PostgreSQL:\n`, err)
+      );
+  }, config.interval);
+};
+
+postgres.getSavedMetricsLength = async (
+  mode: string,
+  currentMetricNames: { [key: string]: boolean }
+): Promise<number> => {
+  let currentMetrics = await client.query(`SELECT * FROM metrics WHERE mode='${mode}';`);
+  if (currentMetrics.rows.length > 0) {
+    currentMetrics.rows.forEach((el: any) => {
+      const { metric, selected } = el;
+      currentMetricNames[metric] = selected;
+    });
+  }
+  return currentMetrics.rows.length || 0;
+};
+
+postgres.addMetrics = async (
+  arr: any[],
+  mode: string,
+  currentMetricNames: { [key: string]: boolean }
+): Promise<number> => {
+  let metricsQueryString = 'INSERT INTO metrics (metric, selected, mode) VALUES ';
+  arr.forEach((el: any) => {
+    if (!(el.metric in currentMetricNames)) {
+      currentMetricNames[el.metric] = true;
+      metricsQueryString = metricsQueryString.concat(`('${el.metric}', true, '${mode}'), `);
+    }
+  });
+  metricsQueryString = metricsQueryString.slice(0, metricsQueryString.lastIndexOf(', ')).concat(';');
+  await client.query(metricsQueryString);
+  return arr.length;
+};
+
+export default postgres;
