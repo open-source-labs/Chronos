@@ -252,7 +252,9 @@ Updates:
 
 ## Overview of the CodeBase
 
-- 
+- In our ChroNotes, we have a full overview of all the files in the codebase, and their purpose.
+<a href='https://docs.google.com/document/d/e/2PACX-1vTWIX6Is3uuvWX73ab5K521X7Ddr_fVN64F82bJ8l4VNF45cM9PbfDj2gVV9MVi_HhDrbNmZK51-dHP/pub'>Click here to view</a>!
+<img src='./assets/ChroNotes.png' alt='ChroNotes screenshot' align='center' height='500'/>
 - If you want to visualize the way the files in the app are connected, we suggest using this data visualizer. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo
   <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
   <img src="assets/codebase_visulization.png" alt="codebase visulization" align="center" height="500"/>
