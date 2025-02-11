@@ -40,7 +40,7 @@ Updates:
 <li>Refactored the homepage of the app to give it a more intuitive appearance regarding where/how to initialize network monitoring.</li>
 
 
-<a href='link here'>Version 15.0 Medium Article</a>
+<a href='(https://ashleybisram.medium.com/a-new-chapter-for-chronos-introducing-version-15-0-12b83def342b)'>Version 15.0 Medium Article</a>
 
 ### **Iteration Log**
 <details><summary>Chronos 14.0</summary>
@@ -242,7 +242,7 @@ Updates:
 </ul>
 </details>
 
-### With Chronos 14.0
+### With Chronos 15.0
 
 <a href="https://chronoslany.com/">
     <img src="assets/demo.gif" alt="Chronos" title="Chronos" align="center" height="500" width="auto" />
@@ -252,9 +252,11 @@ Updates:
 
 ## Overview of the CodeBase
 
+- 
 - If you want to visualize the way the files in the app are connected, we suggest using this data visualizer. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo
   <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
   <img src="assets/codebase_visulization.png" alt="codebase visulization" align="center" height="500"/>
+
 
 ## Features
 
@@ -271,7 +273,7 @@ Updates:
 
 # Installation
 
-This is for the latest Chronos **version 13.0 release**.
+This is for the latest Chronos **version 15.0 release**.
 
 ## NPM Package
 
