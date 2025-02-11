@@ -64,10 +64,51 @@ import bioTedPic from "../../assets/Bio_picture_Ted.png"
 import bioSofiaPic from "../../assets/Bio_picture_Sofia.jpeg"
 import bioMikePic from "../../assets/Bio_picture_Mike.png"
 import bioStephenPic from "../../assets/Bio_picture_Stephen.png"
+import bioAshleyPic from "../../assets/Bio_picture_Ashley_Bisram.jpg"
+import bioArnoldPic from "../../assets/Bio_picture_Arnold_Pinkhasov.jpeg"
+import bioPeterPic from "../../assets/Bio_picture_Pete.png"
+import bioRichPic from "../../assets/Bio_picture_Rich.jpeg"
+
 
 import "../../stylesheets/Team.scss"
 
 const bios = [
+  {
+    name: 'Ashley Bisram',
+    bioParagraph: 'Ashley Bisram is a full-stack software engineer from New York City dedicated to creating inclusive, user-focused technologies. With a foundation in customer experience and a passion for continuous learning, Ashley blends technical expertise with creativity to solve complex challenges.',
+    picture: bioAshleyPic,
+    contact: {
+        gitHub: 'https://github.com/ashleybisram',
+        linkedIn: 'https://www.linkedin.com/in/ashleybisram/',
+    },
+  },
+  {
+    name: 'Arnold Pinkhasov',
+    bioParagraph: `Arnold is a software developer specializing in React and Express Node, with a passion for debugging, optimizing codebases, and designing modular full-stack applications that empower developers to connect communities through technology. When his fingers aren’t flying across the keyboard, they’re tearing up guitar strings—because creativity is the reward.`,
+    picture: bioArnoldPic,
+    contact: {
+        gitHub: 'https://github.com/apinkhasov101',
+        linkedIn: 'https://www.linkedin.com/in/arnold-pinkhasov/',
+    },
+  },
+  {
+    name: 'Peter Toussaint',
+    bioParagraph: `Peter Toussaint is a full-stack developer in New York City who thrives on building dynamic web applications and crafting sleek, user-friendly interfaces. He combines his technical expertise with a creative passion for delivering impactful digital experiences. When he’s not coding, Peter enjoys skateboarding, breakdancing, DJing.`,
+    picture: bioPeterPic,
+    contact: {
+        gitHub: 'https://github.com/Peter2oussaint',
+        linkedIn: 'https://www.linkedin.com/in/petertoussaint/',
+    },
+},
+  {
+    name: 'Fridchard Chery',
+    bioParagraph: 'Fridchard (Rich) Chery is a software engineer based in New York City with a deep interest in creating and learning new technologies. When he’s not coding he enjoys songwriting, watching movies and working out.',
+    picture: bioRichPic,
+    contact: {
+        gitHub: 'https://github.com/Gitfrich',
+        linkedIn: 'https://www.linkedin.com/in/fridchard-chery/',
+    },
+},
   {
     name: 'Michael Tagg',
     bioParagraph: " Mike, a full-stack engineer from Thousand Oaks, California, excels in both front-end and back-end development. With an adventurous spirit, Mike enjoys building apps that integrate real-life functionality with beautifully written code.  In his free time, you can find Mike hiking, rock climbing or skydiving.",
