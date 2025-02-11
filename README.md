@@ -32,7 +32,12 @@ Contributors:
 
 </div>
 Updates:
-<li>Forthcoming</li>
+<li>Improved runtime by incorporating esbuild-loader, lazy-loading/code-splitting, and removing deprecated syntax/unused node modules.</li>
+<li>Refactored SASS by updating deprecated syntax and import statements.</li>
+<li>Grafana dashboard updates include deprecated syntax removal and a more intuitive layout, making it simpler for users to visualize key metrics in the newest version of Grafana.</li>
+<li>TypeScript migration allows contributors and users to catch errors early and work with a more robust codebase, making the app more reliable.</li>
+<li>Introducing ChroNotes, full documentation of our file structure and their purposes.</li>
+<li>Refactored the homepage of the app to give it a more intuitive appearance regarding where/how to initialize network monitoring.</li>
 
 
 <a href='link here'>Version 15.0 Medium Article</a>
