@@ -9,10 +9,11 @@ export const getAllOrders = async (req: Request, res: Response) => {
 };
 
 export const createOrder = async (req: CurrentUserRequest, res: Response) => {
-  const { item, amount } = req.body;
+  const { item, amount,totalPrice, sellerId } = req.body;
   const newOrder = Order.build({
     item,
     amount,
+totalPrice, sellerId
   });
   await newOrder.save();
 

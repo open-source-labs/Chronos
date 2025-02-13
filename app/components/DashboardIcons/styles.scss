@@ -1,7 +1,8 @@
-@import '../../index.scss';
+@use '../../index.scss' as *;
 
 .dashboardIconWrapper {
   margin-right: 37px;
+
 }
 
 .dashboardIconArea {
@@ -25,6 +26,7 @@
   z-index: 1;
   top: 50px;
   right: -14px;
+
 }
 
 .dashboardIconArea .dashboardTooltip::after {
@@ -134,6 +136,7 @@
 .personIconArea {
   position: relative;
   display: inline-block;
+
 }
 
 .personIconArea:hover .personTooltip {

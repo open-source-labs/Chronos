@@ -1,5 +1,5 @@
 import express from 'express';
-import { signup, login, logout, getCurrentUser } from '../controllers/auth-controller';
+import { signup, login, logout, getCurrentUser } from '../controllers/auth-controller.js';
 import { currentUser } from '@chronosrx/common'
 
 const router = express.Router();

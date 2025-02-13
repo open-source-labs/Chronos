@@ -1,0 +1,80 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "noImplicitAny": false,
+//     "noImplicitThis": true,
+//     "strictNullChecks": true,
+//     "strict": false,
+//     "pretty": true,
+//     "outDir": "./build",
+//     "sourceMap": true,
+//     "module": "NodeNext", //updating module from CommonJS. Olivia suggested at a previous time to use "NodeNext" as CommonJS is outdated
+//     "allowJs": true,
+//     "checkJs": false,
+//     "jsx": "react-jsx",
+//     "esModuleInterop": true,
+//     "moduleResolution": "nodenext", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
+//     "resolveJsonModule": true, //! Error: Option '--resolveJsonModule' cannot be specified when 'moduleResolution' is set to 'classic'.ts
+//     "skipLibCheck": true,
+//     "noEmitOnError": false,
+//     "allowSyntheticDefaultImports": true,
+//     // "types": ["jest", "node", "@testing-library/jest-dom"],
+//     "types": ["jest", "node"]
+//   },
+//   "exclude": [
+//     "node_modules",
+//     "dist"
+//   ],
+//   "include": ["./**/*.ts", "./models/*.ts","src/types/hpropagate.d.ts"] //updated the include to have any .ts extensions in this folder
+// }
+{
+  "compilerOptions": {
+    /* Language / Emit Targets */
+    "target": "ES2020",
+    
+    /* Strictness / Type Checking */
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strict": false, // You have this disabled, you can tighten it later if you want
+    "skipLibCheck": true,
+    
+    /* Paths & Outputs */
+   /* "outDir": "./build",*/
+    "sourceMap": true,
+    "noEmitOnError": false,
+
+    /* Module System Setup */
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+ "rootDir": ".",
+"outDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    /* Other Options */
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": false,
+
+    /* Type Declarations to Include */
+    "types": ["jest", "node"]
+  },
+
+  "include": [
+  
+    // "controllers/**/*.ts",
+   
+    // "server/**/*.ts",
+    
+    // "models/**/*.ts",
+   
+    "**/*.ts"
+  ],
+
+  "exclude": [
+    "node_modules"
+    /* "dist","build"*/
+  ]
+}

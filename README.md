@@ -20,31 +20,57 @@ Chronos is a comprehensive developer tool that monitors the health and web traff
 
 ## What's New?
 
-### Chronos 14.0
+### Chronos 15.0
 
 <div>
+
+Contributors:
+[Arnold Pinkhasov](https://github.com/apinkhasov101),
+[Ashley Bisram](https://github.com/ashleybisram),
+[Fridchard Chery](https://github.com/Gitfrich),
+[Peter Toussaint](https://github.com/Peter2oussaint)
+
+</div>
+Updates:
+<li>Improved runtime by incorporating esbuild-loader, removing deprecated syntax/unused node modules, and other bundling optimizations.</li>
+<li>Refactored SASS by updating deprecated syntax and import statements.</li>
+<li>Grafana dashboard updates include deprecated syntax removal and a more intuitive layout, making it simpler for users to visualize key metrics in the newest version of Grafana.</li>
+<li>TypeScript migration allows contributors and users to catch errors early and work with a more robust codebase, making the app more reliable.</li>
+<li>Introduced ChroNotes, full documentation of our file structure and their purposes.</li>
+<li>Refactored the UI of the app to give it a more intuitive appearance regarding where/how to initialize network monitoring.</li>
+
+
+<a href='(https://ashleybisram.medium.com/a-new-chapter-for-chronos-introducing-version-15-0-12b83def342b)'>Version 15.0 Medium Article</a>
+
+### **Iteration Log**
+<details><summary>Chronos 14.0</summary>
+    <ul>
+    <div>
+
 
 Contributors:
 [Michael Tagg](https://github.com/mdtagg),
 [Ted Pham](https://github.com/TedPham397),
 [Sofia Sarhiri](https://github.com/sarhiri),
-[Stephen Yang](https://github.com/stephenhyang),
+[Stephen Yang](https://github.com/stephenhyang)
 
 </div>
 Updates:
-<li>Implemented a new visualization button (example) to expedite data rendering processes.</li>
-<li>Refactored microservices example, switched over to community version of MongoDB for easier URI implementation.</li>
-<li>Modularized cluttered components into modular units to improve code readability and reusability.</li>
-<li>Optimized startup scripts to reduce application load time and streamline environment configuration.</li>
-<li>Upgraded Material-UI from version 4 to version 5, adapting to new API changes and improving UI responsiveness. </li>
-<li>Refactored portions of the electron app </li>
-<li>Refactored data parsing logic to reduce unnecessary rerenders and improve app performance</li>
-<li>Fixed data bottle necks in the local npm packages, data is now able to flow to microservices for data visualization</li>
+    <ul>
+    <li>Implemented a new visualization button (example) to expedite data rendering processes.</li>
+    <li>Refactored microservices example, switched over to community version of MongoDB for easier URI implementation.</li>
+    <li>Modularized cluttered components into modular units to improve code readability and reusability.</li>
+    <li>Optimized startup scripts to reduce application load time and streamline environment configuration.</li>
+    <li>Upgraded Material-UI from version 4 to version 5, adapting to new API changes and improving UI responsiveness. </li>
+    <li>Refactored portions of the electron app </li>
+    <li>Refactored data parsing logic to reduce unnecessary rerenders and improve app performance</li>
+    <li>Fixed data bottle necks in the local npm packages, data is now able to flow to microservices for data visualization</li>
+    </ul>
 
+<a href='https://medium.com/@m.sofiasarhiri/a-tale-as-old-as-time-for-the-modern-developer-chronos-v-14-f84733fd4f93'>Version 14.0 Medium Article</a>
 
-<a href='link here'>Version 14.0 Medium Article</a>
-
-### **Iteration Log**
+</ul>
+</details>
 
 <details><summary>Chronos 13.0</summary>
     <ul>
@@ -216,7 +242,7 @@ Updates:
 </ul>
 </details>
 
-### With Chronos 14.0
+### With Chronos 15.0
 
 <a href="https://chronoslany.com/">
     <img src="assets/demo.gif" alt="Chronos" title="Chronos" align="center" height="500" width="auto" />
@@ -226,9 +252,13 @@ Updates:
 
 ## Overview of the CodeBase
 
+- In our ChroNotes, we have a full overview of all the files in the codebase, and their purpose.
+<a href='https://docs.google.com/document/d/e/2PACX-1vTWIX6Is3uuvWX73ab5K521X7Ddr_fVN64F82bJ8l4VNF45cM9PbfDj2gVV9MVi_HhDrbNmZK51-dHP/pub'>Click here to view</a>!
+<img src='./assets/ChroNotes.png' alt='ChroNotes screenshot' align='center' height='500'/>
 - If you want to visualize the way the files in the app are connected, we suggest using this data visualizer. Below, it's showing the same repository, but instead of a directory structure, each file and folder as a circle: the circle’s color is the type of file, and the circle’s size represents the size of the file. See live demo
   <a href='https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=oslabs-beta%2FChronos'>here</a>.
   <img src="assets/codebase_visulization.png" alt="codebase visulization" align="center" height="500"/>
+
 
 ## Features
 
@@ -245,7 +275,7 @@ Updates:
 
 # Installation
 
-This is for the latest Chronos **version 13.0 release**.
+This is for the latest Chronos **version 15.0 release**.
 
 ## NPM Package
 
@@ -310,7 +340,7 @@ export DISPLAY="`sed -n 's/nameserver //p' /etc/resolv.conf`:0"
 
 **NOTE: You must create your own user database for extended features**
 
-1. Create a MongoDB database in which to store user information and insert it on line 2 within the [UserModel.ts](./electron/models/UserModel.ts) (_electron/models/UserModel.ts_) file.
+1. Create a MongoDB database in which to store user information and insert it within a root .env file based on .env.example [.env.example](./.env.example) (_.env.example_) file.
    - This database will privately store user information.
 2. Once this is set up, you can create new users, log in, and have your data persist between sessions.
 

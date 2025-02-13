@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStylingContext } from './StylingContext';
 
-const names = ['Mike', 'Stephen', 'Ted', 'Sofia'];
+const names = ['Arnold', 'Ashley', 'Pete', 'Rich'];
 
 const TeamMembers: React.FC = () => {
   const currentMode = useStylingContext();

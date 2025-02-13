@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@use '../../index' as *;
 
 .contact {
   display: flex;
@@ -10,13 +10,13 @@
   justify-items: center;
   top: 0;
   left: 0;
+  height: auto;
   min-height: 100vh;
   opacity: 1;
   vertical-align: top;
   justify-content: center;
   align-items: center;
   color: $background;
-  
 }
 .contact-border {
   display: flex;
@@ -167,6 +167,12 @@ input[type='file'] {
   }
 }
 
-.contact-blurb p{
+.contact-blurb p {
+  margin: 0;
   font-weight: 300;
+
+}
+.contact-blurb h1 {
+  margin: 0;
+  padding: 0;
 }

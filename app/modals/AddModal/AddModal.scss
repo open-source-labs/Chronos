@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@use '../../index' as *;
 
 .add-container {
   @include centerModal(30%, 500px);
@@ -7,6 +7,7 @@
   .add-header {
     width: 100%;
     padding: 20px 30px;
+
     text-align: center;
     border-bottom: thin solid $grey;
     background-color: $grey;
@@ -19,6 +20,13 @@
       font-size: 26px;
       font-weight: 300;
       color: $darkgrey;
+      margin: 0; /* Removes top/bottom margins */
+      padding: 0;
+    }
+
+    p {
+      margin: 0; /* Removes top/bottom margins */
+      padding: 0;
     }
   }
 

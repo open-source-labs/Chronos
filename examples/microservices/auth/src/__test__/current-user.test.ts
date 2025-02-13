@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../app';
+import { app } from '../app.js';
 
 // 1) responds with the correct user if cookie exists and is valid
 it('responds with the correct user if cookie exists and is valid', async () => {
@@ -16,8 +16,8 @@ it('responds with the correct user if cookie exists and is valid', async () => {
     .expect(201);
 
   // -- get the cookie from that response
-  const cookie = signupResponse.get('Set-Cookie');
-
+  // const cookie = signupResponse.get('Set-Cookie');
+const cookie = signupResponse.get('Set-Cookie') ?? [];
   const response = await request(app)
     .get('/api/auth/current-user')
     .set('Cookie', cookie)

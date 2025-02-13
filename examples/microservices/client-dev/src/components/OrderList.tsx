@@ -1,7 +1,9 @@
-import { useAppContext } from '../context/appContext';
+import React from 'react';
+
+import { useAppContext } from '../context/appContext.js';
 import { nanoid } from 'nanoid';
-import ClothesIcon from './ClothesIcon';
-import { Clothes } from '../util/types';
+import ClothesIcon from './ClothesIcon.js';
+import { Clothes } from '../util/types.js';
 
 const OrderList = () => {
   const { orders } = useAppContext();

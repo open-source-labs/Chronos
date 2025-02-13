@@ -1,7 +1,9 @@
-import { useAppContext } from '../context/appContext';
+
+import React from 'react';
+import { useAppContext } from '../context/appContext.js';
 import { nanoid } from 'nanoid';
-import FruitIcon from './FruitIcon';
-import { Fruit } from '../util/types';
+import FruitIcon from './FruitIcon.js';
+import { Fruit } from '../util/types.js';
 
 const ItemList = () => {
   const { items, adjustInventory } = useAppContext();

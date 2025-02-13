@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@use '../../index.scss' as *;
 
 .card {
   display: flex;
@@ -8,7 +8,7 @@
   padding: 0;
   cursor: pointer;
   transition: all 0.5s;
-
+// border: 2px solid green;
   &:after,
   &:before {
     content: ' ';

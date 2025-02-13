@@ -1,8 +1,9 @@
+import React from 'react';
 import { FormEvent, useState } from 'react';
-import { Fruit } from '../util/types';
-import { useAppContext } from '../context/appContext';
+import { Fruit } from '../util/types.js';
+import { useAppContext } from '../context/appContext.js';
 import { nanoid } from 'nanoid';
-import FruitIcon from './FruitIcon';
+import FruitIcon from './FruitIcon.js';
 
 const itemOptions = ['bananas', 'strawberries', 'grapes'];
 
