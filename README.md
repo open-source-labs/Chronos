@@ -35,6 +35,6 @@
 4. After saving the copy, go back to the S3 home, select **chronoslany.com** again.
 5. select all objects and delete from the bucket.
 5. Upload the new bundled `bundle.js` and `index.html` (located in `./dist`), as well as your photos with the uglified names. Basically open the folders in a GUI and copy paste all the files in './dist' into the AWS upload module. 
-6. You should be good to go!! However, because the website caches, you may need to visit from another browser or incognito mode to see changes. It can update in 30 seconds, but give it up to 5 minutes before checking. Make sure to use a different browser as previously stated.  
+6. You should be good to go!! However, because the website caches, you may need to visit from another browser or incognito mode to see changes. It can update in 1 minute, but give it up to 5 minutes before checking. Make sure to use a different browser as previously stated.  
 
 _Note: The website should take up to 5 minutes to update with your changes based on the current Cloudflare TTL update of January 2025._
