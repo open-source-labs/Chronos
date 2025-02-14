@@ -1,4 +1,4 @@
-npm# Instructions
+# npm Instructions
 
 **To update the file, follow the below steps:**
 
@@ -34,7 +34,7 @@ npm# Instructions
 5. Select all, click on the actions dropdown and click copy. Save a copy of the existing `bundle.js` and `index.html` just in case. Follow the naming rules directed by amazon, but don't change any of the settings. Save the copy. 
 4. After saving the copy, go back to the S3 home, select **chronoslany.com** again.
 5. select all objects and delete from the bucket.
-5. Upload the new bundled `bundle.js` and `index.html` (located in `./dist`), as well as your photos with the uglified names. Basically open the folders in a GUI and copy paste all the files in './dist' into the aws upload module. 
-6. You should be good to go!!!! However, because the website caches, you may need to visit from another browser or incognito mode to see changes. It might not take 24 hours, but give it a few minutes before checking. Make sure to use a different browser as previously stated.  
+5. Upload the new bundled `bundle.js` and `index.html` (located in `./dist`), as well as your photos with the uglified names. Basically open the folders in a GUI and copy paste all the files in './dist' into the AWS upload module. 
+6. You should be good to go!! However, because the website caches, you may need to visit from another browser or incognito mode to see changes. It can update in 1 minute, but give it up to 5 minutes before checking. Make sure to use a different browser as previously stated.  
 
-_Note: The website will take around 24 hours to update with your changes._
+_Note: The website should take up to 5 minutes to update with your changes based on the current Cloudflare TTL update of January 2025._
