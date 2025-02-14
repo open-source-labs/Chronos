@@ -1,6 +1,6 @@
 {
   "name": "@chronosmicro/tracker",
-  "version": "12.0.4",
+  "version": "13.0.0",
   "description": "Chronos microservice metrics tracker",
   "main": "dist/chronos.js",
   "type": "module",
