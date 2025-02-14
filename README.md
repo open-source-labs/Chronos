@@ -40,7 +40,7 @@ Updates:
 <li>Refactored the UI of the app to give it a more intuitive appearance regarding where/how to initialize network monitoring.</li>
 
 
-<a href='(https://ashleybisram.medium.com/a-new-chapter-for-chronos-introducing-version-15-0-12b83def342b)'>Version 15.0 Medium Article</a>
+<a href='https://ashleybisram.medium.com/a-new-chapter-for-chronos-introducing-version-15-0-12b83def342b'>Version 15.0 Medium Article</a>
 
 ### **Iteration Log**
 <details><summary>Chronos 14.0</summary>
