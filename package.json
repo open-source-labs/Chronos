@@ -118,7 +118,7 @@
     "backend-test": "npx jest --config __backend-tests__/jest.config.js --verbose",
     "start:selenium": "node e2e/seleniumTest.js",
     "start:e2e": "npm run dev:electron & npm run start:selenium",
-    "start:electron": "concurrently \"npm:build\" \"npm:dev:app\" \"npm:dev:electron\"",
+    "start:electron": "concurrently \"npm:dev:app\" \"npm:dev:electron\"",
     "start:microservices": "cd examples/microservices && make all && npm run pkg:install && npm start"
   },
   "repository": {

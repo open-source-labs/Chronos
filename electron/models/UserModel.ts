@@ -1,18 +1,21 @@
-import 'dotenv/config';// Imported dotenv to process env files to protect our URI 
-// Insert the MongoDB URI for your private User database in place of the example URI provided below.
-const MONGO_URI = process.env.MONGO_URI;//URI from .env file in electron folder root directory 
+import mongoose from 'mongoose';
+import 'dotenv/config'; 
 
-const mongoose = require('mongoose');
+
+const MONGO_URI = process.env.MONGO_URI;
+if (!MONGO_URI) throw new Error("❌ Missing MONGO_URI in environment variables!");
+
 
 const userDB = mongoose.createConnection(MONGO_URI);
+
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  email: String,
-  services: [],
+  email: { type: String, required: false },
+  services: { type: Array, default: [] },
   mode: { type: String, default: 'light' },
 });
 
 const UserModel = userDB.model('users', userSchema);
-module.exports = UserModel;
+export { UserModel };

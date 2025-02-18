@@ -19,10 +19,6 @@ const DockerSchema = new Schema({
   },
 });
 
-// module.exports = ContainerName => {
-//   console.log('Inside Docker Schema ContainerInfo.js LN52', ContainerName)
-//   return mongoose.model(ContainerName, DockerSchema); 
-// }; // invalid format for TS files
 
 const ContainerName = mongoose.model('ContainerName', DockerSchema);
 

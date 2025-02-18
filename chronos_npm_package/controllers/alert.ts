@@ -1,189 +1,103 @@
-// import * as axios from 'axios';
-// import * as nodemailer from 'nodemailer';
-
-// // const alert = {};
-
-// interface SlackSettings {
-//   webhook: any; // possibly 'string'?
-// }
-
-// interface EmailSettings {
-//   emails: string;
-//   emailHost: string;
-//   emailPort: string | number;
-//   user: string;
-//   password: string;
-// }
-
-// interface Alert {
-//   sendSlack: (code: number, message: string, slackSettings: SlackSettings) => void;
-//   sendEmail: (code: number, message: string, emailSettings: EmailSettings) => void;
-// }
-
-// const alert: Alert = {
-// /**
-//  * Sends slack notifications to the provided slackurl with the status code
-//  * and message via an axios POST request
-// //  * @param {integer} code Response status code
-// //  * @param {string} message Response message
-// //  * @param {Object} slackSettings User provided slack settings
-//  */
-
-// sendSlack : (code: number, message: string, slackSettings: any) => {
-//   const { webhook } = slackSettings;
-
-//   // Data for POST request
-//   const data = { text: `${code}, ${message}, ${Date.now()}` };
-
-//   // Options for POST request
-//   const config = {
-//     method: 'post',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   };
-
-//   axios
-//     .post(webhook, data, config)
-//     .then(res => console.log('Status Code >= 400...\nError message sent'))
-//     .catch(error => console.log('test------>', error.message));
-// },
-
-// /**
-//  * Sends email notifications using the provided email information with the
-//  * status code and message via an axios POST request
-// //  * @param {integer} code Response status code
-// //  * @param {string} message Response message
-// //  * @param {Object} emailSettings User provided email settings
-// //  */
-
-// sendEmail : (code: number, message: string, emailSettings: any) => {
-//   const { emails, emailHost, emailPort, user, password } = emailSettings;
-
-//   // Message object contains recipient email list and email text body
-//   const data = {
-//     to: `${emails}`,
-//     subject: 'Error from Middleware',
-//     text: `${code}, ${message}`,
-//   };
-
-//   // Configuration settings for email notifications
-//   const config = {
-//     host: `${emailHost}`,
-//     port: `${emailPort}`,
-//     auth: {
-//       user: `${user}`,
-//       pass: `${password}`,
-//     },
-//   };
-//   const transport = nodemailer.createTransport(config);
-
-//   transport.sendMail(data, function (err, info) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log(info);
-//     }
-//   });
-// },
-// };
-
-// export default alert
-// alert.ts
-
-// Option A: Preferred if your tsconfig.json has "esModuleInterop": true
+import nodemailer from 'nodemailer'; // Importing nodemailer for sending emails
 import axios from 'axios';
-// Option B (if you can’t enable esModuleInterop):
-// import * as axiosImport from 'axios';
-// const axios = axiosImport.default;
-
-import nodemailer from 'nodemailer';
-
+// Defined a interface for Slack settings
+// This describes the structure of the `slackSettings` object.
+//  There is a property of `webhook` with a string value, which is the URL to send Slack messages.
 interface SlackSettings {
-  webhook: string; // assuming webhook is a URL string
+  webhook: string; // The Slack webhook URL 
 }
 
+// Defined a TypeScript interface for Email settings
+// This describes the structure of `emailSettings` used for sending emails.
 interface EmailSettings {
-  emails: string;
-  emailHost: string;
-  emailPort: string | number;
-  user: string;
-  password: string;
+  emails: string; // A comma-separated list of email addresses
+  emailHost: string; // SMTP server (e.g., "smtp.gmail.com")
+  emailPort: string | number; // SMTP port 
+  user: string; // Email username (e.g., your email address)
+  password: string; // Email password 
 }
 
+// Defined an interface for the Alert object
+// This helps TypeScript make sure  our `alert` object has two methods: sendSlack &  sendEmail.
 interface Alert {
   sendSlack: (code: number, message: string, slackSettings: SlackSettings) => void;
   sendEmail: (code: number, message: string, emailSettings: EmailSettings) => void;
 }
 
+// Creates an Alert object with 2 functions
 const alert: Alert = {
   /**
-   * Sends slack notifications to the provided slack webhook URL with the status code
-   * and message via an Axios POST request.
+   * Sends a notification to a Slack channel when an error occurs.
+   * This function makes an HTTP POST request to the Slack webhook URL.
    *
-   * @param code Response status code
-   * @param message Response message
-   * @param slackSettings User provided slack settings
+   * @param code - The HTTP status code 
+   * @param message - The error message to send
+   * @param slackSettings - The Slack webhook URL provided by the user
    */
   sendSlack: (code: number, message: string, slackSettings: SlackSettings) => {
-    const { webhook } = slackSettings;
-    // Data for POST request
+    const { webhook } = slackSettings; // Declare a const destructuring slackSettings for  the webhook URL
+
+    //Prepares the message payload
     const data = { text: `${code}, ${message}, ${Date.now()}` };
-    // Options for POST request
+
+    // Sets up the request headers
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', // Ensures proper formatting for Slack
       },
     };
 
+    // Send the POST request using axios
     axios
       .post(webhook, data, config)
-      .then((res) => console.log('Status Code >= 400...\nError message sent'))
-      .catch((error) => console.log('Error sending Slack message:', error.message));
+      .then(() => console.log('✅ Slack alert sent successfully!'))
+      .catch(error => console.log('❌ Error sending Slack message:', error.message));
   },
 
   /**
-   * Sends email notifications using the provided email information with the
-   * status code and message via Nodemailer.
+   * Sends an email notification when an error occurs.
+   * Uses nodemailer to send the email through an SMTP server.
    *
-   * @param code Response status code
-   * @param message Response message
-   * @param emailSettings User provided email settings
+   * @param code - The HTTP status code 
+   * @param message - The error message to send
+   * @param emailSettings - The SMTP configuration and recipient emails
    */
   sendEmail: (code: number, message: string, emailSettings: EmailSettings) => {
-    const { emails, emailHost, emailPort, user, password } = emailSettings;
+    const { emails, emailHost, emailPort, user, password } = emailSettings; // Extract email settings
 
-    // Message object for the email
+    // Format  for the email message
     const mailOptions = {
-      to: emails,
-      subject: 'Error from Middleware',
-      text: `${code}, ${message}`,
+      to: emails, // Recipient(s)
+      subject: '🚨 Error Alert from Middleware',
+      text: `${code}, ${message}`, // Email content
     };
 
-    // Convert port to number if necessary
-    const portNumber =
-      typeof emailPort === 'string' ? parseInt(emailPort, 10) : emailPort;
+    // Ensure emailPort is always a number 
+    const portNumber = typeof emailPort === 'string' ? parseInt(emailPort, 10) : emailPort;
 
-    // Configuration settings for Nodemailer
+    // Set up the SMTP transport configuration
     const transportConfig = {
-      host: emailHost,
-      port: portNumber,
+      host: emailHost, // SMTP server (e.g., "smtp.gmail.com")
+      port: portNumber, // Convert to number if needed
       auth: {
-        user: user,
-        pass: password,
+        user: user, // Email username
+        pass: password, // Email password or app password
       },
     };
 
+    // Create an email transporter using nodemailer
     const transport = nodemailer.createTransport(transportConfig);
 
+    // Send the email
     transport.sendMail(mailOptions, (err, info) => {
       if (err) {
-        console.log('Error sending email:', err);
+        console.log('❌ Error sending email:', err);
       } else {
-        console.log('Email sent:', info);
+        console.log('✅ Email sent successfully:', info);
       }
     });
   },
 };
 
+// Export the alert object for use in other files
 export default alert;
