@@ -1,17 +1,18 @@
-import axios from 'axios';
+import axios from 'axios'; // Imports Axios for making HTTP requests
 
 async function getGrafanaDatasource() {
-    // Fetch datasource information from grafana API.
-    // This datasource is PRECONFIGURED on launch using grafana config.
+    // Make an HTTP request to get the list of datasources from Grafana.
+    // Grafana uses datasources like Prometheus, InfluxDB, etc., to store and retrieve monitoring metrics.
     const datasourceResponse = await axios.get('http://localhost:32000/api/datasources');
 
-    // Create a datasource object to be used within panels.
+    //  Access the first datasource from the response.
+    // Grafana API returns an array of datasources, so we are assuming the first one is the one we need.
     const datasource = {
-        type: datasourceResponse[0].type,
-        uid: datasourceResponse[0].uid,
+        type: datasourceResponse[0].type, // This is the type of datasource (i.e., Prometheus)
+        uid: datasourceResponse[0].uid,   // Unique identifier for this datasource
     };
 
-    return datasource;
+    return datasource; //  Return the accessed datasource info.
 }
 
-module.exports = getGrafanaDatasource;
+module.exports = getGrafanaDatasource; 

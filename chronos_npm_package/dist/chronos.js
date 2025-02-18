@@ -336,7 +336,7 @@ import MongoServerWrapper from './wrappers/MongoServerWrapper.js';
 import PostgresClientWrapper from './wrappers/PostgresClientWrapper.js';
 import PostgresServerWrapper from './wrappers/PostgresServerWrapper.js';
 import utilities from './controllers/utilities.js';
-class Chronos {
+export class Chronos {
     constructor(config) {
         if (!config) {
             throw new Error('Chronos config is undefined');
@@ -464,5 +464,5 @@ class Chronos {
         client.metadata = server.metadataHolder;
     }
 }
-export default Chronos;
+// export default Chronos;
 //# sourceMappingURL=chronos.js.map
