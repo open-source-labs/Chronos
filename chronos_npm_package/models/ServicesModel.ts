@@ -1,4 +1,4 @@
-import mongoose from'mongoose';
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -12,8 +12,6 @@ const ServicesSchema = new Schema({
     required: true,
   },
 });
-
-// module.exports = mongoose.model('services', ServicesSchema); // invalid format when converted to TS
 
 // Define the model
 const ServicesModel = mongoose.model('services', ServicesSchema);

@@ -14,11 +14,9 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "moduleResolution": "nodenext", //@see https://stackoverflow.com/questions/72638285/cannot-find-module-mongoose-with-typescript
-    // "resolveJsonModule": true, //! Error: Option '--resolveJsonModule' cannot be specified when 'moduleResolution' is set to 'classic'.ts
     "skipLibCheck": true,
     "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
-    // "types": ["jest", "node", "@testing-library/jest-dom"],
     "types": ["jest", "node"]
   },
   "exclude": [

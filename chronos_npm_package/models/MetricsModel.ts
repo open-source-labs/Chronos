@@ -12,15 +12,12 @@ const MetricsSchema = new Schema({
     default: true,
   },
   mode: {
-    type: String
+    type: String,
   },
   category: {
-    type:String
-  }
+    type: String,
+  },
 });
-
-// module.exports = mongoose.model('metrics', MetricsSchema);
-
 
 const MetricsModel = mongoose.model('MetricsModel', MetricsSchema);
 
